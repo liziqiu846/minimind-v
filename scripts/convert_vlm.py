@@ -18,7 +18,7 @@ def convert_torch2transformers_minimind(torch_path, transformers_path, dtype=tor
     MiniMindVLM.register_for_auto_class("AutoModelForCausalLM")
     lm_model = MiniMindVLM(lm_config, vision_model_path="../model/siglip2-base-p32-256-ve")
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    state_dict = torch.load(torch_path, map_location=device)
+    state_dict = torch.load(torch_path, map_location=device, weights_only=True)
     lm_model.load_state_dict(state_dict, strict=False)
     lm_model = lm_model.to(dtype)  # 转换模型权重精度
     model_params = sum(p.numel() for p in lm_model.parameters() if p.requires_grad)

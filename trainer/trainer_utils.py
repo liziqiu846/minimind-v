@@ -70,7 +70,7 @@ def init_vlm_model(vlm_config, from_weight='pretrain_vlm', tokenizer_path='../mo
     if from_weight != 'none':
         moe_suffix = '_moe' if vlm_config.use_moe else ''
         weight_path = f'{save_dir}/{from_weight}_{vlm_config.hidden_size}{moe_suffix}.pth'
-        weights = torch.load(weight_path, map_location=device)
+        weights = torch.load(weight_path, map_location=device, weights_only=True)
         model.load_state_dict(weights, strict=False)
     
     # 1、全部冻结，只打开vision_proj梯度
@@ -145,7 +145,7 @@ def vlm_checkpoint(vlm_config, weight='pretrain_vlm', model=None, optimizer=None
         torch.cuda.empty_cache()
     else:  # 加载模式
         if os.path.exists(resume_path):
-            ckp_data = torch.load(resume_path, map_location='cpu')
+            ckp_data = torch.load(resume_path, map_location='cpu', weights_only=True)
             saved_ws = ckp_data.get('world_size', 1)
             current_ws = dist.get_world_size() if dist.is_initialized() else 1
             if saved_ws != current_ws:
@@ -190,4 +190,3 @@ class SkipBatchSampler(Sampler):
     def __len__(self):
         total_batches = (len(self.sampler) + self.batch_size - 1) // self.batch_size
         return max(0, total_batches - self.skip_batches)
-

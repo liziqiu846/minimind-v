@@ -5,8 +5,11 @@ __package__ = "trainer"
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import argparse
+import hashlib
+import json
 import time
 import warnings
+from pathlib import Path
 import datasets
 import torch
 import torch.distributed as dist
@@ -20,6 +23,73 @@ from dataset.lm_dataset import VLMDataset
 from trainer.trainer_utils import get_lr, Logger, is_main_process, init_distributed_mode, setup_seed, init_vlm_model, vlm_checkpoint, SkipBatchSampler, vlm_collate_fn
 
 warnings.filterwarnings('ignore')
+
+
+def sha256_file(path):
+    digest = hashlib.sha256()
+    with Path(path).open('rb') as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b''):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def write_run_manifest(args, config, model, train_examples):
+    if not args.manifest_path or not is_main_process():
+        return
+    raw_model = model.module if isinstance(model, DistributedDataParallel) else model
+    trainable_names = [name for name, param in raw_model.named_parameters() if param.requires_grad]
+    trainable_parameters = sum(
+        param.numel() for param in raw_model.parameters() if param.requires_grad
+    )
+    vision_trainable = [name for name in trainable_names if name.startswith('vision_encoder.')]
+    if vision_trainable:
+        raise AssertionError(f'vision encoder must stay frozen: {vision_trainable[:3]}')
+    if args.expected_trainable_parameters and (
+        trainable_parameters != args.expected_trainable_parameters
+    ):
+        raise AssertionError(
+            f'expected {args.expected_trainable_parameters} trainable parameters, '
+            f'found {trainable_parameters}'
+        )
+
+    data_path = Path(args.data_path).resolve()
+    moe_suffix = '_moe' if config.use_moe else ''
+    initial_path = None if args.from_weight == 'none' else (
+        Path(args.init_weight_dir) / f'{args.from_weight}_{config.hidden_size}{moe_suffix}.pth'
+    ).resolve()
+    payload = {
+        'schema_version': 1,
+        'run_id': args.save_weight,
+        'data': {
+            'path': str(data_path),
+            'sha256': sha256_file(data_path),
+            'examples': train_examples,
+        },
+        'initial_weight': None if initial_path is None else {
+            'path': str(initial_path),
+            'sha256': sha256_file(initial_path),
+        },
+        'model': {
+            'hidden_size': config.hidden_size,
+            'num_hidden_layers': config.num_hidden_layers,
+            'freeze_llm': args.freeze_llm,
+            'vision_encoder_frozen': True,
+            'trainable_parameters': trainable_parameters,
+            'trainable_parameter_names': trainable_names,
+        },
+        'training': {
+            'seed': args.seed, 'epochs': args.epochs, 'batch_size': args.batch_size,
+            'accumulation_steps': args.accumulation_steps,
+            'effective_batch_size': args.batch_size * args.accumulation_steps,
+            'learning_rate': args.learning_rate, 'dtype': args.dtype,
+            'max_seq_len': args.max_seq_len, 'augment': bool(args.augment),
+        },
+    }
+    manifest_path = Path(args.manifest_path)
+    manifest_path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = manifest_path.with_suffix(manifest_path.suffix + '.tmp')
+    temporary.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + '\n')
+    temporary.replace(manifest_path)
 
 
 def train_epoch(epoch, loader, iters, start_step=0, wandb=None):
@@ -73,7 +143,7 @@ def train_epoch(epoch, loader, iters, start_step=0, wandb=None):
             clean_state_dict = {k: v.half().cpu() for k, v in clean_state_dict.items()}  # 半精度保存并移到CPU
             torch.save(clean_state_dict, ckp)
             vlm_checkpoint(vlm_config, weight=args.save_weight, model=model, optimizer=optimizer, 
-                         epoch=epoch, step=step, wandb=wandb, save_dir='../checkpoints', scaler=scaler)
+                         epoch=epoch, step=step, wandb=wandb, save_dir=args.checkpoint_dir, scaler=scaler)
             model.train()
             del state_dict, clean_state_dict
 
@@ -91,6 +161,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="MiniMind-V Pretrain")
     parser.add_argument("--save_dir", type=str, default="../out", help="模型保存目录")
     parser.add_argument('--save_weight', default='pretrain_vlm', type=str, help="保存权重的前缀名")
+    parser.add_argument('--init_weight_dir', default='../out', type=str, help='初始化权重目录')
+    parser.add_argument('--checkpoint_dir', default='../checkpoints', type=str, help='续训状态目录')
+    parser.add_argument('--manifest_path', default='', type=str, help='运行清单输出路径')
+    parser.add_argument('--expected_trainable_parameters', default=0, type=int)
+    parser.add_argument('--seed', default=42, type=int, help="随机种子")
     parser.add_argument("--epochs", type=int, default=2, help="训练轮数")
     parser.add_argument("--batch_size", type=int, default=16, help="batch size")
     parser.add_argument("--learning_rate", type=float, default=4e-4, help="初始学习率")
@@ -109,6 +184,7 @@ if __name__ == "__main__":
     parser.add_argument('--from_weight', default='llm', type=str, help="基于哪个权重训练，为none则不基于任何权重训练")
     parser.add_argument('--from_resume', default=0, type=int, choices=[0, 1], help="是否自动检测&续训（0=否，1=是）")
     parser.add_argument('--freeze_llm', default=2, type=int, choices=[0, 1, 2], help="冻结策略（0=完全可训练，1=冻结+解冻首尾层，2=完全冻结仅训练proj）")
+    parser.add_argument('--augment', default=1, type=int, choices=[0, 1], help="是否启用随机system prompt等文本增广（0=否，1=是）")
     parser.add_argument("--use_compile", default=0, type=int, choices=[0, 1], help="是否使用torch.compile加速（0=否，1=是）")
     parser.add_argument("--use_wandb", action="store_true", help="是否使用wandb")
     parser.add_argument("--wandb_project", type=str, default="MiniMind-V-Pretrain", help="wandb项目名")
@@ -117,12 +193,12 @@ if __name__ == "__main__":
     # ========== 1. 初始化环境和随机种子 ==========
     local_rank = init_distributed_mode()
     if dist.is_initialized(): args.device = f"cuda:{local_rank}"
-    setup_seed(42 + (dist.get_rank() if dist.is_initialized() else 0))
+    setup_seed(args.seed + (dist.get_rank() if dist.is_initialized() else 0))
     
     # ========== 2. 配置目录、模型参数、检查ckp ==========
     os.makedirs(args.save_dir, exist_ok=True)
     vlm_config = VLMConfig(hidden_size=args.hidden_size, num_hidden_layers=args.num_hidden_layers, max_seq_len=args.max_seq_len, use_moe=bool(args.use_moe))
-    ckp_data = vlm_checkpoint(vlm_config, weight=args.save_weight, save_dir='../checkpoints') if args.from_resume==1 else None
+    ckp_data = vlm_checkpoint(vlm_config, weight=args.save_weight, save_dir=args.checkpoint_dir) if args.from_resume==1 else None
     
     # ========== 3. 设置混合精度 ==========
     device_type = "cuda" if "cuda" in args.device else "cpu"
@@ -139,8 +215,8 @@ if __name__ == "__main__":
         wandb.init(project=args.wandb_project, name=wandb_run_name, id=wandb_id, resume=resume)
     
     # ========== 5. 定义模型、数据、优化器 ==========
-    model, tokenizer, preprocess = init_vlm_model(vlm_config, from_weight=args.from_weight, device=args.device, freeze_llm=args.freeze_llm)
-    train_ds = VLMDataset(args.data_path, tokenizer, preprocess=preprocess, image_special_token=vlm_config.image_special_token, image_token_len=vlm_config.image_token_len, max_length=vlm_config.max_seq_len)
+    model, tokenizer, preprocess = init_vlm_model(vlm_config, from_weight=args.from_weight, save_dir=args.init_weight_dir, device=args.device, freeze_llm=args.freeze_llm)
+    train_ds = VLMDataset(args.data_path, tokenizer, preprocess=preprocess, image_special_token=vlm_config.image_special_token, image_token_len=vlm_config.image_token_len, max_length=vlm_config.max_seq_len, augment=bool(args.augment))
     train_sampler = DistributedSampler(train_ds) if dist.is_initialized() else None
     scaler = torch.cuda.amp.GradScaler(enabled=(args.dtype == 'float16'))
     optimizer = optim.AdamW(filter(lambda p: p.requires_grad, model.parameters()), lr=args.learning_rate)
@@ -153,6 +229,7 @@ if __name__ == "__main__":
         scaler.load_state_dict(ckp_data['scaler'])
         start_epoch = ckp_data['epoch']
         start_step = ckp_data.get('step', 0)
+    write_run_manifest(args, vlm_config, model, len(train_ds))
     
     # ========== 7. 编译和分布式包装 ==========
     if args.use_compile == 1:
@@ -165,7 +242,7 @@ if __name__ == "__main__":
     # ========== 8. 开始训练 ==========
     for epoch in range(start_epoch, args.epochs):
         train_sampler and train_sampler.set_epoch(epoch)
-        setup_seed(42 + epoch); indices = torch.randperm(len(train_ds)).tolist()
+        setup_seed(args.seed + epoch); indices = torch.randperm(len(train_ds)).tolist()
         skip = start_step if (epoch == start_epoch and start_step > 0) else 0
         batch_sampler = SkipBatchSampler(train_sampler or indices, args.batch_size, skip)
         loader = DataLoader(train_ds, batch_sampler=batch_sampler, num_workers=args.num_workers, pin_memory=True, collate_fn=vlm_collate_fn)

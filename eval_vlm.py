@@ -19,7 +19,7 @@ def init_model(args):
             VLMConfig(hidden_size=args.hidden_size, num_hidden_layers=args.num_hidden_layers, use_moe=bool(args.use_moe)),
             vision_model_path="./model/siglip2-base-p32-256-ve"
         )
-        state_dict = torch.load(ckp, map_location=args.device)
+        state_dict = torch.load(ckp, map_location=args.device, weights_only=True)
         model.load_state_dict({k: v for k, v in state_dict.items() if 'mask' not in k}, strict=False)
     else:
         model = AutoModelForCausalLM.from_pretrained(args.load_from, trust_remote_code=True)

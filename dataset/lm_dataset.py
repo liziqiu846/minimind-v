@@ -46,12 +46,13 @@ def post_processing_chat(prompt_content, empty_think_ratio=0.2):
 
 
 class VLMDataset(Dataset):
-    def __init__(self, parquet_path, tokenizer, preprocess=None, max_length=512, image_special_token='<|image_pad|>', image_token_len=64):
+    def __init__(self, parquet_path, tokenizer, preprocess=None, max_length=512, image_special_token='<|image_pad|>', image_token_len=64, augment=True):
         super().__init__()
         self.dataset = HFDataset.from_parquet(parquet_path)
         self.tokenizer = tokenizer
         self.max_length = max_length
         self.preprocess = preprocess
+        self.augment = augment
         self.image_special_token = image_special_token * image_token_len
         self.bos_id = tokenizer(f'{tokenizer.bos_token}assistant\n', add_special_tokens=False).input_ids
         self.eos_id = tokenizer(f'{tokenizer.eos_token}\n', add_special_tokens=False).input_ids
@@ -96,9 +97,11 @@ class VLMDataset(Dataset):
         image_bytes = row['image_bytes']
         if not isinstance(image_bytes, list): image_bytes = [image_bytes]
         
-        conversations = pre_processing_chat(conversations)
+        if self.augment:
+            conversations = pre_processing_chat(conversations)
         prompt = self.create_chat_prompt(conversations)
-        prompt = post_processing_chat(prompt)
+        if self.augment:
+            prompt = post_processing_chat(prompt)
         input_ids = self.tokenizer(prompt).input_ids[:self.max_length]
         input_ids += [self.tokenizer.pad_token_id] * (self.max_length - len(input_ids))
         labels = self.generate_labels(input_ids)
