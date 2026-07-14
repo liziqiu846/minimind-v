@@ -1,0 +1,67 @@
+{
+  "run_id": "phase2_subspace4096_q3_seed42",
+  "model_kind": "decoded_quantized",
+  "checkpoint": "/home/lizhaohui/lzq/minimind-v/experiments/runs/phase2/run/compression/decoded.pth",
+  "checkpoint_sha256": "249f4c3008563d6bb69695d436333661eba2913e611d363f37d6474a021ca98b",
+  "checkpoint_state_sha256": "3e98f4de0da9edc003bd560c20e4e1988d0c812945d3b165dc9fcecddb0d93fc",
+  "data_path": "/home/lizhaohui/lzq/minimind-v/experiments/runs/phase2/dataset/train.parquet",
+  "data_sha256": "cae2fde24cb5711e32c7c7b86ea019ba88102664f9b72e1107ba4af6e23b1fc3",
+  "image_condition": "correct",
+  "evaluation": {
+    "batch_size": 8,
+    "num_workers": 2,
+    "max_samples": 0,
+    "device": "cuda:2",
+    "dtype": "bfloat16"
+  },
+  "runtime": {
+    "python": "3.10.18",
+    "torch": "2.6.0+cu124",
+    "cuda_runtime": "12.4",
+    "device_name": "NVIDIA A40"
+  },
+  "model_assets": {
+    "tokenizer": {
+      "path": "/home/lizhaohui/lzq/minimind-v/model",
+      "files": {
+        "tokenizer.json": "71f32c68cf63a15355a8fc171b7594b3d41870fe0ddb54fc6aefa55f73a4a668",
+        "tokenizer_config.json": "d7cd6a60c9f191c4f9ffec69b2eb289ad2f960366724f328b681ae1e46e4c110"
+      }
+    },
+    "vision_model": {
+      "path": "/home/lizhaohui/lzq/minimind-v/model/siglip2-base-p32-256-ve",
+      "files": {
+        "config.json": "5ad8dda7d55541c7749f9b1cc43fe8eb8c70d8664588d89f710242ce06b3167e",
+        "model.safetensors": "c1e9cc19ed6704b87353ee00b9ff5d6191886d741898339984364f789c62810d",
+        "preprocessor_config.json": "d14ba2ee3fd816f3de8abaddc31953565128eaf37c73ad4bed32101a98465aff"
+      }
+    }
+  },
+  "alpha_grid": [
+    0.5
+  ],
+  "alpha_choice_bits": 0,
+  "sample_count": 10000,
+  "target_token_count": 2595671,
+  "mean_target_tokens_per_sample": 259.5671,
+  "vocab_size": 6400,
+  "aggregation": "mean_tokens_within_sample_then_mean_samples",
+  "risks": [
+    {
+      "alpha": 0.5,
+      "mean_sample_risk_bits": 4.878544538187981
+    }
+  ],
+  "protocol": {
+    "protocol_id": "minimind-v-phase2-certificate-v1",
+    "protocol_sha256": "8b67d8fc86b31eb402ecb8b19daea85e85f6113672063879ef9608656de92434"
+  },
+  "dataset_split": {
+    "role": "train",
+    "manifest_path": "/home/lizhaohui/lzq/minimind-v/experiments/runs/phase2/dataset/split_manifest.json",
+    "manifest_sha256": "9c81b64957c90b7a59c6f0bba125b71bce7d1c87b3187b831ad68e4bfe560107",
+    "artifact_sha256": "cae2fde24cb5711e32c7c7b86ea019ba88102664f9b72e1107ba4af6e23b1fc3",
+    "membership_sha256": "a7a1ccdd5e7c061863d90c50d4e32db7ce49adeb7d084d3f96e201a949502479",
+    "examples": 10000
+  }
+}

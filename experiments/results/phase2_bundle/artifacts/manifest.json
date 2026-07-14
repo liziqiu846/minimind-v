@@ -1,0 +1,68 @@
+{
+  "schema_version": 2,
+  "run_id": "phase2_subspace4096_q3_seed42",
+  "data": {
+    "path": "/home/lizhaohui/lzq/minimind-v/experiments/runs/phase2/dataset/train.parquet",
+    "sha256": "cae2fde24cb5711e32c7c7b86ea019ba88102664f9b72e1107ba4af6e23b1fc3",
+    "examples": 10000
+  },
+  "initial_weight": {
+    "name": "llm",
+    "path": "/home/lizhaohui/lzq/minimind-v/out/llm_768.pth",
+    "sha256": "5b8c49f6c9d965092e651cafeeaeb8705558632b3fd4ac8ab319cbc5a3cbc4a0"
+  },
+  "model": {
+    "hidden_size": 768,
+    "num_hidden_layers": 8,
+    "use_moe": false,
+    "freeze_llm": 2,
+    "vision_encoder_frozen": true,
+    "trainable_parameters": 4096,
+    "trainable_parameter_names": [
+      "vision_proj.input_projection.coordinates",
+      "vision_proj.output_projection.coordinates"
+    ],
+    "projector": {
+      "type": "subspace",
+      "subspace_dim": 4096,
+      "subspace_seed": 42,
+      "train_norm": false,
+      "protocol": "signed_hash_orthonormal_v1",
+      "fixed_state_sha256": "4783acbaa4dda0087674147e972df5af33e6bf3fb08fbf30041f8fd3dc96a575",
+      "torch_version": "2.6.0+cu124"
+    }
+  },
+  "training": {
+    "seed": 42,
+    "epochs": 3,
+    "batch_size": 4,
+    "accumulation_steps": 4,
+    "effective_batch_size": 16,
+    "learning_rate": 0.015,
+    "dtype": "bfloat16",
+    "max_seq_len": 450,
+    "augment": false,
+    "grad_clip": 1.0,
+    "resume": false,
+    "compile": false,
+    "world_size": 1,
+    "num_workers": 2
+  },
+  "runtime": {
+    "python": "3.10.18",
+    "torch": "2.6.0+cu124",
+    "cuda_runtime": "12.4",
+    "device": "cuda:2",
+    "device_name": "NVIDIA A40"
+  },
+  "protocol_id": "minimind-v-phase2-certificate-v1",
+  "protocol_sha256": "8b67d8fc86b31eb402ecb8b19daea85e85f6113672063879ef9608656de92434",
+  "dataset_split": {
+    "role": "train",
+    "manifest_path": "/home/lizhaohui/lzq/minimind-v/experiments/runs/phase2/dataset/split_manifest.json",
+    "manifest_sha256": "9c81b64957c90b7a59c6f0bba125b71bce7d1c87b3187b831ad68e4bfe560107",
+    "artifact_sha256": "cae2fde24cb5711e32c7c7b86ea019ba88102664f9b72e1107ba4af6e23b1fc3",
+    "membership_sha256": "a7a1ccdd5e7c061863d90c50d4e32db7ce49adeb7d084d3f96e201a949502479",
+    "examples": 10000
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "mapping": "explicit_list_index_v1",
+  "decoders": [
+    {
+      "id": "subspace4096_q3_zlib_v1",
+      "choice": {
+        "family": "fixed_subspace",
+        "subspace_dim": 4096,
+        "train_norm": false,
+        "quantization_bits": 3,
+        "codec": "zlib"
+      }
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "schema_version": 2,
+  "protocol_id": "minimind-v-phase2-certificate-v1",
+  "protocol_sha256": "8b67d8fc86b31eb402ecb8b19daea85e85f6113672063879ef9608656de92434",
+  "source": "/home/lizhaohui/lzq/minimind-v/dataset/pretrain_i2t.parquet",
+  "source_bytes": 4326415097,
+  "source_sha256": "65761f37d1947d54a1d85457ff70938275e4ef58ba5cedcd02463a3a247c93fd",
+  "source_rows": 1274698,
+  "source_unique_images": 623741,
+  "excluded_unique_images": 17619,
+  "all_phase1_selection_images_excluded": true,
+  "exclusions": [
+    {
+      "path": "/home/lizhaohui/lzq/minimind-v/dataset/caption_10k_seed42/train.parquet",
+      "sha256": "5c4f38a4089a275f3169929986fd1340f2bb69d1bfba2d3dbc90ef4c156b9e93",
+      "image_count": 4742
+    },
+    {
+      "path": "/home/lizhaohui/lzq/minimind-v/dataset/caption_10k_seed42/validation.parquet",
+      "sha256": "5b4899252be6def7b781d0e929770f6bd7dd24a47248468b6a7dcb4c0ca21fe1",
+      "image_count": 983
+    },
+    {
+      "path": "/home/lizhaohui/lzq/minimind-v/dataset/bound_caption_10k_seed42/train.parquet",
+      "sha256": "940757a4dabad9ea5d65cdb97b12f76c8991142338e8cf42e13b6f79d9fd71ab",
+      "image_count": 10000
+    },
+    {
+      "path": "/home/lizhaohui/lzq/minimind-v/dataset/bound_caption_10k_seed42/validation.parquet",
+      "sha256": "856b2184b852ca57eb41f9aa6cb810df834583f1acb051b45ddd2ec0635576c6",
+      "image_count": 2000
+    }
+  ],
+  "outputs": {
+    "train": {
+      "path": "train.parquet",
+      "bytes": 67565241,
+      "sha256": "cae2fde24cb5711e32c7c7b86ea019ba88102664f9b72e1107ba4af6e23b1fc3",
+      "rows": 10000,
+      "membership": {
+        "path": "train_membership.jsonl.gz",
+        "bytes": 431491,
+        "sha256": "a7a1ccdd5e7c061863d90c50d4e32db7ce49adeb7d084d3f96e201a949502479"
+      }
+    },
+    "validation": {
+      "path": "validation.parquet",
+      "bytes": 13604790,
+      "sha256": "ab0d2cd3a836943ca218dae0c9b9e3c9ac05dcec86db13cc30d74067d90b2df8",
+      "rows": 2000,
+      "membership": {
+        "path": "validation_membership.jsonl.gz",
+        "bytes": 87333,
+        "sha256": "08a7518c74b6cb54692e9afb6ea4c9f2979f2c40b4f01737559b468f18f85786"
+      }
+    }
+  },
+  "image_overlap": 0,
+  "seed": 314159,
+  "image_identity": "sha256(image_bytes)",
+  "representative": "minimum_sha256(conversations)",
+  "selection": "bound_split_seeded_sha256_rank_v2"
+}

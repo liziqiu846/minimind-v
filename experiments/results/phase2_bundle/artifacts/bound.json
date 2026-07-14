@@ -1,0 +1,78 @@
+{
+  "schema_version": 2,
+  "run_id": "phase2_subspace4096_q3_seed42",
+  "certificate_uses_training_risk_only": true,
+  "confidence_delta": 0.05,
+  "independent_train_samples": 10000,
+  "encoded_weight_bits": 9144,
+  "alpha_choice_bits": 0,
+  "model_selection_bits": 0,
+  "total_hyperparameter_bits": 0,
+  "description_complexity_nats": 6356.37952545109,
+  "archive_sha256": "299fbf3a407aeca9c800f4135b5c3c79dadbd8abbc39d4fbb2379475d6ea54ab",
+  "decoded_checkpoint_sha256": "249f4c3008563d6bb69695d436333661eba2913e611d363f37d6474a021ca98b",
+  "decoded_state_sha256": "3e98f4de0da9edc003bd560c20e4e1988d0c812945d3b165dc9fcecddb0d93fc",
+  "training_data_sha256": "cae2fde24cb5711e32c7c7b86ea019ba88102664f9b72e1107ba4af6e23b1fc3",
+  "validation_data_sha256": "ab0d2cd3a836943ca218dae0c9b9e3c9ac05dcec86db13cc30d74067d90b2df8",
+  "model_assets": {
+    "tokenizer": {
+      "path": "/home/lizhaohui/lzq/minimind-v/model",
+      "files": {
+        "tokenizer.json": "71f32c68cf63a15355a8fc171b7594b3d41870fe0ddb54fc6aefa55f73a4a668",
+        "tokenizer_config.json": "d7cd6a60c9f191c4f9ffec69b2eb289ad2f960366724f328b681ae1e46e4c110"
+      }
+    },
+    "vision_model": {
+      "path": "/home/lizhaohui/lzq/minimind-v/model/siglip2-base-p32-256-ve",
+      "files": {
+        "config.json": "5ad8dda7d55541c7749f9b1cc43fe8eb8c70d8664588d89f710242ce06b3167e",
+        "model.safetensors": "c1e9cc19ed6704b87353ee00b9ff5d6191886d741898339984364f789c62810d",
+        "preprocessor_config.json": "d14ba2ee3fd816f3de8abaddc31953565128eaf37c73ad4bed32101a98465aff"
+      }
+    }
+  },
+  "best_alpha": 0.5,
+  "best_compression_upper_bound_bits": 12.008380176152965,
+  "best_beats_random_guess": true,
+  "bounds": [
+    {
+      "empirical_risk_bits": 4.878544538187981,
+      "loss_interval": {
+        "vocab_size": 6400,
+        "alpha": 0.5,
+        "random_guess_bits": 12.643856189774725,
+        "lower_bits": 0.9997745965090505,
+        "upper_bits": 13.643856189774725,
+        "width_bits": 12.644081593265675
+      },
+      "complexity_nats": 6356.37952545109,
+      "generalization_penalty_bits": 7.129835637964984,
+      "compression_upper_bound_bits": 12.008380176152965,
+      "theoretical_max_bits": 13.643856189774725,
+      "clipped_certified_upper_bits": 12.008380176152965,
+      "random_guess_bits": 12.643856189774725,
+      "random_guess_margin_bits": 0.6354760136217603,
+      "exceeds_theoretical_max": false,
+      "beats_random_guess": true,
+      "alpha": 0.5,
+      "validation_risk_bits": 4.8769434401988985,
+      "observed_generalization_gap_bits": -0.0016010979890825894
+    }
+  ],
+  "run_manifest": "/home/lizhaohui/lzq/minimind-v/experiments/runs/phase2/run/manifest.json",
+  "run_manifest_sha256": "316ab4403eaf9a5febc15d3c6f9c4ab960c8a4ffc0efc509ccaa99281b5aaca9",
+  "decoder_registry": "/home/lizhaohui/lzq/minimind-v/experiments/phase2_decoder_registry.json",
+  "decoder_registry_sha256": "ced115ee0e05699f3da44e88cee883f840a9aad1afc5112d48a21b5099343eee",
+  "decoder_choice_count": 1,
+  "decoder_choice": {
+    "family": "fixed_subspace",
+    "subspace_dim": 4096,
+    "train_norm": false,
+    "quantization_bits": 3,
+    "codec": "zlib"
+  },
+  "protocol": {
+    "protocol_id": "minimind-v-phase2-certificate-v1",
+    "protocol_sha256": "8b67d8fc86b31eb402ecb8b19daea85e85f6113672063879ef9608656de92434"
+  }
+}

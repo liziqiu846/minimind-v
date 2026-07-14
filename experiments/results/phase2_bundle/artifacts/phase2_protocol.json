@@ -1,0 +1,323 @@
+{
+  "schema_version": 1,
+  "status": "frozen",
+  "protocol_id": "minimind-v-phase2-certificate-v1",
+  "run_id": "phase2_subspace4096_q3_seed42",
+  "design": "confirmatory_after_phase1_selection",
+  "frozen_at_utc": "2026-07-14T02:41:04Z",
+  "freeze_evidence": {
+    "repository": "https://github.com/liziqiu846/minimind-v",
+    "implementation_commit": "6a68caf49e189dd7e63c409ed4afed9ab019dd67",
+    "protocol_tag": "phase2-protocol-v1",
+    "required_order": [
+      "implementation_commit",
+      "protocol_commit_and_tag",
+      "phase2_split_generation",
+      "training_and_evaluation"
+    ]
+  },
+  "implementation_files": [
+    {
+      "path": "requirements.txt",
+      "sha256": "e8378954453978fdadc9570d6cb1db6ac73adcf966bb52a6e52b7dd8d8883b59"
+    },
+    {
+      "path": "experiments/phase2_environment.json",
+      "sha256": "28d456e6f8ade56e5d9b4a132959bcfa3c48bf7a20fe852c0fb08f45ff832584"
+    },
+    {
+      "path": "experiments/phase2_decoder_registry.json",
+      "sha256": "ced115ee0e05699f3da44e88cee883f840a9aad1afc5112d48a21b5099343eee"
+    },
+    {
+      "path": "experiments/build_bound_dataset.py",
+      "sha256": "489a74189fafefdfd537402aa0d64c448cd52a59cccd37b340e868c54bba8c6a"
+    },
+    {
+      "path": "experiments/phase2_protocol.py",
+      "sha256": "aea5f299ce2386c3dc5a5fb1ef79400304ff82678a3718f7c33acc351a2148b3"
+    },
+    {
+      "path": "experiments/run_phase2_certificate.py",
+      "sha256": "abe7e3d18780b6aed13e4b5b2c48459dd0ca7fcaea9e1fb1af4ee83bda7a30f8"
+    },
+    {
+      "path": "experiments/build_public_bundle.py",
+      "sha256": "b5df14ec85b042cdd6608329051c6337047b739ba9cec37ac0649ad80655dc4d"
+    },
+    {
+      "path": "experiments/verify_public_bundle.py",
+      "sha256": "4ec160ebbcb7e0c063e9870f151a6fb5cb6df03868323a7790ecc51cb192f3c6"
+    },
+    {
+      "path": "experiments/evaluate_smoothed_risk.py",
+      "sha256": "625f59f04151182e39e1ef11eb4cd44bbff32e0a849882eacc8486d6229de438"
+    },
+    {
+      "path": "experiments/quantize_subspace.py",
+      "sha256": "90a0d924bf3462ef841ab82bc3ccfcc86ec797d22e24f792270aefc3ffbbeb76"
+    },
+    {
+      "path": "experiments/quantize_checkpoint.py",
+      "sha256": "39149c9ee074040ac9615179861b00b59102a62cd50acfd53f045801a11b84d1"
+    },
+    {
+      "path": "experiments/compute_bound_report.py",
+      "sha256": "e24d4267d3bdd227c8ae4549f8dc8e87a025c381999f484659f0ca3c09867394"
+    },
+    {
+      "path": "experiments/generalization_bound.py",
+      "sha256": "69e3d42eae7d588a71692937a64948f808831fc522c694c2a454cd835760b211"
+    },
+    {
+      "path": "trainer/train_pretrain_vlm.py",
+      "sha256": "d25a8fe38b53b9c5f6a491bbab8c78fc8a343a74598ee5f8e0a35a8d6b11599d"
+    },
+    {
+      "path": "trainer/trainer_utils.py",
+      "sha256": "1d4b1544b0986edeaa71721a53978b73df1edf5910322c72aecebac031e0146f"
+    },
+    {
+      "path": "dataset/lm_dataset.py",
+      "sha256": "fc443c1828a73b6cde1b476a773d5226697fce0184819f0331dee8d1fff4414d"
+    },
+    {
+      "path": "model/model_vlm.py",
+      "sha256": "80addaafb3e0b9bc9f083542ae2a40e5dd4ea0c9486117d664a694f36146aac0"
+    },
+    {
+      "path": "model/model_minimind.py",
+      "sha256": "47f124f5f386a8cd76b488b36ecc3e00fc43e3894cdb3ba602420188d9ba8860"
+    },
+    {
+      "path": "model/subspace_projector.py",
+      "sha256": "361fad96e214cec6448c27116b62947243c6b41765a78d16525e45d5e0cdc36b"
+    }
+  ],
+  "environment_path": "experiments/phase2_environment.json",
+  "environment_sha256": "28d456e6f8ade56e5d9b4a132959bcfa3c48bf7a20fe852c0fb08f45ff832584",
+  "decoder_registry": {
+    "path": "experiments/phase2_decoder_registry.json",
+    "sha256": "ced115ee0e05699f3da44e88cee883f840a9aad1afc5112d48a21b5099343eee",
+    "mapping": "explicit_list_index_v1",
+    "index": 0,
+    "choice_count": 1
+  },
+  "dataset": {
+    "source_path": "dataset/pretrain_i2t.parquet",
+    "source_sha256": "65761f37d1947d54a1d85457ff70938275e4ef58ba5cedcd02463a3a247c93fd",
+    "source_bytes": 4326415097,
+    "source_rows": 1274698,
+    "source_id": "minimind-v-pretrain_i2t-local-artifact",
+    "sampling_unit": "one_exact-image representative caption",
+    "image_identity": "sha256(image_bytes)",
+    "representative": "minimum_sha256_utf8_conversations_then_source_row",
+    "selection": "bound_split_seeded_sha256_rank_v2",
+    "split_order": [
+      "validation",
+      "train"
+    ],
+    "seed": 314159,
+    "train_size": 10000,
+    "validation_size": 2000,
+    "exclude_paths": [
+      "dataset/caption_10k_seed42/train.parquet",
+      "dataset/caption_10k_seed42/validation.parquet",
+      "dataset/bound_caption_10k_seed42/train.parquet",
+      "dataset/bound_caption_10k_seed42/validation.parquet"
+    ],
+    "exclude_sha256": [
+      "5c4f38a4089a275f3169929986fd1340f2bb69d1bfba2d3dbc90ef4c156b9e93",
+      "5b4899252be6def7b781d0e929770f6bd7dd24a47248468b6a7dcb4c0ca21fe1",
+      "940757a4dabad9ea5d65cdb97b12f76c8991142338e8cf42e13b6f79d9fd71ab",
+      "856b2184b852ca57eb41f9aa6cb810df834583f1acb051b45ddd2ec0635576c6"
+    ],
+    "excluded_unique_images": 17619,
+    "all_phase1_selection_images_excluded": true,
+    "target_population": "eligible exact-image representatives in the same immutable source after excluding all quantitative Phase 1 development images"
+  },
+  "development_data": {
+    "exhaustive_for_quantitative_phase1_training_evaluation_and_recipe_selection": true,
+    "files": [
+      {
+        "path": "dataset/caption_10k_seed42/train.parquet",
+        "sha256": "5c4f38a4089a275f3169929986fd1340f2bb69d1bfba2d3dbc90ef4c156b9e93",
+        "use": "Phase 1 freeze-strategy training"
+      },
+      {
+        "path": "dataset/caption_10k_seed42/validation.parquet",
+        "sha256": "5b4899252be6def7b781d0e929770f6bd7dd24a47248468b6a7dcb4c0ca21fe1",
+        "use": "Phase 1 freeze-strategy evaluation"
+      },
+      {
+        "path": "dataset/bound_caption_10k_seed42/train.parquet",
+        "sha256": "940757a4dabad9ea5d65cdb97b12f76c8991142338e8cf42e13b6f79d9fd71ab",
+        "use": "Phase 1 subspace training and compression-bound selection"
+      },
+      {
+        "path": "dataset/bound_caption_10k_seed42/validation.parquet",
+        "sha256": "856b2184b852ca57eb41f9aa6cb810df834583f1acb051b45ddd2ec0635576c6",
+        "use": "Phase 1 subspace and visual-condition evaluation"
+      }
+    ],
+    "exact_image_union": 17619,
+    "selection_evidence": [
+      {
+        "path": "experiments/results/freeze_comparison_seed42_q4.json",
+        "sha256": "54b124df0a9bc6a02cd5555de83305db5e3ee1ca2063db14e206a0746d9aa402"
+      },
+      {
+        "path": "experiments/runs/subspace_comparison/f_subspace4096_lr15e3_seed42/manifest.json",
+        "sha256": "15bbb35f4fde6232a339249e6164487a99ccae59f1d1fcd682f21d5dd21cf171"
+      },
+      {
+        "path": "experiments/runs/subspace_comparison/f_subspace4096_lr15e3_seed42/compression/q3_entropy.json",
+        "sha256": "1d0f91faa74a2a3026393bddc7524b2f14147a5830f9e424cedeb9e56a680e92"
+      },
+      {
+        "path": "experiments/runs/subspace_comparison/f_subspace4096_lr15e3_seed42/bound_q3_entropy.json",
+        "sha256": "dc12589b617bcb085b5a589055249da323c2a377c993248ba57bef53bc3dd62b"
+      },
+      {
+        "path": "experiments/phase1_decoder_registry.json",
+        "sha256": "22b0ff040f0fc2d773c42f4ac4d00bab13a2fa6c4097bc5a27c856a1b12c8f94"
+      }
+    ]
+  },
+  "assets": [
+    {
+      "role": "initial_llm",
+      "path": "out/llm_768.pth",
+      "sha256": "5b8c49f6c9d965092e651cafeeaeb8705558632b3fd4ac8ab319cbc5a3cbc4a0"
+    },
+    {
+      "role": "tokenizer_json",
+      "path": "model/tokenizer.json",
+      "sha256": "71f32c68cf63a15355a8fc171b7594b3d41870fe0ddb54fc6aefa55f73a4a668"
+    },
+    {
+      "role": "tokenizer_config",
+      "path": "model/tokenizer_config.json",
+      "sha256": "d7cd6a60c9f191c4f9ffec69b2eb289ad2f960366724f328b681ae1e46e4c110"
+    },
+    {
+      "role": "vision_config",
+      "path": "model/siglip2-base-p32-256-ve/config.json",
+      "sha256": "5ad8dda7d55541c7749f9b1cc43fe8eb8c70d8664588d89f710242ce06b3167e"
+    },
+    {
+      "role": "vision_weights",
+      "path": "model/siglip2-base-p32-256-ve/model.safetensors",
+      "sha256": "c1e9cc19ed6704b87353ee00b9ff5d6191886d741898339984364f789c62810d"
+    },
+    {
+      "role": "vision_processor",
+      "path": "model/siglip2-base-p32-256-ve/preprocessor_config.json",
+      "sha256": "d14ba2ee3fd816f3de8abaddc31953565128eaf37c73ad4bed32101a98465aff"
+    }
+  ],
+  "model": {
+    "hidden_size": 768,
+    "num_hidden_layers": 8,
+    "use_moe": false,
+    "freeze_llm": 2,
+    "initial_weight_name": "llm",
+    "projector_type": "subspace",
+    "projector_protocol": "signed_hash_orthonormal_v1",
+    "subspace_dim": 4096,
+    "subspace_seed": 42,
+    "train_norm": false,
+    "fixed_state_sha256": "4783acbaa4dda0087674147e972df5af33e6bf3fb08fbf30041f8fd3dc96a575"
+  },
+  "training": {
+    "seed": 42,
+    "epochs": 3,
+    "batch_size": 4,
+    "accumulation_steps": 4,
+    "learning_rate": 0.015,
+    "dtype": "bfloat16",
+    "max_seq_len": 450,
+    "num_workers": 2,
+    "augment": false,
+    "grad_clip": 1.0,
+    "resume": false,
+    "compile": false,
+    "world_size": 1
+  },
+  "compression": {
+    "algorithm": "compact_fixed_subspace_symmetric_uniform_zlib",
+    "quantization_bits": 3,
+    "codec": "zlib",
+    "encoded_length": "entire_mms_file_in_bits_including_scales_and_zlib_container"
+  },
+  "certificate": {
+    "bound": "finite_hypothesis_compression_v1",
+    "theorem_source": "arXiv:2312.17173v3 Equation 5 and prediction-smoothing appendix",
+    "uses_full_training_risk": true,
+    "subsampling": false,
+    "aggregation": "mean_target_tokens_within_sample_then_mean_independent_samples",
+    "alpha": 0.5,
+    "alpha_selection_bits": 0,
+    "decoder_selection_bits": 0,
+    "confidence_delta": 0.05,
+    "description_complexity": "C_ln_2_plus_2_ln_C",
+    "predictor": "alpha_smoothed_quantized_vlm",
+    "comparison_baseline": "uniform_random_guess_log2_vocab"
+  },
+  "evaluation": {
+    "certificate_image_condition": "correct",
+    "batch_size": 8,
+    "num_workers": 2,
+    "max_samples": 0,
+    "dtype": "bfloat16"
+  },
+  "diagnostics": {
+    "diagnostic_only": true,
+    "alpha_grid": [
+      0.0001,
+      0.001,
+      0.005,
+      0.01,
+      0.05,
+      0.1,
+      0.25,
+      0.5
+    ],
+    "image_conditions": [
+      "correct",
+      "paired_shuffled",
+      "none"
+    ],
+    "paired_shuffle_protocol": "sha256_rank_pair_swap_v1",
+    "paired_shuffle_seed": 20260714,
+    "pair_effect": "mean_of_two_directional_mismatch_minus_correct_differences",
+    "confidence_level": 0.95,
+    "confidence_interval": "pointwise_normal_approximation_over_disjoint_pair_effects",
+    "simultaneous_coverage": false,
+    "causal_interpretation": false
+  },
+  "claims_and_assumptions": {
+    "iid_unit": "one exact-image representative caption",
+    "iid_status": "assumed_for_the_bound_not_proven_by_hash_uniqueness",
+    "same_source_confirmatory_split": true,
+    "independent_external_dataset": false,
+    "phase1_exclusion_scope": "exact image bytes only",
+    "near_duplicate_exclusion": false,
+    "finite_population_without_replacement_correction": false,
+    "certificate_scope": "the fixed alpha-smoothed quantized predictor, not the raw unsmoothed model",
+    "diagnostic_scope": "average effect of this predeclared random image mismatch, not a causal or universal visual-grounding claim"
+  },
+  "prior_side_information": {
+    "fixed_before_phase2_split": true,
+    "includes": [
+      "implementation files",
+      "decoder registry and primary decoder",
+      "initial LLM",
+      "vision encoder and processor",
+      "tokenizer",
+      "model architecture and subspace construction",
+      "training recipe",
+      "certificate alpha and confidence delta"
+    ]
+  }
+}
