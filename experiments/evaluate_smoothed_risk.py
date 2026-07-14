@@ -18,6 +18,7 @@ sys.path.insert(0, str(REPO_ROOT))
 
 from dataset.lm_dataset import VLMDataset
 from model.model_vlm import VLMConfig
+from model.subspace_projector import fixed_state_sha256
 from trainer.trainer_utils import init_vlm_model, vlm_collate_fn
 
 
@@ -30,6 +31,48 @@ def sha256_file(path: Path) -> str:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def model_asset_fingerprints(tokenizer_path: Path, vision_model_path: Path) -> dict:
+    """Identify the fixed tokenizer, processor, and vision encoder used for risk."""
+    tokenizer_path = tokenizer_path.resolve()
+    vision_model_path = vision_model_path.resolve()
+    return {
+        "tokenizer": {
+            "path": str(tokenizer_path),
+            "files": {
+                name: sha256_file(tokenizer_path / name)
+                for name in ("tokenizer.json", "tokenizer_config.json")
+            },
+        },
+        "vision_model": {
+            "path": str(vision_model_path),
+            "files": {
+                name: sha256_file(vision_model_path / name)
+                for name in (
+                    "config.json",
+                    "model.safetensors",
+                    "preprocessor_config.json",
+                )
+            },
+        },
+    }
+
+
+def apply_image_condition(pixel_values, condition: str):
+    """Keep, mismatch, or remove the images for a diagnostic control."""
+    if condition == "correct":
+        return pixel_values
+    if condition == "none":
+        return None
+
+    sample = next(iter(pixel_values.values())) if isinstance(pixel_values, dict) else pixel_values
+    if sample.shape[0] < 2:
+        raise ValueError("shuffled evaluation needs batches of at least two samples")
+    order = torch.roll(torch.arange(sample.shape[0]), shifts=1)
+    if isinstance(pixel_values, dict):
+        return {key: value[order] for key, value in pixel_values.items()}
+    return pixel_values[order]
 
 
 def parse_args() -> argparse.Namespace:
@@ -47,6 +90,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--batch-size", type=int, default=4)
     parser.add_argument("--num-workers", type=int, default=2)
     parser.add_argument("--max-samples", type=int, default=0)
+    parser.add_argument(
+        "--image-condition",
+        choices=("correct", "shuffled", "none"),
+        default="correct",
+    )
     parser.add_argument("--device", default="cuda:0")
     parser.add_argument(
         "--dtype", choices=("bfloat16", "float16", "float32"), default="bfloat16"
@@ -74,10 +122,15 @@ def resolve_run(args: argparse.Namespace) -> tuple[dict, Path]:
 
 
 def load_model(args: argparse.Namespace, manifest: dict, checkpoint: Path):
+    projector = manifest["model"].get("projector", {"type": "standard"})
     config = VLMConfig(
         hidden_size=manifest["model"]["hidden_size"],
         num_hidden_layers=manifest["model"]["num_hidden_layers"],
         max_seq_len=manifest["training"]["max_seq_len"],
+        projector_type=projector["type"],
+        subspace_dim=projector.get("subspace_dim", 1024),
+        subspace_seed=projector.get("subspace_seed", 42),
+        subspace_train_norm=projector.get("train_norm", False),
     )
     model, tokenizer, processor = init_vlm_model(
         config,
@@ -87,6 +140,10 @@ def load_model(args: argparse.Namespace, manifest: dict, checkpoint: Path):
         device=args.device,
         freeze_llm=2,
     )
+    if projector["type"] == "subspace":
+        actual_hash = fixed_state_sha256(model.vision_proj)
+        if actual_hash != projector["fixed_state_sha256"]:
+            raise ValueError("subspace projector does not match the recorded fixed state")
     state_dict = torch.load(checkpoint, map_location="cpu", weights_only=True)
     incompatible = model.load_state_dict(state_dict, strict=False)
     bad_missing = [
@@ -158,11 +215,13 @@ def evaluate(model, loader, args):
     for input_ids, labels, pixels in tqdm(loader, desc="Evaluating"):
         input_ids = input_ids.to(args.device)
         labels = labels.to(args.device)
-        pixels = (
-            {key: value.to(args.device) for key, value in pixels.items()}
-            if isinstance(pixels, dict)
-            else pixels.to(args.device)
-        )
+        pixels = apply_image_condition(pixels, args.image_condition)
+        if pixels is not None:
+            pixels = (
+                {key: value.to(args.device) for key, value in pixels.items()}
+                if isinstance(pixels, dict)
+                else pixels.to(args.device)
+            )
         with torch.autocast("cuda", dtype=amp_dtype, enabled=use_amp):
             logits = model(input_ids=input_ids, pixel_values=pixels).logits
         risks, counts = smoothed_risk_grid_bits(logits, labels, args.alphas)
@@ -201,6 +260,10 @@ def main():
         "checkpoint_sha256": checkpoint_sha256,
         "data_path": str(args.data_path.resolve()),
         "data_sha256": data_sha256,
+        "image_condition": args.image_condition,
+        "model_assets": model_asset_fingerprints(
+            args.tokenizer_path, args.vision_model_path
+        ),
         "alpha_grid": list(args.alphas),
         "alpha_choice_bits": math.ceil(math.log2(len(args.alphas))),
         **summary,

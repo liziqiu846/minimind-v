@@ -19,6 +19,7 @@ from torch.nn.parallel import DistributedDataParallel
 from torch.utils.data import DataLoader, DistributedSampler
 from transformers import AutoTokenizer
 from model.model_vlm import MiniMindVLM, VLMConfig
+from model.subspace_projector import fixed_state_sha256
 from dataset.lm_dataset import VLMDataset
 from trainer.trainer_utils import get_lr, Logger, is_main_process, init_distributed_mode, setup_seed, init_vlm_model, vlm_checkpoint, SkipBatchSampler, vlm_collate_fn
 
@@ -76,6 +77,18 @@ def write_run_manifest(args, config, model, train_examples):
             'vision_encoder_frozen': True,
             'trainable_parameters': trainable_parameters,
             'trainable_parameter_names': trainable_names,
+            'projector': {
+                'type': config.projector_type,
+                'subspace_dim': config.subspace_dim,
+                'subspace_seed': config.subspace_seed,
+                'train_norm': config.subspace_train_norm,
+                'protocol': 'signed_hash_orthonormal_v1',
+                'fixed_state_sha256': (
+                    fixed_state_sha256(raw_model.vision_proj)
+                    if config.projector_type == 'subspace' else None
+                ),
+                'torch_version': torch.__version__,
+            },
         },
         'training': {
             'seed': args.seed, 'epochs': args.epochs, 'batch_size': args.batch_size,
@@ -165,6 +178,10 @@ if __name__ == "__main__":
     parser.add_argument('--checkpoint_dir', default='../checkpoints', type=str, help='续训状态目录')
     parser.add_argument('--manifest_path', default='', type=str, help='运行清单输出路径')
     parser.add_argument('--expected_trainable_parameters', default=0, type=int)
+    parser.add_argument('--projector_type', choices=['standard', 'subspace'], default='standard')
+    parser.add_argument('--subspace_dim', default=1024, type=int)
+    parser.add_argument('--subspace_seed', default=42, type=int)
+    parser.add_argument('--subspace_train_norm', default=0, type=int, choices=[0, 1])
     parser.add_argument('--seed', default=42, type=int, help="随机种子")
     parser.add_argument("--epochs", type=int, default=2, help="训练轮数")
     parser.add_argument("--batch_size", type=int, default=16, help="batch size")
@@ -197,7 +214,16 @@ if __name__ == "__main__":
     
     # ========== 2. 配置目录、模型参数、检查ckp ==========
     os.makedirs(args.save_dir, exist_ok=True)
-    vlm_config = VLMConfig(hidden_size=args.hidden_size, num_hidden_layers=args.num_hidden_layers, max_seq_len=args.max_seq_len, use_moe=bool(args.use_moe))
+    vlm_config = VLMConfig(
+        hidden_size=args.hidden_size,
+        num_hidden_layers=args.num_hidden_layers,
+        max_seq_len=args.max_seq_len,
+        use_moe=bool(args.use_moe),
+        projector_type=args.projector_type,
+        subspace_dim=args.subspace_dim,
+        subspace_seed=args.subspace_seed,
+        subspace_train_norm=bool(args.subspace_train_norm),
+    )
     ckp_data = vlm_checkpoint(vlm_config, weight=args.save_weight, save_dir=args.checkpoint_dir) if args.from_resume==1 else None
     
     # ========== 3. 设置混合精度 ==========

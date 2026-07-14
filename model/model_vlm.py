@@ -4,6 +4,7 @@ import warnings
 from .model_minimind import *
 from typing import Optional, Tuple, List, Union
 from torch import nn
+from .subspace_projector import LowDimensionalProjector
 from transformers import SiglipImageProcessor, SiglipVisionModel
 from transformers.modeling_outputs import MoeCausalLMOutputWithPast
 
@@ -18,6 +19,10 @@ class VLMConfig(MiniMindConfig):
         self.image_ids = image_ids
         self.image_hidden_size = kwargs.get("image_hidden_size", 768)
         self.image_token_len = kwargs.get("image_token_len", 64)
+        self.projector_type = kwargs.get("projector_type", "standard")
+        self.subspace_dim = kwargs.get("subspace_dim", 1024)
+        self.subspace_seed = kwargs.get("subspace_seed", 42)
+        self.subspace_train_norm = kwargs.get("subspace_train_norm", False)
         super().__init__(**kwargs)
 
 class MMVisionProjector(nn.Module):
@@ -40,7 +45,16 @@ class MiniMindVLM(MiniMindForCausalLM):
         self.config = config or VLMConfig()
         super().__init__(self.config)
         self.vision_encoder, self.processor = self.__class__.get_vision_model(vision_model_path)
-        self.vision_proj = MMVisionProjector(self.config.image_hidden_size, self.config.hidden_size, target_tokens=self.config.image_token_len)
+        if self.config.projector_type == "subspace":
+            self.vision_proj = LowDimensionalProjector(
+                self.config.image_hidden_size,
+                self.config.hidden_size,
+                self.config.subspace_dim,
+                self.config.subspace_seed,
+                self.config.subspace_train_norm,
+            )
+        else:
+            self.vision_proj = MMVisionProjector(self.config.image_hidden_size, self.config.hidden_size, target_tokens=self.config.image_token_len)
 
     @staticmethod
     def get_vision_model(model_path: str):

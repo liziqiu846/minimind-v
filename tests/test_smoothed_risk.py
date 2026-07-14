@@ -4,12 +4,27 @@ import unittest
 import torch
 
 from experiments.evaluate_smoothed_risk import (
+    apply_image_condition,
     smoothed_autoregressive_risk_bits,
     smoothed_risk_grid_bits,
 )
 
 
 class SmoothedRiskTest(unittest.TestCase):
+    def test_image_conditions_keep_shuffle_and_remove_pixels(self):
+        pixels = torch.arange(3).view(3, 1)
+        self.assertIs(apply_image_condition(pixels, "correct"), pixels)
+        self.assertIsNone(apply_image_condition(pixels, "none"))
+        self.assertEqual(
+            apply_image_condition(pixels, "shuffled").flatten().tolist(),
+            [2, 0, 1],
+        )
+
+    def test_shuffled_condition_supports_processor_dictionaries(self):
+        pixels = {"pixel_values": torch.arange(3).view(3, 1)}
+        shuffled = apply_image_condition(pixels, "shuffled")
+        self.assertEqual(shuffled["pixel_values"].flatten().tolist(), [2, 0, 1])
+
     def test_uniform_predictions_equal_random_guess(self):
         logits = torch.zeros(2, 4, 3)
         labels = torch.tensor(
