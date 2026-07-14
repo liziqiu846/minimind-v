@@ -2,6 +2,7 @@
 """Compactly quantize the two coordinates of a fixed subspace projector."""
 
 import argparse
+import hashlib
 import json
 import math
 import os
@@ -21,12 +22,42 @@ from experiments.quantize_checkpoint import (
     sha256_file,
     unpack_codes,
 )
+from experiments.phase2_protocol import FrozenProtocol
 
 
 COORDINATE_NAMES = (
     "vision_proj.input_projection.coordinates",
     "vision_proj.output_projection.coordinates",
 )
+STATE_DICT_HASH_PROTOCOL = "state_dict_sha256_v1"
+
+
+def state_dict_sha256_v1(state_dict: dict[str, torch.Tensor]) -> str:
+    """Hash tensor contents independently of ``torch.save`` serialization.
+
+    The byte protocol starts with ``state_dict_sha256_v1\0``. For each tensor
+    key in sorted order it appends length-prefixed UTF-8 key and dtype names,
+    the rank and dimensions as little-endian integers, then the length and raw
+    bytes of the detached, contiguous CPU tensor.
+    """
+    digest = hashlib.sha256()
+    digest.update((STATE_DICT_HASH_PROTOCOL + "\0").encode("ascii"))
+    for name in sorted(state_dict):
+        tensor = state_dict[name].detach().cpu().contiguous()
+        name_bytes = name.encode("utf-8")
+        dtype_bytes = str(tensor.dtype).encode("ascii")
+        raw_bytes = tensor.reshape(-1).view(torch.uint8).numpy().tobytes()
+
+        digest.update(struct.pack("<Q", len(name_bytes)))
+        digest.update(name_bytes)
+        digest.update(struct.pack("<I", len(dtype_bytes)))
+        digest.update(dtype_bytes)
+        digest.update(struct.pack("<I", tensor.ndim))
+        for dimension in tensor.shape:
+            digest.update(struct.pack("<Q", dimension))
+        digest.update(struct.pack("<Q", len(raw_bytes)))
+        digest.update(raw_bytes)
+    return digest.hexdigest()
 
 
 def coordinate_spec(manifest: dict) -> tuple[tuple[str, int], ...]:
@@ -125,6 +156,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--decoded-checkpoint", type=Path, required=True)
     parser.add_argument("--summary", type=Path, required=True)
     parser.add_argument("--entropy-code", action="store_true")
+    parser.add_argument("--protocol-path", type=Path)
     parser.add_argument("--overwrite", action="store_true")
     return parser.parse_args()
 
@@ -138,6 +170,22 @@ def main() -> None:
         raise ValueError("bits must be between two and eight")
 
     manifest = json.loads((args.run_dir / "manifest.json").read_text())
+    protocol = FrozenProtocol.load(args.protocol_path) if args.protocol_path else None
+    if protocol and args.overwrite:
+        raise ValueError("frozen Phase 2 outputs cannot be overwritten")
+    if protocol:
+        protocol.verify_files(REPO_ROOT, "implementation_files")
+        protocol.verify_environment(REPO_ROOT)
+        if manifest.get("protocol_sha256") != protocol.sha256:
+            raise ValueError("run manifest does not reference this frozen protocol")
+        protocol.require(
+            "compression",
+            {
+                "quantization_bits": args.bits,
+                "codec": "zlib" if args.entropy_code else "fixed_width",
+            },
+            ("quantization_bits", "codec"),
+        )
     spec = coordinate_spec(manifest)
     run_id = manifest["run_id"]
     hidden_size = manifest["model"]["hidden_size"]
@@ -173,6 +221,8 @@ def main() -> None:
         "encoded_weight_bits": args.archive.stat().st_size * 8,
         "decoded_checkpoint": str(args.decoded_checkpoint.resolve()),
         "decoded_checkpoint_sha256": sha256_file(args.decoded_checkpoint),
+        "decoded_state_sha256": state_dict_sha256_v1(decoded),
+        "decoded_state_sha256_protocol": STATE_DICT_HASH_PROTOCOL,
         "reference_sha256": sha256_file(reference_path),
         "trained_checkpoint_sha256": sha256_file(trained_path),
         "quantization_bits": args.bits,
@@ -187,6 +237,14 @@ def main() -> None:
         "fixed_width_payload_bits": sum(count for _, count in spec) * args.bits,
         "encoded_scale_bits": 32 * len(spec),
     }
+    if protocol:
+        registry_path = REPO_ROOT / protocol.payload["decoder_registry"]["path"]
+        registry = json.loads(registry_path.read_text(encoding="utf-8"))
+        primary = registry["decoders"][protocol.payload["decoder_registry"]["index"]]
+        if result["decoder_choice"] != primary["choice"]:
+            raise ValueError("encoded decoder does not match the frozen primary choice")
+        result["protocol"] = protocol.reference()
+        result["decoder_id"] = primary["id"]
     args.summary.write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps(result, indent=2))
 

@@ -4,26 +4,53 @@ import unittest
 import torch
 
 from experiments.evaluate_smoothed_risk import (
+    PairedImageDataset,
     apply_image_condition,
+    paired_derangement,
+    paired_difference_summary,
+    paired_vlm_collate_fn,
     smoothed_autoregressive_risk_bits,
     smoothed_risk_grid_bits,
 )
 
 
 class SmoothedRiskTest(unittest.TestCase):
-    def test_image_conditions_keep_shuffle_and_remove_pixels(self):
+    def test_image_conditions_keep_and_remove_pixels(self):
         pixels = torch.arange(3).view(3, 1)
         self.assertIs(apply_image_condition(pixels, "correct"), pixels)
         self.assertIsNone(apply_image_condition(pixels, "none"))
-        self.assertEqual(
-            apply_image_condition(pixels, "shuffled").flatten().tolist(),
-            [2, 0, 1],
-        )
 
-    def test_shuffled_condition_supports_processor_dictionaries(self):
-        pixels = {"pixel_values": torch.arange(3).view(3, 1)}
-        shuffled = apply_image_condition(pixels, "shuffled")
-        self.assertEqual(shuffled["pixel_values"].flatten().tolist(), [2, 0, 1])
+    def test_paired_derangement_is_fixed_point_free_and_reproducible(self):
+        first = paired_derangement(10, seed=17)
+        second = paired_derangement(10, seed=17)
+        self.assertEqual(first, second)
+        self.assertEqual(sorted(first), list(range(10)))
+        for index, donor in enumerate(first):
+            self.assertNotEqual(index, donor)
+            self.assertEqual(first[donor], index)
+
+    def test_paired_derangement_rejects_odd_sample_count(self):
+        with self.assertRaises(ValueError):
+            paired_derangement(5, seed=17)
+
+    def test_paired_dataset_and_collate_use_global_donors(self):
+        base = [
+            (torch.tensor([index]), torch.tensor([index + 10]), {"x": torch.tensor([index])})
+            for index in range(4)
+        ]
+        permutation = (1, 0, 3, 2)
+        dataset = PairedImageDataset(base, permutation)
+        batch = paired_vlm_collate_fn([dataset[0], dataset[2]])
+        self.assertEqual(batch[2]["x"].flatten().tolist(), [0, 2])
+        self.assertEqual(batch[3]["x"].flatten().tolist(), [1, 3])
+
+    def test_paired_difference_summary_uses_pair_as_statistical_unit(self):
+        differences = torch.tensor([[1.0, 3.0, 5.0, 7.0]])
+        means, standard_errors, _ = paired_difference_summary(
+            differences, (1, 0, 3, 2)
+        )
+        self.assertAlmostEqual(means.item(), 4.0)
+        self.assertAlmostEqual(standard_errors.item(), 2.0)
 
     def test_uniform_predictions_equal_random_guess(self):
         logits = torch.zeros(2, 4, 3)

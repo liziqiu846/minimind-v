@@ -18,10 +18,18 @@ from experiments.generalization_bound import (
     prediction_smoothing_interval,
 )
 from experiments.quantize_checkpoint import sha256_file
+from experiments.phase2_protocol import FrozenProtocol
 
 
 def decoder_registry_selection(registry: dict, choice: dict) -> tuple[int, int]:
     """Validate a decoder choice and return registry size and code length."""
+    if "decoders" in registry:
+        matches = [entry for entry in registry["decoders"] if entry["choice"] == choice]
+        if len(matches) != 1:
+            raise ValueError("encoded decoder choice is absent or duplicated in registry")
+        total_choices = len(registry["decoders"])
+        return total_choices, choice_description_bits(total_choices)
+
     total_choices = 0
     selected = False
     for family in registry["families"]:
@@ -97,9 +105,19 @@ def build_report(
         raise ValueError("model_selection_bits cannot be negative")
     validate_risk_provenance(encoding, training_risk, validation_risk)
     decoded_sha = encoding["decoded_checkpoint_sha256"]
-    if training_risk["checkpoint_sha256"] != decoded_sha:
+    decoded_state_sha = encoding.get("decoded_state_sha256")
+    if decoded_state_sha and training_risk.get("checkpoint_state_sha256") != decoded_state_sha:
+        raise ValueError("training risk state does not match the encoded hypothesis")
+    if not decoded_state_sha and training_risk["checkpoint_sha256"] != decoded_sha:
         raise ValueError("training risk was not evaluated on the encoded hypothesis")
-    if validation_risk and validation_risk["checkpoint_sha256"] != decoded_sha:
+    validation_identity = (
+        validation_risk.get("checkpoint_state_sha256") if validation_risk else None
+    )
+    if validation_risk and (
+        validation_identity != decoded_state_sha
+        if decoded_state_sha
+        else validation_risk["checkpoint_sha256"] != decoded_sha
+    ):
         raise ValueError("validation risk checkpoint does not match the encoded hypothesis")
 
     alpha_bits = training_risk["alpha_choice_bits"]
@@ -143,6 +161,7 @@ def build_report(
         "description_complexity_nats": complexity,
         "archive_sha256": encoding["archive_sha256"],
         "decoded_checkpoint_sha256": decoded_sha,
+        "decoded_state_sha256": decoded_state_sha,
         "training_data_sha256": training_risk["data_sha256"],
         "validation_data_sha256": (
             validation_risk["data_sha256"] if validation_risk else None
@@ -165,6 +184,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--model-selection-bits", type=int, default=0)
     parser.add_argument("--decoder-registry", type=Path)
     parser.add_argument("--run-manifest", type=Path)
+    parser.add_argument("--protocol-path", type=Path)
     parser.add_argument("--overwrite", action="store_true")
     return parser.parse_args()
 
@@ -176,6 +196,25 @@ def main() -> None:
     encoding = json.loads(args.encoding.read_text())
     training = json.loads(args.training_risk.read_text())
     validation = json.loads(args.validation_risk.read_text()) if args.validation_risk else None
+    protocol = FrozenProtocol.load(args.protocol_path) if args.protocol_path else None
+    if protocol and args.overwrite:
+        raise ValueError("frozen Phase 2 outputs cannot be overwritten")
+    if protocol:
+        if not args.run_manifest:
+            raise ValueError("Phase 2 bound requires --run-manifest")
+        protocol.verify_files(REPO_ROOT, "implementation_files")
+        protocol.verify_environment(REPO_ROOT)
+        expected_reference = protocol.reference()
+        artifacts = [encoding, training] + ([validation] if validation else [])
+        if any(artifact.get("protocol") != expected_reference for artifact in artifacts):
+            raise ValueError("an input artifact does not reference the frozen protocol")
+        if args.confidence_delta != protocol.payload["certificate"]["confidence_delta"]:
+            raise ValueError("confidence delta does not match the frozen protocol")
+        expected_alpha = protocol.payload["certificate"]["alpha"]
+        if [row["alpha"] for row in training["risks"]] != [expected_alpha]:
+            raise ValueError("training risk does not use the frozen certificate alpha")
+        if args.model_selection_bits:
+            raise ValueError("manual model selection bits are forbidden by Phase 2 protocol")
     manifest_metadata = {}
     if args.run_manifest:
         validate_manifest(
@@ -187,16 +226,19 @@ def main() -> None:
         }
     registry_metadata = {}
     model_selection_bits = args.model_selection_bits
-    if args.decoder_registry:
+    decoder_registry_path = args.decoder_registry
+    if protocol:
+        decoder_registry_path = REPO_ROOT / protocol.payload["decoder_registry"]["path"]
+    if decoder_registry_path:
         if model_selection_bits:
             raise ValueError("use either decoder registry or manual selection bits")
-        registry = json.loads(args.decoder_registry.read_text())
+        registry = json.loads(decoder_registry_path.read_text())
         choice_count, model_selection_bits = decoder_registry_selection(
             registry, encoding["decoder_choice"]
         )
         registry_metadata = {
-            "decoder_registry": str(args.decoder_registry.resolve()),
-            "decoder_registry_sha256": sha256_file(args.decoder_registry),
+            "decoder_registry": str(decoder_registry_path.resolve()),
+            "decoder_registry_sha256": sha256_file(decoder_registry_path),
             "decoder_choice_count": choice_count,
             "decoder_choice": encoding["decoder_choice"],
         }
@@ -219,6 +261,11 @@ def main() -> None:
     )
     report.update(manifest_metadata)
     report.update(registry_metadata)
+    if protocol:
+        if model_selection_bits != protocol.payload["certificate"]["decoder_selection_bits"]:
+            raise ValueError("decoder selection length does not match frozen protocol")
+        report["schema_version"] = 2
+        report["protocol"] = protocol.reference()
     args.output.parent.mkdir(parents=True, exist_ok=True)
     temporary = args.output.with_suffix(args.output.suffix + ".tmp")
     temporary.write_text(json.dumps(report, indent=2) + "\n")

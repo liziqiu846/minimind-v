@@ -60,6 +60,26 @@ class BoundReportTest(unittest.TestCase):
         )
         self.assertEqual((count, bits), (7, 3))
 
+    def test_single_explicit_decoder_has_zero_selection_bits(self):
+        choice = {
+            "family": "fixed_subspace",
+            "subspace_dim": 4096,
+            "train_norm": False,
+            "quantization_bits": 3,
+            "codec": "zlib",
+        }
+        registry = {"decoders": [{"id": "primary", "choice": choice}]}
+        self.assertEqual(decoder_registry_selection(registry, choice), (1, 0))
+
+    def test_canonical_state_hash_identifies_encoded_hypothesis(self):
+        self.encoding["decoded_state_sha256"] = "state"
+        self.training["checkpoint_state_sha256"] = "state"
+        report = build_report(self.encoding, self.training, None, 0.05, 8)
+        self.assertEqual(report["decoded_state_sha256"], "state")
+        self.training["checkpoint_state_sha256"] = "different"
+        with self.assertRaises(ValueError):
+            build_report(self.encoding, self.training, None, 0.05, 8)
+
     def test_wrong_image_condition_is_rejected(self):
         self.training["image_condition"] = "shuffled"
         with self.assertRaises(ValueError):

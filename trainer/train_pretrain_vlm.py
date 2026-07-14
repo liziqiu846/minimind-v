@@ -21,9 +21,11 @@ from transformers import AutoTokenizer
 from model.model_vlm import MiniMindVLM, VLMConfig
 from model.subspace_projector import fixed_state_sha256
 from dataset.lm_dataset import VLMDataset
+from experiments.phase2_protocol import FrozenProtocol, validate_split_artifact
 from trainer.trainer_utils import get_lr, Logger, is_main_process, init_distributed_mode, setup_seed, init_vlm_model, vlm_checkpoint, SkipBatchSampler, vlm_collate_fn
 
 warnings.filterwarnings('ignore')
+REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 def sha256_file(path):
@@ -34,7 +36,7 @@ def sha256_file(path):
     return digest.hexdigest()
 
 
-def write_run_manifest(args, config, model, train_examples):
+def write_run_manifest(args, config, model, train_examples, protocol=None, split=None):
     if not args.manifest_path or not is_main_process():
         return
     raw_model = model.module if isinstance(model, DistributedDataParallel) else model
@@ -42,6 +44,14 @@ def write_run_manifest(args, config, model, train_examples):
     trainable_parameters = sum(
         param.numel() for param in raw_model.parameters() if param.requires_grad
     )
+    projector_fixed_sha256 = (
+        fixed_state_sha256(raw_model.vision_proj)
+        if config.projector_type == 'subspace' else None
+    )
+    if protocol and projector_fixed_sha256 != protocol.payload['model'][
+        'fixed_state_sha256'
+    ]:
+        raise ValueError('fixed projector does not match the frozen protocol')
     vision_trainable = [name for name in trainable_names if name.startswith('vision_encoder.')]
     if vision_trainable:
         raise AssertionError(f'vision encoder must stay frozen: {vision_trainable[:3]}')
@@ -59,7 +69,7 @@ def write_run_manifest(args, config, model, train_examples):
         Path(args.init_weight_dir) / f'{args.from_weight}_{config.hidden_size}{moe_suffix}.pth'
     ).resolve()
     payload = {
-        'schema_version': 1,
+        'schema_version': 2 if protocol else 1,
         'run_id': args.save_weight,
         'data': {
             'path': str(data_path),
@@ -67,12 +77,14 @@ def write_run_manifest(args, config, model, train_examples):
             'examples': train_examples,
         },
         'initial_weight': None if initial_path is None else {
+            'name': args.from_weight,
             'path': str(initial_path),
             'sha256': sha256_file(initial_path),
         },
         'model': {
             'hidden_size': config.hidden_size,
             'num_hidden_layers': config.num_hidden_layers,
+            'use_moe': bool(config.use_moe),
             'freeze_llm': args.freeze_llm,
             'vision_encoder_frozen': True,
             'trainable_parameters': trainable_parameters,
@@ -83,10 +95,7 @@ def write_run_manifest(args, config, model, train_examples):
                 'subspace_seed': config.subspace_seed,
                 'train_norm': config.subspace_train_norm,
                 'protocol': 'signed_hash_orthonormal_v1',
-                'fixed_state_sha256': (
-                    fixed_state_sha256(raw_model.vision_proj)
-                    if config.projector_type == 'subspace' else None
-                ),
+                'fixed_state_sha256': projector_fixed_sha256,
                 'torch_version': torch.__version__,
             },
         },
@@ -96,8 +105,29 @@ def write_run_manifest(args, config, model, train_examples):
             'effective_batch_size': args.batch_size * args.accumulation_steps,
             'learning_rate': args.learning_rate, 'dtype': args.dtype,
             'max_seq_len': args.max_seq_len, 'augment': bool(args.augment),
+            'grad_clip': args.grad_clip,
+            'resume': bool(args.from_resume),
+            'compile': bool(args.use_compile),
+            'world_size': dist.get_world_size() if dist.is_initialized() else 1,
+            'num_workers': args.num_workers,
+        },
+        'runtime': {
+            'python': sys.version.split()[0],
+            'torch': torch.__version__,
+            'cuda_runtime': torch.version.cuda,
+            'device': args.device,
+            'device_name': (
+                torch.cuda.get_device_name(args.device)
+                if args.device.startswith('cuda') else None
+            ),
         },
     }
+    if protocol:
+        if split['examples'] != train_examples:
+            raise ValueError('training dataset length differs from the split manifest')
+        payload['protocol_id'] = protocol.payload['protocol_id']
+        payload['protocol_sha256'] = protocol.sha256
+        payload['dataset_split'] = split
     manifest_path = Path(args.manifest_path)
     manifest_path.parent.mkdir(parents=True, exist_ok=True)
     temporary = manifest_path.with_suffix(manifest_path.suffix + '.tmp')
@@ -177,6 +207,14 @@ if __name__ == "__main__":
     parser.add_argument('--init_weight_dir', default='../out', type=str, help='初始化权重目录')
     parser.add_argument('--checkpoint_dir', default='../checkpoints', type=str, help='续训状态目录')
     parser.add_argument('--manifest_path', default='', type=str, help='运行清单输出路径')
+    parser.add_argument('--protocol_path', type=Path)
+    parser.add_argument('--split_manifest', type=Path)
+    parser.add_argument('--tokenizer_path', type=Path, default=REPO_ROOT / 'model')
+    parser.add_argument(
+        '--vision_model_path',
+        type=Path,
+        default=REPO_ROOT / 'model/siglip2-base-p32-256-ve',
+    )
     parser.add_argument('--expected_trainable_parameters', default=0, type=int)
     parser.add_argument('--projector_type', choices=['standard', 'subspace'], default='standard')
     parser.add_argument('--subspace_dim', default=1024, type=int)
@@ -224,6 +262,74 @@ if __name__ == "__main__":
         subspace_seed=args.subspace_seed,
         subspace_train_norm=bool(args.subspace_train_norm),
     )
+    protocol = FrozenProtocol.load(args.protocol_path) if args.protocol_path else None
+    split_metadata = None
+    if protocol:
+        if not args.split_manifest or not args.manifest_path:
+            raise ValueError('Phase 2 training requires split and run manifests')
+        output_weight = Path(args.save_dir) / f'{args.save_weight}_{args.hidden_size}.pth'
+        if Path(args.manifest_path).exists() or output_weight.exists():
+            raise FileExistsError('Phase 2 run outputs already exist')
+        protocol.verify_files(Path(__file__).resolve().parents[1], 'implementation_files')
+        protocol.verify_environment(REPO_ROOT)
+        protocol.verify_files(Path(__file__).resolve().parents[1], 'assets')
+        protocol.verify_asset(
+            'initial_llm',
+            Path(args.init_weight_dir) / f'llm_{args.hidden_size}.pth',
+        )
+        protocol.verify_asset('tokenizer_json', args.tokenizer_path / 'tokenizer.json')
+        protocol.verify_asset(
+            'tokenizer_config', args.tokenizer_path / 'tokenizer_config.json'
+        )
+        protocol.verify_asset(
+            'vision_config', args.vision_model_path / 'config.json'
+        )
+        protocol.verify_asset(
+            'vision_weights', args.vision_model_path / 'model.safetensors'
+        )
+        protocol.verify_asset(
+            'vision_processor', args.vision_model_path / 'preprocessor_config.json'
+        )
+        protocol.require(
+            'model',
+            {
+                'hidden_size': args.hidden_size,
+                'num_hidden_layers': args.num_hidden_layers,
+                'freeze_llm': args.freeze_llm,
+                'projector_type': args.projector_type,
+                'subspace_dim': args.subspace_dim,
+                'subspace_seed': args.subspace_seed,
+                'train_norm': bool(args.subspace_train_norm),
+                'use_moe': bool(args.use_moe),
+                'initial_weight_name': args.from_weight,
+            },
+            ('hidden_size', 'num_hidden_layers', 'freeze_llm', 'projector_type',
+             'subspace_dim', 'subspace_seed', 'train_norm', 'use_moe',
+             'initial_weight_name'),
+        )
+        protocol.require(
+            'training',
+            {
+                'seed': args.seed,
+                'epochs': args.epochs,
+                'batch_size': args.batch_size,
+                'accumulation_steps': args.accumulation_steps,
+                'learning_rate': args.learning_rate,
+                'dtype': args.dtype,
+                'max_seq_len': args.max_seq_len,
+                'augment': bool(args.augment),
+                'grad_clip': args.grad_clip,
+                'resume': bool(args.from_resume),
+                'compile': bool(args.use_compile),
+                'world_size': dist.get_world_size() if dist.is_initialized() else 1,
+            },
+            ('seed', 'epochs', 'batch_size', 'accumulation_steps',
+             'learning_rate', 'dtype', 'max_seq_len', 'augment', 'grad_clip',
+             'resume', 'compile', 'world_size'),
+        )
+        split_metadata = validate_split_artifact(
+            args.split_manifest, Path(args.data_path), 'train', protocol
+        )
     ckp_data = vlm_checkpoint(vlm_config, weight=args.save_weight, save_dir=args.checkpoint_dir) if args.from_resume==1 else None
     
     # ========== 3. 设置混合精度 ==========
@@ -241,7 +347,15 @@ if __name__ == "__main__":
         wandb.init(project=args.wandb_project, name=wandb_run_name, id=wandb_id, resume=resume)
     
     # ========== 5. 定义模型、数据、优化器 ==========
-    model, tokenizer, preprocess = init_vlm_model(vlm_config, from_weight=args.from_weight, save_dir=args.init_weight_dir, device=args.device, freeze_llm=args.freeze_llm)
+    model, tokenizer, preprocess = init_vlm_model(
+        vlm_config,
+        from_weight=args.from_weight,
+        tokenizer_path=str(args.tokenizer_path),
+        vision_model_path=str(args.vision_model_path),
+        save_dir=args.init_weight_dir,
+        device=args.device,
+        freeze_llm=args.freeze_llm,
+    )
     train_ds = VLMDataset(args.data_path, tokenizer, preprocess=preprocess, image_special_token=vlm_config.image_special_token, image_token_len=vlm_config.image_token_len, max_length=vlm_config.max_seq_len, augment=bool(args.augment))
     train_sampler = DistributedSampler(train_ds) if dist.is_initialized() else None
     scaler = torch.cuda.amp.GradScaler(enabled=(args.dtype == 'float16'))
@@ -255,7 +369,9 @@ if __name__ == "__main__":
         scaler.load_state_dict(ckp_data['scaler'])
         start_epoch = ckp_data['epoch']
         start_step = ckp_data.get('step', 0)
-    write_run_manifest(args, vlm_config, model, len(train_ds))
+    write_run_manifest(
+        args, vlm_config, model, len(train_ds), protocol, split_metadata
+    )
     
     # ========== 7. 编译和分布式包装 ==========
     if args.use_compile == 1:
