@@ -1,0 +1,610 @@
+{
+  "schema_version": 1,
+  "status": "draft",
+  "protocol_id": "minimind-v-stage2-joint-compression-v1",
+  "objective": "Under the same caption task, samples, and 4096-coordinate information budget, measure the additional compression-bound cost of vision and compare independent module coordinates with a globally shared coordinate vector.",
+  "decision_sources": [
+    "https://chatgpt.com/share/6a57acf0-69b8-83ee-adda-5e196b4cf294",
+    "https://chatgpt.com/share/6a57b105-475c-83e8-9ea5-175b06f234e6",
+    "https://chatgpt.com/share/6a57b2e6-cca0-83e8-a088-953863ff0433",
+    "https://chatgpt.com/share/6a57b476-abb4-83ee-8bee-ada4bbda214c"
+  ],
+  "git": {
+    "base_commit": "b71602a3106434e1165216cc5f85f30957f0ec95",
+    "branch": "exp/stage2-vlm-joint-compression",
+    "worktree": "/home/lizhaohui/lzq/minimind-v-stage2",
+    "phase3_archive_branch": "archive/phase3-pre-stage2",
+    "phase3_archive_commit": "4f7a1a2",
+    "input_receipt_commit": "6d5e513264013ba5ea9ed458c8394c84f5e9d0b0",
+    "freeze_commit_message": "experiment: freeze stage2 protocol v1",
+    "annotated_tag": "stage2-protocol-v1",
+    "remote_push": false,
+    "frozen_implementation_commit": null
+  },
+  "assets": {
+    "root": "/home/lizhaohui/lzq/stage2-assets-v1",
+    "read_only": true,
+    "manifest_path": "experiments/stage2_assets_manifest.json",
+    "manifest_sha256": "04a830520786ff9ae94906dfae74b50b8fda780688566671d90575189f64824d",
+    "sha256_list_path": "experiments/stage2_assets_sha256.txt",
+    "sha256_list_sha256": "36b234d859ec10b2bc28e0adf226b72d47426f9dff19220ad7116567e9633c17",
+    "required_roles": {
+      "source_dataset": "dataset/pretrain_i2t.parquet",
+      "development_train": "dataset/development/train.parquet",
+      "development_validation": "dataset/development/validation.parquet",
+      "initial_llm": "llm/llm_768.pth",
+      "tokenizer": "tokenizer",
+      "vision_encoder": "vision"
+    }
+  },
+  "history_exclusion": {
+    "manual_exposure_outside_repository": false,
+    "receipt_path": "experiments/stage2_history_exclusion_receipt.jsonl",
+    "receipt_sha256": "ad41069bc501602e6fafff4f044b4bee3856b88b691cb605cc808a896f98e7bf",
+    "exact_sha256_path": "experiments/stage2_history_exact_sha256.txt",
+    "exact_sha256_sha256": "a006eaa59e21ed745d34433267d40ecc4bc7bd39902da61423080af3c29d32f4",
+    "phash_path": "experiments/stage2_history_phash.txt",
+    "phash_sha256": "b55280f33218775ebc5dcdee1415ab466af3ed04042d2c3e0f4ae00062705fbf",
+    "sources_path": "experiments/stage2_history_sources.json",
+    "sources_sha256": "c58a06c34e76807eefffc59178e9d29c1aeeb3f8fdf06990dd6a25d51ac251e1",
+    "manifest_path": "experiments/stage2_history_exclusion_manifest.json",
+    "manifest_sha256": "c57fd6f8605e1133aae4906328f19546f15a97378dd08db6906bcf638a0a6ab9",
+    "exposure_records": 48253,
+    "unique_exact_images": 41071,
+    "unique_phashes": 41064,
+    "old_runs_access_after_import": false
+  },
+  "model": {
+    "hidden_size": 768,
+    "num_hidden_layers": 8,
+    "vocab_size": 6400,
+    "image_hidden_size": 768,
+    "image_token_count": 64,
+    "use_moe": false,
+    "total_coordinate_budget": 4096,
+    "groups": {
+      "M0": {
+        "description": "language-only model",
+        "image_input": false,
+        "coordinate_groups": ["language"],
+        "coordinate_dimensions": [4096],
+        "formal_mapping_roots": [43101, 43102, 43103],
+        "formal_runs": 3
+      },
+      "M1": {
+        "description": "historical fixed hashed projector baseline",
+        "image_input": true,
+        "coordinate_groups": ["projector_layer_1", "projector_layer_2"],
+        "coordinate_dimensions": [2048, 2048],
+        "subspace_seed": 42,
+        "formal_runs": 1
+      },
+      "M2": {
+        "description": "independent vision, projector, and language coordinates",
+        "image_input": true,
+        "coordinate_groups": ["vision", "projector", "language"],
+        "coordinate_dimensions": [582, 2327, 1187],
+        "formal_mapping_roots": [43101, 43102, 43103],
+        "formal_runs": 3
+      },
+      "M3": {
+        "description": "one globally shared coordinate vector",
+        "image_input": true,
+        "coordinate_groups": ["shared"],
+        "coordinate_dimensions": [4096],
+        "formal_mapping_roots": [43101, 43102, 43103],
+        "formal_runs": 3
+      }
+    },
+    "targets": {
+      "vision": {
+        "rank": 4,
+        "names": [
+          "vision_encoder.vision_model.encoder.layers.10.self_attn.q_proj",
+          "vision_encoder.vision_model.encoder.layers.10.self_attn.v_proj",
+          "vision_encoder.vision_model.encoder.layers.11.self_attn.q_proj",
+          "vision_encoder.vision_model.encoder.layers.11.self_attn.v_proj"
+        ],
+        "factor_elements": 24576
+      },
+      "projector": {
+        "rank": 32,
+        "names": [
+          "vision_proj.mlp.1",
+          "vision_proj.mlp.3"
+        ],
+        "factor_elements": 98304
+      },
+      "language": {
+        "rank": 4,
+        "names": [
+          "lm_head",
+          "model.layers.0.self_attn.q_proj",
+          "model.layers.0.self_attn.v_proj",
+          "model.layers.7.self_attn.q_proj",
+          "model.layers.7.self_attn.v_proj"
+        ],
+        "factor_elements": 50176
+      }
+    },
+    "target_order": "full canonical UTF-8 name ascending; A then B within each target; C-order row-major flattening",
+    "independent_dimension_allocation": {
+      "method": "largest_remainder_proportional_to_A_and_B_factor_elements",
+      "total_factor_elements": 173056,
+      "vision": 582,
+      "projector": 2327,
+      "language": 1187
+    },
+    "projector_base": {
+      "source": "M1 LowDimensionalProjector fixed base tensors",
+      "source_seed_layer_1": 42,
+      "source_seed_layer_2": 43,
+      "normalization": {
+        "normalized_shape": 768,
+        "eps": 1e-05,
+        "elementwise_affine": false
+      },
+      "architecture": [
+        "LayerNorm",
+        "Linear(768,768,bias=True)",
+        "GELU",
+        "Linear(768,768,bias=True)"
+      ],
+      "base_tensor_sha256": null,
+      "configuration_sha256": null
+    },
+    "lora": {
+      "formula": "W0*x+b0+(alpha_r/r)*B(w)*A(w)*x",
+      "alpha_r_equals_rank": true,
+      "effective_scale": 1.0,
+      "A": "A0 + P_A*w",
+      "B": "P_B*w",
+      "B0": 0.0,
+      "coordinate_initialization": 0.0,
+      "base_weights_frozen": true,
+      "biases_frozen": true
+    },
+    "deterministic_mapping": {
+      "string_serialization": "uint32 little-endian UTF-8 byte length followed by UTF-8 bytes",
+      "integer_serialization": "uint64 little-endian unsigned",
+      "negative_integer_fields": "forbidden",
+      "A0_domain": "stage2-a0-v1",
+      "A0_digest_rule": "raw=uint64_le(digest[0:8]); n=raw & (2^53-1); u=(n+0.5)/2^53",
+      "A0_value_rule": "float32((2*u-1)/sqrt(d_in)) computed from binary64 intermediates",
+      "mapping_domain": "stage2-map-v1",
+      "mapping_message_fields": [
+        "domain",
+        "mapping_root",
+        "canonical_layer_name",
+        "factor_name",
+        "flat_index"
+      ],
+      "coordinate_rule": "uint64_le(digest[0:8]) modulo coordinate dimension",
+      "sign_rule": "+1 if digest[8]&1 is zero, otherwise -1",
+      "factor_names": ["A", "B"],
+      "value_rule": "sign*w[k]/sqrt(c[k])",
+      "count_scope": {
+        "M0": "all language A/B elements",
+        "M2": "separate counts inside vision, projector, and language",
+        "M3": "one global count across all vision, projector, and language A/B elements"
+      },
+      "require_every_coordinate_used": true,
+      "usage_statistics": null
+    }
+  },
+  "data": {
+    "source": "stage2-assets-v1/dataset/pretrain_i2t.parquet",
+    "source_sha256": "65761f37d1947d54a1d85457ff70938275e4ef58ba5cedcd02463a3a247c93fd",
+    "output_directory": "dataset/stage2_confirm_seed2026",
+    "train_images": 10000,
+    "validation_images": 2000,
+    "selection_seed": 2026,
+    "exact_identity": "SHA256(raw image bytes)",
+    "phash": {
+      "library": "ImageHash",
+      "version": "4.3.2",
+      "hash_size": 8,
+      "highfreq_factor": 4,
+      "preprocess": ["Pillow decode", "ImageOps.exif_transpose", "RGB conversion"],
+      "maximum_allowed_hamming_distance": 6,
+      "acceptance_rule": "distance greater than 6 from every historical and already-selected image"
+    },
+    "conversation_canonicalization": {
+      "parse_json_strings": true,
+      "serialization": "json.dumps(ensure_ascii=False,sort_keys=True,separators=(',',':')) encoded as UTF-8",
+      "unicode_normalization": "none",
+      "representative_key": ["SHA256(canonical conversation UTF-8)", "source row index"]
+    },
+    "candidate_requirements": [
+      "image decodes successfully",
+      "exact image absent from historical receipt",
+      "pHash distance greater than 6 from every historical image",
+      "exactly one assistant answer span is uniquely located",
+      "assistant target includes assistant EOS",
+      "full VLM token sequence length is at most 450",
+      "target answer is not truncated",
+      "image, text, and target token metadata reproduce exactly"
+    ],
+    "candidate_rank": {
+      "domain": "stage2-split-v1",
+      "message": "serialized domain || uint64_le(seed) || raw 32-byte image SHA256 digest",
+      "order": ["rank digest ascending", "image SHA256 ascending", "source row index ascending"]
+    },
+    "greedy_selection": {
+      "validation_first": 2000,
+      "training_second": 10000,
+      "scan_limit": "entire eligible source",
+      "selected_images_join_phash_forbidden_set_immediately": true
+    },
+    "frozen_fields_per_sample": [
+      "sample_id",
+      "image_sha256",
+      "phash_hex",
+      "source_row_index",
+      "canonical_conversation",
+      "full_token_ids",
+      "assistant_target_start",
+      "assistant_target_end",
+      "target_token_ids",
+      "target_token_count",
+      "assistant_eos_token_id"
+    ],
+    "train_sha256": null,
+    "validation_sha256": null,
+    "split_manifest_sha256": null
+  },
+  "development": {
+    "purpose": "learning-rate selection only",
+    "formal_evidence": false,
+    "train_path": "stage2-assets-v1/dataset/development/train.parquet",
+    "train_sha256": "940757a4dabad9ea5d65cdb97b12f76c8991142338e8cf42e13b6f79d9fd71ab",
+    "validation_path": "stage2-assets-v1/dataset/development/validation.parquet",
+    "validation_sha256": "856b2184b852ca57eb41f9aa6cb810df834583f1acb051b45ddd2ec0635576c6",
+    "learning_rates": [0.005, 0.015, 0.05],
+    "mapping_root_seed_pairs": [
+      {"mapping_root": 43101, "train_seed": 42},
+      {"mapping_root": 43102, "train_seed": 43},
+      {"mapping_root": 43103, "train_seed": 44}
+    ],
+    "runs": {
+      "M0": 9,
+      "M1": 9,
+      "M2": 9,
+      "M3": 9,
+      "total": 36
+    },
+    "selection_delta": 0.05,
+    "alpha": 0.5,
+    "risk_source": "full quantized decoded development training risk",
+    "M0_rule": "minimize arithmetic mean bound over three mapping-root/seed pairs",
+    "M1_rule": "minimize arithmetic mean bound over train seeds 42, 43, and 44",
+    "M2_M3_rule": "choose one shared LR minimizing the equal-weight mean of all six M2/M3 bounds",
+    "tie_rule": "choose the smallest LR whose mean is no more than global minimum plus 1e-4",
+    "selected_learning_rates": {
+      "M0": null,
+      "M1": null,
+      "M2_M3": null
+    }
+  },
+  "training": {
+    "formal_seed": 2026,
+    "epoch_permutation": "torch.randperm with a CPU torch.Generator seeded by train_seed+epoch_index; save permutation SHA256",
+    "epochs": 3,
+    "micro_batch_size": 4,
+    "gradient_accumulation_steps": 4,
+    "effective_batch_size": 16,
+    "drop_last": true,
+    "max_sequence_length": 450,
+    "augmentation": false,
+    "optimizer": {
+      "name": "torch.optim.AdamW",
+      "betas": [0.9, 0.999],
+      "eps": 1e-08,
+      "weight_decay": 0.01,
+      "amsgrad": false,
+      "parameters": "coordinate tensors only"
+    },
+    "learning_rate_schedule": {
+      "update_unit": "optimizer step",
+      "warmup_steps": 0,
+      "total_steps": 1875,
+      "t_values": "0 through 1874",
+      "minimum_ratio": 0.1,
+      "formula": "lr_min+0.5*(lr_max-lr_min)*(1+cos(pi*t/(T-1)))"
+    },
+    "gradient_clip_global_l2": 1.0,
+    "autocast_dtype": "bfloat16",
+    "grad_scaler": false,
+    "compile": false,
+    "world_size": 1,
+    "dataloader": {
+      "num_workers": 2,
+      "persistent_workers": true,
+      "pin_memory": true,
+      "prefetch_factor": 2
+    },
+    "checkpoint_payload": ["coordinates", "protocol reference", "recovery state"],
+    "formal_run_order": [
+      "M0-root1",
+      "M0-root2",
+      "M0-root3",
+      "M1",
+      "M2-root1",
+      "M2-root2",
+      "M2-root3",
+      "M3-root1",
+      "M3-root2",
+      "M3-root3"
+    ]
+  },
+  "environment": {
+    "python_executable": "/home/lizhaohui/lzq/minimind-v/.conda-env/bin/python",
+    "python": "3.10.18",
+    "torch": "2.6.0+cu124",
+    "transformers": "4.57.6",
+    "numpy": "1.26.4",
+    "Pillow": "11.3.0",
+    "ImageHash": "4.3.2",
+    "zlib_build": "1.3.1",
+    "zlib_runtime": "1.3.1",
+    "pip_freeze_sha256": null,
+    "gpu_selection_rule": [
+      "name strictly contains A40",
+      "exclude GPUs with active compute processes",
+      "maximize free memory",
+      "break equal-free-memory ties by ascending GPU UUID"
+    ],
+    "selected_gpu_uuid": null,
+    "selected_gpu_name": null,
+    "single_physical_gpu_for_all_development_confirmation_and_evaluation": true
+  },
+  "compression": {
+    "format": "MMS2 version 1",
+    "quantization_bits_label": 3,
+    "levels": [-3, -2, -1, 0, 1, 2, 3],
+    "header": [
+      {"offset": 0, "bytes": 4, "field": "ASCII MMS2"},
+      {"offset": 4, "bytes": 1, "field": "format version 1"},
+      {"offset": 5, "bytes": 1, "field": "model group ID"},
+      {"offset": 6, "bytes": 1, "field": "mapping root ID"},
+      {"offset": 7, "bytes": 1, "field": "coordinate group count"},
+      {"offset": 8, "bytes": 1, "field": "quantization bits label 3"},
+      {"offset": 9, "bytes": 4, "field": "uncompressed body bytes uint32 little-endian"},
+      {"offset": 13, "bytes": 4, "field": "compressed body bytes uint32 little-endian"},
+      {"offset": 17, "bytes": null, "field": "zlib level-9 body"}
+    ],
+    "model_group_ids": {"M0": 0, "M1": 1, "M2": 2, "M3": 3},
+    "mapping_root_ids": {"M1": 0, "43101": 1, "43102": 2, "43103": 3},
+    "body_per_group": ["dimension uint32 little-endian", "scale IEEE float32 little-endian", "one uint8 q+3 per coordinate"],
+    "group_order": {
+      "M0": ["language"],
+      "M1": ["projector_layer_1", "projector_layer_2"],
+      "M2": ["vision", "projector", "language"],
+      "M3": ["shared"]
+    },
+    "scale": "float32(max(abs(float32 coordinates))/float32(3))",
+    "zero_vector": "scale float32 zero and every stored symbol byte equals 3",
+    "rounding": "numpy.rint round-to-nearest-even then clip to [-3,3]",
+    "decoded_dtype": "float32",
+    "codec": "zlib.compress(body, level=9)",
+    "complexity_bits": "8 times complete adapter.mms2 file size",
+    "required_outputs": [
+      "adapter.mms2",
+      "adapter_summary.json",
+      "decoded_coordinates.pt",
+      "decoded_model_hash.json"
+    ]
+  },
+  "evaluation": {
+    "batch_size": 8,
+    "num_workers": 2,
+    "persistent_workers": true,
+    "pin_memory": true,
+    "prefetch_factor": 2,
+    "shuffle": false,
+    "drop_last": false,
+    "model_forward_dtype": "bfloat16 autocast",
+    "logits_dtype_for_log_softmax": "float32",
+    "sample_risk_accumulator": "float64",
+    "risk_aggregation": "mean target-token risk inside each sample, then equal mean over independent images",
+    "alpha": 0.5,
+    "vocab_size": 6400,
+    "smoothing": "(1-alpha)*p+alpha/V",
+    "loss_units": "bits",
+    "formal_model_count": 10,
+    "familywise_delta": 0.05,
+    "per_model_delta": 0.005,
+    "description_complexity_nats": "C*ln(2)+2*ln(C)",
+    "bound": "R_hat+Delta_alpha*sqrt((complexity+ln(1/delta))/(2*m))",
+    "random_baseline_bits": 12.643856189774725,
+    "nonvacuous_margin": "random baseline minus raw compression upper bound",
+    "primary_bound": "raw, unclipped compression upper bound",
+    "required_risks": [
+      "unquantized full training risk",
+      "decoded quantized full training risk",
+      "decoded quantized validation risk"
+    ]
+  },
+  "diagnostics": {
+    "status": "secondary descriptive only",
+    "models": [
+      "M1",
+      "M2-root1",
+      "M2-root2",
+      "M2-root3",
+      "M3-root1",
+      "M3-root2",
+      "M3-root3"
+    ],
+    "conditions": ["correct", "paired_shuffled", "none"],
+    "pairing": "sort validation images by raw SHA256 digest and swap adjacent images",
+    "shuffle_effect_unit": "mean of the two mismatch-minus-correct effects inside each disjoint pair",
+    "shuffle_bootstrap": {
+      "units": 1000,
+      "repetitions": 10000,
+      "seed": 2028,
+      "rng": "numpy Generator PCG64",
+      "interval": "percentile 95% using numpy.quantile method=linear"
+    },
+    "none_effect_unit": "per-image none-minus-correct paired difference",
+    "none_bootstrap": {
+      "units": 2000,
+      "repetitions": 10000,
+      "seed": 2029,
+      "rng": "numpy Generator PCG64",
+      "interval": "percentile 95% using numpy.quantile method=linear"
+    },
+    "model_selection_use": false,
+    "formal_hypothesis_test": false
+  },
+  "tests": {
+    "structure": [
+      "M0 has exactly 4096 trainable coordinates",
+      "M1 has exactly two 2048-coordinate tensors",
+      "M2 dimensions are exactly 582, 2327, and 1187",
+      "M3 has exactly one 4096-coordinate tensor",
+      "M2 and M3 target sets are identical"
+    ],
+    "initialization": [
+      "all zero-coordinate low-rank updates are exactly zero",
+      "all base tensors and configurations match their recorded hashes",
+      "M1, zero-coordinate M2, and zero-coordinate M3 projector outputs match on deterministic CPU float32 tensors with rtol 0 and atol 1e-6"
+    ],
+    "gradient": [
+      "M0 has gradients only on its language coordinate",
+      "M1 has gradients only on its two projector coordinates",
+      "M2 has nonzero gradients on all three coordinate groups",
+      "separate module-enabled backward probes show vision, projector, and language contributions to M3",
+      "all base parameter gradients are None"
+    ],
+    "mapping": [
+      "every coordinate has positive use count for every predeclared applicable mapping root",
+      "M3 counts are global rather than per module",
+      "mapping hashes and use-count histogram hashes reproduce"
+    ],
+    "codec": [
+      "MMS2 independently decodes using frozen assets, code, protocol, and adapter only",
+      "reported complexity equals exact adapter file bytes times eight",
+      "two clean decodes have identical canonical model hashes",
+      "decoded risk evaluation repeats"
+    ],
+    "data": [
+      "train and validation exact hashes are internally unique and disjoint",
+      "all selected pHash distances are greater than six from history and one another",
+      "all four groups have identical target token IDs per sample",
+      "no target truncation occurs",
+      "selection and membership receipts reproduce"
+    ],
+    "smoke_samples": 256
+  },
+  "implementation": {
+    "new_files": [
+      "model/global_subspace_lora.py",
+      "experiments/build_stage2_dataset.py",
+      "experiments/stage2_protocol.py",
+      "experiments/stage2_target_registry.json",
+      "trainer/train_stage2.py",
+      "experiments/quantize_stage2_adapter.py",
+      "experiments/evaluate_stage2_risk.py",
+      "experiments/compute_stage2_bound.py",
+      "experiments/run_stage2_pipeline.py",
+      "experiments/summarize_stage2.py",
+      "tests/test_global_subspace_lora.py",
+      "tests/test_stage2_gradient_scope.py",
+      "tests/test_stage2_codec.py",
+      "tests/test_stage2_dataset_leakage.py",
+      "tests/test_stage2_reproducibility.py"
+    ],
+    "modified_files": ["model/model_vlm.py", "requirements.txt"],
+    "model_vlm_allowed_changes": [
+      "adapter configuration",
+      "gradient-enabled vision forward only when a trainable vision adapter exists",
+      "low-rank wrapper injection",
+      "target and coordinate state exposure"
+    ],
+    "forbidden_changes": [
+      "historical standard projector behavior",
+      "historical LowDimensionalProjector behavior",
+      "historical phase2 protocol or results",
+      "Phase 3 archive or ignored results"
+    ],
+    "implementation_file_sha256": null,
+    "target_registry_sha256": null,
+    "environment_manifest_sha256": null
+  },
+  "execution_order": [
+    "archive Phase 3 and immutable inputs",
+    "create isolated worktree and protocol draft",
+    "implement deterministic global subspace LoRA",
+    "implement remaining Stage 2 pipeline",
+    "pass all unit tests",
+    "verify mapping roots and run 256-sample forward/backward checks",
+    "run 36 development experiments",
+    "select and record learning rates",
+    "commit frozen implementation",
+    "materialize and independently commit final protocol",
+    "create annotated stage2-protocol-v1 tag",
+    "generate confirmation data after the tag",
+    "validate exact and perceptual leakage constraints",
+    "train 10 formal models in declared order",
+    "quantize and write MMS2 adapters",
+    "terminate training processes and decode in clean processes",
+    "evaluate full training and validation risks",
+    "run all seven visual diagnostics",
+    "compute ten Bonferroni-adjusted bounds",
+    "summarize T_k, G_k, risk/complexity decompositions, and their arithmetic means",
+    "verify every output hash and write the final report"
+  ],
+  "failure_policy": {
+    "automatic_protocol_changes": false,
+    "automatic_hyperparameter_changes": false,
+    "automatic_batch_or_precision_changes": false,
+    "confirmation_resume": false,
+    "confirmation_failure_action": "retain failure receipt, repair only the external cause, and restart the exact run from the beginning on the same data and protocol",
+    "expected_preflight_stops": [
+      "no idle A40 satisfies the deterministic selection rule",
+      "a predeclared mapping root leaves at least one coordinate unused",
+      "fewer than 12000 eligible confirmation images remain"
+    ],
+    "other_stop_conditions": "any failed test, hash, asset, data, environment, protocol, numerical, or reproducibility invariant",
+    "forbidden_reactions": [
+      "lower pHash threshold",
+      "reduce confirmation sample sizes",
+      "change seed or mapping root after confirmation begins",
+      "drop an unfavorable or failed formal run",
+      "select a different GPU",
+      "upgrade descriptive diagnostics into post-hoc formal tests"
+    ]
+  },
+  "interpretation": {
+    "primary_differences": {
+      "vision_cost": "T_k = B(M3,k)-B(M0,k)",
+      "shared_gain": "G_k = B(M2,k)-B(M3,k)"
+    },
+    "report_all_three_mapping_roots": true,
+    "report_arithmetic_means_as_descriptive_summaries": true,
+    "select_best_mapping_root": false,
+    "allowed_claims": [
+      "whether visual conditioning changes empirical risk for these frozen hypotheses",
+      "whether these VLM hypotheses require more encoded bits",
+      "whether their compression bounds are looser than the language-only counterparts",
+      "whether shared coordinates outperform independent module coordinates across the three predeclared mappings",
+      "descriptive sensitivity to correct, mismatched, and absent images"
+    ],
+    "forbidden_claims": [
+      "universal VLM generalization theory",
+      "all visual redundancy has been explained",
+      "pixel redundancy equals parameter-update redundancy",
+      "a nonvacuous NLL bound proves strong visual reasoning",
+      "same-source confirmation establishes out-of-distribution generalization"
+    ]
+  },
+  "pending_before_freeze": [
+    "selected A40 UUID and full environment receipt",
+    "projector base tensor and configuration hashes",
+    "mapping use-count statistics for all applicable roots",
+    "selected M0, M1, and shared M2/M3 learning rates",
+    "frozen implementation commit and implementation hashes",
+    "final target registry hash"
+  ]
+}
