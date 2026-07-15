@@ -1,6 +1,7 @@
 import os
 import torch
 import warnings
+from contextlib import nullcontext
 from .model_minimind import *
 from typing import Optional, Tuple, List, Union
 from torch import nn
@@ -37,6 +38,34 @@ class MMVisionProjector(nn.Module):
     def forward(self, x):
         return self.mlp(x)
 
+
+class Stage2BaseProjector(nn.Module):
+    """The M1 fixed projector base exposed under the Stage 2 canonical names."""
+
+    def __init__(self, in_dim, out_dim, seed=42):
+        super().__init__()
+        reference = LowDimensionalProjector(
+            in_dim=in_dim,
+            out_dim=out_dim,
+            subspace_dim=4096,
+            seed=seed,
+            train_norm=False,
+        )
+        self.mlp = nn.Sequential(
+            nn.LayerNorm(in_dim, eps=1e-5, elementwise_affine=False),
+            nn.Linear(in_dim, out_dim, bias=True),
+            nn.GELU(),
+            nn.Linear(out_dim, out_dim, bias=True),
+        )
+        with torch.no_grad():
+            self.mlp[1].weight.copy_(reference.input_projection.base_weight)
+            self.mlp[1].bias.copy_(reference.input_projection.base_bias)
+            self.mlp[3].weight.copy_(reference.output_projection.base_weight)
+            self.mlp[3].bias.copy_(reference.output_projection.base_bias)
+
+    def forward(self, inputs):
+        return self.mlp(inputs)
+
 # 继承自语言模型
 class MiniMindVLM(MiniMindForCausalLM):
     config_class = VLMConfig
@@ -52,6 +81,12 @@ class MiniMindVLM(MiniMindForCausalLM):
                 self.config.subspace_dim,
                 self.config.subspace_seed,
                 self.config.subspace_train_norm,
+            )
+        elif self.config.projector_type == "stage2_base":
+            self.vision_proj = Stage2BaseProjector(
+                self.config.image_hidden_size,
+                self.config.hidden_size,
+                self.config.subspace_seed,
             )
         else:
             self.vision_proj = MMVisionProjector(self.config.image_hidden_size, self.config.hidden_size, target_tokens=self.config.image_token_len)
@@ -82,7 +117,12 @@ class MiniMindVLM(MiniMindForCausalLM):
     def get_image_embeddings(image_inputs, vision_model):
         if hasattr(image_inputs, 'keys'):
             image_inputs = {k: v.squeeze(1) if v.ndim > 2 and v.shape[1] == 1 else v for k, v in image_inputs.items()}
-        with torch.no_grad():
+        gradient_enabled = bool(
+            torch.is_grad_enabled()
+            and getattr(vision_model, "stage2_gradient_enabled", False)
+        )
+        context = nullcontext() if gradient_enabled else torch.no_grad()
+        with context:
             outputs = vision_model(**image_inputs)
         return outputs.last_hidden_state
 

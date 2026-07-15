@@ -151,6 +151,7 @@
         "Linear(768,768,bias=True)"
       ],
       "base_tensor_sha256": null,
+      "base_tensor_hash_protocol": "for each of four tensors, SHA256 of C-order little-endian float32 raw bytes",
       "configuration_sha256": null
     },
     "lora": {
@@ -266,6 +267,13 @@
     "train_sha256": "940757a4dabad9ea5d65cdb97b12f76c8991142338e8cf42e13b6f79d9fd71ab",
     "validation_path": "stage2-assets-v1/dataset/development/validation.parquet",
     "validation_sha256": "856b2184b852ca57eb41f9aa6cb810df834583f1acb051b45ddd2ec0635576c6",
+    "legacy_data_semantics": {
+      "purpose": "preserve the complete already-exposed 10000/2000 development sets used only for LR selection",
+      "image_marker_replacement": "replace every <image> in non-system turns with 64 image tokens, matching the historical VLMDataset",
+      "sequence_rule": "construct the complete chat template and truncate to the first 450 token IDs",
+      "target_rule": "use all assistant-span token IDs present in the truncated VLM sequence and place the identical IDs in every model group",
+      "assistant_eos_exception": "a target cut by the legacy 450-token truncation need not contain EOS; this exception is forbidden for confirmation data"
+    },
     "learning_rates": [0.005, 0.015, 0.05],
     "mapping_root_seed_pairs": [
       {"mapping_root": 43101, "train_seed": 42},
@@ -285,7 +293,7 @@
     "M0_rule": "minimize arithmetic mean bound over three mapping-root/seed pairs",
     "M1_rule": "minimize arithmetic mean bound over train seeds 42, 43, and 44",
     "M2_M3_rule": "choose one shared LR minimizing the equal-weight mean of all six M2/M3 bounds",
-    "tie_rule": "if candidate mean bounds differ by strictly less than 1e-4, choose the smaller learning rate",
+    "tie_rule": "choose the smallest learning rate among candidates whose mean is no more than the global minimum plus 1e-4",
     "selected_learning_rates": {
       "M0": null,
       "M1": null,
@@ -508,13 +516,17 @@
       "model/global_subspace_lora.py",
       "experiments/build_stage2_dataset.py",
       "experiments/stage2_protocol.py",
+      "experiments/stage2_model.py",
       "experiments/stage2_target_registry.json",
+      "experiments/stage2_environment.py",
+      "dataset/stage2_dataset.py",
       "trainer/train_stage2.py",
       "experiments/quantize_stage2_adapter.py",
       "experiments/evaluate_stage2_risk.py",
       "experiments/compute_stage2_bound.py",
       "experiments/run_stage2_pipeline.py",
       "experiments/summarize_stage2.py",
+      "experiments/analyze_stage2_diagnostics.py",
       "tests/test_global_subspace_lora.py",
       "tests/test_stage2_gradient_scope.py",
       "tests/test_stage2_codec.py",

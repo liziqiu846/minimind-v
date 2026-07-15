@@ -45,11 +45,14 @@ a stop condition, not permission to weaken the criteria.
 
 ## Development and freezing
 
-The only development decision is learning rate. Each of M0--M3 runs the grid
+The only development decision is learning rate. The already-exposed 10k/2k
+development files retain their historical 450-token truncation semantics so
+the declared sample counts and optimizer-step schedule remain unchanged; this
+legacy exception is never used for confirmation data. Each of M0--M3 runs the grid
 `{0.005, 0.015, 0.05}` with three predeclared seed/root pairs, for 36 runs.
 M0 and M1 select their own mean-bound minimizer. M2 and M3 share a single rate
-selected from the equal-weight mean of their six bounds. Two mean bounds whose
-difference is strictly less than `1e-4` are tied, and the smaller rate wins. Development uses
+selected from the equal-weight mean of their six bounds. Among rates whose mean
+is at most the global minimum plus `1e-4`, the smallest rate wins. Development uses
 delta 0.05 and is not formal evidence.
 
 After recording the selected rates and all pending deterministic hashes, the

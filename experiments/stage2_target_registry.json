@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "registry_id": "minimind-v-stage2-targets-v1",
+  "target_order": "canonical_name_utf8_ascending",
+  "factor_order": ["A", "B"],
+  "flatten_order": "C",
+  "modules": {
+    "vision": {
+      "rank": 4,
+      "factor_elements": 24576,
+      "targets": [
+        {
+          "canonical_name": "vision_encoder.vision_model.encoder.layers.10.self_attn.q_proj",
+          "in_features": 768,
+          "out_features": 768
+        },
+        {
+          "canonical_name": "vision_encoder.vision_model.encoder.layers.10.self_attn.v_proj",
+          "in_features": 768,
+          "out_features": 768
+        },
+        {
+          "canonical_name": "vision_encoder.vision_model.encoder.layers.11.self_attn.q_proj",
+          "in_features": 768,
+          "out_features": 768
+        },
+        {
+          "canonical_name": "vision_encoder.vision_model.encoder.layers.11.self_attn.v_proj",
+          "in_features": 768,
+          "out_features": 768
+        }
+      ]
+    },
+    "projector": {
+      "rank": 32,
+      "factor_elements": 98304,
+      "targets": [
+        {
+          "canonical_name": "vision_proj.mlp.1",
+          "in_features": 768,
+          "out_features": 768
+        },
+        {
+          "canonical_name": "vision_proj.mlp.3",
+          "in_features": 768,
+          "out_features": 768
+        }
+      ]
+    },
+    "language": {
+      "rank": 4,
+      "factor_elements": 50176,
+      "targets": [
+        {
+          "canonical_name": "lm_head",
+          "in_features": 768,
+          "out_features": 6400
+        },
+        {
+          "canonical_name": "model.layers.0.self_attn.q_proj",
+          "in_features": 768,
+          "out_features": 768
+        },
+        {
+          "canonical_name": "model.layers.0.self_attn.v_proj",
+          "in_features": 768,
+          "out_features": 384
+        },
+        {
+          "canonical_name": "model.layers.7.self_attn.q_proj",
+          "in_features": 768,
+          "out_features": 768
+        },
+        {
+          "canonical_name": "model.layers.7.self_attn.v_proj",
+          "in_features": 768,
+          "out_features": 384
+        }
+      ]
+    }
+  }
+}
