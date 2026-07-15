@@ -1,0 +1,95 @@
+{
+  "exposure_records": 48253,
+  "manual_exposure_outside_repository": false,
+  "phash": {
+    "hash_size": 8,
+    "highfreq_factor": 4,
+    "library": "ImageHash",
+    "preprocess": "Pillow ImageOps.exif_transpose then RGB",
+    "version": "4.3.2"
+  },
+  "protocol": "stage2_history_exposure_sources_v1",
+  "schema_version": 1,
+  "sources": [
+    {
+      "images": 10000,
+      "path": "dataset/caption_10k_seed42/train.parquet",
+      "rows": 10000,
+      "sha256": "5c4f38a4089a275f3169929986fd1340f2bb69d1bfba2d3dbc90ef4c156b9e93",
+      "source_name": "phase1_caption",
+      "source_split": "train"
+    },
+    {
+      "images": 2001,
+      "path": "dataset/caption_10k_seed42/validation.parquet",
+      "rows": 2001,
+      "sha256": "5b4899252be6def7b781d0e929770f6bd7dd24a47248468b6a7dcb4c0ca21fe1",
+      "source_name": "phase1_caption",
+      "source_split": "validation"
+    },
+    {
+      "images": 10000,
+      "path": "dataset/bound_caption_10k_seed42/train.parquet",
+      "rows": 10000,
+      "sha256": "940757a4dabad9ea5d65cdb97b12f76c8991142338e8cf42e13b6f79d9fd71ab",
+      "source_name": "stage1_development",
+      "source_split": "train"
+    },
+    {
+      "images": 2000,
+      "path": "dataset/bound_caption_10k_seed42/validation.parquet",
+      "rows": 2000,
+      "sha256": "856b2184b852ca57eb41f9aa6cb810df834583f1acb051b45ddd2ec0635576c6",
+      "source_name": "stage1_development",
+      "source_split": "validation"
+    },
+    {
+      "images": 10000,
+      "path": "experiments/runs/phase2/dataset/train.parquet",
+      "rows": 10000,
+      "sha256": "cae2fde24cb5711e32c7c7b86ea019ba88102664f9b72e1107ba4af6e23b1fc3",
+      "source_name": "phase2_confirmation",
+      "source_split": "train"
+    },
+    {
+      "images": 2000,
+      "path": "experiments/runs/phase2/dataset/validation.parquet",
+      "rows": 2000,
+      "sha256": "ab0d2cd3a836943ca218dae0c9b9e3c9ac05dcec86db13cc30d74067d90b2df8",
+      "source_name": "phase2_confirmation",
+      "source_split": "validation"
+    },
+    {
+      "images": 800,
+      "path": "experiments/runs/module_allocations/phase0/dataset/smoke_800.parquet",
+      "rows": 800,
+      "sha256": "add3eb9a638bca4ff2100ab6b9dc8e3a24f86234353bae9ab78bd04117434bb5",
+      "source_name": "phase3_phase0",
+      "source_split": "smoke"
+    },
+    {
+      "images": 10000,
+      "path": "experiments/runs/module_allocations/phase_b/dataset/train.parquet",
+      "rows": 10000,
+      "sha256": "7d2db798170d183c770c4cdda5f2e0811292c0b9c84e2558381d5a625f1f1070",
+      "source_name": "phase3_confirmation",
+      "source_split": "train"
+    },
+    {
+      "images": 1446,
+      "path": "experiments/runs/module_allocations/phase_b/dataset/validation.parquet",
+      "rows": 1446,
+      "sha256": "7508c8ed3f1e1b23a95948d2d676ec4459aebb505c09113772040c8eaed266cf",
+      "source_name": "phase3_confirmation",
+      "source_split": "validation"
+    },
+    {
+      "files": 6,
+      "path": "dataset/eval_images",
+      "source_name": "repository_manual_eval_images",
+      "source_split": "manual"
+    }
+  ],
+  "unique_exact_images": 41071,
+  "unique_phashes": 41064
+}
