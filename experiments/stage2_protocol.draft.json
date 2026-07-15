@@ -169,6 +169,12 @@
       "integer_serialization": "uint64 little-endian unsigned",
       "negative_integer_fields": "forbidden",
       "A0_domain": "stage2-a0-v1",
+      "A0_message_fields": [
+        "domain",
+        "canonical_layer_name",
+        "row_index",
+        "column_index"
+      ],
       "A0_digest_rule": "raw=uint64_le(digest[0:8]); n=raw & (2^53-1); u=(n+0.5)/2^53",
       "A0_value_rule": "float32((2*u-1)/sqrt(d_in)) computed from binary64 intermediates",
       "mapping_domain": "stage2-map-v1",
@@ -279,7 +285,7 @@
     "M0_rule": "minimize arithmetic mean bound over three mapping-root/seed pairs",
     "M1_rule": "minimize arithmetic mean bound over train seeds 42, 43, and 44",
     "M2_M3_rule": "choose one shared LR minimizing the equal-weight mean of all six M2/M3 bounds",
-    "tie_rule": "choose the smallest LR whose mean is no more than global minimum plus 1e-4",
+    "tie_rule": "if candidate mean bounds differ by strictly less than 1e-4, choose the smaller learning rate",
     "selected_learning_rates": {
       "M0": null,
       "M1": null,
