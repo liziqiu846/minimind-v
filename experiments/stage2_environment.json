@@ -1,0 +1,132 @@
+{
+  "active_compute_processes": [
+    {
+      "gpu_uuid": "GPU-ffaa2b16-21a7-745b-f7c7-9e58f2502214",
+      "pid": 3243359,
+      "used_memory_mib": 14618
+    },
+    {
+      "gpu_uuid": "GPU-ffaa2b16-21a7-745b-f7c7-9e58f2502214",
+      "pid": 3245561,
+      "used_memory_mib": 414
+    },
+    {
+      "gpu_uuid": "GPU-e56a063c-98cb-5220-667f-4bdd2a7c0daa",
+      "pid": 2908747,
+      "used_memory_mib": 8198
+    },
+    {
+      "gpu_uuid": "GPU-e56a063c-98cb-5220-667f-4bdd2a7c0daa",
+      "pid": 2909356,
+      "used_memory_mib": 35076
+    },
+    {
+      "gpu_uuid": "GPU-8ece0ccf-0be1-3c7e-6e68-497d66fa5cae",
+      "pid": 2120884,
+      "used_memory_mib": 2416
+    }
+  ],
+  "gpu_inventory": [
+    {
+      "driver_version": "570.133.20",
+      "index": 0,
+      "memory_free_mib": 45499,
+      "memory_total_mib": 46068,
+      "name": "NVIDIA A40",
+      "uuid": "GPU-3e79d612-52da-90ce-9215-e2f1367ae2ba"
+    },
+    {
+      "driver_version": "570.133.20",
+      "index": 1,
+      "memory_free_mib": 45499,
+      "memory_total_mib": 46068,
+      "name": "NVIDIA A40",
+      "uuid": "GPU-ea0ec4c5-625e-be0d-c5cf-9b18971e5e9c"
+    },
+    {
+      "driver_version": "570.133.20",
+      "index": 2,
+      "memory_free_mib": 45499,
+      "memory_total_mib": 46068,
+      "name": "NVIDIA A40",
+      "uuid": "GPU-c9a8863d-0fc8-4a4a-d8ab-ff06e1466f11"
+    },
+    {
+      "driver_version": "570.133.20",
+      "index": 3,
+      "memory_free_mib": 25396,
+      "memory_total_mib": 40960,
+      "name": "NVIDIA A100-PCIE-40GB",
+      "uuid": "GPU-ffaa2b16-21a7-745b-f7c7-9e58f2502214"
+    },
+    {
+      "driver_version": "570.133.20",
+      "index": 4,
+      "memory_free_mib": 45499,
+      "memory_total_mib": 46068,
+      "name": "NVIDIA A40",
+      "uuid": "GPU-8e1547c5-b212-b319-786a-c17a3d644e0b"
+    },
+    {
+      "driver_version": "570.133.20",
+      "index": 5,
+      "memory_free_mib": 2211,
+      "memory_total_mib": 46068,
+      "name": "NVIDIA A40",
+      "uuid": "GPU-e56a063c-98cb-5220-667f-4bdd2a7c0daa"
+    },
+    {
+      "driver_version": "570.133.20",
+      "index": 6,
+      "memory_free_mib": 45499,
+      "memory_total_mib": 46068,
+      "name": "NVIDIA A40",
+      "uuid": "GPU-dc9b3899-d5cf-ff29-8870-c369ef8196a6"
+    },
+    {
+      "driver_version": "570.133.20",
+      "index": 7,
+      "memory_free_mib": 43075,
+      "memory_total_mib": 46068,
+      "name": "NVIDIA A40",
+      "uuid": "GPU-8ece0ccf-0be1-3c7e-6e68-497d66fa5cae"
+    }
+  ],
+  "pip_freeze": {
+    "normalization": "pip freeze --all lines sorted case-insensitively, LF terminated",
+    "path": "/home/lizhaohui/lzq/minimind-v-stage2/experiments/stage2_pip_freeze.txt",
+    "sha256": "d58af1bd5fa2e1a8973bb5f04c38e1ad26a32e338e515fa56014d1964ae77f4c"
+  },
+  "runtime": {
+    "cuda_runtime": "12.4",
+    "cudnn": 90100,
+    "packages": {
+      "ImageHash": "4.3.2",
+      "Pillow": "11.3.0",
+      "numpy": "1.26.4",
+      "pyarrow": "23.0.0",
+      "torch": "2.6.0",
+      "transformers": "4.57.6"
+    },
+    "platform": "Linux-5.4.0-216-generic-x86_64-with-glibc2.31",
+    "python": "3.10.18",
+    "python_executable": "/home/lizhaohui/lzq/minimind-v-stage2/../minimind-v/.conda-env/bin/python",
+    "zlib_build": "1.3.1",
+    "zlib_runtime": "1.3.1"
+  },
+  "schema_version": 1,
+  "selected_gpu": {
+    "driver_version": "570.133.20",
+    "index": 0,
+    "memory_free_mib": 45499,
+    "memory_total_mib": 46068,
+    "name": "NVIDIA A40",
+    "uuid": "GPU-3e79d612-52da-90ce-9215-e2f1367ae2ba"
+  },
+  "selection_rule": [
+    "name strictly contains A40",
+    "exclude GPUs with active compute processes",
+    "maximize free memory in MiB",
+    "break exact free-memory ties by ascending GPU UUID"
+  ]
+}

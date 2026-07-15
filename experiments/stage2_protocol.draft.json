@@ -150,9 +150,15 @@
         "GELU",
         "Linear(768,768,bias=True)"
       ],
-      "base_tensor_sha256": null,
+      "base_tensor_sha256": {
+        "vision_proj.mlp.1.weight": "637808c850b6caa99b20d95d7ae2cd836848f31ebe8025e8179a485ea33128a3",
+        "vision_proj.mlp.1.bias": "b84dab01932d5844cbef737e892677d0bfa1c1b8c650e773292a1d8cd84477c5",
+        "vision_proj.mlp.3.weight": "31f5fc3242249bf75b38f602ce58135bb43fa5cc4f8f95390288197efecad17b",
+        "vision_proj.mlp.3.bias": "646898f2f2627dcefdfbcc0fe36d9b6113fb439f26eaf8b9f08c021f0541fa31"
+      },
       "base_tensor_hash_protocol": "for each of four tensors, SHA256 of C-order little-endian float32 raw bytes",
-      "configuration_sha256": null
+      "aggregate_tensor_sha256": "3712c79bd4859f543c9030e237a49797c3dfe064a457dcce21dd7cf6a227921a",
+      "configuration_sha256": "5b88036932ef590707662f2dc61d3d5c84de26de89f6188064a9b5d3d6d613b0"
     },
     "lora": {
       "formula": "W0*x+b0+(alpha_r/r)*B(w)*A(w)*x",
@@ -196,7 +202,12 @@
         "M3": "one global count across all vision, projector, and language A/B elements"
       },
       "require_every_coordinate_used": true,
-      "usage_statistics": null
+      "usage_statistics": {
+        "receipt_path": "experiments/stage2_preflight.json",
+        "receipt_sha256": "a13628eacc3c63b605acebdf9657595bf9547d1155c5e51a0a3fdea2b13b4ae6",
+        "receipt_key": "mapping_usage_statistics",
+        "includes": "M1 historical mapping and every M0/M2/M3 predeclared mapping root; each group records dimension, min, max, mean, histogram, histogram SHA256, and mapping SHA256"
+      }
     }
   },
   "data": {
@@ -361,15 +372,18 @@
     "ImageHash": "4.3.2",
     "zlib_build": "1.3.1",
     "zlib_runtime": "1.3.1",
-    "pip_freeze_sha256": null,
+    "receipt_path": "experiments/stage2_environment.json",
+    "receipt_sha256": "3792ed30b5b6b99f4ba3ae22dea02e8569c35326f52d33d69ac4bacd351b5cd0",
+    "pip_freeze_path": "experiments/stage2_pip_freeze.txt",
+    "pip_freeze_sha256": "d58af1bd5fa2e1a8973bb5f04c38e1ad26a32e338e515fa56014d1964ae77f4c",
     "gpu_selection_rule": [
       "name strictly contains A40",
       "exclude GPUs with active compute processes",
       "maximize free memory",
       "break equal-free-memory ties by ascending GPU UUID"
     ],
-    "selected_gpu_uuid": null,
-    "selected_gpu_name": null,
+    "selected_gpu_uuid": "GPU-3e79d612-52da-90ce-9215-e2f1367ae2ba",
+    "selected_gpu_name": "NVIDIA A40",
     "single_physical_gpu_for_all_development_confirmation_and_evaluation": true
   },
   "compression": {
@@ -547,8 +561,8 @@
       "Phase 3 archive or ignored results"
     ],
     "implementation_file_sha256": null,
-    "target_registry_sha256": null,
-    "environment_manifest_sha256": null
+    "target_registry_sha256": "a16de2f97bf50d0dcca1d432cc89c5d9b6ed192343aac1e11c909716e5a696fe",
+    "environment_manifest_sha256": "3792ed30b5b6b99f4ba3ae22dea02e8569c35326f52d33d69ac4bacd351b5cd0"
   },
   "execution_order": [
     "archive Phase 3 and immutable inputs",
@@ -618,11 +632,7 @@
     ]
   },
   "pending_before_freeze": [
-    "selected A40 UUID and full environment receipt",
-    "projector base tensor and configuration hashes",
-    "mapping use-count statistics for all applicable roots",
     "selected M0, M1, and shared M2/M3 learning rates",
-    "frozen implementation commit and implementation hashes",
-    "final target registry hash"
+    "frozen implementation commit and implementation hashes"
   ]
 }

@@ -188,6 +188,19 @@ def build_factor_mappings(
         scale = signs.to(torch.float32) / counts[group][indices].to(torch.float32).sqrt()
         mappings[key] = FactorMapping(indices=indices, scales=scale)
 
+    mapping_digests = {
+        group: hashlib.sha256(b"stage2-factor-mapping-v1\0") for group in counts
+    }
+    for spec in specs:
+        group = _coordinate_group(model_group, spec)
+        for factor_name in ("A", "B"):
+            _, indices, signs = raw[(spec.canonical_name, factor_name)]
+            digest = mapping_digests[group]
+            digest.update(_string(spec.canonical_name))
+            digest.update(_string(factor_name))
+            digest.update(indices.numpy().astype("<u8", copy=False).tobytes())
+            digest.update(signs.numpy().astype("i1", copy=False).tobytes())
+
     statistics = {}
     for group, values in counts.items():
         unique, frequencies = torch.unique(values, sorted=True, return_counts=True)
@@ -206,8 +219,46 @@ def build_factor_mappings(
             "histogram": histogram,
             "histogram_serialization": "canonical JSON object count->frequency",
             "histogram_sha256": hashlib.sha256(histogram_bytes).hexdigest(),
+            "mapping_sha256": mapping_digests[group].hexdigest(),
         }
     return mappings, statistics
+
+
+def legacy_m1_mapping_statistics(model: nn.Module) -> dict[str, dict]:
+    layers = {
+        "projector_layer_1": model.vision_proj.input_projection,
+        "projector_layer_2": model.vision_proj.output_projection,
+    }
+    statistics = {}
+    for group, layer in layers.items():
+        dimension = int(layer.coordinates.numel())
+        indices = layer.coordinate_index.detach().cpu().reshape(-1).to(torch.int64)
+        counts = torch.bincount(indices, minlength=dimension)
+        if torch.any(counts == 0):
+            raise RuntimeError(f"M1 {group} contains an unused coordinate")
+        signs = torch.sign(layer.coordinate_scale.detach().cpu().reshape(-1)).to(torch.int8)
+        digest = hashlib.sha256(b"stage2-m1-historical-mapping-v1\0")
+        digest.update(indices.numpy().astype("<u8", copy=False).tobytes())
+        digest.update(signs.numpy().astype("i1", copy=False).tobytes())
+        unique, frequencies = torch.unique(counts, sorted=True, return_counts=True)
+        histogram = {
+            str(int(key)): int(value)
+            for key, value in zip(unique.tolist(), frequencies.tolist(), strict=True)
+        }
+        histogram_bytes = json.dumps(
+            histogram, sort_keys=True, separators=(",", ":")
+        ).encode("ascii")
+        statistics[group] = {
+            "dimension": dimension,
+            "minimum": int(counts.min().item()),
+            "maximum": int(counts.max().item()),
+            "mean": float(counts.to(torch.float64).mean().item()),
+            "histogram": histogram,
+            "histogram_serialization": "canonical JSON object count->frequency",
+            "histogram_sha256": hashlib.sha256(histogram_bytes).hexdigest(),
+            "mapping_sha256": digest.hexdigest(),
+        }
+    return statistics
 
 
 class Stage2CoordinateStore(nn.Module):
@@ -375,7 +426,7 @@ def configure_m1_coordinates(model: nn.Module) -> dict:
             "vision_proj.input_projection",
             "vision_proj.output_projection",
         ],
-        "mapping_statistics": None,
+        "mapping_statistics": legacy_m1_mapping_statistics(model),
     }
     return model.stage2_adapter  # type: ignore[attr-defined]
 

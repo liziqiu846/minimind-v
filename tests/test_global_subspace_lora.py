@@ -18,6 +18,7 @@ from model.global_subspace_lora import (
     a0_message,
     build_factor_mappings,
     deterministic_a0,
+    legacy_m1_mapping_statistics,
     mapping_message,
     projector_base_receipt,
     target_specs,
@@ -117,6 +118,10 @@ class GlobalSubspaceLoRATests(unittest.TestCase):
             projector_base_receipt(Holder(m1)),
             projector_base_receipt(Holder(stage2)),
         )
+        statistics = legacy_m1_mapping_statistics(Holder(m1))
+        self.assertEqual(set(statistics), {"projector_layer_1", "projector_layer_2"})
+        self.assertTrue(all(row["minimum"] > 0 for row in statistics.values()))
+        self.assertTrue(all(len(row["mapping_sha256"]) == 64 for row in statistics.values()))
 
 
 if __name__ == "__main__":
