@@ -308,9 +308,21 @@
     "M2_M3_rule": "choose one shared LR minimizing the equal-weight mean of all six M2/M3 bounds",
     "tie_rule": "choose the smallest learning rate among candidates whose mean is no more than the global minimum plus 1e-4",
     "selected_learning_rates": {
-      "M0": null,
-      "M1": null,
-      "M2_M3": null
+      "M0": 0.05,
+      "M1": 0.015,
+      "M2_M3": 0.05
+    },
+    "selection_receipt": {
+      "path": "experiments/runs/stage2/development_summary.json",
+      "sha256": "1b6215f482685bb0369bae3fe12d6dfbfd041b5a6c575c84ffd9bd5460fc1e22",
+      "development_protocol_commit": "8a3e7062ae28602185f0caee1a248ea65ad6ab6d",
+      "development_protocol_sha256": "d23f8e35620e3c986fd116d6e666218dd9f857fede1171c6eb01e18e7bc87b87",
+      "pipeline_plan_sha256": "38c2bd224c773d24603c51bed322b01de00ce5c3fc1f50de0397035589c7c91a",
+      "pipeline_progress_sha256": "00c959c36448fed5a7e10ed78d6f6dd7c15276e6e851abf291c608140e1c6058",
+      "verified_runs": 36,
+      "common_image_order_sha256": "aff229ee64655b208c0232342fd7cd031a54fba825418dae401be71b1d275c57",
+      "common_target_count_order_sha256": "81dcf8266a8382ab5a1d99f40a2ea8fad8025cf74eb8c38892ea9dfda4e135aa",
+      "formal_evidence": false
     }
   },
   "training": {
@@ -549,7 +561,8 @@
       "tests/test_stage2_gradient_scope.py",
       "tests/test_stage2_codec.py",
       "tests/test_stage2_dataset_leakage.py",
-      "tests/test_stage2_reproducibility.py"
+      "tests/test_stage2_reproducibility.py",
+      "tests/test_stage2_protocol.py"
     ],
     "modified_files": ["model/model_vlm.py", "requirements.txt"],
     "model_vlm_allowed_changes": [
@@ -564,7 +577,32 @@
       "historical phase2 protocol or results",
       "Phase 3 archive or ignored results"
     ],
-    "implementation_file_sha256": null,
+    "implementation_file_sha256": {
+      "model/global_subspace_lora.py": "4fcb3f0bf8786fe8eb8fce93bac32a4ec8341863c986f42a9f7c2118e2f12908",
+      "experiments/build_stage2_dataset.py": "a7647280473f2a69b602334b9575b216eccba47897ae1d5656761ec4261cdae3",
+      "experiments/verify_stage2_dataset.py": "4dc975991c9e633c0df2f016f60d422160739c29e8e4455ab2a9c9dc23907ffb",
+      "experiments/stage2_protocol.py": "e66f57bcdf76410a60aa633e3374b94cacff0cdb66b549aabff9c423d6f46d6b",
+      "experiments/stage2_model.py": "e3feb83d1bc4eaca43520375003eeaf7027d38ef09b09c56000f793b99a7884e",
+      "experiments/stage2_target_registry.json": "a16de2f97bf50d0dcca1d432cc89c5d9b6ed192343aac1e11c909716e5a696fe",
+      "experiments/stage2_environment.py": "dabadfdc31f073d656f81ca0afbc7bcc4db1ea87067cfb905dc9083b8eb7e238",
+      "dataset/stage2_dataset.py": "4454c272881d8b8b08fe9958dab0e6716f371cb60021bb3255388e1df6cad15a",
+      "trainer/train_stage2.py": "d2f44034d060df1a467e395a06307ca0b1853e75d67d74857c38ff40d6eb14fd",
+      "experiments/quantize_stage2_adapter.py": "cb473abc654b98767d32ed0f5086a81ea60e1793a55fbe13533d31f44a07ebcb",
+      "experiments/evaluate_stage2_risk.py": "7422eadcba05d3f34260f3789caf6f17a2f5eda9440cc8b4a69763b8a1e9b7db",
+      "experiments/compute_stage2_bound.py": "dec37b962feb43cf19ae340569398240f55775f3a8295b6997e775e69fa26605",
+      "experiments/run_stage2_pipeline.py": "2d6148a8b6956568c818d98fb8b020467a77de13053fc8d843504cff3106db24",
+      "experiments/summarize_stage2.py": "133c3158c3cb0556b24364d5fe5cbe179120b493b4b8f79c1ac0e59047066261",
+      "experiments/analyze_stage2_diagnostics.py": "1957e32954711a7677ef60fa5fbbdf6c19c771e0675f71738b0101df766993a1",
+      "experiments/finalize_stage2_report.py": "b5f3e988b5e92de9c0f44c19a135918f9b0cbe8e12e59430451d261fa1188f95",
+      "tests/test_global_subspace_lora.py": "767eab75dced1c816e835d2e63bb297ffcacab9049e9e92b3eaa26622d769596",
+      "tests/test_stage2_gradient_scope.py": "14f1e7b10b2ef8c7bba1a634cf070b13a0a95e8255a1886cce8eb68234dd00c2",
+      "tests/test_stage2_codec.py": "986d733cef1f933f60f78abfa199fa80927305cb486dea759fb81da4b3c5b276",
+      "tests/test_stage2_dataset_leakage.py": "b128023a91c45f00ba8688db7db31599d46aba762876cb9ff1d23ec0ff31eefc",
+      "tests/test_stage2_reproducibility.py": "b6b93897b15c28fee942005831dfe199f9cc520d997a7325b47d24e445d8e40d",
+      "tests/test_stage2_protocol.py": "1bc66600d790395874fdfb463d9ff4f300a3dd8a1a9c1db1f8e69867a646afeb",
+      "model/model_vlm.py": "5f702ddb6f4e1ba84e58ce1373dfa7da9e8c0e30d70676789f038404c6a3d4b9",
+      "requirements.txt": "0b6434eb1f57a9c86f72b9b1532994ffd37588591e29e6df700fd33acd036511"
+    },
     "target_registry_sha256": "a16de2f97bf50d0dcca1d432cc89c5d9b6ed192343aac1e11c909716e5a696fe",
     "environment_manifest_sha256": "3792ed30b5b6b99f4ba3ae22dea02e8569c35326f52d33d69ac4bacd351b5cd0"
   },
@@ -636,7 +674,6 @@
     ]
   },
   "pending_before_freeze": [
-    "selected M0, M1, and shared M2/M3 learning rates",
-    "frozen implementation commit and implementation hashes"
+    "frozen implementation commit reference in the final protocol"
   ]
 }
