@@ -121,10 +121,7 @@ def validate_args(args: argparse.Namespace, protocol: Stage2Protocol) -> None:
         key = "M2_M3" if args.model_group in ("M2", "M3") else args.model_group
         if args.learning_rate != selected[key]:
             raise ValueError("formal learning rate differs from the frozen selection")
-        data = protocol.payload["data"]
-        expected = data["train_sha256"]
-        if sha256_file(args.data) != expected:
-            raise ValueError("formal training data hash differs from the frozen protocol")
+        protocol.verify_confirmation_data(args.data, "train")
 
 
 def main() -> None:

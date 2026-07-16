@@ -267,9 +267,11 @@
       "target_token_count",
       "assistant_eos_token_id"
     ],
-    "train_sha256": null,
-    "validation_sha256": null,
-    "split_manifest_sha256": null
+    "post_tag_receipts": {
+      "split_manifest": "split_manifest.json",
+      "independent_verification": "verification.json",
+      "binding": "formal data must use the frozen output path; the split manifest must reference the frozen protocol and the independent verification receipt must pass with matching manifest, train, and validation SHA256 values"
+    }
   },
   "development": {
     "purpose": "learning-rate selection only",

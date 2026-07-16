@@ -81,6 +81,81 @@ class Stage2Protocol:
         if not self.is_frozen:
             raise ValueError("formal confirmation requires a frozen Stage 2 protocol")
 
+    def confirmation_directory(self) -> Path:
+        directory = Path(self.payload["data"]["output_directory"])
+        return directory if directory.is_absolute() else REPO_ROOT / directory
+
+    def verify_confirmation_data(self, path: Path, role: str) -> dict[str, Any]:
+        """Verify post-tag confirmation data through its protocol-bound receipts."""
+        self.require_frozen()
+        if role not in ("train", "validation"):
+            raise ValueError(f"unknown confirmation data role: {role}")
+        data = self.payload["data"]
+        directory = self.confirmation_directory().resolve()
+        selected = Path(path).resolve()
+        expected_path = directory / f"{role}.parquet"
+        if selected != expected_path:
+            raise ValueError(
+                f"formal {role} data must use the frozen output path: {expected_path}"
+            )
+        receipts = data["post_tag_receipts"]
+        manifest_path = directory / receipts["split_manifest"]
+        verification_path = directory / receipts["independent_verification"]
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        verification = json.loads(verification_path.read_text(encoding="utf-8"))
+        reference = self.reference()
+        if manifest.get("schema_version") != 1 or manifest.get("protocol") != reference:
+            raise ValueError("confirmation split manifest does not bind the frozen protocol")
+        if (
+            verification.get("schema_version") != 1
+            or verification.get("status") != "passed"
+            or verification.get("protocol") != reference
+        ):
+            raise ValueError("confirmation verification receipt is not a frozen-protocol pass")
+        selection = manifest.get("selection", {})
+        if (
+            manifest.get("source", {}).get("sha256") != data["source_sha256"]
+            or selection.get("seed") != data["selection_seed"]
+            or selection.get("validation_first") != data["validation_images"]
+            or selection.get("training_second") != data["train_images"]
+        ):
+            raise ValueError("confirmation manifest selection rules differ from protocol")
+        required_manifest_invariants = {
+            "exact_unique_and_disjoint",
+            "target_eos_present",
+            "vlm_length_at_most_450",
+            "selected_phash_unique",
+        }
+        manifest_invariants = manifest.get("invariants", {})
+        if not required_manifest_invariants.issubset(manifest_invariants) or not all(
+            manifest_invariants[name] for name in required_manifest_invariants
+        ):
+            raise ValueError("confirmation split manifest has a failed invariant")
+        if verification.get("verified_images") != data["train_images"] + data["validation_images"]:
+            raise ValueError("confirmation verification image count differs from protocol")
+        verification_invariants = verification.get("invariants", {})
+        if not verification_invariants or not all(verification_invariants.values()):
+            raise ValueError("confirmation independent verification has a failed invariant")
+        if verification.get("split_manifest_sha256") != sha256_file(manifest_path):
+            raise ValueError("confirmation split manifest hash differs from verification receipt")
+        output = manifest.get("outputs", {}).get(role, {})
+        expected_rows = data[f"{role}_images"]
+        actual_sha256 = sha256_file(selected)
+        if output.get("rows") != expected_rows:
+            raise ValueError(f"formal {role} row count differs from frozen protocol")
+        if output.get("sha256") != actual_sha256:
+            raise ValueError(f"formal {role} hash differs from split manifest")
+        if verification.get(f"{role}_sha256") != actual_sha256:
+            raise ValueError(f"formal {role} hash differs from independent verification")
+        return {
+            "data_path": str(selected),
+            "data_sha256": actual_sha256,
+            "split_manifest_path": str(manifest_path),
+            "split_manifest_sha256": sha256_file(manifest_path),
+            "independent_verification_path": str(verification_path),
+            "independent_verification_sha256": sha256_file(verification_path),
+        }
+
     def verify_file(self, path: Path, expected_sha256: str, role: str) -> None:
         actual = sha256_file(path)
         if actual != expected_sha256:

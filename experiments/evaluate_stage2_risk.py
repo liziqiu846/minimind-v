@@ -142,9 +142,7 @@ def main() -> None:
         protocol.require_frozen()
         if args.max_samples:
             raise ValueError("formal risk cannot limit samples")
-        expected = protocol.payload["data"][f"{args.data_role}_sha256"]
-        if sha256_file(args.data) != expected:
-            raise ValueError("formal risk data differs from frozen protocol")
+        protocol.verify_confirmation_data(args.data, args.data_role)
     if args.model_kind == "decoded_quantized" and args.adapter is None:
         raise ValueError("decoded quantized risk requires the transmitted adapter")
     if args.image_condition != "correct" and args.model_group == "M0":

@@ -195,6 +195,7 @@ def main() -> None:
     args = parse_args()
     protocol_path = args.protocol or (DEFAULT_FROZEN if args.phase == "formal" else DEFAULT_DRAFT)
     protocol = Stage2Protocol.load(protocol_path, require_frozen=args.phase == "formal")
+    protocol.verify_immutable_inputs()
     if args.phase == "development":
         data = protocol.asset_path("development_train")
         specs = development_specs(protocol)
@@ -202,6 +203,10 @@ def main() -> None:
         data = Path(protocol.payload["data"]["output_directory"]) / "train.parquet"
         if not data.is_absolute():
             data = REPO_ROOT / data
+        protocol.verify_confirmation_data(data, "train")
+        protocol.verify_confirmation_data(
+            protocol.confirmation_directory() / "validation.parquet", "validation"
+        )
         specs = formal_specs(protocol)
     plan = []
     for ordinal, spec in enumerate(specs):
