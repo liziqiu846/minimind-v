@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "status": "draft",
+  "status": "frozen",
   "protocol_id": "minimind-v-stage2-joint-compression-v2",
   "objective": "Under the same caption task, model families, and 4096-coordinate information budget, obtain strict finite-hypothesis compression certificates over a declared finite eligible-image distribution using independent with-replacement draws, while comparing independent module coordinates with a globally shared coordinate vector.",
   "decision_sources": [
@@ -18,7 +18,7 @@
     "v1_protocol_tag": "stage2-protocol-v1",
     "v1_protocol_commit": "d1ebfb463e6f3c2ae7cd9436ade5994396b2f9e7",
     "v1_frozen_implementation_commit": "e25e414f77711735e2b3febd7128ac4f62636289",
-    "frozen_implementation_commit": null,
+    "frozen_implementation_commit": "62a8855e60db206507a180eb5cb7e97a7f7de805",
     "frozen_protocol_commit_binding": "resolve the annotated stage2-protocol-v2 tag target at runtime and require it to equal HEAD and to contain this exact protocol SHA256; the protocol cannot embed the hash of the commit that contains itself",
     "freeze_commit_message": "experiment: freeze stage2 protocol v2",
     "annotated_tag": "stage2-protocol-v2",
@@ -815,15 +815,50 @@
       "historical phase2 protocol or results",
       "Phase 3 archive or ignored results"
     ],
-    "implementation_file_sha256": {},
+    "implementation_file_sha256": {
+      "dataset/stage2_dataset.py": "4454c272881d8b8b08fe9958dab0e6716f371cb60021bb3255388e1df6cad15a",
+      "docs/stage2_v1_closeout.md": "6718461c346fcd324162e1757997ac734c0200ff0221bc805bbeec111e8dcad6",
+      "experiments/analyze_stage2_diagnostics.py": "eaf83ad8d85e946e2ae08eb4ed757eaabac635e0e9bb8bd23154c408f37ae080",
+      "experiments/audit_stage2_integrity.py": "0c5c694ca609032d965e169af86d67a87335818f269869527e7be722af6267f3",
+      "experiments/audit_stage2_v1.py": "43bb89b8f6292302fcc3dd932ae6626c58bbf714e8335f6e948ff9439c72ace0",
+      "experiments/audit_stage2_v2_behavior.py": "83b4a39a8f439e984307cfce82756abc31f59d218907a23cd5f2e6bb409f038b",
+      "experiments/build_stage2_dataset.py": "a7647280473f2a69b602334b9575b216eccba47897ae1d5656761ec4261cdae3",
+      "experiments/build_stage2_dataset_v2.py": "d6ae73e43978fc273c24cbd52b97eafdc28b15a40484ce87b5452fe07cb6a2e0",
+      "experiments/build_stage2_v2_history.py": "ba9b4b196ab7eaa97e0fc7fd0c65e47eed8f766573d37676d187a9e3b5082b03",
+      "experiments/compute_stage2_bound.py": "ac3245aaa721e65c8704e13cb9b81bf835e750717e3145bdfc6b71f2ffaafde4",
+      "experiments/evaluate_stage2_risk.py": "22a4f88d0bf0b3907302526e219a2d820fb9bf4ca18e44adf2dd423962a3bd80",
+      "experiments/finalize_stage2_report.py": "655655a5cb80d1be33f0bfd8db2ec58ab4465b6707511f5ada559d957a0a1ab6",
+      "experiments/quantize_stage2_adapter.py": "d42a0f0eecfd3c6977d04a3f446c48369e9505dd65d1c5f577b4e92ccc6cf785",
+      "experiments/run_stage2_pipeline.py": "ca5cf4fb506c4423ec6901aff55f366292f8c3fc11405cec25b32f4ae55fe7aa",
+      "experiments/stage2_environment.py": "af991f147471de311a7d2bb8501995cfd123417c6ba0247e75795df8daad26c8",
+      "experiments/stage2_model.py": "fa69e769a0c482b986ad1058498c156f6eaa26aad633a8807f7904d29593c0f4",
+      "experiments/stage2_protocol.py": "31a48794d255d16ce33281f66763d60acbaa0f4c231958490e0eedf28f49a3d9",
+      "experiments/stage2_target_registry.json": "a16de2f97bf50d0dcca1d432cc89c5d9b6ed192343aac1e11c909716e5a696fe",
+      "experiments/summarize_stage2.py": "f82dc51c590a8e01b4edb018c617032466ca9b6a0c83127f2c7adad28d9063db",
+      "experiments/verify_stage2_dataset.py": "4dc975991c9e633c0df2f016f60d422160739c29e8e4455ab2a9c9dc23907ffb",
+      "experiments/verify_stage2_dataset_v2.py": "25302bdb2e2e7bd991ed486aea68bc29308ae93c2b6fd23941c795d473d10793",
+      "model/global_subspace_lora.py": "4fcb3f0bf8786fe8eb8fce93bac32a4ec8341863c986f42a9f7c2118e2f12908",
+      "model/model_vlm.py": "5f702ddb6f4e1ba84e58ce1373dfa7da9e8c0e30d70676789f038404c6a3d4b9",
+      "requirements.txt": "0b6434eb1f57a9c86f72b9b1532994ffd37588591e29e6df700fd33acd036511",
+      "tests/test_global_subspace_lora.py": "767eab75dced1c816e835d2e63bb297ffcacab9049e9e92b3eaa26622d769596",
+      "tests/test_stage2_codec.py": "986d733cef1f933f60f78abfa199fa80927305cb486dea759fb81da4b3c5b276",
+      "tests/test_stage2_dataset_leakage.py": "b128023a91c45f00ba8688db7db31599d46aba762876cb9ff1d23ec0ff31eefc",
+      "tests/test_stage2_gradient_scope.py": "14f1e7b10b2ef8c7bba1a634cf070b13a0a95e8255a1886cce8eb68234dd00c2",
+      "tests/test_stage2_model_loading.py": "1cc708eafc1c63d5a353eb2754677740d5165d3f7abf7d1389b77aa08337b33e",
+      "tests/test_stage2_protocol.py": "fe162e13f397b326c2c9cffee438b615425766678d6b0e509799f52a62f7c181",
+      "tests/test_stage2_reproducibility.py": "b6b93897b15c28fee942005831dfe199f9cc520d997a7325b47d24e445d8e40d",
+      "tests/test_stage2_runtime_integrity.py": "33c3773d208e945768bae2c208da882b0c3b471d03bfaca58c03f7b7b7b139ea",
+      "tests/test_stage2_v2_sampling.py": "d4747092e357bc301675d23acf9df1d7b6b264d4296940135f8dc12461bebc45",
+      "trainer/train_stage2.py": "08679a8e675fb8ecd5b9f90e579a409f0250ac369a69eaf6cbb2bc8adf2400ec"
+    },
     "allowed_untracked_output_roots": [
       "dataset/stage2_confirm_seed2026",
       "dataset/stage2_confirm_v2_seed2028",
       "experiments/runs/stage2_v2"
     ],
     "target_registry_sha256": "a16de2f97bf50d0dcca1d432cc89c5d9b6ed192343aac1e11c909716e5a696fe",
-    "environment_manifest_sha256": "3792ed30b5b6b99f4ba3ae22dea02e8569c35326f52d33d69ac4bacd351b5cd0",
-    "pending_hash_freeze": true
+    "environment_manifest_sha256": "4c35c6c189242b2bbbb7e01de8e854436962c6d0a2f9e16cffa822d71ea743fc",
+    "pending_hash_freeze": false
   },
   "execution_order": [
     "preserve and audit immutable Stage 2 v1 artifacts",
@@ -896,11 +931,5 @@
     "v1_status": "exploratory computed compression-bound values only",
     "v2_required_claim_gate": "strict certificate language is allowed only after all v2 sampling, runtime-integrity, formal-run, and final-artifact audits pass"
   },
-  "pending_before_freeze": [
-    "complete implementation and tests",
-    "prove v1 behavior unchanged outside data identity, duplicate-aware bookkeeping, diagnostics pairing, and audit guards",
-    "freeze implementation file hashes and implementation commit",
-    "freeze environment receipt, pip-freeze hash, and selected A40 UUID",
-    "freeze final protocol commit and annotated tag"
-  ]
+  "pending_before_freeze": []
 }
