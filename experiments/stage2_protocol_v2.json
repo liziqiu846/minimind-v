@@ -19,10 +19,27 @@
     "v1_protocol_commit": "d1ebfb463e6f3c2ae7cd9436ade5994396b2f9e7",
     "v1_frozen_implementation_commit": "e25e414f77711735e2b3febd7128ac4f62636289",
     "frozen_implementation_commit": "62a8855e60db206507a180eb5cb7e97a7f7de805",
-    "frozen_protocol_commit_binding": "resolve the annotated stage2-protocol-v2 tag target at runtime and require it to equal HEAD and to contain this exact protocol SHA256; the protocol cannot embed the hash of the commit that contains itself",
-    "freeze_commit_message": "experiment: freeze stage2 protocol v2",
-    "annotated_tag": "stage2-protocol-v2",
+    "frozen_protocol_commit_binding": "resolve the annotated stage2-protocol-v2-gpu5 tag target at runtime and require it to equal HEAD and to contain this exact protocol SHA256; the protocol cannot embed the hash of the commit that contains itself",
+    "freeze_commit_message": "experiment: refreeze stage2 protocol v2 on gpu5",
+    "annotated_tag": "stage2-protocol-v2-gpu5",
     "remote_push": false
+  },
+  "protocol_amendment": {
+    "approved_date": "2026-07-18",
+    "reason": "The originally selected physical A40 became occupied before any v2 confirmation data or formal model run was created; the user approved refreezing on the currently idle equivalent A40 instead of waiting indefinitely.",
+    "supersedes_protocol_tag_for_future_v2_execution": "stage2-protocol-v2",
+    "superseded_protocol_commit": "04d828837c4b93ef5abec55e32345fa33013b613",
+    "previous_selected_gpu_uuid": "GPU-c9a8863d-0fc8-4a4a-d8ab-ff06e1466f11",
+    "new_selected_gpu_uuid": "GPU-e56a063c-98cb-5220-667f-4bdd2a7c0daa",
+    "formal_v2_data_generated_before_amendment": false,
+    "formal_v2_training_started_before_amendment": false,
+    "scientific_method_changed": false,
+    "development_selection_rerun_required": false,
+    "change_scope": [
+      "selected physical A40 UUID",
+      "environment receipt and pip-freeze path",
+      "protocol tag binding"
+    ]
   },
   "assets": {
     "root": "/home/lizhaohui/lzq/stage2-assets-v1",
@@ -519,9 +536,9 @@
   "environment": {
     "status": "frozen",
     "python_executable": "/home/lizhaohui/lzq/minimind-v/.conda-env/bin/python",
-    "receipt_path": "experiments/stage2_v2_environment.json",
-    "receipt_sha256": "4c35c6c189242b2bbbb7e01de8e854436962c6d0a2f9e16cffa822d71ea743fc",
-    "pip_freeze_path": "experiments/stage2_v2_pip_freeze.txt",
+    "receipt_path": "experiments/stage2_v2_gpu5_environment.json",
+    "receipt_sha256": "e8ba3aa1c9c0926944b0d90c969af436e87869307ce556878b16e2e19c527022",
+    "pip_freeze_path": "experiments/stage2_v2_gpu5_pip_freeze.txt",
     "pip_freeze_sha256": "d58af1bd5fa2e1a8973bb5f04c38e1ad26a32e338e515fa56014d1964ae77f4c",
     "gpu_selection_rule": [
       "name strictly contains A40",
@@ -529,7 +546,7 @@
       "maximize free memory in MiB",
       "break exact free-memory ties by ascending GPU UUID"
     ],
-    "selected_gpu_uuid": "GPU-c9a8863d-0fc8-4a4a-d8ab-ff06e1466f11",
+    "selected_gpu_uuid": "GPU-e56a063c-98cb-5220-667f-4bdd2a7c0daa",
     "selected_gpu_name": "NVIDIA A40",
     "single_physical_gpu_for_all_v2_confirmation_and_evaluation": true
   },
@@ -857,7 +874,7 @@
       "experiments/runs/stage2_v2"
     ],
     "target_registry_sha256": "a16de2f97bf50d0dcca1d432cc89c5d9b6ed192343aac1e11c909716e5a696fe",
-    "environment_manifest_sha256": "4c35c6c189242b2bbbb7e01de8e854436962c6d0a2f9e16cffa822d71ea743fc",
+    "environment_manifest_sha256": "e8ba3aa1c9c0926944b0d90c969af436e87869307ce556878b16e2e19c527022",
     "pending_hash_freeze": false
   },
   "execution_order": [
