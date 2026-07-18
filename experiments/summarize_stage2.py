@@ -90,6 +90,8 @@ def main() -> None:
     if args.output.exists():
         raise FileExistsError(f"summary already exists: {args.output}")
     protocol = Stage2Protocol.load(args.protocol, require_frozen=args.mode == "formal")
+    if args.mode == "formal" and protocol.payload.get("schema_version") == 2:
+        protocol.verify_runtime_integrity()
     if args.mode == "development":
         summary = development_summary(protocol, args.run_root)
     else:

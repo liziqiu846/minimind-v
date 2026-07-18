@@ -58,7 +58,10 @@ def analyze_run(run_dir: Path, protocol: Stage2Protocol) -> dict:
     shuffled = load_risk(shuffled_path, "paired_shuffled", protocol)
     absent = load_risk(none_path, "none", protocol)
     identities = [
-        payload["risk"]["sample_image_sha256"]
+        (
+            payload["risk"]["sample_image_sha256"],
+            payload["risk"].get("sample_id"),
+        )
         for payload in (correct, shuffled, absent)
     ]
     if identities[0] != identities[1] or identities[0] != identities[2]:
@@ -71,7 +74,10 @@ def analyze_run(run_dir: Path, protocol: Stage2Protocol) -> dict:
         raise ValueError("diagnostic permutation length is inconsistent")
     pairs = [(index, donor) for index, donor in enumerate(permutation) if index < donor]
     if len(pairs) * 2 != len(permutation):
-        raise ValueError("diagnostic permutation is not disjoint adjacent swapping")
+        raise ValueError("diagnostic permutation is not a disjoint involution")
+    hashes = correct["risk"]["sample_image_sha256"]
+    if any(hashes[left] == hashes[right] for left, right in pairs):
+        raise ValueError("diagnostic pairing contains an equal-image pair")
     mismatch_effect = shuffled_values - correct_values
     pair_units = np.asarray(
         [(mismatch_effect[left] + mismatch_effect[right]) / 2 for left, right in pairs],
@@ -137,6 +143,8 @@ def main() -> None:
     if args.output.exists():
         raise FileExistsError(f"diagnostic summary already exists: {args.output}")
     protocol = Stage2Protocol.load(args.protocol, require_frozen=True)
+    if protocol.payload.get("schema_version") == 2:
+        protocol.verify_runtime_integrity()
     rows = []
     for run_dir in sorted(args.run_root.glob("[0-9][0-9]_M[123]_*")):
         if (run_dir / "risk_decoded_validation_paired_shuffled.json").exists():
@@ -149,7 +157,7 @@ def main() -> None:
     if {(row["model_group"], row["mapping_root"]) for row in rows} != expected:
         raise ValueError("visual diagnostic model set is incomplete")
     output = {
-        "schema_version": 1,
+        "schema_version": protocol.payload.get("schema_version", 1),
         "status": "secondary descriptive only",
         "model_selection_use": False,
         "formal_hypothesis_test": False,

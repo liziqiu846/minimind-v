@@ -202,6 +202,8 @@ def main() -> None:
     args = parse_args()
     protocol = Stage2Protocol.load(args.protocol)
     protocol.verify_immutable_inputs()
+    if protocol.is_frozen and protocol.payload.get("schema_version") == 2:
+        protocol.verify_runtime_integrity()
     args.output_dir.mkdir(parents=True, exist_ok=True)
     decoded_path = args.output_dir / "decoded_coordinates.pt"
     summary_path = args.output_dir / "adapter_summary.json"

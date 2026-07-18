@@ -1,0 +1,44 @@
+{
+  "base_exact_images": 41071,
+  "merged_exact_images": 53071,
+  "merged_unique_phashes": 53064,
+  "phash": {
+    "hash_size": 8,
+    "highfreq_factor": 4,
+    "library": "ImageHash",
+    "preprocess": "Pillow ImageOps.exif_transpose then RGB",
+    "version": "4.3.2"
+  },
+  "protocol": "stage2_v2_history_sources_v1",
+  "schema_version": 1,
+  "sources": [
+    {
+      "exact_path": "/home/lizhaohui/lzq/minimind-v-stage2/experiments/stage2_history_exact_sha256.txt",
+      "exact_sha256": "a006eaa59e21ed745d34433267d40ecc4bc7bd39902da61423080af3c29d32f4",
+      "images": 41071,
+      "manifest_path": "/home/lizhaohui/lzq/minimind-v-stage2/experiments/stage2_history_exclusion_manifest.json",
+      "manifest_sha256": "c57fd6f8605e1133aae4906328f19546f15a97378dd08db6906bcf638a0a6ab9",
+      "phash_path": "/home/lizhaohui/lzq/minimind-v-stage2/experiments/stage2_history_phash.txt",
+      "phash_sha256": "b55280f33218775ebc5dcdee1415ab466af3ed04042d2c3e0f4ae00062705fbf",
+      "role": "pre_stage2_v1_history"
+    },
+    {
+      "images": 10000,
+      "membership_path": "/home/lizhaohui/lzq/minimind-v-stage2/dataset/stage2_confirm_seed2026/train_membership.jsonl",
+      "membership_sha256": "1ef46c00085002a16452e357fc723be801892e7de067be7316e9ced5441e9cda",
+      "role": "stage2_v1_confirmation_train"
+    },
+    {
+      "images": 2000,
+      "membership_path": "/home/lizhaohui/lzq/minimind-v-stage2/dataset/stage2_confirm_seed2026/validation_membership.jsonl",
+      "membership_sha256": "89f825797e58d85329a4b41f6fb810ea5e210b9465a1106c46401b553b71afb2",
+      "role": "stage2_v1_confirmation_validation"
+    },
+    {
+      "path": "/home/lizhaohui/lzq/minimind-v-stage2/experiments/audits/stage2_v1/audit_summary.json",
+      "role": "stage2_v1_closeout_audit",
+      "sha256": "1e47bedc6a29c61bfcfc0e11202a9aa03fc022e5be8b4800d1571743eb91d39b"
+    }
+  ],
+  "stage2_v1_images": 12000
+}

@@ -196,10 +196,17 @@ def main() -> None:
     protocol_path = args.protocol or (DEFAULT_FROZEN if args.phase == "formal" else DEFAULT_DRAFT)
     protocol = Stage2Protocol.load(protocol_path, require_frozen=args.phase == "formal")
     protocol.verify_immutable_inputs()
+    if args.phase == "formal" and protocol.payload.get("schema_version") == 2:
+        protocol.verify_runtime_integrity()
     if args.phase == "development":
         data = protocol.asset_path("development_train")
         specs = development_specs(protocol)
     else:
+        if (
+            protocol.payload.get("schema_version") == 2
+            and args.gpu_uuid != protocol.payload["environment"]["selected_gpu_uuid"]
+        ):
+            raise ValueError("formal GPU UUID differs from the frozen v2 environment")
         data = Path(protocol.payload["data"]["output_directory"]) / "train.parquet"
         if not data.is_absolute():
             data = REPO_ROOT / data

@@ -6,7 +6,7 @@ import hashlib
 import json
 import struct
 from pathlib import Path
-from typing import Mapping
+from typing import Mapping, Sequence
 
 import torch
 from torch import nn
@@ -21,6 +21,50 @@ from model.global_subspace_lora import (
 )
 from model.model_minimind import MiniMindConfig, MiniMindForCausalLM
 from model.model_vlm import MiniMindVLM, VLMConfig
+
+
+VLM_INITIAL_LLM_ALLOWED_MISSING_PREFIXES = ("vision_encoder.", "vision_proj.")
+
+
+def validate_initial_llm_load(
+    model_group: str,
+    model: nn.Module,
+    initial_state: Mapping[str, torch.Tensor],
+    missing_keys: Sequence[str],
+    unexpected_keys: Sequence[str],
+) -> dict:
+    """Reject every incomplete or non-exact language-model initialization."""
+    unexpected = list(unexpected_keys)
+    missing = list(missing_keys)
+    if unexpected:
+        raise ValueError(f"initial LLM has unexpected keys: {unexpected}")
+    allowed_prefixes = () if model_group == "M0" else VLM_INITIAL_LLM_ALLOWED_MISSING_PREFIXES
+    disallowed_missing = [
+        key for key in missing if not key.startswith(allowed_prefixes)
+    ]
+    if disallowed_missing:
+        raise ValueError(
+            "initial LLM is incomplete outside separately constructed vision modules: "
+            f"{disallowed_missing}"
+        )
+    model_state = model.state_dict()
+    initial_absent = [key for key in initial_state if key not in model_state]
+    if initial_absent:
+        raise ValueError(f"initial LLM tensors are absent from model: {initial_absent}")
+    mismatches = [
+        key
+        for key, tensor in initial_state.items()
+        if not torch.equal(model_state[key].detach().cpu(), tensor.detach().cpu())
+    ]
+    if mismatches:
+        raise ValueError(f"initial LLM tensors did not load exactly: {mismatches}")
+    return {
+        "initial_state_key_count": len(initial_state),
+        "missing_key_count": len(missing),
+        "allowed_missing_prefixes": list(allowed_prefixes),
+        "unexpected_keys": unexpected,
+        "exact_initial_tensor_match": True,
+    }
 
 
 def build_stage2_model(
@@ -70,10 +114,13 @@ def build_stage2_model(
     initial_path = protocol.asset_path("initial_llm")
     initial = torch.load(initial_path, map_location="cpu", weights_only=True)
     incompatible = model.load_state_dict(initial, strict=False)
-    if incompatible.unexpected_keys:
-        raise ValueError(f"initial LLM has unexpected keys: {incompatible.unexpected_keys}")
-    if model_group == "M0" and incompatible.missing_keys:
-        raise ValueError(f"M0 initial LLM is incomplete: {incompatible.missing_keys}")
+    load_receipt = validate_initial_llm_load(
+        model_group,
+        model,
+        initial,
+        incompatible.missing_keys,
+        incompatible.unexpected_keys,
+    )
     if model_group == "M1":
         adapter = configure_m1_coordinates(model)
     else:
@@ -83,6 +130,7 @@ def build_stage2_model(
     model.stage2_adapter.update(  # type: ignore[attr-defined]
         {
             "initial_llm_sha256": sha256_file(initial_path),
+            "initial_llm_load": load_receipt,
             "protocol": protocol.reference(),
         }
     )

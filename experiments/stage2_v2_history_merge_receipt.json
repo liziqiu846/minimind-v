@@ -1,0 +1,24 @@
+{
+  "counts": {
+    "base_exact_images": 41071,
+    "base_v1_exact_overlap": 0,
+    "merged_exact_images": 53071,
+    "merged_phash_rows": 53071,
+    "merged_unique_phashes": 53064,
+    "stage2_v1_images": 12000
+  },
+  "outputs": {
+    "exact_sha256": "64eb08c16000a357d681bbce14c0a0511346a43f1e9f253ec16d7e2831c3efd4",
+    "phash_sha256": "4836b8fa7cd1e2a23aa32e25a6a25fbbfef60241a3612a2f23310bbfe5160dfe",
+    "sources_sha256": "4f052146f3518bed5907b3d97c6a6d71182158bd0f9a304d3a7478b5d43367c2"
+  },
+  "receipt_id": "minimind-v-stage2-v2-history-merge-v1",
+  "rules": [
+    "include every exact image and pHash from the frozen pre-v1 history",
+    "include all 10000 train and 2000 validation images exposed by Stage 2 v1",
+    "do not remove or replace any prior history item",
+    "require exactly one pHash row for every exact image"
+  ],
+  "schema_version": 1,
+  "status": "passed"
+}

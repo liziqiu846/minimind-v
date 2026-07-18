@@ -1,0 +1,34 @@
+{
+  "audit_id": "minimind-v-stage2-v1-sampling-assumption-audit",
+  "evidence": {
+    "candidate_rank_depends_on_image_value": true,
+    "deduplicates_exact_images_before_selection": true,
+    "protocol_requires_exact_unique_and_disjoint": true,
+    "protocol_requires_pairwise_selected_phash_distance": true,
+    "selected_phash_enters_forbidden_set": true
+  },
+  "finding": "The selected image units are adaptively coupled because every selected pHash changes eligibility of later candidates. Exact-value deduplication and value-dependent top-k selection also do not implement independent draws from a declared distribution. Therefore the v1 sample count cannot be used as independent_train_samples under Equation (1) without an additional theorem.",
+  "implementation": {
+    "path": "/home/lizhaohui/lzq/minimind-v-stage2/experiments/build_stage2_dataset.py",
+    "sha256": "a7647280473f2a69b602334b9575b216eccba47897ae1d5656761ec4261cdae3"
+  },
+  "invalid_without_additional_theory": [
+    "strict 95 percent population generalization certificate",
+    "treating all 10000 v1 training images as independent samples in Equation (1)",
+    "unqualified non-vacuous certificate language for the ten v1 models"
+  ],
+  "protocol": {
+    "protocol_id": "minimind-v-stage2-joint-compression-v1",
+    "protocol_sha256": "854b13051916a198cc1abbb47126e32526d3cbe653970504ae2e102cc2d72b44"
+  },
+  "required_v2_repair": "declare a fixed eligible unit distribution and draw training and validation units independently with replacement; history filtering may be fixed, but no draw may change later-draw eligibility",
+  "schema_version": 1,
+  "severity": "critical_for_strict_certificate",
+  "status": "theorem_independence_not_established",
+  "unaffected_observations": [
+    "training and validation risks as computed on the frozen v1 datasets",
+    "MMS2 archive byte lengths and clean decode hashes",
+    "all predeclared M2 versus M3 computed-value comparisons",
+    "secondary correct, paired-shuffled, and absent-image diagnostics"
+  ]
+}

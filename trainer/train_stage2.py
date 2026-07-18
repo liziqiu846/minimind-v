@@ -128,6 +128,8 @@ def main() -> None:
     args = parse_args()
     protocol = Stage2Protocol.load(args.protocol, require_frozen=args.formal)
     protocol.verify_immutable_inputs()
+    if args.formal and protocol.payload.get("schema_version") == 2:
+        protocol.verify_runtime_integrity()
     validate_args(args, protocol)
     if args.output_dir.exists() and any(args.output_dir.iterdir()):
         raise FileExistsError(f"training output is not empty: {args.output_dir}")

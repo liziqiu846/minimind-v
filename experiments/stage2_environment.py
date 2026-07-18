@@ -86,6 +86,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--pip-freeze-output", type=Path, required=True)
     parser.add_argument("--expect-uuid")
+    parser.add_argument("--receipt-schema-version", type=int, choices=(1, 2), default=1)
     return parser.parse_args()
 
 
@@ -109,7 +110,7 @@ def main() -> None:
         for name in ("torch", "transformers", "numpy", "Pillow", "ImageHash", "pyarrow")
     }
     payload = {
-        "schema_version": 1,
+        "schema_version": args.receipt_schema_version,
         "selection_rule": [
             "name strictly contains A40",
             "exclude GPUs with active compute processes",
@@ -121,7 +122,7 @@ def main() -> None:
         "active_compute_processes": processes,
         "runtime": {
             "python": platform.python_version(),
-            "python_executable": sys.executable,
+            "python_executable": str(Path(sys.executable).resolve()),
             "packages": packages,
             "cuda_runtime": torch.version.cuda,
             "cudnn": torch.backends.cudnn.version(),

@@ -43,6 +43,8 @@ def main() -> None:
     if args.output.exists():
         raise FileExistsError(f"bound output already exists: {args.output}")
     protocol = Stage2Protocol.load(args.protocol, require_frozen=args.formal)
+    if args.formal and protocol.payload.get("schema_version") == 2:
+        protocol.verify_runtime_integrity()
     summary = json.loads(args.adapter_summary.read_text(encoding="utf-8"))
     decoded_hash = json.loads(args.decoded_model_hash.read_text(encoding="utf-8"))
     training = json.loads(args.decoded_training_risk.read_text(encoding="utf-8"))

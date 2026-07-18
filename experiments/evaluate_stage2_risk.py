@@ -62,7 +62,9 @@ def sample_risk_bits(
     return risks, counts
 
 
-def image_hashes(dataset: Stage2CaptionDataset) -> list[str]:
+def image_hashes(
+    dataset: Stage2CaptionDataset, *, allow_duplicates: bool = False
+) -> list[str]:
     values = []
     for index in range(len(dataset)):
         row = dataset.dataset[index]
@@ -75,8 +77,18 @@ def image_hashes(dataset: Stage2CaptionDataset) -> list[str]:
                     raise ValueError("Stage 2 diagnostics require one image per sample")
                 image_bytes = image_bytes[0]
             values.append(hashlib.sha256(image_bytes).hexdigest())
-    if len(values) != len(set(values)):
+    if not allow_duplicates and len(values) != len(set(values)):
         raise ValueError("risk dataset contains duplicate exact images")
+    return values
+
+
+def sample_ids(dataset: Stage2CaptionDataset) -> list[str]:
+    values = []
+    for index in range(len(dataset)):
+        row = dataset.dataset[index]
+        values.append(str(row.get("sample_id", f"row-{index:08d}")))
+    if len(values) != len(set(values)):
+        raise ValueError("risk dataset contains duplicate sample identities")
     return values
 
 
@@ -91,8 +103,36 @@ def pair_swap_permutation(hashes: list[str]) -> tuple[int, ...]:
     return tuple(permutation)
 
 
-def permutation_sha256(permutation: tuple[int, ...]) -> str:
-    digest = hashlib.sha256(b"stage2-sha256-pair-swap-v1\0")
+def pair_swap_permutation_v2(
+    hashes: list[str], identities: list[str]
+) -> tuple[int, ...]:
+    """Pair duplicate-aware draws by the frozen split-half cyclic-offset rule."""
+    if len(hashes) != len(identities):
+        raise ValueError("pairing hashes and sample identities have different lengths")
+    if len(hashes) % 2 or len(hashes) < 2:
+        raise ValueError("pair swap requires a positive even number of draws")
+    order = sorted(
+        range(len(hashes)),
+        key=lambda index: (bytes.fromhex(hashes[index]), identities[index].encode("utf-8")),
+    )
+    half = len(order) // 2
+    left = order[:half]
+    right = order[half:]
+    for offset in range(half):
+        rotated = right[offset:] + right[:offset]
+        if all(hashes[a] != hashes[b] for a, b in zip(left, rotated, strict=True)):
+            permutation = list(range(len(hashes)))
+            for a, b in zip(left, rotated, strict=True):
+                permutation[a] = b
+                permutation[b] = a
+            return tuple(permutation)
+    raise ValueError("no unequal-image perfect pairing exists for frozen validation draws")
+
+
+def permutation_sha256(
+    permutation: tuple[int, ...], domain: bytes = b"stage2-sha256-pair-swap-v1\0"
+) -> str:
+    digest = hashlib.sha256(domain)
     for value in permutation:
         digest.update(value.to_bytes(8, "little"))
     return digest.hexdigest()
@@ -140,6 +180,8 @@ def main() -> None:
     protocol.verify_immutable_inputs()
     if args.formal:
         protocol.require_frozen()
+        if protocol.payload.get("schema_version") == 2:
+            protocol.verify_runtime_integrity()
         if args.max_samples:
             raise ValueError("formal risk cannot limit samples")
         protocol.verify_confirmation_data(args.data, args.data_role)
@@ -167,14 +209,21 @@ def main() -> None:
         max_length=protocol.payload["training"]["max_sequence_length"],
         image_token_count=protocol.payload["model"]["image_token_count"],
     )
-    hashes = image_hashes(base_dataset)
+    v2 = protocol.payload.get("schema_version") == 2
+    hashes = image_hashes(base_dataset, allow_duplicates=v2)
+    identities = sample_ids(base_dataset)
     if args.max_samples:
         base_dataset = Subset(base_dataset, range(args.max_samples))
         hashes = hashes[:args.max_samples]
+        identities = identities[:args.max_samples]
     permutation = None
     dataset: Dataset = base_dataset
     if args.image_condition == "paired_shuffled":
-        permutation = pair_swap_permutation(hashes)
+        permutation = (
+            pair_swap_permutation_v2(hashes, identities)
+            if v2
+            else pair_swap_permutation(hashes)
+        )
         dataset = PairedImageDataset(base_dataset, permutation)
 
     evaluation = protocol.payload["evaluation"]
@@ -211,7 +260,7 @@ def main() -> None:
     if sample_count != len(dataset):
         raise RuntimeError("risk evaluation did not consume every sample")
     result = {
-        "schema_version": 1,
+        "schema_version": 2 if v2 else 1,
         "model_group": args.model_group,
         "mapping_root": args.mapping_root,
         "model_kind": args.model_kind,
@@ -236,13 +285,14 @@ def main() -> None:
             "alpha": alpha,
             "vocab_size": evaluation["vocab_size"],
             "units": "bits",
-            "aggregation": "mean target tokens inside sample, then equal mean of images",
+            "aggregation": evaluation["risk_aggregation"],
             "mean_sample_risk_bits": float(sums.item() / sample_count),
             "target_token_count": int(sum(token_counts)),
             "mean_target_tokens_per_sample": float(sum(token_counts) / sample_count),
             "sample_risk_bits": sample_values,
             "sample_target_token_counts": token_counts,
             "sample_image_sha256": hashes,
+            "sample_id": identities,
         },
         "model_state_sha256": tensor_state_sha256(model.state_dict()),
         "evaluation": {
@@ -255,10 +305,20 @@ def main() -> None:
         },
     }
     if permutation is not None:
+        permutation_domain = (
+            b"stage2-v2-duplicate-aware-pair-swap-v1\0"
+            if v2
+            else b"stage2-sha256-pair-swap-v1\0"
+        )
         result["pair_swap"] = {
-            "rule": "sort raw SHA256 ascending and swap adjacent images",
+            "rule": (
+                "sort by (image SHA256, sample_id), split halves, and use the "
+                "smallest unequal-image cyclic offset"
+                if v2
+                else "sort raw SHA256 ascending and swap adjacent images"
+            ),
             "permutation": list(permutation),
-            "permutation_sha256": permutation_sha256(permutation),
+            "permutation_sha256": permutation_sha256(permutation, permutation_domain),
         }
     write_json_atomic(args.output, result)
     printable = dict(result)
@@ -266,6 +326,7 @@ def main() -> None:
     printable["risk"].pop("sample_risk_bits")
     printable["risk"].pop("sample_target_token_counts")
     printable["risk"].pop("sample_image_sha256")
+    printable["risk"].pop("sample_id")
     print(json.dumps(printable, indent=2, sort_keys=True))
 
 
