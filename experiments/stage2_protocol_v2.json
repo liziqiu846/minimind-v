@@ -18,26 +18,29 @@
     "v1_protocol_tag": "stage2-protocol-v1",
     "v1_protocol_commit": "d1ebfb463e6f3c2ae7cd9436ade5994396b2f9e7",
     "v1_frozen_implementation_commit": "e25e414f77711735e2b3febd7128ac4f62636289",
-    "frozen_implementation_commit": "62a8855e60db206507a180eb5cb7e97a7f7de805",
-    "frozen_protocol_commit_binding": "resolve the annotated stage2-protocol-v2-gpu5 tag target at runtime and require it to equal HEAD and to contain this exact protocol SHA256; the protocol cannot embed the hash of the commit that contains itself",
-    "freeze_commit_message": "experiment: refreeze stage2 protocol v2 on gpu5",
-    "annotated_tag": "stage2-protocol-v2-gpu5",
-    "remote_push": false
+    "frozen_implementation_commit": "30cef94c5b770705f721135b2bf96da176681322",
+    "frozen_protocol_commit_binding": "resolve the annotated stage2-protocol-v2-fast-multigpu tag target at runtime and require it to equal HEAD and to contain this exact protocol SHA256; the protocol cannot embed the hash of the commit that contains itself",
+    "freeze_commit_message": "experiment: freeze stage2 v2 dynamic multi-A40 amendment",
+    "annotated_tag": "stage2-protocol-v2-fast-multigpu",
+    "remote_push": true
   },
   "protocol_amendment": {
-    "approved_date": "2026-07-18",
-    "reason": "The originally selected physical A40 became occupied before any v2 confirmation data or formal model run was created; the user approved refreezing on the currently idle equivalent A40 instead of waiting indefinitely.",
-    "supersedes_protocol_tag_for_future_v2_execution": "stage2-protocol-v2",
-    "superseded_protocol_commit": "04d828837c4b93ef5abec55e32345fa33013b613",
-    "previous_selected_gpu_uuid": "GPU-c9a8863d-0fc8-4a4a-d8ab-ff06e1466f11",
-    "new_selected_gpu_uuid": "GPU-e56a063c-98cb-5220-667f-4bdd2a7c0daa",
-    "formal_v2_data_generated_before_amendment": false,
-    "formal_v2_training_started_before_amendment": false,
+    "approved_date": "2026-07-19",
+    "reason": "After two complete formal bounds and an audited external-GPU interruption of run 3 under the single-GPU tag, the user explicitly requested using any available card and parallel independent-model execution to obtain results quickly.",
+    "supersedes_protocol_tag_for_future_v2_execution": "stage2-protocol-v2-gpu5",
+    "superseded_protocol_commit": "81b6bdf89fae107f2b4670eb833102c99b00a517",
+    "superseded_protocol_sha256": "89f5e8ee3083f9a66b86b8cef83b73d5a66a02b2915b4e55862dd911801a21d0",
+    "superseded_results_preserved": true,
+    "formal_v2_data_generated_before_amendment": true,
+    "formal_v2_training_started_before_amendment": true,
+    "superseded_completed_formal_bounds": 2,
+    "rerun_all_ten_models_from_scratch": true,
     "scientific_method_changed": false,
     "development_selection_rerun_required": false,
     "change_scope": [
-      "selected physical A40 UUID",
-      "environment receipt and pip-freeze path",
+      "dynamic selection among idle equivalent A40 GPUs",
+      "cross-model parallel execution while retaining one physical GPU per model",
+      "reuse of the exact independently verified v2 catalog and draw files",
       "protocol tag binding"
     ]
   },
@@ -371,13 +374,30 @@
       "target_token_count",
       "assistant_eos_token_id"
     ],
+    "reused_confirmation": {
+      "source_protocol": {
+        "protocol_id": "minimind-v-stage2-joint-compression-v2",
+        "protocol_sha256": "89f5e8ee3083f9a66b86b8cef83b73d5a66a02b2915b4e55862dd911801a21d0"
+      },
+      "source_tag": "stage2-protocol-v2-gpu5",
+      "source_commit": "81b6bdf89fae107f2b4670eb833102c99b00a517",
+      "exact_frozen_draws_reused": true,
+      "regeneration_forbidden": true,
+      "catalog_sha256": "ac2ba7397f603bf4a10bed82af600e290654f8b8665f8aa5cf62074b2757ebaf",
+      "catalog_manifest_sha256": "7f116e1e088a9eec3cf18b42567815d27ee1a66f8e7088459fc653b146526c61",
+      "split_manifest_sha256": "76d5257c8eaaea12d04960ff0d950ada380ff750cb3b4b78ea1cb5a332f8aaae",
+      "train_sha256": "3c3d90c525f43200d35ebd5b4ac1719c8336d278aecbf7e929997c8401b1d5ce",
+      "validation_sha256": "72456b3a6f43800a2302fbc376f905335c9bb52b5b8bdad5ddee07ec99f942e8",
+      "independent_verification_sha256": "03f8a4d05d810447a5599b6bfa517390210116e5f23c6966a2868135e07e69e8",
+      "replay_verification_sha256": "55f250d1bb7bef013dca4e27dcea48c27cc1d21185e2c2837675c412ce174a43"
+    },
     "post_tag_receipts": {
       "catalog": "eligible_catalog.parquet",
       "catalog_manifest": "catalog_manifest.json",
       "split_manifest": "split_manifest.json",
       "independent_verification": "verification.json",
       "replay_verification": "replay_verification.json",
-      "binding": "formal data must use the v2 frozen output paths; catalog, draw streams, split manifest, independent verification, and replay verification must bind the exact frozen v2 protocol and hashes"
+      "binding": "formal data must use the exact v2 output paths and hashes materialized under source tag stage2-protocol-v2-gpu5; all new model-stage receipts bind the current hardware-amended protocol"
     }
   },
   "development": {
@@ -548,7 +568,30 @@
     ],
     "selected_gpu_uuid": "GPU-e56a063c-98cb-5220-667f-4bdd2a7c0daa",
     "selected_gpu_name": "NVIDIA A40",
-    "single_physical_gpu_for_all_v2_confirmation_and_evaluation": true
+    "single_physical_gpu_for_all_v2_confirmation_and_evaluation": false,
+    "receipt_gpu_binding_superseded_by_hardware_execution": true,
+    "receipt_scope_after_amendment": "Python executable, pip freeze, driver/runtime metadata, and legacy source-run provenance"
+  },
+  "hardware_execution": {
+    "policy": "dynamic_idle_a40_pool",
+    "eligible_gpu_uuids": [
+      "GPU-3e79d612-52da-90ce-9215-e2f1367ae2ba",
+      "GPU-ea0ec4c5-625e-be0d-c5cf-9b18971e5e9c",
+      "GPU-c9a8863d-0fc8-4a4a-d8ab-ff06e1466f11",
+      "GPU-8e1547c5-b212-b319-786a-c17a3d644e0b",
+      "GPU-e56a063c-98cb-5220-667f-4bdd2a7c0daa",
+      "GPU-dc9b3899-d5cf-ff29-8870-c369ef8196a6",
+      "GPU-8ece0ccf-0be1-3c7e-6e68-497d66fa5cae"
+    ],
+    "required_gpu_name_substring": "A40",
+    "idle_definition": "absent from nvidia-smi compute-process GPU UUIDs at dispatch and at every formal stage preflight",
+    "per_model_single_physical_gpu": true,
+    "cross_model_parallelism_allowed": true,
+    "rerun_all_formal_models_from_scratch": true,
+    "max_parallel_workers": 7,
+    "assignment_order": "predeclared formal ordinals assigned to idle eligible GPUs sorted by descending free MiB then ascending UUID",
+    "scientific_inputs_or_algorithms_changed": false,
+    "superseded_single_gpu_tag_execution_claimed": false
   },
   "compression": {
     "format": "MMS2 version 1",
@@ -772,7 +815,7 @@
       "tracked worktree is clean and untracked paths are limited to declared output roots",
       "every implementation blob and current implementation file matches the frozen v2 protocol SHA256",
       "model loading rejects every missing language or lm_head tensor and every unexpected tensor",
-      "formal data and every stage receipt bind the exact v2 protocol reference"
+      "formal data bind the immutable source protocol reference while every new model-stage receipt binds the current amended protocol reference"
     ]
   },
   "implementation": {
@@ -790,6 +833,7 @@
       "experiments/evaluate_stage2_risk.py",
       "experiments/compute_stage2_bound.py",
       "experiments/run_stage2_pipeline.py",
+      "experiments/run_stage2_parallel.py",
       "experiments/summarize_stage2.py",
       "experiments/analyze_stage2_diagnostics.py",
       "experiments/finalize_stage2_report.py",
@@ -808,6 +852,7 @@
       "tests/test_stage2_v2_sampling.py",
       "tests/test_stage2_model_loading.py",
       "tests/test_stage2_runtime_integrity.py",
+      "tests/test_stage2_parallel.py",
       "docs/stage2_v1_closeout.md"
     ],
     "modified_files": [
@@ -818,6 +863,7 @@
       "experiments/evaluate_stage2_risk.py",
       "experiments/analyze_stage2_diagnostics.py",
       "experiments/run_stage2_pipeline.py",
+      "experiments/run_stage2_parallel.py",
       "experiments/finalize_stage2_report.py"
     ],
     "model_vlm_allowed_changes": [
@@ -844,12 +890,13 @@
       "experiments/build_stage2_v2_history.py": "ba9b4b196ab7eaa97e0fc7fd0c65e47eed8f766573d37676d187a9e3b5082b03",
       "experiments/compute_stage2_bound.py": "ac3245aaa721e65c8704e13cb9b81bf835e750717e3145bdfc6b71f2ffaafde4",
       "experiments/evaluate_stage2_risk.py": "22a4f88d0bf0b3907302526e219a2d820fb9bf4ca18e44adf2dd423962a3bd80",
-      "experiments/finalize_stage2_report.py": "655655a5cb80d1be33f0bfd8db2ec58ab4465b6707511f5ada559d957a0a1ab6",
+      "experiments/finalize_stage2_report.py": "ffd813cdaa323090fb5c76bed2bbcdb83e642c41eb55610d705c0c950f509f97",
       "experiments/quantize_stage2_adapter.py": "d42a0f0eecfd3c6977d04a3f446c48369e9505dd65d1c5f577b4e92ccc6cf785",
-      "experiments/run_stage2_pipeline.py": "ca5cf4fb506c4423ec6901aff55f366292f8c3fc11405cec25b32f4ae55fe7aa",
+      "experiments/run_stage2_parallel.py": "70d7eed9e8950da7bc64b8864622e3f1ee054fd891163a345ff0b7ff49038409",
+      "experiments/run_stage2_pipeline.py": "987600718302c9d53751150db2c54790006761074a1cb8f6e6e623cc287c41f7",
       "experiments/stage2_environment.py": "af991f147471de311a7d2bb8501995cfd123417c6ba0247e75795df8daad26c8",
       "experiments/stage2_model.py": "fa69e769a0c482b986ad1058498c156f6eaa26aad633a8807f7904d29593c0f4",
-      "experiments/stage2_protocol.py": "31a48794d255d16ce33281f66763d60acbaa0f4c231958490e0eedf28f49a3d9",
+      "experiments/stage2_protocol.py": "d62c3193ac98e961f41299212b3336aee1869bfc4470589faa8ad7d2d2c42501",
       "experiments/stage2_target_registry.json": "a16de2f97bf50d0dcca1d432cc89c5d9b6ed192343aac1e11c909716e5a696fe",
       "experiments/summarize_stage2.py": "f82dc51c590a8e01b4edb018c617032466ca9b6a0c83127f2c7adad28d9063db",
       "experiments/verify_stage2_dataset.py": "4dc975991c9e633c0df2f016f60d422160739c29e8e4455ab2a9c9dc23907ffb",
@@ -862,16 +909,18 @@
       "tests/test_stage2_dataset_leakage.py": "b128023a91c45f00ba8688db7db31599d46aba762876cb9ff1d23ec0ff31eefc",
       "tests/test_stage2_gradient_scope.py": "14f1e7b10b2ef8c7bba1a634cf070b13a0a95e8255a1886cce8eb68234dd00c2",
       "tests/test_stage2_model_loading.py": "1cc708eafc1c63d5a353eb2754677740d5165d3f7abf7d1389b77aa08337b33e",
-      "tests/test_stage2_protocol.py": "fe162e13f397b326c2c9cffee438b615425766678d6b0e509799f52a62f7c181",
+      "tests/test_stage2_parallel.py": "959743469a680314b3595ed2a6afb8aa6ab2bba3ad437b10d7ff4b7dcadc5b22",
+      "tests/test_stage2_protocol.py": "f7fed48bf571b8c2729e74e9e52f2a07984c1bee0c646a2875d7ee6cdf7186e2",
       "tests/test_stage2_reproducibility.py": "b6b93897b15c28fee942005831dfe199f9cc520d997a7325b47d24e445d8e40d",
-      "tests/test_stage2_runtime_integrity.py": "33c3773d208e945768bae2c208da882b0c3b471d03bfaca58c03f7b7b7b139ea",
+      "tests/test_stage2_runtime_integrity.py": "48abd329e6277b81becd5ba82e2fea33349ea627827f561c85411102110eaac8",
       "tests/test_stage2_v2_sampling.py": "d4747092e357bc301675d23acf9df1d7b6b264d4296940135f8dc12461bebc45",
       "trainer/train_stage2.py": "08679a8e675fb8ecd5b9f90e579a409f0250ac369a69eaf6cbb2bc8adf2400ec"
     },
     "allowed_untracked_output_roots": [
       "dataset/stage2_confirm_seed2026",
       "dataset/stage2_confirm_v2_seed2028",
-      "experiments/runs/stage2_v2"
+      "experiments/runs/stage2_v2",
+      "experiments/runs/stage2_v2_fast"
     ],
     "target_registry_sha256": "a16de2f97bf50d0dcca1d432cc89c5d9b6ed192343aac1e11c909716e5a696fe",
     "environment_manifest_sha256": "e8ba3aa1c9c0926944b0d90c969af436e87869307ce556878b16e2e19c527022",
@@ -890,7 +939,8 @@
     "create annotated stage2-protocol-v2 tag",
     "generate the eligible catalog and v2 confirmation draws only after the tag",
     "independently verify and replay the catalog and draws",
-    "run all ten formal models in the predeclared order",
+    "preserve the interrupted single-GPU run and its failure audit without reuse",
+    "rerun all ten formal models from scratch, retaining predeclared ordinals while dynamically dispatching independent models across idle A40s",
     "run seven secondary visual diagnostics",
     "summarize all roots without post-hoc selection",
     "finalize v2 report, artifact manifest, and v1-v2 comparison"
@@ -916,7 +966,7 @@
       "reject or redraw repeated units or cross-split overlaps",
       "change seed or mapping root after confirmation begins",
       "drop an unfavorable or failed formal run",
-      "select a different GPU",
+      "use a GPU outside the frozen eligible A40 pool or place one model across multiple GPUs",
       "upgrade descriptive diagnostics into post-hoc formal tests",
       "overwrite any v1 result or receipt"
     ]
