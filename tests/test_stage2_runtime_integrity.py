@@ -1,7 +1,9 @@
 import json
+import os
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from experiments.stage2_protocol import Stage2Protocol, path_is_within_declared_roots
 
@@ -42,6 +44,30 @@ class Stage2RuntimeIntegrityTests(unittest.TestCase):
             )
             with self.assertRaisesRegex(ValueError, "protocol ID"):
                 Stage2Protocol.load(path)
+
+    def test_dynamic_execution_resolves_exactly_one_eligible_uuid(self):
+        protocol = Stage2Protocol(
+            path=Path("protocol.json"),
+            sha256="ab" * 32,
+            payload={
+                "environment": {"selected_gpu_uuid": "GPU-old"},
+                "hardware_execution": {
+                    "policy": "dynamic_idle_a40_pool",
+                    "eligible_gpu_uuids": ["GPU-a", "GPU-b"],
+                },
+            },
+        )
+        with patch.dict(os.environ, {"CUDA_VISIBLE_DEVICES": "GPU-b"}, clear=False):
+            self.assertEqual(
+                protocol.execution_gpu_uuid(),
+                ("dynamic_idle_a40_pool", "GPU-b"),
+            )
+        with patch.dict(os.environ, {"CUDA_VISIBLE_DEVICES": "GPU-x"}, clear=False):
+            with self.assertRaisesRegex(ValueError, "outside"):
+                protocol.execution_gpu_uuid()
+        with patch.dict(os.environ, {"CUDA_VISIBLE_DEVICES": "GPU-a,GPU-b"}, clear=False):
+            with self.assertRaisesRegex(ValueError, "exactly one"):
+                protocol.execution_gpu_uuid()
 
 
 if __name__ == "__main__":

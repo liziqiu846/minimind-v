@@ -74,6 +74,15 @@ def markdown_report(payload: dict) -> str:
         ),
         "",
     ]
+    if payload.get("execution_amendment"):
+        used_gpus = sorted(
+            {row["gpu_uuid"] for row in payload.get("gpu_assignments", [])}
+        )
+        lines[-1:-1] = [
+            "- Execution amendment: all ten models were rerun from scratch, with each model confined to one A40 and independent models dispatched concurrently across dynamically idle A40s.",
+            f"- Physical A40s used: {len(used_gpus)} (`{'`, `'.join(used_gpus)}`).",
+            "- Conformance caveat: these results conform to the hardware-amended protocol recorded above; they are not claimed as a strict execution of the superseded single-GPU tag.",
+        ]
     return "\n".join(lines)
 
 
@@ -97,8 +106,11 @@ def main() -> None:
         else None
     )
     reference = protocol.reference()
-    if any(item.get("protocol") != reference for item in (summary, diagnostics, dataset_verification)):
-        raise ValueError("final report input provenance differs from frozen protocol")
+    confirmation_reference = protocol.confirmation_reference()
+    if any(item.get("protocol") != reference for item in (summary, diagnostics)):
+        raise ValueError("final model-result provenance differs from frozen protocol")
+    if dataset_verification.get("protocol") != confirmation_reference:
+        raise ValueError("final dataset provenance differs from frozen confirmation data")
     if summary.get("formal_model_count") != 10 or len(diagnostics.get("models", [])) != 7:
         raise ValueError("final formal or diagnostic model count is incomplete")
     if dataset_verification.get("status") != "passed":
@@ -106,13 +118,15 @@ def main() -> None:
     if is_v2:
         if args.dataset_replay is None or args.runtime_integrity is None:
             raise ValueError("v2 finalization requires dataset replay and runtime-integrity receipts")
-        if any(
-            item is None
-            or item.get("status") != "passed"
-            or item.get("protocol") != reference
-            for item in (dataset_replay, runtime_integrity)
+        if (
+            dataset_replay is None
+            or dataset_replay.get("status") != "passed"
+            or dataset_replay.get("protocol") != confirmation_reference
+            or runtime_integrity is None
+            or runtime_integrity.get("status") != "passed"
+            or runtime_integrity.get("protocol") != reference
         ):
-            raise ValueError("v2 replay or runtime-integrity receipt is not a protocol-bound pass")
+            raise ValueError("v2 data replay or execution integrity is not a protocol-bound pass")
         if runtime_integrity.get("runtime_integrity", {}).get("status") != "passed":
             raise ValueError("v2 nested runtime-integrity audit is not a pass")
     failures = list(args.formal_root.rglob("failure_receipt.json")) + list(args.formal_root.glob("pipeline_failure.json"))
@@ -121,6 +135,21 @@ def main() -> None:
     progress = json.loads((args.formal_root / "pipeline_progress.json").read_text())
     if progress.get("status") != "complete" or progress.get("completed_runs") != 10:
         raise ValueError("formal pipeline completion receipt is incomplete")
+    gpu_assignments = progress.get("assignments", [])
+    hardware = protocol.payload.get("hardware_execution")
+    if hardware:
+        eligible = set(hardware["eligible_gpu_uuids"])
+        if (
+            len(gpu_assignments) != 10
+            or {row.get("ordinal") for row in gpu_assignments} != set(range(1, 11))
+            or any(
+                row.get("status") != "complete"
+                or row.get("protocol") != reference
+                or row.get("gpu_uuid") not in eligible
+                for row in gpu_assignments
+            )
+        ):
+            raise ValueError("dynamic formal GPU assignments are incomplete or invalid")
     formal_rows = []
     for bound in summary["bounds"]:
         formal_rows.append({
@@ -192,15 +221,27 @@ def main() -> None:
         "descriptive_means": summary["descriptive_means"],
         "dataset_verification": dataset_verification,
         "dataset_replay": dataset_replay,
+        "confirmation_data_protocol": confirmation_reference,
         "runtime_integrity": runtime_integrity,
+        "hardware_execution": hardware,
+        "gpu_assignments": sorted(gpu_assignments, key=lambda row: row["ordinal"]),
         "diagnostics_path": str(args.diagnostics.resolve()),
         "diagnostics_sha256": sha256_file(args.diagnostics),
         "artifact_manifest_path": str(manifest_path.resolve()),
         "artifact_manifest_sha256": sha256_file(manifest_path),
         "best_mapping_root_selected": False,
         "primary_bound": "raw unclipped compression upper bound",
+        "execution_amendment": protocol.payload.get("protocol_amendment")
+        if protocol.payload.get("hardware_execution")
+        else None,
         "certificate": {
-            "status": "strict_finite_catalog_certificate" if is_v2 else "exploratory",
+            "status": (
+                "strict_finite_catalog_certificate_hardware_amended"
+                if is_v2 and protocol.payload.get("hardware_execution")
+                else "strict_finite_catalog_certificate"
+                if is_v2
+                else "exploratory"
+            ),
             "scope": (
                 protocol.payload["interpretation"]["certificate_scope"]
                 if is_v2
@@ -263,7 +304,7 @@ def main() -> None:
                 "protocol": reference,
                 "report_path": str(report_json_path.resolve()),
                 "report_sha256": sha256_file(report_json_path),
-                "certificate_status": "strict_finite_catalog_certificate",
+                "certificate_status": report["certificate"]["status"],
                 "sampling": "independent domain-separated with-replacement draws from a fixed finite catalog",
                 "scope": protocol.payload["interpretation"]["certificate_scope"],
             },

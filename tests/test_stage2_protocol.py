@@ -2,6 +2,7 @@ import hashlib
 import json
 import tempfile
 import unittest
+from copy import deepcopy
 from pathlib import Path
 
 from experiments.stage2_protocol import Stage2Protocol
@@ -208,6 +209,21 @@ class Stage2ProtocolTests(unittest.TestCase):
 
             receipt = protocol.verify_confirmation_data(files["train"], "train")
             self.assertEqual(receipt["catalog_sha256"], catalog_sha)
+
+            amended_payload = deepcopy(protocol.payload)
+            amended_payload["data"]["reused_confirmation"] = {
+                "source_protocol": reference,
+                "exact_frozen_draws_reused": True,
+                "regeneration_forbidden": True,
+            }
+            amended = Stage2Protocol(
+                path=directory / "stage2_protocol_v2_amended.json",
+                sha256="56" * 32,
+                payload=amended_payload,
+            )
+            amended_receipt = amended.verify_confirmation_data(files["train"], "train")
+            self.assertEqual(amended_receipt["confirmation_protocol"], reference)
+            self.assertEqual(amended_receipt["execution_protocol"], amended.reference())
 
             replay["train_draws"] = 1
             write_json(directory / "replay_verification.json", replay)

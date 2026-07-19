@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import subprocess
 import sys
 from dataclasses import dataclass
@@ -111,6 +112,34 @@ def validate_v2_payload(payload: dict[str, Any]) -> None:
         or payload["diagnostics"]["pairing_failure"].startswith("stop") is not True
     ):
         raise ValueError("Stage 2 v2 frozen counts or failure policy are inconsistent")
+    reused = data.get("reused_confirmation")
+    if reused is not None:
+        source = reused.get("source_protocol", {})
+        if (
+            set(source) != {"protocol_id", "protocol_sha256"}
+            or source.get("protocol_id") != payload["protocol_id"]
+            or not isinstance(source.get("protocol_sha256"), str)
+            or len(source["protocol_sha256"]) != 64
+            or reused.get("exact_frozen_draws_reused") is not True
+            or reused.get("regeneration_forbidden") is not True
+        ):
+            raise ValueError("Stage 2 v2 reused-confirmation provenance is inconsistent")
+    hardware = payload.get("hardware_execution")
+    if hardware is not None:
+        eligible = hardware.get("eligible_gpu_uuids")
+        if (
+            hardware.get("policy") != "dynamic_idle_a40_pool"
+            or not isinstance(eligible, list)
+            or not eligible
+            or len(eligible) != len(set(eligible))
+            or not all(isinstance(uuid, str) and uuid.startswith("GPU-") for uuid in eligible)
+            or hardware.get("per_model_single_physical_gpu") is not True
+            or hardware.get("cross_model_parallelism_allowed") is not True
+            or hardware.get("rerun_all_formal_models_from_scratch") is not True
+            or not isinstance(hardware.get("max_parallel_workers"), int)
+            or not 1 <= hardware["max_parallel_workers"] <= len(eligible)
+        ):
+            raise ValueError("Stage 2 v2 dynamic GPU execution policy is inconsistent")
 
 
 @dataclass(frozen=True)
@@ -151,6 +180,22 @@ class Stage2Protocol:
             "protocol_id": self.payload["protocol_id"],
             "protocol_sha256": self.sha256,
         }
+
+    def confirmation_reference(self) -> dict[str, str]:
+        """Return the protocol that originally materialized the frozen draws."""
+        reused = self.payload.get("data", {}).get("reused_confirmation")
+        if reused is None:
+            return self.reference()
+        source = reused.get("source_protocol")
+        if (
+            not isinstance(source, dict)
+            or set(source) != {"protocol_id", "protocol_sha256"}
+            or source.get("protocol_id") != self.payload["protocol_id"]
+            or not isinstance(source.get("protocol_sha256"), str)
+            or len(source["protocol_sha256"]) != 64
+        ):
+            raise ValueError("reused confirmation source protocol is malformed")
+        return dict(source)
 
     def require_frozen(self) -> None:
         if not self.is_frozen:
@@ -263,7 +308,7 @@ class Stage2Protocol:
         replay = json.loads(
             paths["replay_verification"].read_text(encoding="utf-8")
         )
-        reference = self.reference()
+        reference = self.confirmation_reference()
         for name, receipt in (
             ("catalog manifest", catalog_manifest),
             ("split manifest", split_manifest),
@@ -361,6 +406,8 @@ class Stage2Protocol:
         return {
             "data_path": str(selected),
             "data_sha256": actual_sha256,
+            "confirmation_protocol": reference,
+            "execution_protocol": self.reference(),
             "catalog_path": str(paths["catalog"]),
             "catalog_sha256": catalog_sha256,
             "catalog_manifest_path": str(paths["catalog_manifest"]),
@@ -432,6 +479,21 @@ class Stage2Protocol:
                 != environment["pip_freeze_sha256"]
             ):
                 raise ValueError("v2 environment receipt differs from frozen protocol")
+
+    def execution_gpu_uuid(self) -> tuple[str, str]:
+        """Resolve the one physical GPU assigned to the current process."""
+        environment = self.payload["environment"]
+        hardware = self.payload.get("hardware_execution")
+        if hardware is None:
+            return "single_frozen_gpu", environment["selected_gpu_uuid"]
+        visible = os.environ.get("CUDA_VISIBLE_DEVICES", "").strip()
+        if not visible or "," in visible or not visible.startswith("GPU-"):
+            raise ValueError(
+                "dynamic formal execution requires exactly one GPU UUID in CUDA_VISIBLE_DEVICES"
+            )
+        if visible not in hardware["eligible_gpu_uuids"]:
+            raise ValueError("execution GPU is outside the frozen dynamic A40 pool")
+        return hardware["policy"], visible
 
     def verify_runtime_integrity(self) -> dict[str, Any]:
         """Bind v2 formal execution to the annotated tag and frozen blobs."""
@@ -547,13 +609,14 @@ class Stage2Protocol:
             text=True,
         ).stdout.splitlines()
         inventory = [tuple(value.strip() for value in row.split(",", 1)) for row in gpu_rows]
+        execution_policy, execution_gpu_uuid = self.execution_gpu_uuid()
         selected_gpu = [
             (name, uuid)
             for name, uuid in inventory
-            if uuid == environment["selected_gpu_uuid"]
+            if uuid == execution_gpu_uuid
         ]
         if len(selected_gpu) != 1 or "A40" not in selected_gpu[0][0]:
-            raise ValueError("frozen physical A40 is absent from the live GPU inventory")
+            raise ValueError("selected execution A40 is absent from the live GPU inventory")
         process_result = subprocess.run(
             [
                 "nvidia-smi",
@@ -569,8 +632,8 @@ class Stage2Protocol:
             for line in process_result.stdout.splitlines()
             if line.strip()
         }
-        if environment["selected_gpu_uuid"] in active_gpu_uuids:
-            raise ValueError("frozen physical A40 has an active compute process")
+        if execution_gpu_uuid in active_gpu_uuids:
+            raise ValueError("selected execution A40 has an active compute process")
         return {
             "status": "passed",
             "protocol": self.reference(),
@@ -584,7 +647,11 @@ class Stage2Protocol:
             "observed_untracked_paths": untracked,
             "python_executable": str(Path(sys.executable).resolve()),
             "live_pip_freeze_sha256": hashlib.sha256(normalized_pip).hexdigest(),
-            "selected_gpu_uuid": environment["selected_gpu_uuid"],
+            "execution_gpu_policy": execution_policy,
+            "execution_gpu_uuid": execution_gpu_uuid,
+            "execution_gpu_name": selected_gpu[0][0],
+            "execution_gpu_idle": True,
+            "selected_gpu_uuid": execution_gpu_uuid,
             "selected_gpu_name": selected_gpu[0][0],
             "selected_gpu_idle": True,
         }

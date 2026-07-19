@@ -197,16 +197,22 @@ def main() -> None:
     protocol = Stage2Protocol.load(protocol_path, require_frozen=args.phase == "formal")
     protocol.verify_immutable_inputs()
     if args.phase == "formal" and protocol.payload.get("schema_version") == 2:
+        if protocol.payload.get("hardware_execution"):
+            os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu_uuid
         protocol.verify_runtime_integrity()
     if args.phase == "development":
         data = protocol.asset_path("development_train")
         specs = development_specs(protocol)
     else:
-        if (
-            protocol.payload.get("schema_version") == 2
-            and args.gpu_uuid != protocol.payload["environment"]["selected_gpu_uuid"]
-        ):
-            raise ValueError("formal GPU UUID differs from the frozen v2 environment")
+        if protocol.payload.get("schema_version") == 2:
+            hardware = protocol.payload.get("hardware_execution")
+            eligible = (
+                hardware["eligible_gpu_uuids"]
+                if hardware
+                else [protocol.payload["environment"]["selected_gpu_uuid"]]
+            )
+            if args.gpu_uuid not in eligible:
+                raise ValueError("formal GPU UUID is outside the frozen v2 execution policy")
         data = Path(protocol.payload["data"]["output_directory"]) / "train.parquet"
         if not data.is_absolute():
             data = REPO_ROOT / data
