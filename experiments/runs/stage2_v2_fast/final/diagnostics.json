@@ -1,0 +1,250 @@
+{
+  "bootstrap": {
+    "interval": "percentile 95% using numpy.quantile method=linear",
+    "none_seed": 2029,
+    "paired_shuffle_seed": 2028,
+    "repetitions": 10000,
+    "rng": "numpy Generator PCG64"
+  },
+  "formal_hypothesis_test": false,
+  "model_selection_use": false,
+  "models": [
+    {
+      "inputs": {
+        "correct_sha256": "23f53a758ec8e63203467e550afaa28fc106d55ef91672e21db323b27a8a49e5",
+        "none_sha256": "d8a002f7adb3ae6dfb89631fb7cec6de872ec74a15930ed5c9c0af0ffe83e178",
+        "pair_permutation_sha256": "b5703cc796204a86e035869f82ed5360425cbdcaadebdfaf97b7eabc57ef05e8",
+        "paired_shuffled_sha256": "e6715e6eb767c3c74de05e6bf1013c9d3ac3018df65ac57d4e9ac47d91d094d7"
+      },
+      "mapping_root": null,
+      "mean_risk_bits": {
+        "correct": 4.861854914784431,
+        "none": 5.465273255705833,
+        "paired_shuffled": 4.882883478403091
+      },
+      "model_group": "M1",
+      "none_minus_correct": {
+        "bootstrap_ci95_lower_bits": 0.5972896215081215,
+        "bootstrap_ci95_upper_bits": 0.6096261531293392,
+        "bootstrap_means_sha256": "113decb1d935877bce3fe93dcc251dd71c9e7255eb93821fbc6c7181928861cf",
+        "mean_bits": 0.603418340921402,
+        "unit": "per-image paired difference",
+        "units": 2000
+      },
+      "pair_count": 1000,
+      "paired_shuffled_minus_correct": {
+        "bootstrap_ci95_lower_bits": 0.01974757619202137,
+        "bootstrap_ci95_upper_bits": 0.0223495631724596,
+        "bootstrap_means_sha256": "97e2e2ff6229ddd77d9f482d327ff142880df5cb4f8beb849299925b5e6ff668",
+        "mean_bits": 0.021028563618659974,
+        "unit": "mean of two sample effects inside each disjoint image pair",
+        "units": 1000
+      },
+      "sample_count": 2000
+    },
+    {
+      "inputs": {
+        "correct_sha256": "c2230e7698cb694a58ef0ad6b764f91e386d80903899ff05ce8a2a5f1ee5a6d3",
+        "none_sha256": "3ae42d824a4f63b1d8d1793ad5a64ae7a8c23128c59518c635a263fc6933abc6",
+        "pair_permutation_sha256": "b5703cc796204a86e035869f82ed5360425cbdcaadebdfaf97b7eabc57ef05e8",
+        "paired_shuffled_sha256": "9532e3e797cc0926e41ede1d75e5369f6d7da57b2d823288586aca3551d28bf3"
+      },
+      "mapping_root": 43101,
+      "mean_risk_bits": {
+        "correct": 4.919502541899681,
+        "none": 5.488529460191726,
+        "paired_shuffled": 4.937788547635078
+      },
+      "model_group": "M2",
+      "none_minus_correct": {
+        "bootstrap_ci95_lower_bits": 0.5630954629987478,
+        "bootstrap_ci95_upper_bits": 0.5749642416030168,
+        "bootstrap_means_sha256": "784beb33fd435100a67d30442fc2bfc583067486eb5fa21bf9908cdd3ba70e4d",
+        "mean_bits": 0.5690269182920455,
+        "unit": "per-image paired difference",
+        "units": 2000
+      },
+      "pair_count": 1000,
+      "paired_shuffled_minus_correct": {
+        "bootstrap_ci95_lower_bits": 0.016960782384872437,
+        "bootstrap_ci95_upper_bits": 0.019611540803313253,
+        "bootstrap_means_sha256": "5523342586fdccd6e60a8201b47549457401a027860ee203c36fc5fbf4957e31",
+        "mean_bits": 0.018286005735397338,
+        "unit": "mean of two sample effects inside each disjoint image pair",
+        "units": 1000
+      },
+      "sample_count": 2000
+    },
+    {
+      "inputs": {
+        "correct_sha256": "aa8200aac565b893264fc0d7fbe4275f3d5b7eec1de2715b19e64184ec868875",
+        "none_sha256": "32e4efc8728f256c9874fbacea8b91629510af6aafc529ad9b0cb06d57c9feb5",
+        "pair_permutation_sha256": "b5703cc796204a86e035869f82ed5360425cbdcaadebdfaf97b7eabc57ef05e8",
+        "paired_shuffled_sha256": "96f12f867b218e557fcc0455ef3009f6d7f2ae28215238fb0d41a37a9e6dce42"
+      },
+      "mapping_root": 43102,
+      "mean_risk_bits": {
+        "correct": 4.902748154520989,
+        "none": 5.416880269050598,
+        "paired_shuffled": 4.922810015559197
+      },
+      "model_group": "M2",
+      "none_minus_correct": {
+        "bootstrap_ci95_lower_bits": 0.5084770748764277,
+        "bootstrap_ci95_upper_bits": 0.5198106968611479,
+        "bootstrap_means_sha256": "6ab6b0c82a035c093e9a622576e8f29d3c39fce76325dc66ab24f0ac73c97ba7",
+        "mean_bits": 0.5141321145296097,
+        "unit": "per-image paired difference",
+        "units": 2000
+      },
+      "pair_count": 1000,
+      "paired_shuffled_minus_correct": {
+        "bootstrap_ci95_lower_bits": 0.018443449574708937,
+        "bootstrap_ci95_upper_bits": 0.021675647726655006,
+        "bootstrap_means_sha256": "2648459a9261a0385a8eedb7a510b1d50bcda55f54c0ed09df956098be097e48",
+        "mean_bits": 0.020061861038208006,
+        "unit": "mean of two sample effects inside each disjoint image pair",
+        "units": 1000
+      },
+      "sample_count": 2000
+    },
+    {
+      "inputs": {
+        "correct_sha256": "857f7d60a7ecbf176b01a1988db2fd3ca0ad04a6b1a4354ddb888c5b21df64a2",
+        "none_sha256": "f95000dd19cd8bccf9a4439d9636a11e39040b630fa79b3b1531e546ab558ce9",
+        "pair_permutation_sha256": "b5703cc796204a86e035869f82ed5360425cbdcaadebdfaf97b7eabc57ef05e8",
+        "paired_shuffled_sha256": "9cdf7bc4a17ebefcfec97d3aaa724b862fecc213dad9c770561c57e46c644035"
+      },
+      "mapping_root": 43103,
+      "mean_risk_bits": {
+        "correct": 4.864659668326378,
+        "none": 5.410576494216919,
+        "paired_shuffled": 4.881190606117249
+      },
+      "model_group": "M2",
+      "none_minus_correct": {
+        "bootstrap_ci95_lower_bits": 0.5401678314715623,
+        "bootstrap_ci95_upper_bits": 0.5516581368207931,
+        "bootstrap_means_sha256": "4b1bc6fb337000c4d66fc06f27942f4f375f09875858520e6ff8cd514785659c",
+        "mean_bits": 0.545916825890541,
+        "unit": "per-image paired difference",
+        "units": 2000
+      },
+      "pair_count": 1000,
+      "paired_shuffled_minus_correct": {
+        "bootstrap_ci95_lower_bits": 0.015412724643945695,
+        "bootstrap_ci95_upper_bits": 0.017660317751765253,
+        "bootstrap_means_sha256": "7f69d2b1605aadb5f9b464af0b81cba5d8075d21423349f48f59eb3bc7d4e8c6",
+        "mean_bits": 0.016530937790870667,
+        "unit": "mean of two sample effects inside each disjoint image pair",
+        "units": 1000
+      },
+      "sample_count": 2000
+    },
+    {
+      "inputs": {
+        "correct_sha256": "ccd0c30c295a066ed412f21b8d10e0862b65e67ce4f3a6efc9634bcefcc4f606",
+        "none_sha256": "bdcbf51bc7a7c4a7f53c360c29ffb7dd3ad02f2f878fd44c539163c64bed5f8d",
+        "pair_permutation_sha256": "b5703cc796204a86e035869f82ed5360425cbdcaadebdfaf97b7eabc57ef05e8",
+        "paired_shuffled_sha256": "3b26a2ce5039a2644694beb2be69052a12d967bef49412ec004c2f7ee9380917"
+      },
+      "mapping_root": 43101,
+      "mean_risk_bits": {
+        "correct": 4.961433386325836,
+        "none": 5.518792057752609,
+        "paired_shuffled": 4.964632927656174
+      },
+      "model_group": "M3",
+      "none_minus_correct": {
+        "bootstrap_ci95_lower_bits": 0.5516538690268994,
+        "bootstrap_ci95_upper_bits": 0.5630212523370981,
+        "bootstrap_means_sha256": "c2d3d5ca691fa5b4b7a0db8c872e84e7c3dccfcb9d5aef6aa8aac88ae99ba412",
+        "mean_bits": 0.5573586714267731,
+        "unit": "per-image paired difference",
+        "units": 2000
+      },
+      "pair_count": 1000,
+      "paired_shuffled_minus_correct": {
+        "bootstrap_ci95_lower_bits": 0.0022451376140117645,
+        "bootstrap_ci95_upper_bits": 0.0041446374177932736,
+        "bootstrap_means_sha256": "ddbd0b989c605c62fd680d9c29d4db9e693ea53a9bfd963ab28db94e2781f6a4",
+        "mean_bits": 0.0031995413303375245,
+        "unit": "mean of two sample effects inside each disjoint image pair",
+        "units": 1000
+      },
+      "sample_count": 2000
+    },
+    {
+      "inputs": {
+        "correct_sha256": "4a546cf6cb89670b3a5b8d86a67a849b41919c33290be8f421932418b443138f",
+        "none_sha256": "cb532122023bacb4fc39cc15612a6684b7edda054534fd825f740d647b3aa601",
+        "pair_permutation_sha256": "b5703cc796204a86e035869f82ed5360425cbdcaadebdfaf97b7eabc57ef05e8",
+        "paired_shuffled_sha256": "09f36a99269257bacee5fe7abceebb2a0ce215ed48d8e7328471a27b3ea36ed7"
+      },
+      "mapping_root": 43102,
+      "mean_risk_bits": {
+        "correct": 4.990439758658409,
+        "none": 5.652439319610596,
+        "paired_shuffled": 4.999006472110748
+      },
+      "model_group": "M3",
+      "none_minus_correct": {
+        "bootstrap_ci95_lower_bits": 0.6556556734919547,
+        "bootstrap_ci95_upper_bits": 0.6685956062495708,
+        "bootstrap_means_sha256": "15d10bede993ba70ccb2dbc30f37280d7eae97abdfc757905e8642639dfb98e2",
+        "mean_bits": 0.6619995609521866,
+        "unit": "per-image paired difference",
+        "units": 2000
+      },
+      "pair_count": 1000,
+      "paired_shuffled_minus_correct": {
+        "bootstrap_ci95_lower_bits": 0.007423533383011818,
+        "bootstrap_ci95_upper_bits": 0.00970613829791546,
+        "bootstrap_means_sha256": "64c33a8346c59f68c5f8f79fd5dcebb2f9e92a92426743cef3b0c0ad4f1720c9",
+        "mean_bits": 0.008566713452339173,
+        "unit": "mean of two sample effects inside each disjoint image pair",
+        "units": 1000
+      },
+      "sample_count": 2000
+    },
+    {
+      "inputs": {
+        "correct_sha256": "093ca404aa3802095e3941b84e05349b897ebfea83cafce78e613b75f21e0eea",
+        "none_sha256": "4206438d8765f4267c6f3de0067333180e9d400956d5ee6c46e86bc6497eb7cf",
+        "pair_permutation_sha256": "b5703cc796204a86e035869f82ed5360425cbdcaadebdfaf97b7eabc57ef05e8",
+        "paired_shuffled_sha256": "8b7a3d08b0f1b2c159981e4953d0408ff9d79e008731ba6897a47ff7cc657889"
+      },
+      "mapping_root": 43103,
+      "mean_risk_bits": {
+        "correct": 4.9847812572717665,
+        "none": 5.571532921075821,
+        "paired_shuffled": 4.987822243452072
+      },
+      "model_group": "M3",
+      "none_minus_correct": {
+        "bootstrap_ci95_lower_bits": 0.5805671147793532,
+        "bootstrap_ci95_upper_bits": 0.5930742236196995,
+        "bootstrap_means_sha256": "429ee5bbd16da8bc9399cd417f81b6cfcf345becc43825399b0f4df6a5ca8ece",
+        "mean_bits": 0.5867516638040543,
+        "unit": "per-image paired difference",
+        "units": 2000
+      },
+      "pair_count": 1000,
+      "paired_shuffled_minus_correct": {
+        "bootstrap_ci95_lower_bits": 0.002199732369184494,
+        "bootstrap_ci95_upper_bits": 0.003917002081871033,
+        "bootstrap_means_sha256": "bec23deecc534dd4f6d2dc966da3f8782c433727eef890ec87f69d797665cfee",
+        "mean_bits": 0.003040986180305481,
+        "unit": "mean of two sample effects inside each disjoint image pair",
+        "units": 1000
+      },
+      "sample_count": 2000
+    }
+  ],
+  "protocol": {
+    "protocol_id": "minimind-v-stage2-joint-compression-v2",
+    "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3"
+  },
+  "schema_version": 2,
+  "status": "secondary descriptive only"
+}

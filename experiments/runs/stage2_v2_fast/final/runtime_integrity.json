@@ -1,0 +1,212 @@
+{
+  "confirmation_receipts": {
+    "train": {
+      "catalog_manifest_path": "/home/lizhaohui/lzq/minimind-v-stage2/dataset/stage2_confirm_v2_seed2028/catalog_manifest.json",
+      "catalog_manifest_sha256": "7f116e1e088a9eec3cf18b42567815d27ee1a66f8e7088459fc653b146526c61",
+      "catalog_path": "/home/lizhaohui/lzq/minimind-v-stage2/dataset/stage2_confirm_v2_seed2028/eligible_catalog.parquet",
+      "catalog_sha256": "ac2ba7397f603bf4a10bed82af600e290654f8b8665f8aa5cf62074b2757ebaf",
+      "confirmation_protocol": {
+        "protocol_id": "minimind-v-stage2-joint-compression-v2",
+        "protocol_sha256": "89f5e8ee3083f9a66b86b8cef83b73d5a66a02b2915b4e55862dd911801a21d0"
+      },
+      "data_path": "/home/lizhaohui/lzq/minimind-v-stage2/dataset/stage2_confirm_v2_seed2028/train.parquet",
+      "data_sha256": "3c3d90c525f43200d35ebd5b4ac1719c8336d278aecbf7e929997c8401b1d5ce",
+      "execution_protocol": {
+        "protocol_id": "minimind-v-stage2-joint-compression-v2",
+        "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3"
+      },
+      "independent_verification_path": "/home/lizhaohui/lzq/minimind-v-stage2/dataset/stage2_confirm_v2_seed2028/verification.json",
+      "independent_verification_sha256": "03f8a4d05d810447a5599b6bfa517390210116e5f23c6966a2868135e07e69e8",
+      "replay_verification_path": "/home/lizhaohui/lzq/minimind-v-stage2/dataset/stage2_confirm_v2_seed2028/replay_verification.json",
+      "replay_verification_sha256": "55f250d1bb7bef013dca4e27dcea48c27cc1d21185e2c2837675c412ce174a43",
+      "split_manifest_path": "/home/lizhaohui/lzq/minimind-v-stage2/dataset/stage2_confirm_v2_seed2028/split_manifest.json",
+      "split_manifest_sha256": "76d5257c8eaaea12d04960ff0d950ada380ff750cb3b4b78ea1cb5a332f8aaae"
+    },
+    "validation": {
+      "catalog_manifest_path": "/home/lizhaohui/lzq/minimind-v-stage2/dataset/stage2_confirm_v2_seed2028/catalog_manifest.json",
+      "catalog_manifest_sha256": "7f116e1e088a9eec3cf18b42567815d27ee1a66f8e7088459fc653b146526c61",
+      "catalog_path": "/home/lizhaohui/lzq/minimind-v-stage2/dataset/stage2_confirm_v2_seed2028/eligible_catalog.parquet",
+      "catalog_sha256": "ac2ba7397f603bf4a10bed82af600e290654f8b8665f8aa5cf62074b2757ebaf",
+      "confirmation_protocol": {
+        "protocol_id": "minimind-v-stage2-joint-compression-v2",
+        "protocol_sha256": "89f5e8ee3083f9a66b86b8cef83b73d5a66a02b2915b4e55862dd911801a21d0"
+      },
+      "data_path": "/home/lizhaohui/lzq/minimind-v-stage2/dataset/stage2_confirm_v2_seed2028/validation.parquet",
+      "data_sha256": "72456b3a6f43800a2302fbc376f905335c9bb52b5b8bdad5ddee07ec99f942e8",
+      "execution_protocol": {
+        "protocol_id": "minimind-v-stage2-joint-compression-v2",
+        "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3"
+      },
+      "independent_verification_path": "/home/lizhaohui/lzq/minimind-v-stage2/dataset/stage2_confirm_v2_seed2028/verification.json",
+      "independent_verification_sha256": "03f8a4d05d810447a5599b6bfa517390210116e5f23c6966a2868135e07e69e8",
+      "replay_verification_path": "/home/lizhaohui/lzq/minimind-v-stage2/dataset/stage2_confirm_v2_seed2028/replay_verification.json",
+      "replay_verification_sha256": "55f250d1bb7bef013dca4e27dcea48c27cc1d21185e2c2837675c412ce174a43",
+      "split_manifest_path": "/home/lizhaohui/lzq/minimind-v-stage2/dataset/stage2_confirm_v2_seed2028/split_manifest.json",
+      "split_manifest_sha256": "76d5257c8eaaea12d04960ff0d950ada380ff750cb3b4b78ea1cb5a332f8aaae"
+    }
+  },
+  "elapsed_seconds": 10.286299228668213,
+  "model_load_guard": {
+    "all_initial_language_tensors_exact": true,
+    "executed": true,
+    "groups": [
+      {
+        "coordinate_dimensions": {
+          "language": 4096
+        },
+        "initial_llm_load": {
+          "allowed_missing_prefixes": [],
+          "exact_initial_tensor_match": true,
+          "initial_state_key_count": 91,
+          "missing_key_count": 0,
+          "unexpected_keys": []
+        },
+        "mapping_root": 43101,
+        "model_group": "M0",
+        "trainable_parameter_count": 4096
+      },
+      {
+        "coordinate_dimensions": {
+          "projector_layer_1": 2048,
+          "projector_layer_2": 2048
+        },
+        "initial_llm_load": {
+          "allowed_missing_prefixes": [
+            "vision_encoder.",
+            "vision_proj."
+          ],
+          "exact_initial_tensor_match": true,
+          "initial_state_key_count": 91,
+          "missing_key_count": 210,
+          "unexpected_keys": []
+        },
+        "mapping_root": null,
+        "model_group": "M1",
+        "trainable_parameter_count": 4096
+      },
+      {
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 582
+        },
+        "initial_llm_load": {
+          "allowed_missing_prefixes": [
+            "vision_encoder.",
+            "vision_proj."
+          ],
+          "exact_initial_tensor_match": true,
+          "initial_state_key_count": 91,
+          "missing_key_count": 212,
+          "unexpected_keys": []
+        },
+        "mapping_root": 43101,
+        "model_group": "M2",
+        "trainable_parameter_count": 4096
+      },
+      {
+        "coordinate_dimensions": {
+          "shared": 4096
+        },
+        "initial_llm_load": {
+          "allowed_missing_prefixes": [
+            "vision_encoder.",
+            "vision_proj."
+          ],
+          "exact_initial_tensor_match": true,
+          "initial_state_key_count": 91,
+          "missing_key_count": 212,
+          "unexpected_keys": []
+        },
+        "mapping_root": 43101,
+        "model_group": "M3",
+        "trainable_parameter_count": 4096
+      }
+    ]
+  },
+  "protocol": {
+    "protocol_id": "minimind-v-stage2-joint-compression-v2",
+    "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3"
+  },
+  "runtime_integrity": {
+    "allowed_untracked_output_roots": [
+      "dataset/stage2_confirm_seed2026",
+      "dataset/stage2_confirm_v2_seed2028",
+      "experiments/runs/stage2_v2",
+      "experiments/runs/stage2_v2_fast"
+    ],
+    "annotated_tag": "stage2-protocol-v2-fast-multigpu",
+    "execution_gpu_idle": true,
+    "execution_gpu_name": "NVIDIA A40",
+    "execution_gpu_policy": "dynamic_idle_a40_pool",
+    "execution_gpu_uuid": "GPU-8e1547c5-b212-b319-786a-c17a3d644e0b",
+    "frozen_implementation_commit": "30cef94c5b770705f721135b2bf96da176681322",
+    "head_commit": "07eff239d965f644e3207925ddac446a803ee45e",
+    "live_pip_freeze_sha256": "d58af1bd5fa2e1a8973bb5f04c38e1ad26a32e338e515fa56014d1964ae77f4c",
+    "observed_untracked_paths": [
+      "dataset/stage2_confirm_seed2026/candidate_exposure_receipt.jsonl",
+      "dataset/stage2_confirm_seed2026/replay_verification.json",
+      "dataset/stage2_confirm_seed2026/train_membership.jsonl",
+      "dataset/stage2_confirm_seed2026/validation_membership.jsonl",
+      "dataset/stage2_confirm_seed2026/verification.json",
+      "dataset/stage2_confirm_v2_seed2028/catalog_candidate_exposure_receipt.jsonl",
+      "dataset/stage2_confirm_v2_seed2028/catalog_manifest.json",
+      "dataset/stage2_confirm_v2_seed2028/catalog_source_indices.txt",
+      "dataset/stage2_confirm_v2_seed2028/replay_verification.json",
+      "dataset/stage2_confirm_v2_seed2028/train_membership.jsonl",
+      "dataset/stage2_confirm_v2_seed2028/validation_membership.jsonl",
+      "dataset/stage2_confirm_v2_seed2028/verification.json"
+    ],
+    "protocol": {
+      "protocol_id": "minimind-v-stage2-joint-compression-v2",
+      "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3"
+    },
+    "python_executable": "/home/lizhaohui/lzq/minimind-v/.conda-env/bin/python3.10",
+    "selected_gpu_idle": true,
+    "selected_gpu_name": "NVIDIA A40",
+    "selected_gpu_uuid": "GPU-8e1547c5-b212-b319-786a-c17a3d644e0b",
+    "status": "passed",
+    "tag_commit": "07eff239d965f644e3207925ddac446a803ee45e",
+    "verified_implementation_file_count": 36,
+    "verified_implementation_files": [
+      "dataset/stage2_dataset.py",
+      "docs/stage2_v1_closeout.md",
+      "experiments/analyze_stage2_diagnostics.py",
+      "experiments/audit_stage2_integrity.py",
+      "experiments/audit_stage2_v1.py",
+      "experiments/audit_stage2_v2_behavior.py",
+      "experiments/build_stage2_dataset.py",
+      "experiments/build_stage2_dataset_v2.py",
+      "experiments/build_stage2_v2_history.py",
+      "experiments/compute_stage2_bound.py",
+      "experiments/evaluate_stage2_risk.py",
+      "experiments/finalize_stage2_report.py",
+      "experiments/quantize_stage2_adapter.py",
+      "experiments/run_stage2_parallel.py",
+      "experiments/run_stage2_pipeline.py",
+      "experiments/stage2_environment.py",
+      "experiments/stage2_model.py",
+      "experiments/stage2_protocol.py",
+      "experiments/stage2_target_registry.json",
+      "experiments/summarize_stage2.py",
+      "experiments/verify_stage2_dataset.py",
+      "experiments/verify_stage2_dataset_v2.py",
+      "model/global_subspace_lora.py",
+      "model/model_vlm.py",
+      "requirements.txt",
+      "tests/test_global_subspace_lora.py",
+      "tests/test_stage2_codec.py",
+      "tests/test_stage2_dataset_leakage.py",
+      "tests/test_stage2_gradient_scope.py",
+      "tests/test_stage2_model_loading.py",
+      "tests/test_stage2_parallel.py",
+      "tests/test_stage2_protocol.py",
+      "tests/test_stage2_reproducibility.py",
+      "tests/test_stage2_runtime_integrity.py",
+      "tests/test_stage2_v2_sampling.py",
+      "trainer/train_stage2.py"
+    ]
+  },
+  "schema_version": 2,
+  "status": "passed"
+}
