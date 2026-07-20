@@ -129,11 +129,22 @@ The authoritative result files are under
 - 131-check completion audit:
   `1ff3fc7d1bb6611311135dc1bc5a6bb71d40adcf4408e2199d91cdf81a7feb5b`.
 
-The first finalizer invocation was preserved under
-`experiments/runs/stage2_v2_fast/failures/001_finalize_supervisor_log_race/`.
-Its scientific inputs and model results were valid, but its artifact manifest
-captured `supervisor.log` before the orchestrating `tee` appended the finalizer
-output and completion line. After the orchestrator exited, the same frozen
-finalizer was rerun with the same protocol-bound inputs and the now-stable log.
-The completion audit recomputed every byte count and SHA-256 in the replacement
-268-file manifest with zero mismatches.
+The first finalizer invocation captured `supervisor.log` before the
+orchestrating `tee` appended the finalizer output and completion line. After the
+orchestrator exited, the same frozen finalizer was rerun with the same
+protocol-bound inputs and the now-stable log. The completion audit recomputed
+every byte count and SHA-256 in the replacement 268-file manifest with zero
+mismatches. The compact post-experiment checkout retains the audit receipt for
+this incident but removes the five superseded duplicate reports.
+
+## Post-experiment retention
+
+After completion and publication, reproducible intermediate datasets, model
+checkpoints, per-draw risk vectors, and full run directories were removed from
+the working checkout to keep the repository small. The source asset remains
+available under the separately managed immutable asset root, and its SHA-256
+still matches the protocol. Protocols, implementation code, final summaries,
+diagnostics, reports, comparison, audit receipts, and conclusion addenda remain
+tracked. The 268-file manifest and 131-check receipt are immutable records of
+the complete pre-cleanup state; the compact checkout is not claimed to retain
+all 268 raw artifacts locally. See `docs/stage2_retention.md`.
