@@ -32,6 +32,16 @@ from experiments.phase3.phase3_protocol import Phase3Protocol
 from experiments.phase3.phase3_protocol import frozen_repository_binding, verify_code_manifest
 from experiments.phase3.stage2_adapter_loader import load_verified_model
 from experiments.phase3.statistical_bounds import compression_upper, definition_constant, hoeffding_upper
+from experiments.phase3.phase3_protocol_v5 import (
+    Phase3ProtocolV5, frozen_repository_binding_v5, verify_code_manifest_v5,
+)
+from experiments.phase3.statistical_bounds_v5 import (
+    POST_HOC_STATUS, compression_upper_v5, definition_constant_v5, fixed_model_upper_v5,
+)
+from experiments.phase3.theory_metrics_v5 import (
+    DIAGNOSTIC_METRICS_V5, PRIMARY_METRICS_V5, aggregate_rows_v5,
+    empirical_metric_means_v5, m0_row_metrics_v5, visual_row_metrics_v5,
+)
 
 
 NLL_DISCLAIMER = "未平滑 NLL 尾部诊断，仅为后续理论选型提供证据，不构成泛化保证。"
@@ -101,14 +111,22 @@ def _verify_runner_inputs(
     model_ids: list[str],
     filenames: list[str],
     overlap_audit_receipt_path: Path | None,
-) -> tuple[Phase3Protocol, dict[str, Any]]:
-    protocol = Phase3Protocol.load(protocol_path)
+    metric_version: str = "v4",
+) -> tuple[Phase3Protocol | Phase3ProtocolV5, dict[str, Any]]:
+    if metric_version == "v4":
+        protocol = Phase3Protocol.load(protocol_path)
+        code_manifest = protocol_path.parent / "phase3_code_manifest_v2.json"
+        code_payload = verify_code_manifest(code_manifest)
+    elif metric_version == "v5":
+        protocol = Phase3ProtocolV5.load(protocol_path)
+        code_manifest = protocol_path.parent / "phase3_code_manifest_v5.json"
+        code_payload = verify_code_manifest_v5(code_manifest)
+    else:
+        raise ValueError(f"unknown metric_version: {metric_version}")
     sidecar = protocol_path.with_suffix(".sha256")
     if snapshot_file(sidecar).decode("ascii") != protocol.raw_sha256 + "\n":
         raise ValueError("protocol sidecar mismatch")
-    code_manifest = protocol_path.parent / "phase3_code_manifest_v2.json"
     code_sidecar = code_manifest.with_suffix(".sha256")
-    code_payload = verify_code_manifest(code_manifest)
     code_raw = canonical_json_bytes(code_payload)
     if snapshot_file(code_sidecar).decode("ascii") != sha256_bytes(code_raw) + "\n":
         raise ValueError("code manifest sidecar mismatch")
@@ -247,22 +265,26 @@ def _environment(device: str) -> dict[str, Any]:
 
 
 def _degenerate_sensitivity(
-    row_results: list[dict[str, Any]], degenerate_rows: dict[str, Any]
+    row_results: list[dict[str, Any]], degenerate_rows: dict[str, Any], metric_version: str = "v4"
 ) -> dict[str, Any]:
+    if metric_version not in ("v4", "v5"):
+        raise ValueError(f"unknown metric_version: {metric_version}")
+    aggregate = aggregate_rows if metric_version == "v4" else aggregate_rows_v5
+    means = empirical_metric_means if metric_version == "v4" else empirical_metric_means_v5
     excluded = {int(row["row_index"]) for row in degenerate_rows.get("rows", [])}
     output = {"schema_version": 1, "models": []}
     for model_id in sorted({row["model_id"] for row in row_results}, key=lambda value: value.encode("utf-8")):
         original = [row for row in row_results if row["model_id"] == model_id]
         kept = [row for row in original if int(row["row_index"]) not in excluded]
         original_groups = {row["filename"] for row in original}
-        groups = aggregate_rows(kept)
+        groups = aggregate(kept)
         output["models"].append(
             {
                 "model_id": model_id,
                 "excluded_row_count": len(original) - len(kept),
                 "excluded_empty_group_count": len(original_groups - {row["filename"] for row in kept}),
                 "remaining_group_n": len(groups),
-                "diagnostic_means": empirical_metric_means(groups) if groups else None,
+                "diagnostic_means": means(groups) if groups else None,
                 "bound_status": "not_applicable_sensitivity_only",
             }
         )
@@ -274,7 +296,12 @@ def build_metrics_summary(
     model_ids: list[str],
     groups: list[dict[str, Any]],
     registry: dict[str, Any],
+    metric_version: str = "v4",
 ) -> dict[str, Any]:
+    if metric_version == "v5":
+        return _build_metrics_summary_v5(run_mode, model_ids, groups, registry)
+    if metric_version != "v4":
+        raise ValueError(f"unknown metric_version: {metric_version}")
     registry_models = {row["model_id"]: row for row in registry["models"]}
     metrics = {
         "schema_version": 1,
@@ -337,6 +364,74 @@ def build_metrics_summary(
     return metrics
 
 
+def _build_metrics_summary_v5(
+    run_mode: str,
+    model_ids: list[str],
+    groups: list[dict[str, Any]],
+    registry: dict[str, Any],
+) -> dict[str, Any]:
+    registry_models = {row["model_id"]: row for row in registry["models"]}
+    metrics: dict[str, Any] = {
+        "schema_version": 1,
+        "metric_version": "v5",
+        "run_mode": run_mode,
+        "primary_metrics": list(PRIMARY_METRICS_V5),
+        "non_primary_diagnostics": list(DIAGNOSTIC_METRICS_V5),
+        "bound_name": "nominal_post_hoc_fixed_and_compression_bounds" if run_mode == "formal" else None,
+        "certificate_status": "post_hoc_no_fresh_simultaneous_coverage_claim" if run_mode == "formal" else "not_applicable_non_certifying",
+        "selection_status": POST_HOC_STATUS,
+        "simultaneous_coverage_claim": False,
+        "post_hoc_disclosure": "v5 metrics may have been selected after v4 Formal values were viewed",
+        "estimand_scope": (
+            "SugarCrepe++ represented target image-text construction distribution conditional on "
+            "no project-history image overlap"
+        ),
+        "finite_population_guarantee": False,
+        "all_natural_images_claim": False,
+        "external_base_pretraining_overlap": "unknown",
+        "models": [],
+    }
+    for model_id in model_ids:
+        selected = [row for row in groups if row["model_id"] == model_id]
+        empirical = empirical_metric_means_v5(selected)
+        diagnostics: dict[str, float | None] = {}
+        for name in DIAGNOSTIC_METRICS_V5:
+            values = [row.get(name) for row in selected]
+            diagnostics[name] = None if all(value is None for value in values) else float(
+                np.mean(np.asarray(values, dtype=np.float64), dtype=np.float64)
+            )
+        fixed = {name: None for name in PRIMARY_METRICS_V5}
+        compression = {name: None for name in PRIMARY_METRICS_V5}
+        if run_mode == "formal":
+            n = len(selected)
+            registry_row = registry_models[model_id]
+            bits = int(registry_row["artifact_size_bytes"]) * 8 + 4
+            for name in PRIMARY_METRICS_V5:
+                values = np.asarray([row[name] for row in selected], dtype=np.float64)
+                if registry_row["method"] == "M0" and name == "visual_semantic_loss":
+                    fixed[name] = definition_constant_v5(0.5, name, n, family="fixed_model")
+                    compression[name] = definition_constant_v5(
+                        0.5, name, n, family="compression", description_bits=bits,
+                    )
+                else:
+                    fixed[name] = fixed_model_upper_v5(
+                        empirical[name], name, n,
+                        observed_min=float(np.min(values)), observed_max=float(np.max(values)),
+                    )
+                    compression[name] = compression_upper_v5(empirical[name], name, n, bits)
+        metrics["models"].append(
+            {
+                "model_id": model_id,
+                "n_unique_image_groups": len(selected),
+                "empirical_risks": empirical,
+                "diagnostic_means": diagnostics,
+                "fixed_model_bounds": fixed,
+                "compression_bounds": compression,
+            }
+        )
+    return metrics
+
+
 def execute_evaluation(
     *,
     run_mode: str,
@@ -353,6 +448,7 @@ def execute_evaluation(
     item_batch_size: int,
     stage2_protocol_path: Path,
     overlap_audit_receipt_path: Path | None = None,
+    metric_version: str = "v4",
 ) -> dict[str, Any]:
     import torch
     from transformers import AutoTokenizer
@@ -360,6 +456,8 @@ def execute_evaluation(
     from model.model_vlm import MiniMindVLM
     from experiments.phase3.caption_scorer import prepare_caption_batch, score_tokenized_batch
 
+    if metric_version not in ("v4", "v5"):
+        raise ValueError(f"unknown metric_version: {metric_version}")
     if item_batch_size != 1:
         raise ValueError("item_batch_size is frozen to one")
     if output_dir.exists():
@@ -376,16 +474,22 @@ def execute_evaluation(
         model_ids=model_ids,
         filenames=filenames,
         overlap_audit_receipt_path=overlap_audit_receipt_path,
+        metric_version=metric_version,
     )
-    repository_binding = {
-        "phase3_source_commit": protocol.payload.get("phase3_source_commit"),
-        "protocol_repository_commit": None,
-        "protocol_tag": None,
-        "protocol_tag_object": None,
-    }
-    if run_mode in ("pilot", "formal"):
-        protocol.require_frozen()
-        repository_binding = frozen_repository_binding(protocol)
+    if metric_version == "v4":
+        repository_binding = {
+            "phase3_source_commit": protocol.payload.get("phase3_source_commit"),
+            "protocol_repository_commit": None,
+            "protocol_tag": None,
+            "protocol_tag_object": None,
+        }
+        if run_mode in ("pilot", "formal"):
+            protocol.require_frozen()
+            repository_binding = frozen_repository_binding(protocol)
+    else:
+        repository_binding = {"protocol_repository_commit": None, "protocol_tag": None}
+        if run_mode == "formal":
+            repository_binding = frozen_repository_binding_v5(protocol)
     receipt_models = {row["model_id"]: row for row in receipt.get("models", [])}
     missing = [model_id for model_id in model_ids if receipt_models.get(model_id, {}).get("status") != "verified"]
     if missing:
@@ -494,7 +598,8 @@ def execute_evaluation(
                             "b_none_neg_raw": raw[2], "b_none_neg": used[2],
                             "raw_none_margin": raw[2] - (raw[0] + raw[1]) / 2.0,
                         }
-                        result = {**base, **m0_row_metrics(values)}
+                        row_metric = m0_row_metrics if metric_version == "v4" else m0_row_metrics_v5
+                        result = {**base, **row_metric(values)}
                         for role, token_values in zip(roles, lm_scores["token_nll_bits"][start:end]):
                             nll_by_model[model_id].append(
                                 {**base, "condition": "lm_only", "caption_role": role, "values": token_values.numpy()}
@@ -512,10 +617,15 @@ def execute_evaluation(
                             "b_none_pos2_raw": raw_n[1], "b_none_pos2": used_n[1],
                             "b_none_neg_raw": raw_n[2], "b_none_neg": used_n[2],
                         }
-                        values["raw_image_margin"] = raw_i[2] - (raw_i[0] + raw_i[1]) / 2.0
-                        values["raw_none_margin"] = raw_n[2] - (raw_n[0] + raw_n[1]) / 2.0
+                        if metric_version == "v4":
+                            values["raw_image_margin"] = raw_i[2] - (raw_i[0] + raw_i[1]) / 2.0
+                            values["raw_none_margin"] = raw_n[2] - (raw_n[0] + raw_n[1]) / 2.0
+                        else:
+                            values["raw_image_margin"] = raw_i[2] - max(raw_i[0], raw_i[1])
+                            values["raw_none_margin"] = raw_n[2] - max(raw_n[0], raw_n[1])
                         values["raw_visual_increment"] = values["raw_image_margin"] - values["raw_none_margin"]
-                        result = {**base, **visual_row_metrics(values)}
+                        row_metric = visual_row_metrics if metric_version == "v4" else visual_row_metrics_v5
+                        result = {**base, **row_metric(values)}
                         for condition, scores in (("correct", correct), ("none", none)):
                             for role, token_values in zip(roles, scores["token_nll_bits"][start:end]):
                                 nll_by_model[model_id].append(
@@ -529,13 +639,14 @@ def execute_evaluation(
         row_results.sort(key=lambda row: (model_order[row["model_id"]], row["row_index"]))
         atomic_write_jsonl(temporary / "row_level_results.jsonl", row_results)
         persisted_rows = _jsonl(temporary / "row_level_results.jsonl")
-        groups = aggregate_rows(persisted_rows)
+        aggregate = aggregate_rows if metric_version == "v4" else aggregate_rows_v5
+        groups = aggregate(persisted_rows)
         groups.sort(key=lambda row: (model_order[row["model_id"]], row["filename"].encode("utf-8")))
         atomic_write_jsonl(temporary / "image_group_results.jsonl", groups)
         persisted_groups = _jsonl(temporary / "image_group_results.jsonl")
         if run_mode != "formal":
             registry = load_json_snapshot(expected_registry_path)
-            metrics = build_metrics_summary(run_mode, model_ids, persisted_groups, registry)
+            metrics = build_metrics_summary(run_mode, model_ids, persisted_groups, registry, metric_version)
             atomic_write_json(temporary / "metrics_summary.json", metrics)
         nll_root = temporary / "nll"
         nll_root.mkdir()
@@ -553,7 +664,10 @@ def execute_evaluation(
         atomic_write_json(temporary / "nll_tail_summary.json", nll_summary)
         if run_mode != "formal":
             degenerates = load_json_snapshot(prepared_data_dir / "degenerate_rows.json")
-            atomic_write_json(temporary / "degenerate_sensitivity_summary.json", _degenerate_sensitivity(persisted_rows, degenerates))
+            atomic_write_json(
+                temporary / "degenerate_sensitivity_summary.json",
+                _degenerate_sensitivity(persisted_rows, degenerates, metric_version),
+            )
         atomic_write_json(temporary / "numerical_diagnostics.json", numerical)
         if device.startswith("cuda"):
             torch.cuda.synchronize(device)
@@ -578,6 +692,8 @@ def execute_evaluation(
             "protocol_sha256": protocol.raw_sha256,
             **repository_binding,
         }
+        if metric_version == "v5":
+            run_config["metric_version"] = "v5"
         atomic_write_json(temporary / "run_config.json", run_config)
         atomic_write_json(temporary / "protocol_reference.json", {"path_alias": "phase3_protocol", "sha256": protocol.raw_sha256, "protocol_kind": protocol.kind})
         for source, name in (
@@ -590,10 +706,15 @@ def execute_evaluation(
             (prepared_data_dir / "degenerate_rows.json", "degenerate_rows.json"),
         ):
             _copy_snapshot(source, temporary / name)
-        atomic_write_json(temporary / "run_status.json", {"schema_version": 1, "status": "success", "run_mode": run_mode})
+        run_status = {"schema_version": 1, "status": "success", "run_mode": run_mode}
+        if metric_version == "v5":
+            run_status["metric_version"] = "v5"
+        atomic_write_json(temporary / "run_status.json", run_status)
         inventory = inventory_files(temporary, excluded=("run_manifest.json",))
         authority_path = protocol_path.parent / "phase3_stage2_authority_manifest_v2.json"
-        code_manifest_path = protocol_path.parent / "phase3_code_manifest_v2.json"
+        code_manifest_path = protocol_path.parent / (
+            "phase3_code_manifest_v2.json" if metric_version == "v4" else "phase3_code_manifest_v5.json"
+        )
         run_manifest = {
             "schema_version": 1,
             "run_mode": run_mode,
@@ -623,6 +744,8 @@ def execute_evaluation(
             "files": inventory,
             "exclusion_rule": "run_manifest.json and transient lock/temp files are excluded",
         }
+        if metric_version == "v5":
+            run_manifest["metric_version"] = "v5"
         atomic_write_json(temporary / "run_manifest.json", run_manifest)
         publish_directory(temporary, output_dir)
         return {"run_dir": str(output_dir), "row_results": len(row_results), "image_groups": len(groups), "elapsed_seconds": elapsed}

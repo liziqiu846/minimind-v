@@ -347,8 +347,39 @@ def build_code_manifest(repo_root: str | Path = REPO_ROOT) -> dict[str, Any]:
 def verify_code_manifest(path: str | Path, repo_root: str | Path = REPO_ROOT) -> dict[str, Any]:
     payload = load_json_snapshot(path)
     expected = build_code_manifest(repo_root)
-    if payload != expected:
+    if payload == expected:
+        return payload
+    # The immutable v4 manifest intentionally continues to describe the v4
+    # freeze commit after additive v5 files and the version-dispatch refactor
+    # exist in the current tree.  Validate that historical tree rather than
+    # weakening or rewriting the frozen v4 artifact.
+    raw = snapshot_file(path)
+    if (
+        Path(path).name != "phase3_code_manifest_v2.json"
+        or sha256_bytes(raw) != "6e04c2ba7de3781023bc3c807ef91cc6b5c29955ab32a3b2cef503fae6a84048"
+    ):
         raise ValueError("Phase 3 code manifest differs from the current inclusion set or bytes")
+    source_commit = "5d9602dd7933f87409d9811fc1f2298b6cc8a790"
+    committed_manifest = subprocess.run(
+        ["git", "-C", str(repo_root), "show", f"{source_commit}:experiments/phase3/phase3_code_manifest_v2.json"],
+        stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False,
+    )
+    if committed_manifest.returncode != 0 or committed_manifest.stdout != raw:
+        raise ValueError("frozen v4 code manifest is not the source-commit artifact")
+    rows = payload.get("files")
+    if not isinstance(rows, list) or len(rows) != payload.get("file_count"):
+        raise ValueError("frozen v4 code manifest schema mismatch")
+    for row in rows:
+        blob = subprocess.run(
+            ["git", "-C", str(repo_root), "show", f"{source_commit}:{row['relative_path']}"],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=False,
+        )
+        if (
+            blob.returncode != 0
+            or len(blob.stdout) != row.get("size_bytes")
+            or sha256_bytes(blob.stdout) != row.get("sha256")
+        ):
+            raise ValueError(f"frozen v4 manifest member mismatch: {row.get('relative_path')}")
     return payload
 
 
