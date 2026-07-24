@@ -1,0 +1,125 @@
+{
+  "actual_description_length_is_an_observed_result": true,
+  "base_protocol": {
+    "protocol_id": "minimind-v-stage2-joint-compression-v2",
+    "relative_path": "experiments/stage2_protocol_v2.json",
+    "sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3"
+  },
+  "budget": "current",
+  "budget_multiplier_from_current": 1.0,
+  "candidate_family_size": 18,
+  "comparison_label": "equal_coordinate_budget_not_equal_description_length",
+  "comparison_label_zh": "相同坐标预算下的公平比较",
+  "config_id": "M3-current-seed-43103",
+  "coordinate_dimensions": {
+    "shared": 4096
+  },
+  "data": {
+    "draw_count": 10000,
+    "root_argument": "--artifact-root",
+    "same_data_for_all_models": true,
+    "training_relative_path": "dataset/stage2_confirm_v2_seed2028/train.parquet",
+    "training_sha256": "3c3d90c525f43200d35ebd5b4ac1719c8336d278aecbf7e929997c8401b1d5ce"
+  },
+  "evaluation": {
+    "analysis_mode": "current_coupled_post_hoc",
+    "assignment_core_sha256": "fb4808db202e9191172e80a96b7de4d6343f1380393535ff2c6f32224cbb635b",
+    "candidate_and_hull_rule": "unchanged frozen Phase 3 v6 contrast-hull scorer",
+    "certified": false,
+    "evaluation_seed": 3407,
+    "frozen_input_sha256": {
+      "experiments/phase3_v6/audit_v2/contrast_hull_audit.jsonl": "34f592eec832fba78999a2084dcb871a3d6a2e5b015817cc8d598082797d9a4d",
+      "experiments/phase3_v6/audit_v2/contrast_hull_summary.json": "3eaddd46c68947ed9cca6e125e4b5ca112ec4a48d88a1fa789dbb3e72612d479",
+      "experiments/phase3_v6/mismatch_audit/mismatch_manifest_k5.jsonl": "a7298df9fb57ca24888f3564a38f38357ee144b27d32faab9d07955ff2b30331",
+      "experiments/phase3_v6/mismatch_audit/mismatch_summary.json": "f542c8143582b869b1ae6eb5ffc2df43ba68f11550fc38ebec461fcd053a5d45"
+    },
+    "invalid_for_formal_certification_reasons": [
+      "post_hoc_metric_design",
+      "coupled_mismatch_donors"
+    ],
+    "mismatch_k": 5
+  },
+  "experiment_seed": 43103,
+  "experiment_seed_semantics": "deterministic_mapping_root",
+  "external_hyperparameter_bits": 0,
+  "external_hyperparameter_bits_note": "all budget levels, seeds, optimizer settings, and quantization rules are predeclared in this 18-member manifest",
+  "external_selection_bits": 5,
+  "m2_allocation_protocol": {
+    "factor_elements": {
+      "language": 50176,
+      "projector": 98304,
+      "vision": 24576
+    },
+    "method": "largest_remainder_proportional_to_frozen_A_B_factor_elements",
+    "raw_before_rounding": {
+      "language": {
+        "decimal": 1187.5976331360946,
+        "exact_fraction": "200704/169"
+      },
+      "projector": {
+        "decimal": 2326.7218934911243,
+        "exact_fraction": "393216/169"
+      },
+      "vision": {
+        "decimal": 581.6804733727811,
+        "exact_fraction": "98304/169"
+      }
+    },
+    "rounded_dimensions": {
+      "language": 1187,
+      "projector": 2327,
+      "vision": 582
+    }
+  },
+  "mapping_root": 43103,
+  "method": "M3",
+  "output_relative_path": "experiments/runs/phase3_risk_v1/M3-current-seed-43103",
+  "protocol_id": "minimind-v-phase3-risk-decomposition-v1",
+  "quantization": {
+    "codec": "zlib.compress(body, level=9)",
+    "format": "MMS2 version 1",
+    "levels": [
+      -3,
+      -2,
+      -1,
+      0,
+      1,
+      2,
+      3
+    ],
+    "quantization_bits_label": 3
+  },
+  "schema_version": 1,
+  "total_coordinate_budget": 4096,
+  "training": {
+    "autocast_dtype": "bfloat16",
+    "effective_batch_size": 16,
+    "epoch_permutation": "torch.randperm with a CPU torch.Generator seeded by train_seed+epoch_index; save permutation SHA256",
+    "epochs": 3,
+    "gradient_accumulation_steps": 4,
+    "gradient_clip_global_l2": 1,
+    "learning_rate": 0.05,
+    "learning_rate_schedule": {
+      "formula": "lr_min+0.5*(lr_max-lr_min)*(1+cos(pi*t/(T-1)))",
+      "minimum_ratio": 0.1,
+      "t_values": "0 through 1874",
+      "total_steps": 1875,
+      "update_unit": "optimizer step",
+      "warmup_steps": 0
+    },
+    "loss": "unchanged Stage 2 teacher-forced training loss",
+    "micro_batch_size": 4,
+    "optimizer": {
+      "amsgrad": false,
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "name": "torch.optim.AdamW",
+      "parameters": "coordinate tensors only",
+      "weight_decay": 0.01
+    },
+    "train_seed": 2026
+  }
+}
