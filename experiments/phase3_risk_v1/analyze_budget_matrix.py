@@ -56,12 +56,23 @@ def _write_csv(path: Path, rows: Sequence[Mapping[str, Any]]) -> None:
     columns = list(rows[0])
     if any(list(row) != columns for row in rows):
         raise ValueError(f"inconsistent CSV columns for {path}")
+    csv_rows = [
+        {
+            key: (
+                "|".join(str(item) for item in value)
+                if isinstance(value, (list, tuple))
+                else value
+            )
+            for key, value in row.items()
+        }
+        for row in rows
+    ]
     with path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(
             handle, fieldnames=columns, lineterminator="\n"
         )
         writer.writeheader()
-        writer.writerows(rows)
+        writer.writerows(csv_rows)
 
 
 def _current_inputs() -> tuple[dict[str, dict], dict[str, dict]]:
@@ -193,8 +204,8 @@ def _load_all(
                             ],
                         ),
                         "certified": False,
-                        "invalid_for_formal_certification_reasons": (
-                            "|".join(INVALID_REASONS)
+                        "invalid_for_formal_certification_reasons": list(
+                            INVALID_REASONS
                         ),
                         "comparison_claim": (
                             "equal_coordinate_budget_not_equal_"

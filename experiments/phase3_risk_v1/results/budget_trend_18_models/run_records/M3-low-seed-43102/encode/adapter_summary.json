@@ -1,0 +1,229 @@
+{
+  "actual_description_length_is_an_observed_result": true,
+  "archive_bits": 3488,
+  "archive_bytes": 436,
+  "archive_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/phase3_risk_v1/M3-low-seed-43102/encode/adapter.mms2",
+  "archive_sha256": "7bd57d11c0315317a6d7fea1ba49f2af33073ed4ff5788b87a2374ad506a3f6e",
+  "budget": "low",
+  "candidate_family_size": 18,
+  "codec": "zlib-9",
+  "comparison_claim": "equal_coordinate_budget_not_equal_description_length",
+  "compressed_body_bytes": 419,
+  "config": {
+    "directory_validation": {
+      "candidate_family_size": 18,
+      "comparison_claim": "equal_coordinate_budget_not_equal_description_length",
+      "config_count": 18,
+      "external_selection_bits": 5,
+      "pair_count": 9,
+      "status": "passed"
+    },
+    "manifest_path": "/home/lizhaohui/lzq/minimind-v-stage2/experiments/phase3_risk_v1/configs/manifest.json",
+    "manifest_sha256": "721629f7f511cee5cbb7239c42a0c730d730235464ca8029ca1c47cb3cafe2b0",
+    "path": "/home/lizhaohui/lzq/minimind-v-stage2/experiments/phase3_risk_v1/configs/M3-low-seed-43102.json",
+    "sha256": "730578ebba056b4d8c0636f3cef3620c1d6042f2565f2217ee3b8ab1ede994a2"
+  },
+  "config_id": "M3-low-seed-43102",
+  "coordinate_groups": [
+    {
+      "dimension": 2048,
+      "name": "shared",
+      "scale_float32": 0.8361051082611084,
+      "symbol_histogram": {
+        "-1": 197,
+        "-2": 13,
+        "-3": 0,
+        "0": 1629,
+        "1": 199,
+        "2": 8,
+        "3": 2
+      }
+    }
+  ],
+  "decode_reencode_byte_equivalence": true,
+  "decoded_coordinate_state_sha256": "0567612d9aa132d1dfae9c2637b1fc957d1420e44bda312aeb0ece0999c2c96c",
+  "decoded_coordinates_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/phase3_risk_v1/M3-low-seed-43102/encode/decoded_coordinates.pt",
+  "decoded_coordinates_sha256": "c12513487d8de94587ffc20f9abfe739c295da06080498a68952d1a49758d630",
+  "decoded_model_coordinate_state_sha256": "0567612d9aa132d1dfae9c2637b1fc957d1420e44bda312aeb0ece0999c2c96c",
+  "decoded_model_structure": {
+    "adapter": {
+      "comparison_label": "equal_coordinate_budget_not_equal_description_length",
+      "coordinate_dimensions": {
+        "shared": 2048
+      },
+      "initial_llm_load": {
+        "allowed_missing_prefixes": [
+          "vision_encoder.",
+          "vision_proj."
+        ],
+        "exact_initial_tensor_match": true,
+        "initial_state_key_count": 91,
+        "missing_key_count": 212,
+        "unexpected_keys": []
+      },
+      "initial_llm_sha256": "5b8c49f6c9d965092e651cafeeaeb8705558632b3fd4ac8ab319cbc5a3cbc4a0",
+      "mapping_root": 43102,
+      "mapping_statistics": {
+        "shared": {
+          "dimension": 2048,
+          "histogram": {
+            "100": 24,
+            "101": 29,
+            "102": 11,
+            "103": 16,
+            "104": 10,
+            "105": 13,
+            "106": 2,
+            "107": 4,
+            "109": 6,
+            "114": 1,
+            "115": 1,
+            "56": 1,
+            "59": 3,
+            "60": 3,
+            "61": 1,
+            "62": 2,
+            "63": 3,
+            "64": 9,
+            "65": 11,
+            "66": 10,
+            "67": 15,
+            "68": 17,
+            "69": 18,
+            "70": 38,
+            "71": 34,
+            "72": 30,
+            "73": 35,
+            "74": 53,
+            "75": 50,
+            "76": 51,
+            "77": 63,
+            "78": 74,
+            "79": 92,
+            "80": 92,
+            "81": 80,
+            "82": 86,
+            "83": 87,
+            "84": 85,
+            "85": 103,
+            "86": 81,
+            "87": 79,
+            "88": 76,
+            "89": 63,
+            "90": 71,
+            "91": 69,
+            "92": 57,
+            "93": 52,
+            "94": 49,
+            "95": 53,
+            "96": 47,
+            "97": 32,
+            "98": 32,
+            "99": 24
+          },
+          "histogram_serialization": "canonical JSON object count->frequency",
+          "histogram_sha256": "1f35213b68808c79d7aed24ae168a7b4556336d67ff03fa8f23a2532d3c93f15",
+          "mapping_sha256": "44510f00268b979e44c0dc5f22fa2b9cc2a61e3598a3d4515f5762513497fba8",
+          "maximum": 115,
+          "mean": 84.5,
+          "minimum": 56
+        }
+      },
+      "model_group": "M3",
+      "protocol": {
+        "protocol_id": "minimind-v-stage2-joint-compression-v2",
+        "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3"
+      },
+      "wrapped_names": [
+        "lm_head",
+        "model.layers.0.self_attn.q_proj",
+        "model.layers.0.self_attn.v_proj",
+        "model.layers.7.self_attn.q_proj",
+        "model.layers.7.self_attn.v_proj",
+        "vision_encoder.vision_model.encoder.layers.10.self_attn.q_proj",
+        "vision_encoder.vision_model.encoder.layers.10.self_attn.v_proj",
+        "vision_encoder.vision_model.encoder.layers.11.self_attn.q_proj",
+        "vision_encoder.vision_model.encoder.layers.11.self_attn.v_proj",
+        "vision_proj.mlp.1",
+        "vision_proj.mlp.3"
+      ]
+    },
+    "coordinate_dimensions": {
+      "shared": 2048
+    },
+    "coordinate_state_sha256": "0567612d9aa132d1dfae9c2637b1fc957d1420e44bda312aeb0ece0999c2c96c",
+    "projector_base": {
+      "aggregate_tensor_sha256": "3712c79bd4859f543c9030e237a49797c3dfe064a457dcce21dd7cf6a227921a",
+      "configuration": {
+        "elementwise_affine": false,
+        "eps": 1e-05,
+        "normalized_shape": [
+          768
+        ]
+      },
+      "configuration_serialization": "canonical JSON",
+      "configuration_sha256": "5b88036932ef590707662f2dc61d3d5c84de26de89f6188064a9b5d3d6d613b0",
+      "tensor_hash_protocol": "SHA256 of C-order little-endian float32 raw bytes",
+      "tensor_sha256": {
+        "vision_proj.mlp.1.bias": "b84dab01932d5844cbef737e892677d0bfa1c1b8c650e773292a1d8cd84477c5",
+        "vision_proj.mlp.1.weight": "637808c850b6caa99b20d95d7ae2cd836848f31ebe8025e8179a485ea33128a3",
+        "vision_proj.mlp.3.bias": "646898f2f2627dcefdfbcc0fe36d9b6113fb439f26eaf8b9f08c021f0541fa31",
+        "vision_proj.mlp.3.weight": "31f5fc3242249bf75b38f602ce58135bb43fa5cc4f8f95390288197efecad17b"
+      }
+    },
+    "trainable_parameter_count": 2048,
+    "trainable_parameter_names": [
+      "stage2_coordinates.coordinates.shared"
+    ]
+  },
+  "existing_coordinate_loader_equivalence": true,
+  "external_hyperparameter_bits": 0,
+  "external_selection_bits": 5,
+  "external_selection_bits_rule": "ceil(log2(candidate_family_size))",
+  "format": "MMS2",
+  "format_version": 1,
+  "mapping_root": 43102,
+  "mms2_header_recounted_as_external_metadata": false,
+  "model_group": "M3",
+  "quantization_bits_label": 3,
+  "quantization_levels": [
+    -3,
+    -2,
+    -1,
+    0,
+    1,
+    2,
+    3
+  ],
+  "runtime_preflight": {
+    "config_id": "M3-low-seed-43102",
+    "environment": {
+      "mode": "stage2",
+      "pip_freeze_sha256": "d58af1bd5fa2e1a8973bb5f04c38e1ad26a32e338e515fa56014d1964ae77f4c",
+      "python_executable": "/home/lizhaohui/lzq/minimind-v/.conda-env/bin/python3.10"
+    },
+    "git": {
+      "branch": "stage3-v5-completion",
+      "head_commit": "6cfe342e9889ae496e370c6c42544c8150fac1c2",
+      "tracked_status": ""
+    },
+    "gpu": null,
+    "stage2_protocol": {
+      "protocol_id": "minimind-v-stage2-joint-compression-v2",
+      "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3"
+    },
+    "status": "passed",
+    "training_data": {
+      "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/dataset/stage2_confirm_v2_seed2028/train.parquet",
+      "sha256": "3c3d90c525f43200d35ebd5b4ac1719c8336d278aecbf7e929997c8401b1d5ce"
+    }
+  },
+  "schema_version": 1,
+  "status": "complete",
+  "total_coordinate_budget": 2048,
+  "total_description_bits": 3493,
+  "total_description_bits_definition": "archive_bits + external_selection_bits + external_hyperparameter_bits",
+  "training_manifest_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/phase3_risk_v1/M3-low-seed-43102/training/training_manifest.json",
+  "training_manifest_sha256": "c68e67524a5ec758e07a40a3e17a1bcce42bf26a3ee077a3a0b4a5388c6d0456",
+  "uncompressed_body_bytes": 2056
+}

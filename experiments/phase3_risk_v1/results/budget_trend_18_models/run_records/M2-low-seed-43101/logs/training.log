@@ -1,0 +1,413 @@
+config=M2-low-seed-43101 epoch=1/3 optimizer_step=625/1875 mean_loss=2.75533716
+config=M2-low-seed-43101 epoch=2/3 optimizer_step=1250/1875 mean_loss=2.73073171
+config=M2-low-seed-43101 epoch=3/3 optimizer_step=1875/1875 mean_loss=2.72163654
+{
+  "budget": "low",
+  "checkpoint": {
+    "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/phase3_risk_v1/M2-low-seed-43101/training/training_checkpoint.pt",
+    "sha256": "add578cadd9b9e215cd845cfe64e67b3ca417fe0fbbf41628b0caa942def41e0"
+  },
+  "config": {
+    "directory_validation": {
+      "candidate_family_size": 18,
+      "comparison_claim": "equal_coordinate_budget_not_equal_description_length",
+      "config_count": 18,
+      "external_selection_bits": 5,
+      "pair_count": 9,
+      "status": "passed"
+    },
+    "manifest_path": "/home/lizhaohui/lzq/minimind-v-stage2/experiments/phase3_risk_v1/configs/manifest.json",
+    "manifest_sha256": "721629f7f511cee5cbb7239c42a0c730d730235464ca8029ca1c47cb3cafe2b0",
+    "path": "/home/lizhaohui/lzq/minimind-v-stage2/experiments/phase3_risk_v1/configs/M2-low-seed-43101.json",
+    "sha256": "e21db6a3304148ac619c69f6e29fce061359b371dc42a88fb4d017b1b7e79ec0"
+  },
+  "config_id": "M2-low-seed-43101",
+  "coordinate_dimensions": {
+    "language": 594,
+    "projector": 1163,
+    "vision": 291
+  },
+  "coordinates": {
+    "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/phase3_risk_v1/M2-low-seed-43101/training/coordinates.pt",
+    "sha256": "47014eeabf58544fdc2a40c00246c4805c2eabd94fddeb920c02e2c9f3e42c62"
+  },
+  "data": {
+    "examples": 10000,
+    "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/dataset/stage2_confirm_v2_seed2028/train.parquet",
+    "sha256": "3c3d90c525f43200d35ebd5b4ac1719c8336d278aecbf7e929997c8401b1d5ce"
+  },
+  "experiment_type": "phase3_equal_coordinate_budget",
+  "formal_stage2_certification_run": false,
+  "mapping_root": 43101,
+  "method": "M2",
+  "model": {
+    "final_coordinate_state_sha256": "321937ce4e6d9771a51ee56e76f339b4889deb0c2e7cd603ad4e3b771d4dd049",
+    "final_frozen_parameter_sha256": "8db8f60ea8d42011df035d6af59fbe64c9fbda96f18c2e1bc542fe53ef52945f",
+    "frozen_parameters_unchanged": true,
+    "initial_frozen_parameter_sha256": "8db8f60ea8d42011df035d6af59fbe64c9fbda96f18c2e1bc542fe53ef52945f",
+    "initial_structure": {
+      "adapter": {
+        "comparison_label": "equal_coordinate_budget_not_equal_description_length",
+        "coordinate_dimensions": {
+          "language": 594,
+          "projector": 1163,
+          "vision": 291
+        },
+        "initial_llm_load": {
+          "allowed_missing_prefixes": [
+            "vision_encoder.",
+            "vision_proj."
+          ],
+          "exact_initial_tensor_match": true,
+          "initial_state_key_count": 91,
+          "missing_key_count": 212,
+          "unexpected_keys": []
+        },
+        "initial_llm_sha256": "5b8c49f6c9d965092e651cafeeaeb8705558632b3fd4ac8ab319cbc5a3cbc4a0",
+        "mapping_root": 43101,
+        "mapping_statistics": {
+          "language": {
+            "dimension": 594,
+            "histogram": {
+              "100": 7,
+              "101": 3,
+              "102": 8,
+              "103": 3,
+              "104": 3,
+              "106": 1,
+              "107": 3,
+              "112": 2,
+              "119": 1,
+              "51": 1,
+              "56": 1,
+              "59": 1,
+              "60": 1,
+              "64": 2,
+              "65": 1,
+              "66": 4,
+              "67": 6,
+              "68": 3,
+              "69": 6,
+              "70": 12,
+              "71": 3,
+              "72": 14,
+              "73": 8,
+              "74": 18,
+              "75": 13,
+              "76": 15,
+              "77": 19,
+              "78": 29,
+              "79": 22,
+              "80": 27,
+              "81": 28,
+              "82": 26,
+              "83": 21,
+              "84": 20,
+              "85": 22,
+              "86": 29,
+              "87": 28,
+              "88": 26,
+              "89": 24,
+              "90": 8,
+              "91": 22,
+              "92": 18,
+              "93": 18,
+              "94": 16,
+              "95": 10,
+              "96": 10,
+              "97": 11,
+              "98": 12,
+              "99": 8
+            },
+            "histogram_serialization": "canonical JSON object count->frequency",
+            "histogram_sha256": "04959947786391c47c72c2ce91f5d2268f00f68ad86ec0c7a2b6d014ddd56f7c",
+            "mapping_sha256": "5ce1069d228a8c0c9773513f8aa1030b8b214382755d76583169bbb15ee61579",
+            "maximum": 119,
+            "mean": 84.47138047138047,
+            "minimum": 51
+          },
+          "projector": {
+            "dimension": 1163,
+            "histogram": {
+              "100": 13,
+              "101": 15,
+              "102": 10,
+              "103": 7,
+              "104": 10,
+              "105": 2,
+              "106": 3,
+              "107": 2,
+              "108": 4,
+              "109": 1,
+              "111": 1,
+              "114": 2,
+              "115": 1,
+              "54": 1,
+              "56": 1,
+              "58": 1,
+              "59": 1,
+              "62": 3,
+              "63": 5,
+              "64": 1,
+              "65": 6,
+              "66": 4,
+              "67": 10,
+              "68": 15,
+              "69": 15,
+              "70": 15,
+              "71": 21,
+              "72": 17,
+              "73": 28,
+              "74": 33,
+              "75": 26,
+              "76": 34,
+              "77": 33,
+              "78": 35,
+              "79": 40,
+              "80": 45,
+              "81": 42,
+              "82": 46,
+              "83": 58,
+              "84": 51,
+              "85": 48,
+              "86": 58,
+              "87": 42,
+              "88": 42,
+              "89": 47,
+              "90": 36,
+              "91": 42,
+              "92": 31,
+              "93": 30,
+              "94": 32,
+              "95": 22,
+              "96": 20,
+              "97": 23,
+              "98": 10,
+              "99": 22
+            },
+            "histogram_serialization": "canonical JSON object count->frequency",
+            "histogram_sha256": "eaceb3817273f23a0aeacc7104d2caebfa90c5768bea83e1bf77c5abd6d59135",
+            "mapping_sha256": "a9f1dbf5d43e92f1f92e6120984ff5d1e1cc2b3f5ea4e571eefa8cb428056155",
+            "maximum": 115,
+            "mean": 84.5262252794497,
+            "minimum": 54
+          },
+          "vision": {
+            "dimension": 291,
+            "histogram": {
+              "100": 3,
+              "101": 4,
+              "102": 1,
+              "103": 1,
+              "104": 2,
+              "106": 1,
+              "108": 1,
+              "110": 1,
+              "112": 1,
+              "116": 1,
+              "53": 1,
+              "58": 1,
+              "62": 1,
+              "63": 2,
+              "64": 1,
+              "65": 3,
+              "66": 3,
+              "67": 3,
+              "69": 4,
+              "70": 1,
+              "71": 4,
+              "72": 6,
+              "73": 5,
+              "74": 6,
+              "75": 5,
+              "76": 9,
+              "77": 10,
+              "78": 8,
+              "79": 10,
+              "80": 16,
+              "81": 13,
+              "82": 11,
+              "83": 16,
+              "84": 18,
+              "85": 10,
+              "86": 8,
+              "87": 10,
+              "88": 9,
+              "89": 7,
+              "90": 11,
+              "91": 7,
+              "92": 6,
+              "93": 11,
+              "94": 10,
+              "95": 7,
+              "96": 10,
+              "97": 6,
+              "98": 5,
+              "99": 1
+            },
+            "histogram_serialization": "canonical JSON object count->frequency",
+            "histogram_sha256": "c1cc8eaba960b4e397444723cbbd01bc68ad2a0f4f40c4ee10739e63aa2a8a10",
+            "mapping_sha256": "8c37d12912f8e29d5669e7c768e91251779f2d901d74992661459ef31899e1a8",
+            "maximum": 116,
+            "mean": 84.45360824742268,
+            "minimum": 53
+          }
+        },
+        "model_group": "M2",
+        "protocol": {
+          "protocol_id": "minimind-v-stage2-joint-compression-v2",
+          "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3"
+        },
+        "wrapped_names": [
+          "lm_head",
+          "model.layers.0.self_attn.q_proj",
+          "model.layers.0.self_attn.v_proj",
+          "model.layers.7.self_attn.q_proj",
+          "model.layers.7.self_attn.v_proj",
+          "vision_encoder.vision_model.encoder.layers.10.self_attn.q_proj",
+          "vision_encoder.vision_model.encoder.layers.10.self_attn.v_proj",
+          "vision_encoder.vision_model.encoder.layers.11.self_attn.q_proj",
+          "vision_encoder.vision_model.encoder.layers.11.self_attn.v_proj",
+          "vision_proj.mlp.1",
+          "vision_proj.mlp.3"
+        ]
+      },
+      "coordinate_dimensions": {
+        "language": 594,
+        "projector": 1163,
+        "vision": 291
+      },
+      "coordinate_state_sha256": "00b53bffe8005cf7aaa670dd9f0faad5866a97f044b7c4d58ed0b2b3a31c74ef",
+      "projector_base": {
+        "aggregate_tensor_sha256": "3712c79bd4859f543c9030e237a49797c3dfe064a457dcce21dd7cf6a227921a",
+        "configuration": {
+          "elementwise_affine": false,
+          "eps": 1e-05,
+          "normalized_shape": [
+            768
+          ]
+        },
+        "configuration_serialization": "canonical JSON",
+        "configuration_sha256": "5b88036932ef590707662f2dc61d3d5c84de26de89f6188064a9b5d3d6d613b0",
+        "tensor_hash_protocol": "SHA256 of C-order little-endian float32 raw bytes",
+        "tensor_sha256": {
+          "vision_proj.mlp.1.bias": "b84dab01932d5844cbef737e892677d0bfa1c1b8c650e773292a1d8cd84477c5",
+          "vision_proj.mlp.1.weight": "637808c850b6caa99b20d95d7ae2cd836848f31ebe8025e8179a485ea33128a3",
+          "vision_proj.mlp.3.bias": "646898f2f2627dcefdfbcc0fe36d9b6113fb439f26eaf8b9f08c021f0541fa31",
+          "vision_proj.mlp.3.weight": "31f5fc3242249bf75b38f602ce58135bb43fa5cc4f8f95390288197efecad17b"
+        }
+      },
+      "trainable_parameter_count": 2048,
+      "trainable_parameter_names": [
+        "stage2_coordinates.coordinates.language",
+        "stage2_coordinates.coordinates.projector",
+        "stage2_coordinates.coordinates.vision"
+      ]
+    }
+  },
+  "runtime": {
+    "cuda_runtime": "12.4",
+    "cudnn": 90100,
+    "python": "3.10.18",
+    "seconds": 715.2612619400024,
+    "torch": "2.6.0+cu124",
+    "visible_device_count": 1,
+    "visible_device_name": "NVIDIA A40"
+  },
+  "runtime_preflight": {
+    "config_id": "M2-low-seed-43101",
+    "environment": {
+      "mode": "stage2",
+      "pip_freeze_sha256": "d58af1bd5fa2e1a8973bb5f04c38e1ad26a32e338e515fa56014d1964ae77f4c",
+      "python_executable": "/home/lizhaohui/lzq/minimind-v/.conda-env/bin/python3.10"
+    },
+    "git": {
+      "branch": "stage3-v5-completion",
+      "head_commit": "6cfe342e9889ae496e370c6c42544c8150fac1c2",
+      "tracked_status": ""
+    },
+    "gpu": {
+      "free_memory_mib": 18875,
+      "idle_at_preflight": false,
+      "idle_definition": "absent from nvidia-smi compute-process GPU UUIDs at dispatch and at every formal stage preflight",
+      "minimum_free_memory_mib": 12288,
+      "name": "NVIDIA A40",
+      "physical_index": 4,
+      "policy": "dynamic_idle_a40_pool",
+      "shared_gpu_execution": true,
+      "shared_gpu_user_authorized": true,
+      "uuid": "GPU-8e1547c5-b212-b319-786a-c17a3d644e0b"
+    },
+    "stage2_protocol": {
+      "protocol_id": "minimind-v-stage2-joint-compression-v2",
+      "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3"
+    },
+    "status": "passed",
+    "training_data": {
+      "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/dataset/stage2_confirm_v2_seed2028/train.parquet",
+      "sha256": "3c3d90c525f43200d35ebd5b4ac1719c8336d278aecbf7e929997c8401b1d5ce"
+    }
+  },
+  "schema_version": 1,
+  "status": "complete",
+  "total_coordinate_budget": 2048,
+  "training": {
+    "all_gradient_norms_finite": true,
+    "all_losses_finite": true,
+    "automatic_hyperparameter_tuning": false,
+    "checkpoint_selection": "final_frozen_schedule_state_only",
+    "effective_batch_size": 16,
+    "epoch_receipts": [
+      {
+        "epoch_index": 0,
+        "epoch_seed": 2026,
+        "mean_micro_batch_loss": 2.755337161064148,
+        "micro_batches": 2500,
+        "permutation_sha256": "22887f87b96655552871f1a309a22b53ea77d0ad24bed9be54a4c201372cc580"
+      },
+      {
+        "epoch_index": 1,
+        "epoch_seed": 2027,
+        "mean_micro_batch_loss": 2.730731706905365,
+        "micro_batches": 2500,
+        "permutation_sha256": "8c79b9e05bc90f8ee3d06e0eaa1d0fb2499d892d64e2c04a03d3f43dc8b9b3bd"
+      },
+      {
+        "epoch_index": 2,
+        "epoch_seed": 2028,
+        "mean_micro_batch_loss": 2.721636536884308,
+        "micro_batches": 2500,
+        "permutation_sha256": "ed28c6db3715fc5a4015153352145426e865fc8abf47a047e619bfaec04c8e01"
+      }
+    ],
+    "epochs": 3,
+    "gradient_accumulation_steps": 4,
+    "learning_rate": 0.05,
+    "learning_rate_schedule": {
+      "formula": "lr_min+0.5*(lr_max-lr_min)*(1+cos(pi*t/(T-1)))",
+      "minimum_ratio": 0.1,
+      "t_values": "0 through 1874",
+      "total_steps": 1875,
+      "update_unit": "optimizer step",
+      "warmup_steps": 0
+    },
+    "mean_micro_batch_loss": 2.73590180161794,
+    "micro_batch_size": 4,
+    "observed_micro_batches": 7500,
+    "optimizer": {
+      "amsgrad": false,
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "name": "torch.optim.AdamW",
+      "parameters": "coordinate tensors only",
+      "weight_decay": 0.01
+    },
+    "optimizer_steps_expected": 1875,
+    "optimizer_steps_observed": 1875,
+    "retry_count": 0,
+    "train_seed": 2026
+  }
+}

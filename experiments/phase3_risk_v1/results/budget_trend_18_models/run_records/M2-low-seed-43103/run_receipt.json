@@ -1,0 +1,91 @@
+{
+  "adapter_summary": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/phase3_risk_v1/M2-low-seed-43103/encode/adapter_summary.json",
+  "automatic_retry": false,
+  "config": {
+    "directory_validation": {
+      "candidate_family_size": 18,
+      "comparison_claim": "equal_coordinate_budget_not_equal_description_length",
+      "config_count": 18,
+      "external_selection_bits": 5,
+      "pair_count": 9,
+      "status": "passed"
+    },
+    "manifest_path": "/home/lizhaohui/lzq/minimind-v-stage2/experiments/phase3_risk_v1/configs/manifest.json",
+    "manifest_sha256": "721629f7f511cee5cbb7239c42a0c730d730235464ca8029ca1c47cb3cafe2b0",
+    "path": "/home/lizhaohui/lzq/minimind-v-stage2/experiments/phase3_risk_v1/configs/M2-low-seed-43103.json",
+    "sha256": "a1ed68b4d09d72f17adb8e6bab0360c2ae0990f39b9ee5ac17ad3d296f9720f1"
+  },
+  "config_id": "M2-low-seed-43103",
+  "gpu_uuid": "GPU-3e79d612-52da-90ce-9215-e2f1367ae2ba",
+  "model_summary": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/phase3_risk_v1/M2-low-seed-43103/scoring/model_summary.json",
+  "run_dir": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/phase3_risk_v1/M2-low-seed-43103",
+  "schema_version": 1,
+  "scoring_receipt": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/phase3_risk_v1/M2-low-seed-43103/scoring/scoring_receipt.json",
+  "seconds": 1122.8292698860168,
+  "stages": [
+    {
+      "command": [
+        "/home/lizhaohui/lzq/minimind-v/.conda-env/bin/python",
+        "-m",
+        "experiments.phase3_risk_v1.train_budget_model",
+        "--config-id",
+        "M2-low-seed-43103",
+        "--artifact-root",
+        "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721",
+        "--output-dir",
+        "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/phase3_risk_v1/M2-low-seed-43103/training",
+        "--device",
+        "cuda:0"
+      ],
+      "log_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/phase3_risk_v1/M2-low-seed-43103/logs/training.log",
+      "log_sha256": "ee449a192fb45770369d622781a5fd695c440041e02dc109554387c15cb35654",
+      "returncode": 0,
+      "seconds": 765.0798199176788,
+      "stage": "training"
+    },
+    {
+      "command": [
+        "/home/lizhaohui/lzq/minimind-v/.conda-env/bin/python",
+        "-m",
+        "experiments.phase3_risk_v1.quantize_budget_model",
+        "--config-id",
+        "M2-low-seed-43103",
+        "--artifact-root",
+        "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721",
+        "--training-manifest",
+        "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/phase3_risk_v1/M2-low-seed-43103/training/training_manifest.json",
+        "--output-dir",
+        "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/phase3_risk_v1/M2-low-seed-43103/encode"
+      ],
+      "log_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/phase3_risk_v1/M2-low-seed-43103/logs/quantization.log",
+      "log_sha256": "671088ca7e7e0bd160343946e152f42fd1ded7fd3d3520af2f6573034cee12cb",
+      "returncode": 0,
+      "seconds": 12.859430313110352,
+      "stage": "quantization"
+    },
+    {
+      "command": [
+        "/home/lizhaohui/lzq/phase3_runtime/phase3_v5/env/bin/python",
+        "-m",
+        "experiments.phase3_risk_v1.score_budget_model",
+        "--config-id",
+        "M2-low-seed-43103",
+        "--artifact-root",
+        "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721",
+        "--adapter-summary",
+        "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/phase3_risk_v1/M2-low-seed-43103/encode/adapter_summary.json",
+        "--output-dir",
+        "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/phase3_risk_v1/M2-low-seed-43103/scoring",
+        "--device",
+        "cuda:0"
+      ],
+      "log_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/phase3_risk_v1/M2-low-seed-43103/logs/scoring.log",
+      "log_sha256": "527b2065f47dc9a86407baa007224b1c85c700037620754448bd0b0144f5431f",
+      "returncode": 0,
+      "seconds": 344.8892939090729,
+      "stage": "scoring_and_risk"
+    }
+  ],
+  "status": "complete",
+  "training_manifest": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/phase3_risk_v1/M2-low-seed-43103/training/training_manifest.json"
+}

@@ -47,5 +47,7 @@ zlib-9 压缩共同决定，是实验输出。
 ## 已保存结果
 
 冻结 v6 的风险回填、复杂度审查、统一汇总和图表保存在
-[`results/`](results/README.md)。这些结果是探索性集中分析，不是正式外部认证；
-18 个新配置仍只有静态 dry-run，没有启动训练。
+[`results/`](results/README.md)。12 个 low/high 新模型的完整预算趋势执行摘要与
+18 模型统一分析保存在
+[`results/budget_trend_18_models/`](results/budget_trend_18_models/README.md)。
+这些结果是探索性集中分析，不是正式外部认证。

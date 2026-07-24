@@ -1,0 +1,287 @@
+config=M3-low-seed-43101 epoch=1/3 optimizer_step=625/1875 mean_loss=2.76212077
+config=M3-low-seed-43101 epoch=2/3 optimizer_step=1250/1875 mean_loss=2.74419854
+config=M3-low-seed-43101 epoch=3/3 optimizer_step=1875/1875 mean_loss=2.73481246
+{
+  "budget": "low",
+  "checkpoint": {
+    "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/phase3_risk_v1/M3-low-seed-43101/training/training_checkpoint.pt",
+    "sha256": "703ec365e3302a6220e304ae745c8baad28e524296e0581bcd341c30a7cdeede"
+  },
+  "config": {
+    "directory_validation": {
+      "candidate_family_size": 18,
+      "comparison_claim": "equal_coordinate_budget_not_equal_description_length",
+      "config_count": 18,
+      "external_selection_bits": 5,
+      "pair_count": 9,
+      "status": "passed"
+    },
+    "manifest_path": "/home/lizhaohui/lzq/minimind-v-stage2/experiments/phase3_risk_v1/configs/manifest.json",
+    "manifest_sha256": "721629f7f511cee5cbb7239c42a0c730d730235464ca8029ca1c47cb3cafe2b0",
+    "path": "/home/lizhaohui/lzq/minimind-v-stage2/experiments/phase3_risk_v1/configs/M3-low-seed-43101.json",
+    "sha256": "7643bfeb5f84720cb97c60b174fdbddffad1fa59091d2de9075496f0d20afe6e"
+  },
+  "config_id": "M3-low-seed-43101",
+  "coordinate_dimensions": {
+    "shared": 2048
+  },
+  "coordinates": {
+    "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/phase3_risk_v1/M3-low-seed-43101/training/coordinates.pt",
+    "sha256": "cc52aa19b1583638fd37e865806e0fa80cbdb9038541ed2affff2d3cf7e0ddc1"
+  },
+  "data": {
+    "examples": 10000,
+    "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/dataset/stage2_confirm_v2_seed2028/train.parquet",
+    "sha256": "3c3d90c525f43200d35ebd5b4ac1719c8336d278aecbf7e929997c8401b1d5ce"
+  },
+  "experiment_type": "phase3_equal_coordinate_budget",
+  "formal_stage2_certification_run": false,
+  "mapping_root": 43101,
+  "method": "M3",
+  "model": {
+    "final_coordinate_state_sha256": "6658e72623b9f416785a79efeb54ee059cb58490b9f9b9ca70a68aa03d928e3f",
+    "final_frozen_parameter_sha256": "8db8f60ea8d42011df035d6af59fbe64c9fbda96f18c2e1bc542fe53ef52945f",
+    "frozen_parameters_unchanged": true,
+    "initial_frozen_parameter_sha256": "8db8f60ea8d42011df035d6af59fbe64c9fbda96f18c2e1bc542fe53ef52945f",
+    "initial_structure": {
+      "adapter": {
+        "comparison_label": "equal_coordinate_budget_not_equal_description_length",
+        "coordinate_dimensions": {
+          "shared": 2048
+        },
+        "initial_llm_load": {
+          "allowed_missing_prefixes": [
+            "vision_encoder.",
+            "vision_proj."
+          ],
+          "exact_initial_tensor_match": true,
+          "initial_state_key_count": 91,
+          "missing_key_count": 212,
+          "unexpected_keys": []
+        },
+        "initial_llm_sha256": "5b8c49f6c9d965092e651cafeeaeb8705558632b3fd4ac8ab319cbc5a3cbc4a0",
+        "mapping_root": 43101,
+        "mapping_statistics": {
+          "shared": {
+            "dimension": 2048,
+            "histogram": {
+              "100": 22,
+              "101": 21,
+              "102": 10,
+              "103": 18,
+              "104": 13,
+              "105": 10,
+              "106": 4,
+              "107": 7,
+              "108": 3,
+              "109": 5,
+              "110": 2,
+              "111": 2,
+              "118": 1,
+              "120": 1,
+              "51": 1,
+              "56": 1,
+              "57": 1,
+              "60": 1,
+              "61": 5,
+              "62": 4,
+              "63": 4,
+              "64": 9,
+              "65": 10,
+              "66": 10,
+              "67": 16,
+              "68": 24,
+              "69": 31,
+              "70": 18,
+              "71": 22,
+              "72": 34,
+              "73": 45,
+              "74": 47,
+              "75": 58,
+              "76": 58,
+              "77": 77,
+              "78": 71,
+              "79": 82,
+              "80": 77,
+              "81": 73,
+              "82": 93,
+              "83": 67,
+              "84": 81,
+              "85": 91,
+              "86": 86,
+              "87": 82,
+              "88": 94,
+              "89": 85,
+              "90": 77,
+              "91": 71,
+              "92": 53,
+              "93": 48,
+              "94": 50,
+              "95": 44,
+              "96": 33,
+              "97": 43,
+              "98": 21,
+              "99": 31
+            },
+            "histogram_serialization": "canonical JSON object count->frequency",
+            "histogram_sha256": "296f8a21edee76ca0352b0b806768711729e2b6c172da1d2794b63ca50716d8c",
+            "mapping_sha256": "29883e72f4e9a810fd1bda72beafc24117b7a91428ca84efdaa1b94fd50e7cb6",
+            "maximum": 120,
+            "mean": 84.5,
+            "minimum": 51
+          }
+        },
+        "model_group": "M3",
+        "protocol": {
+          "protocol_id": "minimind-v-stage2-joint-compression-v2",
+          "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3"
+        },
+        "wrapped_names": [
+          "lm_head",
+          "model.layers.0.self_attn.q_proj",
+          "model.layers.0.self_attn.v_proj",
+          "model.layers.7.self_attn.q_proj",
+          "model.layers.7.self_attn.v_proj",
+          "vision_encoder.vision_model.encoder.layers.10.self_attn.q_proj",
+          "vision_encoder.vision_model.encoder.layers.10.self_attn.v_proj",
+          "vision_encoder.vision_model.encoder.layers.11.self_attn.q_proj",
+          "vision_encoder.vision_model.encoder.layers.11.self_attn.v_proj",
+          "vision_proj.mlp.1",
+          "vision_proj.mlp.3"
+        ]
+      },
+      "coordinate_dimensions": {
+        "shared": 2048
+      },
+      "coordinate_state_sha256": "dce7a2f664ec0f426d011e4c9a68a9f3b03aae9d27b792a77fe0b1cb9af87452",
+      "projector_base": {
+        "aggregate_tensor_sha256": "3712c79bd4859f543c9030e237a49797c3dfe064a457dcce21dd7cf6a227921a",
+        "configuration": {
+          "elementwise_affine": false,
+          "eps": 1e-05,
+          "normalized_shape": [
+            768
+          ]
+        },
+        "configuration_serialization": "canonical JSON",
+        "configuration_sha256": "5b88036932ef590707662f2dc61d3d5c84de26de89f6188064a9b5d3d6d613b0",
+        "tensor_hash_protocol": "SHA256 of C-order little-endian float32 raw bytes",
+        "tensor_sha256": {
+          "vision_proj.mlp.1.bias": "b84dab01932d5844cbef737e892677d0bfa1c1b8c650e773292a1d8cd84477c5",
+          "vision_proj.mlp.1.weight": "637808c850b6caa99b20d95d7ae2cd836848f31ebe8025e8179a485ea33128a3",
+          "vision_proj.mlp.3.bias": "646898f2f2627dcefdfbcc0fe36d9b6113fb439f26eaf8b9f08c021f0541fa31",
+          "vision_proj.mlp.3.weight": "31f5fc3242249bf75b38f602ce58135bb43fa5cc4f8f95390288197efecad17b"
+        }
+      },
+      "trainable_parameter_count": 2048,
+      "trainable_parameter_names": [
+        "stage2_coordinates.coordinates.shared"
+      ]
+    }
+  },
+  "runtime": {
+    "cuda_runtime": "12.4",
+    "cudnn": 90100,
+    "python": "3.10.18",
+    "seconds": 711.6307396888733,
+    "torch": "2.6.0+cu124",
+    "visible_device_count": 1,
+    "visible_device_name": "NVIDIA A40"
+  },
+  "runtime_preflight": {
+    "config_id": "M3-low-seed-43101",
+    "environment": {
+      "mode": "stage2",
+      "pip_freeze_sha256": "d58af1bd5fa2e1a8973bb5f04c38e1ad26a32e338e515fa56014d1964ae77f4c",
+      "python_executable": "/home/lizhaohui/lzq/minimind-v/.conda-env/bin/python3.10"
+    },
+    "git": {
+      "branch": "stage3-v5-completion",
+      "head_commit": "6cfe342e9889ae496e370c6c42544c8150fac1c2",
+      "tracked_status": ""
+    },
+    "gpu": {
+      "free_memory_mib": 18875,
+      "idle_at_preflight": false,
+      "idle_definition": "absent from nvidia-smi compute-process GPU UUIDs at dispatch and at every formal stage preflight",
+      "minimum_free_memory_mib": 12288,
+      "name": "NVIDIA A40",
+      "physical_index": 2,
+      "policy": "dynamic_idle_a40_pool",
+      "shared_gpu_execution": true,
+      "shared_gpu_user_authorized": true,
+      "uuid": "GPU-c9a8863d-0fc8-4a4a-d8ab-ff06e1466f11"
+    },
+    "stage2_protocol": {
+      "protocol_id": "minimind-v-stage2-joint-compression-v2",
+      "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3"
+    },
+    "status": "passed",
+    "training_data": {
+      "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/dataset/stage2_confirm_v2_seed2028/train.parquet",
+      "sha256": "3c3d90c525f43200d35ebd5b4ac1719c8336d278aecbf7e929997c8401b1d5ce"
+    }
+  },
+  "schema_version": 1,
+  "status": "complete",
+  "total_coordinate_budget": 2048,
+  "training": {
+    "all_gradient_norms_finite": true,
+    "all_losses_finite": true,
+    "automatic_hyperparameter_tuning": false,
+    "checkpoint_selection": "final_frozen_schedule_state_only",
+    "effective_batch_size": 16,
+    "epoch_receipts": [
+      {
+        "epoch_index": 0,
+        "epoch_seed": 2026,
+        "mean_micro_batch_loss": 2.762120766735077,
+        "micro_batches": 2500,
+        "permutation_sha256": "22887f87b96655552871f1a309a22b53ea77d0ad24bed9be54a4c201372cc580"
+      },
+      {
+        "epoch_index": 1,
+        "epoch_seed": 2027,
+        "mean_micro_batch_loss": 2.7441985446929933,
+        "micro_batches": 2500,
+        "permutation_sha256": "8c79b9e05bc90f8ee3d06e0eaa1d0fb2499d892d64e2c04a03d3f43dc8b9b3bd"
+      },
+      {
+        "epoch_index": 2,
+        "epoch_seed": 2028,
+        "mean_micro_batch_loss": 2.734812464904785,
+        "micro_batches": 2500,
+        "permutation_sha256": "ed28c6db3715fc5a4015153352145426e865fc8abf47a047e619bfaec04c8e01"
+      }
+    ],
+    "epochs": 3,
+    "gradient_accumulation_steps": 4,
+    "learning_rate": 0.05,
+    "learning_rate_schedule": {
+      "formula": "lr_min+0.5*(lr_max-lr_min)*(1+cos(pi*t/(T-1)))",
+      "minimum_ratio": 0.1,
+      "t_values": "0 through 1874",
+      "total_steps": 1875,
+      "update_unit": "optimizer step",
+      "warmup_steps": 0
+    },
+    "mean_micro_batch_loss": 2.747043925444285,
+    "micro_batch_size": 4,
+    "observed_micro_batches": 7500,
+    "optimizer": {
+      "amsgrad": false,
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "name": "torch.optim.AdamW",
+      "parameters": "coordinate tensors only",
+      "weight_decay": 0.01
+    },
+    "optimizer_steps_expected": 1875,
+    "optimizer_steps_observed": 1875,
+    "retry_count": 0,
+    "train_seed": 2026
+  }
+}

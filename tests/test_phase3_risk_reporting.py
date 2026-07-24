@@ -7,7 +7,10 @@ from experiments.phase3_risk_v1.summarize_and_plot import (
     join_summary_rows,
     paired_differences,
 )
-from experiments.phase3_risk_v1.analyze_budget_matrix import _budget_summary
+from experiments.phase3_risk_v1.analyze_budget_matrix import (
+    _budget_summary,
+    _write_csv,
+)
 from experiments.phase3_risk_v1.risk_metrics import derive_risk_row
 from experiments.phase3_v6.scoring.common import read_json, read_jsonl
 
@@ -153,3 +156,26 @@ def test_budget_summary_reports_population_std_and_pair_sign_consistency():
         row["delta_visual_risk_signs"] == "positive|positive|positive"
         for row in result
     )
+
+
+def test_budget_csv_serializes_reason_arrays_without_mutating_json_rows(
+    tmp_path,
+):
+    rows = [
+        {
+            "model_id": "M2-low-seed-43101",
+            "invalid_for_formal_certification_reasons": [
+                "post_hoc_metric_design",
+                "coupled_mismatch_donors",
+            ],
+        }
+    ]
+    output = tmp_path / "models.csv"
+    _write_csv(output, rows)
+    assert output.read_text(encoding="utf-8").splitlines()[1].endswith(
+        "post_hoc_metric_design|coupled_mismatch_donors"
+    )
+    assert rows[0]["invalid_for_formal_certification_reasons"] == [
+        "post_hoc_metric_design",
+        "coupled_mismatch_donors",
+    ]
