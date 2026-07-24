@@ -151,7 +151,12 @@ def gpu_inventory() -> list[dict[str, Any]]:
     return output
 
 
-def available_eligible_gpus(protocol) -> list[dict[str, Any]]:
+def available_eligible_gpus(
+    protocol,
+    *,
+    allow_shared: bool = False,
+    minimum_free_memory_mib: int = 0,
+) -> list[dict[str, Any]]:
     hardware = protocol.payload["hardware_execution"]
     eligible = set(hardware["eligible_gpu_uuids"])
     substring = str(hardware["required_gpu_name_substring"])
@@ -160,7 +165,13 @@ def available_eligible_gpus(protocol) -> list[dict[str, Any]]:
         for row in gpu_inventory()
         if row["uuid"] in eligible
         and substring in row["name"]
-        and not row["active_compute_process"]
+        and (
+            not row["active_compute_process"]
+            or (
+                allow_shared
+                and row["free_memory_mib"] >= minimum_free_memory_mib
+            )
+        )
     ]
     return sorted(
         rows, key=lambda row: (-row["free_memory_mib"], row["uuid"])
@@ -183,8 +194,23 @@ def verify_gpu_preflight(protocol, *, require_idle: bool = True) -> dict[str, An
     selected = matches[0]
     if hardware["required_gpu_name_substring"] not in selected["name"]:
         raise ValueError("selected execution device is not an eligible A40")
-    if require_idle and selected["active_compute_process"]:
+    allow_shared = os.environ.get("PHASE3_ALLOW_SHARED_GPU", "") == "1"
+    minimum_free_memory_mib = int(
+        os.environ.get("PHASE3_MIN_FREE_MEMORY_MIB", "0")
+    )
+    if minimum_free_memory_mib < 0:
+        raise ValueError("shared-GPU minimum free memory must be non-negative")
+    if require_idle and selected["active_compute_process"] and not allow_shared:
         raise ValueError("selected execution A40 has an active compute process")
+    if (
+        selected["active_compute_process"]
+        and allow_shared
+        and selected["free_memory_mib"] < minimum_free_memory_mib
+    ):
+        raise ValueError(
+            "selected shared A40 has less free memory than the declared "
+            "safety threshold"
+        )
     return {
         "policy": hardware["policy"],
         "idle_definition": hardware["idle_definition"],
@@ -193,6 +219,9 @@ def verify_gpu_preflight(protocol, *, require_idle: bool = True) -> dict[str, An
         "physical_index": selected["index"],
         "free_memory_mib": selected["free_memory_mib"],
         "idle_at_preflight": not selected["active_compute_process"],
+        "shared_gpu_execution": bool(selected["active_compute_process"]),
+        "shared_gpu_user_authorized": allow_shared,
+        "minimum_free_memory_mib": minimum_free_memory_mib,
     }
 
 

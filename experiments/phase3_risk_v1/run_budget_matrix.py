@@ -70,6 +70,8 @@ def dispatch(
     *,
     max_workers: int,
     poll_seconds: int,
+    allow_shared_gpu: bool,
+    minimum_free_memory_mib: int,
 ) -> list[dict]:
     protocol = verify_stage2_source_integrity(str(STAGE2_PROTOCOL_PATH))
     _require_absent_outputs(artifact_root, config_ids)
@@ -80,7 +82,11 @@ def dispatch(
         live_uuids = {value["gpu"]["uuid"] for value in active.values()}
         available = [
             gpu
-            for gpu in available_eligible_gpus(protocol)
+            for gpu in available_eligible_gpus(
+                protocol,
+                allow_shared=allow_shared_gpu,
+                minimum_free_memory_mib=minimum_free_memory_mib,
+            )
             if gpu["uuid"] not in live_uuids
         ]
         while pending and available and len(active) < max_workers:
@@ -89,6 +95,12 @@ def dispatch(
             environment = dict(os.environ)
             environment["CUDA_VISIBLE_DEVICES"] = gpu["uuid"]
             environment["PYTHONUNBUFFERED"] = "1"
+            environment["PHASE3_ALLOW_SHARED_GPU"] = (
+                "1" if allow_shared_gpu else "0"
+            )
+            environment["PHASE3_MIN_FREE_MEMORY_MIB"] = str(
+                minimum_free_memory_mib
+            )
             command = [
                 sys.executable,
                 "-m",
@@ -121,6 +133,12 @@ def dispatch(
                         "free_memory_mib_at_dispatch": gpu[
                             "free_memory_mib"
                         ],
+                        "shared_gpu_execution": gpu[
+                            "active_compute_process"
+                        ],
+                        "minimum_free_memory_mib": (
+                            minimum_free_memory_mib
+                        ),
                     },
                     sort_keys=True,
                 ),
@@ -169,7 +187,11 @@ def dispatch(
                 print(
                     json.dumps(
                         {
-                            "event": "waiting_for_idle_eligible_A40",
+                            "event": (
+                                "waiting_for_sufficient_memory_eligible_A40"
+                                if allow_shared_gpu
+                                else "waiting_for_idle_eligible_A40"
+                            ),
                             "pending_count": len(pending),
                         },
                         sort_keys=True,
@@ -188,10 +210,18 @@ def main() -> int:
     parser.add_argument("--artifact-root", type=Path, required=True)
     parser.add_argument("--max-workers", type=int, default=7)
     parser.add_argument("--poll-seconds", type=int, default=20)
+    parser.add_argument("--allow-shared-gpu", action="store_true")
+    parser.add_argument("--minimum-free-memory-mib", type=int, default=0)
     parser.add_argument("--receipt", type=Path, required=True)
     args = parser.parse_args()
     if not 1 <= args.max_workers <= 7:
         raise ValueError("max-workers must be between one and seven")
+    if args.minimum_free_memory_mib < 0:
+        raise ValueError("minimum-free-memory-mib must be non-negative")
+    if not args.allow_shared_gpu and args.minimum_free_memory_mib:
+        raise ValueError(
+            "minimum-free-memory-mib requires --allow-shared-gpu"
+        )
     root = args.artifact_root.resolve()
     gate_path = root / (
         "experiments/runs/phase3_risk_v1/gate_low_43101.json"
@@ -210,6 +240,8 @@ def main() -> int:
             requested,
             max_workers=args.max_workers,
             poll_seconds=args.poll_seconds,
+            allow_shared_gpu=args.allow_shared_gpu,
+            minimum_free_memory_mib=args.minimum_free_memory_mib,
         )
         if args.phase == "gate":
             gate_path.parent.mkdir(parents=True, exist_ok=True)
@@ -237,6 +269,11 @@ def main() -> int:
             "gate_receipt": str(gate_path),
             "seconds": time.time() - started,
             "automatic_retry": False,
+            "resource_policy": {
+                "allow_shared_gpu": args.allow_shared_gpu,
+                "minimum_free_memory_mib": args.minimum_free_memory_mib,
+                "user_authorized": args.allow_shared_gpu,
+            },
         }
         atomic_write_json(args.receipt, receipt)
         print(json.dumps(receipt, indent=2, sort_keys=True))
@@ -253,6 +290,13 @@ def main() -> int:
                 "error": str(error),
                 "seconds": time.time() - started,
                 "automatic_retry": False,
+                "resource_policy": {
+                    "allow_shared_gpu": args.allow_shared_gpu,
+                    "minimum_free_memory_mib": (
+                        args.minimum_free_memory_mib
+                    ),
+                    "user_authorized": args.allow_shared_gpu,
+                },
             },
         )
         raise

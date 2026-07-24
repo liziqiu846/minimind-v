@@ -1,4 +1,5 @@
 import json
+from types import SimpleNamespace
 
 import torch
 
@@ -20,6 +21,7 @@ from experiments.phase3_risk_v1.budget_configs import (
     m2_allocation,
 )
 from experiments.phase3_risk_v1.budget_runtime import load_frozen_config
+from experiments.phase3_risk_v1 import budget_runtime
 from experiments.stage2_protocol import load_target_registry
 from model.global_subspace_lora import target_specs
 
@@ -106,3 +108,49 @@ def test_runtime_loader_verifies_selected_config_and_complete_manifest():
     assert config["external_selection_bits"] == 5
     assert len(receipt["sha256"]) == 64
     assert receipt["directory_validation"]["status"] == "passed"
+
+
+def test_shared_gpu_selection_requires_declared_free_memory(monkeypatch):
+    protocol = SimpleNamespace(
+        payload={
+            "hardware_execution": {
+                "eligible_gpu_uuids": ["GPU-a", "GPU-b", "GPU-c"],
+                "required_gpu_name_substring": "A40",
+            }
+        }
+    )
+    monkeypatch.setattr(
+        budget_runtime,
+        "gpu_inventory",
+        lambda: [
+            {
+                "index": 0,
+                "name": "NVIDIA A40",
+                "uuid": "GPU-a",
+                "free_memory_mib": 16000,
+                "active_compute_process": True,
+            },
+            {
+                "index": 1,
+                "name": "NVIDIA A40",
+                "uuid": "GPU-b",
+                "free_memory_mib": 10000,
+                "active_compute_process": True,
+            },
+            {
+                "index": 2,
+                "name": "NVIDIA A40",
+                "uuid": "GPU-c",
+                "free_memory_mib": 9000,
+                "active_compute_process": False,
+            },
+        ],
+    )
+    idle_only = budget_runtime.available_eligible_gpus(protocol)
+    assert [row["uuid"] for row in idle_only] == ["GPU-c"]
+    shared = budget_runtime.available_eligible_gpus(
+        protocol,
+        allow_shared=True,
+        minimum_free_memory_mib=12288,
+    )
+    assert [row["uuid"] for row in shared] == ["GPU-a", "GPU-c"]
