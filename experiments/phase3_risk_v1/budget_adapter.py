@@ -232,7 +232,21 @@ def reconfigure_budget_adapter(
         _set_child(parent, child_name, wrapper)
     if hasattr(model, "vision_encoder"):
         model.vision_encoder.stage2_gradient_enabled = True
+    preserved_metadata = {
+        key: value
+        for key, value in metadata.items()
+        if key
+        not in {
+            "model_group",
+            "mapping_root",
+            "wrapped_names",
+            "mapping_statistics",
+            "coordinate_dimensions",
+            "comparison_label",
+        }
+    }
     model.stage2_adapter = {  # type: ignore[attr-defined]
+        **preserved_metadata,
         "model_group": model_group,
         "mapping_root": mapping_root,
         "wrapped_names": expected_names,

@@ -19,6 +19,7 @@ from experiments.phase3_risk_v1.budget_configs import (
     load_and_validate_directory,
     m2_allocation,
 )
+from experiments.phase3_risk_v1.budget_runtime import load_frozen_config
 from experiments.stage2_protocol import load_target_registry
 from model.global_subspace_lora import target_specs
 
@@ -96,3 +97,12 @@ def test_low_and_high_budget_codec_round_trip():
         assert identity["model_group"] == "M2"
         assert summary["archive_bits"] == len(payload) * 8
         assert set(decoded) == set(dimensions)
+
+
+def test_runtime_loader_verifies_selected_config_and_complete_manifest():
+    config, receipt = load_frozen_config("M2-low-seed-43101")
+    assert config["config_id"] == "M2-low-seed-43101"
+    assert config["candidate_family_size"] == 18
+    assert config["external_selection_bits"] == 5
+    assert len(receipt["sha256"]) == 64
+    assert receipt["directory_validation"]["status"] == "passed"
