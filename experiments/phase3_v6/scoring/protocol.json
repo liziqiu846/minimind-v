@@ -1,0 +1,549 @@
+{
+  "bootstrap": {
+    "enabled": false,
+    "reason": "optional analysis not added to the frozen primary workflow"
+  },
+  "category_aggregation": {
+    "categories": [
+      "replace_attribute",
+      "replace_object",
+      "replace_relation",
+      "swap_atribute",
+      "swap_object"
+    ],
+    "rule": "filename_x_category mean then equal filename mean"
+  },
+  "claims_not_made": [
+    "new unseen test set",
+    "all future natural-image population guarantee",
+    "new Phase 3 compression generalization bound",
+    "random mismatches are equivalent to hard visual negatives"
+  ],
+  "environment_at_freeze": {
+    "Pillow": "10.4.0",
+    "autocast_enabled": false,
+    "cuda": "12.4",
+    "cuda_available": true,
+    "cuda_matmul_allow_tf32": false,
+    "cudnn": 90100,
+    "cudnn_allow_tf32": true,
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": false,
+    "device": "cuda:3",
+    "gpu": {
+      "compute_capability": [
+        8,
+        6
+      ],
+      "index": 3,
+      "name": "NVIDIA A40",
+      "total_memory_bytes": 47709159424
+    },
+    "model_dtype": "float32",
+    "numpy": "1.26.4",
+    "platform": "Linux-5.4.0-216-generic-x86_64-with-glibc2.31",
+    "python": "3.11.15",
+    "scipy": "1.13.1",
+    "torch": "2.6.0+cu124",
+    "transformers": "4.57.6"
+  },
+  "execution": {
+    "autocast": false,
+    "batch_unit": "all records and six contexts for one target filename",
+    "cuda_matmul_allow_tf32": false,
+    "cudnn_allow_tf32": false,
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": true,
+    "device": "cuda:3",
+    "dropout": false,
+    "global_seed": 3407,
+    "inference_mode": true,
+    "model_dtype": "float32",
+    "model_eval": true,
+    "shard_size_target_images": 32,
+    "vision_cache": {
+      "expected_unique_images_per_m0_model": 0,
+      "expected_unique_images_per_visual_model": 1345,
+      "mode": "model_local_cpu_memory_projected_features",
+      "old_cache_reuse": false,
+      "precompute_batch_size": 1
+    }
+  },
+  "frozen_inputs": {
+    "assignment_core_sha256": "fb4808db202e9191172e80a96b7de4d6343f1380393535ff2c6f32224cbb635b",
+    "candidate_preflight_evidence": "experiments/phase3_v6/scoring/candidate_preflight.jsonl",
+    "candidate_preflight_evidence_sha256": "c6b5c39e6e2ce1eff35d772b550615e3e73e296f48a797fcde618f471faf5cc8",
+    "candidate_preflight_summary": "experiments/phase3_v6/scoring/candidate_preflight_summary.json",
+    "candidate_preflight_summary_sha256": "e3028cf09f2bbd103187822ff9fd07df2ddd34a92ce8627fff61848c8b2bf89a",
+    "expected_assignment_core_sha256": "fb4808db202e9191172e80a96b7de4d6343f1380393535ff2c6f32224cbb635b",
+    "mismatch_image_union_count": 1345,
+    "sha256": {
+      "experiments/phase3_v6/audit_v2/contrast_hull_audit.jsonl": "34f592eec832fba78999a2084dcb871a3d6a2e5b015817cc8d598082797d9a4d",
+      "experiments/phase3_v6/audit_v2/contrast_hull_summary.json": "3eaddd46c68947ed9cca6e125e4b5ca112ec4a48d88a1fa789dbb3e72612d479",
+      "experiments/phase3_v6/mismatch_audit/mismatch_manifest_k5.jsonl": "a7298df9fb57ca24888f3564a38f38357ee144b27d32faab9d07955ff2b30331",
+      "experiments/phase3_v6/mismatch_audit/mismatch_summary.json": "f542c8143582b869b1ae6eb5ffc2df43ba68f11550fc38ebec461fcd053a5d45"
+    },
+    "valid_record_count": 4107,
+    "valid_target_image_count": 1343
+  },
+  "git": {
+    "branch": "stage3-v5-completion",
+    "code_commit": "9cb94f8b39c002d9a6200d7835ee4853364e33b8",
+    "scoring_source_sha256": {
+      "experiments/phase3_v6/scoring/README.md": "01d7cb83883ec886c32010dde76d01154f987fe5fad895b5dffac884bb7d9032",
+      "experiments/phase3_v6/scoring/__init__.py": "ebccad9a26b1937fa083adea1a826196b4407df807753b5efd1397cb5f59c3fa",
+      "experiments/phase3_v6/scoring/aggregations.py": "22b6a082aaf6e30ed4fccc25211152d5a40045fdd0be1b78e39cd4da0f301fc5",
+      "experiments/phase3_v6/scoring/candidate_builder.py": "193e87d9914be0b53495ac9d799ac2307de13708cb31bd93ccbb5bd4a8f17697",
+      "experiments/phase3_v6/scoring/common.py": "e59e8ad7402c9b3c170a071c9e3c1d970942812dc5e01ebd45468a0b61b206de",
+      "experiments/phase3_v6/scoring/hull_scorer.py": "5a62fe16e83d4112f5126283ec3fe13adf2799aa0550e857f536d5f1504fc4aa",
+      "experiments/phase3_v6/scoring/image_feature_cache.py": "c3e8f220cd256ad28708e3c60e7a3166ca5d477da27c76bc481ecc3ddd4be953",
+      "experiments/phase3_v6/scoring/input_validation.py": "b576dd5facbe2ee8dfa86cbbb4c6c80d1587d907bdceda23d8202dd93b776b62",
+      "experiments/phase3_v6/scoring/protocol.py": "99f978483ba37dbd819c0151a53ded17dd036844b7523b8e8fc18db7be8f7987",
+      "experiments/phase3_v6/scoring/run_scoring.py": "226736d29e7de3c32f2aac0e5ed77668c77c39fe70affd321f77c254f1029687",
+      "experiments/phase3_v6/scoring/stage2_comparison.py": "98ac975a4c0b806d60fa04148b7a7db9c899640685c22c21108a0d52e71d3546",
+      "experiments/phase3_v6/scoring/tests/__init__.py": "b203ff33cd9c0749aff566e0368604fe711055d897230bd30f2c38b58574f35a",
+      "experiments/phase3_v6/scoring/tests/test_cache_and_resume.py": "e61dfc92d61dcd8339109fb1b2bedc8105859f7f5f30ff651f842b5c8d38a441",
+      "experiments/phase3_v6/scoring/tests/test_frozen_inputs_and_candidates.py": "4712681e2e2d3b394a96c5e8c0b85b57c91e3795af6e738a7e466543ee3a8955",
+      "experiments/phase3_v6/scoring/tests/test_math_and_aggregation.py": "2c164733649ffc342cb3dc3ec77ac8a9f4ab7c79f4ee29afaa1cb0e67b74a4ec"
+    },
+    "scoring_source_tree_sha256": "aa483eac612c35fcce286ca528f2f5c9b91f4fb87fafc0eb082694f94c562285",
+    "worktree_status_at_freeze": "?? experiments/phase3_v6/\n?? tests/test_phase3_v6_contrast_hull_audit.py\n?? tests/test_phase3_v6_edit_span_audit.py\n?? tests/test_phase3_v6_mismatch_audit.py"
+  },
+  "image_contexts": [
+    "correct",
+    "mismatch_round_1",
+    "mismatch_round_2",
+    "mismatch_round_3",
+    "mismatch_round_4",
+    "mismatch_round_5"
+  ],
+  "image_group_aggregation": {
+    "across_filename": "equal weight per filename",
+    "primary_metric": "mu_k5",
+    "quantiles": "linear interpolation at (n-1)*p",
+    "win_rate_tie_rule": "strict_D_g_k5_greater_than_zero",
+    "within_filename": "arithmetic mean over all valid records"
+  },
+  "local_hull_sensitivity_analysis": {
+    "label": "local_hull_sensitivity_analysis",
+    "may_replace_main_result": false,
+    "selector": "max(positive_hull_token_coverage,negative_hull_token_coverage) <= 0.75"
+  },
+  "m0_invariant": {
+    "failure_blocks_formal_model_comparison": true,
+    "formal_tolerance": 1e-08,
+    "manual_zero_assignment": false,
+    "secondary_diagnostic_tolerance": 1e-06,
+    "six_contexts_actually_scored": true,
+    "token_template_mask_identity_checked": true
+  },
+  "mismatch_aggregation": {
+    "d_k": "q_correct - arithmetic_mean(q_mismatch_selected_rounds)",
+    "k1": [
+      1
+    ],
+    "k3": [
+      1,
+      2,
+      3
+    ],
+    "k5": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  "models": {
+    "artifact_root": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721",
+    "ordered_model_ids": [
+      "M0-root-43101",
+      "M0-root-43102",
+      "M0-root-43103",
+      "M1-root-none",
+      "M2-root-43101",
+      "M2-root-43102",
+      "M2-root-43103",
+      "M3-root-43101",
+      "M3-root-43102",
+      "M3-root-43103"
+    ],
+    "stage2_protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3",
+    "training_finetuning_or_weight_changes_allowed": false,
+    "verified_models": [
+      {
+        "adapter_config": {
+          "archive_bytes": 820,
+          "complexity_bits": 6560,
+          "compressed_body_bytes": 803,
+          "coordinate_groups": [
+            {
+              "dimension": 4096,
+              "name": "language",
+              "scale_float32": 0.35913872718811035
+            }
+          ],
+          "mapping_root": 43101,
+          "mapping_root_id": 1,
+          "model_group": "M0",
+          "model_group_id": 0,
+          "uncompressed_body_bytes": 4104
+        },
+        "checkpoint_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/01_M0_root-43101_seed-2026_lr-0p050/encode/adapter.mms2",
+        "checkpoint_sha256": "7ac08152d6487b582a6cae16c6d932ef507823b67302a77e7260ccf87dd12220",
+        "checkpoint_size_bytes": 820,
+        "decoded_mapping_root": 43101,
+        "decoded_model_group": "M0",
+        "mapping_root": 43101,
+        "method": "M0",
+        "model_id": "M0-root-43101"
+      },
+      {
+        "adapter_config": {
+          "archive_bytes": 828,
+          "complexity_bits": 6624,
+          "compressed_body_bytes": 811,
+          "coordinate_groups": [
+            {
+              "dimension": 4096,
+              "name": "language",
+              "scale_float32": 0.36268600821495056
+            }
+          ],
+          "mapping_root": 43102,
+          "mapping_root_id": 2,
+          "model_group": "M0",
+          "model_group_id": 0,
+          "uncompressed_body_bytes": 4104
+        },
+        "checkpoint_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/02_M0_root-43102_seed-2026_lr-0p050/encode/adapter.mms2",
+        "checkpoint_sha256": "a77491ab4729bd2e99e9062b77611f59550931c2ed508725c56523ffb3ce66cf",
+        "checkpoint_size_bytes": 828,
+        "decoded_mapping_root": 43102,
+        "decoded_model_group": "M0",
+        "mapping_root": 43102,
+        "method": "M0",
+        "model_id": "M0-root-43102"
+      },
+      {
+        "adapter_config": {
+          "archive_bytes": 973,
+          "complexity_bits": 7784,
+          "compressed_body_bytes": 956,
+          "coordinate_groups": [
+            {
+              "dimension": 4096,
+              "name": "language",
+              "scale_float32": 0.305387407541275
+            }
+          ],
+          "mapping_root": 43103,
+          "mapping_root_id": 3,
+          "model_group": "M0",
+          "model_group_id": 0,
+          "uncompressed_body_bytes": 4104
+        },
+        "checkpoint_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/03_M0_root-43103_seed-2026_lr-0p050/encode/adapter.mms2",
+        "checkpoint_sha256": "c0349a686885bc36d130e83b4a4d696e3b59aeb43e936ccc7631a0483a22ab96",
+        "checkpoint_size_bytes": 973,
+        "decoded_mapping_root": 43103,
+        "decoded_model_group": "M0",
+        "mapping_root": 43103,
+        "method": "M0",
+        "model_id": "M0-root-43103"
+      },
+      {
+        "adapter_config": {
+          "archive_bytes": 1311,
+          "complexity_bits": 10488,
+          "compressed_body_bytes": 1294,
+          "coordinate_groups": [
+            {
+              "dimension": 2048,
+              "name": "projector_layer_1",
+              "scale_float32": 0.5794515013694763
+            },
+            {
+              "dimension": 2048,
+              "name": "projector_layer_2",
+              "scale_float32": 0.4985574185848236
+            }
+          ],
+          "mapping_root": null,
+          "mapping_root_id": 0,
+          "model_group": "M1",
+          "model_group_id": 1,
+          "uncompressed_body_bytes": 4112
+        },
+        "checkpoint_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/04_M1_root-none_seed-2026_lr-0p015/encode/adapter.mms2",
+        "checkpoint_sha256": "e30206f2063217e36f992a4c622f99a15db38f7d071aea67e0c79b8df9dd7674",
+        "checkpoint_size_bytes": 1311,
+        "decoded_mapping_root": null,
+        "decoded_model_group": "M1",
+        "mapping_root": null,
+        "method": "M1",
+        "model_id": "M1-root-none"
+      },
+      {
+        "adapter_config": {
+          "archive_bytes": 1150,
+          "complexity_bits": 9200,
+          "compressed_body_bytes": 1133,
+          "coordinate_groups": [
+            {
+              "dimension": 582,
+              "name": "vision",
+              "scale_float32": 1.2557531595230103
+            },
+            {
+              "dimension": 2327,
+              "name": "projector",
+              "scale_float32": 0.8305993676185608
+            },
+            {
+              "dimension": 1187,
+              "name": "language",
+              "scale_float32": 0.5198883414268494
+            }
+          ],
+          "mapping_root": 43101,
+          "mapping_root_id": 1,
+          "model_group": "M2",
+          "model_group_id": 2,
+          "uncompressed_body_bytes": 4120
+        },
+        "checkpoint_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/05_M2_root-43101_seed-2026_lr-0p050/encode/adapter.mms2",
+        "checkpoint_sha256": "29234c2a2709fee8256779a6cacd8ace75de34a73791f4f07031b6383688e8ad",
+        "checkpoint_size_bytes": 1150,
+        "decoded_mapping_root": 43101,
+        "decoded_model_group": "M2",
+        "mapping_root": 43101,
+        "method": "M2",
+        "model_id": "M2-root-43101"
+      },
+      {
+        "adapter_config": {
+          "archive_bytes": 1296,
+          "complexity_bits": 10368,
+          "compressed_body_bytes": 1279,
+          "coordinate_groups": [
+            {
+              "dimension": 582,
+              "name": "vision",
+              "scale_float32": 1.0156077146530151
+            },
+            {
+              "dimension": 2327,
+              "name": "projector",
+              "scale_float32": 0.7851158976554871
+            },
+            {
+              "dimension": 1187,
+              "name": "language",
+              "scale_float32": 0.28972795605659485
+            }
+          ],
+          "mapping_root": 43102,
+          "mapping_root_id": 2,
+          "model_group": "M2",
+          "model_group_id": 2,
+          "uncompressed_body_bytes": 4120
+        },
+        "checkpoint_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/06_M2_root-43102_seed-2026_lr-0p050/encode/adapter.mms2",
+        "checkpoint_sha256": "6c99254997772d99155969dd6c6d5867bb8f2b16f619fb330cdfa6747252cd00",
+        "checkpoint_size_bytes": 1296,
+        "decoded_mapping_root": 43102,
+        "decoded_model_group": "M2",
+        "mapping_root": 43102,
+        "method": "M2",
+        "model_id": "M2-root-43102"
+      },
+      {
+        "adapter_config": {
+          "archive_bytes": 1302,
+          "complexity_bits": 10416,
+          "compressed_body_bytes": 1285,
+          "coordinate_groups": [
+            {
+              "dimension": 582,
+              "name": "vision",
+              "scale_float32": 1.1575226783752441
+            },
+            {
+              "dimension": 2327,
+              "name": "projector",
+              "scale_float32": 0.8365902900695801
+            },
+            {
+              "dimension": 1187,
+              "name": "language",
+              "scale_float32": 0.2624051868915558
+            }
+          ],
+          "mapping_root": 43103,
+          "mapping_root_id": 3,
+          "model_group": "M2",
+          "model_group_id": 2,
+          "uncompressed_body_bytes": 4120
+        },
+        "checkpoint_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/07_M2_root-43103_seed-2026_lr-0p050/encode/adapter.mms2",
+        "checkpoint_sha256": "5f39f9f70341051683fb0f17d58373cbe60f50749767fda74b48b4ddb95db2bf",
+        "checkpoint_size_bytes": 1302,
+        "decoded_mapping_root": 43103,
+        "decoded_model_group": "M2",
+        "mapping_root": 43103,
+        "method": "M2",
+        "model_id": "M2-root-43103"
+      },
+      {
+        "adapter_config": {
+          "archive_bytes": 804,
+          "complexity_bits": 6432,
+          "compressed_body_bytes": 787,
+          "coordinate_groups": [
+            {
+              "dimension": 4096,
+              "name": "shared",
+              "scale_float32": 0.7332369685173035
+            }
+          ],
+          "mapping_root": 43101,
+          "mapping_root_id": 1,
+          "model_group": "M3",
+          "model_group_id": 3,
+          "uncompressed_body_bytes": 4104
+        },
+        "checkpoint_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/08_M3_root-43101_seed-2026_lr-0p050/encode/adapter.mms2",
+        "checkpoint_sha256": "732d9af5c6ddb7d21f78bc3a942473a71393a7d3452be3b095b4b166bdd6b405",
+        "checkpoint_size_bytes": 804,
+        "decoded_mapping_root": 43101,
+        "decoded_model_group": "M3",
+        "mapping_root": 43101,
+        "method": "M3",
+        "model_id": "M3-root-43101"
+      },
+      {
+        "adapter_config": {
+          "archive_bytes": 978,
+          "complexity_bits": 7824,
+          "compressed_body_bytes": 961,
+          "coordinate_groups": [
+            {
+              "dimension": 4096,
+              "name": "shared",
+              "scale_float32": 0.5702551007270813
+            }
+          ],
+          "mapping_root": 43102,
+          "mapping_root_id": 2,
+          "model_group": "M3",
+          "model_group_id": 3,
+          "uncompressed_body_bytes": 4104
+        },
+        "checkpoint_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/09_M3_root-43102_seed-2026_lr-0p050/encode/adapter.mms2",
+        "checkpoint_sha256": "78ba0766be1adf79aa11579dee02d394ddcfc990559a97f87d11a50fb86f4977",
+        "checkpoint_size_bytes": 978,
+        "decoded_mapping_root": 43102,
+        "decoded_model_group": "M3",
+        "mapping_root": 43102,
+        "method": "M3",
+        "model_id": "M3-root-43102"
+      },
+      {
+        "adapter_config": {
+          "archive_bytes": 798,
+          "complexity_bits": 6384,
+          "compressed_body_bytes": 781,
+          "coordinate_groups": [
+            {
+              "dimension": 4096,
+              "name": "shared",
+              "scale_float32": 0.7554597854614258
+            }
+          ],
+          "mapping_root": 43103,
+          "mapping_root_id": 3,
+          "model_group": "M3",
+          "model_group_id": 3,
+          "uncompressed_body_bytes": 4104
+        },
+        "checkpoint_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/10_M3_root-43103_seed-2026_lr-0p050/encode/adapter.mms2",
+        "checkpoint_sha256": "8950c943a030ea9571b0fb191a0ac9cb20aeec9ea1e87b6a11cd80c89a1d7b83",
+        "checkpoint_size_bytes": 798,
+        "decoded_mapping_root": 43103,
+        "decoded_model_group": "M3",
+        "mapping_root": 43103,
+        "method": "M3",
+        "model_id": "M3-root-43103"
+      }
+    ]
+  },
+  "protocol_id": "minimind-v-phase3-v6-frozen-contrast-hull-scoring-v1",
+  "record_filter": {
+    "equivalent_positive_sources_rule": "use audit-v2 preselected deterministic positive",
+    "excluded_second_round_categories": [
+      "token_mapping_problem",
+      "surface_only_or_degenerate",
+      "invalid_sample"
+    ],
+    "expected_record_count": 4107,
+    "expected_target_image_count": 1343,
+    "normalized_negative_reconstruction_required": true,
+    "normalized_positive_reconstruction_required": true,
+    "positive_and_negative_model_token_count_at_least": 1,
+    "scope_flag": "certifying_formal",
+    "token_boundary_mapping_required": true
+  },
+  "schema_version": 1,
+  "score": {
+    "aggregation_dtype": "float64",
+    "causal_shift": true,
+    "eos_scored": false,
+    "generation_or_sampling": false,
+    "image_placeholders_scored": false,
+    "label_smoothing": false,
+    "log_probability": "log_softmax_then_gather",
+    "name": "mean_teacher_forced_hull_log_probability",
+    "natural_language_suffix_scored": false,
+    "padding_scored": false,
+    "prefix_scored": false,
+    "probability_clipping_or_smoothing": false,
+    "q": "stable_sigmoid(mean_lp_positive - mean_lp_negative)",
+    "target_mask": "formal scoring-hull model tokens only"
+  },
+  "stage2_stage3_analysis": {
+    "all_ten_models_pearson_and_spearman": true,
+    "label": "descriptive_only",
+    "p_values_or_strong_generalization_claims": false,
+    "same_root_m2_m3_difference_direction": "M3_minus_M2",
+    "seven_non_m0_auxiliary_sensitivity": true
+  },
+  "statistical_scope": "fixed 1343 effective SugarCrepe++ certifying-formal image groups, fixed contrast hulls, and fixed balanced K=5 mismatch manifest",
+  "status": "frozen_before_formal_model_inference",
+  "templates": {
+    "attention_mask": null,
+    "image_token_count": 64,
+    "maximum_sequence_length": 450,
+    "model_family_template": {
+      "M0": "lm_only",
+      "M1": "vlm",
+      "M2": "vlm",
+      "M3": "vlm"
+    },
+    "user_prompt": "Describe the image in one sentence.",
+    "visual_user_content": "<image>\\nDescribe the image in one sentence."
+  },
+  "text_construction": {
+    "alignment_view_role": "locate_and_validate_hull_only",
+    "all_4107_stitch_and_token_boundaries_prevalidated": true,
+    "candidate_negative": "C + negative original boundary-and-hull span",
+    "candidate_positive": "C + positive original boundary-and-hull span",
+    "common_prefix_boundary": "end of final common-prefix original lexeme in selected positive",
+    "formal_source": "original text and original character offsets",
+    "natural_language_suffix_included": false,
+    "negative_uses_selected_positive_common_prefix": true,
+    "surface_cleaning_or_case_conversion": false,
+    "template_generated_eos_present_but_unscored": true
+  }
+}

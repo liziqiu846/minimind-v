@@ -1,0 +1,369 @@
+{
+  "all_ten_models_correlations": {
+    "confidence_intervals_reported": false,
+    "label": "descriptive_only",
+    "metrics": {
+      "stage2_code_length_bits": {
+        "pearson": 0.6382169007860952,
+        "spearman": 0.5272727272727272
+      },
+      "stage2_empirical_risk_bits": {
+        "pearson": -0.5170121780291073,
+        "spearman": -0.2727272727272727
+      },
+      "stage2_generalization_upper_bound_bits": {
+        "pearson": 0.6510161909594177,
+        "spearman": 0.5757575757575758
+      }
+    },
+    "model_count": 10,
+    "p_values_reported": false,
+    "raw_variable_direction": {
+      "stage2_code_length_bits": "smaller_is_better",
+      "stage2_empirical_risk_bits": "smaller_is_better",
+      "stage2_generalization_upper_bound_bits": "smaller_is_better",
+      "v6_mu_k5": "larger_is_better",
+      "variables_sign_flipped": false
+    }
+  },
+  "analysis_label": "descriptive_only",
+  "m0_zero_gain_check": {
+    "maximum_abs_mu_k5": 2.0046401022360795e-19,
+    "model_count": 3,
+    "passes": true,
+    "tolerance": 1e-08
+  },
+  "models": [
+    {
+      "mapping_root": 43101,
+      "method": "M0",
+      "model_id": "M0-root-43101",
+      "stage2_bound_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/01_M0_root-43101_seed-2026_lr-0p050/bound.json",
+      "stage2_bound_sha256": "ae23feb9a1af128ca29dd9424996afe31e53f11a2dbc3c9e7af33a79ed7d12e6",
+      "stage2_code_length_bits": 6560,
+      "stage2_empirical_risk_bits": 5.03216863436699,
+      "stage2_generalization_upper_bound_bits": 11.076199214850384,
+      "stage2_metric_field_mapping": {
+        "code_length": "complexity.adapter_bits",
+        "empirical_risk": "risk.decoded_training_bits",
+        "generalization_upper_bound": "bound.raw_compression_upper_bound_bits"
+      },
+      "v6_mu_k1": 0.0,
+      "v6_mu_k3": 7.280982831307066e-20,
+      "v6_mu_k5": 2.0046401022360795e-19,
+      "v6_win_rate_k5": 0.15785554728220402
+    },
+    {
+      "mapping_root": 43102,
+      "method": "M0",
+      "model_id": "M0-root-43102",
+      "stage2_bound_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/02_M0_root-43102_seed-2026_lr-0p050/bound.json",
+      "stage2_bound_sha256": "6aaaf1347bbfbb7e562bdafdfe3086059398127692f1a3ef1b462dcc318f9746",
+      "stage2_code_length_bits": 6624,
+      "stage2_empirical_risk_bits": 5.055619264829159,
+      "stage2_generalization_upper_bound_bits": 11.128927267202808,
+      "stage2_metric_field_mapping": {
+        "code_length": "complexity.adapter_bits",
+        "empirical_risk": "risk.decoded_training_bits",
+        "generalization_upper_bound": "bound.raw_compression_upper_bound_bits"
+      },
+      "v6_mu_k1": 0.0,
+      "v6_mu_k3": 6.725790225663955e-19,
+      "v6_mu_k5": 1.0971415516087928e-19,
+      "v6_win_rate_k5": 0.16306775874906926
+    },
+    {
+      "mapping_root": 43103,
+      "method": "M0",
+      "model_id": "M0-root-43103",
+      "stage2_bound_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/03_M0_root-43103_seed-2026_lr-0p050/bound.json",
+      "stage2_bound_sha256": "475724504a5db0d551715b3f5e3b1528d8a2316264ae1d80dd4496328f0bce37",
+      "stage2_code_length_bits": 7784,
+      "stage2_empirical_risk_bits": 5.024783303463459,
+      "stage2_generalization_upper_bound_bits": 11.606192120745732,
+      "stage2_metric_field_mapping": {
+        "code_length": "complexity.adapter_bits",
+        "empirical_risk": "risk.decoded_training_bits",
+        "generalization_upper_bound": "bound.raw_compression_upper_bound_bits"
+      },
+      "v6_mu_k1": 0.0,
+      "v6_mu_k3": -1.0041775784381766e-18,
+      "v6_mu_k5": 1.4243944138814527e-19,
+      "v6_win_rate_k5": 0.1734921816827997
+    },
+    {
+      "mapping_root": null,
+      "method": "M1",
+      "model_id": "M1-root-none",
+      "stage2_bound_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/04_M1_root-none_seed-2026_lr-0p015/bound.json",
+      "stage2_bound_sha256": "ccfa7313c726824ca9d7f468c19b1765a94ec243b56a027cfb564d0b7598faa5",
+      "stage2_code_length_bits": 10488,
+      "stage2_empirical_risk_bits": 4.881407397949696,
+      "stage2_generalization_upper_bound_bits": 12.516978640541838,
+      "stage2_metric_field_mapping": {
+        "code_length": "complexity.adapter_bits",
+        "empirical_risk": "risk.decoded_training_bits",
+        "generalization_upper_bound": "bound.raw_compression_upper_bound_bits"
+      },
+      "v6_mu_k1": 0.0009489740705911293,
+      "v6_mu_k3": 0.0008340216046447768,
+      "v6_mu_k5": 0.0006100950411133227,
+      "v6_win_rate_k5": 0.5167535368577811
+    },
+    {
+      "mapping_root": 43101,
+      "method": "M2",
+      "model_id": "M2-root-43101",
+      "stage2_bound_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/05_M2_root-43101_seed-2026_lr-0p050/bound.json",
+      "stage2_bound_sha256": "8c25d10d2429567b4f2595f3bd09a2149e4c9daa3ef3750523fd8f57f2040766",
+      "stage2_code_length_bits": 9200,
+      "stage2_empirical_risk_bits": 4.89094736559391,
+      "stage2_generalization_upper_bound_bits": 12.043802944744414,
+      "stage2_metric_field_mapping": {
+        "code_length": "complexity.adapter_bits",
+        "empirical_risk": "risk.decoded_training_bits",
+        "generalization_upper_bound": "bound.raw_compression_upper_bound_bits"
+      },
+      "v6_mu_k1": 0.0007576965654626446,
+      "v6_mu_k3": 0.0007185759717782185,
+      "v6_mu_k5": 0.0008115133609180617,
+      "v6_win_rate_k5": 0.5383469843633656
+    },
+    {
+      "mapping_root": 43102,
+      "method": "M2",
+      "model_id": "M2-root-43102",
+      "stage2_bound_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/06_M2_root-43102_seed-2026_lr-0p050/bound.json",
+      "stage2_bound_sha256": "817b0451f20b1b5f73b1f1af0ea6d57981dacdb4a40f37c0f92514753b8b3b05",
+      "stage2_code_length_bits": 10368,
+      "stage2_empirical_risk_bits": 4.8920090611457825,
+      "stage2_generalization_upper_bound_bits": 12.483904209573172,
+      "stage2_metric_field_mapping": {
+        "code_length": "complexity.adapter_bits",
+        "empirical_risk": "risk.decoded_training_bits",
+        "generalization_upper_bound": "bound.raw_compression_upper_bound_bits"
+      },
+      "v6_mu_k1": -9.263978699770688e-05,
+      "v6_mu_k3": 0.000716070868422131,
+      "v6_mu_k5": 0.0006271921389645035,
+      "v6_win_rate_k5": 0.5011169024571854
+    },
+    {
+      "mapping_root": 43103,
+      "method": "M2",
+      "model_id": "M2-root-43103",
+      "stage2_bound_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/07_M2_root-43103_seed-2026_lr-0p050/bound.json",
+      "stage2_bound_sha256": "21eb6b3e152b7a721e085f647145a0faae7338abd00be24938239ba3a6a59748",
+      "stage2_code_length_bits": 10416,
+      "stage2_empirical_risk_bits": 4.88659757065773,
+      "stage2_generalization_upper_bound_bits": 12.495993256345052,
+      "stage2_metric_field_mapping": {
+        "code_length": "complexity.adapter_bits",
+        "empirical_risk": "risk.decoded_training_bits",
+        "generalization_upper_bound": "bound.raw_compression_upper_bound_bits"
+      },
+      "v6_mu_k1": 0.00019956825727857766,
+      "v6_mu_k3": 0.0002202869392890936,
+      "v6_mu_k5": -2.01850776281874e-05,
+      "v6_win_rate_k5": 0.4951600893521966
+    },
+    {
+      "mapping_root": 43101,
+      "method": "M3",
+      "model_id": "M3-root-43101",
+      "stage2_bound_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/08_M3_root-43101_seed-2026_lr-0p050/bound.json",
+      "stage2_bound_sha256": "886a635ebb10cd221d33f7ee4cc73cfeb40130e692dd976247f8ce9e73163951",
+      "stage2_code_length_bits": 6432,
+      "stage2_empirical_risk_bits": 5.00180068885088,
+      "stage2_generalization_upper_bound_bits": 10.986846402513791,
+      "stage2_metric_field_mapping": {
+        "code_length": "complexity.adapter_bits",
+        "empirical_risk": "risk.decoded_training_bits",
+        "generalization_upper_bound": "bound.raw_compression_upper_bound_bits"
+      },
+      "v6_mu_k1": -0.0006842022220719022,
+      "v6_mu_k3": -0.001407849482547877,
+      "v6_mu_k5": -0.0017231989205921015,
+      "v6_win_rate_k5": 0.5063291139240507
+    },
+    {
+      "mapping_root": 43102,
+      "method": "M3",
+      "model_id": "M3-root-43102",
+      "stage2_bound_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/09_M3_root-43102_seed-2026_lr-0p050/bound.json",
+      "stage2_bound_sha256": "612e252eef2833858b8082ae9f0b89b2616d951c7a4935c5cf7d04ea33e14666",
+      "stage2_code_length_bits": 7824,
+      "stage2_empirical_risk_bits": 4.967523832893372,
+      "stage2_generalization_upper_bound_bits": 11.565755014401503,
+      "stage2_metric_field_mapping": {
+        "code_length": "complexity.adapter_bits",
+        "empirical_risk": "risk.decoded_training_bits",
+        "generalization_upper_bound": "bound.raw_compression_upper_bound_bits"
+      },
+      "v6_mu_k1": -0.00034995035886754475,
+      "v6_mu_k3": -0.0005738435876541556,
+      "v6_mu_k5": -0.00043676607626722057,
+      "v6_win_rate_k5": 0.48622486969471335
+    },
+    {
+      "mapping_root": 43103,
+      "method": "M3",
+      "model_id": "M3-root-43103",
+      "stage2_bound_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/10_M3_root-43103_seed-2026_lr-0p050/bound.json",
+      "stage2_bound_sha256": "c375d48d9f2f06bff8b5661ced64cc11a8b21aa72f1dad8f64ea3303f9d135e3",
+      "stage2_code_length_bits": 6384,
+      "stage2_empirical_risk_bits": 5.008209436452389,
+      "stage2_generalization_upper_bound_bits": 10.97098526042128,
+      "stage2_metric_field_mapping": {
+        "code_length": "complexity.adapter_bits",
+        "empirical_risk": "risk.decoded_training_bits",
+        "generalization_upper_bound": "bound.raw_compression_upper_bound_bits"
+      },
+      "v6_mu_k1": 0.0003629949950420497,
+      "v6_mu_k3": -0.0003587863022832158,
+      "v6_mu_k5": -0.00028184325126454454,
+      "v6_win_rate_k5": 0.49292628443782577
+    }
+  ],
+  "protocol_sha256": "3cbf89287ef5c75657bf0df6ed1170f0ab1c916ac5aacc0c009fb80c3bbf9195",
+  "same_root_M2_M3_paired_differences": [
+    {
+      "difference_direction": "M3_minus_M2",
+      "directional_reference_only": {
+        "larger_v6_visual_gain": "positive mu_k5 difference",
+        "smaller_stage2_bound": "negative generalization-bound difference",
+        "used_as_success_threshold": false
+      },
+      "mapping_root": 43101,
+      "stage2_code_length_difference_bits": -2768,
+      "stage2_generalization_upper_bound_difference": -1.0569565422306226,
+      "v6_visual_gain_mu_k5_difference": -0.002534712281510163
+    },
+    {
+      "difference_direction": "M3_minus_M2",
+      "directional_reference_only": {
+        "larger_v6_visual_gain": "positive mu_k5 difference",
+        "smaller_stage2_bound": "negative generalization-bound difference",
+        "used_as_success_threshold": false
+      },
+      "mapping_root": 43102,
+      "stage2_code_length_difference_bits": -2544,
+      "stage2_generalization_upper_bound_difference": -0.9181491951716687,
+      "v6_visual_gain_mu_k5_difference": -0.001063958215231724
+    },
+    {
+      "difference_direction": "M3_minus_M2",
+      "directional_reference_only": {
+        "larger_v6_visual_gain": "positive mu_k5 difference",
+        "smaller_stage2_bound": "negative generalization-bound difference",
+        "used_as_success_threshold": false
+      },
+      "mapping_root": 43103,
+      "stage2_code_length_difference_bits": -4032,
+      "stage2_generalization_upper_bound_difference": -1.5250079959237723,
+      "v6_visual_gain_mu_k5_difference": -0.00026165817363635714
+    }
+  ],
+  "scatter_data": [
+    {
+      "mapping_root": 43101,
+      "method": "M0",
+      "model_id": "M0-root-43101",
+      "stage2_generalization_upper_bound_bits": 11.076199214850384,
+      "v6_visual_gain_mu_k5": 2.0046401022360795e-19
+    },
+    {
+      "mapping_root": 43102,
+      "method": "M0",
+      "model_id": "M0-root-43102",
+      "stage2_generalization_upper_bound_bits": 11.128927267202808,
+      "v6_visual_gain_mu_k5": 1.0971415516087928e-19
+    },
+    {
+      "mapping_root": 43103,
+      "method": "M0",
+      "model_id": "M0-root-43103",
+      "stage2_generalization_upper_bound_bits": 11.606192120745732,
+      "v6_visual_gain_mu_k5": 1.4243944138814527e-19
+    },
+    {
+      "mapping_root": null,
+      "method": "M1",
+      "model_id": "M1-root-none",
+      "stage2_generalization_upper_bound_bits": 12.516978640541838,
+      "v6_visual_gain_mu_k5": 0.0006100950411133227
+    },
+    {
+      "mapping_root": 43101,
+      "method": "M2",
+      "model_id": "M2-root-43101",
+      "stage2_generalization_upper_bound_bits": 12.043802944744414,
+      "v6_visual_gain_mu_k5": 0.0008115133609180617
+    },
+    {
+      "mapping_root": 43102,
+      "method": "M2",
+      "model_id": "M2-root-43102",
+      "stage2_generalization_upper_bound_bits": 12.483904209573172,
+      "v6_visual_gain_mu_k5": 0.0006271921389645035
+    },
+    {
+      "mapping_root": 43103,
+      "method": "M2",
+      "model_id": "M2-root-43103",
+      "stage2_generalization_upper_bound_bits": 12.495993256345052,
+      "v6_visual_gain_mu_k5": -2.01850776281874e-05
+    },
+    {
+      "mapping_root": 43101,
+      "method": "M3",
+      "model_id": "M3-root-43101",
+      "stage2_generalization_upper_bound_bits": 10.986846402513791,
+      "v6_visual_gain_mu_k5": -0.0017231989205921015
+    },
+    {
+      "mapping_root": 43102,
+      "method": "M3",
+      "model_id": "M3-root-43102",
+      "stage2_generalization_upper_bound_bits": 11.565755014401503,
+      "v6_visual_gain_mu_k5": -0.00043676607626722057
+    },
+    {
+      "mapping_root": 43103,
+      "method": "M3",
+      "model_id": "M3-root-43103",
+      "stage2_generalization_upper_bound_bits": 10.97098526042128,
+      "v6_visual_gain_mu_k5": -0.00028184325126454454
+    }
+  ],
+  "schema_version": 1,
+  "seven_non_m0_models_sensitivity_correlations": {
+    "analysis_label": "auxiliary_non_m0_sensitivity_descriptive_only",
+    "confidence_intervals_reported": false,
+    "label": "descriptive_only",
+    "metrics": {
+      "stage2_code_length_bits": {
+        "pearson": 0.7664237873852039,
+        "spearman": 0.5714285714285714
+      },
+      "stage2_empirical_risk_bits": {
+        "pearson": -0.8085881213651881,
+        "spearman": -0.6071428571428571
+      },
+      "stage2_generalization_upper_bound_bits": {
+        "pearson": 0.7675894523717908,
+        "spearman": 0.5714285714285714
+      }
+    },
+    "model_count": 7,
+    "p_values_reported": false,
+    "raw_variable_direction": {
+      "stage2_code_length_bits": "smaller_is_better",
+      "stage2_empirical_risk_bits": "smaller_is_better",
+      "stage2_generalization_upper_bound_bits": "smaller_is_better",
+      "v6_mu_k5": "larger_is_better",
+      "variables_sign_flipped": false
+    }
+  },
+  "strong_generalization_claim": false
+}

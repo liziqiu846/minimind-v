@@ -1,0 +1,638 @@
+{
+  "ambiguous_source_count": 87,
+  "ambiguous_source_proportion": 0.018288837502627706,
+  "audit_version": "phase3-v6-edit-span-audit-v1",
+  "case_only_difference_count": 0,
+  "category_counts": {
+    "ambiguous_source": {
+      "count": 87,
+      "proportion": 0.018288837502627706
+    },
+    "complex_edit": {
+      "count": 2044,
+      "proportion": 0.42968257305024177
+    },
+    "direct_metadata": {
+      "count": 0,
+      "proportion": 0.0
+    },
+    "invalid_sample": {
+      "count": 2,
+      "proportion": 0.00042043304603741857
+    },
+    "non_semantic_edit": {
+      "count": 0,
+      "proportion": 0.0
+    },
+    "tokenization_problem": {
+      "count": 0,
+      "proportion": 0.0
+    },
+    "unique_alignment": {
+      "count": 2624,
+      "proportion": 0.5516081564010932
+    }
+  },
+  "deterministic_rules": {
+    "category_precedence": [
+      "invalid_sample",
+      "direct_metadata",
+      "ambiguous_source",
+      "non_semantic_edit",
+      "complex_edit",
+      "tokenization_problem",
+      "unique_alignment"
+    ],
+    "character_span": "exact longest common prefix/suffix with a non-overlap constraint",
+    "complex_edit": "more than one non-equal lexeme opcode, detected word-order change, or the fixed whole/large rewrite coverage rule",
+    "source_selection": "select a positive only when its (normalized, raw) character and token Levenshtein score pairs Pareto-dominate the other positive; ties and cross-metric conflicts are ambiguous",
+    "token_span": "exact token-ID longest common prefix/suffix on add_special_tokens=False encodings"
+  },
+  "edit_length_distributions": {
+    "all_selected_sources": {
+      "negative_characters": {
+        "count": 4670,
+        "histogram": {
+          "0": 37,
+          "1": 4,
+          "11-20": 665,
+          "2": 138,
+          "21+": 1946,
+          "3": 206,
+          "4": 310,
+          "5": 359,
+          "6-10": 1005
+        },
+        "maximum": 139,
+        "mean": 22.17708779443255,
+        "median": 13.0,
+        "minimum": 0,
+        "p90": 52.0
+      },
+      "negative_tokens": {
+        "count": 4670,
+        "histogram": {
+          "0": 2,
+          "1": 287,
+          "11-20": 1245,
+          "2": 703,
+          "21+": 293,
+          "3": 733,
+          "4": 410,
+          "5": 280,
+          "6-10": 717
+        },
+        "maximum": 47,
+        "mean": 8.280299785867237,
+        "median": 5.0,
+        "minimum": 0,
+        "p90": 19.0
+      },
+      "negative_words": {
+        "count": 4670,
+        "histogram": {
+          "0": 37,
+          "1": 1689,
+          "11-20": 407,
+          "2": 618,
+          "21+": 5,
+          "3": 266,
+          "4": 250,
+          "5": 220,
+          "6-10": 1178
+        },
+        "maximum": 29,
+        "mean": 4.355460385438972,
+        "median": 2.0,
+        "minimum": 0,
+        "p90": 10.0
+      },
+      "positive_characters": {
+        "count": 4670,
+        "histogram": {
+          "0": 140,
+          "1": 16,
+          "11-20": 660,
+          "2": 197,
+          "21+": 1949,
+          "3": 236,
+          "4": 321,
+          "5": 355,
+          "6-10": 796
+        },
+        "maximum": 147,
+        "mean": 21.903211991434688,
+        "median": 14.0,
+        "minimum": 0,
+        "p90": 51.0
+      },
+      "positive_tokens": {
+        "count": 4670,
+        "histogram": {
+          "0": 15,
+          "1": 501,
+          "11-20": 1263,
+          "2": 671,
+          "21+": 251,
+          "3": 600,
+          "4": 350,
+          "5": 253,
+          "6-10": 766
+        },
+        "maximum": 51,
+        "mean": 8.036188436830836,
+        "median": 5.0,
+        "minimum": 0,
+        "p90": 18.0
+      },
+      "positive_words": {
+        "count": 4670,
+        "histogram": {
+          "0": 142,
+          "1": 1565,
+          "11-20": 416,
+          "2": 556,
+          "21+": 5,
+          "3": 309,
+          "4": 258,
+          "5": 251,
+          "6-10": 1168
+        },
+        "maximum": 31,
+        "mean": 4.37644539614561,
+        "median": 3.0,
+        "minimum": 0,
+        "p90": 10.0
+      }
+    },
+    "unique_recoveries": {
+      "negative_characters": {
+        "count": 2624,
+        "histogram": {
+          "0": 35,
+          "1": 4,
+          "11-20": 466,
+          "2": 138,
+          "21+": 113,
+          "3": 206,
+          "4": 310,
+          "5": 359,
+          "6-10": 993
+        },
+        "maximum": 49,
+        "mean": 7.989710365853658,
+        "median": 6.0,
+        "minimum": 0,
+        "p90": 15.0
+      },
+      "negative_tokens": {
+        "count": 2624,
+        "histogram": {
+          "1": 287,
+          "11-20": 52,
+          "2": 703,
+          "21+": 1,
+          "3": 722,
+          "4": 396,
+          "5": 243,
+          "6-10": 220
+        },
+        "maximum": 21,
+        "mean": 3.4054878048780486,
+        "median": 3.0,
+        "minimum": 1,
+        "p90": 6.0
+      },
+      "negative_words": {
+        "count": 2624,
+        "histogram": {
+          "0": 35,
+          "1": 1689,
+          "2": 598,
+          "3": 165,
+          "4": 61,
+          "5": 28,
+          "6-10": 48
+        },
+        "maximum": 7,
+        "mean": 1.5522103658536586,
+        "median": 1.0,
+        "minimum": 0,
+        "p90": 3.0
+      },
+      "positive_characters": {
+        "count": 2624,
+        "histogram": {
+          "0": 138,
+          "1": 16,
+          "11-20": 449,
+          "2": 197,
+          "21+": 137,
+          "3": 236,
+          "4": 321,
+          "5": 354,
+          "6-10": 776
+        },
+        "maximum": 53,
+        "mean": 7.780868902439025,
+        "median": 6.0,
+        "minimum": 0,
+        "p90": 15.0
+      },
+      "positive_tokens": {
+        "count": 2624,
+        "histogram": {
+          "0": 13,
+          "1": 501,
+          "11-20": 66,
+          "2": 667,
+          "21+": 1,
+          "3": 583,
+          "4": 326,
+          "5": 210,
+          "6-10": 257
+        },
+        "maximum": 23,
+        "mean": 3.3041158536585367,
+        "median": 3.0,
+        "minimum": 0,
+        "p90": 6.0
+      },
+      "positive_words": {
+        "count": 2624,
+        "histogram": {
+          "0": 140,
+          "1": 1565,
+          "2": 537,
+          "3": 207,
+          "4": 79,
+          "5": 47,
+          "6-10": 49
+        },
+        "maximum": 8,
+        "mean": 1.5743140243902438,
+        "median": 1.0,
+        "minimum": 0,
+        "p90": 3.0
+      }
+    }
+  },
+  "empty_edit_fragment_count": 175,
+  "empty_edit_fragment_proportion_of_selected_sources": 0.03747323340471092,
+  "multi_token_edit_count": 2498,
+  "multi_token_edit_proportion_of_unique_recoveries": 0.9519817073170732,
+  "negative_type_results": {
+    "replace_attribute": {
+      "category_counts": {
+        "ambiguous_source": 5,
+        "complex_edit": 207,
+        "unique_alignment": 576
+      },
+      "success_rate": 0.7309644670050761,
+      "successful_unique_recovery_count": 576,
+      "total": 788
+    },
+    "replace_object": {
+      "category_counts": {
+        "ambiguous_source": 5,
+        "complex_edit": 570,
+        "unique_alignment": 1077
+      },
+      "success_rate": 0.6519370460048426,
+      "successful_unique_recovery_count": 1077,
+      "total": 1652
+    },
+    "replace_relation": {
+      "category_counts": {
+        "ambiguous_source": 25,
+        "complex_edit": 417,
+        "unique_alignment": 964
+      },
+      "success_rate": 0.6856330014224751,
+      "successful_unique_recovery_count": 964,
+      "total": 1406
+    },
+    "swap_atribute": {
+      "category_counts": {
+        "ambiguous_source": 32,
+        "complex_edit": 633,
+        "unique_alignment": 1
+      },
+      "success_rate": 0.0015015015015015015,
+      "successful_unique_recovery_count": 1,
+      "total": 666
+    },
+    "swap_object": {
+      "category_counts": {
+        "ambiguous_source": 20,
+        "complex_edit": 217,
+        "invalid_sample": 2,
+        "unique_alignment": 6
+      },
+      "success_rate": 0.024489795918367346,
+      "successful_unique_recovery_count": 6,
+      "total": 245
+    }
+  },
+  "non_contiguous_or_complex_edit_count": 2044,
+  "non_contiguous_or_complex_edit_proportion": 0.42968257305024177,
+  "provenance": {
+    "certifying_formal_filenames": "/home/lizhaohui/lzq/phase3_runtime/results/phase3_formal_v2_phase3v4_20260722/certifying_formal_filenames.txt",
+    "certifying_formal_filenames_sha256": "afb73f300dfbff0c60fd207a3f65c8950448cd2266cc2c8eb0f04b4a41643329",
+    "formal_filenames": "/home/lizhaohui/lzq/phase3_runtime/prepared_phase3_v4_official_coco_20260721/formal_filenames.txt",
+    "formal_filenames_sha256": "1ef422f6977ef36bae76be5c59fffa843e5e912264f7fea4a2db97b10d0aa83e",
+    "image_manifest": "/home/lizhaohui/lzq/phase3_runtime/prepared_phase3_v4_official_coco_20260721/coco_referenced_images_manifest.jsonl",
+    "image_manifest_sha256": "317e2273edac3b2abf4d1980d53277f51de987eeb52f26abc39d0bb2636e497a",
+    "input_jsonl": "/home/lizhaohui/lzq/phase3_runtime/prepared_phase3_v4_official_coco_20260721/sugarcrepe_pp_canonical.jsonl",
+    "input_jsonl_sha256": "35f9fbd7b01e885e95452cd39c9131c440c4d3f69b19a817800468d902e871df",
+    "model_outputs_consulted": false,
+    "observed_input_field_sets": {
+      "caption,caption2,category,filename,negative_caption,numeric_id,row_key": 4757
+    },
+    "pilot_filenames": "/home/lizhaohui/lzq/phase3_runtime/prepared_phase3_v4_official_coco_20260721/pilot_filenames.txt",
+    "pilot_filenames_sha256": "729ad2b6e8af6662a5ad76b82839c871b7c81eb0f386888c629a2ca4c394f7ee",
+    "tokenizer_files_sha256": {
+      "tokenizer.json": "71f32c68cf63a15355a8fc171b7594b3d41870fe0ddb54fc6aefa55f73a4a668",
+      "tokenizer_config.json": "d7cd6a60c9f191c4f9ffec69b2eb289ad2f960366724f328b681ae1e46e4c110"
+    },
+    "tokenizer_path": "/home/lizhaohui/lzq/stage2-assets-v1/tokenizer",
+    "transformers_version": "4.57.6"
+  },
+  "punctuation_only_difference_count": 0,
+  "random_seed": 3407,
+  "representative_examples": {
+    "failures": [
+      {
+        "category": "ambiguous_source",
+        "failure_reason": "character_and_token_distance_rankings_conflict",
+        "negative_edit_span": "",
+        "negative_type": "swap_atribute",
+        "positive_edit_span": "",
+        "sample_id": "swap_atribute:303",
+        "selected_source_label": null
+      },
+      {
+        "category": "ambiguous_source",
+        "failure_reason": "character_and_token_distance_rankings_conflict",
+        "negative_edit_span": "",
+        "negative_type": "swap_atribute",
+        "positive_edit_span": "",
+        "sample_id": "swap_atribute:450",
+        "selected_source_label": null
+      },
+      {
+        "category": "complex_edit",
+        "failure_reason": "non_contiguous_edit_blocks=2;obvious_rewrite_by_fixed_coverage_rule",
+        "negative_edit_span": "hamburger with cheese and ketchup on a plate.",
+        "negative_type": "replace_object",
+        "positive_edit_span": "slice of pizza with cheese and marinara sauce on a plate. ",
+        "sample_id": "replace_object:948",
+        "selected_source_label": "positive_1"
+      },
+      {
+        "category": "complex_edit",
+        "failure_reason": "non_contiguous_edit_blocks=2;word_order_change",
+        "negative_edit_span": "yellow walls with red",
+        "negative_type": "swap_atribute",
+        "positive_edit_span": "red walls with yellow",
+        "sample_id": "swap_atribute:301",
+        "selected_source_label": "positive_1"
+      },
+      {
+        "category": "invalid_sample",
+        "failure_reason": "selected_positive_equals_negative_no_edit",
+        "negative_edit_span": "",
+        "negative_type": "swap_object",
+        "positive_edit_span": "",
+        "sample_id": "swap_object:2",
+        "selected_source_label": "positive_1"
+      },
+      {
+        "category": "invalid_sample",
+        "failure_reason": "selected_positive_equals_negative_no_edit",
+        "negative_edit_span": "",
+        "negative_type": "swap_object",
+        "positive_edit_span": "",
+        "sample_id": "swap_object:8",
+        "selected_source_label": "positive_1"
+      }
+    ],
+    "successes": [
+      {
+        "category": "unique_alignment",
+        "failure_reason": null,
+        "negative_edit_span": " young",
+        "negative_type": "replace_attribute",
+        "positive_edit_span": "n elderly",
+        "sample_id": "replace_attribute:325",
+        "selected_source_label": "positive_1"
+      },
+      {
+        "category": "unique_alignment",
+        "failure_reason": null,
+        "negative_edit_span": "bench",
+        "negative_type": "replace_object",
+        "positive_edit_span": "parking meter",
+        "sample_id": "replace_object:1128",
+        "selected_source_label": "positive_1"
+      },
+      {
+        "category": "unique_alignment",
+        "failure_reason": null,
+        "negative_edit_span": "next to",
+        "negative_type": "replace_relation",
+        "positive_edit_span": "on",
+        "sample_id": "replace_relation:1099",
+        "selected_source_label": "positive_1"
+      },
+      {
+        "category": "unique_alignment",
+        "failure_reason": null,
+        "negative_edit_span": "a footwear on the floor.",
+        "negative_type": "swap_atribute",
+        "positive_edit_span": "several footwear on the floor. ",
+        "sample_id": "swap_atribute:233",
+        "selected_source_label": "positive_1"
+      },
+      {
+        "category": "unique_alignment",
+        "failure_reason": null,
+        "negative_edit_span": "pulling",
+        "negative_type": "swap_object",
+        "positive_edit_span": "is being pulled by",
+        "sample_id": "swap_object:81",
+        "selected_source_label": "positive_2"
+      }
+    ]
+  },
+  "schema_version": 1,
+  "scope_results": {
+    "canonical_all": {
+      "category_counts": {
+        "ambiguous_source": 87,
+        "complex_edit": 2044,
+        "invalid_sample": 2,
+        "unique_alignment": 2624
+      },
+      "negative_type_results": {
+        "replace_attribute": {
+          "success_rate": 0.7309644670050761,
+          "successful_unique_recovery_count": 576,
+          "total": 788
+        },
+        "replace_object": {
+          "success_rate": 0.6519370460048426,
+          "successful_unique_recovery_count": 1077,
+          "total": 1652
+        },
+        "replace_relation": {
+          "success_rate": 0.6856330014224751,
+          "successful_unique_recovery_count": 964,
+          "total": 1406
+        },
+        "swap_atribute": {
+          "success_rate": 0.0015015015015015015,
+          "successful_unique_recovery_count": 1,
+          "total": 666
+        },
+        "swap_object": {
+          "success_rate": 0.024489795918367346,
+          "successful_unique_recovery_count": 6,
+          "total": 245
+        }
+      },
+      "sample_count": 4757,
+      "success_rate": 0.5516081564010932,
+      "successful_unique_recovery_count": 2624,
+      "unique_image_count": 1542
+    },
+    "certifying_formal": {
+      "category_counts": {
+        "ambiguous_source": 80,
+        "complex_edit": 1771,
+        "invalid_sample": 2,
+        "unique_alignment": 2272
+      },
+      "negative_type_results": {
+        "replace_attribute": {
+          "success_rate": 0.7396449704142012,
+          "successful_unique_recovery_count": 500,
+          "total": 676
+        },
+        "replace_object": {
+          "success_rate": 0.6530035335689046,
+          "successful_unique_recovery_count": 924,
+          "total": 1415
+        },
+        "replace_relation": {
+          "success_rate": 0.6826298701298701,
+          "successful_unique_recovery_count": 841,
+          "total": 1232
+        },
+        "swap_atribute": {
+          "success_rate": 0.0017094017094017094,
+          "successful_unique_recovery_count": 1,
+          "total": 585
+        },
+        "swap_object": {
+          "success_rate": 0.027649769585253458,
+          "successful_unique_recovery_count": 6,
+          "total": 217
+        }
+      },
+      "sample_count": 4125,
+      "success_rate": 0.5507878787878788,
+      "successful_unique_recovery_count": 2272,
+      "unique_image_count": 1345
+    },
+    "formal": {
+      "category_counts": {
+        "ambiguous_source": 83,
+        "complex_edit": 1818,
+        "invalid_sample": 2,
+        "unique_alignment": 2335
+      },
+      "negative_type_results": {
+        "replace_attribute": {
+          "success_rate": 0.7387518142235123,
+          "successful_unique_recovery_count": 509,
+          "total": 689
+        },
+        "replace_object": {
+          "success_rate": 0.6536082474226804,
+          "successful_unique_recovery_count": 951,
+          "total": 1455
+        },
+        "replace_relation": {
+          "success_rate": 0.6872525732383215,
+          "successful_unique_recovery_count": 868,
+          "total": 1263
+        },
+        "swap_atribute": {
+          "success_rate": 0.0016611295681063123,
+          "successful_unique_recovery_count": 1,
+          "total": 602
+        },
+        "swap_object": {
+          "success_rate": 0.026200873362445413,
+          "successful_unique_recovery_count": 6,
+          "total": 229
+        }
+      },
+      "sample_count": 4238,
+      "success_rate": 0.5509674374705049,
+      "successful_unique_recovery_count": 2335,
+      "unique_image_count": 1389
+    },
+    "pilot": {
+      "category_counts": {
+        "ambiguous_source": 4,
+        "complex_edit": 226,
+        "unique_alignment": 289
+      },
+      "negative_type_results": {
+        "replace_attribute": {
+          "success_rate": 0.6767676767676768,
+          "successful_unique_recovery_count": 67,
+          "total": 99
+        },
+        "replace_object": {
+          "success_rate": 0.6395939086294417,
+          "successful_unique_recovery_count": 126,
+          "total": 197
+        },
+        "replace_relation": {
+          "success_rate": 0.6713286713286714,
+          "successful_unique_recovery_count": 96,
+          "total": 143
+        },
+        "swap_atribute": {
+          "success_rate": 0.0,
+          "successful_unique_recovery_count": 0,
+          "total": 64
+        },
+        "swap_object": {
+          "success_rate": 0.0,
+          "successful_unique_recovery_count": 0,
+          "total": 16
+        }
+      },
+      "sample_count": 519,
+      "success_rate": 0.5568400770712909,
+      "successful_unique_recovery_count": 289,
+      "unique_image_count": 153
+    }
+  },
+  "success_definition": [
+    "direct_metadata",
+    "unique_alignment"
+  ],
+  "token_boundary_mismatch_count": 1,
+  "token_boundary_mismatch_proportion_of_selected_sources": 0.00021413276231263382,
+  "tokenizer_alignment_failure_count": 0,
+  "tokenizer_alignment_failure_proportion": 0.0,
+  "total_samples": 4757,
+  "unique_recovery_count": 2624,
+  "unique_recovery_proportion": 0.5516081564010932,
+  "whitespace_only_difference_count": 0
+}
