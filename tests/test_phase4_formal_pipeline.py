@@ -31,6 +31,10 @@ from experiments.phase4_m4_v1.score_m4 import (
     adapt_frozen_score_rows,
     summarize_adapted_rows,
 )
+from experiments.phase4_m4_v1.train_m4 import (
+    RUNTIME_SCHEDULE_FIELDS,
+    validate_frozen_training_configuration,
+)
 
 
 def _golden(sample_id, filename, q_correct, mismatch):
@@ -112,6 +116,37 @@ def test_formal_cli_exposes_no_scientific_runtime_overrides():
     _require_config(FORMAL_CONFIG_ID)
     with pytest.raises(ValueError):
         _require_config("M4-shared-1024-root-43101")
+
+
+def test_training_gate_compares_executable_schedule_not_protocol_prose():
+    config, _ = load_frozen_config(FORMAL_CONFIG_ID)
+    frozen = {
+        "formal_seed": 2026,
+        "epochs": 3,
+        "micro_batch_size": 4,
+        "gradient_accumulation_steps": 4,
+        "gradient_clip_global_l2": 1,
+        "autocast_dtype": "bfloat16",
+        "learning_rate_schedule": {
+            **config["training"]["learning_rate_schedule"],
+            "t_values": "0 through 1874",
+            "update_unit": "optimizer step",
+        },
+    }
+    receipt = validate_frozen_training_configuration(
+        config["training"], frozen
+    )
+    assert receipt["status"] == "passed"
+    assert receipt["executable_schedule_fields"] == list(
+        RUNTIME_SCHEDULE_FIELDS
+    )
+    changed = dict(config["training"])
+    changed["learning_rate_schedule"] = dict(
+        config["training"]["learning_rate_schedule"]
+    )
+    changed["learning_rate_schedule"]["total_steps"] = 1874
+    with pytest.raises(ValueError):
+        validate_frozen_training_configuration(changed, frozen)
 
 
 def test_preferred_scoring_fields_are_exact_frozen_aliases():

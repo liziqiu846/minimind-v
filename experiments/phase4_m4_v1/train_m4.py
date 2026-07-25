@@ -43,6 +43,12 @@ from trainer.train_stage2 import (
 
 
 ARTIFACT_ROOT_ENV = "PHASE4_ARTIFACT_ROOT"
+RUNTIME_SCHEDULE_FIELDS = (
+    "formula",
+    "minimum_ratio",
+    "total_steps",
+    "warmup_steps",
+)
 
 
 def _name_bytes(name: str) -> bytes:
@@ -136,6 +142,65 @@ def build_coordinate_optimizer(
     return optimizer
 
 
+def validate_frozen_training_configuration(
+    training: Mapping[str, Any],
+    frozen_training: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Compare every executable field while leaving prose in its authority."""
+
+    scalar_fields = (
+        "formal_seed",
+        "epochs",
+        "micro_batch_size",
+        "gradient_accumulation_steps",
+        "gradient_clip_global_l2",
+        "autocast_dtype",
+    )
+    config_names = {
+        "formal_seed": "train_seed",
+        "epochs": "epochs",
+        "micro_batch_size": "micro_batch_size",
+        "gradient_accumulation_steps": "gradient_accumulation_steps",
+        "gradient_clip_global_l2": "gradient_clip_global_l2",
+        "autocast_dtype": "autocast_dtype",
+    }
+    expected_scalars = {
+        config_names[name]: frozen_training[name] for name in scalar_fields
+    }
+    actual_scalars = {
+        name: training[name] for name in expected_scalars
+    }
+    if actual_scalars != expected_scalars:
+        raise ValueError("M4 training fields differ from frozen Stage 2")
+
+    frozen_schedule = frozen_training["learning_rate_schedule"]
+    configured_schedule = training["learning_rate_schedule"]
+    if (
+        tuple(configured_schedule) != RUNTIME_SCHEDULE_FIELDS
+        or any(name not in frozen_schedule for name in RUNTIME_SCHEDULE_FIELDS)
+        or dict(configured_schedule)
+        != {
+            name: frozen_schedule[name]
+            for name in RUNTIME_SCHEDULE_FIELDS
+        }
+        or frozen_schedule.get("update_unit") != "optimizer step"
+        or frozen_schedule.get("t_values") != "0 through 1874"
+    ):
+        raise ValueError(
+            "M4 executable learning-rate schedule differs from frozen Stage 2"
+        )
+    return {
+        "status": "passed",
+        "executable_scalar_fields": list(expected_scalars),
+        "executable_schedule_fields": list(RUNTIME_SCHEDULE_FIELDS),
+        "stage2_descriptive_schedule_fields": {
+            "update_unit": frozen_schedule["update_unit"],
+            "t_values": frozen_schedule["t_values"],
+        },
+        "scientific_training_values_changed": False,
+    }
+
+
 def cpu_smoke_step(
     model: nn.Module,
     optimizer: torch.optim.Optimizer,
@@ -215,24 +280,9 @@ def train(config_id: str) -> dict[str, Any]:
         protocol = _stage2_protocol(config)
         training = config["training"]
         frozen_training = protocol.payload["training"]
-        expected = {
-            "train_seed": frozen_training["formal_seed"],
-            "epochs": frozen_training["epochs"],
-            "micro_batch_size": frozen_training["micro_batch_size"],
-            "gradient_accumulation_steps": frozen_training[
-                "gradient_accumulation_steps"
-            ],
-            "gradient_clip_global_l2": frozen_training[
-                "gradient_clip_global_l2"
-            ],
-            "autocast_dtype": frozen_training["autocast_dtype"],
-            "learning_rate_schedule": frozen_training[
-                "learning_rate_schedule"
-            ],
-        }
-        actual = {name: training[name] for name in expected}
-        if actual != expected:
-            raise ValueError("M4 training fields differ from frozen Stage 2")
+        training_protocol_validation = validate_frozen_training_configuration(
+            training, frozen_training
+        )
         frozen_optimizer = {
             key: value
             for key, value in frozen_training["optimizer"].items()
@@ -420,6 +470,7 @@ def train(config_id: str) -> dict[str, Any]:
                 "mean_micro_batch_loss": total_loss / observed_micro_batches,
                 "epoch_receipts": epoch_receipts,
                 "automatic_hyperparameter_tuning": False,
+                "stage2_protocol_validation": training_protocol_validation,
             },
             "model": {
                 "structure": m4_model_structure_receipt(model),
