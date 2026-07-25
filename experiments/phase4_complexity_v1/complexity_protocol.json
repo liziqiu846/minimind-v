@@ -1,0 +1,241 @@
+{
+  "binary_message": {
+    "block_encoding": {
+      "compressed_length": {
+        "bits": 32,
+        "byte_order": "little-endian",
+        "maximum_bytes": 65536,
+        "minimum_bytes": 1,
+        "type": "uint32"
+      },
+      "order": [
+        "float32_scale",
+        "uint32_compressed_length",
+        "zlib_compressed_packed_symbols"
+      ],
+      "scale": {
+        "bits": 32,
+        "byte_order": "little-endian",
+        "canonical_zero_bits_hex": "00000000",
+        "format": "IEEE-754 binary32",
+        "validation": [
+          "finite",
+          "nonnegative",
+          "negative_zero_rejected",
+          "zero_scale_requires_all_zero_quantized_symbols",
+          "nonzero_scale_requires_at_least_one_symbol_with_abs_value_three"
+        ]
+      }
+    },
+    "candidate_header": {
+      "candidate_id_bits": 4,
+      "candidate_id_location": "high_nibble_of_first_byte",
+      "invalid_candidate_id": 15,
+      "low_nibble": "four paid framing bits fixed to zero"
+    },
+    "compression": {
+      "canonical_recompression_required": true,
+      "format": "RFC1950_zlib_wrapped_DEFLATE",
+      "level": 9,
+      "producer_zlib_compile_version": "1.3.1",
+      "producer_zlib_runtime_version": "1.3.1",
+      "strategy": "Z_DEFAULT_STRATEGY",
+      "wbits": "MAX_WBITS"
+    },
+    "decoder_schema": "phase4-conditional-message-decoder-v1",
+    "integrity": {
+      "bits": 256,
+      "coverage": "all preceding message bytes",
+      "location": "final 32 bytes",
+      "name": "SHA256"
+    },
+    "message_order": [
+      "candidate_header_byte",
+      "candidate_declared_coordinate_blocks",
+      "message_sha256"
+    ],
+    "no_embedded_fields": [
+      "magic",
+      "protocol_version",
+      "method",
+      "mapping_root",
+      "block_count",
+      "block_names",
+      "block_dimensions",
+      "target_registry",
+      "rank_split",
+      "outer_scale",
+      "mapping_metadata",
+      "base_asset_hashes"
+    ],
+    "symbol_packing": {
+      "code_mapping": "unsigned_code=quantized_level+3",
+      "invalid_code": 7,
+      "level_order": [
+        -3,
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        3
+      ],
+      "packed_bytes": "ceil(3*public_dimension/8)",
+      "padding": "unused low bits of final byte must be zero",
+      "symbol_bit_order": "three-bit code most-significant-bit first",
+      "symbols_per_coordinate_bits": 3
+    }
+  },
+  "candidate_family": {
+    "candidate_count": 15,
+    "candidate_id_bits": 4,
+    "candidate_manifest_relative_path": "experiments/phase4_complexity_v1/candidate_manifest.json",
+    "candidate_manifest_sha256": "5e59abe91e75acfda6926ffd25eaf6ac15fd32f47065673686e16152ceaac114",
+    "candidate_prior_interpretation": "each valid candidate receives one fixed four-bit code and subprobability one sixteenth",
+    "invalid_candidate_id": 15,
+    "selection_cost_scope": "the complete six current-M2/current-M3 and nine M4 candidate family"
+  },
+  "complexity_definition": {
+    "candidate_id_bits": 4,
+    "conditional_message_bits": "candidate_id_bits + framing_bits + sum(block_scale_bits) + sum(block_compressed_symbol_bits)",
+    "formal_name": "C_conditional(h | A)",
+    "framing_bits": "4 alignment bits + 32 length bits per candidate-declared block + 256 integrity bits",
+    "full_archive_bits_role": "engineering_reference_only",
+    "public_information_bits": 0,
+    "training_dependent_paid_fields": [
+      "four-bit candidate identity",
+      "one exact float32 quantization scale per candidate-declared block",
+      "one canonical compressed quantized-symbol stream per candidate-declared block",
+      "all framing and integrity bits"
+    ],
+    "unknown_post_training_field_policy": "not representable in v1; any new training-dependent field requires a new protocol frozen before training"
+  },
+  "free_public_information_A": {
+    "base_assets": {
+      "asset_manifest": {
+        "relative_path": "experiments/stage2_assets_manifest.json",
+        "sha256": "04a830520786ff9ae94906dfae74b50b8fda780688566671d90575189f64824d"
+      },
+      "asset_sha256_list": {
+        "relative_path": "experiments/stage2_assets_sha256.txt",
+        "sha256": "36b234d859ec10b2bc28e0adf226b72d47426f9dff19220ad7116567e9633c17"
+      },
+      "initial_llm": {
+        "asset_id": "llm/llm_768.pth",
+        "sha256": "5b8c49f6c9d965092e651cafeeaeb8705558632b3fd4ac8ab319cbc5a3cbc4a0"
+      },
+      "projector_base": {
+        "aggregate_tensor_sha256": "3712c79bd4859f543c9030e237a49797c3dfe064a457dcce21dd7cf6a227921a",
+        "configuration_sha256": "5b88036932ef590707662f2dc61d3d5c84de26de89f6188064a9b5d3d6d613b0"
+      },
+      "tokenizer_files": [
+        {
+          "asset_id": "tokenizer/tokenizer.json",
+          "sha256": "71f32c68cf63a15355a8fc171b7594b3d41870fe0ddb54fc6aefa55f73a4a668"
+        },
+        {
+          "asset_id": "tokenizer/tokenizer_config.json",
+          "sha256": "d7cd6a60c9f191c4f9ffec69b2eb289ad2f960366724f328b681ae1e46e4c110"
+        }
+      ],
+      "vision_encoder_files": [
+        {
+          "asset_id": "vision/config.json",
+          "sha256": "5ad8dda7d55541c7749f9b1cc43fe8eb8c70d8664588d89f710242ce06b3167e"
+        },
+        {
+          "asset_id": "vision/model.safetensors",
+          "sha256": "c1e9cc19ed6704b87353ee00b9ff5d6191886d741898339984364f789c62810d"
+        },
+        {
+          "asset_id": "vision/preprocessor_config.json",
+          "sha256": "d14ba2ee3fd816f3de8abaddc31953565128eaf37c73ad4bed32101a98465aff"
+        }
+      ]
+    },
+    "candidate_configuration": "the complete immutable fifteen-candidate manifest, including block order and dimensions",
+    "conditional_decoder": {
+      "freeze_manifest_relative_path": "experiments/phase4_complexity_v1/freeze_manifest.json",
+      "implementation_relative_path": "experiments/phase4_complexity_v1/conditional_codec.py",
+      "schema": "phase4-conditional-message-decoder-v1"
+    },
+    "mapping_and_A0": {
+      "M2_M3_implementation": {
+        "relative_path": "model/global_subspace_lora.py",
+        "sha256": "4fcb3f0bf8786fe8eb8fce93bac32a4ec8341863c986f42a9f7c2118e2f12908"
+      },
+      "M4_implementation": {
+        "relative_path": "model/hybrid_subspace_lora.py",
+        "sha256": "6de4764e6357385e40c7342d6d85a7df8a4817e9a790226804242ffe00cb091f"
+      }
+    },
+    "parameterization_rules": {
+      "M2": "three independent coordinate blocks with the frozen Stage-2 current dimensions",
+      "M3": "one shared coordinate block with the frozen Stage-2 current dimension",
+      "M4": "one shared and three module-private coordinate blocks; shared/private branch ranks each equal half the old target rank; one outer old scale",
+      "M4_rank_split": {
+        "old_rank_32": {
+          "private_rank": 16,
+          "shared_rank": 16
+        },
+        "old_rank_4": {
+          "private_rank": 2,
+          "shared_rank": 2
+        }
+      },
+      "outer_scale": "the frozen old target scale is applied once outside the sum of shared and private branches"
+    },
+    "quantization_rule": {
+      "decoded_dtype": "float32",
+      "levels": [
+        -3,
+        -2,
+        -1,
+        0,
+        1,
+        2,
+        3
+      ],
+      "numeric_rule": "cast input to contiguous float32; scale=float32(max(abs(x))/3); q=clip(rint(x/scale),-3,3); all-zero block uses positive float32 zero scale",
+      "quantization_bits_label": 3,
+      "scale_encoding": "IEEE-754 binary32 little-endian"
+    },
+    "source_protocols": {
+      "M4": {
+        "relative_path": "experiments/phase4_m4_v1/protocol.json",
+        "sha256": "21b0163f012a506370e65e0dc8f9a44b9375dd91116aaa7c2eedd40fe7cf8e01"
+      },
+      "stage2": {
+        "protocol_id": "minimind-v-stage2-joint-compression-v2",
+        "relative_path": "experiments/stage2_protocol_v2.json",
+        "sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3"
+      }
+    },
+    "target_registry": {
+      "registry_id": "minimind-v-stage2-targets-v1",
+      "relative_path": "experiments/stage2_target_registry.json",
+      "sha256": "a16de2f97bf50d0dcca1d432cc89c5d9b6ed192343aac1e11c909716e5a696fe"
+    }
+  },
+  "protocol_id": "minimind-v-phase4-conditional-complexity-v1",
+  "schema_version": 1,
+  "status": "frozen-before-new-M4-training",
+  "temporal_and_certificate_scope": {
+    "external_candidate_selection_certificate": {
+      "condition": "a future wholly new independent confirmation set evaluates all fifteen already frozen candidate models",
+      "guarantee_layer": "external candidate selection only",
+      "identity_cost_bits": 4,
+      "separate_from": "each model training-complexity guarantee",
+      "uniform_scope": "all fifteen frozen M2/M3/M4 candidates"
+    },
+    "legacy_M2_M3": {
+      "conditional_reencoding_role": "post-hoc unified code-length comparison only",
+      "protocol_created_after_training": true,
+      "replaces_original_formal_training_certificate": false
+    },
+    "new_M4": {
+      "eligible_for_training_complexity": true,
+      "requirement": "training begins only after this protocol, candidate manifest, decoder, and public information A are frozen"
+    }
+  }
+}
