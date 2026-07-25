@@ -1,0 +1,408 @@
+{
+  "archive": {
+    "candidate_selection_bits": 4,
+    "candidate_selection_bits_in_archive": false,
+    "complexity_definition": "archive_bits is eight times the complete MMS2 v2 byte length",
+    "compression": {
+      "algorithm": "zlib",
+      "algorithm_version": 1,
+      "level": 9
+    },
+    "decoder_schema": "phase4-m4-mms2-v2-decoder-v1",
+    "format": "MMS2",
+    "format_version": 2,
+    "section_order": [
+      "structure_metadata",
+      "shared_coordinates",
+      "vision_private_coordinates",
+      "projector_private_coordinates",
+      "language_private_coordinates"
+    ],
+    "sections_are_independently_compressed": true,
+    "structure_bits_include": [
+      "fixed archive header",
+      "complete section directory",
+      "compressed structure_metadata section"
+    ]
+  },
+  "automatic_hyperparameter_tuning": false,
+  "base_assets": {
+    "asset_manifest": {
+      "relative_path": "experiments/stage2_assets_manifest.json",
+      "sha256": "04a830520786ff9ae94906dfae74b50b8fda780688566671d90575189f64824d"
+    },
+    "asset_sha256_list": {
+      "relative_path": "experiments/stage2_assets_sha256.txt",
+      "sha256": "36b234d859ec10b2bc28e0adf226b72d47426f9dff19220ad7116567e9633c17"
+    },
+    "initial_llm": {
+      "asset_id": "llm/llm_768.pth",
+      "sha256": "5b8c49f6c9d965092e651cafeeaeb8705558632b3fd4ac8ab319cbc5a3cbc4a0"
+    },
+    "projector_base": {
+      "aggregate_tensor_sha256": "3712c79bd4859f543c9030e237a49797c3dfe064a457dcce21dd7cf6a227921a",
+      "configuration_sha256": "5b88036932ef590707662f2dc61d3d5c84de26de89f6188064a9b5d3d6d613b0"
+    },
+    "stage2_protocol": {
+      "protocol_id": "minimind-v-stage2-joint-compression-v2",
+      "relative_path": "experiments/stage2_protocol_v2.json",
+      "sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3"
+    },
+    "target_registry": {
+      "registry_id": "minimind-v-stage2-targets-v1",
+      "relative_path": "experiments/stage2_target_registry.json",
+      "sha256": "a16de2f97bf50d0dcca1d432cc89c5d9b6ed192343aac1e11c909716e5a696fe"
+    },
+    "tokenizer_files": [
+      {
+        "asset_id": "tokenizer/tokenizer.json",
+        "sha256": "71f32c68cf63a15355a8fc171b7594b3d41870fe0ddb54fc6aefa55f73a4a668"
+      },
+      {
+        "asset_id": "tokenizer/tokenizer_config.json",
+        "sha256": "d7cd6a60c9f191c4f9ffec69b2eb289ad2f960366724f328b681ae1e46e4c110"
+      }
+    ],
+    "vision_encoder_files": [
+      {
+        "asset_id": "vision/config.json",
+        "sha256": "5ad8dda7d55541c7749f9b1cc43fe8eb8c70d8664588d89f710242ce06b3167e"
+      },
+      {
+        "asset_id": "vision/model.safetensors",
+        "sha256": "c1e9cc19ed6704b87353ee00b9ff5d6191886d741898339984364f789c62810d"
+      },
+      {
+        "asset_id": "vision/preprocessor_config.json",
+        "sha256": "d14ba2ee3fd816f3de8abaddc31953565128eaf37c73ad4bed32101a98465aff"
+      }
+    ]
+  },
+  "candidate_family_size": 9,
+  "candidate_selection_bits": 4,
+  "candidate_selection_bits_in_archive": false,
+  "config_id": "M4-shared-3072-root-43102",
+  "coordinate_block_order": [
+    "shared_coordinates",
+    "vision_private_coordinates",
+    "projector_private_coordinates",
+    "language_private_coordinates"
+  ],
+  "coordinate_dimensions": {
+    "language_private_coordinates": 297,
+    "projector_private_coordinates": 582,
+    "shared_coordinates": 3072,
+    "vision_private_coordinates": 145
+  },
+  "language_private_budget": 297,
+  "mapping": {
+    "a0_domain": "phase4-m4-a0-v1",
+    "a0_message_fields": [
+      "domain",
+      "mapping_root",
+      "canonical_target_name",
+      "module_group",
+      "coordinate_block_id",
+      "row_index",
+      "column_index"
+    ],
+    "mapping_domain": "phase4-m4-map-v1",
+    "mapping_message_fields": [
+      "domain",
+      "mapping_root",
+      "canonical_target_name",
+      "module_group",
+      "coordinate_block_id",
+      "factor_id",
+      "flat_index"
+    ],
+    "normalization": "signed coordinate divided by square root of usage count within its coordinate block",
+    "require_every_coordinate_used": true
+  },
+  "mapping_root": 43102,
+  "mapping_summary": {
+    "language_private_coordinates": {
+      "dimension": 297,
+      "mapping_sha256": "d0344b5b2320ec3a538d77206c9dd4fae8ad668ae4d6734ab23b3a68f11fa086",
+      "maximum_usage": 129,
+      "mean_usage": 84.47138047138047,
+      "minimum_usage": 57,
+      "usage_histogram_sha256": "5b7bac18089d0df381c41e1955ae75defd1f44b09ffc5ae7fdb8080b7f673331"
+    },
+    "projector_private_coordinates": {
+      "dimension": 582,
+      "mapping_sha256": "aef6b43b3ca17402ece0e3eb1feba32473000aaa798cd2a96df697fb838ff889",
+      "maximum_usage": 116,
+      "mean_usage": 84.45360824742268,
+      "minimum_usage": 64,
+      "usage_histogram_sha256": "97edb518044f2410938240d213c299c7173b55f9c9f7477050d71f526eaed5da"
+    },
+    "shared_coordinates": {
+      "dimension": 3072,
+      "mapping_sha256": "0a297a2e42134316b4b345f8b0b2d69522b34299393f195254d9eefc2c571325",
+      "maximum_usage": 51,
+      "mean_usage": 28.166666666666668,
+      "minimum_usage": 10,
+      "usage_histogram_sha256": "1dba83db6c22679cdd434fac5fe564bc131374c8b57b280c6fe7b9e0347121c4"
+    },
+    "vision_private_coordinates": {
+      "dimension": 145,
+      "mapping_sha256": "e91c4d9fa8667ec0a197769c5899e5cc71c0cc107aee09f89bf271376780e5be",
+      "maximum_usage": 107,
+      "mean_usage": 84.7448275862069,
+      "minimum_usage": 61,
+      "usage_histogram_sha256": "1f53c44f1b094174234f14fe25a79e5c5fd4d17b2f0920d7ae101d3bd579c5e4"
+    }
+  },
+  "method": "M4",
+  "output_relative_path": "experiments/runs/phase4_m4_v1/M4-shared-3072-root-43102",
+  "parameterization": {
+    "coordinate_block_order": [
+      "shared_coordinates",
+      "vision_private_coordinates",
+      "projector_private_coordinates",
+      "language_private_coordinates"
+    ],
+    "formula": "DeltaW_t = outer_scale_t * (B_shared_t @ A_shared_t + B_private_t @ A_private_t)",
+    "outer_scale_application": "once after summing branches",
+    "private_allocation": {
+      "authority_function": "experiments.phase3_risk_v1.budget_configs.m2_allocation",
+      "factor_elements": {
+        "language": 50176,
+        "projector": 98304,
+        "vision": 24576
+      },
+      "method": "frozen largest remainder with frozen module-order tie-break"
+    },
+    "rank_split": {
+      "old_rank_32": {
+        "private_rank": 16,
+        "shared_rank": 16
+      },
+      "old_rank_4": {
+        "private_rank": 2,
+        "shared_rank": 2
+      }
+    }
+  },
+  "private_allocation_protocol": {
+    "authority_function": "experiments.phase3_risk_v1.budget_configs.m2_allocation",
+    "authority_source_sha256": "4bdbe1bc70fd0eef1a7c8c85c4c042df2ed91e313d4128b4fd9f92c53e428f32",
+    "factor_elements": {
+      "language": 50176,
+      "projector": 98304,
+      "vision": 24576
+    },
+    "method": "largest_remainder_proportional_to_frozen_A_B_factor_elements",
+    "module_order_tie_break": [
+      "vision",
+      "projector",
+      "language"
+    ],
+    "raw_before_rounding": {
+      "language": {
+        "decimal": 296.89940828402365,
+        "exact_fraction": "50176/169"
+      },
+      "projector": {
+        "decimal": 581.6804733727811,
+        "exact_fraction": "98304/169"
+      },
+      "vision": {
+        "decimal": 145.42011834319527,
+        "exact_fraction": "24576/169"
+      }
+    },
+    "rounded_dimensions": {
+      "language": 297,
+      "projector": 582,
+      "vision": 145
+    }
+  },
+  "private_total_budget": 1024,
+  "projector_private_budget": 582,
+  "protocol": {
+    "relative_path": "experiments/phase4_m4_v1/protocol.json",
+    "sha256": "21b0163f012a506370e65e0dc8f9a44b9375dd91116aaa7c2eedd40fe7cf8e01"
+  },
+  "protocol_id": "minimind-v-phase4-m4-v1",
+  "quantization": {
+    "decoded_dtype": "float32",
+    "levels": [
+      -3,
+      -2,
+      -1,
+      0,
+      1,
+      2,
+      3
+    ],
+    "quantization_bits_label": 3,
+    "rounding": "numpy.rint round-to-nearest-even then clip to [-3,3]",
+    "scale": "float32(max(abs(float32 coordinates))/float32(3))",
+    "symbols": "one uint8 q+3 per coordinate",
+    "zero_vector": "scale float32 zero and every stored symbol byte equals 3"
+  },
+  "risk_adapter": {
+    "certified": false,
+    "exploratory": true,
+    "frozen_aggregation": "unchanged image-group equal weighting",
+    "frozen_mismatch_k": 5,
+    "frozen_scorer_changes": "none",
+    "joint_semantic_risk": "1 - q_correct",
+    "legacy_language_risk": "retained only as a legacy alias of mismatch_baseline_risk",
+    "mismatch_baseline_risk": "1 - q_mismatch_mean",
+    "teacher_forcing_changes": "none",
+    "u_statistic": "not implemented",
+    "visual_gain": "q_correct - q_mismatch_mean"
+  },
+  "runtime_overrides": "forbidden",
+  "schema_version": 1,
+  "shared_budget": 3072,
+  "target_registry": {
+    "registry_id": "minimind-v-stage2-targets-v1",
+    "relative_path": "experiments/stage2_target_registry.json",
+    "sha256": "a16de2f97bf50d0dcca1d432cc89c5d9b6ed192343aac1e11c909716e5a696fe",
+    "target_order": "canonical_name_utf8_ascending",
+    "targets": [
+      {
+        "canonical_name": "lm_head",
+        "in_features": 768,
+        "module_group": "language",
+        "old_rank": 4,
+        "out_features": 6400,
+        "outer_scale": 1.0,
+        "private_rank": 2,
+        "shared_rank": 2
+      },
+      {
+        "canonical_name": "model.layers.0.self_attn.q_proj",
+        "in_features": 768,
+        "module_group": "language",
+        "old_rank": 4,
+        "out_features": 768,
+        "outer_scale": 1.0,
+        "private_rank": 2,
+        "shared_rank": 2
+      },
+      {
+        "canonical_name": "model.layers.0.self_attn.v_proj",
+        "in_features": 768,
+        "module_group": "language",
+        "old_rank": 4,
+        "out_features": 384,
+        "outer_scale": 1.0,
+        "private_rank": 2,
+        "shared_rank": 2
+      },
+      {
+        "canonical_name": "model.layers.7.self_attn.q_proj",
+        "in_features": 768,
+        "module_group": "language",
+        "old_rank": 4,
+        "out_features": 768,
+        "outer_scale": 1.0,
+        "private_rank": 2,
+        "shared_rank": 2
+      },
+      {
+        "canonical_name": "model.layers.7.self_attn.v_proj",
+        "in_features": 768,
+        "module_group": "language",
+        "old_rank": 4,
+        "out_features": 384,
+        "outer_scale": 1.0,
+        "private_rank": 2,
+        "shared_rank": 2
+      },
+      {
+        "canonical_name": "vision_encoder.vision_model.encoder.layers.10.self_attn.q_proj",
+        "in_features": 768,
+        "module_group": "vision",
+        "old_rank": 4,
+        "out_features": 768,
+        "outer_scale": 1.0,
+        "private_rank": 2,
+        "shared_rank": 2
+      },
+      {
+        "canonical_name": "vision_encoder.vision_model.encoder.layers.10.self_attn.v_proj",
+        "in_features": 768,
+        "module_group": "vision",
+        "old_rank": 4,
+        "out_features": 768,
+        "outer_scale": 1.0,
+        "private_rank": 2,
+        "shared_rank": 2
+      },
+      {
+        "canonical_name": "vision_encoder.vision_model.encoder.layers.11.self_attn.q_proj",
+        "in_features": 768,
+        "module_group": "vision",
+        "old_rank": 4,
+        "out_features": 768,
+        "outer_scale": 1.0,
+        "private_rank": 2,
+        "shared_rank": 2
+      },
+      {
+        "canonical_name": "vision_encoder.vision_model.encoder.layers.11.self_attn.v_proj",
+        "in_features": 768,
+        "module_group": "vision",
+        "old_rank": 4,
+        "out_features": 768,
+        "outer_scale": 1.0,
+        "private_rank": 2,
+        "shared_rank": 2
+      },
+      {
+        "canonical_name": "vision_proj.mlp.1",
+        "in_features": 768,
+        "module_group": "projector",
+        "old_rank": 32,
+        "out_features": 768,
+        "outer_scale": 1.0,
+        "private_rank": 16,
+        "shared_rank": 16
+      },
+      {
+        "canonical_name": "vision_proj.mlp.3",
+        "in_features": 768,
+        "module_group": "projector",
+        "old_rank": 32,
+        "out_features": 768,
+        "outer_scale": 1.0,
+        "private_rank": 16,
+        "shared_rank": 16
+      }
+    ]
+  },
+  "total_coordinate_budget": 4096,
+  "training": {
+    "autocast_dtype": "bfloat16",
+    "epochs": 3,
+    "gradient_accumulation_steps": 4,
+    "gradient_clip_global_l2": 1.0,
+    "learning_rate": 0.05,
+    "learning_rate_schedule": {
+      "formula": "lr_min+0.5*(lr_max-lr_min)*(1+cos(pi*t/(T-1)))",
+      "minimum_ratio": 0.1,
+      "total_steps": 1875,
+      "warmup_steps": 0
+    },
+    "micro_batch_size": 4,
+    "optimizer": {
+      "amsgrad": false,
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "name": "torch.optim.AdamW",
+      "parameters": "exactly the four M4 coordinate tensors",
+      "weight_decay": 0.01
+    },
+    "train_seed": 2026
+  },
+  "vision_private_budget": 145
+}
