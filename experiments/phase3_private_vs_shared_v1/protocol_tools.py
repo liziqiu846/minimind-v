@@ -7,7 +7,7 @@ from typing import Any
 from . import BUDGETS, CANDIDATE_COUNT, PROTOCOL_ID, SEEDS, STRUCTURES
 from .authority import read_m2_authority
 from .common import REPO_ROOT, canonical_bytes, load_json, sha256_file
-from .configs import generate_matrix, validate_matrix
+from .configs import generate_matrix, matrix_sha256, validate_matrix
 from .certificates import (
     FORMAL_DELTA_SEMANTIC,
     FORMAL_DELTA_TOTAL,
@@ -30,6 +30,7 @@ def build_protocol() -> dict[str, Any]:
         "seeds": list(SEEDS),
         "s0": SEEDS[0],
         "candidate_count": CANDIDATE_COUNT,
+        "candidate_matrix_sha256": matrix_sha256(),
         "candidate_selection": {
             "unit": "bit",
             "bits": __import__("math").log2(CANDIDATE_COUNT),
@@ -111,12 +112,19 @@ def build_protocol() -> dict[str, Any]:
             "formal_requires_fresh_confirmation_manifest": True,
         },
         "execution_limit": {
-            "formal_training_forbidden_in_engineering_run": True,
+            "formal_training_allowed": True,
+            "formal_training_entry": (
+                "experiments.phase3_private_vs_shared_v1.train_one"
+            ),
+            "formal_matrix_entry": (
+                "experiments.phase3_private_vs_shared_v1.run_matrix"
+            ),
             "smoke_max_batches": 2,
         },
         "artifact_compatibility": {
             "required_field": "protocol_sha256",
             "required_value": "raw SHA-256 of this protocol.json",
+            "required_matrix_field": "candidate_matrix_sha256",
             "missing_or_mismatched_policy": "reject",
             "cross_protocol_mixing": "forbidden",
         },

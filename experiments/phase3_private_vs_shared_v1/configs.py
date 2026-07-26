@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 import math
+import hashlib
 from fractions import Fraction
 from typing import Any, Mapping, Sequence
 
 from . import BUDGETS, CANDIDATE_COUNT, PROTOCOL_ID, SEEDS, STRUCTURES
 from .authority import read_m2_authority
+from .common import canonical_bytes
 
 
 def private_allocation(total: int) -> dict[str, int]:
@@ -51,6 +53,19 @@ def generate_matrix() -> list[dict[str, Any]]:
         build_config(structure, budget, seed)
         for structure in STRUCTURES for budget in BUDGETS for seed in SEEDS
     ]
+
+
+def matrix_sha256(configs: Sequence[Mapping[str, Any]] | None = None) -> str:
+    selected = list(configs) if configs is not None else generate_matrix()
+    validate_matrix(selected)
+    return hashlib.sha256(canonical_bytes(selected)).hexdigest()
+
+
+def load_candidate(config_id: str) -> dict[str, Any]:
+    matches = [item for item in generate_matrix() if item["config_id"] == config_id]
+    if len(matches) != 1:
+        raise ValueError("config ID is absent or duplicated in the frozen matrix")
+    return matches[0]
 
 
 def validate_matrix(configs: Sequence[Mapping[str, Any]]) -> None:
