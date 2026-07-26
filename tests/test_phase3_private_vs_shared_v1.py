@@ -22,8 +22,9 @@ from experiments.phase3_private_vs_shared_v1.parameterization import (
     CoordinateStore, ProjectedUpdate, assert_storage_contract,
 )
 from experiments.phase3_private_vs_shared_v1.protocol_tools import (
-    validate_frozen_protocol,
+    PROTOCOL_PATH, validate_artifact_protocol, validate_frozen_protocol,
 )
+from experiments.phase3_private_vs_shared_v1.common import sha256_file
 from experiments.phase3_private_vs_shared_v1.smoke import run
 
 
@@ -75,7 +76,10 @@ def test_bit_accounting_once_and_exact_log2_18():
     assert p["parameter_bits"] == 33
     assert s["parameter_bits"] == 30
     assert p["seed_integer_bits"] == s["seed_integer_bits"] == 0
-    assert p["candidate_identity_bits"] == 0
+    assert p["candidate_identity_bits"] == math.log2(18)
+    assert s["candidate_identity_bits"] == math.log2(18)
+    assert p["candidate_identity_covers"] == ["structure", "budget", "seed"]
+    assert p["coded_bits"] == pytest.approx(33 + math.log2(18))
     assert selection["coded_bits"] == math.log2(18)
     assert selection["training_certificate_bits_recharged"] == 0
     assert selection["checkpoint_bits"] == selection["seed_integer_bits"] == 0
@@ -145,12 +149,25 @@ def test_metric_ranges_bounds_aggregation_and_smoke():
         [0.8, 0.6], [0.2, 0.4], [0.6, 0.9], [0.4, 0.3], 0.05
     )
     assert visual["empirical_visual_gain"] == pytest.approx(0.4)
+    assert visual["candidate_selection_bits"] == math.log2(18)
+    assert visual["candidate_selection_nats"] == pytest.approx(math.log(18))
+    expected_radius = math.sqrt(
+        2 * (math.log(18) + math.log(1 / 0.05)) / 2
+    )
+    assert visual["confidence_radius"] == pytest.approx(expected_radius)
     assert -1 <= visual["visual_gain_lower_bound"] <= 1
     with pytest.raises(ValueError, match=r"outside \[0,1\]"):
         visual_gain_certificate([1.01], [0.2], [0.8], [0.3], 0.05)
-    semantic = semantic_certificate(0.5, 100, math.log2(18), 0.05)
+    semantic = semantic_certificate(
+        0.5, 100, math.log2(18), 0.05, vocab_size=6400, alpha=0.5
+    )
     assert semantic["semantic_bound"] > semantic["empirical_risk"]
     assert semantic["bit_to_nat_multiplier"] == math.log(2)
+    expected_width = math.log2(1 + (1 - 0.5) * 6400 / 0.5)
+    assert semantic["loss_range_width"] == pytest.approx(expected_width)
+    assert semantic["complexity_penalty"] == pytest.approx(
+        expected_width * semantic["unit_interval_radius"]
+    )
     configs = generate_matrix()
     rows = aggregate_models(configs, {
         configs[0]["config_id"]: {
@@ -177,3 +194,12 @@ def test_new_experiment_does_not_import_or_restore_legacy_m4():
     assert "phase3_m4" not in source
     assert "m4_" not in source
     assert "restore" not in source
+
+
+def test_artifacts_are_bound_to_exact_current_protocol():
+    current = sha256_file(PROTOCOL_PATH)
+    validate_artifact_protocol({"protocol_sha256": current})
+    with pytest.raises(ValueError, match="current frozen protocol"):
+        validate_artifact_protocol({})
+    with pytest.raises(ValueError, match="current frozen protocol"):
+        validate_artifact_protocol({"protocol_sha256": "old-protocol-hash"})

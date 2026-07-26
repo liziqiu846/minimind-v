@@ -67,7 +67,26 @@ def build_protocol() -> dict[str, Any]:
         },
         "evaluation": {
             "semantic_risk": "existing_prediction_smoothed_conditional_nll",
+            "semantic_smoothing": {
+                "alpha": base["evaluation"]["alpha"],
+                "vocab_size": base["evaluation"]["vocab_size"],
+                "loss_unit": base["evaluation"]["loss_units"],
+                "loss_range": (
+                    "Delta_alpha=log2(1+(1-alpha)*vocab_size/alpha)"
+                ),
+                "bound": (
+                    "R_hat+Delta_alpha*sqrt((C_nats+ln(1/delta))/(2*m))"
+                ),
+            },
             "visual_score": "phase3_v6_bounded_visual_semantic_contrast_q",
+            "visual_candidate_selection": {
+                "candidate_count": CANDIDATE_COUNT,
+                "selection_bits": __import__("math").log2(CANDIDATE_COUNT),
+                "selection_nats": "selection_bits*ln(2)=ln(18)",
+                "bound_radius": (
+                    "sqrt(2*(ln(18)+ln(1/delta))/pair_count)"
+                ),
+            },
             "pairing_seed": 3407,
             "pairing": (
                 "shuffle_unique_groups_then_adjacent_disjoint_pairs_and_use_both_directions"
@@ -81,6 +100,12 @@ def build_protocol() -> dict[str, Any]:
         "execution_limit": {
             "formal_training_forbidden_in_engineering_run": True,
             "smoke_max_batches": 2,
+        },
+        "artifact_compatibility": {
+            "required_field": "protocol_sha256",
+            "required_value": "raw SHA-256 of this protocol.json",
+            "missing_or_mismatched_policy": "reject",
+            "cross_protocol_mixing": "forbidden",
         },
         "candidate_matrix_rule": "deterministic_cartesian_product(structure,budget,seed)",
     }
@@ -100,3 +125,13 @@ def validate_frozen_protocol() -> str:
         raise ValueError("protocol.json raw-file SHA-256 differs from frozen sidecar")
     validate_matrix(generate_matrix())
     return hashlib.sha256(canonical_bytes(payload)).hexdigest()
+
+
+def validate_artifact_protocol(artifact: dict[str, Any]) -> None:
+    """Reject missing, stale, or foreign protocol bindings."""
+    current = sha256_file(PROTOCOL_PATH)
+    observed = artifact.get("protocol_sha256")
+    if observed != current:
+        raise ValueError(
+            "artifact protocol SHA-256 does not match the current frozen protocol"
+        )

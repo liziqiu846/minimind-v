@@ -80,7 +80,20 @@
   },
   "evaluation": {
     "semantic_risk": "existing_prediction_smoothed_conditional_nll",
+    "semantic_smoothing": {
+      "alpha": 0.5,
+      "vocab_size": 6400,
+      "loss_unit": "bits",
+      "loss_range": "Delta_alpha=log2(1+(1-alpha)*vocab_size/alpha)",
+      "bound": "R_hat+Delta_alpha*sqrt((C_nats+ln(1/delta))/(2*m))"
+    },
     "visual_score": "phase3_v6_bounded_visual_semantic_contrast_q",
+    "visual_candidate_selection": {
+      "candidate_count": 18,
+      "selection_bits": 4.169925001442312,
+      "selection_nats": "selection_bits*ln(2)=ln(18)",
+      "bound_radius": "sqrt(2*(ln(18)+ln(1/delta))/pair_count)"
+    },
     "pairing_seed": 3407,
     "pairing": "shuffle_unique_groups_then_adjacent_disjoint_pairs_and_use_both_directions",
     "pair_estimand": "0.5*((q(I_i,T_i)-q(I_j,T_i))+(q(I_j,T_j)-q(I_i,T_j)))",
@@ -92,6 +105,12 @@
   "execution_limit": {
     "formal_training_forbidden_in_engineering_run": true,
     "smoke_max_batches": 2
+  },
+  "artifact_compatibility": {
+    "required_field": "protocol_sha256",
+    "required_value": "raw SHA-256 of this protocol.json",
+    "missing_or_mismatched_policy": "reject",
+    "cross_protocol_mixing": "forbidden"
   },
   "candidate_matrix_rule": "deterministic_cartesian_product(structure,budget,seed)"
 }

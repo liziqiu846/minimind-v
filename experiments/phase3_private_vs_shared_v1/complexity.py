@@ -5,7 +5,7 @@ from __future__ import annotations
 import math
 from typing import Any, Mapping
 
-from . import CANDIDATE_COUNT, SEEDS, STRUCTURES
+from . import CANDIDATE_COUNT, SEEDS
 from .parameterization import CoordinateStore
 
 
@@ -21,8 +21,6 @@ def training_certificate_bits(
     store: CoordinateStore,
     *,
     encoded_parameter_bits: Mapping[str, int],
-    structure_bits: float = math.log2(len(STRUCTURES)),
-    budget_identity_bits: float = math.log2(3),
 ) -> dict[str, Any]:
     expected = tuple(store.coordinates.keys())
     if set(encoded_parameter_bits) != set(expected):
@@ -30,17 +28,20 @@ def training_certificate_bits(
     parameter_bits = float(sum(int(encoded_parameter_bits[name]) for name in expected))
     if parameter_bits < 0:
         raise ValueError("parameter bit length must be non-negative")
-    structural = float(structure_bits) + float(budget_identity_bits)
-    total = parameter_bits + structural
+    identity_bits = candidate_identity_bits()
+    total = parameter_bits + identity_bits
     return {
         "scope": "training_certificate",
         "unit": "bit",
         "parameter_bits": parameter_bits,
-        "structure_bits": float(structure_bits),
-        "budget_identity_bits": float(budget_identity_bits),
+        "structure_bits": 0.0,
+        "budget_identity_bits": 0.0,
         "seed_integer_bits": 0.0,
-        "candidate_identity_bits": 0.0,
-        "seed_rule": f"predeclared_set_of_{len(SEEDS)}_charged_only_via_candidate_identity",
+        "candidate_identity_bits": identity_bits,
+        "candidate_identity_covers": ["structure", "budget", "seed"],
+        "seed_rule": (
+            f"predeclared_set_of_{len(SEEDS)}_charged_once_via_18_candidate_identity"
+        ),
         "coded_bits": total,
         "coded_nats_for_natural_log_formula": bits_to_nats(total),
     }
@@ -56,6 +57,10 @@ def confirmation_selection_bits() -> dict[str, Any]:
         "checkpoint_bits": 0.0,
         "seed_integer_bits": 0.0,
         "training_certificate_bits_recharged": 0.0,
+        "scope_note": (
+            "confirmation selection is a separate bound; never add this receipt "
+            "to a training-certificate receipt"
+        ),
         "coded_bits": bits,
         "coded_nats_for_natural_log_formula": bits_to_nats(bits),
     }
