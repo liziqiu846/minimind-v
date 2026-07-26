@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "status": "frozen",
+  "protocol_id": "phase3-private-vs-shared-budget-v1",
+  "scientific_question": "private_module_coordinates_vs_one_shared_coordinate_vector",
+  "structures": ["P", "S"],
+  "budgets": [2048, 4096, 8192],
+  "seeds": [43101, 43102, 43103],
+  "s0": 43101,
+  "candidate_count": 18,
+  "candidate_selection": {
+    "unit": "bit",
+    "bits": 4.169925001442312,
+    "natural_log_conversion": "bits * ln(2)",
+    "seed_integer_bits": 0,
+    "checkpoint_reencoding_bits": 0
+  },
+  "m2_allocation_authority": {
+    "factor_elements": {
+      "vision": 24576,
+      "projector": 98304,
+      "language": 50176
+    },
+    "current_dimensions": {
+      "vision": 582,
+      "projector": 2327,
+      "language": 1187
+    },
+    "protocol_relative_path": "experiments/stage2_protocol_v2.json",
+    "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3",
+    "code_relative_path": "model/global_subspace_lora.py",
+    "code_sha256": "4fcb3f0bf8786fe8eb8fce93bac32a4ec8341863c986f42a9f7c2118e2f12908",
+    "verification": "factor_elements_from_protocol_and_M2_dimensions_match_code"
+  },
+  "shared_semantics": "delta_theta_m = P_m w; one w, module-specific frozen P_m",
+  "fairness": {
+    "base_checkpoint": {
+      "path": "llm/llm_768.pth",
+      "sha256": "5b8c49f6c9d965092e651cafeeaeb8705558632b3fd4ac8ab319cbc5a3cbc4a0"
+    },
+    "training_data": {
+      "relative_path": "dataset/stage2_confirm_v2_seed2028/train.parquet",
+      "sha256": "3c3d90c525f43200d35ebd5b4ac1719c8336d278aecbf7e929997c8401b1d5ce",
+      "same_order": true,
+      "train_seed": 2026,
+      "epoch_permutation": "torch.randperm with a CPU torch.Generator seeded by train_seed+epoch_index; save permutation SHA256"
+    },
+    "target_registry": {
+      "relative_path": "experiments/stage2_target_registry.json",
+      "sha256": "a16de2f97bf50d0dcca1d432cc89c5d9b6ed192343aac1e11c909716e5a696fe"
+    },
+    "optimizer": {
+      "name": "torch.optim.AdamW",
+      "betas": [0.9, 0.999],
+      "eps": 1e-08,
+      "weight_decay": 0.01,
+      "amsgrad": false,
+      "parameters": "coordinate tensors only"
+    },
+    "epochs": 3,
+    "micro_batch_size": 4,
+    "gradient_accumulation_steps": 4,
+    "total_steps": 1875,
+    "learning_rate_schedule": {
+      "update_unit": "optimizer step",
+      "warmup_steps": 0,
+      "total_steps": 1875,
+      "t_values": "0 through 1874",
+      "minimum_ratio": 0.1,
+      "formula": "lr_min+0.5*(lr_max-lr_min)*(1+cos(pi*t/(T-1)))"
+    },
+    "learning_rate": 0.05,
+    "quantization": {
+      "format": "MMS2 version 1",
+      "levels": [-3, -2, -1, 0, 1, 2, 3],
+      "codec": "zlib.compress(body, level=9)",
+      "complexity_bits": "8 times complete adapter.mms2 file size"
+    },
+    "projection_domain": "stage2-map-v1"
+  },
+  "evaluation": {
+    "semantic_risk": "existing_prediction_smoothed_conditional_nll",
+    "visual_score": "phase3_v6_bounded_visual_semantic_contrast_q",
+    "pairing_seed": 3407,
+    "pairing": "shuffle_unique_groups_then_adjacent_disjoint_pairs_and_use_both_directions",
+    "pair_estimand": "0.5*((q(I_i,T_i)-q(I_j,T_i))+(q(I_j,T_j)-q(I_i,T_j)))",
+    "odd_sample_policy": "drop_frozen_permutation_last_and_record_audit_hashes",
+    "development_image_count": 1343,
+    "development_use_only": true,
+    "formal_requires_fresh_confirmation_manifest": true
+  },
+  "execution_limit": {
+    "formal_training_forbidden_in_engineering_run": true,
+    "smoke_max_batches": 2
+  },
+  "candidate_matrix_rule": "deterministic_cartesian_product(structure,budget,seed)"
+}
