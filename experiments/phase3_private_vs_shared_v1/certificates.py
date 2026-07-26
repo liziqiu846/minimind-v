@@ -5,10 +5,22 @@ from __future__ import annotations
 import math
 from typing import Any, Sequence
 
-from experiments.generalization_bound import prediction_smoothing_interval
+from experiments.generalization_bound import (
+    description_complexity_nats,
+    prediction_smoothing_interval,
+)
 
 from . import CANDIDATE_COUNT
 from .complexity import bits_to_nats
+
+FORMAL_DELTA_TOTAL = 0.05
+FORMAL_DELTA_SEMANTIC = 0.025
+FORMAL_DELTA_VISUAL = 0.025
+
+
+def _require_frozen_delta(name: str, observed: float, expected: float) -> None:
+    if not math.isclose(float(observed), expected, rel_tol=0.0, abs_tol=1e-15):
+        raise ValueError(f"{name} must equal the frozen value {expected}")
 
 
 def semantic_certificate(empirical_smoothed_nll: float, sample_count: int,
@@ -17,7 +29,8 @@ def semantic_certificate(empirical_smoothed_nll: float, sample_count: int,
     risk = float(empirical_smoothed_nll)
     if not math.isfinite(risk) or risk < 0 or sample_count <= 0 or not 0 < delta < 1:
         raise ValueError("invalid semantic certificate inputs")
-    complexity_nats = bits_to_nats(coded_bits)
+    _require_frozen_delta("semantic delta", delta, FORMAL_DELTA_SEMANTIC)
+    complexity_nats = description_complexity_nats(coded_bits)
     interval = prediction_smoothing_interval(vocab_size, alpha)
     unit_interval_radius = math.sqrt(
         (complexity_nats + math.log(1.0 / delta)) / (2.0 * sample_count)
@@ -35,6 +48,9 @@ def semantic_certificate(empirical_smoothed_nll: float, sample_count: int,
         "semantic_bound": risk + penalty,
         "coded_bits": float(coded_bits),
         "bit_to_nat_multiplier": math.log(2.0),
+        "self_delimiting_overhead_nats": 2.0 * math.log(coded_bits),
+        "complexity_nats": complexity_nats,
+        "complexity_formula": "C*ln(2)+2*ln(C)",
         "delta": float(delta),
         "sample_count": int(sample_count),
     }
@@ -59,6 +75,7 @@ def visual_gain_certificate(q_ii: Sequence[float], q_ji: Sequence[float],
     if (lengths != {len(q_ii)} or not q_ii or not 0 < delta < 1
             or isinstance(candidate_count, bool) or candidate_count <= 0):
         raise ValueError("invalid visual certificate inputs")
+    _require_frozen_delta("visual delta", delta, FORMAL_DELTA_VISUAL)
     gains = [
         symmetric_pair_gain(a, b, c, d)
         for a, b, c, d in zip(q_ii, q_ji, q_jj, q_ij)

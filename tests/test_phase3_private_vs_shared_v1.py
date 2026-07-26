@@ -7,6 +7,7 @@ import torch
 
 from experiments.phase3_private_vs_shared_v1.aggregate import aggregate_models
 from experiments.phase3_private_vs_shared_v1.certificates import (
+    FORMAL_DELTA_SEMANTIC, FORMAL_DELTA_TOTAL, FORMAL_DELTA_VISUAL,
     semantic_certificate, symmetric_pair_gain, visual_gain_certificate,
 )
 from experiments.phase3_private_vs_shared_v1.complexity import (
@@ -146,20 +147,24 @@ def test_metric_ranges_bounds_aggregation_and_smoke():
     assert symmetric_pair_gain(1.0, 0.0, 1.0, 0.0) == 1.0
     assert symmetric_pair_gain(0.0, 1.0, 0.0, 1.0) == -1.0
     visual = visual_gain_certificate(
-        [0.8, 0.6], [0.2, 0.4], [0.6, 0.9], [0.4, 0.3], 0.05
+        [0.8, 0.6], [0.2, 0.4], [0.6, 0.9], [0.4, 0.3],
+        FORMAL_DELTA_VISUAL,
     )
     assert visual["empirical_visual_gain"] == pytest.approx(0.4)
     assert visual["candidate_selection_bits"] == math.log2(18)
     assert visual["candidate_selection_nats"] == pytest.approx(math.log(18))
     expected_radius = math.sqrt(
-        2 * (math.log(18) + math.log(1 / 0.05)) / 2
+        2 * (math.log(18) + math.log(1 / FORMAL_DELTA_VISUAL)) / 2
     )
     assert visual["confidence_radius"] == pytest.approx(expected_radius)
     assert -1 <= visual["visual_gain_lower_bound"] <= 1
     with pytest.raises(ValueError, match=r"outside \[0,1\]"):
-        visual_gain_certificate([1.01], [0.2], [0.8], [0.3], 0.05)
+        visual_gain_certificate(
+            [1.01], [0.2], [0.8], [0.3], FORMAL_DELTA_VISUAL
+        )
     semantic = semantic_certificate(
-        0.5, 100, math.log2(18), 0.05, vocab_size=6400, alpha=0.5
+        0.5, 100, math.log2(18), FORMAL_DELTA_SEMANTIC,
+        vocab_size=6400, alpha=0.5
     )
     assert semantic["semantic_bound"] > semantic["empirical_risk"]
     assert semantic["bit_to_nat_multiplier"] == math.log(2)
@@ -168,6 +173,15 @@ def test_metric_ranges_bounds_aggregation_and_smoke():
     assert semantic["complexity_penalty"] == pytest.approx(
         expected_width * semantic["unit_interval_radius"]
     )
+    coded_bits = math.log2(18)
+    assert semantic["complexity_nats"] == pytest.approx(
+        coded_bits * math.log(2) + 2 * math.log(coded_bits)
+    )
+    assert FORMAL_DELTA_SEMANTIC + FORMAL_DELTA_VISUAL == FORMAL_DELTA_TOTAL
+    with pytest.raises(ValueError, match="frozen value"):
+        semantic_certificate(
+            0.5, 100, coded_bits, 0.05, vocab_size=6400, alpha=0.5
+        )
     configs = generate_matrix()
     rows = aggregate_models(configs, {
         configs[0]["config_id"]: {

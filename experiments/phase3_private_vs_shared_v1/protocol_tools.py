@@ -8,6 +8,11 @@ from . import BUDGETS, CANDIDATE_COUNT, PROTOCOL_ID, SEEDS, STRUCTURES
 from .authority import read_m2_authority
 from .common import REPO_ROOT, canonical_bytes, load_json, sha256_file
 from .configs import generate_matrix, validate_matrix
+from .certificates import (
+    FORMAL_DELTA_SEMANTIC,
+    FORMAL_DELTA_TOTAL,
+    FORMAL_DELTA_VISUAL,
+)
 
 PROTOCOL_PATH = Path(__file__).with_name("protocol.json")
 
@@ -66,6 +71,13 @@ def build_protocol() -> dict[str, Any]:
             "projection_domain": "stage2-map-v1",
         },
         "evaluation": {
+            "joint_confidence": {
+                "delta_total": FORMAL_DELTA_TOTAL,
+                "delta_semantic": FORMAL_DELTA_SEMANTIC,
+                "delta_visual": FORMAL_DELTA_VISUAL,
+                "allocation_rule": "delta_semantic + delta_visual = delta_total",
+                "simultaneous_confidence": 1.0 - FORMAL_DELTA_TOTAL,
+            },
             "semantic_risk": "existing_prediction_smoothed_conditional_nll",
             "semantic_smoothing": {
                 "alpha": base["evaluation"]["alpha"],
@@ -75,7 +87,8 @@ def build_protocol() -> dict[str, Any]:
                     "Delta_alpha=log2(1+(1-alpha)*vocab_size/alpha)"
                 ),
                 "bound": (
-                    "R_hat+Delta_alpha*sqrt((C_nats+ln(1/delta))/(2*m))"
+                    "R_hat+Delta_alpha*sqrt(((C_bits*ln(2)+2*ln(C_bits))"
+                    "+ln(1/delta_semantic))/(2*m))"
                 ),
             },
             "visual_score": "phase3_v6_bounded_visual_semantic_contrast_q",
