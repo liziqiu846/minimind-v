@@ -1,0 +1,1867 @@
+{
+  "action_modules": [
+    "vision",
+    "language"
+  ],
+  "base_states": {
+    "language_rich": {
+      "language": 3561,
+      "projector": 2327,
+      "vision": 582
+    },
+    "original": {
+      "language": 1187,
+      "projector": 2327,
+      "vision": 582
+    }
+  },
+  "blocking_and_order": {
+    "block": "seed",
+    "candidate_execution_order": [
+      {
+        "base_state": "language_rich",
+        "module": "language",
+        "seed": 43101
+      },
+      {
+        "base_state": "original",
+        "module": "vision",
+        "seed": 43101
+      },
+      {
+        "base_state": "language_rich",
+        "module": "vision",
+        "seed": 43101
+      },
+      {
+        "base_state": "original",
+        "module": "language",
+        "seed": 43101
+      },
+      {
+        "base_state": "language_rich",
+        "module": "vision",
+        "seed": 43102
+      },
+      {
+        "base_state": "original",
+        "module": "vision",
+        "seed": 43102
+      },
+      {
+        "base_state": "original",
+        "module": "language",
+        "seed": 43102
+      },
+      {
+        "base_state": "language_rich",
+        "module": "language",
+        "seed": 43102
+      },
+      {
+        "base_state": "language_rich",
+        "module": "language",
+        "seed": 43103
+      },
+      {
+        "base_state": "original",
+        "module": "language",
+        "seed": 43103
+      },
+      {
+        "base_state": "language_rich",
+        "module": "vision",
+        "seed": 43103
+      },
+      {
+        "base_state": "original",
+        "module": "vision",
+        "seed": 43103
+      }
+    ],
+    "randomization_seed": 20260805
+  },
+  "bound": {
+    "candidate_family_size": 75,
+    "complexity_nats": "C*ln(2)+2*ln(C)",
+    "delta_each": 0.0006666666666666668,
+    "description_bits": "sum_of_three_actual_module_encoded_bits",
+    "empirical_risk": "development_task_risk=image_equal_mean(1-q_correct)",
+    "familywise_delta": 0.05,
+    "formula": "B=R_hat+sqrt((C*ln(2)+2*ln(C)+ln(1/delta_each))/(2*n))",
+    "improvement": "delta_B=B_base-B_candidate",
+    "independent_sample_count": 1343,
+    "loss_support": [
+      0.0,
+      1.0
+    ],
+    "name": "raw_unclipped_compression_generalization_upper_bound",
+    "prediction_processing": "unchanged_phase3_v6_stable_sigmoid_no_additional_smoothing_or_clipping",
+    "primary_is_raw_unclipped": true
+  },
+  "calibration": {
+    "bit_adequacy_gate": {
+      "maximum_within_state_seed_action_ratio": 2.0,
+      "minimum_target_module_delta_bits_each_seed": 512
+    },
+    "language_rich_language_projection_adjustment": {
+      "intended_coordinate_dimension": 6500,
+      "reason": "nearest_smaller_dimension_with_zero_unused_coordinates_for_all_three_frozen_seeds",
+      "selected_coordinate_dimension": 5976
+    },
+    "predicted_median_target_delta_bits": {
+      "language_rich": {
+        "language": 2113,
+        "vision": 2490
+      },
+      "original": {
+        "language": 2749,
+        "vision": 2490
+      }
+    },
+    "selection_only_not_an_outcome_metric": true,
+    "source": "existing_actual_module_bit_curves_and_previous_state_step"
+  },
+  "candidate_configs": [
+    {
+      "base_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 582
+      },
+      "base_state": "original",
+      "config_id": "lv-switch-original-vision-coords-1700",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 1700
+      },
+      "module": "vision"
+    },
+    {
+      "base_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 582
+      },
+      "base_state": "original",
+      "config_id": "lv-switch-original-language-coords-2700",
+      "coordinate_dimensions": {
+        "language": 2700,
+        "projector": 2327,
+        "vision": 582
+      },
+      "module": "language"
+    },
+    {
+      "base_dimensions": {
+        "language": 3561,
+        "projector": 2327,
+        "vision": 582
+      },
+      "base_state": "language_rich",
+      "config_id": "lv-switch-language_rich-vision-coords-1700",
+      "coordinate_dimensions": {
+        "language": 3561,
+        "projector": 2327,
+        "vision": 1700
+      },
+      "module": "vision"
+    },
+    {
+      "base_dimensions": {
+        "language": 3561,
+        "projector": 2327,
+        "vision": 582
+      },
+      "base_state": "language_rich",
+      "config_id": "lv-switch-language_rich-language-coords-5976",
+      "coordinate_dimensions": {
+        "language": 5976,
+        "projector": 2327,
+        "vision": 582
+      },
+      "module": "language"
+    }
+  ],
+  "comparisons": [
+    {
+      "base_run_id": "lv-switch-original-base-seed-43101",
+      "base_state": "original",
+      "candidate_run_id": "lv-switch-original-vision-coords-1700-seed-43101",
+      "module": "vision",
+      "primary_improvement_definition": "B_base-B_candidate",
+      "seed": 43101
+    },
+    {
+      "base_run_id": "lv-switch-original-base-seed-43102",
+      "base_state": "original",
+      "candidate_run_id": "lv-switch-original-vision-coords-1700-seed-43102",
+      "module": "vision",
+      "primary_improvement_definition": "B_base-B_candidate",
+      "seed": 43102
+    },
+    {
+      "base_run_id": "lv-switch-original-base-seed-43103",
+      "base_state": "original",
+      "candidate_run_id": "lv-switch-original-vision-coords-1700-seed-43103",
+      "module": "vision",
+      "primary_improvement_definition": "B_base-B_candidate",
+      "seed": 43103
+    },
+    {
+      "base_run_id": "lv-switch-original-base-seed-43101",
+      "base_state": "original",
+      "candidate_run_id": "lv-switch-original-language-coords-2700-seed-43101",
+      "module": "language",
+      "primary_improvement_definition": "B_base-B_candidate",
+      "seed": 43101
+    },
+    {
+      "base_run_id": "lv-switch-original-base-seed-43102",
+      "base_state": "original",
+      "candidate_run_id": "lv-switch-original-language-coords-2700-seed-43102",
+      "module": "language",
+      "primary_improvement_definition": "B_base-B_candidate",
+      "seed": 43102
+    },
+    {
+      "base_run_id": "lv-switch-original-base-seed-43103",
+      "base_state": "original",
+      "candidate_run_id": "lv-switch-original-language-coords-2700-seed-43103",
+      "module": "language",
+      "primary_improvement_definition": "B_base-B_candidate",
+      "seed": 43103
+    },
+    {
+      "base_run_id": "lv-switch-language_rich-base-seed-43101",
+      "base_state": "language_rich",
+      "candidate_run_id": "lv-switch-language_rich-vision-coords-1700-seed-43101",
+      "module": "vision",
+      "primary_improvement_definition": "B_base-B_candidate",
+      "seed": 43101
+    },
+    {
+      "base_run_id": "lv-switch-language_rich-base-seed-43102",
+      "base_state": "language_rich",
+      "candidate_run_id": "lv-switch-language_rich-vision-coords-1700-seed-43102",
+      "module": "vision",
+      "primary_improvement_definition": "B_base-B_candidate",
+      "seed": 43102
+    },
+    {
+      "base_run_id": "lv-switch-language_rich-base-seed-43103",
+      "base_state": "language_rich",
+      "candidate_run_id": "lv-switch-language_rich-vision-coords-1700-seed-43103",
+      "module": "vision",
+      "primary_improvement_definition": "B_base-B_candidate",
+      "seed": 43103
+    },
+    {
+      "base_run_id": "lv-switch-language_rich-base-seed-43101",
+      "base_state": "language_rich",
+      "candidate_run_id": "lv-switch-language_rich-language-coords-5976-seed-43101",
+      "module": "language",
+      "primary_improvement_definition": "B_base-B_candidate",
+      "seed": 43101
+    },
+    {
+      "base_run_id": "lv-switch-language_rich-base-seed-43102",
+      "base_state": "language_rich",
+      "candidate_run_id": "lv-switch-language_rich-language-coords-5976-seed-43102",
+      "module": "language",
+      "primary_improvement_definition": "B_base-B_candidate",
+      "seed": 43102
+    },
+    {
+      "base_run_id": "lv-switch-language_rich-base-seed-43103",
+      "base_state": "language_rich",
+      "candidate_run_id": "lv-switch-language_rich-language-coords-5976-seed-43103",
+      "module": "language",
+      "primary_improvement_definition": "B_base-B_candidate",
+      "seed": 43103
+    }
+  ],
+  "coordinate_modules": [
+    "vision",
+    "projector",
+    "language"
+  ],
+  "counts": {
+    "action_count": 2,
+    "base_state_count": 2,
+    "candidate_config_count": 4,
+    "comparison_count": 12,
+    "expanded_model_run_count": 18,
+    "new_training_count": 12,
+    "reused_complete_base_result_count": 6,
+    "seed_count": 3
+  },
+  "decision_rule": {
+    "bit_adequacy_gate_must_pass": true,
+    "fail_decision": "stop_language_vision_switch_route_no_expansion",
+    "language_rich_expected_order": [
+      "vision",
+      "language"
+    ],
+    "median_order_must_match": true,
+    "original_expected_order": [
+      "language",
+      "vision"
+    ],
+    "pass_decision": "proceed_to_dynamic_budget_algorithm_design",
+    "required_seed_majority": 2
+  },
+  "evaluation": {
+    "candidate_family_size_reused_from_previous_round": 75,
+    "protocol": "unchanged_phase3_v6_development_scoring",
+    "risk": "development_task_risk",
+    "role": "development_only"
+  },
+  "preflight": {
+    "checkpoint_reuse_checks": {
+      "language_rich": {
+        "43101": {
+          "checkpoint_path": "/home/lizhaohui/lzq/stage3-curve-development-20260804/training_artifacts/P-4096-language-coords-3561-seed-43101/checkpoint.pt",
+          "checkpoint_sha256": "105febf2ae912f5da4055d1b3cf6963fce5d69ad83815861b230524409493184",
+          "coordinate_state_sha256": "a7aa533a7e16a19e274dd69c1eb696d626053ccb181b44be76f13798bf9c6665",
+          "development_evaluation_result_sha256": "88523ff40dababcb5a8f5044f2b7b2b616a0b27181f741e81bb19328ca0a13b2",
+          "reuse_scope": "complete_base_model_result",
+          "source_run_result_sha256": "f16ed8dd1fa5b98393a759298c3dab2f56e7fbd592078af669b37a1a3330f2a9",
+          "status": "verified"
+        },
+        "43102": {
+          "checkpoint_path": "/home/lizhaohui/lzq/stage3-curve-development-20260804/training_artifacts/P-4096-language-coords-3561-seed-43102/checkpoint.pt",
+          "checkpoint_sha256": "1cdad2ff844713782bb11711698457710eed0a0a38c4828db10185a95cff0f82",
+          "coordinate_state_sha256": "7ebbc433520c510fcd7fa460700a37946b9025434aecd5e63c15253b0b9fda42",
+          "development_evaluation_result_sha256": "ec18d4c78a744e2e5d1cbac793b99de3debcee1f1e02aa786b1b986d796c1d71",
+          "reuse_scope": "complete_base_model_result",
+          "source_run_result_sha256": "6e3da2766b2a8bf3be4e082a2cef6ef7d14b1ed7729387ef8a82182cc38dae3e",
+          "status": "verified"
+        },
+        "43103": {
+          "checkpoint_path": "/home/lizhaohui/lzq/stage3-curve-development-20260804/training_artifacts/P-4096-language-coords-3561-seed-43103/checkpoint.pt",
+          "checkpoint_sha256": "17b9597e9e812e8dac5601ebd9869b97893a6cce303bec6124b6e9809bec06b9",
+          "coordinate_state_sha256": "711eaa6d8badb72822933fd71969901542331ea47145b131d885a8cb0e8939ed",
+          "development_evaluation_result_sha256": "cb5844e19c5ca88f047a4fab61096dc53451d0f9957df6934a8282971b893949",
+          "reuse_scope": "complete_base_model_result",
+          "source_run_result_sha256": "385921333ec94533db7e5eaa5cde62d59f188c6b32e423eb0b2a3c205beacda6",
+          "status": "verified"
+        }
+      },
+      "original": {
+        "43101": {
+          "checkpoint_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43101/checkpoint.pt",
+          "checkpoint_sha256": "0acd320c17144d42360bca1dc1e0df5d714907673f6a16319af248d1de85c26e",
+          "coordinate_state_sha256": "9b718196620aca62edb4894ad89455481d9b5815b92a51efe716d682af364858",
+          "development_evaluation_result_sha256": "d3a9d2d280521b11558de0d338c31bf54c656e90596acdb279ad6834f4f69416",
+          "reuse_scope": "complete_base_model_result",
+          "source_run_result_sha256": "06d717f146af97636eebbd41ccbca8d355532aebeef5b32dd85936b8c0c082f4",
+          "status": "verified"
+        },
+        "43102": {
+          "checkpoint_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43102/checkpoint.pt",
+          "checkpoint_sha256": "36e525528c99c139f71ae7737f5b2b2cbfe207dfa29582e96d3a4c5fc51a8257",
+          "coordinate_state_sha256": "3c150a1dffc02078dd247ed4c6dc8e901c869359c4ee73af5d97e5446fadb8f2",
+          "development_evaluation_result_sha256": "7bd1cf509d91e5b99af7b6fff0340abf51155e71dba98b03a557468417d9bd23",
+          "reuse_scope": "complete_base_model_result",
+          "source_run_result_sha256": "da035426b16fb47153d1cd7b72e6eb15f6ab1fa096150a7e5577192ab5b56424",
+          "status": "verified"
+        },
+        "43103": {
+          "checkpoint_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43103/checkpoint.pt",
+          "checkpoint_sha256": "fdca3785ceb919c3bb08f5d11d0191d016199499c38865fae2ed465127f3b3a8",
+          "coordinate_state_sha256": "0dd0df6b66948edc79a3712877ad2993e11cea1949737e42859f99121da61aee",
+          "development_evaluation_result_sha256": "27559657d938977cea2b0e3fe38e8915201832e1705b49c052247f6046b1cf6b",
+          "reuse_scope": "complete_base_model_result",
+          "source_run_result_sha256": "a887347a1eb0aa4f5695ca54c5e33ac3c0768cb5c68cb4cc70f305300a978e25",
+          "status": "verified"
+        }
+      }
+    },
+    "complete_base_result_reuse_count": 6,
+    "distinct_config_count": 6,
+    "illegal_config_count": 0,
+    "legal_config_count": 6,
+    "new_training_count": 12,
+    "results": [
+      {
+        "base_state": "original",
+        "checks": {
+          "construction_device": "cpu",
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_unchanged": true,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "f23a75d9118ec82647ac9df437d499493f8229b356015cdb8288a814babc410e",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 61,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "f23a75d9118ec82647ac9df437d499493f8229b356015cdb8288a814babc410e",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "e4b972b1df681b3b6b8c332d57e5d16dea56d2fab512c9ee3fbd761ad08fdf62",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 68,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 65,
+                  "minimum_uses_per_coordinate": 25,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "e4b972b1df681b3b6b8c332d57e5d16dea56d2fab512c9ee3fbd761ad08fdf62",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "42f7326fa8571c77128e244b7edeeddfd413ce19a07a44808cff628ed9ad2ab0",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 70,
+                  "minimum_uses_per_coordinate": 24,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 71,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "42f7326fa8571c77128e244b7edeeddfd413ce19a07a44808cff628ed9ad2ab0",
+              "reproducible": true
+            }
+          },
+          "projector_fixed_at_2327": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 4096,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 582
+        },
+        "module": null,
+        "status": "legal"
+      },
+      {
+        "base_state": "original",
+        "checks": {
+          "construction_device": "cpu",
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_unchanged": true,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "7bbf575398c56c1866ed1d0fe1e547832012da83a09b8b4145f257a6d0b01951",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 61,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 1700,
+                  "maximum_uses_per_coordinate": 30,
+                  "minimum_uses_per_coordinate": 1,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "7bbf575398c56c1866ed1d0fe1e547832012da83a09b8b4145f257a6d0b01951",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "e87f6b4c872c984d1cdde1dbebf81c5c9525b4cd22220e00ecb0fd2ce1890989",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 68,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 1700,
+                  "maximum_uses_per_coordinate": 29,
+                  "minimum_uses_per_coordinate": 4,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "e87f6b4c872c984d1cdde1dbebf81c5c9525b4cd22220e00ecb0fd2ce1890989",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "255e9600f7e27278593be5fd742c7821d0f03310856b2529e75ca4280c1b3126",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 70,
+                  "minimum_uses_per_coordinate": 24,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 1700,
+                  "maximum_uses_per_coordinate": 32,
+                  "minimum_uses_per_coordinate": 3,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "255e9600f7e27278593be5fd742c7821d0f03310856b2529e75ca4280c1b3126",
+              "reproducible": true
+            }
+          },
+          "projector_fixed_at_2327": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 5214,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 1700
+        },
+        "module": "vision",
+        "status": "legal"
+      },
+      {
+        "base_state": "original",
+        "checks": {
+          "construction_device": "cpu",
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_unchanged": true,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "9d07a9a92f0dcc6a117481c7cf055e632c36170c4361b5ffd18b1ef9d5d5a244",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 2700,
+                  "maximum_uses_per_coordinate": 34,
+                  "minimum_uses_per_coordinate": 6,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "9d07a9a92f0dcc6a117481c7cf055e632c36170c4361b5ffd18b1ef9d5d5a244",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "8ce0f140407bb63da5616ff5c3a8180413deabf51636899a6676ef24c592ca0a",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 2700,
+                  "maximum_uses_per_coordinate": 34,
+                  "minimum_uses_per_coordinate": 6,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 68,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 65,
+                  "minimum_uses_per_coordinate": 25,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "8ce0f140407bb63da5616ff5c3a8180413deabf51636899a6676ef24c592ca0a",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "3fd1a1a2f1df800ae23fccc1dc7775e9d1dfaf65a0deee7b3b9a4346e7fdee83",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 2700,
+                  "maximum_uses_per_coordinate": 34,
+                  "minimum_uses_per_coordinate": 6,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 71,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "3fd1a1a2f1df800ae23fccc1dc7775e9d1dfaf65a0deee7b3b9a4346e7fdee83",
+              "reproducible": true
+            }
+          },
+          "projector_fixed_at_2327": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 5609,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "coordinate_dimensions": {
+          "language": 2700,
+          "projector": 2327,
+          "vision": 582
+        },
+        "module": "language",
+        "status": "legal"
+      },
+      {
+        "base_state": "language_rich",
+        "checks": {
+          "construction_device": "cpu",
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_unchanged": true,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "a2df6b9c40261201d85dab708de3cc5763619bb3f6464efb422094b1d0efe697",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 3561,
+                  "maximum_uses_per_coordinate": 27,
+                  "minimum_uses_per_coordinate": 3,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "a2df6b9c40261201d85dab708de3cc5763619bb3f6464efb422094b1d0efe697",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "d0ec593ef7c96c06fd5b674e26570c58638876372cc904fe6c29e5a2cfdfaf39",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 3561,
+                  "maximum_uses_per_coordinate": 28,
+                  "minimum_uses_per_coordinate": 3,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 68,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 65,
+                  "minimum_uses_per_coordinate": 25,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "d0ec593ef7c96c06fd5b674e26570c58638876372cc904fe6c29e5a2cfdfaf39",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "de8eed0e76b5e4a9a7985c6b60f71b57b55c2019ab441a023bc7f75e9049a3d1",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 3561,
+                  "maximum_uses_per_coordinate": 28,
+                  "minimum_uses_per_coordinate": 2,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 71,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "de8eed0e76b5e4a9a7985c6b60f71b57b55c2019ab441a023bc7f75e9049a3d1",
+              "reproducible": true
+            }
+          },
+          "projector_fixed_at_2327": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 6470,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "coordinate_dimensions": {
+          "language": 3561,
+          "projector": 2327,
+          "vision": 582
+        },
+        "module": null,
+        "status": "legal"
+      },
+      {
+        "base_state": "language_rich",
+        "checks": {
+          "construction_device": "cpu",
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_unchanged": true,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "5e50cc252eb150b9db334a74034bdc456b991bbcffab8efaa97708fc25d2a038",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 3561,
+                  "maximum_uses_per_coordinate": 27,
+                  "minimum_uses_per_coordinate": 3,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 1700,
+                  "maximum_uses_per_coordinate": 30,
+                  "minimum_uses_per_coordinate": 1,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "5e50cc252eb150b9db334a74034bdc456b991bbcffab8efaa97708fc25d2a038",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "68ea1db64a3da827c4587841cce5779745699f5178bbf82a6cc82951d28be191",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 3561,
+                  "maximum_uses_per_coordinate": 28,
+                  "minimum_uses_per_coordinate": 3,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 68,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 1700,
+                  "maximum_uses_per_coordinate": 29,
+                  "minimum_uses_per_coordinate": 4,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "68ea1db64a3da827c4587841cce5779745699f5178bbf82a6cc82951d28be191",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "cb5bb734f6ea04f1ad7fd98a3739f02e97fe8c2695446b6e394ba46f30e38592",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 3561,
+                  "maximum_uses_per_coordinate": 28,
+                  "minimum_uses_per_coordinate": 2,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 1700,
+                  "maximum_uses_per_coordinate": 32,
+                  "minimum_uses_per_coordinate": 3,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "cb5bb734f6ea04f1ad7fd98a3739f02e97fe8c2695446b6e394ba46f30e38592",
+              "reproducible": true
+            }
+          },
+          "projector_fixed_at_2327": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 7588,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "coordinate_dimensions": {
+          "language": 3561,
+          "projector": 2327,
+          "vision": 1700
+        },
+        "module": "vision",
+        "status": "legal"
+      },
+      {
+        "base_state": "language_rich",
+        "checks": {
+          "construction_device": "cpu",
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_unchanged": true,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "8cfa8a703d678c1ae61269ed8b7eb4a6e2b672eecdf0b9ba572097f8d1114f3b",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 5976,
+                  "maximum_uses_per_coordinate": 19,
+                  "minimum_uses_per_coordinate": 1,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "8cfa8a703d678c1ae61269ed8b7eb4a6e2b672eecdf0b9ba572097f8d1114f3b",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "d09b03ac5e516da577c93be2b4a803ad7c0b76e20dff7efbb019a4fb6f3aed81",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 5976,
+                  "maximum_uses_per_coordinate": 22,
+                  "minimum_uses_per_coordinate": 1,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 68,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 65,
+                  "minimum_uses_per_coordinate": 25,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "d09b03ac5e516da577c93be2b4a803ad7c0b76e20dff7efbb019a4fb6f3aed81",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "dd310325718117a9c69a4f2b61c6cf0ec9033bb26bce5b6628b101dceb620e1a",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 5976,
+                  "maximum_uses_per_coordinate": 22,
+                  "minimum_uses_per_coordinate": 1,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 71,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "dd310325718117a9c69a4f2b61c6cf0ec9033bb26bce5b6628b101dceb620e1a",
+              "reproducible": true
+            }
+          },
+          "projector_fixed_at_2327": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 8885,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "coordinate_dimensions": {
+          "language": 5976,
+          "projector": 2327,
+          "vision": 582
+        },
+        "module": "language",
+        "status": "legal"
+      }
+    ],
+    "status": "passed",
+    "validated_projection_roots": [
+      43101,
+      43102,
+      43103
+    ]
+  },
+  "protocol_id": "phase3-language-vision-switch-final-v1",
+  "protocol_version": "phase3-language-vision-switch-final-v1.0",
+  "runs": [
+    {
+      "base_state": "original",
+      "checkpoint_reuse": true,
+      "complete_result_reuse": true,
+      "config_id": "lv-switch-original-base-seed-43101",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 582
+      },
+      "execution_index": 0,
+      "module": null,
+      "paired_seed_block": 43101,
+      "result_relative_directory": "model_runs/lv-switch-original-base-seed-43101",
+      "run_id": "lv-switch-original-base-seed-43101",
+      "run_type": "reused_base_result",
+      "seed": 43101,
+      "source": {
+        "checkpoint_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43101/checkpoint.pt",
+        "checkpoint_sha256": "0acd320c17144d42360bca1dc1e0df5d714907673f6a16319af248d1de85c26e",
+        "codec_receipt_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43101/codec/receipt.json",
+        "codec_receipt_sha256": "4b8b2faac1bc37431e39346536b34a8cf8e57b0f99b39484d0aec0bfe8e65482",
+        "coordinate_state_sha256": "9b718196620aca62edb4894ad89455481d9b5815b92a51efe716d682af364858",
+        "development_evaluation_result_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43101/development_evaluation/development_result.json",
+        "development_evaluation_result_sha256": "d3a9d2d280521b11558de0d338c31bf54c656e90596acdb279ad6834f4f69416",
+        "module_codec_paths": {
+          "language": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43101/codec/language.mmb1",
+          "projector": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43101/codec/projector.mmb1",
+          "vision": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43101/codec/vision.mmb1"
+        },
+        "module_codec_sha256": {
+          "language": "672497a168151b50badf900f93d493a3ecd5d21403faa34182d4441350aa6ae7",
+          "projector": "606d1547c4105b43000114bc028830369c38b32db109a2597d8ee27f9059da0d",
+          "vision": "e717b722c3d08c7e559d57791171ff9052224e2d59c779862980405373cd23c6"
+        },
+        "new_inference_forbidden": true,
+        "new_training_forbidden": true,
+        "reuse_scope": "complete_base_model_result",
+        "source_development_task_risk": 0.4930878081240548,
+        "source_module_wise_encoded_bits": {
+          "language": 1720,
+          "projector": 6464,
+          "vision": 1824
+        },
+        "source_run_id": "state-original-base-seed-43101",
+        "source_run_result_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43101/run_result.json",
+        "source_run_result_sha256": "06d717f146af97636eebbd41ccbca8d355532aebeef5b32dd85936b8c0c082f4",
+        "source_total_encoded_bits": 10008,
+        "training_manifest_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43101/training_manifest.json",
+        "training_manifest_sha256": "915be51dc60780979537d4c2d72ebf5a843a345cba71e603329ecaa076bf6210"
+      },
+      "structure": "P",
+      "training_required": false
+    },
+    {
+      "base_state": "original",
+      "checkpoint_reuse": true,
+      "complete_result_reuse": true,
+      "config_id": "lv-switch-original-base-seed-43102",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 582
+      },
+      "execution_index": 1,
+      "module": null,
+      "paired_seed_block": 43102,
+      "result_relative_directory": "model_runs/lv-switch-original-base-seed-43102",
+      "run_id": "lv-switch-original-base-seed-43102",
+      "run_type": "reused_base_result",
+      "seed": 43102,
+      "source": {
+        "checkpoint_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43102/checkpoint.pt",
+        "checkpoint_sha256": "36e525528c99c139f71ae7737f5b2b2cbfe207dfa29582e96d3a4c5fc51a8257",
+        "codec_receipt_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43102/codec/receipt.json",
+        "codec_receipt_sha256": "dff3e2179f5c4896c8cb07a4a6e26e49b524f1f86e6762d859f3988d2e5c4ee5",
+        "coordinate_state_sha256": "3c150a1dffc02078dd247ed4c6dc8e901c869359c4ee73af5d97e5446fadb8f2",
+        "development_evaluation_result_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43102/development_evaluation/development_result.json",
+        "development_evaluation_result_sha256": "7bd1cf509d91e5b99af7b6fff0340abf51155e71dba98b03a557468417d9bd23",
+        "module_codec_paths": {
+          "language": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43102/codec/language.mmb1",
+          "projector": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43102/codec/projector.mmb1",
+          "vision": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43102/codec/vision.mmb1"
+        },
+        "module_codec_sha256": {
+          "language": "a6f4494ecb2a1c22df9d75cdc40b1d18629ca3231d7e1dbeb84a61dbd4462a07",
+          "projector": "03aeaab138b85c13b23db9a628367a65bea433ba7537a0ce6b162b65c7e4106e",
+          "vision": "c9beb3c7010d6a808bf8b3f67b122c6e03cc8117a9bae60c1cc1cfd78ed849bf"
+        },
+        "new_inference_forbidden": true,
+        "new_training_forbidden": true,
+        "reuse_scope": "complete_base_model_result",
+        "source_development_task_risk": 0.4884258514226307,
+        "source_module_wise_encoded_bits": {
+          "language": 2520,
+          "projector": 6528,
+          "vision": 2016
+        },
+        "source_run_id": "state-original-base-seed-43102",
+        "source_run_result_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43102/run_result.json",
+        "source_run_result_sha256": "da035426b16fb47153d1cd7b72e6eb15f6ab1fa096150a7e5577192ab5b56424",
+        "source_total_encoded_bits": 11064,
+        "training_manifest_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43102/training_manifest.json",
+        "training_manifest_sha256": "6144a8abd976b95568784b8a388683924c767e5718a124c8059aded003e60f29"
+      },
+      "structure": "P",
+      "training_required": false
+    },
+    {
+      "base_state": "original",
+      "checkpoint_reuse": true,
+      "complete_result_reuse": true,
+      "config_id": "lv-switch-original-base-seed-43103",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 582
+      },
+      "execution_index": 2,
+      "module": null,
+      "paired_seed_block": 43103,
+      "result_relative_directory": "model_runs/lv-switch-original-base-seed-43103",
+      "run_id": "lv-switch-original-base-seed-43103",
+      "run_type": "reused_base_result",
+      "seed": 43103,
+      "source": {
+        "checkpoint_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43103/checkpoint.pt",
+        "checkpoint_sha256": "fdca3785ceb919c3bb08f5d11d0191d016199499c38865fae2ed465127f3b3a8",
+        "codec_receipt_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43103/codec/receipt.json",
+        "codec_receipt_sha256": "25a5e7d16d9291329b965a29f980dddbbe98a79d15e9848b24c981373f36b65b",
+        "coordinate_state_sha256": "0dd0df6b66948edc79a3712877ad2993e11cea1949737e42859f99121da61aee",
+        "development_evaluation_result_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43103/development_evaluation/development_result.json",
+        "development_evaluation_result_sha256": "27559657d938977cea2b0e3fe38e8915201832e1705b49c052247f6046b1cf6b",
+        "module_codec_paths": {
+          "language": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43103/codec/language.mmb1",
+          "projector": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43103/codec/projector.mmb1",
+          "vision": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43103/codec/vision.mmb1"
+        },
+        "module_codec_sha256": {
+          "language": "7a7107bd02cc5074f1973607f0542b9b9c3c18e24492381535a43d8a34a35e1d",
+          "projector": "749a561ab5582877d74d811a42ce2d63e46bf47c34b5446612e85e8a6917b3cf",
+          "vision": "aa81093857e1b35bbb37853af63d4f6ddb87ca91d8fec0bbbe8f87f103020df1"
+        },
+        "new_inference_forbidden": true,
+        "new_training_forbidden": true,
+        "reuse_scope": "complete_base_model_result",
+        "source_development_task_risk": 0.49604353141086716,
+        "source_module_wise_encoded_bits": {
+          "language": 2480,
+          "projector": 6264,
+          "vision": 1984
+        },
+        "source_run_id": "state-original-base-seed-43103",
+        "source_run_result_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43103/run_result.json",
+        "source_run_result_sha256": "a887347a1eb0aa4f5695ca54c5e33ac3c0768cb5c68cb4cc70f305300a978e25",
+        "source_total_encoded_bits": 10728,
+        "training_manifest_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43103/training_manifest.json",
+        "training_manifest_sha256": "5b0e270b580328d914bd24b6d91daee6a570dc469597b60fa07c0fb1d1d9e94c"
+      },
+      "structure": "P",
+      "training_required": false
+    },
+    {
+      "base_state": "language_rich",
+      "checkpoint_reuse": true,
+      "complete_result_reuse": true,
+      "config_id": "lv-switch-language_rich-base-seed-43101",
+      "coordinate_dimensions": {
+        "language": 3561,
+        "projector": 2327,
+        "vision": 582
+      },
+      "execution_index": 3,
+      "module": null,
+      "paired_seed_block": 43101,
+      "result_relative_directory": "model_runs/lv-switch-language_rich-base-seed-43101",
+      "run_id": "lv-switch-language_rich-base-seed-43101",
+      "run_type": "reused_base_result",
+      "seed": 43101,
+      "source": {
+        "checkpoint_path": "/home/lizhaohui/lzq/stage3-curve-development-20260804/training_artifacts/P-4096-language-coords-3561-seed-43101/checkpoint.pt",
+        "checkpoint_sha256": "105febf2ae912f5da4055d1b3cf6963fce5d69ad83815861b230524409493184",
+        "codec_receipt_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43101/codec/receipt.json",
+        "codec_receipt_sha256": "d33194fa842c2c19f4983d208c4d56af06d40b42d9d1bfd8ed0215eb4d3f6bd4",
+        "coordinate_state_sha256": "a7aa533a7e16a19e274dd69c1eb696d626053ccb181b44be76f13798bf9c6665",
+        "development_evaluation_result_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43101/development_evaluation/development_result.json",
+        "development_evaluation_result_sha256": "88523ff40dababcb5a8f5044f2b7b2b616a0b27181f741e81bb19328ca0a13b2",
+        "module_codec_paths": {
+          "language": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43101/codec/language.mmb1",
+          "projector": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43101/codec/projector.mmb1",
+          "vision": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43101/codec/vision.mmb1"
+        },
+        "module_codec_sha256": {
+          "language": "0bc4a815feffa5de3d3843f6cbe34ce153ecbcfadb08704ef0a5aeacf4ba123f",
+          "projector": "58f8c6c7520d56270990b1b6c1f59bc208d8cc7fb135a1a71d52aa8c38b3ba23",
+          "vision": "d453af2e6b5d2da9de7c040ae350222816e7686df68fa5c5c13656e88fb5658b"
+        },
+        "new_inference_forbidden": true,
+        "new_training_forbidden": true,
+        "reuse_scope": "complete_base_model_result",
+        "source_development_task_risk": 0.48861060626909464,
+        "source_module_wise_encoded_bits": {
+          "language": 6808,
+          "projector": 5784,
+          "vision": 1928
+        },
+        "source_run_id": "state-language_rich-base-seed-43101",
+        "source_run_result_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43101/run_result.json",
+        "source_run_result_sha256": "f16ed8dd1fa5b98393a759298c3dab2f56e7fbd592078af669b37a1a3330f2a9",
+        "source_total_encoded_bits": 14520,
+        "training_manifest_path": "/home/lizhaohui/lzq/stage3-curve-development-20260804/training_artifacts/P-4096-language-coords-3561-seed-43101/training_manifest.json",
+        "training_manifest_sha256": "00506978b29044669d7fa06b8cc8bd0e94d7b68d2b8b53797d53238f3a29a3be"
+      },
+      "structure": "P",
+      "training_required": false
+    },
+    {
+      "base_state": "language_rich",
+      "checkpoint_reuse": true,
+      "complete_result_reuse": true,
+      "config_id": "lv-switch-language_rich-base-seed-43102",
+      "coordinate_dimensions": {
+        "language": 3561,
+        "projector": 2327,
+        "vision": 582
+      },
+      "execution_index": 4,
+      "module": null,
+      "paired_seed_block": 43102,
+      "result_relative_directory": "model_runs/lv-switch-language_rich-base-seed-43102",
+      "run_id": "lv-switch-language_rich-base-seed-43102",
+      "run_type": "reused_base_result",
+      "seed": 43102,
+      "source": {
+        "checkpoint_path": "/home/lizhaohui/lzq/stage3-curve-development-20260804/training_artifacts/P-4096-language-coords-3561-seed-43102/checkpoint.pt",
+        "checkpoint_sha256": "1cdad2ff844713782bb11711698457710eed0a0a38c4828db10185a95cff0f82",
+        "codec_receipt_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43102/codec/receipt.json",
+        "codec_receipt_sha256": "e2c8b01e837d373ab3637c896cefd8907bd62fdadd53cc32930b9eb659ce5204",
+        "coordinate_state_sha256": "7ebbc433520c510fcd7fa460700a37946b9025434aecd5e63c15253b0b9fda42",
+        "development_evaluation_result_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43102/development_evaluation/development_result.json",
+        "development_evaluation_result_sha256": "ec18d4c78a744e2e5d1cbac793b99de3debcee1f1e02aa786b1b986d796c1d71",
+        "module_codec_paths": {
+          "language": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43102/codec/language.mmb1",
+          "projector": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43102/codec/projector.mmb1",
+          "vision": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43102/codec/vision.mmb1"
+        },
+        "module_codec_sha256": {
+          "language": "291872e5031ea86c8fa21473c6c9aa9dc8f90b16a7445e54166b9ffe98d955c1",
+          "projector": "e3fcb3c936752013984e0f6534114798ed8cfcbfb11dd8042cf40295278f132e",
+          "vision": "bcf97c4c60aa5c62669272efbccec0d81f52a08bd3a79536363afcdf23ef64b5"
+        },
+        "new_inference_forbidden": true,
+        "new_training_forbidden": true,
+        "reuse_scope": "complete_base_model_result",
+        "source_development_task_risk": 0.48606364616559394,
+        "source_module_wise_encoded_bits": {
+          "language": 6232,
+          "projector": 5912,
+          "vision": 1680
+        },
+        "source_run_id": "state-language_rich-base-seed-43102",
+        "source_run_result_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43102/run_result.json",
+        "source_run_result_sha256": "6e3da2766b2a8bf3be4e082a2cef6ef7d14b1ed7729387ef8a82182cc38dae3e",
+        "source_total_encoded_bits": 13824,
+        "training_manifest_path": "/home/lizhaohui/lzq/stage3-curve-development-20260804/training_artifacts/P-4096-language-coords-3561-seed-43102/training_manifest.json",
+        "training_manifest_sha256": "e48bb7bc6ff14158504b091c9e9e57c58f3b7406bc1933b15a2a9575f29c6198"
+      },
+      "structure": "P",
+      "training_required": false
+    },
+    {
+      "base_state": "language_rich",
+      "checkpoint_reuse": true,
+      "complete_result_reuse": true,
+      "config_id": "lv-switch-language_rich-base-seed-43103",
+      "coordinate_dimensions": {
+        "language": 3561,
+        "projector": 2327,
+        "vision": 582
+      },
+      "execution_index": 5,
+      "module": null,
+      "paired_seed_block": 43103,
+      "result_relative_directory": "model_runs/lv-switch-language_rich-base-seed-43103",
+      "run_id": "lv-switch-language_rich-base-seed-43103",
+      "run_type": "reused_base_result",
+      "seed": 43103,
+      "source": {
+        "checkpoint_path": "/home/lizhaohui/lzq/stage3-curve-development-20260804/training_artifacts/P-4096-language-coords-3561-seed-43103/checkpoint.pt",
+        "checkpoint_sha256": "17b9597e9e812e8dac5601ebd9869b97893a6cce303bec6124b6e9809bec06b9",
+        "codec_receipt_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43103/codec/receipt.json",
+        "codec_receipt_sha256": "a9c6f9a38daa7b9bbf0709998afe47af40b3f7688a99f4006f01b14dffd53eb7",
+        "coordinate_state_sha256": "711eaa6d8badb72822933fd71969901542331ea47145b131d885a8cb0e8939ed",
+        "development_evaluation_result_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43103/development_evaluation/development_result.json",
+        "development_evaluation_result_sha256": "cb5844e19c5ca88f047a4fab61096dc53451d0f9957df6934a8282971b893949",
+        "module_codec_paths": {
+          "language": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43103/codec/language.mmb1",
+          "projector": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43103/codec/projector.mmb1",
+          "vision": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43103/codec/vision.mmb1"
+        },
+        "module_codec_sha256": {
+          "language": "fdeb5386b19c685422a749123e9387d311dc6293a941fab9f359f1fdf537da06",
+          "projector": "6c6512f9b9c52590455b5290085bb4c90c873843750d3b27a599c27ea1ddac99",
+          "vision": "207163d1205af420d38b985ecc56194317872c678b2a615fa3a602cec7a318ac"
+        },
+        "new_inference_forbidden": true,
+        "new_training_forbidden": true,
+        "reuse_scope": "complete_base_model_result",
+        "source_development_task_risk": 0.48791495240912564,
+        "source_module_wise_encoded_bits": {
+          "language": 4840,
+          "projector": 5600,
+          "vision": 1904
+        },
+        "source_run_id": "state-language_rich-base-seed-43103",
+        "source_run_result_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43103/run_result.json",
+        "source_run_result_sha256": "385921333ec94533db7e5eaa5cde62d59f188c6b32e423eb0b2a3c205beacda6",
+        "source_total_encoded_bits": 12344,
+        "training_manifest_path": "/home/lizhaohui/lzq/stage3-curve-development-20260804/training_artifacts/P-4096-language-coords-3561-seed-43103/training_manifest.json",
+        "training_manifest_sha256": "8bca95bdc2c75b6c6a1660e6a67259bcfceb3a840832e57c895addd5de346e27"
+      },
+      "structure": "P",
+      "training_required": false
+    },
+    {
+      "base_state": "language_rich",
+      "candidate_config_id": "lv-switch-language_rich-language-coords-5976",
+      "checkpoint_reuse": false,
+      "complete_result_reuse": false,
+      "config_id": "lv-switch-language_rich-language-coords-5976-seed-43101",
+      "coordinate_dimensions": {
+        "language": 5976,
+        "projector": 2327,
+        "vision": 582
+      },
+      "execution_index": 6,
+      "module": "language",
+      "paired_seed_block": 43101,
+      "result_relative_directory": "model_runs/lv-switch-language_rich-language-coords-5976-seed-43101",
+      "run_id": "lv-switch-language_rich-language-coords-5976-seed-43101",
+      "run_type": "new_candidate",
+      "seed": 43101,
+      "source": null,
+      "structure": "P",
+      "training_required": true
+    },
+    {
+      "base_state": "original",
+      "candidate_config_id": "lv-switch-original-vision-coords-1700",
+      "checkpoint_reuse": false,
+      "complete_result_reuse": false,
+      "config_id": "lv-switch-original-vision-coords-1700-seed-43101",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 1700
+      },
+      "execution_index": 7,
+      "module": "vision",
+      "paired_seed_block": 43101,
+      "result_relative_directory": "model_runs/lv-switch-original-vision-coords-1700-seed-43101",
+      "run_id": "lv-switch-original-vision-coords-1700-seed-43101",
+      "run_type": "new_candidate",
+      "seed": 43101,
+      "source": null,
+      "structure": "P",
+      "training_required": true
+    },
+    {
+      "base_state": "language_rich",
+      "candidate_config_id": "lv-switch-language_rich-vision-coords-1700",
+      "checkpoint_reuse": false,
+      "complete_result_reuse": false,
+      "config_id": "lv-switch-language_rich-vision-coords-1700-seed-43101",
+      "coordinate_dimensions": {
+        "language": 3561,
+        "projector": 2327,
+        "vision": 1700
+      },
+      "execution_index": 8,
+      "module": "vision",
+      "paired_seed_block": 43101,
+      "result_relative_directory": "model_runs/lv-switch-language_rich-vision-coords-1700-seed-43101",
+      "run_id": "lv-switch-language_rich-vision-coords-1700-seed-43101",
+      "run_type": "new_candidate",
+      "seed": 43101,
+      "source": null,
+      "structure": "P",
+      "training_required": true
+    },
+    {
+      "base_state": "original",
+      "candidate_config_id": "lv-switch-original-language-coords-2700",
+      "checkpoint_reuse": false,
+      "complete_result_reuse": false,
+      "config_id": "lv-switch-original-language-coords-2700-seed-43101",
+      "coordinate_dimensions": {
+        "language": 2700,
+        "projector": 2327,
+        "vision": 582
+      },
+      "execution_index": 9,
+      "module": "language",
+      "paired_seed_block": 43101,
+      "result_relative_directory": "model_runs/lv-switch-original-language-coords-2700-seed-43101",
+      "run_id": "lv-switch-original-language-coords-2700-seed-43101",
+      "run_type": "new_candidate",
+      "seed": 43101,
+      "source": null,
+      "structure": "P",
+      "training_required": true
+    },
+    {
+      "base_state": "language_rich",
+      "candidate_config_id": "lv-switch-language_rich-vision-coords-1700",
+      "checkpoint_reuse": false,
+      "complete_result_reuse": false,
+      "config_id": "lv-switch-language_rich-vision-coords-1700-seed-43102",
+      "coordinate_dimensions": {
+        "language": 3561,
+        "projector": 2327,
+        "vision": 1700
+      },
+      "execution_index": 10,
+      "module": "vision",
+      "paired_seed_block": 43102,
+      "result_relative_directory": "model_runs/lv-switch-language_rich-vision-coords-1700-seed-43102",
+      "run_id": "lv-switch-language_rich-vision-coords-1700-seed-43102",
+      "run_type": "new_candidate",
+      "seed": 43102,
+      "source": null,
+      "structure": "P",
+      "training_required": true
+    },
+    {
+      "base_state": "original",
+      "candidate_config_id": "lv-switch-original-vision-coords-1700",
+      "checkpoint_reuse": false,
+      "complete_result_reuse": false,
+      "config_id": "lv-switch-original-vision-coords-1700-seed-43102",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 1700
+      },
+      "execution_index": 11,
+      "module": "vision",
+      "paired_seed_block": 43102,
+      "result_relative_directory": "model_runs/lv-switch-original-vision-coords-1700-seed-43102",
+      "run_id": "lv-switch-original-vision-coords-1700-seed-43102",
+      "run_type": "new_candidate",
+      "seed": 43102,
+      "source": null,
+      "structure": "P",
+      "training_required": true
+    },
+    {
+      "base_state": "original",
+      "candidate_config_id": "lv-switch-original-language-coords-2700",
+      "checkpoint_reuse": false,
+      "complete_result_reuse": false,
+      "config_id": "lv-switch-original-language-coords-2700-seed-43102",
+      "coordinate_dimensions": {
+        "language": 2700,
+        "projector": 2327,
+        "vision": 582
+      },
+      "execution_index": 12,
+      "module": "language",
+      "paired_seed_block": 43102,
+      "result_relative_directory": "model_runs/lv-switch-original-language-coords-2700-seed-43102",
+      "run_id": "lv-switch-original-language-coords-2700-seed-43102",
+      "run_type": "new_candidate",
+      "seed": 43102,
+      "source": null,
+      "structure": "P",
+      "training_required": true
+    },
+    {
+      "base_state": "language_rich",
+      "candidate_config_id": "lv-switch-language_rich-language-coords-5976",
+      "checkpoint_reuse": false,
+      "complete_result_reuse": false,
+      "config_id": "lv-switch-language_rich-language-coords-5976-seed-43102",
+      "coordinate_dimensions": {
+        "language": 5976,
+        "projector": 2327,
+        "vision": 582
+      },
+      "execution_index": 13,
+      "module": "language",
+      "paired_seed_block": 43102,
+      "result_relative_directory": "model_runs/lv-switch-language_rich-language-coords-5976-seed-43102",
+      "run_id": "lv-switch-language_rich-language-coords-5976-seed-43102",
+      "run_type": "new_candidate",
+      "seed": 43102,
+      "source": null,
+      "structure": "P",
+      "training_required": true
+    },
+    {
+      "base_state": "language_rich",
+      "candidate_config_id": "lv-switch-language_rich-language-coords-5976",
+      "checkpoint_reuse": false,
+      "complete_result_reuse": false,
+      "config_id": "lv-switch-language_rich-language-coords-5976-seed-43103",
+      "coordinate_dimensions": {
+        "language": 5976,
+        "projector": 2327,
+        "vision": 582
+      },
+      "execution_index": 14,
+      "module": "language",
+      "paired_seed_block": 43103,
+      "result_relative_directory": "model_runs/lv-switch-language_rich-language-coords-5976-seed-43103",
+      "run_id": "lv-switch-language_rich-language-coords-5976-seed-43103",
+      "run_type": "new_candidate",
+      "seed": 43103,
+      "source": null,
+      "structure": "P",
+      "training_required": true
+    },
+    {
+      "base_state": "original",
+      "candidate_config_id": "lv-switch-original-language-coords-2700",
+      "checkpoint_reuse": false,
+      "complete_result_reuse": false,
+      "config_id": "lv-switch-original-language-coords-2700-seed-43103",
+      "coordinate_dimensions": {
+        "language": 2700,
+        "projector": 2327,
+        "vision": 582
+      },
+      "execution_index": 15,
+      "module": "language",
+      "paired_seed_block": 43103,
+      "result_relative_directory": "model_runs/lv-switch-original-language-coords-2700-seed-43103",
+      "run_id": "lv-switch-original-language-coords-2700-seed-43103",
+      "run_type": "new_candidate",
+      "seed": 43103,
+      "source": null,
+      "structure": "P",
+      "training_required": true
+    },
+    {
+      "base_state": "language_rich",
+      "candidate_config_id": "lv-switch-language_rich-vision-coords-1700",
+      "checkpoint_reuse": false,
+      "complete_result_reuse": false,
+      "config_id": "lv-switch-language_rich-vision-coords-1700-seed-43103",
+      "coordinate_dimensions": {
+        "language": 3561,
+        "projector": 2327,
+        "vision": 1700
+      },
+      "execution_index": 16,
+      "module": "vision",
+      "paired_seed_block": 43103,
+      "result_relative_directory": "model_runs/lv-switch-language_rich-vision-coords-1700-seed-43103",
+      "run_id": "lv-switch-language_rich-vision-coords-1700-seed-43103",
+      "run_type": "new_candidate",
+      "seed": 43103,
+      "source": null,
+      "structure": "P",
+      "training_required": true
+    },
+    {
+      "base_state": "original",
+      "candidate_config_id": "lv-switch-original-vision-coords-1700",
+      "checkpoint_reuse": false,
+      "complete_result_reuse": false,
+      "config_id": "lv-switch-original-vision-coords-1700-seed-43103",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 1700
+      },
+      "execution_index": 17,
+      "module": "vision",
+      "paired_seed_block": 43103,
+      "result_relative_directory": "model_runs/lv-switch-original-vision-coords-1700-seed-43103",
+      "run_id": "lv-switch-original-vision-coords-1700-seed-43103",
+      "run_type": "new_candidate",
+      "seed": 43103,
+      "source": null,
+      "structure": "P",
+      "training_required": true
+    }
+  ],
+  "runtime_source_sha256": {
+    "experiments/generalization_bound.py": "69e3d42eae7d588a71692937a64948f808831fc522c694c2a454cd835760b211",
+    "experiments/phase3_language_vision_switch_final_v1/__init__.py": "534d50c256528093a79270d857448d45566d0e41247660686d5e56ac2a1f62af",
+    "experiments/phase3_language_vision_switch_final_v1/design.py": "1f1337dd624b504f5b92ea465b14fa3169b61ed766027aa08e2e6e00495fdc4d",
+    "experiments/phase3_language_vision_switch_final_v1/development_eval.py": "d88be29776c526d814badfff25e0bf8f2f536038abf8e6ba03b4a30e273ea9c4",
+    "experiments/phase3_language_vision_switch_final_v1/manifest.py": "94e5b5b6a7999cba1a043b68ad0e1657c6772b2775b684637e7712aac3e3a8a1",
+    "experiments/phase3_language_vision_switch_final_v1/preflight.py": "f434e5895349198094637aeea81f77bf27dcb8897446a2489bfd2972ad7e9f6f",
+    "experiments/phase3_language_vision_switch_final_v1/run_experiment.py": "cc1d859a617f102501db6d25e9c70e017798cb289b22af9e290048b64d56bab5",
+    "experiments/phase3_language_vision_switch_final_v1/runtime.py": "0e2d03bb48813fbdc72e565fcf2029173f4cd0c18a015a0fb93c61cb8832169a",
+    "experiments/phase3_language_vision_switch_final_v1/summarize.py": "79a4da34c966e0116f40b7394feb5f6ae795be3c1f06ae0b73f5acfcd6afb856",
+    "experiments/phase3_module_marginal_budget_v1/codec.py": "1b55f025b6c4981726c6c60865f91f8f4e6a2f741d16b695a735e480f4bac807",
+    "experiments/phase3_module_marginal_budget_v1/development_eval.py": "2a8ea1cf08d6b6367fc8a65be592dc458eec8703ddfc2c8625b40482012329ed",
+    "experiments/phase3_module_marginal_budget_v1/parameterization.py": "f6ac509030937db000a17a2bd7c5974f8e474f242a4ad2406fac3bba8a55f5f2",
+    "experiments/phase3_private_vs_shared_v1/train_one.py": "e8a08dd8fb4010a7dd39d93263a5abc6f847dc76ed11a4a600dec3102e62f72d"
+  },
+  "schema_version": 1,
+  "scientific_question": "whether the preferred Language/Vision budget direction switches between Original and Language-rich",
+  "scope_exclusions": [
+    "projector_action",
+    "projector_rich_state",
+    "additional_states",
+    "grids",
+    "ablations",
+    "fitted_curves",
+    "eta_primary_metric",
+    "new_metrics"
+  ],
+  "seeds": [
+    43101,
+    43102,
+    43103
+  ],
+  "source_experiment": {
+    "base_artifacts": {
+      "language_rich": {
+        "43101": {
+          "checkpoint_path": "/home/lizhaohui/lzq/stage3-curve-development-20260804/training_artifacts/P-4096-language-coords-3561-seed-43101/checkpoint.pt",
+          "checkpoint_sha256": "105febf2ae912f5da4055d1b3cf6963fce5d69ad83815861b230524409493184",
+          "codec_receipt_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43101/codec/receipt.json",
+          "codec_receipt_sha256": "d33194fa842c2c19f4983d208c4d56af06d40b42d9d1bfd8ed0215eb4d3f6bd4",
+          "coordinate_state_sha256": "a7aa533a7e16a19e274dd69c1eb696d626053ccb181b44be76f13798bf9c6665",
+          "development_evaluation_result_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43101/development_evaluation/development_result.json",
+          "development_evaluation_result_sha256": "88523ff40dababcb5a8f5044f2b7b2b616a0b27181f741e81bb19328ca0a13b2",
+          "module_codec_paths": {
+            "language": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43101/codec/language.mmb1",
+            "projector": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43101/codec/projector.mmb1",
+            "vision": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43101/codec/vision.mmb1"
+          },
+          "module_codec_sha256": {
+            "language": "0bc4a815feffa5de3d3843f6cbe34ce153ecbcfadb08704ef0a5aeacf4ba123f",
+            "projector": "58f8c6c7520d56270990b1b6c1f59bc208d8cc7fb135a1a71d52aa8c38b3ba23",
+            "vision": "d453af2e6b5d2da9de7c040ae350222816e7686df68fa5c5c13656e88fb5658b"
+          },
+          "new_inference_forbidden": true,
+          "new_training_forbidden": true,
+          "reuse_scope": "complete_base_model_result",
+          "source_development_task_risk": 0.48861060626909464,
+          "source_module_wise_encoded_bits": {
+            "language": 6808,
+            "projector": 5784,
+            "vision": 1928
+          },
+          "source_run_id": "state-language_rich-base-seed-43101",
+          "source_run_result_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43101/run_result.json",
+          "source_run_result_sha256": "f16ed8dd1fa5b98393a759298c3dab2f56e7fbd592078af669b37a1a3330f2a9",
+          "source_total_encoded_bits": 14520,
+          "training_manifest_path": "/home/lizhaohui/lzq/stage3-curve-development-20260804/training_artifacts/P-4096-language-coords-3561-seed-43101/training_manifest.json",
+          "training_manifest_sha256": "00506978b29044669d7fa06b8cc8bd0e94d7b68d2b8b53797d53238f3a29a3be"
+        },
+        "43102": {
+          "checkpoint_path": "/home/lizhaohui/lzq/stage3-curve-development-20260804/training_artifacts/P-4096-language-coords-3561-seed-43102/checkpoint.pt",
+          "checkpoint_sha256": "1cdad2ff844713782bb11711698457710eed0a0a38c4828db10185a95cff0f82",
+          "codec_receipt_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43102/codec/receipt.json",
+          "codec_receipt_sha256": "e2c8b01e837d373ab3637c896cefd8907bd62fdadd53cc32930b9eb659ce5204",
+          "coordinate_state_sha256": "7ebbc433520c510fcd7fa460700a37946b9025434aecd5e63c15253b0b9fda42",
+          "development_evaluation_result_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43102/development_evaluation/development_result.json",
+          "development_evaluation_result_sha256": "ec18d4c78a744e2e5d1cbac793b99de3debcee1f1e02aa786b1b986d796c1d71",
+          "module_codec_paths": {
+            "language": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43102/codec/language.mmb1",
+            "projector": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43102/codec/projector.mmb1",
+            "vision": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43102/codec/vision.mmb1"
+          },
+          "module_codec_sha256": {
+            "language": "291872e5031ea86c8fa21473c6c9aa9dc8f90b16a7445e54166b9ffe98d955c1",
+            "projector": "e3fcb3c936752013984e0f6534114798ed8cfcbfb11dd8042cf40295278f132e",
+            "vision": "bcf97c4c60aa5c62669272efbccec0d81f52a08bd3a79536363afcdf23ef64b5"
+          },
+          "new_inference_forbidden": true,
+          "new_training_forbidden": true,
+          "reuse_scope": "complete_base_model_result",
+          "source_development_task_risk": 0.48606364616559394,
+          "source_module_wise_encoded_bits": {
+            "language": 6232,
+            "projector": 5912,
+            "vision": 1680
+          },
+          "source_run_id": "state-language_rich-base-seed-43102",
+          "source_run_result_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43102/run_result.json",
+          "source_run_result_sha256": "6e3da2766b2a8bf3be4e082a2cef6ef7d14b1ed7729387ef8a82182cc38dae3e",
+          "source_total_encoded_bits": 13824,
+          "training_manifest_path": "/home/lizhaohui/lzq/stage3-curve-development-20260804/training_artifacts/P-4096-language-coords-3561-seed-43102/training_manifest.json",
+          "training_manifest_sha256": "e48bb7bc6ff14158504b091c9e9e57c58f3b7406bc1933b15a2a9575f29c6198"
+        },
+        "43103": {
+          "checkpoint_path": "/home/lizhaohui/lzq/stage3-curve-development-20260804/training_artifacts/P-4096-language-coords-3561-seed-43103/checkpoint.pt",
+          "checkpoint_sha256": "17b9597e9e812e8dac5601ebd9869b97893a6cce303bec6124b6e9809bec06b9",
+          "codec_receipt_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43103/codec/receipt.json",
+          "codec_receipt_sha256": "a9c6f9a38daa7b9bbf0709998afe47af40b3f7688a99f4006f01b14dffd53eb7",
+          "coordinate_state_sha256": "711eaa6d8badb72822933fd71969901542331ea47145b131d885a8cb0e8939ed",
+          "development_evaluation_result_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43103/development_evaluation/development_result.json",
+          "development_evaluation_result_sha256": "cb5844e19c5ca88f047a4fab61096dc53451d0f9957df6934a8282971b893949",
+          "module_codec_paths": {
+            "language": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43103/codec/language.mmb1",
+            "projector": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43103/codec/projector.mmb1",
+            "vision": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43103/codec/vision.mmb1"
+          },
+          "module_codec_sha256": {
+            "language": "fdeb5386b19c685422a749123e9387d311dc6293a941fab9f359f1fdf537da06",
+            "projector": "6c6512f9b9c52590455b5290085bb4c90c873843750d3b27a599c27ea1ddac99",
+            "vision": "207163d1205af420d38b985ecc56194317872c678b2a615fa3a602cec7a318ac"
+          },
+          "new_inference_forbidden": true,
+          "new_training_forbidden": true,
+          "reuse_scope": "complete_base_model_result",
+          "source_development_task_risk": 0.48791495240912564,
+          "source_module_wise_encoded_bits": {
+            "language": 4840,
+            "projector": 5600,
+            "vision": 1904
+          },
+          "source_run_id": "state-language_rich-base-seed-43103",
+          "source_run_result_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-language_rich-base-seed-43103/run_result.json",
+          "source_run_result_sha256": "385921333ec94533db7e5eaa5cde62d59f188c6b32e423eb0b2a3c205beacda6",
+          "source_total_encoded_bits": 12344,
+          "training_manifest_path": "/home/lizhaohui/lzq/stage3-curve-development-20260804/training_artifacts/P-4096-language-coords-3561-seed-43103/training_manifest.json",
+          "training_manifest_sha256": "8bca95bdc2c75b6c6a1660e6a67259bcfceb3a840832e57c895addd5de346e27"
+        }
+      },
+      "original": {
+        "43101": {
+          "checkpoint_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43101/checkpoint.pt",
+          "checkpoint_sha256": "0acd320c17144d42360bca1dc1e0df5d714907673f6a16319af248d1de85c26e",
+          "codec_receipt_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43101/codec/receipt.json",
+          "codec_receipt_sha256": "4b8b2faac1bc37431e39346536b34a8cf8e57b0f99b39484d0aec0bfe8e65482",
+          "coordinate_state_sha256": "9b718196620aca62edb4894ad89455481d9b5815b92a51efe716d682af364858",
+          "development_evaluation_result_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43101/development_evaluation/development_result.json",
+          "development_evaluation_result_sha256": "d3a9d2d280521b11558de0d338c31bf54c656e90596acdb279ad6834f4f69416",
+          "module_codec_paths": {
+            "language": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43101/codec/language.mmb1",
+            "projector": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43101/codec/projector.mmb1",
+            "vision": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43101/codec/vision.mmb1"
+          },
+          "module_codec_sha256": {
+            "language": "672497a168151b50badf900f93d493a3ecd5d21403faa34182d4441350aa6ae7",
+            "projector": "606d1547c4105b43000114bc028830369c38b32db109a2597d8ee27f9059da0d",
+            "vision": "e717b722c3d08c7e559d57791171ff9052224e2d59c779862980405373cd23c6"
+          },
+          "new_inference_forbidden": true,
+          "new_training_forbidden": true,
+          "reuse_scope": "complete_base_model_result",
+          "source_development_task_risk": 0.4930878081240548,
+          "source_module_wise_encoded_bits": {
+            "language": 1720,
+            "projector": 6464,
+            "vision": 1824
+          },
+          "source_run_id": "state-original-base-seed-43101",
+          "source_run_result_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43101/run_result.json",
+          "source_run_result_sha256": "06d717f146af97636eebbd41ccbca8d355532aebeef5b32dd85936b8c0c082f4",
+          "source_total_encoded_bits": 10008,
+          "training_manifest_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43101/training_manifest.json",
+          "training_manifest_sha256": "915be51dc60780979537d4c2d72ebf5a843a345cba71e603329ecaa076bf6210"
+        },
+        "43102": {
+          "checkpoint_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43102/checkpoint.pt",
+          "checkpoint_sha256": "36e525528c99c139f71ae7737f5b2b2cbfe207dfa29582e96d3a4c5fc51a8257",
+          "codec_receipt_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43102/codec/receipt.json",
+          "codec_receipt_sha256": "dff3e2179f5c4896c8cb07a4a6e26e49b524f1f86e6762d859f3988d2e5c4ee5",
+          "coordinate_state_sha256": "3c150a1dffc02078dd247ed4c6dc8e901c869359c4ee73af5d97e5446fadb8f2",
+          "development_evaluation_result_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43102/development_evaluation/development_result.json",
+          "development_evaluation_result_sha256": "7bd1cf509d91e5b99af7b6fff0340abf51155e71dba98b03a557468417d9bd23",
+          "module_codec_paths": {
+            "language": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43102/codec/language.mmb1",
+            "projector": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43102/codec/projector.mmb1",
+            "vision": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43102/codec/vision.mmb1"
+          },
+          "module_codec_sha256": {
+            "language": "a6f4494ecb2a1c22df9d75cdc40b1d18629ca3231d7e1dbeb84a61dbd4462a07",
+            "projector": "03aeaab138b85c13b23db9a628367a65bea433ba7537a0ce6b162b65c7e4106e",
+            "vision": "c9beb3c7010d6a808bf8b3f67b122c6e03cc8117a9bae60c1cc1cfd78ed849bf"
+          },
+          "new_inference_forbidden": true,
+          "new_training_forbidden": true,
+          "reuse_scope": "complete_base_model_result",
+          "source_development_task_risk": 0.4884258514226307,
+          "source_module_wise_encoded_bits": {
+            "language": 2520,
+            "projector": 6528,
+            "vision": 2016
+          },
+          "source_run_id": "state-original-base-seed-43102",
+          "source_run_result_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43102/run_result.json",
+          "source_run_result_sha256": "da035426b16fb47153d1cd7b72e6eb15f6ab1fa096150a7e5577192ab5b56424",
+          "source_total_encoded_bits": 11064,
+          "training_manifest_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43102/training_manifest.json",
+          "training_manifest_sha256": "6144a8abd976b95568784b8a388683924c767e5718a124c8059aded003e60f29"
+        },
+        "43103": {
+          "checkpoint_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43103/checkpoint.pt",
+          "checkpoint_sha256": "fdca3785ceb919c3bb08f5d11d0191d016199499c38865fae2ed465127f3b3a8",
+          "codec_receipt_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43103/codec/receipt.json",
+          "codec_receipt_sha256": "25a5e7d16d9291329b965a29f980dddbbe98a79d15e9848b24c981373f36b65b",
+          "coordinate_state_sha256": "0dd0df6b66948edc79a3712877ad2993e11cea1949737e42859f99121da61aee",
+          "development_evaluation_result_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43103/development_evaluation/development_result.json",
+          "development_evaluation_result_sha256": "27559657d938977cea2b0e3fe38e8915201832e1705b49c052247f6046b1cf6b",
+          "module_codec_paths": {
+            "language": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43103/codec/language.mmb1",
+            "projector": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43103/codec/projector.mmb1",
+            "vision": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43103/codec/vision.mmb1"
+          },
+          "module_codec_sha256": {
+            "language": "7a7107bd02cc5074f1973607f0542b9b9c3c18e24492381535a43d8a34a35e1d",
+            "projector": "749a561ab5582877d74d811a42ce2d63e46bf47c34b5446612e85e8a6917b3cf",
+            "vision": "aa81093857e1b35bbb37853af63d4f6ddb87ca91d8fec0bbbe8f87f103020df1"
+          },
+          "new_inference_forbidden": true,
+          "new_training_forbidden": true,
+          "reuse_scope": "complete_base_model_result",
+          "source_development_task_risk": 0.49604353141086716,
+          "source_module_wise_encoded_bits": {
+            "language": 2480,
+            "projector": 6264,
+            "vision": 1984
+          },
+          "source_run_id": "state-original-base-seed-43103",
+          "source_run_result_path": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805/model_runs/state-original-base-seed-43103/run_result.json",
+          "source_run_result_sha256": "a887347a1eb0aa4f5695ca54c5e33ac3c0768cb5c68cb4cc70f305300a978e25",
+          "source_total_encoded_bits": 10728,
+          "training_manifest_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43103/training_manifest.json",
+          "training_manifest_sha256": "5b0e270b580328d914bd24b6d91daee6a570dc469597b60fa07c0fb1d1d9e94c"
+        }
+      }
+    },
+    "manifest_path": "/home/lizhaohui/lzq/minimind-v/experiments/phase3_state_dependent_marginal_v1/experiment_manifest.json",
+    "manifest_sha256": "fd32524075291531da46431a9b8e3e9d75cf1209083e33fae46bcf3ed4727ab8",
+    "protocol_path": "/home/lizhaohui/lzq/minimind-v/experiments/phase3_private_vs_shared_v1/protocol.json",
+    "protocol_sha256": "5425fd6ab1fb6673d381e0fbf650ff42ed174398da9fe90e933ccf591f275a4d",
+    "results_root": "/home/lizhaohui/lzq/stage3-state-dependent-marginal-20260805"
+  },
+  "status": "frozen",
+  "structure": "P",
+  "upper_dimensions": {
+    "language_rich": {
+      "language": 5976,
+      "vision": 1700
+    },
+    "original": {
+      "language": 2700,
+      "vision": 1700
+    }
+  }
+}
