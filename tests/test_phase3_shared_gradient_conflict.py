@@ -25,10 +25,10 @@ def test_gradient_metrics_use_one_common_coordinate_system() -> None:
     result = gradient_metrics(gradients, epsilon=0.0)
     mean = torch.tensor([0.0, 1.0 / 3.0], dtype=torch.float64)
     expected_d = sum(
-        torch.linalg.vector_norm(value.double() - mean).item()
+        torch.dot(value.double() - mean, value.double() - mean).item()
         for value in gradients.values()
     )
-    assert math.isclose(result["D"], expected_d, rel_tol=0.0, abs_tol=1e-15)
+    assert math.isclose(result["D"], expected_d, rel_tol=0.0, abs_tol=1e-14)
     assert math.isclose(
         result["D_norm"], expected_d / 3.0, rel_tol=0.0, abs_tol=1e-15
     )
@@ -36,6 +36,24 @@ def test_gradient_metrics_use_one_common_coordinate_system() -> None:
     assert result["dot_vision_language"] == -1.0
     assert result["dot_projector_language"] == 0.0
     assert result["cos_vision_language"] == -1.0
+
+
+def test_conflict_metrics_match_registered_squared_l2_formula() -> None:
+    gradients = {
+        "vision": torch.tensor([3.0, 0.0]),
+        "projector": torch.tensor([0.0, 4.0]),
+        "language": torch.tensor([-1.0, 0.0]),
+    }
+    result = gradient_metrics(gradients, epsilon=0.0)
+    expected_d = 58.0 / 3.0
+    expected_denominator = 3.0**2 + 4.0**2 + 1.0**2
+    assert math.isclose(result["D"], expected_d, rel_tol=0.0, abs_tol=1e-14)
+    assert math.isclose(
+        result["D_norm"],
+        expected_d / expected_denominator,
+        rel_tol=0.0,
+        abs_tol=1e-14,
+    )
 
 
 def test_batch_summary_reports_sample_standard_deviation() -> None:

@@ -174,11 +174,15 @@ def gradient_metrics(
     if any(not torch.isfinite(value).all() for value in vectors.values()):
         raise FloatingPointError("module gradient is non-finite")
     mean = sum(vectors.values()) / len(MODULES)
-    norms = {name: float(torch.linalg.vector_norm(value)) for name, value in vectors.items()}
+    squared_norms = {
+        name: float(torch.dot(value, value)) for name, value in vectors.items()
+    }
+    norms = {name: math.sqrt(squared_norms[name]) for name in MODULES}
     disagreement = math.fsum(
-        float(torch.linalg.vector_norm(vectors[name] - mean)) for name in MODULES
+        float(torch.dot(vectors[name] - mean, vectors[name] - mean))
+        for name in MODULES
     )
-    denominator = math.fsum(norms.values()) + float(epsilon)
+    denominator = math.fsum(squared_norms.values()) + float(epsilon)
     result = {
         "grad_norm_vision": norms["vision"],
         "grad_norm_projector": norms["projector"],
@@ -657,9 +661,14 @@ def audit_inputs(ps_root: Path) -> dict[str, Any]:
     root = ps_root.resolve()
     index_path = root / "training_artifact_index.json"
     aggregate_path = root / "development_evaluation/aggregate_results.json"
+    evaluation_index_path = (
+        root / "development_evaluation/evaluation_artifact_index.json"
+    )
+    evaluation_source_path = root / "development_evaluation/evaluate_models.py"
     run_manifest_path = root / "run_manifest.json"
     index = _load_json(index_path)
     aggregate = _load_json(aggregate_path)
+    evaluation_index = _load_json(evaluation_index_path)
     run_manifest = _load_json(run_manifest_path)
     protocol = _load_json(PROTOCOL_PATH)
     protocol_hash = sha256_file(PROTOCOL_PATH)
@@ -671,6 +680,19 @@ def audit_inputs(ps_root: Path) -> dict[str, Any]:
         or aggregate.get("final_confirmation_accessed") is not False
         or aggregate.get("analysis_scope")
         != "development_only_exploratory_not_a_formal_certificate"
+        or evaluation_index.get("status") != "complete"
+        or evaluation_index.get("model_count") != 18
+        or evaluation_index.get("final_confirmation_accessed") is not False
+        or evaluation_index.get("analysis_scope")
+        != "development_only_exploratory_not_a_formal_certificate"
+        or evaluation_index.get("protocol_sha256") != protocol_hash
+        or evaluation_index.get("candidate_matrix_sha256") != matrix_sha256()
+        or evaluation_index.get("training_artifact_index_sha256")
+        != sha256_file(index_path)
+        or evaluation_index.get("aggregate", {}).get("sha256")
+        != sha256_file(aggregate_path)
+        or evaluation_index.get("evaluation_source_sha256")
+        != sha256_file(evaluation_source_path)
         or protocol.get("status") != "frozen"
         or index.get("protocol_sha256") != protocol_hash
         or aggregate.get("protocol_sha256") != protocol_hash
@@ -681,7 +703,14 @@ def audit_inputs(ps_root: Path) -> dict[str, Any]:
     configs = generate_matrix()
     index_by = {row["config_id"]: row for row in index["models"]}
     result_by = {row["config_id"]: row for row in aggregate["models"]}
-    if set(index_by) != {row["config_id"] for row in configs} or set(result_by) != set(index_by):
+    evaluation_index_by = {
+        row["config_id"]: row for row in evaluation_index["models"]
+    }
+    if (
+        set(index_by) != {row["config_id"] for row in configs}
+        or set(result_by) != set(index_by)
+        or set(evaluation_index_by) != set(index_by)
+    ):
         raise ValueError("P/S artifact candidate identities differ from the frozen matrix")
     artifacts = {}
     for config in configs:
@@ -706,6 +735,8 @@ def audit_inputs(ps_root: Path) -> dict[str, Any]:
             or manifest["checkpoint"]["sha256"] != checkpoint_entry["sha256"]
             or manifest["encoding"]["sha256"] != archive_entry["sha256"]
             or result["evaluated_archive_sha256"] != archive_entry["sha256"]
+            or evaluation_index_by[config_id]["evaluated_archive_sha256"]
+            != archive_entry["sha256"]
             or int(result["complexity"]["coded_bits"]) != archive.stat().st_size * 8
         ):
             raise ValueError(f"{config_id}: artifact identity or evaluation binding mismatch")
@@ -724,6 +755,7 @@ def audit_inputs(ps_root: Path) -> dict[str, Any]:
         "root": root,
         "index": index,
         "aggregate": aggregate,
+        "evaluation_index": evaluation_index,
         "run_manifest": run_manifest,
         "protocol": protocol,
         "artifacts": artifacts,
@@ -731,6 +763,12 @@ def audit_inputs(ps_root: Path) -> dict[str, Any]:
             "phase3_protocol": protocol_hash,
             "training_artifact_index": sha256_file(index_path),
             "development_aggregate": sha256_file(aggregate_path),
+            "development_evaluation_artifact_index": sha256_file(
+                evaluation_index_path
+            ),
+            "development_evaluation_source": sha256_file(
+                evaluation_source_path
+            ),
             "run_manifest": sha256_file(run_manifest_path),
         },
     }
@@ -992,24 +1030,40 @@ def run(ps_root: Path, output_dir: Path, device_name: str) -> dict[str, Any]:
         model = first_model if index == 0 else build_candidate_model(
             s_artifact["config"], stage2, device=device
         )
-        checkpoint_payload = torch.load(
-            s_artifact["checkpoint_path"], map_location="cpu", weights_only=True
+        decoded_coordinates = decode_mms2(
+            s_artifact["archive_path"], s_artifact["config"]
         )
-        checkpoint_coordinates = checkpoint_payload["coordinates"]
-        if set(checkpoint_coordinates) != {"shared"}:
-            raise ValueError(f"{s_id}: S checkpoint is not shared")
+        if set(decoded_coordinates) != {"shared"}:
+            raise ValueError(f"{s_id}: decoded S archive is not shared")
+        decoded_state_sha256 = tensor_state_sha256(decoded_coordinates)
         with torch.no_grad():
             model.stage2_coordinates.coordinates["shared"].copy_(
-                checkpoint_coordinates["shared"].to(
+                decoded_coordinates["shared"].to(
                     device=device, dtype=torch.float32
                 )
+            )
+        loaded_state_sha256 = tensor_state_sha256(
+            {
+                "shared": model.stage2_coordinates.coordinates[
+                    "shared"
+                ].detach().cpu()
+            }
+        )
+        if loaded_state_sha256 != decoded_state_sha256:
+            raise AssertionError(
+                f"{s_id}: in-memory coordinates differ from decoded MMS2"
             )
         diagnostic = diagnose_model(model, batches, device)
         detailed[s_id] = {
             "diagnostic_coordinate_source": (
-                "the existing S checkpoint.pt shared coordinate tensor; loaded "
-                "read-only and copied only into the in-memory diagnostic model"
+                "the exact S adapter.mms2 archive evaluated for delta_R; decoded "
+                "with the frozen development evaluator's MMS2 semantics and copied "
+                "only into the in-memory diagnostic model"
             ),
+            "evaluated_archive_sha256": s_artifact["archive_sha256"],
+            "decoded_coordinate_state_sha256": decoded_state_sha256,
+            "loaded_coordinate_state_sha256": loaded_state_sha256,
+            "decoded_coordinates_match_loaded_model": True,
             "checkpoint_audit": checkpoint_audit[s_id],
             **diagnostic,
         }
@@ -1024,7 +1078,7 @@ def run(ps_root: Path, output_dir: Path, device_name: str) -> dict[str, Any]:
                 audited["protocol"],
             )
         )
-        del model, checkpoint_payload, checkpoint_coordinates
+        del model, decoded_coordinates
         if device.type == "cuda":
             torch.cuda.empty_cache()
         gc.collect()
@@ -1060,6 +1114,18 @@ def run(ps_root: Path, output_dir: Path, device_name: str) -> dict[str, Any]:
         "all_S_split_graph_leaves_independent": all(
             value["coordinate_graph_leaves_independent"] for value in detailed.values()
         ),
+        "all_S_diagnostic_coordinates_match_evaluated_archives": all(
+            value["decoded_coordinates_match_loaded_model"]
+            and value["evaluated_archive_sha256"]
+            == artifacts[config_id]["archive_sha256"]
+            and value["decoded_coordinate_state_sha256"]
+            == value["loaded_coordinate_state_sha256"]
+            for config_id, value in detailed.items()
+        ),
+        "development_evaluation_source_hash_verified": (
+            audited["input_hashes"]["development_evaluation_source"]
+            == audited["evaluation_index"]["evaluation_source_sha256"]
+        ),
         "development_only": True,
         "final_fresh_confirmation_not_accessed": True,
         "no_optimizer_or_training_step_executed": True,
@@ -1074,7 +1140,7 @@ def run(ps_root: Path, output_dir: Path, device_name: str) -> dict[str, Any]:
     if not all(checks.values()):
         raise RuntimeError(f"one or more diagnostic checks failed: {checks}")
     result = {
-        "schema_version": 1,
+        "schema_version": 2,
         "status": "complete",
         "analysis_role": "development_only_minimal_gradient_diagnostic",
         "scientific_question": (
@@ -1100,8 +1166,28 @@ def run(ps_root: Path, output_dir: Path, device_name: str) -> dict[str, Any]:
                 "actual MMS2 coded bits, m=1343, alpha=0.5, vocab=6400, delta=0.025"
             ),
         },
+        "model_object_alignment": {
+            "status": "exact",
+            "risk_model_coordinate_source": "evaluated adapter.mms2 archive",
+            "gradient_model_coordinate_source": "same evaluated adapter.mms2 archive",
+            "model_builder": (
+                "experiments.phase3_private_vs_shared_v1.adapter_runtime."
+                "build_candidate_model"
+            ),
+            "decoder_semantics": (
+                "the same float32 scale and uint8 symbol reconstruction used by "
+                "the hash-bound frozen development evaluator"
+            ),
+            "per_model_verification": (
+                "evaluated archive SHA-256 and decoded tensor-state SHA-256 are "
+                "recorded; the loaded in-memory tensor-state SHA-256 must match"
+            ),
+        },
         "gradient_definition": {
-            "coordinate_source": "existing S checkpoint.pt shared coordinates",
+            "coordinate_source": (
+                "exact float32 coordinates decoded from each S adapter.mms2 "
+                "archive evaluated for delta_R"
+            ),
             "modules": list(MODULES),
             "split": (
                 "three numerically identical, storage-independent, leaf "
@@ -1118,9 +1204,9 @@ def run(ps_root: Path, output_dir: Path, device_name: str) -> dict[str, Any]:
                 "identity check and is not a training hyperparameter."
             ),
             "frozen_training_precision_for_context": "CUDA bfloat16 autocast",
-            "D": "sum_m ||g_m - mean(g_v,g_p,g_l)||_2",
+            "D": "sum_m ||g_m - mean(g_v,g_p,g_l)||_2^2",
             "D_norm": (
-                "D / (||g_v||_2 + ||g_p||_2 + ||g_l||_2 + 1e-12)"
+                "D / (||g_v||_2^2 + ||g_p||_2^2 + ||g_l||_2^2 + 1e-12)"
             ),
             "batch_aggregation": "arithmetic mean and sample SD across 16 batches",
             "epsilon": CONFLICT_EPSILON,
@@ -1152,6 +1238,12 @@ def run(ps_root: Path, output_dir: Path, device_name: str) -> dict[str, Any]:
                     "checkpoint_sha256": artifacts[config_id]["checkpoint_sha256"],
                     "evaluated_archive_path": str(artifacts[config_id]["archive_path"]),
                     "evaluated_archive_sha256": artifacts[config_id]["archive_sha256"],
+                    "decoded_coordinate_state_sha256": detailed[config_id][
+                        "decoded_coordinate_state_sha256"
+                    ],
+                    "loaded_coordinate_state_sha256": detailed[config_id][
+                        "loaded_coordinate_state_sha256"
+                    ],
                     **checkpoint_audit[config_id],
                     "gradient_diagnostic_run": True,
                 }
@@ -1177,12 +1269,6 @@ def run(ps_root: Path, output_dir: Path, device_name: str) -> dict[str, Any]:
                 "Gradients use frozen Phase 3 training batches and the existing "
                 "training loss; delta_R comes from the separately exposed "
                 "development evaluation."
-            ),
-            (
-                "The requested gradients are evaluated at the unquantized "
-                "checkpoint.pt coordinates, whereas the only existing paired "
-                "development risks were evaluated from each MMS2 archive; this "
-                "pre-existing representation mismatch limits mechanistic claims."
             ),
         ],
         "runtime": {
