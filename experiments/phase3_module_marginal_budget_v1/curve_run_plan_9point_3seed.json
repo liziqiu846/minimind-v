@@ -1,0 +1,2433 @@
+{
+  "actual_training_run_count": 72,
+  "anchor_artifacts": {
+    "results_by_seed": {
+      "43101": {
+        "checkpoint_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43101/checkpoint.pt",
+        "checkpoint_sha256": "0acd320c17144d42360bca1dc1e0df5d714907673f6a16319af248d1de85c26e",
+        "confirmation_risk_status": "not_yet_evaluated_in_source_run",
+        "coordinate_state_sha256": "9b718196620aca62edb4894ad89455481d9b5815b92a51efe716d682af364858",
+        "source_archive_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43101/adapter.mms2",
+        "source_archive_sha256": "9f52fb30005903d00d434aba3a15ecc517a33eae3327ef1006040b9f128d38e4",
+        "source_config_id": "P-budget-4096-seed-43101",
+        "training_manifest_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43101/training_manifest.json",
+        "training_manifest_sha256": "915be51dc60780979537d4c2d72ebf5a843a345cba71e603329ecaa076bf6210"
+      },
+      "43102": {
+        "checkpoint_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43102/checkpoint.pt",
+        "checkpoint_sha256": "36e525528c99c139f71ae7737f5b2b2cbfe207dfa29582e96d3a4c5fc51a8257",
+        "confirmation_risk_status": "not_yet_evaluated_in_source_run",
+        "coordinate_state_sha256": "3c150a1dffc02078dd247ed4c6dc8e901c869359c4ee73af5d97e5446fadb8f2",
+        "source_archive_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43102/adapter.mms2",
+        "source_archive_sha256": "26682fc98f2e97af0b6f35f7f98ce8db068a4e88cd8f8e7d1ee20a69a4d2eb26",
+        "source_config_id": "P-budget-4096-seed-43102",
+        "training_manifest_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43102/training_manifest.json",
+        "training_manifest_sha256": "6144a8abd976b95568784b8a388683924c767e5718a124c8059aded003e60f29"
+      },
+      "43103": {
+        "checkpoint_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43103/checkpoint.pt",
+        "checkpoint_sha256": "fdca3785ceb919c3bb08f5d11d0191d016199499c38865fae2ed465127f3b3a8",
+        "confirmation_risk_status": "not_yet_evaluated_in_source_run",
+        "coordinate_state_sha256": "0dd0df6b66948edc79a3712877ad2993e11cea1949737e42859f99121da61aee",
+        "source_archive_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43103/adapter.mms2",
+        "source_archive_sha256": "30dc1e19d4647995e0184f748dbde6e8cff88ae5a673928f9a036c956825a52e",
+        "source_config_id": "P-budget-4096-seed-43103",
+        "training_manifest_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43103/training_manifest.json",
+        "training_manifest_sha256": "5b0e270b580328d914bd24b6d91daee6a570dc469597b60fa07c0fb1d1d9e94c"
+      }
+    },
+    "source_root": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825",
+    "training_artifact_index_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/training_artifact_index.json",
+    "training_artifact_index_sha256": "8748d599d9d278745994cced8cfb429f3ac8d9b17b5ea4a7bd89c33e0b59032a"
+  },
+  "anchor_config": {
+    "allocation_authority": {
+      "code_relative_path": "model/global_subspace_lora.py",
+      "code_sha256": "4fcb3f0bf8786fe8eb8fce93bac32a4ec8341863c986f42a9f7c2118e2f12908",
+      "current_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 582
+      },
+      "factor_elements": {
+        "language": 50176,
+        "projector": 98304,
+        "vision": 24576
+      },
+      "protocol_relative_path": "experiments/stage2_protocol_v2.json",
+      "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3",
+      "verification": "factor_elements_from_protocol_and_M2_dimensions_match_code"
+    },
+    "anchor_id": "P-4096",
+    "authoritative_config_ids": [
+      "P-budget-4096-seed-43101",
+      "P-budget-4096-seed-43102",
+      "P-budget-4096-seed-43103"
+    ],
+    "authoritative_seeds": [
+      43101,
+      43102,
+      43103
+    ],
+    "config_id": "P-4096-anchor",
+    "coordinate_dimensions": {
+      "language": 1187,
+      "projector": 2327,
+      "vision": 582
+    },
+    "source_protocol": "/home/lizhaohui/lzq/minimind-v/experiments/phase3_private_vs_shared_v1/protocol.json",
+    "source_protocol_id": "phase3-private-vs-shared-budget-v1",
+    "structure": "P"
+  },
+  "config_count": 25,
+  "curve_manifest_path": "/home/lizhaohui/lzq/minimind-v/experiments/phase3_module_marginal_budget_v1/curve_sweep_manifest_9point.json",
+  "curve_manifest_sha256": "c385dec006ee759445c8e1c73ba22df71b88e1834bd77d436b9e8a3233ae1238",
+  "expanded_run_count": 75,
+  "formal_seeds": [
+    43101,
+    43102,
+    43103
+  ],
+  "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+  "results_directory_role": "independent_curve_results_root",
+  "reused_anchor_run_count": 3,
+  "run_plan_version": "phase3-module-budget-value-curve-run-plan-v1",
+  "runs": [
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": true,
+      "anchor_source": {
+        "checkpoint_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43101/checkpoint.pt",
+        "checkpoint_sha256": "0acd320c17144d42360bca1dc1e0df5d714907673f6a16319af248d1de85c26e",
+        "confirmation_risk_status": "not_yet_evaluated_in_source_run",
+        "coordinate_state_sha256": "9b718196620aca62edb4894ad89455481d9b5815b92a51efe716d682af364858",
+        "source_archive_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43101/adapter.mms2",
+        "source_archive_sha256": "9f52fb30005903d00d434aba3a15ecc517a33eae3327ef1006040b9f128d38e4",
+        "source_config_id": "P-budget-4096-seed-43101",
+        "training_manifest_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43101/training_manifest.json",
+        "training_manifest_sha256": "915be51dc60780979537d4c2d72ebf5a843a345cba71e603329ecaa076bf6210"
+      },
+      "config_id": "P-4096-anchor-seed-43101",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-anchor",
+          "curve_name": "R_V",
+          "is_anchor": true,
+          "sweep_index": 4,
+          "target_module": "vision"
+        },
+        {
+          "config_id": "P-4096-anchor",
+          "curve_name": "R_C",
+          "is_anchor": true,
+          "sweep_index": 4,
+          "target_module": "projector"
+        },
+        {
+          "config_id": "P-4096-anchor",
+          "curve_name": "R_L",
+          "is_anchor": true,
+          "sweep_index": 4,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "shared_anchor",
+      "planned_status": "reuse_authoritative_anchor",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-anchor-seed-43101",
+      "run_id": "P-4096-anchor-seed-43101",
+      "seed": 43101,
+      "sweep_config_id": "P-4096-anchor",
+      "sweep_index": null,
+      "target_module": null,
+      "training_required": false
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": true,
+      "anchor_source": {
+        "checkpoint_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43102/checkpoint.pt",
+        "checkpoint_sha256": "36e525528c99c139f71ae7737f5b2b2cbfe207dfa29582e96d3a4c5fc51a8257",
+        "confirmation_risk_status": "not_yet_evaluated_in_source_run",
+        "coordinate_state_sha256": "3c150a1dffc02078dd247ed4c6dc8e901c869359c4ee73af5d97e5446fadb8f2",
+        "source_archive_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43102/adapter.mms2",
+        "source_archive_sha256": "26682fc98f2e97af0b6f35f7f98ce8db068a4e88cd8f8e7d1ee20a69a4d2eb26",
+        "source_config_id": "P-budget-4096-seed-43102",
+        "training_manifest_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43102/training_manifest.json",
+        "training_manifest_sha256": "6144a8abd976b95568784b8a388683924c767e5718a124c8059aded003e60f29"
+      },
+      "config_id": "P-4096-anchor-seed-43102",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-anchor",
+          "curve_name": "R_V",
+          "is_anchor": true,
+          "sweep_index": 4,
+          "target_module": "vision"
+        },
+        {
+          "config_id": "P-4096-anchor",
+          "curve_name": "R_C",
+          "is_anchor": true,
+          "sweep_index": 4,
+          "target_module": "projector"
+        },
+        {
+          "config_id": "P-4096-anchor",
+          "curve_name": "R_L",
+          "is_anchor": true,
+          "sweep_index": 4,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "shared_anchor",
+      "planned_status": "reuse_authoritative_anchor",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-anchor-seed-43102",
+      "run_id": "P-4096-anchor-seed-43102",
+      "seed": 43102,
+      "sweep_config_id": "P-4096-anchor",
+      "sweep_index": null,
+      "target_module": null,
+      "training_required": false
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": true,
+      "anchor_source": {
+        "checkpoint_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43103/checkpoint.pt",
+        "checkpoint_sha256": "fdca3785ceb919c3bb08f5d11d0191d016199499c38865fae2ed465127f3b3a8",
+        "confirmation_risk_status": "not_yet_evaluated_in_source_run",
+        "coordinate_state_sha256": "0dd0df6b66948edc79a3712877ad2993e11cea1949737e42859f99121da61aee",
+        "source_archive_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43103/adapter.mms2",
+        "source_archive_sha256": "30dc1e19d4647995e0184f748dbde6e8cff88ae5a673928f9a036c956825a52e",
+        "source_config_id": "P-budget-4096-seed-43103",
+        "training_manifest_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/candidates/P-budget-4096-seed-43103/training_manifest.json",
+        "training_manifest_sha256": "5b0e270b580328d914bd24b6d91daee6a570dc469597b60fa07c0fb1d1d9e94c"
+      },
+      "config_id": "P-4096-anchor-seed-43103",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-anchor",
+          "curve_name": "R_V",
+          "is_anchor": true,
+          "sweep_index": 4,
+          "target_module": "vision"
+        },
+        {
+          "config_id": "P-4096-anchor",
+          "curve_name": "R_C",
+          "is_anchor": true,
+          "sweep_index": 4,
+          "target_module": "projector"
+        },
+        {
+          "config_id": "P-4096-anchor",
+          "curve_name": "R_L",
+          "is_anchor": true,
+          "sweep_index": 4,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "shared_anchor",
+      "planned_status": "reuse_authoritative_anchor",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-anchor-seed-43103",
+      "run_id": "P-4096-anchor-seed-43103",
+      "seed": 43103,
+      "sweep_config_id": "P-4096-anchor",
+      "sweep_index": null,
+      "target_module": null,
+      "training_required": false
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-vision-coords-194-seed-43101",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 194
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-194",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 0,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-vision-coords-194-seed-43101",
+      "run_id": "P-4096-vision-coords-194-seed-43101",
+      "seed": 43101,
+      "sweep_config_id": "P-4096-vision-coords-194",
+      "sweep_index": 0,
+      "target_module": "vision",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-vision-coords-194-seed-43102",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 194
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-194",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 0,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-vision-coords-194-seed-43102",
+      "run_id": "P-4096-vision-coords-194-seed-43102",
+      "seed": 43102,
+      "sweep_config_id": "P-4096-vision-coords-194",
+      "sweep_index": 0,
+      "target_module": "vision",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-vision-coords-194-seed-43103",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 194
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-194",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 0,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-vision-coords-194-seed-43103",
+      "run_id": "P-4096-vision-coords-194-seed-43103",
+      "seed": 43103,
+      "sweep_config_id": "P-4096-vision-coords-194",
+      "sweep_index": 0,
+      "target_module": "vision",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-vision-coords-255-seed-43101",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 255
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-255",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 1,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-vision-coords-255-seed-43101",
+      "run_id": "P-4096-vision-coords-255-seed-43101",
+      "seed": 43101,
+      "sweep_config_id": "P-4096-vision-coords-255",
+      "sweep_index": 1,
+      "target_module": "vision",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-vision-coords-255-seed-43102",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 255
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-255",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 1,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-vision-coords-255-seed-43102",
+      "run_id": "P-4096-vision-coords-255-seed-43102",
+      "seed": 43102,
+      "sweep_config_id": "P-4096-vision-coords-255",
+      "sweep_index": 1,
+      "target_module": "vision",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-vision-coords-255-seed-43103",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 255
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-255",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 1,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-vision-coords-255-seed-43103",
+      "run_id": "P-4096-vision-coords-255-seed-43103",
+      "seed": 43103,
+      "sweep_config_id": "P-4096-vision-coords-255",
+      "sweep_index": 1,
+      "target_module": "vision",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-vision-coords-336-seed-43101",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 336
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-336",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 2,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-vision-coords-336-seed-43101",
+      "run_id": "P-4096-vision-coords-336-seed-43101",
+      "seed": 43101,
+      "sweep_config_id": "P-4096-vision-coords-336",
+      "sweep_index": 2,
+      "target_module": "vision",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-vision-coords-336-seed-43102",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 336
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-336",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 2,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-vision-coords-336-seed-43102",
+      "run_id": "P-4096-vision-coords-336-seed-43102",
+      "seed": 43102,
+      "sweep_config_id": "P-4096-vision-coords-336",
+      "sweep_index": 2,
+      "target_module": "vision",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-vision-coords-336-seed-43103",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 336
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-336",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 2,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-vision-coords-336-seed-43103",
+      "run_id": "P-4096-vision-coords-336-seed-43103",
+      "seed": 43103,
+      "sweep_config_id": "P-4096-vision-coords-336",
+      "sweep_index": 2,
+      "target_module": "vision",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-vision-coords-442-seed-43101",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 442
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-442",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 3,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-vision-coords-442-seed-43101",
+      "run_id": "P-4096-vision-coords-442-seed-43101",
+      "seed": 43101,
+      "sweep_config_id": "P-4096-vision-coords-442",
+      "sweep_index": 3,
+      "target_module": "vision",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-vision-coords-442-seed-43102",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 442
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-442",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 3,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-vision-coords-442-seed-43102",
+      "run_id": "P-4096-vision-coords-442-seed-43102",
+      "seed": 43102,
+      "sweep_config_id": "P-4096-vision-coords-442",
+      "sweep_index": 3,
+      "target_module": "vision",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-vision-coords-442-seed-43103",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 442
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-442",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 3,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-vision-coords-442-seed-43103",
+      "run_id": "P-4096-vision-coords-442-seed-43103",
+      "seed": 43103,
+      "sweep_config_id": "P-4096-vision-coords-442",
+      "sweep_index": 3,
+      "target_module": "vision",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-vision-coords-766-seed-43101",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 766
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-766",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 5,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-vision-coords-766-seed-43101",
+      "run_id": "P-4096-vision-coords-766-seed-43101",
+      "seed": 43101,
+      "sweep_config_id": "P-4096-vision-coords-766",
+      "sweep_index": 5,
+      "target_module": "vision",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-vision-coords-766-seed-43102",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 766
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-766",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 5,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-vision-coords-766-seed-43102",
+      "run_id": "P-4096-vision-coords-766-seed-43102",
+      "seed": 43102,
+      "sweep_config_id": "P-4096-vision-coords-766",
+      "sweep_index": 5,
+      "target_module": "vision",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-vision-coords-766-seed-43103",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 766
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-766",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 5,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-vision-coords-766-seed-43103",
+      "run_id": "P-4096-vision-coords-766-seed-43103",
+      "seed": 43103,
+      "sweep_config_id": "P-4096-vision-coords-766",
+      "sweep_index": 5,
+      "target_module": "vision",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-vision-coords-1008-seed-43101",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 1008
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-1008",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 6,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-vision-coords-1008-seed-43101",
+      "run_id": "P-4096-vision-coords-1008-seed-43101",
+      "seed": 43101,
+      "sweep_config_id": "P-4096-vision-coords-1008",
+      "sweep_index": 6,
+      "target_module": "vision",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-vision-coords-1008-seed-43102",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 1008
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-1008",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 6,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-vision-coords-1008-seed-43102",
+      "run_id": "P-4096-vision-coords-1008-seed-43102",
+      "seed": 43102,
+      "sweep_config_id": "P-4096-vision-coords-1008",
+      "sweep_index": 6,
+      "target_module": "vision",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-vision-coords-1008-seed-43103",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 1008
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-1008",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 6,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-vision-coords-1008-seed-43103",
+      "run_id": "P-4096-vision-coords-1008-seed-43103",
+      "seed": 43103,
+      "sweep_config_id": "P-4096-vision-coords-1008",
+      "sweep_index": 6,
+      "target_module": "vision",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-vision-coords-1327-seed-43101",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 1327
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-1327",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 7,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-vision-coords-1327-seed-43101",
+      "run_id": "P-4096-vision-coords-1327-seed-43101",
+      "seed": 43101,
+      "sweep_config_id": "P-4096-vision-coords-1327",
+      "sweep_index": 7,
+      "target_module": "vision",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-vision-coords-1327-seed-43102",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 1327
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-1327",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 7,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-vision-coords-1327-seed-43102",
+      "run_id": "P-4096-vision-coords-1327-seed-43102",
+      "seed": 43102,
+      "sweep_config_id": "P-4096-vision-coords-1327",
+      "sweep_index": 7,
+      "target_module": "vision",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-vision-coords-1327-seed-43103",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 1327
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-1327",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 7,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-vision-coords-1327-seed-43103",
+      "run_id": "P-4096-vision-coords-1327-seed-43103",
+      "seed": 43103,
+      "sweep_config_id": "P-4096-vision-coords-1327",
+      "sweep_index": 7,
+      "target_module": "vision",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-vision-coords-1746-seed-43101",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 1746
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-1746",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 8,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-vision-coords-1746-seed-43101",
+      "run_id": "P-4096-vision-coords-1746-seed-43101",
+      "seed": 43101,
+      "sweep_config_id": "P-4096-vision-coords-1746",
+      "sweep_index": 8,
+      "target_module": "vision",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-vision-coords-1746-seed-43102",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 1746
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-1746",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 8,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-vision-coords-1746-seed-43102",
+      "run_id": "P-4096-vision-coords-1746-seed-43102",
+      "seed": 43102,
+      "sweep_config_id": "P-4096-vision-coords-1746",
+      "sweep_index": 8,
+      "target_module": "vision",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-vision-coords-1746-seed-43103",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 1746
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-1746",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 8,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-vision-coords-1746-seed-43103",
+      "run_id": "P-4096-vision-coords-1746-seed-43103",
+      "seed": 43103,
+      "sweep_config_id": "P-4096-vision-coords-1746",
+      "sweep_index": 8,
+      "target_module": "vision",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-projector-coords-776-seed-43101",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 776,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-776",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 0,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-projector-coords-776-seed-43101",
+      "run_id": "P-4096-projector-coords-776-seed-43101",
+      "seed": 43101,
+      "sweep_config_id": "P-4096-projector-coords-776",
+      "sweep_index": 0,
+      "target_module": "projector",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-projector-coords-776-seed-43102",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 776,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-776",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 0,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-projector-coords-776-seed-43102",
+      "run_id": "P-4096-projector-coords-776-seed-43102",
+      "seed": 43102,
+      "sweep_config_id": "P-4096-projector-coords-776",
+      "sweep_index": 0,
+      "target_module": "projector",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-projector-coords-776-seed-43103",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 776,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-776",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 0,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-projector-coords-776-seed-43103",
+      "run_id": "P-4096-projector-coords-776-seed-43103",
+      "seed": 43103,
+      "sweep_config_id": "P-4096-projector-coords-776",
+      "sweep_index": 0,
+      "target_module": "projector",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-projector-coords-1021-seed-43101",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 1021,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-1021",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 1,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-projector-coords-1021-seed-43101",
+      "run_id": "P-4096-projector-coords-1021-seed-43101",
+      "seed": 43101,
+      "sweep_config_id": "P-4096-projector-coords-1021",
+      "sweep_index": 1,
+      "target_module": "projector",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-projector-coords-1021-seed-43102",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 1021,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-1021",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 1,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-projector-coords-1021-seed-43102",
+      "run_id": "P-4096-projector-coords-1021-seed-43102",
+      "seed": 43102,
+      "sweep_config_id": "P-4096-projector-coords-1021",
+      "sweep_index": 1,
+      "target_module": "projector",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-projector-coords-1021-seed-43103",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 1021,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-1021",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 1,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-projector-coords-1021-seed-43103",
+      "run_id": "P-4096-projector-coords-1021-seed-43103",
+      "seed": 43103,
+      "sweep_config_id": "P-4096-projector-coords-1021",
+      "sweep_index": 1,
+      "target_module": "projector",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-projector-coords-1343-seed-43101",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 1343,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-1343",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 2,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-projector-coords-1343-seed-43101",
+      "run_id": "P-4096-projector-coords-1343-seed-43101",
+      "seed": 43101,
+      "sweep_config_id": "P-4096-projector-coords-1343",
+      "sweep_index": 2,
+      "target_module": "projector",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-projector-coords-1343-seed-43102",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 1343,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-1343",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 2,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-projector-coords-1343-seed-43102",
+      "run_id": "P-4096-projector-coords-1343-seed-43102",
+      "seed": 43102,
+      "sweep_config_id": "P-4096-projector-coords-1343",
+      "sweep_index": 2,
+      "target_module": "projector",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-projector-coords-1343-seed-43103",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 1343,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-1343",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 2,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-projector-coords-1343-seed-43103",
+      "run_id": "P-4096-projector-coords-1343-seed-43103",
+      "seed": 43103,
+      "sweep_config_id": "P-4096-projector-coords-1343",
+      "sweep_index": 2,
+      "target_module": "projector",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-projector-coords-1768-seed-43101",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 1768,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-1768",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 3,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-projector-coords-1768-seed-43101",
+      "run_id": "P-4096-projector-coords-1768-seed-43101",
+      "seed": 43101,
+      "sweep_config_id": "P-4096-projector-coords-1768",
+      "sweep_index": 3,
+      "target_module": "projector",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-projector-coords-1768-seed-43102",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 1768,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-1768",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 3,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-projector-coords-1768-seed-43102",
+      "run_id": "P-4096-projector-coords-1768-seed-43102",
+      "seed": 43102,
+      "sweep_config_id": "P-4096-projector-coords-1768",
+      "sweep_index": 3,
+      "target_module": "projector",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-projector-coords-1768-seed-43103",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 1768,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-1768",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 3,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-projector-coords-1768-seed-43103",
+      "run_id": "P-4096-projector-coords-1768-seed-43103",
+      "seed": 43103,
+      "sweep_config_id": "P-4096-projector-coords-1768",
+      "sweep_index": 3,
+      "target_module": "projector",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-projector-coords-3063-seed-43101",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 3063,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-3063",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 5,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-projector-coords-3063-seed-43101",
+      "run_id": "P-4096-projector-coords-3063-seed-43101",
+      "seed": 43101,
+      "sweep_config_id": "P-4096-projector-coords-3063",
+      "sweep_index": 5,
+      "target_module": "projector",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-projector-coords-3063-seed-43102",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 3063,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-3063",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 5,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-projector-coords-3063-seed-43102",
+      "run_id": "P-4096-projector-coords-3063-seed-43102",
+      "seed": 43102,
+      "sweep_config_id": "P-4096-projector-coords-3063",
+      "sweep_index": 5,
+      "target_module": "projector",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-projector-coords-3063-seed-43103",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 3063,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-3063",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 5,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-projector-coords-3063-seed-43103",
+      "run_id": "P-4096-projector-coords-3063-seed-43103",
+      "seed": 43103,
+      "sweep_config_id": "P-4096-projector-coords-3063",
+      "sweep_index": 5,
+      "target_module": "projector",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-projector-coords-4030-seed-43101",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 4030,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-4030",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 6,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-projector-coords-4030-seed-43101",
+      "run_id": "P-4096-projector-coords-4030-seed-43101",
+      "seed": 43101,
+      "sweep_config_id": "P-4096-projector-coords-4030",
+      "sweep_index": 6,
+      "target_module": "projector",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-projector-coords-4030-seed-43102",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 4030,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-4030",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 6,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-projector-coords-4030-seed-43102",
+      "run_id": "P-4096-projector-coords-4030-seed-43102",
+      "seed": 43102,
+      "sweep_config_id": "P-4096-projector-coords-4030",
+      "sweep_index": 6,
+      "target_module": "projector",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-projector-coords-4030-seed-43103",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 4030,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-4030",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 6,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-projector-coords-4030-seed-43103",
+      "run_id": "P-4096-projector-coords-4030-seed-43103",
+      "seed": 43103,
+      "sweep_config_id": "P-4096-projector-coords-4030",
+      "sweep_index": 6,
+      "target_module": "projector",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-projector-coords-5304-seed-43101",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 5304,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-5304",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 7,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-projector-coords-5304-seed-43101",
+      "run_id": "P-4096-projector-coords-5304-seed-43101",
+      "seed": 43101,
+      "sweep_config_id": "P-4096-projector-coords-5304",
+      "sweep_index": 7,
+      "target_module": "projector",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-projector-coords-5304-seed-43102",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 5304,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-5304",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 7,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-projector-coords-5304-seed-43102",
+      "run_id": "P-4096-projector-coords-5304-seed-43102",
+      "seed": 43102,
+      "sweep_config_id": "P-4096-projector-coords-5304",
+      "sweep_index": 7,
+      "target_module": "projector",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-projector-coords-5304-seed-43103",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 5304,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-5304",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 7,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-projector-coords-5304-seed-43103",
+      "run_id": "P-4096-projector-coords-5304-seed-43103",
+      "seed": 43103,
+      "sweep_config_id": "P-4096-projector-coords-5304",
+      "sweep_index": 7,
+      "target_module": "projector",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-projector-coords-6981-seed-43101",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 6981,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-6981",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 8,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-projector-coords-6981-seed-43101",
+      "run_id": "P-4096-projector-coords-6981-seed-43101",
+      "seed": 43101,
+      "sweep_config_id": "P-4096-projector-coords-6981",
+      "sweep_index": 8,
+      "target_module": "projector",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-projector-coords-6981-seed-43102",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 6981,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-6981",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 8,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-projector-coords-6981-seed-43102",
+      "run_id": "P-4096-projector-coords-6981-seed-43102",
+      "seed": 43102,
+      "sweep_config_id": "P-4096-projector-coords-6981",
+      "sweep_index": 8,
+      "target_module": "projector",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-projector-coords-6981-seed-43103",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 6981,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-6981",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 8,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-projector-coords-6981-seed-43103",
+      "run_id": "P-4096-projector-coords-6981-seed-43103",
+      "seed": 43103,
+      "sweep_config_id": "P-4096-projector-coords-6981",
+      "sweep_index": 8,
+      "target_module": "projector",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-language-coords-396-seed-43101",
+      "coordinate_dimensions": {
+        "language": 396,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-396",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 0,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-language-coords-396-seed-43101",
+      "run_id": "P-4096-language-coords-396-seed-43101",
+      "seed": 43101,
+      "sweep_config_id": "P-4096-language-coords-396",
+      "sweep_index": 0,
+      "target_module": "language",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-language-coords-396-seed-43102",
+      "coordinate_dimensions": {
+        "language": 396,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-396",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 0,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-language-coords-396-seed-43102",
+      "run_id": "P-4096-language-coords-396-seed-43102",
+      "seed": 43102,
+      "sweep_config_id": "P-4096-language-coords-396",
+      "sweep_index": 0,
+      "target_module": "language",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-language-coords-396-seed-43103",
+      "coordinate_dimensions": {
+        "language": 396,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-396",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 0,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-language-coords-396-seed-43103",
+      "run_id": "P-4096-language-coords-396-seed-43103",
+      "seed": 43103,
+      "sweep_config_id": "P-4096-language-coords-396",
+      "sweep_index": 0,
+      "target_module": "language",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-language-coords-521-seed-43101",
+      "coordinate_dimensions": {
+        "language": 521,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-521",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 1,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-language-coords-521-seed-43101",
+      "run_id": "P-4096-language-coords-521-seed-43101",
+      "seed": 43101,
+      "sweep_config_id": "P-4096-language-coords-521",
+      "sweep_index": 1,
+      "target_module": "language",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-language-coords-521-seed-43102",
+      "coordinate_dimensions": {
+        "language": 521,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-521",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 1,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-language-coords-521-seed-43102",
+      "run_id": "P-4096-language-coords-521-seed-43102",
+      "seed": 43102,
+      "sweep_config_id": "P-4096-language-coords-521",
+      "sweep_index": 1,
+      "target_module": "language",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-language-coords-521-seed-43103",
+      "coordinate_dimensions": {
+        "language": 521,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-521",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 1,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-language-coords-521-seed-43103",
+      "run_id": "P-4096-language-coords-521-seed-43103",
+      "seed": 43103,
+      "sweep_config_id": "P-4096-language-coords-521",
+      "sweep_index": 1,
+      "target_module": "language",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-language-coords-685-seed-43101",
+      "coordinate_dimensions": {
+        "language": 685,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-685",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 2,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-language-coords-685-seed-43101",
+      "run_id": "P-4096-language-coords-685-seed-43101",
+      "seed": 43101,
+      "sweep_config_id": "P-4096-language-coords-685",
+      "sweep_index": 2,
+      "target_module": "language",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-language-coords-685-seed-43102",
+      "coordinate_dimensions": {
+        "language": 685,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-685",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 2,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-language-coords-685-seed-43102",
+      "run_id": "P-4096-language-coords-685-seed-43102",
+      "seed": 43102,
+      "sweep_config_id": "P-4096-language-coords-685",
+      "sweep_index": 2,
+      "target_module": "language",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-language-coords-685-seed-43103",
+      "coordinate_dimensions": {
+        "language": 685,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-685",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 2,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-language-coords-685-seed-43103",
+      "run_id": "P-4096-language-coords-685-seed-43103",
+      "seed": 43103,
+      "sweep_config_id": "P-4096-language-coords-685",
+      "sweep_index": 2,
+      "target_module": "language",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-language-coords-902-seed-43101",
+      "coordinate_dimensions": {
+        "language": 902,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-902",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 3,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-language-coords-902-seed-43101",
+      "run_id": "P-4096-language-coords-902-seed-43101",
+      "seed": 43101,
+      "sweep_config_id": "P-4096-language-coords-902",
+      "sweep_index": 3,
+      "target_module": "language",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-language-coords-902-seed-43102",
+      "coordinate_dimensions": {
+        "language": 902,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-902",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 3,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-language-coords-902-seed-43102",
+      "run_id": "P-4096-language-coords-902-seed-43102",
+      "seed": 43102,
+      "sweep_config_id": "P-4096-language-coords-902",
+      "sweep_index": 3,
+      "target_module": "language",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-language-coords-902-seed-43103",
+      "coordinate_dimensions": {
+        "language": 902,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-902",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 3,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-language-coords-902-seed-43103",
+      "run_id": "P-4096-language-coords-902-seed-43103",
+      "seed": 43103,
+      "sweep_config_id": "P-4096-language-coords-902",
+      "sweep_index": 3,
+      "target_module": "language",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-language-coords-1562-seed-43101",
+      "coordinate_dimensions": {
+        "language": 1562,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-1562",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 5,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-language-coords-1562-seed-43101",
+      "run_id": "P-4096-language-coords-1562-seed-43101",
+      "seed": 43101,
+      "sweep_config_id": "P-4096-language-coords-1562",
+      "sweep_index": 5,
+      "target_module": "language",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-language-coords-1562-seed-43102",
+      "coordinate_dimensions": {
+        "language": 1562,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-1562",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 5,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-language-coords-1562-seed-43102",
+      "run_id": "P-4096-language-coords-1562-seed-43102",
+      "seed": 43102,
+      "sweep_config_id": "P-4096-language-coords-1562",
+      "sweep_index": 5,
+      "target_module": "language",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-language-coords-1562-seed-43103",
+      "coordinate_dimensions": {
+        "language": 1562,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-1562",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 5,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-language-coords-1562-seed-43103",
+      "run_id": "P-4096-language-coords-1562-seed-43103",
+      "seed": 43103,
+      "sweep_config_id": "P-4096-language-coords-1562",
+      "sweep_index": 5,
+      "target_module": "language",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-language-coords-2056-seed-43101",
+      "coordinate_dimensions": {
+        "language": 2056,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-2056",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 6,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-language-coords-2056-seed-43101",
+      "run_id": "P-4096-language-coords-2056-seed-43101",
+      "seed": 43101,
+      "sweep_config_id": "P-4096-language-coords-2056",
+      "sweep_index": 6,
+      "target_module": "language",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-language-coords-2056-seed-43102",
+      "coordinate_dimensions": {
+        "language": 2056,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-2056",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 6,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-language-coords-2056-seed-43102",
+      "run_id": "P-4096-language-coords-2056-seed-43102",
+      "seed": 43102,
+      "sweep_config_id": "P-4096-language-coords-2056",
+      "sweep_index": 6,
+      "target_module": "language",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-language-coords-2056-seed-43103",
+      "coordinate_dimensions": {
+        "language": 2056,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-2056",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 6,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-language-coords-2056-seed-43103",
+      "run_id": "P-4096-language-coords-2056-seed-43103",
+      "seed": 43103,
+      "sweep_config_id": "P-4096-language-coords-2056",
+      "sweep_index": 6,
+      "target_module": "language",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-language-coords-2706-seed-43101",
+      "coordinate_dimensions": {
+        "language": 2706,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-2706",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 7,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-language-coords-2706-seed-43101",
+      "run_id": "P-4096-language-coords-2706-seed-43101",
+      "seed": 43101,
+      "sweep_config_id": "P-4096-language-coords-2706",
+      "sweep_index": 7,
+      "target_module": "language",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-language-coords-2706-seed-43102",
+      "coordinate_dimensions": {
+        "language": 2706,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-2706",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 7,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-language-coords-2706-seed-43102",
+      "run_id": "P-4096-language-coords-2706-seed-43102",
+      "seed": 43102,
+      "sweep_config_id": "P-4096-language-coords-2706",
+      "sweep_index": 7,
+      "target_module": "language",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-language-coords-2706-seed-43103",
+      "coordinate_dimensions": {
+        "language": 2706,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-2706",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 7,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-language-coords-2706-seed-43103",
+      "run_id": "P-4096-language-coords-2706-seed-43103",
+      "seed": 43103,
+      "sweep_config_id": "P-4096-language-coords-2706",
+      "sweep_index": 7,
+      "target_module": "language",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-language-coords-3561-seed-43101",
+      "coordinate_dimensions": {
+        "language": 3561,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-3561",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 8,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-language-coords-3561-seed-43101",
+      "run_id": "P-4096-language-coords-3561-seed-43101",
+      "seed": 43101,
+      "sweep_config_id": "P-4096-language-coords-3561",
+      "sweep_index": 8,
+      "target_module": "language",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-language-coords-3561-seed-43102",
+      "coordinate_dimensions": {
+        "language": 3561,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-3561",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 8,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-language-coords-3561-seed-43102",
+      "run_id": "P-4096-language-coords-3561-seed-43102",
+      "seed": 43102,
+      "sweep_config_id": "P-4096-language-coords-3561",
+      "sweep_index": 8,
+      "target_module": "language",
+      "training_required": true
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "anchor_reuse": false,
+      "anchor_source": null,
+      "config_id": "P-4096-language-coords-3561-seed-43103",
+      "coordinate_dimensions": {
+        "language": 3561,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-3561",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 8,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "planned_status": "planned",
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "result_relative_directory": "P-4096-language-coords-3561-seed-43103",
+      "run_id": "P-4096-language-coords-3561-seed-43103",
+      "seed": 43103,
+      "sweep_config_id": "P-4096-language-coords-3561",
+      "sweep_index": 8,
+      "target_module": "language",
+      "training_required": true
+    }
+  ],
+  "schema_version": 1,
+  "seed_authority": {
+    "authority": "frozen_phase3_private_vs_shared_main_experiment",
+    "seeds": [
+      43101,
+      43102,
+      43103
+    ],
+    "source_protocol": "/home/lizhaohui/lzq/minimind-v/experiments/phase3_private_vs_shared_v1/protocol.json",
+    "source_protocol_canonical_sha256": "18f72e3fe177763329bb344941cd3e32305c32442a6cb84b04dc38c30f56144a",
+    "source_protocol_id": "phase3-private-vs-shared-budget-v1",
+    "source_protocol_sha256": "5425fd6ab1fb6673d381e0fbf650ff42ed174398da9fe90e933ccf591f275a4d"
+  },
+  "status": "frozen"
+}

@@ -7,20 +7,25 @@ import argparse
 import json
 import os
 import subprocess
-import sys
 import time
+from collections.abc import Callable, Mapping
 from pathlib import Path
+from typing import Any
 
 import torch
 from torch.utils.data import DataLoader
 from transformers import AutoTokenizer
 
 from dataset.stage2_dataset import Stage2CaptionDataset, stage2_collate
-from experiments.stage2_model import model_structure_receipt, tensor_state_sha256
+from experiments.stage2_model import tensor_state_sha256
 from experiments.stage2_protocol import Stage2Protocol
 from trainer.train_stage2 import (
-    frozen_parameter_hash, learning_rate_at, move_pixels, permutation_for_epoch,
-    permutation_sha256, seed_everything,
+    frozen_parameter_hash,
+    learning_rate_at,
+    move_pixels,
+    permutation_for_epoch,
+    permutation_sha256,
+    seed_everything,
 )
 
 from .adapter_runtime import build_candidate_model
@@ -36,8 +41,12 @@ STAGE2_PROTOCOL = REPO_ROOT / "experiments/stage2_protocol_v2.json"
 
 def _git(*args: str) -> str:
     return subprocess.run(
-        ["git", *args], cwd=REPO_ROOT, check=True, text=True,
-        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+        ["git", *args],
+        cwd=REPO_ROOT,
+        check=True,
+        text=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
     ).stdout.strip()
 
 
@@ -61,26 +70,52 @@ def _formal_preflight() -> dict:
     }
 
 
-def train_candidate(config_id: str, artifact_root: Path, output_root: Path,
-                    device_name: str) -> dict:
-    config = load_candidate(config_id)
-    binding = _formal_preflight()
+def train_candidate(
+    config_id: str,
+    artifact_root: Path,
+    output_root: Path,
+    device_name: str,
+    *,
+    config_override: Mapping[str, Any] | None = None,
+    binding_override: Mapping[str, Any] | None = None,
+    binding_validator: Callable[[dict[str, Any]], None] = validate_bindings,
+    model_builder: Callable[..., torch.nn.Module] = build_candidate_model,
+) -> dict:
+    """Run the frozen loop, optionally with a protocol-bound external config."""
+    if (config_override is None) != (binding_override is None):
+        raise ValueError(
+            "config_override and binding_override must be supplied together"
+        )
+    config = (
+        load_candidate(config_id) if config_override is None else dict(config_override)
+    )
+    if config.get("config_id") != config_id:
+        raise ValueError("training config identity differs from config_id")
+    binding = (
+        _formal_preflight() if binding_override is None else dict(binding_override)
+    )
     output = output_root.resolve() / config_id
     output.mkdir(parents=True, exist_ok=True)
     status_path = output / "status.json"
     complete_path = output / "training_manifest.json"
     if complete_path.exists():
         complete = json.loads(complete_path.read_text(encoding="utf-8"))
-        validate_bindings(complete)
+        binding_validator(complete)
         if complete.get("status") != "complete":
             raise ValueError("existing terminal manifest is not complete")
         return complete
 
     started = time.time()
-    write_json_atomic(status_path, {
-        **binding, "config_id": config_id, "status": "running",
-        "started_unix": started, "resume_supported": True,
-    })
+    write_json_atomic(
+        status_path,
+        {
+            **binding,
+            "config_id": config_id,
+            "status": "running",
+            "started_unix": started,
+            "resume_supported": True,
+        },
+    )
     try:
         stage2 = Stage2Protocol.load(STAGE2_PROTOCOL, require_frozen=True)
         protocol = json.loads(PROTOCOL_PATH.read_text(encoding="utf-8"))
@@ -96,13 +131,15 @@ def train_candidate(config_id: str, artifact_root: Path, output_root: Path,
             raise RuntimeError("formal training requires CUDA")
 
         seed_everything(int(fairness["training_data"]["train_seed"]))
-        model = build_candidate_model(config, stage2, device=device)
+        model = model_builder(config, stage2, device=device)
         legacy_group = "M2" if config["structure"] == "P" else "M3"
         tokenizer = AutoTokenizer.from_pretrained(
             stage2.asset_path("tokenizer"), local_files_only=True
         )
         dataset = Stage2CaptionDataset(
-            data_path, tokenizer, model_group=legacy_group,
+            data_path,
+            tokenizer,
+            model_group=legacy_group,
             processor=model.processor,
             max_length=stage2.payload["training"]["max_sequence_length"],
             image_token_count=stage2.payload["model"]["image_token_count"],
@@ -121,8 +158,10 @@ def train_candidate(config_id: str, artifact_root: Path, output_root: Path,
         parameters = list(store.parameters())
         optimizer_spec = fairness["optimizer"]
         optimizer = torch.optim.AdamW(
-            parameters, lr=float(fairness["learning_rate"]),
-            betas=tuple(optimizer_spec["betas"]), eps=float(optimizer_spec["eps"]),
+            parameters,
+            lr=float(fairness["learning_rate"]),
+            betas=tuple(optimizer_spec["betas"]),
+            eps=float(optimizer_spec["eps"]),
             weight_decay=float(optimizer_spec["weight_decay"]),
             amsgrad=bool(optimizer_spec["amsgrad"]),
         )
@@ -133,7 +172,7 @@ def train_candidate(config_id: str, artifact_root: Path, output_root: Path,
         epoch_receipts = []
         if recovery_path.exists():
             recovery = torch.load(recovery_path, map_location="cpu", weights_only=False)
-            validate_bindings(recovery)
+            binding_validator(recovery)
             if recovery["config_id"] != config_id:
                 raise ValueError("recovery config identity mismatch")
             store.load_state_dict(recovery["coordinates"])
@@ -154,10 +193,16 @@ def train_candidate(config_id: str, artifact_root: Path, output_root: Path,
             )
             workers = int(training["dataloader"]["num_workers"])
             loader = DataLoader(
-                dataset, batch_size=micro_batch, sampler=permutation.tolist(),
-                drop_last=True, num_workers=workers, persistent_workers=workers > 0,
+                dataset,
+                batch_size=micro_batch,
+                sampler=permutation.tolist(),
+                drop_last=True,
+                num_workers=workers,
+                persistent_workers=workers > 0,
                 pin_memory=True,
-                prefetch_factor=training["dataloader"]["prefetch_factor"] if workers else None,
+                prefetch_factor=training["dataloader"]["prefetch_factor"]
+                if workers
+                else None,
                 collate_fn=stage2_collate,
             )
             epoch_loss = 0.0
@@ -190,29 +235,35 @@ def train_candidate(config_id: str, artifact_root: Path, output_root: Path,
                     optimizer.step()
                     optimizer.zero_grad(set_to_none=True)
                     optimizer_step += 1
-            epoch_receipts.append({
-                "epoch": epoch,
-                "permutation_sha256": permutation_sha256(permutation),
-                "micro_batches": len(loader),
-                "mean_loss": epoch_loss / len(loader),
-            })
-            _save_torch_atomic(recovery_path, {
-                **binding, "config_id": config_id, "next_epoch": epoch + 1,
-                "optimizer_step": optimizer_step,
-                "observed_micro_batches": observed_batches,
-                "total_loss": total_loss,
-                "epoch_receipts": epoch_receipts,
-                "coordinates": store.state_dict(),
-                "optimizer": optimizer.state_dict(),
-            })
+            epoch_receipts.append(
+                {
+                    "epoch": epoch,
+                    "permutation_sha256": permutation_sha256(permutation),
+                    "micro_batches": len(loader),
+                    "mean_loss": epoch_loss / len(loader),
+                }
+            )
+            _save_torch_atomic(
+                recovery_path,
+                {
+                    **binding,
+                    "config_id": config_id,
+                    "next_epoch": epoch + 1,
+                    "optimizer_step": optimizer_step,
+                    "observed_micro_batches": observed_batches,
+                    "total_loss": total_loss,
+                    "epoch_receipts": epoch_receipts,
+                    "coordinates": store.state_dict(),
+                    "optimizer": optimizer.state_dict(),
+                },
+            )
         if optimizer_step != total_steps:
             raise RuntimeError("actual optimizer steps differ from frozen schedule")
         final_frozen = frozen_parameter_hash(model)
         if final_frozen != initial_frozen:
             raise RuntimeError("frozen base parameters changed")
         coordinates = {
-            name: tensor.detach().cpu()
-            for name, tensor in store.coordinates.items()
+            name: tensor.detach().cpu() for name, tensor in store.coordinates.items()
         }
         archive, encoding = encode_coordinates(
             coordinates, str(config["structure"]), int(config["seed"])
@@ -220,13 +271,22 @@ def train_candidate(config_id: str, artifact_root: Path, output_root: Path,
         archive_path = output / "adapter.mms2"
         archive_path.write_bytes(archive)
         checkpoint_path = output / "checkpoint.pt"
-        _save_torch_atomic(checkpoint_path, {
-            **binding, "config_id": config_id, "coordinates": coordinates,
-            "optimizer": optimizer.state_dict(), "optimizer_step": optimizer_step,
-        })
+        _save_torch_atomic(
+            checkpoint_path,
+            {
+                **binding,
+                "config_id": config_id,
+                "coordinates": coordinates,
+                "optimizer": optimizer.state_dict(),
+                "optimizer_step": optimizer_step,
+            },
+        )
         manifest = {
-            **binding, "schema_version": 1, "status": "complete",
-            "config_id": config_id, "config": config,
+            **binding,
+            "schema_version": 1,
+            "status": "complete",
+            "config_id": config_id,
+            "config": config,
             "git_commit": binding["git_commit"],
             "data_sha256": sha256_file(data_path),
             "base_checkpoint_sha256": sha256_file(checkpoint),
@@ -238,28 +298,41 @@ def train_candidate(config_id: str, artifact_root: Path, output_root: Path,
             "frozen_parameters_unchanged": True,
             "coordinate_state_sha256": tensor_state_sha256(coordinates),
             "encoding": {
-                **encoding, "path": str(archive_path),
+                **encoding,
+                "path": str(archive_path),
                 "sha256": sha256_file(archive_path),
             },
             "checkpoint": {
-                "path": str(checkpoint_path), "sha256": sha256_file(checkpoint_path),
+                "path": str(checkpoint_path),
+                "sha256": sha256_file(checkpoint_path),
             },
             "epoch_receipts": epoch_receipts,
             "runtime_seconds": time.time() - started,
         }
         write_json_atomic(complete_path, manifest)
-        write_json_atomic(status_path, {
-            **binding, "config_id": config_id, "status": "complete",
-            "manifest_sha256": sha256_file(complete_path),
-        })
+        write_json_atomic(
+            status_path,
+            {
+                **binding,
+                "config_id": config_id,
+                "status": "complete",
+                "manifest_sha256": sha256_file(complete_path),
+            },
+        )
         return manifest
     except BaseException as error:
-        write_json_atomic(status_path, {
-            **binding, "config_id": config_id, "status": "failed",
-            "error_type": type(error).__name__, "error": str(error),
-            "elapsed_seconds": time.time() - started,
-            "automatic_configuration_change": False,
-        })
+        write_json_atomic(
+            status_path,
+            {
+                **binding,
+                "config_id": config_id,
+                "status": "failed",
+                "error_type": type(error).__name__,
+                "error": str(error),
+                "elapsed_seconds": time.time() - started,
+                "automatic_configuration_change": False,
+            },
+        )
         raise
 
 
@@ -274,7 +347,9 @@ def main() -> int:
     config = load_candidate(args.config_id)
     if args.smoke_batches:
         result = {
-            **bindings(), "config_id": args.config_id, "status": "smoke_only",
+            **bindings(),
+            "config_id": args.config_id,
+            "status": "smoke_only",
             **run_synthetic_smoke(config["structure"], args.smoke_batches),
         }
     else:

@@ -1,0 +1,3905 @@
+{
+  "anchor_config": {
+    "allocation_authority": {
+      "code_relative_path": "model/global_subspace_lora.py",
+      "code_sha256": "4fcb3f0bf8786fe8eb8fce93bac32a4ec8341863c986f42a9f7c2118e2f12908",
+      "current_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 582
+      },
+      "factor_elements": {
+        "language": 50176,
+        "projector": 98304,
+        "vision": 24576
+      },
+      "protocol_relative_path": "experiments/stage2_protocol_v2.json",
+      "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3",
+      "verification": "factor_elements_from_protocol_and_M2_dimensions_match_code"
+    },
+    "anchor_id": "P-4096",
+    "authoritative_config_ids": [
+      "P-budget-4096-seed-43101",
+      "P-budget-4096-seed-43102",
+      "P-budget-4096-seed-43103"
+    ],
+    "authoritative_seeds": [
+      43101,
+      43102,
+      43103
+    ],
+    "config_id": "P-4096-anchor",
+    "coordinate_dimensions": {
+      "language": 1187,
+      "projector": 2327,
+      "vision": 582
+    },
+    "source_protocol": "/home/lizhaohui/lzq/minimind-v/experiments/phase3_private_vs_shared_v1/protocol.json",
+    "source_protocol_id": "phase3-private-vs-shared-budget-v1",
+    "structure": "P"
+  },
+  "budget_measure_after_training": "target_module_encoded_bits",
+  "capacity_points": {
+    "language": [
+      396,
+      521,
+      685,
+      902,
+      1187,
+      1562,
+      2056,
+      2706,
+      3561
+    ],
+    "projector": [
+      776,
+      1021,
+      1343,
+      1768,
+      2327,
+      3063,
+      4030,
+      5304,
+      6981
+    ],
+    "vision": [
+      194,
+      255,
+      336,
+      442,
+      582,
+      766,
+      1008,
+      1327,
+      1746
+    ]
+  },
+  "configs": [
+    {
+      "anchor_config": "P-4096-anchor",
+      "config_id": "P-4096-anchor",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-anchor",
+          "curve_name": "R_V",
+          "is_anchor": true,
+          "sweep_index": 4,
+          "target_module": "vision"
+        },
+        {
+          "config_id": "P-4096-anchor",
+          "curve_name": "R_C",
+          "is_anchor": true,
+          "sweep_index": 4,
+          "target_module": "projector"
+        },
+        {
+          "config_id": "P-4096-anchor",
+          "curve_name": "R_L",
+          "is_anchor": true,
+          "sweep_index": 4,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "shared_anchor",
+      "is_anchor": true,
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "seed": "__FIXED_PROJECTION_SEED__",
+      "sweep_index": null,
+      "target_module": null
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "config_id": "P-4096-vision-coords-194",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 194
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-194",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 0,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "is_anchor": false,
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "seed": "__FIXED_PROJECTION_SEED__",
+      "sweep_index": 0,
+      "target_module": "vision"
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "config_id": "P-4096-vision-coords-255",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 255
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-255",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 1,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "is_anchor": false,
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "seed": "__FIXED_PROJECTION_SEED__",
+      "sweep_index": 1,
+      "target_module": "vision"
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "config_id": "P-4096-vision-coords-336",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 336
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-336",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 2,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "is_anchor": false,
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "seed": "__FIXED_PROJECTION_SEED__",
+      "sweep_index": 2,
+      "target_module": "vision"
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "config_id": "P-4096-vision-coords-442",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 442
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-442",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 3,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "is_anchor": false,
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "seed": "__FIXED_PROJECTION_SEED__",
+      "sweep_index": 3,
+      "target_module": "vision"
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "config_id": "P-4096-vision-coords-766",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 766
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-766",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 5,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "is_anchor": false,
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "seed": "__FIXED_PROJECTION_SEED__",
+      "sweep_index": 5,
+      "target_module": "vision"
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "config_id": "P-4096-vision-coords-1008",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 1008
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-1008",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 6,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "is_anchor": false,
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "seed": "__FIXED_PROJECTION_SEED__",
+      "sweep_index": 6,
+      "target_module": "vision"
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "config_id": "P-4096-vision-coords-1327",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 1327
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-1327",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 7,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "is_anchor": false,
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "seed": "__FIXED_PROJECTION_SEED__",
+      "sweep_index": 7,
+      "target_module": "vision"
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "config_id": "P-4096-vision-coords-1746",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 1746
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-vision-coords-1746",
+          "curve_name": "R_V",
+          "is_anchor": false,
+          "sweep_index": 8,
+          "target_module": "vision"
+        }
+      ],
+      "curve_name": "R_V",
+      "is_anchor": false,
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "seed": "__FIXED_PROJECTION_SEED__",
+      "sweep_index": 8,
+      "target_module": "vision"
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "config_id": "P-4096-projector-coords-776",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 776,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-776",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 0,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "is_anchor": false,
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "seed": "__FIXED_PROJECTION_SEED__",
+      "sweep_index": 0,
+      "target_module": "projector"
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "config_id": "P-4096-projector-coords-1021",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 1021,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-1021",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 1,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "is_anchor": false,
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "seed": "__FIXED_PROJECTION_SEED__",
+      "sweep_index": 1,
+      "target_module": "projector"
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "config_id": "P-4096-projector-coords-1343",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 1343,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-1343",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 2,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "is_anchor": false,
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "seed": "__FIXED_PROJECTION_SEED__",
+      "sweep_index": 2,
+      "target_module": "projector"
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "config_id": "P-4096-projector-coords-1768",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 1768,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-1768",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 3,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "is_anchor": false,
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "seed": "__FIXED_PROJECTION_SEED__",
+      "sweep_index": 3,
+      "target_module": "projector"
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "config_id": "P-4096-projector-coords-3063",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 3063,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-3063",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 5,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "is_anchor": false,
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "seed": "__FIXED_PROJECTION_SEED__",
+      "sweep_index": 5,
+      "target_module": "projector"
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "config_id": "P-4096-projector-coords-4030",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 4030,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-4030",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 6,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "is_anchor": false,
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "seed": "__FIXED_PROJECTION_SEED__",
+      "sweep_index": 6,
+      "target_module": "projector"
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "config_id": "P-4096-projector-coords-5304",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 5304,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-5304",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 7,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "is_anchor": false,
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "seed": "__FIXED_PROJECTION_SEED__",
+      "sweep_index": 7,
+      "target_module": "projector"
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "config_id": "P-4096-projector-coords-6981",
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 6981,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-projector-coords-6981",
+          "curve_name": "R_C",
+          "is_anchor": false,
+          "sweep_index": 8,
+          "target_module": "projector"
+        }
+      ],
+      "curve_name": "R_C",
+      "is_anchor": false,
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "seed": "__FIXED_PROJECTION_SEED__",
+      "sweep_index": 8,
+      "target_module": "projector"
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "config_id": "P-4096-language-coords-396",
+      "coordinate_dimensions": {
+        "language": 396,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-396",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 0,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "is_anchor": false,
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "seed": "__FIXED_PROJECTION_SEED__",
+      "sweep_index": 0,
+      "target_module": "language"
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "config_id": "P-4096-language-coords-521",
+      "coordinate_dimensions": {
+        "language": 521,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-521",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 1,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "is_anchor": false,
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "seed": "__FIXED_PROJECTION_SEED__",
+      "sweep_index": 1,
+      "target_module": "language"
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "config_id": "P-4096-language-coords-685",
+      "coordinate_dimensions": {
+        "language": 685,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-685",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 2,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "is_anchor": false,
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "seed": "__FIXED_PROJECTION_SEED__",
+      "sweep_index": 2,
+      "target_module": "language"
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "config_id": "P-4096-language-coords-902",
+      "coordinate_dimensions": {
+        "language": 902,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-902",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 3,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "is_anchor": false,
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "seed": "__FIXED_PROJECTION_SEED__",
+      "sweep_index": 3,
+      "target_module": "language"
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "config_id": "P-4096-language-coords-1562",
+      "coordinate_dimensions": {
+        "language": 1562,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-1562",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 5,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "is_anchor": false,
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "seed": "__FIXED_PROJECTION_SEED__",
+      "sweep_index": 5,
+      "target_module": "language"
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "config_id": "P-4096-language-coords-2056",
+      "coordinate_dimensions": {
+        "language": 2056,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-2056",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 6,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "is_anchor": false,
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "seed": "__FIXED_PROJECTION_SEED__",
+      "sweep_index": 6,
+      "target_module": "language"
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "config_id": "P-4096-language-coords-2706",
+      "coordinate_dimensions": {
+        "language": 2706,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-2706",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 7,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "is_anchor": false,
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "seed": "__FIXED_PROJECTION_SEED__",
+      "sweep_index": 7,
+      "target_module": "language"
+    },
+    {
+      "anchor_config": "P-4096-anchor",
+      "config_id": "P-4096-language-coords-3561",
+      "coordinate_dimensions": {
+        "language": 3561,
+        "projector": 2327,
+        "vision": 582
+      },
+      "curve_memberships": [
+        {
+          "config_id": "P-4096-language-coords-3561",
+          "curve_name": "R_L",
+          "is_anchor": false,
+          "sweep_index": 8,
+          "target_module": "language"
+        }
+      ],
+      "curve_name": "R_L",
+      "is_anchor": false,
+      "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+      "seed": "__FIXED_PROJECTION_SEED__",
+      "sweep_index": 8,
+      "target_module": "language"
+    }
+  ],
+  "coordinate_dimension_role": "trainable_capacity_control_only",
+  "curve_names": {
+    "language": "R_L",
+    "projector": "R_C",
+    "vision": "R_V"
+  },
+  "curve_point_membership_count": 27,
+  "curves": {
+    "language": [
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-language-coords-396",
+        "coordinate_dimensions": {
+          "language": 396,
+          "projector": 2327,
+          "vision": 582
+        },
+        "curve_name": "R_L",
+        "is_anchor": false,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 0,
+        "target_module": "language"
+      },
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-language-coords-521",
+        "coordinate_dimensions": {
+          "language": 521,
+          "projector": 2327,
+          "vision": 582
+        },
+        "curve_name": "R_L",
+        "is_anchor": false,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 1,
+        "target_module": "language"
+      },
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-language-coords-685",
+        "coordinate_dimensions": {
+          "language": 685,
+          "projector": 2327,
+          "vision": 582
+        },
+        "curve_name": "R_L",
+        "is_anchor": false,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 2,
+        "target_module": "language"
+      },
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-language-coords-902",
+        "coordinate_dimensions": {
+          "language": 902,
+          "projector": 2327,
+          "vision": 582
+        },
+        "curve_name": "R_L",
+        "is_anchor": false,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 3,
+        "target_module": "language"
+      },
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-anchor",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 582
+        },
+        "curve_name": "R_L",
+        "is_anchor": true,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 4,
+        "target_module": "language"
+      },
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-language-coords-1562",
+        "coordinate_dimensions": {
+          "language": 1562,
+          "projector": 2327,
+          "vision": 582
+        },
+        "curve_name": "R_L",
+        "is_anchor": false,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 5,
+        "target_module": "language"
+      },
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-language-coords-2056",
+        "coordinate_dimensions": {
+          "language": 2056,
+          "projector": 2327,
+          "vision": 582
+        },
+        "curve_name": "R_L",
+        "is_anchor": false,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 6,
+        "target_module": "language"
+      },
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-language-coords-2706",
+        "coordinate_dimensions": {
+          "language": 2706,
+          "projector": 2327,
+          "vision": 582
+        },
+        "curve_name": "R_L",
+        "is_anchor": false,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 7,
+        "target_module": "language"
+      },
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-language-coords-3561",
+        "coordinate_dimensions": {
+          "language": 3561,
+          "projector": 2327,
+          "vision": 582
+        },
+        "curve_name": "R_L",
+        "is_anchor": false,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 8,
+        "target_module": "language"
+      }
+    ],
+    "projector": [
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-projector-coords-776",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 776,
+          "vision": 582
+        },
+        "curve_name": "R_C",
+        "is_anchor": false,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 0,
+        "target_module": "projector"
+      },
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-projector-coords-1021",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 1021,
+          "vision": 582
+        },
+        "curve_name": "R_C",
+        "is_anchor": false,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 1,
+        "target_module": "projector"
+      },
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-projector-coords-1343",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 1343,
+          "vision": 582
+        },
+        "curve_name": "R_C",
+        "is_anchor": false,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 2,
+        "target_module": "projector"
+      },
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-projector-coords-1768",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 1768,
+          "vision": 582
+        },
+        "curve_name": "R_C",
+        "is_anchor": false,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 3,
+        "target_module": "projector"
+      },
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-anchor",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 582
+        },
+        "curve_name": "R_C",
+        "is_anchor": true,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 4,
+        "target_module": "projector"
+      },
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-projector-coords-3063",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 3063,
+          "vision": 582
+        },
+        "curve_name": "R_C",
+        "is_anchor": false,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 5,
+        "target_module": "projector"
+      },
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-projector-coords-4030",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 4030,
+          "vision": 582
+        },
+        "curve_name": "R_C",
+        "is_anchor": false,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 6,
+        "target_module": "projector"
+      },
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-projector-coords-5304",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 5304,
+          "vision": 582
+        },
+        "curve_name": "R_C",
+        "is_anchor": false,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 7,
+        "target_module": "projector"
+      },
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-projector-coords-6981",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 6981,
+          "vision": 582
+        },
+        "curve_name": "R_C",
+        "is_anchor": false,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 8,
+        "target_module": "projector"
+      }
+    ],
+    "vision": [
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-vision-coords-194",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 194
+        },
+        "curve_name": "R_V",
+        "is_anchor": false,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 0,
+        "target_module": "vision"
+      },
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-vision-coords-255",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 255
+        },
+        "curve_name": "R_V",
+        "is_anchor": false,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 1,
+        "target_module": "vision"
+      },
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-vision-coords-336",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 336
+        },
+        "curve_name": "R_V",
+        "is_anchor": false,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 2,
+        "target_module": "vision"
+      },
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-vision-coords-442",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 442
+        },
+        "curve_name": "R_V",
+        "is_anchor": false,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 3,
+        "target_module": "vision"
+      },
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-anchor",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 582
+        },
+        "curve_name": "R_V",
+        "is_anchor": true,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 4,
+        "target_module": "vision"
+      },
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-vision-coords-766",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 766
+        },
+        "curve_name": "R_V",
+        "is_anchor": false,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 5,
+        "target_module": "vision"
+      },
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-vision-coords-1008",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 1008
+        },
+        "curve_name": "R_V",
+        "is_anchor": false,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 6,
+        "target_module": "vision"
+      },
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-vision-coords-1327",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 1327
+        },
+        "curve_name": "R_V",
+        "is_anchor": false,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 7,
+        "target_module": "vision"
+      },
+      {
+        "anchor_config": "P-4096-anchor",
+        "config_id": "P-4096-vision-coords-1746",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 1746
+        },
+        "curve_name": "R_V",
+        "is_anchor": false,
+        "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+        "seed": "__FIXED_PROJECTION_SEED__",
+        "sweep_index": 8,
+        "target_module": "vision"
+      }
+    ]
+  },
+  "distinct_config_count": 25,
+  "execution_scope": {
+    "formal_codec_statistics_executed": false,
+    "formal_training_executed": false,
+    "risk_evaluation_executed": false
+  },
+  "preflight": {
+    "distinct_configs_checked": 25,
+    "illegal_config_count": 0,
+    "illegal_configs": [],
+    "legal_config_count": 25,
+    "model_construction_seed": 43101,
+    "model_construction_seed_role": "preflight_only_not_formal_seed",
+    "results": [
+      {
+        "checks": {
+          "construction_device": "cpu",
+          "construction_seed": 43101,
+          "expected_trainable_parameter_count": 4096,
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_match_anchor": true,
+          "private_parameter_object_count": 3,
+          "private_parameter_storage_count": 3,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "f23a75d9118ec82647ac9df437d499493f8229b356015cdb8288a814babc410e",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 61,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "f23a75d9118ec82647ac9df437d499493f8229b356015cdb8288a814babc410e",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "e4b972b1df681b3b6b8c332d57e5d16dea56d2fab512c9ee3fbd761ad08fdf62",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 68,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 65,
+                  "minimum_uses_per_coordinate": 25,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "e4b972b1df681b3b6b8c332d57e5d16dea56d2fab512c9ee3fbd761ad08fdf62",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "42f7326fa8571c77128e244b7edeeddfd413ce19a07a44808cff628ed9ad2ab0",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 70,
+                  "minimum_uses_per_coordinate": 24,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 71,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "42f7326fa8571c77128e244b7edeeddfd413ce19a07a44808cff628ed9ad2ab0",
+              "reproducible": true
+            }
+          },
+          "target_dimension_legal": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 4096,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "config_id": "P-4096-anchor",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 582
+        },
+        "curve_name": "shared_anchor",
+        "error": null,
+        "nearest_legal_capacity_candidate": null,
+        "status": "legal",
+        "target_module": null
+      },
+      {
+        "checks": {
+          "construction_device": "cpu",
+          "construction_seed": 43101,
+          "expected_trainable_parameter_count": 3708,
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_match_anchor": true,
+          "private_parameter_object_count": 3,
+          "private_parameter_storage_count": 3,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "9e9cb50e90daa09c0273d3146d560612e0ff5a1beaace0bd01c26cc44773ad71",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 61,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 194,
+                  "maximum_uses_per_coordinate": 159,
+                  "minimum_uses_per_coordinate": 100,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "9e9cb50e90daa09c0273d3146d560612e0ff5a1beaace0bd01c26cc44773ad71",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "2d9e64d8f8480d2adabf7c98b9bbbd2117f180da3f0d56df388f9096b6a0e2c2",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 68,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 194,
+                  "maximum_uses_per_coordinate": 167,
+                  "minimum_uses_per_coordinate": 93,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "2d9e64d8f8480d2adabf7c98b9bbbd2117f180da3f0d56df388f9096b6a0e2c2",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "1f87deb4ab913f08ed8f35431b043a3d2b87a9fabb42a466d2b31b4ab2742122",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 70,
+                  "minimum_uses_per_coordinate": 24,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 194,
+                  "maximum_uses_per_coordinate": 168,
+                  "minimum_uses_per_coordinate": 97,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "1f87deb4ab913f08ed8f35431b043a3d2b87a9fabb42a466d2b31b4ab2742122",
+              "reproducible": true
+            }
+          },
+          "target_dimension_legal": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 3708,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "config_id": "P-4096-vision-coords-194",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 194
+        },
+        "curve_name": "R_V",
+        "error": null,
+        "nearest_legal_capacity_candidate": null,
+        "status": "legal",
+        "target_module": "vision"
+      },
+      {
+        "checks": {
+          "construction_device": "cpu",
+          "construction_seed": 43101,
+          "expected_trainable_parameter_count": 3769,
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_match_anchor": true,
+          "private_parameter_object_count": 3,
+          "private_parameter_storage_count": 3,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "07238322b3121744ca77518572e319aa5ee2553a9dbdcf4285f527ecb1d0ed08",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 61,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 255,
+                  "maximum_uses_per_coordinate": 126,
+                  "minimum_uses_per_coordinate": 71,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "07238322b3121744ca77518572e319aa5ee2553a9dbdcf4285f527ecb1d0ed08",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "dcf0953c84ecb76318ea1421ef2284075381ae54dfbfdb5c3e978547bf6cef86",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 68,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 255,
+                  "maximum_uses_per_coordinate": 126,
+                  "minimum_uses_per_coordinate": 70,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "dcf0953c84ecb76318ea1421ef2284075381ae54dfbfdb5c3e978547bf6cef86",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "a358af6bff1789b1ed29015a89e1c4e31fd82b55edcfab66ae20b15e997921ee",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 70,
+                  "minimum_uses_per_coordinate": 24,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 255,
+                  "maximum_uses_per_coordinate": 127,
+                  "minimum_uses_per_coordinate": 69,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "a358af6bff1789b1ed29015a89e1c4e31fd82b55edcfab66ae20b15e997921ee",
+              "reproducible": true
+            }
+          },
+          "target_dimension_legal": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 3769,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "config_id": "P-4096-vision-coords-255",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 255
+        },
+        "curve_name": "R_V",
+        "error": null,
+        "nearest_legal_capacity_candidate": null,
+        "status": "legal",
+        "target_module": "vision"
+      },
+      {
+        "checks": {
+          "construction_device": "cpu",
+          "construction_seed": 43101,
+          "expected_trainable_parameter_count": 3850,
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_match_anchor": true,
+          "private_parameter_object_count": 3,
+          "private_parameter_storage_count": 3,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "d3cb5ffebdc4a31d4a8abffdbf30c4870f714dfa41336e5feff2897a86df052f",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 61,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 336,
+                  "maximum_uses_per_coordinate": 107,
+                  "minimum_uses_per_coordinate": 52,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "d3cb5ffebdc4a31d4a8abffdbf30c4870f714dfa41336e5feff2897a86df052f",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "61f95484ac5ffc0830860554d3da85f07d1b6cd9da7c9072e1ede521a84ce72b",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 68,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 336,
+                  "maximum_uses_per_coordinate": 98,
+                  "minimum_uses_per_coordinate": 52,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "61f95484ac5ffc0830860554d3da85f07d1b6cd9da7c9072e1ede521a84ce72b",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "aafb198b7bb0c146f4e307d78ee686cbfe68c284b58d7b1ce1b9df4646d1dc34",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 70,
+                  "minimum_uses_per_coordinate": 24,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 336,
+                  "maximum_uses_per_coordinate": 104,
+                  "minimum_uses_per_coordinate": 51,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "aafb198b7bb0c146f4e307d78ee686cbfe68c284b58d7b1ce1b9df4646d1dc34",
+              "reproducible": true
+            }
+          },
+          "target_dimension_legal": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 3850,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "config_id": "P-4096-vision-coords-336",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 336
+        },
+        "curve_name": "R_V",
+        "error": null,
+        "nearest_legal_capacity_candidate": null,
+        "status": "legal",
+        "target_module": "vision"
+      },
+      {
+        "checks": {
+          "construction_device": "cpu",
+          "construction_seed": 43101,
+          "expected_trainable_parameter_count": 3956,
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_match_anchor": true,
+          "private_parameter_object_count": 3,
+          "private_parameter_storage_count": 3,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "76efa5c3fbb639660527bb79ba7dc6dfd0dcdb1aec605f9ee5e704cc8f5e72fe",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 61,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 442,
+                  "maximum_uses_per_coordinate": 77,
+                  "minimum_uses_per_coordinate": 37,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "76efa5c3fbb639660527bb79ba7dc6dfd0dcdb1aec605f9ee5e704cc8f5e72fe",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "bddb662b648b482f919819ec87067d8457f9e0d888a289f2a7edb70b107f556d",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 68,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 442,
+                  "maximum_uses_per_coordinate": 77,
+                  "minimum_uses_per_coordinate": 36,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "bddb662b648b482f919819ec87067d8457f9e0d888a289f2a7edb70b107f556d",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "14288b3553605ebb4ae7eff8a41733abc3395a337520bacae7f1abba5a59ce32",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 70,
+                  "minimum_uses_per_coordinate": 24,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 442,
+                  "maximum_uses_per_coordinate": 76,
+                  "minimum_uses_per_coordinate": 36,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "14288b3553605ebb4ae7eff8a41733abc3395a337520bacae7f1abba5a59ce32",
+              "reproducible": true
+            }
+          },
+          "target_dimension_legal": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 3956,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "config_id": "P-4096-vision-coords-442",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 442
+        },
+        "curve_name": "R_V",
+        "error": null,
+        "nearest_legal_capacity_candidate": null,
+        "status": "legal",
+        "target_module": "vision"
+      },
+      {
+        "checks": {
+          "construction_device": "cpu",
+          "construction_seed": 43101,
+          "expected_trainable_parameter_count": 4280,
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_match_anchor": true,
+          "private_parameter_object_count": 3,
+          "private_parameter_storage_count": 3,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "dbeb1e7ababa2c51fd58072fcfa3ce42e5b480be6520cda47ce89ad3dc114435",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 61,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 766,
+                  "maximum_uses_per_coordinate": 51,
+                  "minimum_uses_per_coordinate": 16,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "dbeb1e7ababa2c51fd58072fcfa3ce42e5b480be6520cda47ce89ad3dc114435",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "a61ea359ce21f89cc7d8805ad731ec298e66cf62a9fe302e44b3cce357abe327",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 68,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 766,
+                  "maximum_uses_per_coordinate": 50,
+                  "minimum_uses_per_coordinate": 17,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "a61ea359ce21f89cc7d8805ad731ec298e66cf62a9fe302e44b3cce357abe327",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "c109a8e8a5555e3b36ad3829bf72b73ee9d9c472e5f0a8c6eada7e73f0271f8c",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 70,
+                  "minimum_uses_per_coordinate": 24,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 766,
+                  "maximum_uses_per_coordinate": 51,
+                  "minimum_uses_per_coordinate": 16,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "c109a8e8a5555e3b36ad3829bf72b73ee9d9c472e5f0a8c6eada7e73f0271f8c",
+              "reproducible": true
+            }
+          },
+          "target_dimension_legal": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 4280,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "config_id": "P-4096-vision-coords-766",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 766
+        },
+        "curve_name": "R_V",
+        "error": null,
+        "nearest_legal_capacity_candidate": null,
+        "status": "legal",
+        "target_module": "vision"
+      },
+      {
+        "checks": {
+          "construction_device": "cpu",
+          "construction_seed": 43101,
+          "expected_trainable_parameter_count": 4522,
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_match_anchor": true,
+          "private_parameter_object_count": 3,
+          "private_parameter_storage_count": 3,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "402481d5c166f96c28c5f992cf52f9fd1246be5a0b35ce489a58837f9f0b321f",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 61,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 1008,
+                  "maximum_uses_per_coordinate": 45,
+                  "minimum_uses_per_coordinate": 11,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "402481d5c166f96c28c5f992cf52f9fd1246be5a0b35ce489a58837f9f0b321f",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "5948a4e052e70bae816e68a9d58405d8de4f2a29021b417ca24595e301630822",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 68,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 1008,
+                  "maximum_uses_per_coordinate": 41,
+                  "minimum_uses_per_coordinate": 8,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "5948a4e052e70bae816e68a9d58405d8de4f2a29021b417ca24595e301630822",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "febc357ea7db5671abb7a1a6169d08b6ff317bd47ebc090dec0e32bbd0437494",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 70,
+                  "minimum_uses_per_coordinate": 24,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 1008,
+                  "maximum_uses_per_coordinate": 41,
+                  "minimum_uses_per_coordinate": 11,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "febc357ea7db5671abb7a1a6169d08b6ff317bd47ebc090dec0e32bbd0437494",
+              "reproducible": true
+            }
+          },
+          "target_dimension_legal": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 4522,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "config_id": "P-4096-vision-coords-1008",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 1008
+        },
+        "curve_name": "R_V",
+        "error": null,
+        "nearest_legal_capacity_candidate": null,
+        "status": "legal",
+        "target_module": "vision"
+      },
+      {
+        "checks": {
+          "construction_device": "cpu",
+          "construction_seed": 43101,
+          "expected_trainable_parameter_count": 4841,
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_match_anchor": true,
+          "private_parameter_object_count": 3,
+          "private_parameter_storage_count": 3,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "762590c0d2f2a065b29eef1110415c08c1310d290e7cf5e32cafc6bd2f331478",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 61,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 1327,
+                  "maximum_uses_per_coordinate": 34,
+                  "minimum_uses_per_coordinate": 7,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "762590c0d2f2a065b29eef1110415c08c1310d290e7cf5e32cafc6bd2f331478",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "f365b9f0df2ec376862d044f7d3b991147727aa6a2df28fe4cddb8b03115d99d",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 68,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 1327,
+                  "maximum_uses_per_coordinate": 35,
+                  "minimum_uses_per_coordinate": 4,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "f365b9f0df2ec376862d044f7d3b991147727aa6a2df28fe4cddb8b03115d99d",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "3e20e75a0baa3c79dd617b5b87dd9d3adfb1ee8a48802b3696ef59d99598ef8c",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 70,
+                  "minimum_uses_per_coordinate": 24,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 1327,
+                  "maximum_uses_per_coordinate": 35,
+                  "minimum_uses_per_coordinate": 8,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "3e20e75a0baa3c79dd617b5b87dd9d3adfb1ee8a48802b3696ef59d99598ef8c",
+              "reproducible": true
+            }
+          },
+          "target_dimension_legal": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 4841,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "config_id": "P-4096-vision-coords-1327",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 1327
+        },
+        "curve_name": "R_V",
+        "error": null,
+        "nearest_legal_capacity_candidate": null,
+        "status": "legal",
+        "target_module": "vision"
+      },
+      {
+        "checks": {
+          "construction_device": "cpu",
+          "construction_seed": 43101,
+          "expected_trainable_parameter_count": 5260,
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_match_anchor": true,
+          "private_parameter_object_count": 3,
+          "private_parameter_storage_count": 3,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "1687a6754c9ce52cc6770d9c228cb621652f34e87e8099d00d650c53a2528e33",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 61,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 1746,
+                  "maximum_uses_per_coordinate": 27,
+                  "minimum_uses_per_coordinate": 5,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "1687a6754c9ce52cc6770d9c228cb621652f34e87e8099d00d650c53a2528e33",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "da66f6b03a6646693fd898396e8d006f123b36225a5c3ebea55c67a1a4802127",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 68,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 1746,
+                  "maximum_uses_per_coordinate": 31,
+                  "minimum_uses_per_coordinate": 2,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "da66f6b03a6646693fd898396e8d006f123b36225a5c3ebea55c67a1a4802127",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "2e85f754e61232cec7469e3605e8d8356ee491bfae946fe653cb92b9cd5ce1da",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 70,
+                  "minimum_uses_per_coordinate": 24,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 1746,
+                  "maximum_uses_per_coordinate": 30,
+                  "minimum_uses_per_coordinate": 4,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "2e85f754e61232cec7469e3605e8d8356ee491bfae946fe653cb92b9cd5ce1da",
+              "reproducible": true
+            }
+          },
+          "target_dimension_legal": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 5260,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "config_id": "P-4096-vision-coords-1746",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 1746
+        },
+        "curve_name": "R_V",
+        "error": null,
+        "nearest_legal_capacity_candidate": null,
+        "status": "legal",
+        "target_module": "vision"
+      },
+      {
+        "checks": {
+          "construction_device": "cpu",
+          "construction_seed": 43101,
+          "expected_trainable_parameter_count": 2545,
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_match_anchor": true,
+          "private_parameter_object_count": 3,
+          "private_parameter_storage_count": 3,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "e6ecaacb4e7c17885536f80793b39db422339c3269a04a09c765782b5791a278",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 61,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 776,
+                  "maximum_uses_per_coordinate": 162,
+                  "minimum_uses_per_coordinate": 90,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "e6ecaacb4e7c17885536f80793b39db422339c3269a04a09c765782b5791a278",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "72b7c528d993c4c24bc4a79d30f7cea31bf4900d31b74b26a6ee5673c98ceb0f",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 776,
+                  "maximum_uses_per_coordinate": 161,
+                  "minimum_uses_per_coordinate": 93,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 65,
+                  "minimum_uses_per_coordinate": 25,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "72b7c528d993c4c24bc4a79d30f7cea31bf4900d31b74b26a6ee5673c98ceb0f",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "41035b39ec8385fc96e56a534bf004ac56b74828544336d98480d9def872f7f2",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 70,
+                  "minimum_uses_per_coordinate": 24,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 776,
+                  "maximum_uses_per_coordinate": 168,
+                  "minimum_uses_per_coordinate": 89,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 71,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "41035b39ec8385fc96e56a534bf004ac56b74828544336d98480d9def872f7f2",
+              "reproducible": true
+            }
+          },
+          "target_dimension_legal": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 2545,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "config_id": "P-4096-projector-coords-776",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 776,
+          "vision": 582
+        },
+        "curve_name": "R_C",
+        "error": null,
+        "nearest_legal_capacity_candidate": null,
+        "status": "legal",
+        "target_module": "projector"
+      },
+      {
+        "checks": {
+          "construction_device": "cpu",
+          "construction_seed": 43101,
+          "expected_trainable_parameter_count": 2790,
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_match_anchor": true,
+          "private_parameter_object_count": 3,
+          "private_parameter_storage_count": 3,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "6c777529f2797a13b2a202e0da715f166c39974dd17aaf6e5165298ed7f290dc",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 61,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 1021,
+                  "maximum_uses_per_coordinate": 128,
+                  "minimum_uses_per_coordinate": 70,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "6c777529f2797a13b2a202e0da715f166c39974dd17aaf6e5165298ed7f290dc",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "98ab9f79040049739be8c2fb231c8b11427dde6b8a83ce7fcdca4982327b7806",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 1021,
+                  "maximum_uses_per_coordinate": 131,
+                  "minimum_uses_per_coordinate": 65,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 65,
+                  "minimum_uses_per_coordinate": 25,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "98ab9f79040049739be8c2fb231c8b11427dde6b8a83ce7fcdca4982327b7806",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "19655380f1d02762d0233cdc064ae58a146033f45bb4e22468131871f8720c64",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 70,
+                  "minimum_uses_per_coordinate": 24,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 1021,
+                  "maximum_uses_per_coordinate": 130,
+                  "minimum_uses_per_coordinate": 71,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 71,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "19655380f1d02762d0233cdc064ae58a146033f45bb4e22468131871f8720c64",
+              "reproducible": true
+            }
+          },
+          "target_dimension_legal": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 2790,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "config_id": "P-4096-projector-coords-1021",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 1021,
+          "vision": 582
+        },
+        "curve_name": "R_C",
+        "error": null,
+        "nearest_legal_capacity_candidate": null,
+        "status": "legal",
+        "target_module": "projector"
+      },
+      {
+        "checks": {
+          "construction_device": "cpu",
+          "construction_seed": 43101,
+          "expected_trainable_parameter_count": 3112,
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_match_anchor": true,
+          "private_parameter_object_count": 3,
+          "private_parameter_storage_count": 3,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "53103ec61faade67d45709d10b7e276e538c742e5ebafff996a6a423bdbf5d88",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 61,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 1343,
+                  "maximum_uses_per_coordinate": 107,
+                  "minimum_uses_per_coordinate": 39,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "53103ec61faade67d45709d10b7e276e538c742e5ebafff996a6a423bdbf5d88",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "7ece63502e0f3c996c88f2cab10a3eb06b1e4494e34bc2b58ece28a2f3597571",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 1343,
+                  "maximum_uses_per_coordinate": 103,
+                  "minimum_uses_per_coordinate": 51,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 65,
+                  "minimum_uses_per_coordinate": 25,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "7ece63502e0f3c996c88f2cab10a3eb06b1e4494e34bc2b58ece28a2f3597571",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "bc5daa0bf191d0b0615ddb36e8406fa88e6d24fd7151f366b0dbf657d203fede",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 70,
+                  "minimum_uses_per_coordinate": 24,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 1343,
+                  "maximum_uses_per_coordinate": 105,
+                  "minimum_uses_per_coordinate": 45,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 71,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "bc5daa0bf191d0b0615ddb36e8406fa88e6d24fd7151f366b0dbf657d203fede",
+              "reproducible": true
+            }
+          },
+          "target_dimension_legal": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 3112,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "config_id": "P-4096-projector-coords-1343",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 1343,
+          "vision": 582
+        },
+        "curve_name": "R_C",
+        "error": null,
+        "nearest_legal_capacity_candidate": null,
+        "status": "legal",
+        "target_module": "projector"
+      },
+      {
+        "checks": {
+          "construction_device": "cpu",
+          "construction_seed": 43101,
+          "expected_trainable_parameter_count": 3537,
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_match_anchor": true,
+          "private_parameter_object_count": 3,
+          "private_parameter_storage_count": 3,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "fc50b7f3867414bcd7a9fa504d2f762c2920f6755b9c2f8a170a880f7a2336cb",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 61,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 1768,
+                  "maximum_uses_per_coordinate": 80,
+                  "minimum_uses_per_coordinate": 29,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "fc50b7f3867414bcd7a9fa504d2f762c2920f6755b9c2f8a170a880f7a2336cb",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "26898e55a3c9e1c86c28f31c217ecafa74c7fbb92d98bd5cf6b0ea034e856df2",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 1768,
+                  "maximum_uses_per_coordinate": 91,
+                  "minimum_uses_per_coordinate": 34,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 65,
+                  "minimum_uses_per_coordinate": 25,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "26898e55a3c9e1c86c28f31c217ecafa74c7fbb92d98bd5cf6b0ea034e856df2",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "99c041cfb32242fa107fd4b44bf0a660edfd58bbede8f246bf56cbf311325d01",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 70,
+                  "minimum_uses_per_coordinate": 24,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 1768,
+                  "maximum_uses_per_coordinate": 79,
+                  "minimum_uses_per_coordinate": 33,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 71,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "99c041cfb32242fa107fd4b44bf0a660edfd58bbede8f246bf56cbf311325d01",
+              "reproducible": true
+            }
+          },
+          "target_dimension_legal": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 3537,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "config_id": "P-4096-projector-coords-1768",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 1768,
+          "vision": 582
+        },
+        "curve_name": "R_C",
+        "error": null,
+        "nearest_legal_capacity_candidate": null,
+        "status": "legal",
+        "target_module": "projector"
+      },
+      {
+        "checks": {
+          "construction_device": "cpu",
+          "construction_seed": 43101,
+          "expected_trainable_parameter_count": 4832,
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_match_anchor": true,
+          "private_parameter_object_count": 3,
+          "private_parameter_storage_count": 3,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "3e946c5bbd0051d0de0d749ebb2a524b7fcf2a1d120ba8e89e71e41c1ffe3d36",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 61,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 3063,
+                  "maximum_uses_per_coordinate": 51,
+                  "minimum_uses_per_coordinate": 14,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "3e946c5bbd0051d0de0d749ebb2a524b7fcf2a1d120ba8e89e71e41c1ffe3d36",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "d7b5e5af62f2bc45a8c0c9480f811512cdd12c10a42bf0aeaeca4794f919cfec",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 3063,
+                  "maximum_uses_per_coordinate": 53,
+                  "minimum_uses_per_coordinate": 14,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 65,
+                  "minimum_uses_per_coordinate": 25,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "d7b5e5af62f2bc45a8c0c9480f811512cdd12c10a42bf0aeaeca4794f919cfec",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "efcadda8886a9357b30783fa9525b607e4ba49f39516e431bcedb4214e107f72",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 70,
+                  "minimum_uses_per_coordinate": 24,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 3063,
+                  "maximum_uses_per_coordinate": 53,
+                  "minimum_uses_per_coordinate": 9,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 71,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "efcadda8886a9357b30783fa9525b607e4ba49f39516e431bcedb4214e107f72",
+              "reproducible": true
+            }
+          },
+          "target_dimension_legal": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 4832,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "config_id": "P-4096-projector-coords-3063",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 3063,
+          "vision": 582
+        },
+        "curve_name": "R_C",
+        "error": null,
+        "nearest_legal_capacity_candidate": null,
+        "status": "legal",
+        "target_module": "projector"
+      },
+      {
+        "checks": {
+          "construction_device": "cpu",
+          "construction_seed": 43101,
+          "expected_trainable_parameter_count": 5799,
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_match_anchor": true,
+          "private_parameter_object_count": 3,
+          "private_parameter_storage_count": 3,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "0c62c05927f88d83000a6f4d875a1d14500c258fb95888dfc63a769183108665",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 61,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 4030,
+                  "maximum_uses_per_coordinate": 44,
+                  "minimum_uses_per_coordinate": 5,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "0c62c05927f88d83000a6f4d875a1d14500c258fb95888dfc63a769183108665",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "e3b69a054e330c161eb26955c9a3af23a9288d67eb8c3a4ca776a2127f476fbb",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 4030,
+                  "maximum_uses_per_coordinate": 44,
+                  "minimum_uses_per_coordinate": 10,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 65,
+                  "minimum_uses_per_coordinate": 25,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "e3b69a054e330c161eb26955c9a3af23a9288d67eb8c3a4ca776a2127f476fbb",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "ee41c7984f0024e29a515d6e20b3acb83e6de3986fb0fafbe20a2940a1b53259",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 70,
+                  "minimum_uses_per_coordinate": 24,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 4030,
+                  "maximum_uses_per_coordinate": 43,
+                  "minimum_uses_per_coordinate": 8,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 71,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "ee41c7984f0024e29a515d6e20b3acb83e6de3986fb0fafbe20a2940a1b53259",
+              "reproducible": true
+            }
+          },
+          "target_dimension_legal": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 5799,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "config_id": "P-4096-projector-coords-4030",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 4030,
+          "vision": 582
+        },
+        "curve_name": "R_C",
+        "error": null,
+        "nearest_legal_capacity_candidate": null,
+        "status": "legal",
+        "target_module": "projector"
+      },
+      {
+        "checks": {
+          "construction_device": "cpu",
+          "construction_seed": 43101,
+          "expected_trainable_parameter_count": 7073,
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_match_anchor": true,
+          "private_parameter_object_count": 3,
+          "private_parameter_storage_count": 3,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "61082fca980bbc5a093c5288ae36f2a84353d39288a9e492923bdef58b8a54dc",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 61,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 5304,
+                  "maximum_uses_per_coordinate": 36,
+                  "minimum_uses_per_coordinate": 5,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "61082fca980bbc5a093c5288ae36f2a84353d39288a9e492923bdef58b8a54dc",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "d3a6f77580dba865ebe65e3427cff42bd93655d5fcc9899ecf98849644b3ac35",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 5304,
+                  "maximum_uses_per_coordinate": 40,
+                  "minimum_uses_per_coordinate": 5,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 65,
+                  "minimum_uses_per_coordinate": 25,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "d3a6f77580dba865ebe65e3427cff42bd93655d5fcc9899ecf98849644b3ac35",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "833b7f1d987872906dfc4bc620c773cb6cbb10fcfcde96823fa195685f105c39",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 70,
+                  "minimum_uses_per_coordinate": 24,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 5304,
+                  "maximum_uses_per_coordinate": 35,
+                  "minimum_uses_per_coordinate": 5,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 71,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "833b7f1d987872906dfc4bc620c773cb6cbb10fcfcde96823fa195685f105c39",
+              "reproducible": true
+            }
+          },
+          "target_dimension_legal": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 7073,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "config_id": "P-4096-projector-coords-5304",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 5304,
+          "vision": 582
+        },
+        "curve_name": "R_C",
+        "error": null,
+        "nearest_legal_capacity_candidate": null,
+        "status": "legal",
+        "target_module": "projector"
+      },
+      {
+        "checks": {
+          "construction_device": "cpu",
+          "construction_seed": 43101,
+          "expected_trainable_parameter_count": 8750,
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_match_anchor": true,
+          "private_parameter_object_count": 3,
+          "private_parameter_storage_count": 3,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "2da5ea76e37f17ecc051b8056c84a262193f82f11af6e615f842056f00f67d8a",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 61,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 6981,
+                  "maximum_uses_per_coordinate": 31,
+                  "minimum_uses_per_coordinate": 2,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "2da5ea76e37f17ecc051b8056c84a262193f82f11af6e615f842056f00f67d8a",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "774679fea779426b22c08053aad47e7d3db124ac531ed6dfb8888569fa8f80d9",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 6981,
+                  "maximum_uses_per_coordinate": 30,
+                  "minimum_uses_per_coordinate": 2,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 65,
+                  "minimum_uses_per_coordinate": 25,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "774679fea779426b22c08053aad47e7d3db124ac531ed6dfb8888569fa8f80d9",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "66e20466a1161bb8896eef11c4017afa41b553e750fb4419d398a31248b29e37",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1187,
+                  "maximum_uses_per_coordinate": 70,
+                  "minimum_uses_per_coordinate": 24,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 6981,
+                  "maximum_uses_per_coordinate": 31,
+                  "minimum_uses_per_coordinate": 2,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 71,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "66e20466a1161bb8896eef11c4017afa41b553e750fb4419d398a31248b29e37",
+              "reproducible": true
+            }
+          },
+          "target_dimension_legal": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 8750,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "config_id": "P-4096-projector-coords-6981",
+        "coordinate_dimensions": {
+          "language": 1187,
+          "projector": 6981,
+          "vision": 582
+        },
+        "curve_name": "R_C",
+        "error": null,
+        "nearest_legal_capacity_candidate": null,
+        "status": "legal",
+        "target_module": "projector"
+      },
+      {
+        "checks": {
+          "construction_device": "cpu",
+          "construction_seed": 43101,
+          "expected_trainable_parameter_count": 3305,
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_match_anchor": true,
+          "private_parameter_object_count": 3,
+          "private_parameter_storage_count": 3,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "4e18fc697afe8d788c2e6e2bf55f457a5c30e75ddce660e8187674871da66b04",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 396,
+                  "maximum_uses_per_coordinate": 157,
+                  "minimum_uses_per_coordinate": 100,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "4e18fc697afe8d788c2e6e2bf55f457a5c30e75ddce660e8187674871da66b04",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "3e1fc740a3d278d60b5cdb86010e004b664b72eddfb7d4fa92db341dcabcb3f2",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 396,
+                  "maximum_uses_per_coordinate": 154,
+                  "minimum_uses_per_coordinate": 91,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 68,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 65,
+                  "minimum_uses_per_coordinate": 25,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "3e1fc740a3d278d60b5cdb86010e004b664b72eddfb7d4fa92db341dcabcb3f2",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "40e873fab45e005a3fbd1e3263c98ddea381438c3b657cda6ae2b327e59bbad1",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 396,
+                  "maximum_uses_per_coordinate": 159,
+                  "minimum_uses_per_coordinate": 95,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 71,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "40e873fab45e005a3fbd1e3263c98ddea381438c3b657cda6ae2b327e59bbad1",
+              "reproducible": true
+            }
+          },
+          "target_dimension_legal": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 3305,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "config_id": "P-4096-language-coords-396",
+        "coordinate_dimensions": {
+          "language": 396,
+          "projector": 2327,
+          "vision": 582
+        },
+        "curve_name": "R_L",
+        "error": null,
+        "nearest_legal_capacity_candidate": null,
+        "status": "legal",
+        "target_module": "language"
+      },
+      {
+        "checks": {
+          "construction_device": "cpu",
+          "construction_seed": 43101,
+          "expected_trainable_parameter_count": 3430,
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_match_anchor": true,
+          "private_parameter_object_count": 3,
+          "private_parameter_storage_count": 3,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "23b348d61ac3fd3d0b44c1fa3fd0d00f07f3a470c715207d1bc88000937fe5db",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 521,
+                  "maximum_uses_per_coordinate": 122,
+                  "minimum_uses_per_coordinate": 71,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "23b348d61ac3fd3d0b44c1fa3fd0d00f07f3a470c715207d1bc88000937fe5db",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "9ad51277a38e1c2bfae4b77cc3670a68627aefd2f62a83a867e7d6568d8097ae",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 521,
+                  "maximum_uses_per_coordinate": 126,
+                  "minimum_uses_per_coordinate": 57,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 68,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 65,
+                  "minimum_uses_per_coordinate": 25,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "9ad51277a38e1c2bfae4b77cc3670a68627aefd2f62a83a867e7d6568d8097ae",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "ad818390017c4acb3ecddd7ed7335f58f5e7f55271e1fadc8d2272cf647d8853",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 521,
+                  "maximum_uses_per_coordinate": 127,
+                  "minimum_uses_per_coordinate": 64,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 71,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "ad818390017c4acb3ecddd7ed7335f58f5e7f55271e1fadc8d2272cf647d8853",
+              "reproducible": true
+            }
+          },
+          "target_dimension_legal": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 3430,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "config_id": "P-4096-language-coords-521",
+        "coordinate_dimensions": {
+          "language": 521,
+          "projector": 2327,
+          "vision": 582
+        },
+        "curve_name": "R_L",
+        "error": null,
+        "nearest_legal_capacity_candidate": null,
+        "status": "legal",
+        "target_module": "language"
+      },
+      {
+        "checks": {
+          "construction_device": "cpu",
+          "construction_seed": 43101,
+          "expected_trainable_parameter_count": 3594,
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_match_anchor": true,
+          "private_parameter_object_count": 3,
+          "private_parameter_storage_count": 3,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "9b4fb5b97c2373f39581b04b6d8f44c3a89f9e1fdaafe880aec52428f9cc5cb3",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 685,
+                  "maximum_uses_per_coordinate": 103,
+                  "minimum_uses_per_coordinate": 47,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "9b4fb5b97c2373f39581b04b6d8f44c3a89f9e1fdaafe880aec52428f9cc5cb3",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "612fd7fae23b778d7a79eb0965c3dd73c40c8d2c4733193b95f06594c28cf9d3",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 685,
+                  "maximum_uses_per_coordinate": 97,
+                  "minimum_uses_per_coordinate": 47,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 68,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 65,
+                  "minimum_uses_per_coordinate": 25,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "612fd7fae23b778d7a79eb0965c3dd73c40c8d2c4733193b95f06594c28cf9d3",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "f28794f418934d5bb40593763391f89961e309d4b37b76a4af04ad9806ae83c7",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 685,
+                  "maximum_uses_per_coordinate": 97,
+                  "minimum_uses_per_coordinate": 45,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 71,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "f28794f418934d5bb40593763391f89961e309d4b37b76a4af04ad9806ae83c7",
+              "reproducible": true
+            }
+          },
+          "target_dimension_legal": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 3594,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "config_id": "P-4096-language-coords-685",
+        "coordinate_dimensions": {
+          "language": 685,
+          "projector": 2327,
+          "vision": 582
+        },
+        "curve_name": "R_L",
+        "error": null,
+        "nearest_legal_capacity_candidate": null,
+        "status": "legal",
+        "target_module": "language"
+      },
+      {
+        "checks": {
+          "construction_device": "cpu",
+          "construction_seed": 43101,
+          "expected_trainable_parameter_count": 3811,
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_match_anchor": true,
+          "private_parameter_object_count": 3,
+          "private_parameter_storage_count": 3,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "ba8d129e7b5b0e7d52df1d40643601f43239a6b230ee0e1cf2cc30a49c884aed",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 902,
+                  "maximum_uses_per_coordinate": 78,
+                  "minimum_uses_per_coordinate": 35,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "ba8d129e7b5b0e7d52df1d40643601f43239a6b230ee0e1cf2cc30a49c884aed",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "ff96c96d8ba705a036566a8160ad7e25f05f078468f65392c7c11ac2e4306d35",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 902,
+                  "maximum_uses_per_coordinate": 81,
+                  "minimum_uses_per_coordinate": 31,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 68,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 65,
+                  "minimum_uses_per_coordinate": 25,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "ff96c96d8ba705a036566a8160ad7e25f05f078468f65392c7c11ac2e4306d35",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "deda52b2fa6d7ad410be954afb2eb11279415a755ce55e702de99dadc183dcfd",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 902,
+                  "maximum_uses_per_coordinate": 81,
+                  "minimum_uses_per_coordinate": 35,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 71,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "deda52b2fa6d7ad410be954afb2eb11279415a755ce55e702de99dadc183dcfd",
+              "reproducible": true
+            }
+          },
+          "target_dimension_legal": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 3811,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "config_id": "P-4096-language-coords-902",
+        "coordinate_dimensions": {
+          "language": 902,
+          "projector": 2327,
+          "vision": 582
+        },
+        "curve_name": "R_L",
+        "error": null,
+        "nearest_legal_capacity_candidate": null,
+        "status": "legal",
+        "target_module": "language"
+      },
+      {
+        "checks": {
+          "construction_device": "cpu",
+          "construction_seed": 43101,
+          "expected_trainable_parameter_count": 4471,
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_match_anchor": true,
+          "private_parameter_object_count": 3,
+          "private_parameter_storage_count": 3,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "635f5d9878c74854b84bd89ea4f6edc75df584bcd085f5d73b53f5454658b055",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1562,
+                  "maximum_uses_per_coordinate": 52,
+                  "minimum_uses_per_coordinate": 14,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "635f5d9878c74854b84bd89ea4f6edc75df584bcd085f5d73b53f5454658b055",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "09ab5a9d159d268bbd8ef292302b3293a6f64cf97bf23ee32533f4151b99315b",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1562,
+                  "maximum_uses_per_coordinate": 54,
+                  "minimum_uses_per_coordinate": 15,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 68,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 65,
+                  "minimum_uses_per_coordinate": 25,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "09ab5a9d159d268bbd8ef292302b3293a6f64cf97bf23ee32533f4151b99315b",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "9b55eba65811208f4f6582afb22edecaec2c73111eb2b5d27c60b959ccf7769d",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 1562,
+                  "maximum_uses_per_coordinate": 50,
+                  "minimum_uses_per_coordinate": 15,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 71,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "9b55eba65811208f4f6582afb22edecaec2c73111eb2b5d27c60b959ccf7769d",
+              "reproducible": true
+            }
+          },
+          "target_dimension_legal": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 4471,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "config_id": "P-4096-language-coords-1562",
+        "coordinate_dimensions": {
+          "language": 1562,
+          "projector": 2327,
+          "vision": 582
+        },
+        "curve_name": "R_L",
+        "error": null,
+        "nearest_legal_capacity_candidate": null,
+        "status": "legal",
+        "target_module": "language"
+      },
+      {
+        "checks": {
+          "construction_device": "cpu",
+          "construction_seed": 43101,
+          "expected_trainable_parameter_count": 4965,
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_match_anchor": true,
+          "private_parameter_object_count": 3,
+          "private_parameter_storage_count": 3,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "11fb5d9c414b4d6458f8f0b91730e9f0ca11b11ef56e95b0b76fee4af5b91f41",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 2056,
+                  "maximum_uses_per_coordinate": 44,
+                  "minimum_uses_per_coordinate": 9,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "11fb5d9c414b4d6458f8f0b91730e9f0ca11b11ef56e95b0b76fee4af5b91f41",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "bd29c0e086cf8f7005416ab52beb48477029ab1b32d33b15417c96c377dc5c89",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 2056,
+                  "maximum_uses_per_coordinate": 45,
+                  "minimum_uses_per_coordinate": 9,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 68,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 65,
+                  "minimum_uses_per_coordinate": 25,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "bd29c0e086cf8f7005416ab52beb48477029ab1b32d33b15417c96c377dc5c89",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "0432da5180fa35539fadb69c3575ef4c7ed4d33a332f37340b0e93e286aa7882",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 2056,
+                  "maximum_uses_per_coordinate": 47,
+                  "minimum_uses_per_coordinate": 9,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 71,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "0432da5180fa35539fadb69c3575ef4c7ed4d33a332f37340b0e93e286aa7882",
+              "reproducible": true
+            }
+          },
+          "target_dimension_legal": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 4965,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "config_id": "P-4096-language-coords-2056",
+        "coordinate_dimensions": {
+          "language": 2056,
+          "projector": 2327,
+          "vision": 582
+        },
+        "curve_name": "R_L",
+        "error": null,
+        "nearest_legal_capacity_candidate": null,
+        "status": "legal",
+        "target_module": "language"
+      },
+      {
+        "checks": {
+          "construction_device": "cpu",
+          "construction_seed": 43101,
+          "expected_trainable_parameter_count": 5615,
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_match_anchor": true,
+          "private_parameter_object_count": 3,
+          "private_parameter_storage_count": 3,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "7e3ba77e65721208e909d1edd1e734c4364aaa76624194ac964b4b01ca2d48ea",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 2706,
+                  "maximum_uses_per_coordinate": 34,
+                  "minimum_uses_per_coordinate": 5,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "7e3ba77e65721208e909d1edd1e734c4364aaa76624194ac964b4b01ca2d48ea",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "9450decffde301f13663085e9cc4893a27efc3c670f0a39600c171e3cea27497",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 2706,
+                  "maximum_uses_per_coordinate": 35,
+                  "minimum_uses_per_coordinate": 6,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 68,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 65,
+                  "minimum_uses_per_coordinate": 25,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "9450decffde301f13663085e9cc4893a27efc3c670f0a39600c171e3cea27497",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "dfd77c8f209f7118e3845c4950eed5dd382d8192fbfe15e5691ea0aee426ae2a",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 2706,
+                  "maximum_uses_per_coordinate": 37,
+                  "minimum_uses_per_coordinate": 6,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 71,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "dfd77c8f209f7118e3845c4950eed5dd382d8192fbfe15e5691ea0aee426ae2a",
+              "reproducible": true
+            }
+          },
+          "target_dimension_legal": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 5615,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "config_id": "P-4096-language-coords-2706",
+        "coordinate_dimensions": {
+          "language": 2706,
+          "projector": 2327,
+          "vision": 582
+        },
+        "curve_name": "R_L",
+        "error": null,
+        "nearest_legal_capacity_candidate": null,
+        "status": "legal",
+        "target_module": "language"
+      },
+      {
+        "checks": {
+          "construction_device": "cpu",
+          "construction_seed": 43101,
+          "expected_trainable_parameter_count": 6470,
+          "fixed_projection_reproducible": true,
+          "model_constructed": true,
+          "non_target_modules_match_anchor": true,
+          "private_parameter_object_count": 3,
+          "private_parameter_storage_count": 3,
+          "projection_roots": {
+            "43101": {
+              "mapping_sha256": "a2df6b9c40261201d85dab708de3cc5763619bb3f6464efb422094b1d0efe697",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 3561,
+                  "maximum_uses_per_coordinate": 27,
+                  "minimum_uses_per_coordinate": 3,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 63,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "a2df6b9c40261201d85dab708de3cc5763619bb3f6464efb422094b1d0efe697",
+              "reproducible": true
+            },
+            "43102": {
+              "mapping_sha256": "d0ec593ef7c96c06fd5b674e26570c58638876372cc904fe6c29e5a2cfdfaf39",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 3561,
+                  "maximum_uses_per_coordinate": 28,
+                  "minimum_uses_per_coordinate": 3,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 68,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 65,
+                  "minimum_uses_per_coordinate": 25,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "d0ec593ef7c96c06fd5b674e26570c58638876372cc904fe6c29e5a2cfdfaf39",
+              "reproducible": true
+            },
+            "43103": {
+              "mapping_sha256": "de8eed0e76b5e4a9a7985c6b60f71b57b55c2019ab441a023bc7f75e9049a3d1",
+              "module_usage": {
+                "language": {
+                  "coordinate_dimension": 3561,
+                  "maximum_uses_per_coordinate": 28,
+                  "minimum_uses_per_coordinate": 2,
+                  "unused_coordinate_count": 0
+                },
+                "projector": {
+                  "coordinate_dimension": 2327,
+                  "maximum_uses_per_coordinate": 64,
+                  "minimum_uses_per_coordinate": 22,
+                  "unused_coordinate_count": 0
+                },
+                "vision": {
+                  "coordinate_dimension": 582,
+                  "maximum_uses_per_coordinate": 71,
+                  "minimum_uses_per_coordinate": 23,
+                  "unused_coordinate_count": 0
+                }
+              },
+              "repeated_mapping_sha256": "de8eed0e76b5e4a9a7985c6b60f71b57b55c2019ab441a023bc7f75e9049a3d1",
+              "reproducible": true
+            }
+          },
+          "target_dimension_legal": true,
+          "three_module_parameters_private": true,
+          "trainable_parameter_count": 6470,
+          "trainable_parameter_names": [
+            "stage2_coordinates.coordinates.language",
+            "stage2_coordinates.coordinates.projector",
+            "stage2_coordinates.coordinates.vision"
+          ],
+          "trainable_parameter_set_matches_expected": true,
+          "unused_coordinates_absent": true
+        },
+        "config_id": "P-4096-language-coords-3561",
+        "coordinate_dimensions": {
+          "language": 3561,
+          "projector": 2327,
+          "vision": 582
+        },
+        "curve_name": "R_L",
+        "error": null,
+        "nearest_legal_capacity_candidate": null,
+        "status": "legal",
+        "target_module": "language"
+      }
+    ],
+    "stage2_protocol": {
+      "protocol_id": "minimind-v-stage2-joint-compression-v2",
+      "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3"
+    },
+    "status": "passed",
+    "validated_projection_roots": [
+      43101,
+      43102,
+      43103
+    ]
+  },
+  "protocol_id": "phase3-module-marginal-budget-v1",
+  "protocol_version": "phase3-module-budget-value-curve-sweep-v1",
+  "schema_version": 1,
+  "seed": "__FIXED_PROJECTION_SEED__",
+  "seed_policy": {
+    "all_allowed_roots_preflighted": true,
+    "allowed_fixed_projection_roots": [
+      43101,
+      43102,
+      43103
+    ],
+    "formal_seed_unresolved": true,
+    "seed_placeholder": "__FIXED_PROJECTION_SEED__"
+  },
+  "seed_status": "placeholder",
+  "status": "frozen"
+}
