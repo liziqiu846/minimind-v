@@ -94,3 +94,6 @@ checkpoint-only prediction test；不训练。
   false positive。
 - 未读取 validation/final confirmation，未运行 COMP-01 模型输出；panel 已通过
   collision adjudication，下一状态为单模型 deterministic smoke。
+- `M2-current-seed-43101` 在 manifest 首个 pair 上完成两次 deterministic smoke：
+  四格 NLL 全部有限、两次 raw-row SHA 完全相同、未保存 raw 值、未作科学聚合；
+  peak CUDA allocation 约 0.80 GB。下一步为单 GPU 顺序评分冻结的 18 个模型。
