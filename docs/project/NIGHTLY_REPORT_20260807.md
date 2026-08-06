@@ -126,3 +126,26 @@ checkpoint-only prediction test；不训练。
 - 没有理论同时固定 autoregressive LVLM representation、唯一无 sweep statistic
   与 held-out semantic-risk direction；继续只能事后选择 proxy，触发预注册否定。
 - `XMC-01` 已标记 `REJECTED` 并进入 `REVIEW_QUEUE`；ACTIVE 转为 `VISCOND-01`。
+
+## 13. 持续日志：VISCOND-01 round1 外部 prediction test
+
+- 官方 MMStar revision、41.8 MB parquet SHA、schema、图片解码、A/B/C/D inventory
+  与答案 token gate 均通过。排除 3 个超过冻结 450-token 上限的题目和 1 个官方缺
+  D 选项的题目后，完整 eligible panel 为 1,496 题、1,426 个独立像素组。
+- 18/18 冻结 MMS2 checkpoint 全部评分；正确图像与 no-pixel 共用同一 VLM、
+  question、option target 和 image-pad token 位置。逐题 raw values 保留在 runtime，
+  analysis receipt 绑定 checkpoint、panel、scoring commit、18 个 receipt 和 raw SHA。
+- 一次性预注册聚合为 `REJECT_IDEA`：pooled \(V=-0.221182\) bits/token，图片组
+  bootstrap 95% CI `[-0.306740,-0.134830]`，仅 `2/18` 模型为正，触发构念否定。
+- 9 对风险排序有 `6/9` 方向一致、`4/9` 预测方向 CI 不跨 0；三个 budget 各
+  `2/3`，`ΔR>0` 的 4 对中 `3/4` 为预测方向，6 个类别有 5 个平均方向为正。这些
+  局部条件不能覆盖已触发的 pooled/positive-model 否定项。
+- correct-image accuracy 为 `0.2099–0.2934`，no-pixel 为 `0.2025–0.3135`；
+  accuracy gain 为 `-0.0869–0.0261`。结果更像当前 answer-letter 构造上的视觉输入
+  分布/任务适配问题，而不是稳定正向视觉增量；该解释尚非新结论，也不允许通过换
+  prompt 或 proxy rescue。
+- 18 个 receipt 合计 1,929.725 秒，即 0.536 GPU-hour；本 cycle 累计约 0.75
+  GPU-hour。未训练，未访问 final confirmation set。
+- `VISCOND-01` 已冻结为 `REJECTED` 并进入 `REVIEW_QUEUE`。原 `OBJ-01` 的
+  VISCOND-positive 启动门未满足，禁止直接训练；ACTIVE 转为 `LITMAP-02`
+  primary-source gate，目标是生成真正不同的训练时跨模态监督/优化候选。

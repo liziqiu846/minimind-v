@@ -17,8 +17,9 @@ Mission Question 不得由 Agent 自行改变。
 
 当前 active question 是：
 
-> 是否存在一个具有正式理论桥、可由冻结 autoregressive LVLM 表示唯一计算的
-> 跨模态对应结构保持量，能够在不依赖生成语言偏好的前提下预测真实性能差异？
+> 在生成 NLL 关系绑定、无桥表示保持量和 correct-image vs no-pixel 条件增量均未
+> 形成稳定机制后，是否存在一个以训练时跨模态监督信息或优化动力学为核心、具有
+> 权威机制证据且能由最小受控干预区分竞争解释的 VLM 泛化候选？
 
 这一问题是当前子问题，不是永久冻结的唯一主线。Agent 可以依据可靠实验、
 反例或权威文献自主切换 Active Research Question。
@@ -162,5 +163,27 @@ Agent 可以自主改变：
 - **Mission relation**: correct-image 相对 counterfactual/no-image 的预测变化是
   生成式 LVLM 特有且可直接证伪的操作性代理；若稳定，可导向视觉保持辅助目标、
   vision-aware sampling 或 decoding/training intervention。
-- **Status**: ACTIVE；必须先创建并 commit immutable plan，且不得把经验差值称为
-  互信息、正式视觉风险或无偏估计量。
+- **Status**: REJECTED_AS_ACTIVE；官方 MMStar 1,496 eligible items、1,426 独立
+  image groups、18/18 checkpoint 的 pooled correct-image vs no-pixel \(V\) 为
+  `-0.2212` bits/token，95% CI `[-0.3067,-0.1348]`，仅 `2/18` 模型为正。虽有
+  `6/9` pair 方向一致和 `4/9` 预测方向 CI，但已触发预注册构念否定；不得换
+  prompt、答案形式、subset、proxy、benchmark 或 seed rescue。
+
+### 2026-08-07｜训练时跨模态监督/优化机制 active question
+
+- **Question**: 在三条冻结 checkpoint prediction route 均失败后，是否存在一个以
+  训练时跨模态监督信息或优化动力学为核心、不是任意 checkpoint proxy 重命名的
+  VLM-specific mechanism，能由最小受控干预区分至少两个竞争解释并预测未见任务
+  泛化？
+- **Why the old question was insufficient**: `VISCOND-01` 显示同一冻结 VLM 在
+  视觉必要 MMStar 上加入正确像素后，预声明答案 margin 对当前家族总体反而下降；
+  因而不能以该代理为正门启动 `OBJ-01`，也不能继续换视觉 ablation 来营救。
+- **Evidence / literature origin**: `COMP-01` 的 caption likelihood 被语言偏好主导，
+  `XMC-01` 缺 autoregressive-risk theorem bridge，`VISCOND-01` 的构念正向门失败；
+  CoCa、Prismatic、MM1 等已有受控工作提示 objective、视觉表示与数据 mixture 会
+  改变能力，但现有 registry 尚未给出适合当前 artifact 的唯一 causal mechanism。
+- **Mission relation**: 转向训练时可干预对象可以直接区分“跨模态信号没有被学习”
+  与“冻结输出代理不具构念效度”，并保留从科学规律自然导出训练机制的出口；正式
+  登记候选前必须先通过定向 primary-source literature/theory gate。
+- **Status**: ACTIVE_LITERATURE_GATE；当前只允许创建并 commit `LITMAP-02`
+  immutable plan，然后检索和筛选。不得因“训练可能有效”直接启动实验。

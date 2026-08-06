@@ -1,0 +1,177 @@
+{
+  "budget": "low",
+  "cache": {
+    "cache_key_sha256": "99b899c015372e528422435837c72d5f58cca4deaff5440955bdfe1a96fa8a3f",
+    "cache_mode": "model_local_cpu_memory_projected_features",
+    "checkpoint_sha256": "4103437168511d1fe5d5d5f21d0589caa86d5a05610d3acb55eac0cac4ff1417",
+    "encoded_image_count": 2,
+    "encoder_forward_call_count": 1,
+    "feature_content_sha256": "3c3f71d57d9e8cbff03c6d5159a06187d24a294291e9d491dadffdda2c652bc8",
+    "feature_dtype": "float32",
+    "feature_format_version": "phase3-v6-projected-vision-f32-cpu-v1",
+    "feature_shapes": [
+      [
+        64,
+        768
+      ]
+    ],
+    "feature_storage_device": "cpu",
+    "feature_total_bytes": 393216,
+    "hit_count": 16,
+    "model_id": "M2-low-seed-43101",
+    "processor_config_sha256": "657b8cbd4d4ac0e2a8a9ac7a5f9a6841258ebf7401423681cd2c29ace4884843",
+    "unique_cached_image_count": 2
+  },
+  "checkpoint": {
+    "adapter_summary_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/phase3_risk_v1/M2-low-seed-43101/encode/adapter_summary.json",
+    "adapter_summary_sha256": "2fd6242d9d247b3979ce98dd7e2808bba9224bf3b0256db7acc5080e0d77a201",
+    "archive_bytes": 708,
+    "archive_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/phase3_risk_v1/M2-low-seed-43101/encode/adapter.mms2",
+    "archive_sha256": "4103437168511d1fe5d5d5f21d0589caa86d5a05610d3acb55eac0cac4ff1417",
+    "decoded_metadata": {
+      "archive_bits": 5664,
+      "archive_bytes": 708,
+      "codec": "zlib-9",
+      "coordinate_groups": [
+        {
+          "dimension": 291,
+          "name": "vision",
+          "scale_float32": 1.455458641052246
+        },
+        {
+          "dimension": 1163,
+          "name": "projector",
+          "scale_float32": 0.8332734107971191
+        },
+        {
+          "dimension": 594,
+          "name": "language",
+          "scale_float32": 0.23856675624847412
+        }
+      ],
+      "format": "MMS2",
+      "format_version": 1,
+      "mapping_root": 43101,
+      "model_group": "M2"
+    },
+    "loader": "verified_budget_mms2"
+  },
+  "config": {
+    "directory_validation": {
+      "candidate_family_size": 18,
+      "comparison_claim": "equal_coordinate_budget_not_equal_description_length",
+      "config_count": 18,
+      "external_selection_bits": 5,
+      "pair_count": 9,
+      "status": "passed"
+    },
+    "manifest_path": "/home/lizhaohui/lzq/minimind-v/experiments/phase3_risk_v1/configs/manifest.json",
+    "manifest_sha256": "721629f7f511cee5cbb7239c42a0c730d730235464ca8029ca1c47cb3cafe2b0",
+    "path": "/home/lizhaohui/lzq/minimind-v/experiments/phase3_risk_v1/configs/M2-low-seed-43101.json",
+    "sha256": "e21db6a3304148ac619c69f6e29fce061359b371dc42a88fb4d017b1b7e79ec0"
+  },
+  "config_id": "M2-low-seed-43101",
+  "elapsed_seconds": 4.740767240524292,
+  "environment": {
+    "Pillow": "10.4.0",
+    "autocast_enabled": false,
+    "cuda": "12.4",
+    "cuda_available": true,
+    "cuda_matmul_allow_tf32": false,
+    "cudnn": 90100,
+    "cudnn_allow_tf32": false,
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": true,
+    "device": "cuda:0",
+    "gpu": {
+      "compute_capability": [
+        8,
+        6
+      ],
+      "index": 0,
+      "name": "NVIDIA A40",
+      "total_memory_bytes": 47709159424
+    },
+    "model_dtype": "float32",
+    "numpy": "1.26.4",
+    "platform": "Linux-5.4.0-216-generic-x86_64-with-glibc2.31",
+    "python": "3.11.15",
+    "scipy": "1.13.1",
+    "torch": "2.6.0+cu124",
+    "transformers": "4.57.6"
+  },
+  "git": {
+    "commit": "1b6db44faa12f0847e1d840f68a13bb8b7aeb16b",
+    "tracked_status": ""
+  },
+  "inputs": {
+    "eligible_rows": 1496,
+    "final_confirmation_accessed": false,
+    "independent_image_groups": 1426,
+    "panel_audit": {
+      "path": "/home/lizhaohui/lzq/phase3_runtime/viscond01_mmstar/audit_v2/panel_audit.json",
+      "sha256": "73d02f774f5e32b77546606c3f7388a7dd711ab01ebc999205b9592563b0e345"
+    },
+    "panel_manifest": {
+      "path": "/home/lizhaohui/lzq/phase3_runtime/viscond01_mmstar/audit_v2/panel_manifest.json",
+      "sha256": "e3137d1b5465a72d06368188c5e2871256d17441e557d39024766e69e9e249cc"
+    }
+  },
+  "mapping_root": 43101,
+  "method": "M2",
+  "mode": "smoke",
+  "peak_cuda_memory_bytes": 941440512,
+  "receipt_id": "VISCOND-01-round1-M2-low-seed-43101-smoke",
+  "runtime_preflight": {
+    "config_id": "M2-low-seed-43101",
+    "environment": {
+      "mode": "v6",
+      "pip_freeze_sha256": null,
+      "python_executable": "/home/lizhaohui/lzq/phase3_runtime/phase3_v5/env/bin/python3.11"
+    },
+    "git": {
+      "branch": "stage3-image-group-dependence-sgd-v1",
+      "head_commit": "1b6db44faa12f0847e1d840f68a13bb8b7aeb16b",
+      "tracked_status": ""
+    },
+    "gpu": {
+      "free_memory_mib": 45495,
+      "idle_at_preflight": true,
+      "idle_definition": "absent from nvidia-smi compute-process GPU UUIDs at dispatch and at every formal stage preflight",
+      "minimum_free_memory_mib": 0,
+      "name": "NVIDIA A40",
+      "physical_index": 7,
+      "policy": "dynamic_idle_a40_pool",
+      "shared_gpu_execution": false,
+      "shared_gpu_user_authorized": false,
+      "uuid": "GPU-8ece0ccf-0be1-3c7e-6e68-497d66fa5cae"
+    },
+    "stage2_protocol": {
+      "protocol_id": "minimind-v-stage2-joint-compression-v2",
+      "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3"
+    },
+    "status": "passed",
+    "training_data": {
+      "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/dataset/stage2_confirm_v2_seed2028/train.parquet",
+      "sha256": "3c3d90c525f43200d35ebd5b4ac1719c8336d278aecbf7e929997c8401b1d5ce"
+    }
+  },
+  "schema_version": 1,
+  "scoring": {
+    "aggregate_scientific_result_computed": false,
+    "conditions": [
+      "correct_image",
+      "no_pixel_same_VLM_tokens"
+    ],
+    "deterministic_rerun_exact": true,
+    "item_batch_size": 2,
+    "item_count": 2,
+    "labels_per_condition": 4,
+    "prompt_suffix": "Answer with the option letter only.",
+    "raw_rows_sha256": "6ac7ab76634177449ef37a97a7fac2d7dee53ee4273de48734521038a45f4146",
+    "raw_values_persisted": false,
+    "teacher_forced_target": "option_letter_plus_EOS",
+    "unit": "mean NLL bits per target token"
+  },
+  "status": "complete"
+}

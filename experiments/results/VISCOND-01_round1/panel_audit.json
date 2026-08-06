@@ -1,0 +1,145 @@
+{
+  "audit_id": "VISCOND-01-round1-MMStar-panel-gate",
+  "checks": {
+    "all_eligible_questions_have_exactly_A_B_C_D": true,
+    "all_source_gold_answers_valid": true,
+    "all_source_images_decoded_and_extracted": true,
+    "all_token_sequences_fit_450": true,
+    "eligible_rows_at_least_1350": true,
+    "independent_image_groups_at_least_1350": true,
+    "no_final_confirmation_access": true,
+    "no_model_inference_performed": true,
+    "not_final_confirmation_set": true,
+    "parquet_sha256_matches": true,
+    "parquet_size_matches": true,
+    "schema_columns_match": true,
+    "six_categories_balanced_250": true,
+    "source_row_count_1500": true,
+    "unique_indices_1500": true
+  },
+  "eligible_for_scoring": true,
+  "final_confirmation_accessed": false,
+  "interpretation": "The complete official MMStar panel is eligible for the frozen VISCOND-01 correct-image versus no-pixel prediction test.",
+  "model_inference_performed": false,
+  "outputs": {
+    "panel_manifest": {
+      "path": "/home/lizhaohui/lzq/phase3_runtime/viscond01_mmstar/audit_v2/panel_manifest.json",
+      "sha256": "e3137d1b5465a72d06368188c5e2871256d17441e557d39024766e69e9e249cc"
+    }
+  },
+  "panel": {
+    "answer_counts": {
+      "A": 426,
+      "B": 447,
+      "C": 308,
+      "D": 315
+    },
+    "answer_label_token_count_sets": {
+      "A": [
+        2
+      ],
+      "B": [
+        2
+      ],
+      "C": [
+        2
+      ],
+      "D": [
+        2
+      ]
+    },
+    "category_counts": {
+      "coarse perception": 250,
+      "fine-grained perception": 250,
+      "instance reasoning": 250,
+      "logical reasoning": 250,
+      "math": 250,
+      "science & technology": 250
+    },
+    "duplicate_pixel_group_count": 61,
+    "l2_category_counts": {
+      "biology & chemistry & physics": 146,
+      "code & sequence reasoning": 36,
+      "common reasoning": 100,
+      "cross-instance attribute reasoning": 89,
+      "cross-instance relation reasoning": 62,
+      "diagram reasoning": 110,
+      "electronics & energy & mechanical eng.": 46,
+      "geography & earth science & agriculture": 58,
+      "geometry": 116,
+      "image emotion": 31,
+      "image scene and topic": 141,
+      "image style & quality": 78,
+      "localization": 40,
+      "numeric commonsense and calculation": 48,
+      "object counting": 92,
+      "recognition": 118,
+      "single-instance reasoning": 99,
+      "statistical reasoning": 86
+    },
+    "maximum_input_length_unpadded": 445,
+    "maximum_questions_per_pixel_group": 4,
+    "rejected_row_count": 4,
+    "rejected_rows": [
+      {
+        "answer": "A",
+        "category": "logical reasoning",
+        "detail": "full VLM token sequence exceeds maximum length",
+        "image_path": "/home/lizhaohui/lzq/phase3_runtime/viscond01_mmstar/images/0786.image",
+        "image_sha256": "370ecda3555c176822b47f60cdc9e9a234e48646e877d29fad5dcd483d494810",
+        "index": 786,
+        "l2_category": "code & sequence reasoning",
+        "normalized_pixel_sha256": "fe551b949d4851d270881619fb90af3400c808711c3a08c70cf5522eaee2297f",
+        "reason": "token_sequence_exceeds_450"
+      },
+      {
+        "answer": "A",
+        "category": "logical reasoning",
+        "detail": "full VLM token sequence exceeds maximum length",
+        "image_path": "/home/lizhaohui/lzq/phase3_runtime/viscond01_mmstar/images/0823.image",
+        "image_sha256": "da246e9547a5a53594f79e9048ce560f4bc065abd0a58ea19a617225897d44a5",
+        "index": 823,
+        "l2_category": "code & sequence reasoning",
+        "normalized_pixel_sha256": "7101cf66f8388e42886bd50df686de25e7ac28472b6c293c0160b2a0d1810b5b",
+        "reason": "token_sequence_exceeds_450"
+      },
+      {
+        "answer": "C",
+        "category": "logical reasoning",
+        "detail": "MMStar question does not expose exactly one recognized A/B/C/D inventory: colon=(), paren=('A', 'B', 'C')",
+        "image_path": "/home/lizhaohui/lzq/phase3_runtime/viscond01_mmstar/images/0855.image",
+        "image_sha256": "81ae47cf232ba8ef5ab962ae279888dfd0869bdafe7f9d7ac06a401d599a096b",
+        "index": 855,
+        "l2_category": "code & sequence reasoning",
+        "normalized_pixel_sha256": "c034236fa96aeb1ecade489c8acda362149471019a7e83d5e5b2bda540424edd",
+        "reason": "option_inventory_not_exactly_A_B_C_D"
+      },
+      {
+        "answer": "A",
+        "category": "logical reasoning",
+        "detail": "full VLM token sequence exceeds maximum length",
+        "image_path": "/home/lizhaohui/lzq/phase3_runtime/viscond01_mmstar/images/0868.image",
+        "image_sha256": "0c08c0f662aec9571d0fc1ab927d80517c0a923eab5cafdbb8b53f2d2bbe3716",
+        "index": 868,
+        "l2_category": "common reasoning",
+        "normalized_pixel_sha256": "76f301ef90fc8d50823c1b24729034f877f1007456f7717d10d9dfb8eded1bcc",
+        "reason": "token_sequence_exceeds_450"
+      }
+    ],
+    "row_count": 1496,
+    "source_row_count": 1500,
+    "unique_normalized_pixel_groups": 1426
+  },
+  "schema_version": 1,
+  "scientific_model_results_accessed": false,
+  "source": {
+    "config": "val",
+    "parquet_bytes": 41798712,
+    "parquet_path": "/home/lizhaohui/lzq/phase3_runtime/viscond01_mmstar/mmstar.parquet",
+    "parquet_sha256": "29afd74b0134cfab083a8909b5358577ab18fd41c1e612031577cfb3635531c2",
+    "repository": "Lin-Chen/MMStar",
+    "revision": "bc98d668301da7b14f648724866e57302778ab27",
+    "split": "val"
+  },
+  "status": "passed"
+}

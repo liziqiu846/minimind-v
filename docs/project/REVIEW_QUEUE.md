@@ -83,3 +83,24 @@
 - **Recommended human decision**: 无需立即决定；之后可审查 theorem applicability
   matrix。若未来要恢复 XMC，必须提供新的生成式风险证明或真正新 artifact，而不是
   更换经验表示指标。
+
+## 2026-08-07｜VISCOND-01：MMStar correct-image vs no-pixel 构念门被否定
+
+- **Date**: 2026-08-07
+- **Idea / issue**: 正确图像相对同一 VLM no-pixel 条件的答案判别增量，能否作为
+  解释 M2/M3 development 总语义风险排序的视觉利用机制。
+- **Why human should review it**: pair 排序出现 `6/9` 局部一致，但 18 模型 pooled
+  视觉增量显著为负；必须防止只报告局部排序、忽略操作性构念本身没有正向视觉获益。
+- **Current evidence**: 官方 MMStar frozen revision；1,496 eligible questions、
+  1,426 normalized-pixel groups、18/18 checkpoint。pooled \(V=-0.2212\)
+  bits/token，95% CI `[-0.3067,-0.1348]`，仅 `2/18` 模型为正；预测方向 CI
+  `4/9`，low/current/high 各 `2/3`。触发 immutable plan 的 pooled/positive-model
+  否定项。
+- **What Agent has already frozen**: `VISCOND-01=REJECTED`；\(V\) 只称操作性条件
+  增量，不称互信息、正式视觉风险或因果中介。不得换 prompt、答案文本、subset、
+  proxy、benchmark 或新增 seed rescue，也不得基于该失败 gate 启动原 `OBJ-01`
+  训练。
+- **Whether autonomous work can continue**: 可以；已转入 `LITMAP-02`，以三条失败
+  证据约束新的训练时跨模态监督/优化 mechanism 搜索，不触发 `HARD_STOP`。
+- **Recommended human decision**: 无需立即决定；之后审查时重点确认 negative
+  pooled \(V\) 的构念边界和局部 `6/9` 不应升格的联合判定逻辑。
