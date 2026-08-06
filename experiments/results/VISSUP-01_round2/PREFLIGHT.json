@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "candidate": "VISSUP-01",
+  "round": 2,
+  "status": "passed",
+  "eligible_for_training": true,
+  "code_commit": "e2412fe",
+  "base": {
+    "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/dataset/stage2_confirm_v2_seed2028/train.parquet",
+    "rows": 10000,
+    "sha256": "3c3d90c525f43200d35ebd5b4ac1719c8336d278aecbf7e929997c8401b1d5ce",
+    "unique_normalized_pixel_count": 8848,
+    "duplicate_draw_count": 1152,
+    "encoded_image_sha_matches": 10000
+  },
+  "rotation": {
+    "training_rows": 1008,
+    "heldout_rows": 1008,
+    "sets_disjoint": true,
+    "training_label_counts": {
+      "A": 252,
+      "B": 252,
+      "C": 252,
+      "D": 252
+    },
+    "heldout_label_counts": {
+      "A": 252,
+      "B": 252,
+      "C": 252,
+      "D": 252
+    }
+  },
+  "training_data": {
+    "label-revealed": {
+      "rows": 11008,
+      "bytes": 147817875,
+      "sha256": "33b95b5e02ed64d40887c059c6a5cf23c1229cee2c1276a3e720355b1e92287c"
+    },
+    "visual-necessary": {
+      "rows": 11008,
+      "bytes": 147815535,
+      "sha256": "52cd2672a60c1dcf834ad8795585412b8f0c96ac9f921d83bfd353e1e5628ee5"
+    }
+  },
+  "cvbench": {
+    "repository": "nyu-visionx/CV-Bench",
+    "revision": "bc284db50d036958861cb60cdd7b77612052ce0d",
+    "parquet_sha256": "33196034ef4bf3265cae4a7ff5c4071b2ff1cc21123e8e285c6a91393897ecbc",
+    "source_rows": 1438,
+    "eligible_rows": 1438,
+    "independent_image_groups": 1438,
+    "exact_base_pixel_overlap_rows": 0,
+    "maximum_input_length_unpadded": 185,
+    "task_counts": {
+      "Count": 788,
+      "Relation": 650
+    },
+    "source_counts": {
+      "ADE20K": 633,
+      "COCO": 805
+    }
+  },
+  "runtime_artifacts": {
+    "root": "/home/lizhaohui/lzq/phase3_runtime/vissup01/prepared_round2",
+    "data_audit_sha256": "26999a4451bc094ce6e148bcb1481d44efc5f9da58d9c727609d3b67d7400bea",
+    "cvbench_audit_sha256": "33360a8d0e54ecf3b250e6c581af3b5ee51d790219aae94aa88b9b48d1f7b43a",
+    "training_injection_manifest_sha256": "aca223f139f5e16c76a2a70b4fe71e8c85d6db44b3fa7eb883fd3b9aed1df8d7",
+    "heldout_rotation_manifest_sha256": "131be931c243b863b91121664b8e60db817d82a234d4fe3c26d206531f8311cf",
+    "cvbench_manifest_sha256": "32b9b6212e2e3578e447d9d73c33e08d8296ab7038f4b7c6e8be0e7c750f2949"
+  },
+  "unit_tests": {
+    "command": "python -m pytest -q tests/test_vissup01.py",
+    "passed": 6,
+    "failed": 0
+  },
+  "training_runs_started": 0,
+  "model_inference_performed": false,
+  "final_confirmation_accessed": false
+}

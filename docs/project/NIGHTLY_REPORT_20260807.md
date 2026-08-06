@@ -185,3 +185,8 @@ checkpoint-only prediction test；不训练。
   保留全部官方题，仍以 image-group weighted accuracy/margin 为外部量。其余 training
   data、prompt、ratio、roots、机制门和 `≥5 pp rotation / ≥1 pp CV-Bench` pilot
   阈值全部不变；candidate 不再获得新的 measurement rescue。
+- round2 preflight 已通过：base 有 8,848 个独立 pixel groups；rotation train /
+  held-out 各 1,008 且不重叠、A/B/C/D 各 252；两条件各 11,008 rows。CV-Bench
+  1,438/1,438 rows 全部通过 2–6 choice token gate，最长 185 tokens，与完整 base
+  train 的 exact normalized-pixel overlap 为 0。6/6 unit tests passed；尚未训练或
+  运行模型。

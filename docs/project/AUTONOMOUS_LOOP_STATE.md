@@ -5,16 +5,16 @@ MODE: AUTONOMOUS_RESEARCH
 ACTIVE_RESEARCH_QUESTION: docs/project/ACTIVE_RESEARCH_QUESTION.md
 CURRENT_IDEA: VISSUP-01
 CURRENT_ROUND: 2
-CURRENT_STATE: VISSUP01_ROUND2_PLAN_FROZEN_READY
+CURRENT_STATE: VISSUP01_PREFLIGHT_PASSED_SMOKE_REQUIRED
 RUNNING_JOB: none
 LAST_PLAN: experiments/plans/VISSUP-01_round2.md
-LAST_RESULT: experiments/results/VISSUP-01_round1/RESULT.md
+LAST_RESULT: experiments/results/VISSUP-01_round2/PREFLIGHT.md
 GPU_HOURS_USED_THIS_CYCLE: 0.75
 ACTIVE_QUEUE: VISSUP-01
 NEXT_QUEUE: TBD_AFTER_VISSUP-01
 BACKLOG_QUEUE: OBJ-01,COVER-01
 WINOGROUND_ACCESS: blocked_by_access
-RESOURCE_NOTE: no_running_gpu_job;round2_is_only_schema_rescue;CVBench2D_variable_choices_A_to_F;single_GPU_sequential_only
+RESOURCE_NOTE: no_running_gpu_job;preflight_passed;CVBench_exact_base_pixel_overlap=0;two_sample_smoke_required;single_GPU_sequential_only
 HARD_STOP: false
 ```
 
