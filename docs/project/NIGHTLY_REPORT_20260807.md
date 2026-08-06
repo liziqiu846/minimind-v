@@ -190,3 +190,6 @@ checkpoint-only prediction test；不训练。
   1,438/1,438 rows 全部通过 2–6 choice token gate，最长 185 tokens，与完整 base
   train 的 exact normalized-pixel overlap 为 0。6/6 unit tests passed；尚未训练或
   运行模型。
+- root `43101` 两条件各 2-sample smoke passed：loss `1.1187/1.1852`、gradient norm
+  `0.8960/0.9925` 均 finite，shared initial frozen hash 相同，peak CUDA allocation
+  均约 1.07 GiB；未持久化 coordinates、未作科学聚合。可以启动 paired pilot。
