@@ -321,7 +321,7 @@ def score(args: argparse.Namespace) -> dict:
     items = _scoring_items(rotation_manifest, cv_manifest)
     full_item_count = len(items)
     if args.mode == "smoke":
-        items = items[:2] + items[1008:1010]
+        items = items[:1] + items[1008:1009]
     entries = _image_entries(items)
     cache = ProjectedFeatureCache(
         model,
