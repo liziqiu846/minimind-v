@@ -181,3 +181,7 @@ checkpoint-only prediction test；不训练。
   包含 E/F。按计划触发 `PANEL_INELIGIBLE`；没有丢题、没有训练、没有模型输出。
   这是明确的 metric/schema confound，使用唯一一次 rescue 创建 variable-choice
   round2；训练干预和效应阈值不变。
+- `VISSUP-01_round2` 已将唯一允许修改冻结为 per-row A–F variable-choice scorer；
+  保留全部官方题，仍以 image-group weighted accuracy/margin 为外部量。其余 training
+  data、prompt、ratio、roots、机制门和 `≥5 pp rotation / ≥1 pp CV-Bench` pilot
+  阈值全部不变；candidate 不再获得新的 measurement rescue。
