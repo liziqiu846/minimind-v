@@ -10,6 +10,7 @@ import os
 import sys
 import time
 from pathlib import Path
+from typing import Any, Mapping
 
 import torch
 from torch.utils.data import DataLoader
@@ -52,6 +53,67 @@ EPOCHS = 3
 MICRO_BATCH = 4
 ACCUMULATION = 4
 TOTAL_STEPS = 2_064
+
+
+def _default_model_builder(
+    protocol: Stage2Protocol,
+    mapping_root: int,
+    dimensions: Mapping[str, int],
+    *,
+    device: str | torch.device,
+):
+    if dict(dimensions) != EXPECTED_DIMENSIONS:
+        raise ValueError("default VISSUP model requires M2-current dimensions")
+    return build_stage2_model(
+        "M2",
+        protocol,
+        mapping_root,
+        device=device,
+        dtype=torch.float32,
+    )
+
+
+DEFAULT_TRAINING_SPEC: dict[str, Any] = {
+    "candidate": "VISSUP-01",
+    "round": 2,
+    "conditions": CONDITIONS,
+    "mapping_roots": MAPPING_ROOTS,
+    "dimensions_by_condition": {
+        condition: EXPECTED_DIMENSIONS for condition in CONDITIONS
+    },
+    "data_condition_by_condition": {
+        condition: condition for condition in CONDITIONS
+    },
+    "model_builder": _default_model_builder,
+    "projection_preflight": None,
+}
+
+
+def _validated_spec(spec: Mapping[str, Any] | None) -> dict[str, Any]:
+    value = dict(DEFAULT_TRAINING_SPEC if spec is None else spec)
+    required = {
+        "candidate",
+        "round",
+        "conditions",
+        "mapping_roots",
+        "dimensions_by_condition",
+        "data_condition_by_condition",
+        "model_builder",
+        "projection_preflight",
+    }
+    if set(value) != required:
+        raise ValueError("training spec fields differ from frozen interface")
+    if (
+        not value["candidate"]
+        or not isinstance(value["round"], int)
+        or not callable(value["model_builder"])
+    ):
+        raise ValueError("training spec identity or builder is invalid")
+    if value["projection_preflight"] is not None and not callable(
+        value["projection_preflight"]
+    ):
+        raise ValueError("projection preflight hook is not callable")
+    return value
 
 
 def parse_args() -> argparse.Namespace:
@@ -156,8 +218,22 @@ def _smoke(
     }
 
 
-def train(args: argparse.Namespace) -> dict:
+def train(
+    args: argparse.Namespace,
+    *,
+    spec: Mapping[str, Any] | None = None,
+) -> dict:
     started = time.time()
+    run_spec = _validated_spec(spec)
+    if (
+        args.condition not in run_spec["conditions"]
+        or args.mapping_root not in run_spec["mapping_roots"]
+    ):
+        raise ValueError("condition or mapping root is outside training spec")
+    expected_dimensions = dict(
+        run_spec["dimensions_by_condition"][args.condition]
+    )
+    data_condition = run_spec["data_condition_by_condition"][args.condition]
     output = args.output_dir.resolve()
     if output.exists() and any(output.iterdir()):
         raise FileExistsError(f"training output is not empty: {output}")
@@ -170,10 +246,10 @@ def train(args: argparse.Namespace) -> dict:
             or torch.cuda.device_count() != 1
         ):
             raise ValueError(
-                "VISSUP training requires cuda:0 and exactly one visible GPU"
+                "training requires cuda:0 and exactly one visible GPU"
             )
         prepared = args.prepared_dir.resolve()
-        audit, data_path = _verify_prepared(prepared, args.condition)
+        audit, data_path = _verify_prepared(prepared, data_condition)
         protocol = Stage2Protocol.load(args.protocol, require_frozen=True)
         protocol.verify_immutable_inputs()
         training = protocol.payload["training"]
@@ -192,12 +268,11 @@ def train(args: argparse.Namespace) -> dict:
             raise ValueError("frozen Stage 2 settings differ from VISSUP plan")
         seed_everything(TRAIN_SEED)
         device = torch.device(args.device)
-        model = build_stage2_model(
-            "M2",
+        model = run_spec["model_builder"](
             protocol,
             args.mapping_root,
+            expected_dimensions,
             device=device,
-            dtype=torch.float32,
         )
         tokenizer = AutoTokenizer.from_pretrained(
             protocol.asset_path("tokenizer"),
@@ -216,16 +291,20 @@ def train(args: argparse.Namespace) -> dict:
             ],
         )
         if len(dataset) != TOTAL_TRAIN_ROWS:
-            raise ValueError("VISSUP dataset row count differs from plan")
+            raise ValueError("dataset row count differs from frozen plan")
         parameters = [
             parameter for _, parameter in coordinate_parameters(model)
         ]
         initial_structure = model_structure_receipt(model)
-        if (
-            initial_structure["coordinate_dimensions"]
-            != EXPECTED_DIMENSIONS
-        ):
-            raise ValueError("M2-current coordinate dimensions differ")
+        if initial_structure["coordinate_dimensions"] != expected_dimensions:
+            raise ValueError("constructed coordinate dimensions differ")
+        projection_receipt = (
+            run_spec["projection_preflight"](
+                args.condition, args.mapping_root
+            )
+            if run_spec["projection_preflight"] is not None
+            else None
+        )
         initial_frozen_hash = frozen_parameter_hash(model)
         initial_coordinates = coordinate_state(model)
         if any(
@@ -247,11 +326,16 @@ def train(args: argparse.Namespace) -> dict:
             )
             receipt.update(
                 {
+                    "candidate": run_spec["candidate"],
+                    "round": run_spec["round"],
+                    "coordinate_dimensions": expected_dimensions,
                     "data_path": str(data_path),
                     "data_sha256": sha256_file(data_path),
+                    "data_condition": data_condition,
                     "prepared_audit_sha256": sha256_file(
                         prepared / "data_audit.json"
                     ),
+                    "projection_preflight": projection_receipt,
                     "initial_frozen_parameter_sha256": initial_frozen_hash,
                     "elapsed_seconds": time.time() - started,
                     "peak_cuda_memory_bytes": int(
@@ -268,12 +352,12 @@ def train(args: argparse.Namespace) -> dict:
             len(dataset) % MICRO_BATCH
             or usable_micro_batches % ACCUMULATION
         ):
-            raise ValueError("VISSUP data does not form accumulation windows")
+            raise ValueError("training data does not form accumulation windows")
         observed_total_steps = (
             EPOCHS * usable_micro_batches // ACCUMULATION
         )
         if observed_total_steps != TOTAL_STEPS:
-            raise ValueError("VISSUP optimizer step count differs from plan")
+            raise ValueError("optimizer step count differs from frozen plan")
         optimizer = _optimizer(parameters)
         optimizer.zero_grad(set_to_none=True)
         optimizer_step = 0
@@ -373,7 +457,7 @@ def train(args: argparse.Namespace) -> dict:
             name: int(value.numel())
             for name, value in final_coordinates.items()
         }
-        if dimensions != EXPECTED_DIMENSIONS:
+        if dimensions != expected_dimensions:
             raise RuntimeError("final coordinate dimensions differ")
         if not any(
             torch.count_nonzero(value).item()
@@ -385,8 +469,8 @@ def train(args: argparse.Namespace) -> dict:
             coordinate_path,
             {
                 "schema_version": 1,
-                "candidate": "VISSUP-01",
-                "round": 2,
+                "candidate": run_spec["candidate"],
+                "round": run_spec["round"],
                 "condition": args.condition,
                 "model_group": "M2",
                 "mapping_root": args.mapping_root,
@@ -397,8 +481,8 @@ def train(args: argparse.Namespace) -> dict:
         manifest = {
             "schema_version": 1,
             "status": "complete",
-            "candidate": "VISSUP-01",
-            "round": 2,
+            "candidate": run_spec["candidate"],
+            "round": run_spec["round"],
             "formal_stage2_confirmation_run": False,
             "condition": args.condition,
             "mapping_root": args.mapping_root,
@@ -406,6 +490,7 @@ def train(args: argparse.Namespace) -> dict:
                 "path": str(data_path),
                 "sha256": sha256_file(data_path),
                 "rows": len(dataset),
+                "condition": data_condition,
                 "prepared_audit_path": str(
                     (prepared / "data_audit.json").resolve()
                 ),
@@ -440,6 +525,7 @@ def train(args: argparse.Namespace) -> dict:
                 "final_coordinate_state_sha256": tensor_state_sha256(
                     final_coordinates
                 ),
+                "projection_preflight": projection_receipt,
             },
             "coordinates": {
                 "path": str(coordinate_path),
@@ -468,7 +554,8 @@ def train(args: argparse.Namespace) -> dict:
             {
                 "schema_version": 1,
                 "status": "failed",
-                "candidate": "VISSUP-01",
+                "candidate": run_spec["candidate"],
+                "round": run_spec["round"],
                 "condition": args.condition,
                 "mapping_root": args.mapping_root,
                 "mode": "smoke" if args.smoke else "full",

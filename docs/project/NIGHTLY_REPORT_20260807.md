@@ -230,3 +230,10 @@ checkpoint-only prediction test；不训练。
   parquet，fixed total 4,096 coordinates，pilot root `43201`；rotation
   `+5 pp / CI lower>0 / absolute>=0.30` 与 CV-Bench `+1 pp / margin>0` 必须同时
   通过。未修改训练代码，下一步才进入 candidate-specific implementation。
+- candidate-specific trainer/scorer/analyzer 与 CPU preflight 已实现；旧 VISSUP
+  runner 只抽取了带默认值的 spec interface，既有语义保持不变。24 个
+  PROJALLOC/VISSUP/module-allocation 相关测试通过。
+- 临时 CPU preflight 已验证两条件 frozen hash/11 targets 一致、各自 22 mappings、
+  4,096 exact-zero coordinates、无 unused coordinate，全部 prepared SHA 匹配；0
+  inference、0 training。下一步先提交实现，再由 clean committed tree 生成正式
+  preflight receipt 和运行双条件 GPU smoke。

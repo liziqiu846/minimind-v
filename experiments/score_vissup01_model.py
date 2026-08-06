@@ -43,6 +43,61 @@ from model.global_subspace_lora import load_coordinate_state
 CONDITIONS = ("label-revealed", "visual-necessary")
 MAPPING_ROOTS = (43101, 43102, 43103)
 SCORING_SEED = 20260807
+EXPECTED_DIMENSIONS = {
+    "language": 1_187,
+    "projector": 2_327,
+    "vision": 582,
+}
+
+
+def _default_model_builder(
+    protocol: Stage2Protocol,
+    mapping_root: int,
+    dimensions: Mapping[str, int],
+    *,
+    device: str,
+):
+    if dict(dimensions) != EXPECTED_DIMENSIONS:
+        raise ValueError("default VISSUP scorer requires M2-current dimensions")
+    return build_stage2_model(
+        "M2",
+        protocol,
+        mapping_root,
+        device=device,
+        dtype=torch.float32,
+    )
+
+
+DEFAULT_SCORING_SPEC: dict[str, Any] = {
+    "candidate": "VISSUP-01",
+    "round": 2,
+    "conditions": CONDITIONS,
+    "mapping_roots": MAPPING_ROOTS,
+    "dimensions_by_condition": {
+        condition: EXPECTED_DIMENSIONS for condition in CONDITIONS
+    },
+    "model_builder": _default_model_builder,
+}
+
+
+def _validated_spec(spec: Mapping[str, Any] | None) -> dict[str, Any]:
+    value = dict(DEFAULT_SCORING_SPEC if spec is None else spec)
+    if set(value) != {
+        "candidate",
+        "round",
+        "conditions",
+        "mapping_roots",
+        "dimensions_by_condition",
+        "model_builder",
+    }:
+        raise ValueError("scoring spec fields differ from frozen interface")
+    if (
+        not value["candidate"]
+        or not isinstance(value["round"], int)
+        or not callable(value["model_builder"])
+    ):
+        raise ValueError("scoring spec identity or builder is invalid")
+    return value
 
 
 def parse_args() -> argparse.Namespace:
@@ -93,6 +148,7 @@ def _verify_inputs(args: argparse.Namespace) -> tuple[dict, dict, dict, dict]:
 def _load_model(
     args: argparse.Namespace,
     protocol: Stage2Protocol,
+    spec: Mapping[str, Any],
 ) -> tuple[Any, dict[str, Any]]:
     training_dir = args.training_dir.resolve()
     manifest_path = training_dir / "training_manifest.json"
@@ -100,6 +156,8 @@ def _load_model(
     coordinate_path = training_dir / "coordinates.pt"
     if (
         manifest.get("status") != "complete"
+        or manifest.get("candidate") != spec["candidate"]
+        or manifest.get("round") != spec["round"]
         or manifest.get("condition") != args.condition
         or manifest.get("mapping_root") != args.mapping_root
         or manifest.get("final_confirmation_accessed") is not False
@@ -111,16 +169,20 @@ def _load_model(
     )
     if (
         payload.get("condition") != args.condition
+        or payload.get("candidate") != spec["candidate"]
+        or payload.get("round") != spec["round"]
         or payload.get("mapping_root") != args.mapping_root
         or payload.get("model_group") != "M2"
     ):
         raise ValueError("coordinate payload identity mismatch")
-    model = build_stage2_model(
-        "M2",
+    dimensions = dict(spec["dimensions_by_condition"][args.condition])
+    if manifest["model"]["coordinate_dimensions"] != dimensions:
+        raise ValueError("training manifest allocation differs from scorer")
+    model = spec["model_builder"](
         protocol,
         args.mapping_root,
+        dimensions,
         device=args.device,
-        dtype=torch.float32,
     )
     load_coordinate_state(model, payload["coordinates"])
     model.eval()
@@ -292,8 +354,18 @@ def _scoring_items(rotation_manifest: dict, cv_manifest: dict) -> list[dict]:
     return items
 
 
-def score(args: argparse.Namespace) -> dict:
+def score(
+    args: argparse.Namespace,
+    *,
+    spec: Mapping[str, Any] | None = None,
+) -> dict:
     started = time.time()
+    run_spec = _validated_spec(spec)
+    if (
+        args.condition not in run_spec["conditions"]
+        or args.mapping_root not in run_spec["mapping_roots"]
+    ):
+        raise ValueError("condition or mapping root is outside scoring spec")
     output = args.output_dir.resolve()
     if output.exists() and any(output.iterdir()):
         raise FileExistsError(f"scoring output is not empty: {output}")
@@ -303,7 +375,7 @@ def score(args: argparse.Namespace) -> dict:
         or torch.cuda.device_count() != 1
         or args.item_batch_size < 1
     ):
-        raise ValueError("VISSUP scoring requires one cuda:0 and positive batch")
+        raise ValueError("scoring requires one cuda:0 and positive batch")
     (
         data_audit,
         cv_audit,
@@ -313,7 +385,7 @@ def score(args: argparse.Namespace) -> dict:
     protocol = Stage2Protocol.load(args.protocol, require_frozen=True)
     protocol.verify_immutable_inputs()
     seed_everything(SCORING_SEED)
-    model, checkpoint = _load_model(args, protocol)
+    model, checkpoint = _load_model(args, protocol, run_spec)
     tokenizer = AutoTokenizer.from_pretrained(
         protocol.asset_path("tokenizer"),
         local_files_only=True,
@@ -326,7 +398,7 @@ def score(args: argparse.Namespace) -> dict:
     cache = ProjectedFeatureCache(
         model,
         model_id=(
-            f"VISSUP-01-{args.condition}-root-{args.mapping_root}"
+            f"{run_spec['candidate']}-{args.condition}-root-{args.mapping_root}"
         ),
         checkpoint_sha256=checkpoint["coordinate_sha256"],
         image_entries=entries,
@@ -379,8 +451,8 @@ def score(args: argparse.Namespace) -> dict:
     receipt = {
         "schema_version": 1,
         "status": "complete",
-        "candidate": "VISSUP-01",
-        "round": 2,
+        "candidate": run_spec["candidate"],
+        "round": run_spec["round"],
         "mode": args.mode,
         "condition": args.condition,
         "mapping_root": args.mapping_root,
