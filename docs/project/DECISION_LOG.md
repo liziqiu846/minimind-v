@@ -1,6 +1,6 @@
 # 上海交通大学实习——研究决策日志
 
-**版本：v1**  
+**版本：v2**  
 **日期：2026-08-06**  
 **规则：只追加，不删除历史。每条记录“决定 / 依据 / 后果”。**
 
@@ -125,7 +125,7 @@ D_I=\sum_t\eta_t^2\|g_t-g_t^{ghost}\|_2^2.
 
 **决定**：先写并冻结一页以内的 D_I 最小挽救实验设计。
 
-**设计方向（尚未冻结具体数值）**：
+**设计方向（当时尚未冻结具体数值）**：
 
 - 只先用 budget=2048；
 - P/S × 3 model seeds，共 6 条训练轨迹；
@@ -153,3 +153,60 @@ D_I=\sum_t\eta_t^2\|g_t-g_t^{ghost}\|_2^2.
 - `docs/project/EXPERIMENT_REGISTRY.md`
 
 **后果**：任何新对话先读 `CURRENT_STATE.md`；若聊天记忆与仓库文档冲突，以仓库最新文档为准。
+
+---
+
+## 2026-08-06｜正式 rescue 前先做 checkpoint-only crossed diagnostic pilot
+
+**决定**：不直接冻结正式 rescue 的 panel 数 K 和 diagnostic step 数 T；先对现有 budget=2048 的 6 个 raw checkpoints 做一次 crossed diagnostic pilot。
+
+**依据**：原 infra audit 只有 3 个 probe panel，且与 3 个 model seed 一一混杂；11 个 step 又对应不同 \(W_t\) 和 LR 权重。现有数据无法合法估计跨 panel 方差下降率，也无法可靠冻结正式 K/T。
+
+**Pilot 固定设计**：
+
+- 3 个 shared probe panels；
+- 每 panel 33 个 probes；
+- 6 个 raw checkpoints；
+- 总计 594 次 diagnosis；
+- model seed 与 probe seed 完全分离；
+- 不重训模型、不访问 final confirmation set、不做性能相关性。
+
+**后果**：该 pilot 只用于测量稳定性校准，不被解释为正式 \(D_I\) 或 CMI 泛化证书。
+
+---
+
+## 2026-08-06｜当前 gradient replacement D_I 代理路线停止
+
+**决定**：停止继续使用或挽救当前
+
+\[
+D_I=\sum_t\eta_t^2\|g_t-g_t^{ghost}\|_2^2
+\]
+
+作为 P/S 结构解释与图像组 CMI 的主要可计算代理。不再增加 panel / probe / step，也不再启动正式 rescue training。
+
+**依据**：crossed pilot 已消除最主要的 probe identity 混杂，并显著改善贡献集中和 CV，但核心结构信号仍不稳定：
+
+1. 99 个 shared probes 的 identity audit PASS；
+2. T=33 时 ICC(A,1) 仅 raw `0.084`、log `0.160`；
+3. 最低 P/S bootstrap 符号保持率在 T=33 时为 `0.497`；
+4. seed 43101 在三个 panel 上出现 `P>S / P<S / P>S` 的方向翻转；
+5. 虽然 K 增加会降低 probe/structure ratio，T 增加会降低 CV 和少数 probe 支配，但这些改进没有换来稳定的 P/S 结构方向。
+
+**后果**：
+
+- 当前 `CMI -> gradient replacement D_I` 代理桥停止；
+- 不把该结果解释成 CMI / 图像组数据依赖理论失败；
+- 项目返回理论层，寻找新的训练过程 / 数据依赖可计算量；
+- 下一候选量必须独立于 held-out error，并通过“新科学内容、解释码长—性能脱钩、可导出算法、MiniMind-V 可验证”四项筛选；
+- 当前仍处于阶段三。
+
+---
+
+## 2026-08-06｜crossed pilot 与 infra audit 远端同步状态
+
+**决定**：在后续正式实验前，必须确认 crossed pilot 和 infra audit 必要产物已经 push / freeze 到 GitHub，并回填真实远端 commit。
+
+**依据**：Codex 报告 pilot 本地产物位于 `experiments/results/phase3_di_crossed_probe_pilot_v1/`，并报告 commit `b1205ae42bb2af2e0658d440d90799db3ed43ced`；但截至本次文档维护，通过 GitHub 远端接口未能解析该 commit，且未发现 pilot 目录和上一轮 `infra_audit/` 目录。
+
+**后果**：新对话可以依赖文档理解科学结论，但在下一次正式 Codex 实验前，应先完成结果产物的远端冻结，避免“文档已更新、证据未入库”的断层。
