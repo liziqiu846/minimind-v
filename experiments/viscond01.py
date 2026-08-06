@@ -360,8 +360,8 @@ def audit_panel(
         "all_token_sequences_fit_450": max(token_lengths)
         <= MAX_SEQUENCE_LENGTH,
         "not_final_confirmation_set": True,
-        "final_confirmation_accessed": False,
-        "model_inference_performed": False,
+        "no_final_confirmation_access": True,
+        "no_model_inference_performed": True,
     }
     passed = all(checks.values())
     manifest = {
