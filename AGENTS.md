@@ -170,6 +170,52 @@
 Agent 不得自行改变 Envelope 中的冻结对象。需要改变冻结对象时必须
 `HARD_STOP`。
 
+### 阶段三 mechanism-intervention training
+
+阶段三允许以验证科学规律为唯一目的的最小机制干预训练；这不等同于阶段四
+正式训练算法主实验。只有同时满足以下条件，Agent 才可自行启动新训练：
+
+1. candidate 已登记在 `IDEA_REGISTRY.md`；
+2. 有明确的 VLM-specific scientific mechanism 和可证伪 prediction；
+3. existing checkpoint / artifact 无法充分区分该机制；
+4. 新训练能够直接区分至少两个竞争解释；
+5. intervention 只改变与当前假设直接相关的主要因素；
+6. immutable experiment plan 已创建并 commit；
+7. 不使用 final confirmation set；
+8. 不改变一级科学问题、核心泛化对象或数据统计关系；
+9. 训练处于当前预授权资源范围内。
+
+如果 checkpoint-only test 足以回答问题，不得训练。不得仅以“训练可能看看有无
+效果”为理由启动实验，也不得因为下一步需要训练而自动结束 autonomous cycle。
+
+训练采用最小判别设计：baseline condition 对 hypothesis-specific intervention。
+第一轮只运行 1 个 paired seed。它只用于核查 intervention 是否改变预期机制、训练
+是否正常以及方向是否值得确认；单 seed positive 不得作为科学结论。若结果明显
+违背预注册 prediction 且不存在实现或测量问题，必须 `REJECT_IDEA`。
+
+只有 paired pilot 与 prediction 一致，才可保持数据、intervention、训练配置、评价
+指标和判定标准完全不变，补充两个 seed 至 total 3 seeds。单个 candidate 的标准
+训练预算最多为 2 conditions × 3 seeds = 6 model trainings，不得在三 seed 后更换
+lambda、learning rate、rank、epoch 等重跑一套。
+
+rescue 只允许用于已明确证明的 implementation bug、corrupted data、wrong
+checkpoint、preprocessing mismatch、metric implementation error 或 job failure。
+effect 太小、p-value / correlation 不佳、seed 方向不支持均是科学证据，不是 rescue
+理由。
+
+三 seed 确认后必须作出以下科学判定之一：
+
+* `PROMISING` / `CONCLUSION_CANDIDATE`：主要方向跨 seed 稳定，达到预注册效应
+  标准，简单 baseline 不能解释且符合理论预测；
+* `REJECT_IDEA`：方向不稳定、主效应不存在、与 prediction 相反或简单混杂足以
+  解释；
+* `INCONCLUSIVE`：仅限真正统计能力不足或实验无法区分 competing hypotheses，
+  且不自动获得更多训练预算；若需明显增加资源，写入 `REVIEW_QUEUE.md` 并转向
+  其他 idea。
+
+对同一 idea 禁止通过 hyperparameter search、换 metric / proxy、追加 seed、改数据
+subset、改判定标准或堆叠微小变种维持失败假设。
+
 ---
 
 ## STEP 1：读取当前状态
@@ -414,6 +460,8 @@ Agent 可以在当前 Research Envelope 内继续其他 candidate。
 * exploratory round 最多 2 轮；
 * 只有明确发现 measurement / implementation confound 时，最多允许 1 次 rescue；
 * rescue 后仍不稳定，必须 `REJECT_IDEA` 或标记 `INCONCLUSIVE`；
+* mechanism-intervention training 必须遵守 1 个 paired seed pilot、positive 后才补至
+  total 3 seeds、最多 6 次 model trainings 的上限；
 * 不得无限增加 seed、panel、probe、step、超参数或消融来救一个 idea。
 
 单个 autonomous research cycle：

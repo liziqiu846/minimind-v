@@ -10,6 +10,7 @@
 - read-only 分析；
 - checkpoint-only 分析；
 - 低成本 exploratory pilot；
+- 满足下述全部授权条件的阶段三 mechanism-intervention training；
 - 预授权预算内实验；
 - 多 seed / budget 验证；
 - prediction test；
@@ -18,6 +19,42 @@
 - 更新 registry、queue、state 和 report。
 
 任何科学分析或实验仍必须先创建并 commit immutable experiment plan。
+
+## 阶段三最小训练授权
+
+训练只可用于证实或证伪已通过理论筛选的 scientific idea，不得作为阶段四正式
+训练算法主实验。自动启动训练必须同时满足：
+
+1. candidate 已登记且机制明确为 VLM-specific；
+2. 已形成可证伪 prediction；
+3. existing checkpoint / artifact 无法充分区分该机制；
+4. 新训练能直接区分至少两个竞争解释；
+5. intervention 只改变与假设直接相关的主要因素；
+6. immutable plan 已创建并 commit；
+7. 不使用 final confirmation set；
+8. 不改变一级科学问题、核心泛化对象或数据统计关系；
+9. 不超出预授权资源。
+
+checkpoint-only 足够时不得训练。训练默认仅比较 baseline 与 hypothesis-specific
+intervention，不做 hyperparameter sweep：
+
+1. 先运行 1 个 paired seed；单 seed positive 只用于机制和运行核查，不能成为科学
+   结论。若方向明显违背预注册 prediction 且无实现或测量问题，立即
+   `REJECT_IDEA`。
+2. paired pilot 与 prediction 一致时，保持数据、intervention、配置、指标和判定
+   标准不变，只补两个 seed 至 total 3 seeds。
+3. 每个 candidate 最多 2 conditions × 3 seeds = 6 model trainings。三 seed 后必须
+   判为 `PROMISING` / `CONCLUSION_CANDIDATE`、`REJECT_IDEA` 或真正的
+   `INCONCLUSIVE`；`INCONCLUSIVE` 不自动增加训练预算。
+
+rescue 仅限已证明的 implementation bug、corrupted data、wrong checkpoint、
+preprocessing mismatch、metric implementation error 或 job failure。effect 太小、
+p-value / correlation 不佳或 seed 方向不支持均不是 rescue。禁止通过换参数、
+metric、proxy、数据 subset、判定标准或继续加 seed 来维持失败 idea。
+
+不得因为“下一步需要训练”自动结束夜间 cycle。只有训练超出上述最小授权、需要
+明显扩大模型/数据/算力、实际进入阶段四正式算法主实验，或触发其他 `HARD_STOP`
+条件时，才停止并请求人工决定。
 
 ## REVIEW_QUEUE 不停机
 
