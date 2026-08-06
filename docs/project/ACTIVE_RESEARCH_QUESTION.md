@@ -15,10 +15,10 @@ Mission Question 不得由 Agent 自行改变。
 
 ## 当前 Active Research Question
 
-当前经验起点是：
+当前 active question 是：
 
-> VLM checkpoint 描述长度下降但真实性能没有稳定改善时，哪一种 VLM 特有的
-> 数据、表示或训练机制能够解释这种脱钩，并产生可验证的新预测？
+> 在相同训练数据、预算和 seed 下，较短的共享结构若真实性能更差，是否是因为它
+> 更弱地保留了对象关系与词序所定义的跨模态组合绑定？
 
 这一问题是当前子问题，不是永久冻结的唯一主线。Agent 可以依据可靠实验、
 反例或权威文献自主切换 Active Research Question。
@@ -113,4 +113,19 @@ Agent 可以自主改变：
 - **Question**: checkpoint 描述长度下降但真实 VLM 泛化没有稳定改善时，哪一种
   VLM 特有机制能够解释这种脱钩并产生可验证预测？
 - **Origin**: 已有 phase 2 / phase 3 结果显示码长改善与真实性能并不稳定一致。
-- **Status**: ACTIVE；治理修正后保留为当前经验起点，后续可按上述规则切换。
+- **Status**: SUPERSEDED_AS_ACTIVE；它仍是经验起点，但作为当前问题过宽，不能直接
+  决定唯一最小实验。
+
+### 2026-08-07｜COMP-01 active question
+
+- **Question**: 在相同训练数据、预算和 seed 下，较短的共享结构若真实性能更差，
+  是否是因为它更弱地保留了跨模态组合绑定？
+- **Why the old question was insufficient**: 旧问题同时覆盖数据、表示和训练机制；
+  `XMC-01_round1` 已显示已审计 P/S pair 的实际数据图相同，继续停留在宽问题不能
+  区分模型保持机制。
+- **Evidence / literature origin**: 6 对 P/S data/permutation equality；Winoground、
+  ARO、SugarCrepe 关于 same-word relation/order failure 与 hard-negative training 的
+  primary evidence。
+- **Mission relation**: 它直接测试 VLM 相比 LLM 新增的跨模态关系绑定，能被外部
+  benchmark 否定，并有 composition-aware training 的自然出口。
+- **Status**: ACTIVE。
