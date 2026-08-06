@@ -255,3 +255,5 @@ checkpoint-only prediction test；不训练。
   `472.84/493.59 s`，合计约 `0.268 GPU-hour`。data/permutation/seed/frozen hash/
   11 targets 全匹配，dimensions 与 projection gates 正确，frozen parameters 未变，
   loss/gradient 全 finite；此时仍无任何 scientific scoring。
+- 两模型 raw scoring 已在 GPU 5 顺序启动；只保存逐题 NLL/accuracy/margin，不在
+  单条件完成后聚合或判定。两份 raw scores 完成后才运行一次预注册 paired analyzer。
