@@ -1,0 +1,47 @@
+{
+  "candidate": "VISSUP-01",
+  "round": 1,
+  "status": "PANEL_INELIGIBLE",
+  "model_outputs_created": false,
+  "training_runs_started": 0,
+  "repository": "nyu-visionx/CV-Bench",
+  "revision": "bc284db50d036958861cb60cdd7b77612052ce0d",
+  "config": "2D",
+  "split": "test",
+  "tree_url": "https://huggingface.co/api/datasets/nyu-visionx/CV-Bench/tree/bc284db50d036958861cb60cdd7b77612052ce0d?recursive=true&expand=true",
+  "readme_url": "https://huggingface.co/datasets/nyu-visionx/CV-Bench/resolve/bc284db50d036958861cb60cdd7b77612052ce0d/README.md",
+  "parquet_url": "https://huggingface.co/datasets/nyu-visionx/CV-Bench/resolve/bc284db50d036958861cb60cdd7b77612052ce0d/test_2d.parquet",
+  "tree_sha256": "d613e1c2e9a66e1a4e9576190ea0947f039385a9b61bf86bab5bf5a7d0e86b98",
+  "readme_sha256": "7673ec70487b434ff115676f5b9fda25753d515a36bb1123e4302b2a4a54347b",
+  "parquet_bytes": 184906137,
+  "parquet_sha256": "33196034ef4bf3265cae4a7ff5c4071b2ff1cc21123e8e285c6a91393897ecbc",
+  "rows": 1438,
+  "type_counts": {
+    "2D": 1438
+  },
+  "task_counts": {
+    "Count": 788,
+    "Relation": 650
+  },
+  "source_counts": {
+    "ADE20K": 633,
+    "COCO": 805
+  },
+  "choice_count_inventory": {
+    "2": 650,
+    "4": 493,
+    "5": 156,
+    "6": 139
+  },
+  "answer_label_inventory": {
+    "A": 509,
+    "B": 507,
+    "C": 169,
+    "D": 167,
+    "E": 63,
+    "F": 23
+  },
+  "failed_gate": "round1 required every question to normalize to exactly A/B/C/D without dropping rows",
+  "allowed_resolution": "one pre-model schema rescue round using each row's full official A-through-F choice inventory",
+  "forbidden_resolution": "drop non-four-choice rows or alter the round1 plan in place"
+}

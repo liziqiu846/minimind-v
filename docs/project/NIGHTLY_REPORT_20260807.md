@@ -176,3 +176,8 @@ checkpoint-only prediction test；不训练。
   M2-current root `43101` paired pilot；held-out rotation 机制门与全新
   CV-Bench-2D 外部方向必须同时达到预注册阈值才补 `43102/43103`。资源快照显示
   1/5/7 号 A40 空闲但工作盘仅余约 24.5 GB，因此固定单卡顺序执行和紧凑 artifact。
+- round1 的 pre-model panel gate 发现官方 CV-Bench-2D 并非统一四选一：1,438 rows
+  中 650 题为 2 选、493 题为 4 选、156 题为 5 选、139 题为 6 选，gold label
+  包含 E/F。按计划触发 `PANEL_INELIGIBLE`；没有丢题、没有训练、没有模型输出。
+  这是明确的 metric/schema confound，使用唯一一次 rescue 创建 variable-choice
+  round2；训练干预和效应阈值不变。
