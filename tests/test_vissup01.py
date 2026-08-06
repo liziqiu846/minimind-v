@@ -8,6 +8,7 @@ from PIL import Image
 from experiments.vissup01 import (
     ROTATION_LABELS,
     answer_margin,
+    build_choice_record,
     choice_labels,
     cvbench_gold_label,
     deterministic_png,
@@ -15,6 +16,7 @@ from experiments.vissup01 import (
     normalized_pixel_sha256,
     predicted_label,
     rotate_clockwise,
+    rotation_token_records,
 )
 
 
@@ -63,3 +65,42 @@ def test_png_and_order_keys_are_deterministic():
 
 def test_rotation_labels_are_frozen():
     assert ROTATION_LABELS == ("A", "B", "C", "D")
+
+
+def test_frozen_tokenizer_preserves_paired_rotation_invariant():
+    from transformers import AutoTokenizer
+
+    from experiments.stage2_protocol import Stage2Protocol
+
+    protocol = Stage2Protocol.load(
+        "experiments/stage2_protocol_v2.json", require_frozen=True
+    )
+    tokenizer = AutoTokenizer.from_pretrained(
+        protocol.asset_path("tokenizer"), local_files_only=True
+    )
+    for label in ROTATION_LABELS:
+        visual, revealed = rotation_token_records(tokenizer, label)
+        assert len(visual["full_token_ids"]) == len(
+            revealed["full_token_ids"]
+        )
+        assert visual["target_token_ids"] == revealed["target_token_ids"]
+
+
+def test_variable_choice_record_supports_f_label():
+    from transformers import AutoTokenizer
+
+    from experiments.stage2_protocol import Stage2Protocol
+
+    protocol = Stage2Protocol.load(
+        "experiments/stage2_protocol_v2.json", require_frozen=True
+    )
+    tokenizer = AutoTokenizer.from_pretrained(
+        protocol.asset_path("tokenizer"), local_files_only=True
+    )
+    record = build_choice_record(
+        tokenizer,
+        "Choose one.\n(A) a\n(B) b\n(C) c\n(D) d\n(E) e\n(F) f",
+        "F",
+        legal_labels=("A", "B", "C", "D", "E", "F"),
+    )
+    assert record["valid_token_count"] >= 2
