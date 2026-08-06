@@ -1,0 +1,1501 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/sPiAzlFgARLUPAfCFB7Wgst4A18</id>
+  <title>arXiv Query: search_query=(all:"multimodal contrastive learning" AND (all:theory OR all:theoretical OR all:generalization OR all:identifiability) )&amp;id_list=&amp;start=0&amp;max_results=100</title>
+  <updated>2026-08-06T18:05:37Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22multimodal+contrastive+learning%22+AND+(all:theory+OR+(all:theoretical+OR+(all:generalization+OR+all:identifiability)))&amp;start=0&amp;max_results=100&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>100</opensearch:itemsPerPage>
+  <opensearch:totalResults>54</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2608.04052v1</id>
+    <title>When Modalities Fail to Tango: Conformal Backdoor Detection in Multimodal Contrastive Learning</title>
+    <updated>2026-08-04T10:20:41Z</updated>
+    <link href="https://arxiv.org/abs/2608.04052v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.04052v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Backdoor attacks in multimodal contrastive learning (MCL) have garnered growing attention in recent years, as many downstream tasks critically depend on pre-trained MCL models. Existing detection-based defenses predominantly rely on the CLIPScore metric, under the assumption that poisoned pairs exhibit lower semantic similarity between the image and the caption. However, we identify two critical flaws remaining in existing methods: (1) the substantial overlap between CLIPScore distributions of benign and poisoned pairs undermines the reliability of this metric, and (2) fixed-threshold detection cannot provide statistical guarantees for ambiguous samples within overlapping regions. To overcome these limitations, we propose integrating conformal prediction (CP), a statistical framework that quantifies uncertainty through nonconformity scores (NCSs), to establish provable confidence bounds for detecting poisoned image-caption pairs. Building on CP, we introduce CASCADE, a novel two-stage Coarse-to-Fine Conformal Backdoor Detection framework. The coarse-grained stage uses cross-modality consistency to identify high-confidence benign and poisoned pairs. In the fine-grained stage, a reference set is constructed from high-confidence poisoned pairs, and instance-level NCSs based on text-space similarity are computed for each sample in the unidentified subset. These NCSs measure conformity to the poisoning distribution and enable precise identification of latent poisoned pairs within the unidentified subset. Extensive experiments on the large-scale CC3M dataset demonstrate that CASCADE achieves an average FPR of 5.79% at 100% TPR and an average AUROC of 0.9867 across diverse attacks, while remaining effective against adaptive attacks.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-04T10:20:41Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Yiming Chen</name>
+    </author>
+    <author>
+      <name>Kemou Li</name>
+    </author>
+    <author>
+      <name>Haiwei Wu</name>
+    </author>
+    <author>
+      <name>Jiantao Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.17673v1</id>
+    <title>Beyond Objective Expressivity: Geometry Preservation in Multimodal Contrastive Learning</title>
+    <updated>2026-07-20T08:25:45Z</updated>
+    <link href="https://arxiv.org/abs/2607.17673v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.17673v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Contrastive learning is increasingly moving toward settings with three or more modalities instead of image-text pairs. Yet, extending models from pairwise to higher-order multimodal alignment can introduce optimization and representation challenges. We identify encoder Jacobian conditioning as a key factor in trimodal contrastive learning: poorly conditioned encoders exhibit collapsing or amplified singular-value spectra, leading to exploding Jacobian condition numbers and degraded multimodal alignment. We introduce geometry-preserving encoders (GPEs) by directly conditioning the Jacobian through regularization and demonstrating that simple modifications like LeakyReLU activations and residual paths recover these geometric benefits. Across a synthetic benchmark and four real-world datasets including missing modalities, improving Jacobian conditioning boosts retrieval and linear probe performance across multiple contrastive objectives, whereas expressive objectives yield little benefit in linear probes. More broadly, our results show that multimodal contrastive learning depends not only on objective expressivity, but also on the geometric and optimization properties of the underlying encoders.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-20T08:25:45Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Tillmann Rheude</name>
+    </author>
+    <author>
+      <name>Roland Eils</name>
+    </author>
+    <author>
+      <name>Benjamin Wild</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.24175v1</id>
+    <title>Tri-Efficient Transfer Learning for Point Cloud Videos</title>
+    <updated>2026-06-23T05:55:02Z</updated>
+    <link href="https://arxiv.org/abs/2606.24175v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.24175v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>While point cloud foundation models have significantly advanced point cloud video understanding, existing parameter-efficient fine-tuning (PEFT) methods still suffer from two critical limitations: prohibitive annotation costs for large-scale point cloud datasets and severe memory bottlenecks. In this paper, we aim to mine richer supervision signals from existing data rather than blindly scaling datasets. A further key principle is that the memory footprint of fine-tuning must be drastically reduced compared to full fine-tuning, which remains elusive for current PEFT techniques. Driven by these challenges, we identify three core desiderata: data-, parameter-, and memory efficiency, and present PoinTriE, a unified framework that excels along all three dimensions. For pre-training, pseudo-motion trajectories are synthesized via rigid transformations, paired with text corpora and 2D projections derived from raw point clouds. We then propose a Geometric-Motion Duality Network optimized via multimodal contrastive learning, rigid rotation prediction, and motion distribution divergence to produce dense self-supervision. During fine-tuning, we freeze the pretrained backbone and only update a lightweight Spatio-temporal Side Network built with LoRA units. Equipped with a gradient flow masking strategy, PoinTriE simultaneously reduces memory consumption and parameter overhead. Extensive experiments confirm that PoinTriE establishes new state-of-the-art results on action recognition and semantic segmentation tasks.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-23T05:55:02Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yiding Sun</name>
+    </author>
+    <author>
+      <name>Dongxu Zhang</name>
+    </author>
+    <author>
+      <name>Jihua Zhu</name>
+    </author>
+    <author>
+      <name>Haozhe Cheng</name>
+    </author>
+    <author>
+      <name>Zhengqiao Li</name>
+    </author>
+    <author>
+      <name>Pengcheng Li</name>
+    </author>
+    <author>
+      <name>Chaowei Fang</name>
+    </author>
+    <author>
+      <name>Yonghao Dong</name>
+    </author>
+    <author>
+      <name>Lin Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.28733v1</id>
+    <title>Utility-Aware Multimodal Contrastive Learning for Product Image Generation</title>
+    <updated>2026-05-27T16:54:51Z</updated>
+    <link href="https://arxiv.org/abs/2605.28733v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.28733v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Product images strongly influence consumer decision-making in online marketplaces. Empowered by multimodal contrastive learning, generative AI can output images that closely align with text prompts. Yet existing generative AI models do not directly optimize marketplace performance. This is a critical gap, since semantic alignment alone does not guarantee that an image will sell. To address this limitation, we propose a \textit{utility-aware multimodal contrastive learning} framework that incorporates consumer demand into a novel Utility-Aware InfoNCE loss. Optimizing this utility-aware objective guides generation toward images that are both semantically coherent and demand-enhancing. This effect arises directly from a shift in the learned image-text representation space toward demand-driven visual cues, which we also validate through the theoretical bound of the proposed objective. In downstream applications on Amazon and Airbnb, product images generated and edited by our method outperform state-of-the-art models in increasing demand and preserving fidelity, while maintaining text-image consistency. Notably, our utility-aware framework preserves inverse U-shaped demand patterns for attributes such as aesthetics and uniqueness, improving demand-based performance while preserving fidelity and semantic consistency. Human-subject experiments further validate its commercial effectiveness. As generative AI technology continues to evolve, our utility-aware component can be flexibly embedded into emerging generative models to improve direct commercial use.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-27T16:54:51Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Xiaohang Feng</name>
+    </author>
+    <author>
+      <name>Yiling Xie</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.17168v1</id>
+    <title>BadCLIP++: Stealthy and Persistent Backdoors in Multimodal Contrastive Learning</title>
+    <updated>2026-02-19T08:31:16Z</updated>
+    <link href="https://arxiv.org/abs/2602.17168v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.17168v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Research on backdoor attacks against multimodal contrastive learning models faces two key challenges: stealthiness and persistence. Existing methods often fail under strong detection or continuous fine-tuning, largely due to (1) cross-modal inconsistency that exposes trigger patterns and (2) gradient dilution at low poisoning rates that accelerates backdoor forgetting. These coupled causes remain insufficiently modeled and addressed. We propose BadCLIP++, a unified framework that tackles both challenges. For stealthiness, we introduce a semantic-fusion QR micro-trigger that embeds imperceptible patterns near task-relevant regions, preserving clean-data statistics while producing compact trigger distributions. We further apply target-aligned subset selection to strengthen signals at low injection rates. For persistence, we stabilize trigger embeddings via radius shrinkage and centroid alignment, and stabilize model parameters through curvature control and elastic weight consolidation, maintaining solutions within a low-curvature wide basin resistant to fine-tuning. We also provide the first theoretical analysis showing that, within a trust region, gradients from clean fine-tuning and backdoor objectives are co-directional, yielding a non-increasing upper bound on attack success degradation. Experiments demonstrate that with only 0.3% poisoning, BadCLIP++ achieves 99.99% attack success rate (ASR) in digital settings, surpassing baselines by 11.4 points. Across nineteen defenses, ASR remains above 99.90% with less than 0.8% drop in clean accuracy. The method further attains 65.03% success in physical attacks and shows robustness against watermark removal defenses.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-19T08:31:16Z</published>
+    <arxiv:comment>25 pages, 10 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Siyuan Liang</name>
+    </author>
+    <author>
+      <name>Yongcheng Jing</name>
+    </author>
+    <author>
+      <name>Yingjie Wang</name>
+    </author>
+    <author>
+      <name>Jiaxing Huang</name>
+    </author>
+    <author>
+      <name>Ee-chien Chang</name>
+    </author>
+    <author>
+      <name>Dacheng Tao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.09066v1</id>
+    <title>Spectral Disentanglement and Enhancement: A Dual-domain Contrastive Framework for Representation Learning</title>
+    <updated>2026-02-09T07:29:43Z</updated>
+    <link href="https://arxiv.org/abs/2602.09066v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.09066v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large-scale multimodal contrastive learning has recently achieved impressive success in learning rich and transferable representations, yet it remains fundamentally limited by the uniform treatment of feature dimensions and the neglect of the intrinsic spectral structure of the learned features. Empirical evidence indicates that high-dimensional embeddings tend to collapse into narrow cones, concentrating task-relevant semantics in a small subspace, while the majority of dimensions remain occupied by noise and spurious correlations. Such spectral imbalance and entanglement undermine model generalization. We propose Spectral Disentanglement and Enhancement (SDE), a novel framework that bridges the gap between the geometry of the embedded spaces and their spectral properties. Our approach leverages singular value decomposition to adaptively partition feature dimensions into strong signals that capture task-critical semantics, weak signals that reflect ancillary correlations, and noise representing irrelevant perturbations. A curriculum-based spectral enhancement strategy is then applied, selectively amplifying informative components with theoretical guarantees on training stability. Building upon the enhanced features, we further introduce a dual-domain contrastive loss that jointly optimizes alignment in both the feature and spectral spaces, effectively integrating spectral regularization into the training process and encouraging richer, more robust representations. Extensive experiments on large-scale multimodal benchmarks demonstrate that SDE consistently improves representation robustness and generalization, outperforming state-of-the-art methods. SDE integrates seamlessly with existing contrastive pipelines, offering an effective solution for multimodal representation learning.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-09T07:29:43Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Jinjin Guo</name>
+    </author>
+    <author>
+      <name>Yexin Li</name>
+    </author>
+    <author>
+      <name>Zhichao Huang</name>
+    </author>
+    <author>
+      <name>Jun Fang</name>
+    </author>
+    <author>
+      <name>Zhiyuan Liu</name>
+    </author>
+    <author>
+      <name>Chao Liu</name>
+    </author>
+    <author>
+      <name>Pengzhang Liu</name>
+    </author>
+    <author>
+      <name>Qixia Jiang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.07026v3</id>
+    <title>Modality Gap-Driven Subspace Alignment Training Paradigm For Multimodal Large Language Models</title>
+    <updated>2026-06-05T02:27:27Z</updated>
+    <link href="https://arxiv.org/abs/2602.07026v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.07026v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Despite the success of multimodal contrastive learning in aligning visual and linguistic representations, a persistent geometric anomaly, the Modality Gap, remains: embeddings of distinct modalities expressing identical semantics occupy systematically offset regions. Prior approaches to bridge this gap are largely limited by oversimplified isotropic assumptions, hindering their application in large-scale scenarios. In this paper, we address these limitations by precisely characterizing the geometric shape of the modality gap and leveraging it for efficient model scaling. First, we propose the Fixed-frame Modality Gap Theory, which decomposes the modality gap within a frozen reference frame into stable biases and anisotropic residuals. Guided by this precise modeling, we introduce ReAlign, a training-free modality alignment strategy. Utilizing statistics from massive unpaired data, ReAlign aligns text representation into the image representation distribution via a three-step process comprising Anchor, Trace, and Centroid Alignment, thereby explicitly rectifying geometric misalignment. Building on ReAlign, we propose ReVision, a scalable training paradigm for Multimodal Large Language Models~(MLLMs). ReVision integrates ReAlign into the pretraining stage, enabling the model to learn the distribution of visual representations from unpaired text before visual instruction tuning, without the need for large-scale, high-quality image-text pairs. Our framework demonstrates that statistically aligned unpaired data can effectively substitute for expensive image-text pairs, offering a robust path for the efficient scaling of MLLMs.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-02T13:59:39Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xiaomin Yu</name>
+    </author>
+    <author>
+      <name>Yi Xin</name>
+    </author>
+    <author>
+      <name>Yuhui Zhang</name>
+    </author>
+    <author>
+      <name>Wenjie Zhang</name>
+    </author>
+    <author>
+      <name>Chonghan Liu</name>
+    </author>
+    <author>
+      <name>Hanzhen Zhao</name>
+    </author>
+    <author>
+      <name>Chen Liu</name>
+    </author>
+    <author>
+      <name>Xiaoxing Hu</name>
+    </author>
+    <author>
+      <name>Ziyue Qiao</name>
+    </author>
+    <author>
+      <name>Hao Tang</name>
+    </author>
+    <author>
+      <name>Xiaobin Hu</name>
+    </author>
+    <author>
+      <name>Chengwei Qin</name>
+    </author>
+    <author>
+      <name>Hui Xiong</name>
+    </author>
+    <author>
+      <name>Yu Qiao</name>
+    </author>
+    <author>
+      <name>Shuicheng Yan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.04127v1</id>
+    <title>Pixel-Wise Multimodal Contrastive Learning for Remote Sensing Images</title>
+    <updated>2026-01-07T17:41:11Z</updated>
+    <link href="https://arxiv.org/abs/2601.04127v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.04127v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Satellites continuously generate massive volumes of data, particularly for Earth observation, including satellite image time series (SITS). However, most deep learning models are designed to process either entire images or complete time series sequences to extract meaningful features for downstream tasks. In this study, we propose a novel multimodal approach that leverages pixel-wise two-dimensional (2D) representations to encode visual property variations from SITS more effectively. Specifically, we generate recurrence plots from pixel-based vegetation index time series (NDVI, EVI, and SAVI) as an alternative to using raw pixel values, creating more informative representations. Additionally, we introduce PIxel-wise Multimodal Contrastive (PIMC), a new multimodal self-supervision approach that produces effective encoders based on two-dimensional pixel time series representations and remote sensing imagery (RSI). To validate our approach, we assess its performance on three downstream tasks: pixel-level forecasting and classification using the PASTIS dataset, and land cover classification on the EuroSAT dataset. Moreover, we compare our results to state-of-the-art (SOTA) methods on all downstream tasks. Our experimental results show that the use of 2D representations significantly enhances feature extraction from SITS, while contrastive learning improves the quality of representations for both pixel time series and RSI. These findings suggest that our multimodal method outperforms existing models in various Earth observation tasks, establishing it as a robust self-supervision framework for processing both SITS and RSI. Code avaliable on</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-07T17:41:11Z</published>
+    <arxiv:comment>21 pages, 9 Figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Leandro Stival</name>
+    </author>
+    <author>
+      <name>Ricardo da Silva Torres</name>
+    </author>
+    <author>
+      <name>Helio Pedrini</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.14230v1</id>
+    <title>Understanding the Gain from Data Filtering in Multimodal Contrastive Learning</title>
+    <updated>2025-12-16T09:28:38Z</updated>
+    <link href="https://arxiv.org/abs/2512.14230v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.14230v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The success of modern multimodal representation learning relies on internet-scale datasets. Due to the low quality of a large fraction of raw web data, data curation has become a critical step in the training pipeline. Filtering using a trained model (i.e., teacher-based filtering) has emerged as a successful solution, leveraging a pre-trained model to compute quality scores. To explain the empirical success of teacher-based filtering, we characterize the performance of filtered contrastive learning under the standard bimodal data generation model. Denoting $η\in(0,1]$ as the fraction of data with correctly matched modalities among $n$ paired samples, we utilize a linear contrastive learning setup to show a provable benefit of data filtering: $(i)$ the error without filtering is upper and lower bounded by $\frac{1}{η\sqrt{n}}$, and $(ii)$ the error with teacher-based filtering is upper bounded by $\frac{1}{\sqrt{ηn}}$ in the large $η$ regime, and by $\frac{1}{\sqrt{n}}$ in the small $η$ regime.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-16T09:28:38Z</published>
+    <arxiv:comment>40 pages, 8 figures, 1 table. This work is accepted to the Thirty-ninth Annual Conference on Neural Information Processing Systems, 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Divyansh Pareek</name>
+    </author>
+    <author>
+      <name>Sewoong Oh</name>
+    </author>
+    <author>
+      <name>Simon S. Du</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.18983v1</id>
+    <title>UMCL: Unimodal-generated Multimodal Contrastive Learning for Cross-compression-rate Deepfake Detection</title>
+    <updated>2025-11-24T10:56:22Z</updated>
+    <link href="https://arxiv.org/abs/2511.18983v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.18983v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In deepfake detection, the varying degrees of compression employed by social media platforms pose significant challenges for model generalization and reliability. Although existing methods have progressed from single-modal to multimodal approaches, they face critical limitations: single-modal methods struggle with feature degradation under data compression in social media streaming, while multimodal approaches require expensive data collection and labeling and suffer from inconsistent modal quality or accessibility in real-world scenarios. To address these challenges, we propose a novel Unimodal-generated Multimodal Contrastive Learning (UMCL) framework for robust cross-compression-rate (CCR) deepfake detection. In the training stage, our approach transforms a single visual modality into three complementary features: compression-robust rPPG signals, temporal landmark dynamics, and semantic embeddings from pre-trained vision-language models. These features are explicitly aligned through an affinity-driven semantic alignment (ASA) strategy, which models inter-modal relationships through affinity matrices and optimizes their consistency through contrastive learning. Subsequently, our cross-quality similarity learning (CQSL) strategy enhances feature robustness across compression rates. Extensive experiments demonstrate that our method achieves superior performance across various compression rates and manipulation types, establishing a new benchmark for robust deepfake detection. Notably, our approach maintains high detection accuracy even when individual features degrade, while providing interpretable insights into feature relationships through explicit alignment.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-24T10:56:22Z</published>
+    <arxiv:comment>24-page manuscript accepted to IJCV</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Ching-Yi Lai</name>
+    </author>
+    <author>
+      <name>Chih-Yu Jian</name>
+    </author>
+    <author>
+      <name>Pei-Cheng Chuang</name>
+    </author>
+    <author>
+      <name>Chia-Ming Lee</name>
+    </author>
+    <author>
+      <name>Chih-Chung Hsu</name>
+    </author>
+    <author>
+      <name>Chiou-Ting Hsu</name>
+    </author>
+    <author>
+      <name>Chia-Wen Lin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.13545v1</id>
+    <title>Robust Defense Strategies for Multimodal Contrastive Learning: Efficient Fine-tuning Against Backdoor Attacks</title>
+    <updated>2025-11-17T16:16:50Z</updated>
+    <link href="https://arxiv.org/abs/2511.13545v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.13545v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The advent of multimodal deep learning models, such as CLIP, has unlocked new frontiers in a wide range of applications, from image-text understanding to classification tasks. However, these models are not safe for adversarial attacks, particularly backdoor attacks, which can subtly manipulate model behavior. Moreover, existing defense methods typically involve training from scratch or fine-tuning using a large dataset without pinpointing the specific labels that are affected. In this study, we introduce an innovative strategy to enhance the robustness of multimodal contrastive learning models against such attacks. In particular, given a poisoned CLIP model, our approach can identify the backdoor trigger and pinpoint the victim samples and labels in an efficient manner. To that end, an image segmentation ``oracle'' is introduced as the supervisor for the output of the poisoned CLIP. We develop two algorithms to rectify the poisoned model: (1) differentiating between CLIP and Oracle's knowledge to identify potential triggers; (2) pinpointing affected labels and victim samples, and curating a compact fine-tuning dataset. With this knowledge, we are allowed to rectify the poisoned CLIP model to negate backdoor effects. Extensive experiments on visual recognition benchmarks demonstrate our strategy is effective in CLIP-based backdoor defense.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-17T16:16:50Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Md. Iqbal Hossain</name>
+    </author>
+    <author>
+      <name>Afia Sajeeda</name>
+    </author>
+    <author>
+      <name>Neeresh Kumar Perla</name>
+    </author>
+    <author>
+      <name>Ming Shao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.09250v1</id>
+    <title>NeuroCLIP: Brain-Inspired Prompt Tuning for EEG-to-Image Multimodal Contrastive Learning</title>
+    <updated>2025-11-12T12:13:24Z</updated>
+    <link href="https://arxiv.org/abs/2511.09250v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.09250v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent advances in brain-inspired artificial intelligence have sought to align neural signals with visual semantics using multimodal models such as CLIP. However, existing methods often treat CLIP as a static feature extractor, overlooking its adaptability to neural representations and the inherent physiological-symbolic gap in EEG-image alignment. To address these challenges, we present NeuroCLIP, a prompt tuning framework tailored for EEG-to-image contrastive learning. Our approach introduces three core innovations: (1) We design a dual-stream visual embedding pipeline that combines dynamic filtering and token-level fusion to generate instance-level adaptive prompts, which guide the adjustment of patch embedding tokens based on image content, thereby enabling fine-grained modulation of visual representations under neural constraints; (2) We are the first to introduce visual prompt tokens into EEG-image alignment, acting as global, modality-level prompts that work in conjunction with instance-level adjustments. These visual prompt tokens are inserted into the Transformer architecture to facilitate neural-aware adaptation and parameter optimization at a global level; (3) Inspired by neuroscientific principles of human visual encoding, we propose a refined contrastive loss that better model the semantic ambiguity and cross-modal noise present in EEG signals. On the THINGS-EEG2 dataset, NeuroCLIP achieves a Top-1 accuracy of 63.2% in zero-shot image retrieval, surpassing the previous best method by +12.3%, and demonstrates strong generalization under inter-subject conditions (+4.6% Top-1), highlighting the potential of physiology-aware prompt tuning for bridging brain signals and visual semantics.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-12T12:13:24Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Jiyuan Wang</name>
+    </author>
+    <author>
+      <name>Li Zhang</name>
+    </author>
+    <author>
+      <name>Haipeng Lin</name>
+    </author>
+    <author>
+      <name>Qile Liu</name>
+    </author>
+    <author>
+      <name>Gan Huang</name>
+    </author>
+    <author>
+      <name>Ziyu Li</name>
+    </author>
+    <author>
+      <name>Zhen Liang</name>
+    </author>
+    <author>
+      <name>Xia Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.05293v2</id>
+    <title>Cross-domain EEG-based Emotion Recognition with Contrastive Learning</title>
+    <updated>2026-01-25T07:14:05Z</updated>
+    <link href="https://arxiv.org/abs/2511.05293v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.05293v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Electroencephalogram (EEG)-based emotion recognition is vital for affective computing but faces challenges in feature utilization and cross-domain generalization. This work introduces EmotionCLIP, which reformulates recognition as an EEG-text matching task within the CLIP framework. A tailored backbone, SST-LegoViT, captures spatial, spectral, and temporal features using multi-scale convolution and Transformer modules. Experiments on SEED and SEED-IV datasets show superior cross-subject accuracies of 88.69\% and 73.50\%, and cross-time accuracies of 88.46\% and 77.54\%, outperforming existing models. Results demonstrate the effectiveness of multimodal contrastive learning for robust EEG emotion recognition. The code is available at https://github.com/Departure2021/EmotionCLIP.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-07T14:55:10Z</published>
+    <arxiv:comment>Accepted by IEEE ICASSP 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Rui Yan</name>
+    </author>
+    <author>
+      <name>Yibo Li</name>
+    </author>
+    <author>
+      <name>Han Ding</name>
+    </author>
+    <author>
+      <name>Fei Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.03268v2</id>
+    <title>Decipher the Modality Gap in Multimodal Contrastive Learning: From Convergent Representations to Pairwise Alignment</title>
+    <updated>2025-10-07T18:46:38Z</updated>
+    <link href="https://arxiv.org/abs/2510.03268v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.03268v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal contrastive learning (MCL) aims to embed data from different modalities in a shared embedding space. However, empirical evidence shows that representations from different modalities occupy completely separate regions of embedding space, a phenomenon referred to as the modality gap. Moreover, experimental findings on how the size of the modality gap influences downstream performance are inconsistent. These observations raise two key questions: (1) What causes the modality gap? (2) How does it affect downstream tasks? To address these questions, this paper introduces the first theoretical framework for analyzing the convergent optimal representations of MCL and the modality alignment when training is optimized. Specifically, we prove that without any constraint or under the cone constraint, the modality gap converges to zero. Under the subspace constraint (i.e., representations of two modalities fall into two distinct hyperplanes due to dimension collapse), the modality gap converges to the smallest angle between the two hyperplanes. This result identifies \emph{dimension collapse} as the fundamental origin of the modality gap. Furthermore, our theorems demonstrate that paired samples cannot be perfectly aligned under the subspace constraint. The modality gap influences downstream performance by affecting the alignment between sample pairs. We prove that, in this case, perfect alignment between two modalities can still be achieved via two ways: hyperplane rotation and shared space projection.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-27T04:21:00Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Lingjie Yi</name>
+    </author>
+    <author>
+      <name>Raphael Douady</name>
+    </author>
+    <author>
+      <name>Chao Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.14084v2</id>
+    <title>AD-DINOv3: Enhancing DINOv3 for Zero-Shot Anomaly Detection with Anomaly-Aware Calibration</title>
+    <updated>2025-09-18T02:19:00Z</updated>
+    <link href="https://arxiv.org/abs/2509.14084v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.14084v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Zero-Shot Anomaly Detection (ZSAD) seeks to identify anomalies from arbitrary novel categories, offering a scalable and annotation-efficient solution. Traditionally, most ZSAD works have been based on the CLIP model, which performs anomaly detection by calculating the similarity between visual and text embeddings. Recently, vision foundation models such as DINOv3 have demonstrated strong transferable representation capabilities. In this work, we are the first to adapt DINOv3 for ZSAD. However, this adaptation presents two key challenges: (i) the domain bias between large-scale pretraining data and anomaly detection tasks leads to feature misalignment; and (ii) the inherent bias toward global semantics in pretrained representations often leads to subtle anomalies being misinterpreted as part of the normal foreground objects, rather than being distinguished as abnormal regions. To overcome these challenges, we introduce AD-DINOv3, a novel vision-language multimodal framework designed for ZSAD. Specifically, we formulate anomaly detection as a multimodal contrastive learning problem, where DINOv3 is employed as the visual backbone to extract patch tokens and a CLS token, and the CLIP text encoder provides embeddings for both normal and abnormal prompts. To bridge the domain gap, lightweight adapters are introduced in both modalities, enabling their representations to be recalibrated for the anomaly detection task. Beyond this baseline alignment, we further design an Anomaly-Aware Calibration Module (AACM), which explicitly guides the CLS token to attend to anomalous regions rather than generic foreground semantics, thereby enhancing discriminability. Extensive experiments on eight industrial and medical benchmarks demonstrate that AD-DINOv3 consistently matches or surpasses state-of-the-art methods.The code will be available at https://github.com/Kaisor-Yuan/AD-DINOv3.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-17T15:29:25Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jingyi Yuan</name>
+    </author>
+    <author>
+      <name>Jianxiong Ye</name>
+    </author>
+    <author>
+      <name>Wenkang Chen</name>
+    </author>
+    <author>
+      <name>Chenqiang Gao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.06105v2</id>
+    <title>PathoHR: Hierarchical Reasoning for Vision-Language Models in Pathology</title>
+    <updated>2025-09-30T11:39:52Z</updated>
+    <link href="https://arxiv.org/abs/2509.06105v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.06105v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Accurate analysis of pathological images is essential for automated tumor diagnosis but remains challenging due to high structural similarity and subtle morphological variations in tissue images. Current vision-language (VL) models often struggle to capture the complex reasoning required for interpreting structured pathological reports. To address these limitations, we propose PathoHR-Bench, a novel benchmark designed to evaluate VL models' abilities in hierarchical semantic understanding and compositional reasoning within the pathology domain. Results of this benchmark reveal that existing VL models fail to effectively model intricate cross-modal relationships, hence limiting their applicability in clinical setting. To overcome this, we further introduce a pathology-specific VL training scheme that generates enhanced and perturbed samples for multimodal contrastive learning. Experimental evaluations demonstrate that our approach achieves state-of-the-art performance on PathoHR-Bench and six additional pathology datasets, highlighting its effectiveness in fine-grained pathology representation.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-07T15:42:38Z</published>
+    <arxiv:comment>Accept by EMNLP2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yating Huang</name>
+    </author>
+    <author>
+      <name>Ziyan Huang</name>
+    </author>
+    <author>
+      <name>Lintao Xiang</name>
+    </author>
+    <author>
+      <name>Qijun Yang</name>
+    </author>
+    <author>
+      <name>Hujun Yin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.06570v2</id>
+    <title>ImpliHateVid: A Benchmark Dataset and Two-stage Contrastive Learning Framework for Implicit Hate Speech Detection in Videos</title>
+    <updated>2025-08-15T14:09:37Z</updated>
+    <link href="https://arxiv.org/abs/2508.06570v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.06570v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The existing research has primarily focused on text and image-based hate speech detection, video-based approaches remain underexplored. In this work, we introduce a novel dataset, ImpliHateVid, specifically curated for implicit hate speech detection in videos. ImpliHateVid consists of 2,009 videos comprising 509 implicit hate videos, 500 explicit hate videos, and 1,000 non-hate videos, making it one of the first large-scale video datasets dedicated to implicit hate detection. We also propose a novel two-stage contrastive learning framework for hate speech detection in videos. In the first stage, we train modality-specific encoders for audio, text, and image using contrastive loss by concatenating features from the three encoders. In the second stage, we train cross-encoders using contrastive learning to refine multimodal representations. Additionally, we incorporate sentiment, emotion, and caption-based features to enhance implicit hate detection. We evaluate our method on two datasets, ImpliHateVid for implicit hate speech detection and another dataset for general hate speech detection in videos, HateMM dataset, demonstrating the effectiveness of the proposed multimodal contrastive learning for hateful content detection in videos and the significance of our dataset.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-07T05:57:22Z</published>
+    <arxiv:comment>Published in ACL 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Mohammad Zia Ur Rehman</name>
+    </author>
+    <author>
+      <name>Anukriti Bhatnagar</name>
+    </author>
+    <author>
+      <name>Omkar Kabde</name>
+    </author>
+    <author>
+      <name>Shubhi Bansal</name>
+    </author>
+    <author>
+      <name>Nagendra Kumar</name>
+    </author>
+    <arxiv:doi>10.18653/v1/2025.acl-long.842</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.18653/v1/2025.acl-long.842" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.03989v2</id>
+    <title>Dynamic User-controllable Privacy-preserving Few-shot Sensing Framework</title>
+    <updated>2025-11-18T02:23:20Z</updated>
+    <link href="https://arxiv.org/abs/2508.03989v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.03989v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>User-controllable privacy is important in modern sensing systems, as privacy preferences can vary significantly from person to person and may evolve over time. This is especially relevant in devices equipped with Inertial Measurement Unit (IMU) sensors, such as smartphones and wearables, which continuously collect rich time-series data that can inadvertently expose sensitive user behaviors. While prior work has proposed privacy-preserving methods for sensor data, most rely on static, predefined privacy labels or require large quantities of private training data, limiting their adaptability and user agency. In this work, we introduce PrivCLIP, a dynamic, user-controllable, few-shot privacy-preserving sensing framework. PrivCLIP allows users to specify and modify their privacy preferences by categorizing activities as sensitive (black-listed), non-sensitive (white-listed), or neutral (gray-listed). Leveraging a multimodal contrastive learning approach, PrivCLIP aligns IMU sensor data with natural language activity descriptions in a shared embedding space, enabling few-shot detection of sensitive activities. When a privacy-sensitive activity is identified, the system uses a language-guided activity sanitizer and a motion generation module (IMU-GPT) to transform the original data into a privacy-compliant version that semantically resembles a non-sensitive activity. We evaluate PrivCLIP on multiple human activity recognition datasets and demonstrate that it significantly outperforms baseline methods in terms of both privacy protection and data utility.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-06T00:44:11Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Ajesh Koyatan Chathoth</name>
+    </author>
+    <author>
+      <name>Shuhao Yu</name>
+    </author>
+    <author>
+      <name>Stephen Lee</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.03102v1</id>
+    <title>Causal Disentanglement and Cross-Modal Alignment for Enhanced Few-Shot Learning</title>
+    <updated>2025-08-05T05:30:42Z</updated>
+    <link href="https://arxiv.org/abs/2508.03102v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.03102v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Few-shot learning (FSL) often requires effective adaptation of models using limited labeled data. However, most existing FSL methods rely on entangled representations, requiring the model to implicitly recover the unmixing process to obtain disentangled representations using only limited supervision, which hinders effective adaptation. Recent theoretical studies show that multimodal contrastive learning methods, such as CLIP, can disentangle latent representations up to linear transformations. In light of this, we propose the Causal CLIP Adapter (CCA), a novel framework that explicitly disentangles visual features extracted from CLIP using unsupervised Independent Component Analysis (ICA). This removes the need to learn the unmixing process from the labeled data, thereby reducing the number of trainable parameters and mitigating overfitting. Taking a step further, while ICA can obtain visual disentangled representations, it may also disrupt CLIP's intra- and inter-modal alignment. To counteract this, CCA further leverages CLIP's inherent cross-modal alignment by enhancing it in two ways: unidirectionally, through fine-tuning a CLIP-based text classifier, and bidirectionally, via a cross-attention mechanism that enriches visual and textual representations through mutual interaction. Both unimodal and cross-modal classification outputs can be effectively combined linearly to improve classification accuracy. Extensive experiments on 11 benchmark datasets demonstrate that our method consistently outperforms state-of-the-art approaches in terms of few-shot performance and robustness to distributional shifts, while maintaining computational efficiency. Code will be available at https://github.com/tianjiao-j/CCA.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-05T05:30:42Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Tianjiao Jiang</name>
+    </author>
+    <author>
+      <name>Zhen Zhang</name>
+    </author>
+    <author>
+      <name>Yuhang Liu</name>
+    </author>
+    <author>
+      <name>Javen Qinfeng Shi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.23331v1</id>
+    <title>Contrastive Learning-Driven Traffic Sign Perception: Multi-Modal Fusion of Text and Vision</title>
+    <updated>2025-07-31T08:23:30Z</updated>
+    <link href="https://arxiv.org/abs/2507.23331v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.23331v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Traffic sign recognition, as a core component of autonomous driving perception systems, directly influences vehicle environmental awareness and driving safety. Current technologies face two significant challenges: first, the traffic sign dataset exhibits a pronounced long-tail distribution, resulting in a substantial decline in recognition performance of traditional convolutional networks when processing low-frequency and out-of-distribution classes; second, traffic signs in real-world scenarios are predominantly small targets with significant scale variations, making it difficult to extract multi-scale features.To overcome these issues, we propose a novel two-stage framework combining open-vocabulary detection and cross-modal learning. For traffic sign detection, our NanoVerse YOLO model integrates a reparameterizable vision-language path aggregation network (RepVL-PAN) and an SPD-Conv module to specifically enhance feature extraction for small, multi-scale targets. For traffic sign classification, we designed a Traffic Sign Recognition Multimodal Contrastive Learning model (TSR-MCL). By contrasting visual features from a Vision Transformer with semantic features from a rule-based BERT, TSR-MCL learns robust, frequency-independent representations, effectively mitigating class confusion caused by data imbalance. On the TT100K dataset, our method achieves a state-of-the-art 78.4% mAP in the long-tail detection task for all-class recognition. The model also obtains 91.8% accuracy and 88.9% recall, significantly outperforming mainstream algorithms and demonstrating superior accuracy and generalization in complex, open-world scenarios.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-31T08:23:30Z</published>
+    <arxiv:comment>11pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Qiang Lu</name>
+    </author>
+    <author>
+      <name>Waikit Xiu</name>
+    </author>
+    <author>
+      <name>Xiying Li</name>
+    </author>
+    <author>
+      <name>Shenyu Hu</name>
+    </author>
+    <author>
+      <name>Shengbo Sun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.12998v1</id>
+    <title>Differential-informed Sample Selection Accelerates Multimodal Contrastive Learning</title>
+    <updated>2025-07-17T11:13:44Z</updated>
+    <link href="https://arxiv.org/abs/2507.12998v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.12998v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The remarkable success of contrastive-learning-based multimodal models has been greatly driven by training on ever-larger datasets with expensive compute consumption. Sample selection as an alternative efficient paradigm plays an important direction to accelerate the training process. However, recent advances on sample selection either mostly rely on an oracle model to offline select a high-quality coreset, which is limited in the cold-start scenarios, or focus on online selection based on real-time model predictions, which has not sufficiently or efficiently considered the noisy correspondence. To address this dilemma, we propose a novel Differential-Informed Sample Selection (DISSect) method, which accurately and efficiently discriminates the noisy correspondence for training acceleration. Specifically, we rethink the impact of noisy correspondence on contrastive learning and propose that the differential between the predicted correlation of the current model and that of a historical model is more informative to characterize sample quality. Based on this, we construct a robust differential-based sample selection and analyze its theoretical insights. Extensive experiments on three benchmark datasets and various downstream tasks demonstrate the consistent superiority of DISSect over current state-of-the-art methods. Source code is available at: https://github.com/MediaBrain-SJTU/DISSect.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-17T11:13:44Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zihua Zhao</name>
+    </author>
+    <author>
+      <name>Feng Hong</name>
+    </author>
+    <author>
+      <name>Mengxi Chen</name>
+    </author>
+    <author>
+      <name>Pengyi Chen</name>
+    </author>
+    <author>
+      <name>Benyuan Liu</name>
+    </author>
+    <author>
+      <name>Jiangchao Yao</name>
+    </author>
+    <author>
+      <name>Ya Zhang</name>
+    </author>
+    <author>
+      <name>Yanfeng Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.09128v2</id>
+    <title>A Generalization Theory for Zero-Shot Prediction</title>
+    <updated>2025-08-31T14:34:38Z</updated>
+    <link href="https://arxiv.org/abs/2507.09128v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.09128v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A modern paradigm for generalization in machine learning and AI consists of pre-training a task-agnostic foundation model, generally obtained using self-supervised and multimodal contrastive learning. The resulting representations can be used for prediction on a downstream task for which no labeled data is available. We present a theoretical framework to better understand this approach, called zero-shot prediction. We identify the target quantities that zero-shot prediction aims to learn, or learns in passing, and the key conditional independence relationships that enable its generalization ability.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-12T03:37:57Z</published>
+    <arxiv:comment>Published at ICML '25 (Oral)</arxiv:comment>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Ronak Mehta</name>
+    </author>
+    <author>
+      <name>Zaid Harchaoui</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.24124v2</id>
+    <title>Teaching Time Series to See and Speak: Forecasting with Aligned Visual and Textual Perspectives</title>
+    <updated>2025-07-01T03:40:22Z</updated>
+    <link href="https://arxiv.org/abs/2506.24124v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.24124v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Time series forecasting traditionally relies on unimodal numerical inputs, which often struggle to capture high-level semantic patterns due to their dense and unstructured nature. While recent approaches have explored representing time series as text using large language models (LLMs), these methods remain limited by the discrete nature of token sequences and lack the perceptual intuition humans typically apply, such as interpreting visual patterns. In this paper, we propose a multimodal contrastive learning framework that transforms raw time series into structured visual and textual perspectives. Rather than using natural language or real-world images, we construct both modalities directly from numerical sequences. We then align these views in a shared semantic space via contrastive learning, enabling the model to capture richer and more complementary representations. Furthermore, we introduce a variate selection module that leverages the aligned representations to identify the most informative variables for multivariate forecasting. Extensive experiments on fifteen short-term and six long-term forecasting benchmarks demonstrate that our approach consistently outperforms strong unimodal and cross-modal baselines, highlighting the effectiveness of multimodal alignment in enhancing time series forecasting. Code is available at: https://github.com/Ironieser/TimesCLIP.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-30T17:59:14Z</published>
+    <arxiv:comment>Code: https://github.com/Ironieser/TimesCLIP</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Sixun Dong</name>
+    </author>
+    <author>
+      <name>Wei Fan</name>
+    </author>
+    <author>
+      <name>Teresa Wu</name>
+    </author>
+    <author>
+      <name>Yanjie Fu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.17815v1</id>
+    <title>SLAP: Siamese Language-Audio Pretraining Without Negative Samples for Music Understanding</title>
+    <updated>2025-06-21T21:04:09Z</updated>
+    <link href="https://arxiv.org/abs/2506.17815v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.17815v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Joint embedding spaces have significantly advanced music understanding and generation by linking text and audio through multimodal contrastive learning. However, these approaches face large memory requirement limitations due to relying on large batch sizes to effectively utilize negative samples. Further, multimodal joint embedding spaces suffer from a modality gap wherein embeddings from different modalities lie in different manifolds of the embedding space. To address these challenges, we propose Siamese Language-Audio Pretraining (SLAP), a novel multimodal pretraining framework that allows learning powerful representations without negative samples. SLAP adapts the Bootstrap Your Own Latent (BYOL) paradigm for multimodal audio-text training, promoting scalability in training multimodal embedding spaces.
+  We illustrate the ability of our model to learn meaningful relationships between music and text -- specifically, we show that SLAP outperforms CLAP on tasks such as text-music retrieval and zero-shot classification. We also observe competitive downstream performance on several MIR tasks, including with larger or supervised models (genre and instrument classification, auto-tagging). Additionally, our approach has attractive properties, such as a quantifiably reduced modality gap and improved robustness to batch size variations on retrieval performance. Finally, its novel formulation unlocks large-scale training on a single GPU through gradient accumulation.</summary>
+    <category term="cs.SD" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.AS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-21T21:04:09Z</published>
+    <arxiv:comment>Accepted to ISMIR 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.SD"/>
+    <author>
+      <name>Julien Guinot</name>
+    </author>
+    <author>
+      <name>Alain Riou</name>
+    </author>
+    <author>
+      <name>Elio Quinton</name>
+    </author>
+    <author>
+      <name>György Fazekas</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.12411v1</id>
+    <title>InverTune: Removing Backdoors from Multimodal Contrastive Learning Models via Trigger Inversion and Activation Tuning</title>
+    <updated>2025-06-14T09:08:34Z</updated>
+    <link href="https://arxiv.org/abs/2506.12411v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.12411v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal contrastive learning models like CLIP have demonstrated remarkable vision-language alignment capabilities, yet their vulnerability to backdoor attacks poses critical security risks. Attackers can implant latent triggers that persist through downstream tasks, enabling malicious control of model behavior upon trigger presentation. Despite great success in recent defense mechanisms, they remain impractical due to strong assumptions about attacker knowledge or excessive clean data requirements. In this paper, we introduce InverTune, the first backdoor defense framework for multimodal models under minimal attacker assumptions, requiring neither prior knowledge of attack targets nor access to the poisoned dataset. Unlike existing defense methods that rely on the same dataset used in the poisoning stage, InverTune effectively identifies and removes backdoor artifacts through three key components, achieving robust protection against backdoor attacks. Specifically, InverTune first exposes attack signatures through adversarial simulation, probabilistically identifying the target label by analyzing model response patterns. Building on this, we develop a gradient inversion technique to reconstruct latent triggers through activation pattern analysis. Finally, a clustering-guided fine-tuning strategy is employed to erase the backdoor function with only a small amount of arbitrary clean data, while preserving the original model capabilities. Experimental results show that InverTune reduces the average attack success rate (ASR) by 97.87% against the state-of-the-art (SOTA) attacks while limiting clean accuracy (CA) degradation to just 3.07%. This work establishes a new paradigm for securing multimodal systems, advancing security in foundation model deployment without compromising performance.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-14T09:08:34Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Mengyuan Sun</name>
+    </author>
+    <author>
+      <name>Yu Li</name>
+    </author>
+    <author>
+      <name>Yuchen Liu</name>
+    </author>
+    <author>
+      <name>Bo Du</name>
+    </author>
+    <author>
+      <name>Yunjie Ge</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.24134v1</id>
+    <title>A Mathematical Perspective On Contrastive Learning</title>
+    <updated>2025-05-30T02:09:37Z</updated>
+    <link href="https://arxiv.org/abs/2505.24134v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.24134v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal contrastive learning is a methodology for linking different data modalities; the canonical example is linking image and text data. The methodology is typically framed as the identification of a set of encoders, one for each modality, that align representations within a common latent space. In this work, we focus on the bimodal setting and interpret contrastive learning as the optimization of (parameterized) encoders that define conditional probability distributions, for each modality conditioned on the other, consistent with the available data. This provides a framework for multimodal algorithms such as crossmodal retrieval, which identifies the mode of one of these conditional distributions, and crossmodal classification, which is similar to retrieval but includes a fine-tuning step to make it task specific.
+  The framework we adopt also gives rise to crossmodal generative models. This probabilistic perspective suggests two natural generalizations of contrastive learning: the introduction of novel probabilistic loss functions, and the use of alternative metrics for measuring alignment in the common latent space. We study these generalizations of the classical approach in the multivariate Gaussian setting. In this context we view the latent space identification as a low-rank matrix approximation problem. This allows us to characterize the capabilities of loss functions and alignment metrics to approximate natural statistics, such as conditional means and covariances; doing so yields novel variants on contrastive learning algorithms for specific mode-seeking and for generative tasks. The framework we introduce is also studied through numerical experiments on multivariate Gaussians, the labeled MNIST dataset, and on a data assimilation application arising in oceanography.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-30T02:09:37Z</published>
+    <arxiv:comment>44 pages, 15 figures</arxiv:comment>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Ricardo Baptista</name>
+    </author>
+    <author>
+      <name>Andrew M. Stuart</name>
+    </author>
+    <author>
+      <name>Son Tran</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.10143v7</id>
+    <title>On the Value of Cross-Modal Misalignment in Multimodal Representation Learning</title>
+    <updated>2025-09-26T04:09:38Z</updated>
+    <link href="https://arxiv.org/abs/2504.10143v7" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.10143v7" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal representation learning, exemplified by multimodal contrastive learning (MMCL) using image-text pairs, aims to learn powerful representations by aligning cues across modalities. This approach relies on the core assumption that the exemplar image-text pairs constitute two representations of an identical concept. However, recent research has revealed that real-world datasets often exhibit cross-modal misalignment. There are two distinct viewpoints on how to address this issue: one suggests mitigating the misalignment, and the other leveraging it. We seek here to reconcile these seemingly opposing perspectives, and to provide a practical guide for practitioners. Using latent variable models we thus formalize cross-modal misalignment by introducing two specific mechanisms: Selection bias, where some semantic variables are absent in the text, and perturbation bias, where semantic variables are altered -- both leading to misalignment in data pairs. Our theoretical analysis demonstrates that, under mild assumptions, the representations learned by MMCL capture exactly the information related to the subset of the semantic variables invariant to selection and perturbation biases. This provides a unified perspective for understanding misalignment. Based on this, we further offer actionable insights into how misalignment should inform the design of real-world ML systems. We validate our theoretical findings via extensive empirical studies on both synthetic data and real image-text datasets, shedding light on the nuanced impact of cross-modal misalignment on multimodal representation learning.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-14T11:54:19Z</published>
+    <arxiv:comment>NeurIPS 2025 camera-ready version (with checklist removed for presentation clarity)</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Yichao Cai</name>
+    </author>
+    <author>
+      <name>Yuhang Liu</name>
+    </author>
+    <author>
+      <name>Erdun Gao</name>
+    </author>
+    <author>
+      <name>Tianjiao Jiang</name>
+    </author>
+    <author>
+      <name>Zhen Zhang</name>
+    </author>
+    <author>
+      <name>Anton van den Hengel</name>
+    </author>
+    <author>
+      <name>Javen Qinfeng Shi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.14963v3</id>
+    <title>Continual Multimodal Contrastive Learning</title>
+    <updated>2025-09-22T08:37:48Z</updated>
+    <link href="https://arxiv.org/abs/2503.14963v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.14963v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Contrastive Learning (MCL) advances in aligning different modalities and generating multimodal representations in a joint space. By leveraging contrastive learning across diverse modalities, large-scale multimodal data enhances representational quality. However, a critical yet often overlooked challenge remains: multimodal data is rarely collected in a single process, and training from scratch is computationally expensive. Instead, emergent multimodal data can be used to optimize existing models gradually, i.e., models are trained on a sequence of modality pair data. We define this problem as Continual Multimodal Contrastive Learning (CMCL), an underexplored yet crucial research direction at the intersection of multimodal and continual learning. In this paper, we formulate CMCL through two specialized principles of stability and plasticity. We theoretically derive a novel optimization-based method, which projects updated gradients from dual sides onto subspaces where any gradient is prevented from interfering with the previously learned knowledge. Two upper bounds provide theoretical insights on both stability and plasticity in our solution. Beyond our theoretical contributions, we conduct experiments on multiple datasets by comparing our method against advanced continual learning baselines. The empirical results further support our claims and demonstrate the efficacy of our method. Our codes are available at https://github.com/Xiaohao-Liu/CMCL.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-19T07:57:08Z</published>
+    <arxiv:comment>Accepted by NeurIPS 2025. Codes are available at https://github.com/Xiaohao-Liu/CMCL</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Xiaohao Liu</name>
+    </author>
+    <author>
+      <name>Xiaobo Xia</name>
+    </author>
+    <author>
+      <name>See-Kiong Ng</name>
+    </author>
+    <author>
+      <name>Tat-Seng Chua</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.20392v4</id>
+    <title>Defending Multimodal Backdoored Models by Repulsive Visual Prompt Tuning</title>
+    <updated>2025-10-30T07:48:58Z</updated>
+    <link href="https://arxiv.org/abs/2412.20392v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.20392v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal contrastive learning models (e.g., CLIP) can learn high-quality representations from large-scale image-text datasets, while they exhibit significant vulnerabilities to backdoor attacks, raising serious safety concerns. In this paper, we reveal that CLIP's vulnerabilities primarily stem from its tendency to encode features beyond in-dataset predictive patterns, compromising its visual feature resistivity to input perturbations. This makes its encoded features highly susceptible to being reshaped by backdoor triggers. To address this challenge, we propose Repulsive Visual Prompt Tuning (RVPT), a novel defense approach that employs deep visual prompt tuning with a specially designed feature-repelling loss. Specifically, RVPT adversarially repels the encoded features from deeper layers while optimizing the standard cross-entropy loss, ensuring that only predictive features in downstream tasks are encoded, thereby enhancing CLIP's visual feature resistivity against input perturbations and mitigating its susceptibility to backdoor attacks. Unlike existing multimodal backdoor defense methods that typically require the availability of poisoned data or involve fine-tuning the entire model, RVPT leverages few-shot downstream clean samples and only tunes a small number of parameters. Empirical results demonstrate that RVPT tunes only 0.27\% of the parameters in CLIP, yet it significantly outperforms state-of-the-art defense methods, reducing the attack success rate from 89.70\% to 2.76\% against the most advanced multimodal attacks on ImageNet and effectively generalizes its defensive capabilities across multiple datasets.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-29T08:09:20Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhifang Zhang</name>
+    </author>
+    <author>
+      <name>Shuo He</name>
+    </author>
+    <author>
+      <name>Haobo Wang</name>
+    </author>
+    <author>
+      <name>Bingquan Shen</name>
+    </author>
+    <author>
+      <name>Lei Feng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.06395v1</id>
+    <title>Multimodal Representation Learning using Adaptive Graph Construction</title>
+    <updated>2024-10-08T21:57:46Z</updated>
+    <link href="https://arxiv.org/abs/2410.06395v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.06395v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal contrastive learning train neural networks by levergaing data from heterogeneous sources such as images and text. Yet, many current multimodal learning architectures cannot generalize to an arbitrary number of modalities and need to be hand-constructed. We propose AutoBIND, a novel contrastive learning framework that can learn representations from an arbitrary number of modalites through graph optimization. We evaluate AutoBIND on Alzhiemer's disease detection because it has real-world medical applicability and it contains a broad range of data modalities. We show that AutoBIND outperforms previous methods on this task, highlighting the generalizablility of the approach.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-08T21:57:46Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Weichen Huang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.17601v3</id>
+    <title>CleanerCLIP: Fine-grained Counterfactual Semantic Augmentation for Backdoor Defense in Contrastive Learning</title>
+    <updated>2024-11-15T02:56:58Z</updated>
+    <link href="https://arxiv.org/abs/2409.17601v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.17601v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Pre-trained large models for multimodal contrastive learning, such as CLIP, have been widely recognized in the industry as highly susceptible to data-poisoned backdoor attacks. This poses significant risks to downstream model training. In response to such potential threats, finetuning offers a simpler and more efficient defense choice compared to retraining large models with augmented data. In the supervised learning domain, fine-tuning defense strategies can achieve excellent defense performance. However, in the unsupervised and semi-supervised domain, we find that when CLIP faces some complex attack techniques, the existing fine-tuning defense strategy, CleanCLIP, has some limitations on defense performance. The synonym substitution of its text-augmentation is insufficient to enhance the text feature space. To compensate for this weakness, we improve it by proposing a fine-grained \textbf{T}ext \textbf{A}lignment \textbf{C}leaner (TA-Cleaner) to cut off feature connections of backdoor triggers. We randomly select a few samples for positive and negative subtext generation at each epoch of CleanCLIP, and align the subtexts to the images to strengthen the text self-supervision. We evaluate the effectiveness of our TA-Cleaner against six attack algorithms and conduct comprehensive zero-shot classification tests on ImageNet1K. Our experimental results demonstrate that TA-Cleaner achieves state-of-the-art defensiveness among finetuning-based defense techniques. Even when faced with the novel attack technique BadCLIP, our TA-Cleaner outperforms CleanCLIP by reducing the ASR of Top-1 and Top-10 by 52.02\% and 63.88\%, respectively.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-26T07:35:23Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yuan Xun</name>
+    </author>
+    <author>
+      <name>Siyuan Liang</name>
+    </author>
+    <author>
+      <name>Xiaojun Jia</name>
+    </author>
+    <author>
+      <name>Xinwei Liu</name>
+    </author>
+    <author>
+      <name>Xiaochun Cao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.13887v1</id>
+    <title>Brain-Cognition Fingerprinting via Graph-GCCA with Contrastive Learning</title>
+    <updated>2024-09-20T20:36:20Z</updated>
+    <link href="https://arxiv.org/abs/2409.13887v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.13887v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Many longitudinal neuroimaging studies aim to improve the understanding of brain aging and diseases by studying the dynamic interactions between brain function and cognition. Doing so requires accurate encoding of their multidimensional relationship while accounting for individual variability over time. For this purpose, we propose an unsupervised learning model (called \underline{\textbf{Co}}ntrastive Learning-based \underline{\textbf{Gra}}ph Generalized \underline{\textbf{Ca}}nonical Correlation Analysis (CoGraCa)) that encodes their relationship via Graph Attention Networks and generalized Canonical Correlational Analysis. To create brain-cognition fingerprints reflecting unique neural and cognitive phenotype of each person, the model also relies on individualized and multimodal contrastive learning. We apply CoGraCa to longitudinal dataset of healthy individuals consisting of resting-state functional MRI and cognitive measures acquired at multiple visits for each participant. The generated fingerprints effectively capture significant individual differences and outperform current single-modal and CCA-based multimodal models in identifying sex and age. More importantly, our encoding provides interpretable interactions between those two modalities.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-20T20:36:20Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yixin Wang</name>
+    </author>
+    <author>
+      <name>Wei Peng</name>
+    </author>
+    <author>
+      <name>Yu Zhang</name>
+    </author>
+    <author>
+      <name>Ehsan Adeli</name>
+    </author>
+    <author>
+      <name>Qingyu Zhao</name>
+    </author>
+    <author>
+      <name>Kilian M. Pohl</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.07402v2</id>
+    <title>What to align in multimodal contrastive learning?</title>
+    <updated>2025-03-05T16:48:23Z</updated>
+    <link href="https://arxiv.org/abs/2409.07402v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.07402v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Humans perceive the world through multisensory integration, blending the information of different modalities to adapt their behavior. Contrastive learning offers an appealing solution for multimodal self-supervised learning. Indeed, by considering each modality as a different view of the same entity, it learns to align features of different modalities in a shared representation space. However, this approach is intrinsically limited as it only learns shared or redundant information between modalities, while multimodal interactions can arise in other ways. In this work, we introduce CoMM, a Contrastive MultiModal learning strategy that enables the communication between modalities in a single multimodal space. Instead of imposing cross- or intra- modality constraints, we propose to align multimodal representations by maximizing the mutual information between augmented versions of these multimodal features. Our theoretical analysis shows that shared, synergistic and unique terms of information naturally emerge from this formulation, allowing us to estimate multimodal interactions beyond redundancy. We test CoMM both in a controlled and in a series of real-world settings: in the former, we demonstrate that CoMM effectively captures redundant, unique and synergistic information between modalities. In the latter, CoMM learns complex multimodal interactions and achieves state-of-the-art results on the seven multimodal benchmarks. Code is available at https://github.com/Duplums/CoMM</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-11T16:42:22Z</published>
+    <arxiv:comment>ICLR 2025, 25 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Benoit Dufumier</name>
+    </author>
+    <author>
+      <name>Javiera Castillo-Navarro</name>
+    </author>
+    <author>
+      <name>Devis Tuia</name>
+    </author>
+    <author>
+      <name>Jean-Philippe Thiran</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2408.00365v2</id>
+    <title>Multimodal Fusion and Coherence Modeling for Video Topic Segmentation</title>
+    <updated>2024-12-30T02:50:49Z</updated>
+    <link href="https://arxiv.org/abs/2408.00365v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2408.00365v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The video topic segmentation (VTS) task segments videos into intelligible, non-overlapping topics, facilitating efficient comprehension of video content and quick access to specific content. VTS is also critical to various downstream video understanding tasks. Traditional VTS methods using shallow features or unsupervised approaches struggle to accurately discern the nuances of topical transitions. Recently, supervised approaches have achieved superior performance on video action or scene segmentation over unsupervised approaches. In this work, we improve supervised VTS by thoroughly exploring multimodal fusion and multimodal coherence modeling. Specifically, (1) we enhance multimodal fusion by exploring different architectures using cross-attention and mixture of experts. (2) To generally strengthen multimodality alignment and fusion, we pre-train and fine-tune the model with multimodal contrastive learning. (3) We propose a new pre-training task tailored for the VTS task, and a novel fine-tuning task for enhancing multimodal coherence modeling for VTS. We evaluate the proposed approaches on educational videos, in the form of lectures, due to the vital role of topic segmentation of educational videos in boosting learning experiences. Additionally, we introduce a large-scale Chinese lecture video dataset to augment the existing English corpus, promoting further research in VTS. Experiments on both English and Chinese lecture datasets demonstrate that our model achieves superior VTS performance compared to competitive unsupervised and supervised baselines.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.IV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-08-01T08:10:32Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Hai Yu</name>
+    </author>
+    <author>
+      <name>Chong Deng</name>
+    </author>
+    <author>
+      <name>Qinglin Zhang</name>
+    </author>
+    <author>
+      <name>Jiaqing Liu</name>
+    </author>
+    <author>
+      <name>Qian Chen</name>
+    </author>
+    <author>
+      <name>Wen Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.18520v3</id>
+    <title>Text-Region Matching for Multi-Label Image Recognition with Missing Labels</title>
+    <updated>2024-08-29T06:52:45Z</updated>
+    <link href="https://arxiv.org/abs/2407.18520v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.18520v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, large-scale visual language pre-trained (VLP) models have demonstrated impressive performance across various downstream tasks. Motivated by these advancements, pioneering efforts have emerged in multi-label image recognition with missing labels, leveraging VLP prompt-tuning technology. However, they usually cannot match text and vision features well, due to complicated semantics gaps and missing labels in a multi-label image. To tackle this challenge, we propose $\textbf{T}$ext-$\textbf{R}$egion $\textbf{M}$atching for optimizing $\textbf{M}$ulti-$\textbf{L}$abel prompt tuning, namely TRM-ML, a novel method for enhancing meaningful cross-modal matching. Compared to existing methods, we advocate exploring the information of category-aware regions rather than the entire image or pixels, which contributes to bridging the semantic gap between textual and visual representations in a one-to-one matching manner. Concurrently, we further introduce multimodal contrastive learning to narrow the semantic gap between textual and visual modalities and establish intra-class and inter-class relationships. Additionally, to deal with missing labels, we propose a multimodal category prototype that leverages intra- and inter-category semantic relationships to estimate unknown labels, facilitating pseudo-label generation. Extensive experiments on the MS-COCO, PASCAL VOC, Visual Genome, NUS-WIDE, and CUB-200-211 benchmark datasets demonstrate that our proposed framework outperforms the state-of-the-art methods by a significant margin. Our code is available here: https://github.com/yu-gi-oh-leilei/TRM-ML.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-26T05:29:24Z</published>
+    <arxiv:comment>Accepted to ACM International Conference on Multimedia (ACM MM) 2024</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Leilei Ma</name>
+    </author>
+    <author>
+      <name>Hongxing Xie</name>
+    </author>
+    <author>
+      <name>Lei Wang</name>
+    </author>
+    <author>
+      <name>Yanping Fu</name>
+    </author>
+    <author>
+      <name>Dengdi Sun</name>
+    </author>
+    <author>
+      <name>Haifeng Zhao</name>
+    </author>
+    <arxiv:doi>10.1145/3664647.3680815</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3664647.3680815" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.16307v2</id>
+    <title>Multimodal Unlearnable Examples: Protecting Data against Multimodal Contrastive Learning</title>
+    <updated>2024-07-26T08:39:19Z</updated>
+    <link href="https://arxiv.org/abs/2407.16307v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.16307v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal contrastive learning (MCL) has shown remarkable advances in zero-shot classification by learning from millions of image-caption pairs crawled from the Internet. However, this reliance poses privacy risks, as hackers may unauthorizedly exploit image-text data for model training, potentially including personal and privacy-sensitive information. Recent works propose generating unlearnable examples by adding imperceptible perturbations to training images to build shortcuts for protection. However, they are designed for unimodal classification, which remains largely unexplored in MCL. We first explore this context by evaluating the performance of existing methods on image-caption pairs, and they do not generalize effectively to multimodal data and exhibit limited impact to build shortcuts due to the lack of labels and the dispersion of pairs in MCL. In this paper, we propose Multi-step Error Minimization (MEM), a novel optimization process for generating multimodal unlearnable examples. It extends the Error-Minimization (EM) framework to optimize both image noise and an additional text trigger, thereby enlarging the optimized space and effectively misleading the model to learn the shortcut between the noise features and the text trigger. Specifically, we adopt projected gradient descent to solve the noise minimization problem and use HotFlip to approximate the gradient and replace words to find the optimal text trigger. Extensive experiments demonstrate the effectiveness of MEM, with post-protection retrieval results nearly half of random guessing, and its high transferability across different models. Our code is available on the https://github.com/thinwayliu/Multimodal-Unlearnable-Examples</summary>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-23T09:00:52Z</published>
+    <arxiv:comment>ACM MM2024</arxiv:comment>
+    <arxiv:primary_category term="cs.MM"/>
+    <author>
+      <name>Xinwei Liu</name>
+    </author>
+    <author>
+      <name>Xiaojun Jia</name>
+    </author>
+    <author>
+      <name>Yuan Xun</name>
+    </author>
+    <author>
+      <name>Siyuan Liang</name>
+    </author>
+    <author>
+      <name>Xiaochun Cao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.08216v1</id>
+    <title>Multimodal contrastive learning for spatial gene expression prediction using histology images</title>
+    <updated>2024-07-11T06:33:38Z</updated>
+    <link href="https://arxiv.org/abs/2407.08216v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.08216v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In recent years, the advent of spatial transcriptomics (ST) technology has unlocked unprecedented opportunities for delving into the complexities of gene expression patterns within intricate biological systems. Despite its transformative potential, the prohibitive cost of ST technology remains a significant barrier to its widespread adoption in large-scale studies. An alternative, more cost-effective strategy involves employing artificial intelligence to predict gene expression levels using readily accessible whole-slide images (WSIs) stained with Hematoxylin and Eosin (H\&amp;E). However, existing methods have yet to fully capitalize on multimodal information provided by H&amp;E images and ST data with spatial location. In this paper, we propose \textbf{mclSTExp}, a multimodal contrastive learning with Transformer and Densenet-121 encoder for Spatial Transcriptomics Expression prediction. We conceptualize each spot as a "word", integrating its intrinsic features with spatial context through the self-attention mechanism of a Transformer encoder. This integration is further enriched by incorporating image features via contrastive learning, thereby enhancing the predictive capability of our model. Our extensive evaluation of \textbf{mclSTExp} on two breast cancer datasets and a skin squamous cell carcinoma dataset demonstrates its superior performance in predicting spatial gene expression. Moreover, mclSTExp has shown promise in interpreting cancer-specific overexpressed genes, elucidating immune-related genes, and identifying specialized spatial domains annotated by pathologists. Our source code is available at https://github.com/shizhiceng/mclSTExp.</summary>
+    <category term="eess.IV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="q-bio.QM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-11T06:33:38Z</published>
+    <arxiv:comment>BIB, Code: https://github.com/shizhiceng/mclSTExp</arxiv:comment>
+    <arxiv:primary_category term="eess.IV"/>
+    <author>
+      <name>Wenwen Min</name>
+    </author>
+    <author>
+      <name>Zhiceng Shi</name>
+    </author>
+    <author>
+      <name>Jun Zhang</name>
+    </author>
+    <author>
+      <name>Jun Wan</name>
+    </author>
+    <author>
+      <name>Changmiao Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2404.19228v3</id>
+    <title>Weighted Point Set Embedding for Multimodal Contrastive Learning Toward Optimal Similarity Metric</title>
+    <updated>2025-03-03T02:06:52Z</updated>
+    <link href="https://arxiv.org/abs/2404.19228v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2404.19228v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In typical multimodal contrastive learning, such as CLIP, encoders produce one point in the latent representation space for each input. However, one-point representation has difficulty in capturing the relationship and the similarity structure of a huge amount of instances in the real world. For richer classes of the similarity, we propose the use of weighted point sets, namely, sets of pairs of weight and vector, as representations of instances. In this work, we theoretically show the benefit of our proposed method through a new understanding of the contrastive loss of CLIP, which we call symmetric InfoNCE. We clarify that the optimal similarity that minimizes symmetric InfoNCE is the pointwise mutual information, and show an upper bound of excess risk on downstream classification tasks of representations that achieve the optimal similarity. In addition, we show that our proposed similarity based on weighted point sets consistently achieves the optimal similarity. To verify the effectiveness of our proposed method, we demonstrate pretraining of text-image representation models and classification tasks on common benchmarks.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-04-30T03:15:04Z</published>
+    <arxiv:comment>ICLR 2025 (Spotlight)</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Toshimitsu Uesaka</name>
+    </author>
+    <author>
+      <name>Taiji Suzuki</name>
+    </author>
+    <author>
+      <name>Yuhta Takida</name>
+    </author>
+    <author>
+      <name>Chieh-Hsin Lai</name>
+    </author>
+    <author>
+      <name>Naoki Murata</name>
+    </author>
+    <author>
+      <name>Yuki Mitsufuji</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2404.11326v5</id>
+    <title>SCL: Towards Domain Generalization via Single-Temporal Multimodal Contrastive Learning for Remote Sensing Change Detection</title>
+    <updated>2026-06-01T04:45:35Z</updated>
+    <link href="https://arxiv.org/abs/2404.11326v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2404.11326v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In recent years, change detection and anomaly detection models based on CNN and transformer have achieved remarkable success across various datasets based on paired data. However, most such methods exhibit limited crossdataset generalization due to domain-specific designs and typically rely on large amounts of paired labeled data. In this paper, based on visual-language pre-training model, we introduce a Single-temporal multimodal Contrastive Learning (SCL) foundation models for change detection without training on the target dataset. To further improve the model's ability to learn context of textual and visual information, we propose a Dynamic Text-vision Context Optimization (DTCO) module for prompt learning. Meanwhile, to address the data dependency issue of existing methods, we introduce a controllable generation and Single-temporal trAINing strategy (SAIN). This allows us to train the model using a large number of existing single-temporal images without the need for paired label. Extensive experiments on various realworld change detection datasets demonstrate the superior performance and generalization of SCL, outperforming state-of-the-art methods under the evaluated settings. Code is available at https://github.com/Kane-Du/scl-cd.git.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-04-17T12:38:58Z</published>
+    <arxiv:comment>CVPRW 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Qiangang Du</name>
+    </author>
+    <author>
+      <name>Jinlong Peng</name>
+    </author>
+    <author>
+      <name>Xu Chen</name>
+    </author>
+    <author>
+      <name>Qingdong He</name>
+    </author>
+    <author>
+      <name>Liren He</name>
+    </author>
+    <author>
+      <name>Qiang Nie</name>
+    </author>
+    <author>
+      <name>Mingmin Chi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.14926v3</id>
+    <title>Contrastive Learning on Multimodal Analysis of Electronic Health Records</title>
+    <updated>2026-07-10T12:24:40Z</updated>
+    <link href="https://arxiv.org/abs/2403.14926v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.14926v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Electronic health record (EHR) systems capture a wealth of multimodal clinical data, encompassing both structured clinical codes and unstructured clinical notes. Yet, many EHR-focused studies have traditionally examined these modalities in isolation or combined them using simplistic methods, overlooking the intrinsic synergy between them. In reality, these modalities are deeply interconnected, each containing clinically relevant and complementary information that, when integrated effectively, can provide a more comprehensive understanding of patient health. Despite the success of multimodal contrastive learning in vision-language applications, its potential remains under-explored in multimodal EHR, particularly in terms of theoretical understanding. To support statistical analysis of multimodal EHR data, we propose a multimodal feature embedding generative model and design a multimodal contrastive loss to learn EHR feature representations. Our theoretical analysis demonstrates the effectiveness of multimodal learning over single-modality learning and connects the solution of the loss function to the singular value decomposition of a pointwise mutual information matrix. This connection leads to a privacy-preserving algorithm tailored for multimodal EHR representation learning. Simulation studies show that the proposed algorithm performs well under a variety of configurations. We further validate its clinical utility using real-world EHR data.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-22T03:01:42Z</published>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Tianxi Cai</name>
+    </author>
+    <author>
+      <name>Feiqing Huang</name>
+    </author>
+    <author>
+      <name>Ryumei Nakada</name>
+    </author>
+    <author>
+      <name>Linjun Zhang</name>
+    </author>
+    <author>
+      <name>Doudou Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.02875v2</id>
+    <title>Enhancing Conceptual Understanding in Multimodal Contrastive Learning through Hard Negative Samples</title>
+    <updated>2024-08-05T14:01:26Z</updated>
+    <link href="https://arxiv.org/abs/2403.02875v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.02875v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Current multimodal models leveraging contrastive learning often face limitations in developing fine-grained conceptual understanding. This is due to random negative samples during pretraining, causing almost exclusively very dissimilar concepts to be compared in the loss function. Consequently, the models struggle with fine-grained semantic differences. To address this problem, we introduce a novel pretraining method incorporating synthetic hard negative text examples. The hard negatives permute terms corresponding to visual concepts, leading to a more fine-grained visual and textual concept alignment. Further, we introduce InpaintCOCO, a new challenging dataset for assessing the fine-grained alignment of colors, objects, and sizes in vision-language models. We created the dataset using generative inpainting from COCO images by changing the visual concepts so that the images no longer match their original captions. Our results show significant improvements in fine-grained concept understanding across a wide range of vision-language datasets, including our InpaintCOCO dataset.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-05T11:38:48Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Philipp J. Rösch</name>
+    </author>
+    <author>
+      <name>Norbert Oswald</name>
+    </author>
+    <author>
+      <name>Michaela Geierhos</name>
+    </author>
+    <author>
+      <name>Jindřich Libovický</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.06223v3</id>
+    <title>Beyond DAGs: A Latent Partial Causal Model for Multimodal Learning</title>
+    <updated>2026-02-27T23:52:08Z</updated>
+    <link href="https://arxiv.org/abs/2402.06223v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.06223v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Directed Acyclic Graphs (DAGs) are a standard tool in causal modeling, but their suitability for capturing the complexity of large-scale multimodal data is questionable. In practice, real-world multimodal datasets are often collected from heterogeneous generative processes that do not conform to a single DAG. Instead, they may involve multiple, and even opposing, DAG structures with inverse causal directions. To address this gap, in this work, we first propose a novel latent partial causal model tailored for multimodal data representation learning, featuring two latent coupled variables parts connected by an undirected edge, to represent the transfer of knowledge across modalities. Under specific statistical assumptions, we establish an identifiability result, demonstrating that representations learned by MultiModal Contrastive Learning (MMCL) correspond to the latent coupled variables up to a trivial transformation. This result deepens our understanding of the why MMCL works, highlights its potential for representation disentanglement, and expands the utility of pre-trained models like CLIP. Synthetic experiments confirm the robustness of our findings, even when the assumptions are partially violated. Most importantly, experiments on a pre-trained CLIP model embodies disentangled representations, enabling few-shot learning and improving domain generalization across diverse real-world datasets. Together, these contributions push the boundaries of MMCL, both in theory and in practical applications.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-09T07:18:06Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Yuhang Liu</name>
+    </author>
+    <author>
+      <name>Zhen Zhang</name>
+    </author>
+    <author>
+      <name>Dong Gong</name>
+    </author>
+    <author>
+      <name>Erdun Gao</name>
+    </author>
+    <author>
+      <name>Biwei Huang</name>
+    </author>
+    <author>
+      <name>Mingming Gong</name>
+    </author>
+    <author>
+      <name>Anton van den Hengel</name>
+    </author>
+    <author>
+      <name>Kun Zhang</name>
+    </author>
+    <author>
+      <name>Javen Qinfeng Shi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.02055v1</id>
+    <title>Variance Alignment Score: A Simple But Tough-to-Beat Data Selection Method for Multimodal Contrastive Learning</title>
+    <updated>2024-02-03T06:29:04Z</updated>
+    <link href="https://arxiv.org/abs/2402.02055v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.02055v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In recent years, data selection has emerged as a core issue for large-scale visual-language model pretraining, especially on noisy web-curated datasets. One widely adopted strategy assigns quality scores such as CLIP similarity for each sample and retains the data pairs with the highest scores. However, these approaches are agnostic of data distribution and always fail to select the most informative samples. To solve this problem, we propose a simple yet theoretically principled metric named Variance Alignment Score (VAS), which has the form $\langle Σ_{\text{test}}, Σ_i\rangle$. Here, $Σ_{\text{test}}$ represents the target (cross-)covariance matrix we aim to align, potentially based on prior knowledge, while $Σ_i$ denotes the tensor product of single or multi-modal representations for the $i$-th sample. We further design a new data selection method that maximizes the total VAS. We provide theoretical analysis in a simplified setting to demonstrate the theoretical advantage of VAS over random or other existing data selection. Experimentally, applying VAS and CLIP scores together can outperform baselines by a margin of $1.3\%$ average on 38 evaluation sets for noisy dataset DataComp and $2.5\%$ on VTAB for high-quality dataset CC12M. Additionally, our ablation study also shows visual features are better than text for calculating VAS, and the related classical experimental design methods may fail under this context.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-03T06:29:04Z</published>
+    <arxiv:comment>17 pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Yiping Wang</name>
+    </author>
+    <author>
+      <name>Yifang Chen</name>
+    </author>
+    <author>
+      <name>Wendan Yan</name>
+    </author>
+    <author>
+      <name>Kevin Jamieson</name>
+    </author>
+    <author>
+      <name>Simon Shaolei Du</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2310.04971v2</id>
+    <title>Understanding the Robustness of Multi-modal Contrastive Learning to Distribution Shift</title>
+    <updated>2024-03-17T23:47:33Z</updated>
+    <link href="https://arxiv.org/abs/2310.04971v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2310.04971v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, multimodal contrastive learning (MMCL) approaches, such as CLIP, have achieved a remarkable success in learning representations that are robust against distribution shift and generalize to new domains. Despite the empirical success, the mechanism behind learning such generalizable representations is not understood. In this work, we rigorously analyze this problem and uncover two mechanisms behind MMCL's robustness: \emph{intra-class contrasting}, which allows the model to learn features with a high variance, and \emph{inter-class feature sharing}, where annotated details in one class help learning other classes better. Both mechanisms prevent spurious features that are over-represented in the training data to overshadow the generalizable core features. This yields superior zero-shot classification accuracy under distribution shift. Furthermore, we theoretically demonstrate the benefits of using rich captions on robustness and explore the effect of annotating different types of details in the captions. We validate our theoretical findings through experiments, including a well-designed synthetic experiment and an experiment involving training CLIP models on MSCOCO/Conceptual Captions and evaluating them on shifted ImageNets.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-10-08T02:25:52Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Yihao Xue</name>
+    </author>
+    <author>
+      <name>Siddharth Joshi</name>
+    </author>
+    <author>
+      <name>Dang Nguyen</name>
+    </author>
+    <author>
+      <name>Baharan Mirzasoleiman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2309.16649v1</id>
+    <title>FLIP: Cross-domain Face Anti-spoofing with Language Guidance</title>
+    <updated>2023-09-28T17:53:20Z</updated>
+    <link href="https://arxiv.org/abs/2309.16649v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2309.16649v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Face anti-spoofing (FAS) or presentation attack detection is an essential component of face recognition systems deployed in security-critical applications. Existing FAS methods have poor generalizability to unseen spoof types, camera sensors, and environmental conditions. Recently, vision transformer (ViT) models have been shown to be effective for the FAS task due to their ability to capture long-range dependencies among image patches. However, adaptive modules or auxiliary loss functions are often required to adapt pre-trained ViT weights learned on large-scale datasets such as ImageNet. In this work, we first show that initializing ViTs with multimodal (e.g., CLIP) pre-trained weights improves generalizability for the FAS task, which is in line with the zero-shot transfer capabilities of vision-language pre-trained (VLP) models. We then propose a novel approach for robust cross-domain FAS by grounding visual representations with the help of natural language. Specifically, we show that aligning the image representation with an ensemble of class descriptions (based on natural language semantics) improves FAS generalizability in low-data regimes. Finally, we propose a multimodal contrastive learning strategy to boost feature generalization further and bridge the gap between source and target domains. Extensive experiments on three standard protocols demonstrate that our method significantly outperforms the state-of-the-art methods, achieving better zero-shot transfer performance than five-shot transfer of adaptive ViTs. Code: https://github.com/koushiksrivats/FLIP</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-28T17:53:20Z</published>
+    <arxiv:comment>Accepted to ICCV-2023. Project Page: https://koushiksrivats.github.io/FLIP/</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Koushik Srivatsan</name>
+    </author>
+    <author>
+      <name>Muzammal Naseer</name>
+    </author>
+    <author>
+      <name>Karthik Nandakumar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2308.07026v1</id>
+    <title>AdvCLIP: Downstream-agnostic Adversarial Examples in Multimodal Contrastive Learning</title>
+    <updated>2023-08-14T09:29:22Z</updated>
+    <link href="https://arxiv.org/abs/2308.07026v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2308.07026v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal contrastive learning aims to train a general-purpose feature extractor, such as CLIP, on vast amounts of raw, unlabeled paired image-text data. This can greatly benefit various complex downstream tasks, including cross-modal image-text retrieval and image classification. Despite its promising prospect, the security issue of cross-modal pre-trained encoder has not been fully explored yet, especially when the pre-trained encoder is publicly available for commercial use.
+  In this work, we propose AdvCLIP, the first attack framework for generating downstream-agnostic adversarial examples based on cross-modal pre-trained encoders. AdvCLIP aims to construct a universal adversarial patch for a set of natural images that can fool all the downstream tasks inheriting the victim cross-modal pre-trained encoder. To address the challenges of heterogeneity between different modalities and unknown downstream tasks, we first build a topological graph structure to capture the relevant positions between target samples and their neighbors. Then, we design a topology-deviation based generative adversarial network to generate a universal adversarial patch. By adding the patch to images, we minimize their embeddings similarity to different modality and perturb the sample distribution in the feature space, achieving unviersal non-targeted attacks. Our results demonstrate the excellent attack performance of AdvCLIP on two types of downstream tasks across eight datasets. We also tailor three popular defenses to mitigate AdvCLIP, highlighting the need for new defense mechanisms to defend cross-modal pre-trained encoders.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-14T09:29:22Z</published>
+    <arxiv:comment>This paper has been accepted by the ACM International Conference on Multimedia (ACM MM '23, October 29-November 3, 2023, Ottawa, ON, Canada)</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Ziqi Zhou</name>
+    </author>
+    <author>
+      <name>Shengshan Hu</name>
+    </author>
+    <author>
+      <name>Minghui Li</name>
+    </author>
+    <author>
+      <name>Hangtao Zhang</name>
+    </author>
+    <author>
+      <name>Yechao Zhang</name>
+    </author>
+    <author>
+      <name>Hai Jin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2304.03717v1</id>
+    <title>On the Importance of Contrastive Loss in Multimodal Learning</title>
+    <updated>2023-04-07T16:25:18Z</updated>
+    <link href="https://arxiv.org/abs/2304.03717v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2304.03717v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, contrastive learning approaches (e.g., CLIP (Radford et al., 2021)) have received huge success in multimodal learning, where the model tries to minimize the distance between the representations of different views (e.g., image and its caption) of the same data point while keeping the representations of different data points away from each other. However, from a theoretical perspective, it is unclear how contrastive learning can learn the representations from different views efficiently, especially when the data is not isotropic. In this work, we analyze the training dynamics of a simple multimodal contrastive learning model and show that contrastive pairs are important for the model to efficiently balance the learned representations. In particular, we show that the positive pairs will drive the model to align the representations at the cost of increasing the condition number, while the negative pairs will reduce the condition number, keeping the learned representations balanced.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-04-07T16:25:18Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Yunwei Ren</name>
+    </author>
+    <author>
+      <name>Yuanzhi Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2303.09166v1</id>
+    <title>Identifiability Results for Multimodal Contrastive Learning</title>
+    <updated>2023-03-16T09:14:26Z</updated>
+    <link href="https://arxiv.org/abs/2303.09166v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2303.09166v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Contrastive learning is a cornerstone underlying recent progress in multi-view and multimodal learning, e.g., in representation learning with image/caption pairs. While its effectiveness is not yet fully understood, a line of recent work reveals that contrastive learning can invert the data generating process and recover ground truth latent factors shared between views. In this work, we present new identifiability results for multimodal contrastive learning, showing that it is possible to recover shared factors in a more general setup than the multi-view setting studied previously. Specifically, we distinguish between the multi-view setting with one generative mechanism (e.g., multiple cameras of the same type) and the multimodal setting that is characterized by distinct mechanisms (e.g., cameras and microphones). Our work generalizes previous identifiability results by redefining the generative process in terms of distinct mechanisms with modality-specific latent variables. We prove that contrastive learning can block-identify latent factors shared between modalities, even when there are nontrivial dependencies between factors. We empirically verify our identifiability results with numerical simulations and corroborate our findings on a complex multimodal dataset of image/text pairs. Zooming out, our work provides a theoretical basis for multimodal representation learning and explains in which settings multimodal contrastive learning can be effective in practice.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-03-16T09:14:26Z</published>
+    <arxiv:comment>ICLR 2023 camera-ready version</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Imant Daunhawer</name>
+    </author>
+    <author>
+      <name>Alice Bizeul</name>
+    </author>
+    <author>
+      <name>Emanuele Palumbo</name>
+    </author>
+    <author>
+      <name>Alexander Marx</name>
+    </author>
+    <author>
+      <name>Julia E. Vogt</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2302.06232v3</id>
+    <title>Understanding Multimodal Contrastive Learning and Incorporating Unpaired Data</title>
+    <updated>2023-03-15T01:38:19Z</updated>
+    <link href="https://arxiv.org/abs/2302.06232v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2302.06232v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Language-supervised vision models have recently attracted great attention in computer vision. A common approach to build such models is to use contrastive learning on paired data across the two modalities, as exemplified by Contrastive Language-Image Pre-Training (CLIP). In this paper, under linear representation settings, (i) we initiate the investigation of a general class of nonlinear loss functions for multimodal contrastive learning (MMCL) including CLIP loss and show its connection to singular value decomposition (SVD). Namely, we show that each step of loss minimization by gradient descent can be seen as performing SVD on a contrastive cross-covariance matrix. Based on this insight, (ii) we analyze the performance of MMCL. We quantitatively show that the feature learning ability of MMCL can be better than that of unimodal contrastive learning applied to each modality even under the presence of wrongly matched pairs. This characterizes the robustness of MMCL to noisy data. Furthermore, when we have access to additional unpaired data, (iii) we propose a new MMCL loss that incorporates additional unpaired datasets. We show that the algorithm can detect the ground-truth pairs and improve performance by fully exploiting unpaired datasets. The performance of the proposed algorithm was verified by numerical experiments.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-02-13T10:11:05Z</published>
+    <arxiv:comment>42 pages, 3 figures, accepted by AISTATS 2023; a link to GitHub repository added, style corrected, acknowledgements section added</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Ryumei Nakada</name>
+    </author>
+    <author>
+      <name>Halil Ibrahim Gulluk</name>
+    </author>
+    <author>
+      <name>Zhun Deng</name>
+    </author>
+    <author>
+      <name>Wenlong Ji</name>
+    </author>
+    <author>
+      <name>James Zou</name>
+    </author>
+    <author>
+      <name>Linjun Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2212.06573v2</id>
+    <title>On the Evolution of (Hateful) Memes by Means of Multimodal Contrastive Learning</title>
+    <updated>2023-07-07T14:24:04Z</updated>
+    <link href="https://arxiv.org/abs/2212.06573v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2212.06573v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The dissemination of hateful memes online has adverse effects on social media platforms and the real world. Detecting hateful memes is challenging, one of the reasons being the evolutionary nature of memes; new hateful memes can emerge by fusing hateful connotations with other cultural ideas or symbols. In this paper, we propose a framework that leverages multimodal contrastive learning models, in particular OpenAI's CLIP, to identify targets of hateful content and systematically investigate the evolution of hateful memes. We find that semantic regularities exist in CLIP-generated embeddings that describe semantic relationships within the same modality (images) or across modalities (images and text). Leveraging this property, we study how hateful memes are created by combining visual elements from multiple images or fusing textual information with a hateful image. We demonstrate the capabilities of our framework for analyzing the evolution of hateful memes by focusing on antisemitic memes, particularly the Happy Merchant meme. Using our framework on a dataset extracted from 4chan, we find 3.3K variants of the Happy Merchant meme, with some linked to specific countries, persons, or organizations. We envision that our framework can be used to aid human moderators by flagging new variants of hateful memes so that moderators can manually verify them and mitigate the problem of hateful content online.</summary>
+    <category term="cs.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-12-13T13:38:04Z</published>
+    <arxiv:comment>To Appear in the 44th IEEE Symposium on Security and Privacy, May 22-25, 2023</arxiv:comment>
+    <arxiv:primary_category term="cs.SI"/>
+    <author>
+      <name>Yiting Qu</name>
+    </author>
+    <author>
+      <name>Xinlei He</name>
+    </author>
+    <author>
+      <name>Shannon Pierson</name>
+    </author>
+    <author>
+      <name>Michael Backes</name>
+    </author>
+    <author>
+      <name>Yang Zhang</name>
+    </author>
+    <author>
+      <name>Savvas Zannettou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2210.10163v1</id>
+    <title>MedCLIP: Contrastive Learning from Unpaired Medical Images and Text</title>
+    <updated>2022-10-18T21:06:29Z</updated>
+    <link href="https://arxiv.org/abs/2210.10163v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.10163v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Existing vision-text contrastive learning like CLIP aims to match the paired image and caption embeddings while pushing others apart, which improves representation transferability and supports zero-shot prediction. However, medical image-text datasets are orders of magnitude below the general images and captions from the internet. Moreover, previous methods encounter many false negatives, i.e., images and reports from separate patients probably carry the same semantics but are wrongly treated as negatives. In this paper, we decouple images and texts for multimodal contrastive learning thus scaling the usable training data in a combinatorial magnitude with low cost. We also propose to replace the InfoNCE loss with semantic matching loss based on medical knowledge to eliminate false negatives in contrastive learning. We prove that MedCLIP is a simple yet effective framework: it outperforms state-of-the-art methods on zero-shot prediction, supervised classification, and image-text retrieval. Surprisingly, we observe that with only 20K pre-training data, MedCLIP wins over the state-of-the-art method (using around 200K data). Our code is available at https://github.com/RyanWangZf/MedCLIP.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-18T21:06:29Z</published>
+    <arxiv:comment>EMNLP 2022</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zifeng Wang</name>
+    </author>
+    <author>
+      <name>Zhenbang Wu</name>
+    </author>
+    <author>
+      <name>Dinesh Agarwal</name>
+    </author>
+    <author>
+      <name>Jimeng Sun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2209.02329v1</id>
+    <title>Multimodal contrastive learning for remote sensing tasks</title>
+    <updated>2022-09-06T09:31:45Z</updated>
+    <link href="https://arxiv.org/abs/2209.02329v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2209.02329v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Self-supervised methods have shown tremendous success in the field of computer vision, including applications in remote sensing and medical imaging. Most popular contrastive-loss based methods like SimCLR, MoCo, MoCo-v2 use multiple views of the same image by applying contrived augmentations on the image to create positive pairs and contrast them with negative examples. Although these techniques work well, most of these techniques have been tuned on ImageNet (and similar computer vision datasets). While there have been some attempts to capture a richer set of deformations in the positive samples, in this work, we explore a promising alternative to generating positive examples for remote sensing data within the contrastive learning framework. Images captured from different sensors at the same location and nearby timestamps can be thought of as strongly augmented instances of the same scene, thus removing the need to explore and tune a set of hand crafted strong augmentations. In this paper, we propose a simple dual-encoder framework, which is pre-trained on a large unlabeled dataset (~1M) of Sentinel-1 and Sentinel-2 image pairs. We test the embeddings on two remote sensing downstream tasks: flood segmentation and land cover mapping, and empirically show that embeddings learnt from this technique outperform the conventional technique of collecting positive examples via aggressive data augmentations.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-09-06T09:31:45Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Umangi Jain</name>
+    </author>
+    <author>
+      <name>Alex Wilson</name>
+    </author>
+    <author>
+      <name>Varun Gulshan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2204.03293v3</id>
+    <title>CoCoSoDa: Effective Contrastive Learning for Code Search</title>
+    <updated>2023-02-12T10:47:18Z</updated>
+    <link href="https://arxiv.org/abs/2204.03293v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2204.03293v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Code search aims to retrieve semantically relevant code snippets for a given natural language query. Recently, many approaches employing contrastive learning have shown promising results on code representation learning and greatly improved the performance of code search. However, there is still a lot of room for improvement in using contrastive learning for code search. In this paper, we propose CoCoSoDa to effectively utilize contrastive learning for code search via two key factors in contrastive learning: data augmentation and negative samples. Specifically, soft data augmentation is to dynamically masking or replacing some tokens with their types for input sequences to generate positive samples. Momentum mechanism is used to generate large and consistent representations of negative samples in a mini-batch through maintaining a queue and a momentum encoder. In addition, multimodal contrastive learning is used to pull together representations of code-query pairs and push apart the unpaired code snippets and queries. We conduct extensive experiments to evaluate the effectiveness of our approach on a large-scale dataset with six programming languages. Experimental results show that: (1) CoCoSoDa outperforms 14 baselines and especially exceeds CodeBERT, GraphCodeBERT, and UniXcoder by 13.3%, 10.5%, and 5.9% on average MRR scores, respectively. (2) The ablation studies show the effectiveness of each component of our approach. (3) We adapt our techniques to several different pre-trained models such as RoBERTa, CodeBERT, and GraphCodeBERT and observe a significant boost in their performance in code search. (4) Our model performs robustly under different hyper-parameters. Furthermore, we perform qualitative and quantitative analyses to explore reasons behind the good performance of our model.</summary>
+    <category term="cs.SE" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-04-07T08:49:27Z</published>
+    <arxiv:comment>Accepted by ICSE 2023 (The 45th International Conference on Software Engineering)</arxiv:comment>
+    <arxiv:primary_category term="cs.SE"/>
+    <author>
+      <name>Ensheng Shi</name>
+    </author>
+    <author>
+      <name>Yanlin Wang</name>
+    </author>
+    <author>
+      <name>Wenchao Gu</name>
+    </author>
+    <author>
+      <name>Lun Du</name>
+    </author>
+    <author>
+      <name>Hongyu Zhang</name>
+    </author>
+    <author>
+      <name>Shi Han</name>
+    </author>
+    <author>
+      <name>Dongmei Zhang</name>
+    </author>
+    <author>
+      <name>Hongbin Sun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2203.00187v2</id>
+    <title>Robots Autonomously Detecting People: A Multimodal Deep Contrastive Learning Method Robust to Intraclass Variations</title>
+    <updated>2024-02-13T20:07:59Z</updated>
+    <link href="https://arxiv.org/abs/2203.00187v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2203.00187v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Robotic detection of people in crowded and/or cluttered human-centered environments including hospitals, long-term care, stores and airports is challenging as people can become occluded by other people or objects, and deform due to variations in clothing or pose. There can also be loss of discriminative visual features due to poor lighting. In this paper, we present a novel multimodal person detection architecture to address the mobile robot problem of person detection under intraclass variations. We present a two-stage training approach using 1) a unique pretraining method we define as Temporal Invariant Multimodal Contrastive Learning (TimCLR), and 2) a Multimodal Faster R-CNN (MFRCNN) detector. TimCLR learns person representations that are invariant under intraclass variations through unsupervised learning. Our approach is unique in that it generates image pairs from natural variations within multimodal image sequences, in addition to synthetic data augmentation, and contrasts crossmodal features to transfer invariances between different modalities. These pretrained features are used by the MFRCNN detector for finetuning and person detection from RGB-D images. Extensive experiments validate the performance of our DL architecture in both human-centered crowded and cluttered environments. Results show that our method outperforms existing unimodal and multimodal person detection approaches in terms of detection accuracy in detecting people with body occlusions and pose deformations in different lighting conditions.</summary>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-03-01T02:36:17Z</published>
+    <arxiv:primary_category term="cs.RO"/>
+    <author>
+      <name>Angus Fung</name>
+    </author>
+    <author>
+      <name>Beno Benhabib</name>
+    </author>
+    <author>
+      <name>Goldie Nejat</name>
+    </author>
+  </entry>
+</feed>

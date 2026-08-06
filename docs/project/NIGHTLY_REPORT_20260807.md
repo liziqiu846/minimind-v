@@ -111,3 +111,18 @@ checkpoint-only prediction test；不训练。
   pair 的两张图偏好同一 caption，说明当前生成式 NLL bridge 强烈受语言偏好支配。
 - COMP-01 已冻结为 `REJECTED` 并进入 `REVIEW_QUEUE`；不做 rescue，ACTIVE 转为
   `XMC-01` model-retention bridge。
+
+## 12. 持续日志：XMC-01 round2 理论 gate
+
+- arXiv/OpenAlex 定向检索完成；Parallel CLI 因服务器未认证不可用，按既定
+  `paper-lookup` fallback 保存 7 份原始查询响应。
+- 下载并全文/appendix 核查 13 篇 primary sources，PDF 版本与 SHA-256 已记录；
+  没有运行 checkpoint、没有训练、没有访问 final confirmation。
+- `2505.24134` 的 generative 解释属于 dual-encoder induced conditional，解析定理
+  限 linear Gaussian；`2605.02116` 的 calibration 只控制 contrastive retrieval
+  AUC；`2607.08194` 明确限定为机制解释而非定量 bound。
+- 其余理论止于 MMCL linear probe、identifiability、CLIP zero-shot prediction、
+  pair alignment、给定 cost 的几何保持或经验 subspace/Jacobian diagnostics。
+- 没有理论同时固定 autoregressive LVLM representation、唯一无 sweep statistic
+  与 held-out semantic-risk direction；继续只能事后选择 proxy，触发预注册否定。
+- `XMC-01` 已标记 `REJECTED` 并进入 `REVIEW_QUEUE`；ACTIVE 转为 `VISCOND-01`。

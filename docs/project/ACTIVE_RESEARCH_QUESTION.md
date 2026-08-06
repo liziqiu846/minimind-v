@@ -144,4 +144,23 @@ Agent 可以自主改变：
 - **Mission relation**: 先审计理论能否连接“联合数据结构→模型表示保持→真实风险”，
   可避免继续制造无桥 proxy；支持时有 representation-preserving training 的算法
   出口，否定时可低成本转向视觉条件利用机制。
-- **Status**: ACTIVE。
+- **Status**: REJECTED_AS_ACTIVE；13 篇 primary-source/appendix audit 未找到从冻结
+  autoregressive LVLM 表示到未见语义风险的唯一量。最强结果分别止于 contrastive
+  retrieval/linear probe、linear-Gaussian dual-encoder conditional 或机制性
+  UFM；继续需要 layer/kernel/rank/proxy 选择，触发预注册否定。
+
+### 2026-08-07｜VISCOND-01 active question
+
+- **Question**: 在相同训练数据、预算和 seed 下，真实性能更差的冻结 MiniMind-V
+  是否系统性地更少利用任务相关图像条件，而更多依赖 language-only prior？
+- **Why the old question was insufficient**: `XMC-01` 没有合法的生成式 LVLM
+  representation-risk bridge；继续测通用 embedding geometry 会变成无理论约束的
+  proxy search。
+- **Evidence / literature origin**: `COMP-01` 显示生成 caption NLL 被语言偏好主导；
+  Eyes Wide Shut、MMStar、POPE、VCD 等工作提供视觉依赖/语言捷径的经验机制，但
+  尚无正式生成风险 theorem。
+- **Mission relation**: correct-image 相对 counterfactual/no-image 的预测变化是
+  生成式 LVLM 特有且可直接证伪的操作性代理；若稳定，可导向视觉保持辅助目标、
+  vision-aware sampling 或 decoding/training intervention。
+- **Status**: ACTIVE；必须先创建并 commit immutable plan，且不得把经验差值称为
+  互信息、正式视觉风险或无偏估计量。

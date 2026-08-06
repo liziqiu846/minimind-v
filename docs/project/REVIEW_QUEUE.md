@@ -63,3 +63,23 @@
   bridge。
 - **Recommended human decision**: 无需立即决定；之后审查时重点确认 cluster
   bootstrap 与“生成 likelihood 不适合作为关系判别 bridge”的边界表述。
+
+## 2026-08-07｜XMC-01：生成式 model-retention bridge 被理论 gate 否定
+
+- **Date**: 2026-08-07
+- **Idea / issue**: 是否可把 MMCL 共现谱、representation geometry 或 low-rank
+  alignment theory 迁移成冻结 autoregressive MiniMind-V 的唯一保持量。
+- **Why human should review it**: 这是对当前最强形式理论路线的适用性否定，不是否定
+  原论文定理；边界措辞决定后续不能用无桥 CKA/CCA/HSIC 或 token probe 营救。
+- **Current evidence**: 完整核查 13 篇 primary paper/appendix。最强“生成式”结果
+  限于 dual-encoder tilting 与 linear Gaussian conditionals；最强 risk calibration
+  限于 contrastive retrieval AUC；最直接 low-rank LVLM theorem 自述为机制解释而非
+  quantitative bound，且 downstream 联系只属关联。
+- **What Agent has already frozen**: `XMC-01=REJECTED`；不得 sweep
+  layer/pooling/kernel/rank/proxy，不把 contrastive/linear-probe theorem 直接套到
+  autoregressive semantic risk。
+- **Whether autonomous work can continue**: 可以；已转向 `VISCOND-01`，不触发
+  `HARD_STOP`。
+- **Recommended human decision**: 无需立即决定；之后可审查 theorem applicability
+  matrix。若未来要恢复 XMC，必须提供新的生成式风险证明或真正新 artifact，而不是
+  更换经验表示指标。
