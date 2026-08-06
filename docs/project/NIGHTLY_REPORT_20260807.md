@@ -97,3 +97,17 @@ checkpoint-only prediction test；不训练。
 - `M2-current-seed-43101` 在 manifest 首个 pair 上完成两次 deterministic smoke：
   四格 NLL 全部有限、两次 raw-row SHA 完全相同、未保存 raw 值、未作科学聚合；
   peak CUDA allocation 约 0.80 GB。下一步为单 GPU 顺序评分冻结的 18 个模型。
+
+## 11. 持续日志：COMP-01 round1 判定
+
+- 18/18 冻结模型、410/410 pair 全部评分完成；单卡 wall time 815.7 秒，模型运行
+  receipt 合计约 0.20 GPU-hour。未训练、未访问 final confirmation。
+- 一次性预注册判定为 `REJECT_IDEA`：sign concordance `5/9`，预测方向 CI 不跨 0
+  仅 `1/9`；low/current/high budget 分别 `1/3,3/3,1/3`，不能事后只保留 current。
+- `ΔR>0` 的 4 pair 中 `3/4` 有 `ΔG<0`，且三个 relation family 的
+  prediction-oriented 平均效应为正；但联合支持标准未满足，且已触发 `≤5/9`
+  否定项。
+- 所有模型 image accuracy 约 0.50、group accuracy 仅 0.2%–2.9%；95.4%–99.8%
+  pair 的两张图偏好同一 caption，说明当前生成式 NLL bridge 强烈受语言偏好支配。
+- COMP-01 已冻结为 `REJECTED` 并进入 `REVIEW_QUEUE`；不做 rescue，ACTIVE 转为
+  `XMC-01` model-retention bridge。

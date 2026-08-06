@@ -1,0 +1,175 @@
+{
+  "budget": "current",
+  "cache": {
+    "cache_key_sha256": "c18540e84b3d099efbdfb9a809b850b56c3fe086749e0394d2194163a0870ae3",
+    "cache_mode": "model_local_cpu_memory_projected_features",
+    "checkpoint_sha256": "6c99254997772d99155969dd6c6d5867bb8f2b16f619fb330cdfa6747252cd00",
+    "encoded_image_count": 820,
+    "encoder_forward_call_count": 26,
+    "feature_content_sha256": "46126d407fa0fc98643c29f139986a747da9b60b80168f621ebe982fd6e80ee7",
+    "feature_dtype": "float32",
+    "feature_format_version": "phase3-v6-projected-vision-f32-cpu-v1",
+    "feature_shapes": [
+      [
+        64,
+        768
+      ]
+    ],
+    "feature_storage_device": "cpu",
+    "feature_total_bytes": 161218560,
+    "hit_count": 1640,
+    "model_id": "M2-current-seed-43102",
+    "processor_config_sha256": "657b8cbd4d4ac0e2a8a9ac7a5f9a6841258ebf7401423681cd2c29ace4884843",
+    "unique_cached_image_count": 820
+  },
+  "checkpoint": {
+    "archive_bytes": 1296,
+    "archive_path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/06_M2_root-43102_seed-2026_lr-0p050/encode/adapter.mms2",
+    "archive_sha256": "6c99254997772d99155969dd6c6d5867bb8f2b16f619fb330cdfa6747252cd00",
+    "decoded_metadata": {
+      "archive_bytes": 1296,
+      "complexity_bits": 10368,
+      "compressed_body_bytes": 1279,
+      "coordinate_groups": [
+        {
+          "dimension": 582,
+          "name": "vision",
+          "scale_float32": 1.0156077146530151
+        },
+        {
+          "dimension": 2327,
+          "name": "projector",
+          "scale_float32": 0.7851158976554871
+        },
+        {
+          "dimension": 1187,
+          "name": "language",
+          "scale_float32": 0.28972795605659485
+        }
+      ],
+      "mapping_root": 43102,
+      "mapping_root_id": 2,
+      "model_group": "M2",
+      "model_group_id": 2,
+      "uncompressed_body_bytes": 4120
+    },
+    "loader": "verified_stage2_current_mms2",
+    "stage2_model_id": "M2-root-43102"
+  },
+  "config": {
+    "directory_validation": {
+      "candidate_family_size": 18,
+      "comparison_claim": "equal_coordinate_budget_not_equal_description_length",
+      "config_count": 18,
+      "external_selection_bits": 5,
+      "pair_count": 9,
+      "status": "passed"
+    },
+    "manifest_path": "/home/lizhaohui/lzq/minimind-v/experiments/phase3_risk_v1/configs/manifest.json",
+    "manifest_sha256": "721629f7f511cee5cbb7239c42a0c730d730235464ca8029ca1c47cb3cafe2b0",
+    "path": "/home/lizhaohui/lzq/minimind-v/experiments/phase3_risk_v1/configs/M2-current-seed-43102.json",
+    "sha256": "b35c56f4c6e2c29963e4913cc2176a102c99ba13bed7c7cc4c2eebfbeb74570a"
+  },
+  "config_id": "M2-current-seed-43102",
+  "elapsed_seconds": 40.3994562625885,
+  "environment": {
+    "Pillow": "10.4.0",
+    "autocast_enabled": false,
+    "cuda": "12.4",
+    "cuda_available": true,
+    "cuda_matmul_allow_tf32": false,
+    "cudnn": 90100,
+    "cudnn_allow_tf32": false,
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": true,
+    "device": "cuda:0",
+    "gpu": {
+      "compute_capability": [
+        8,
+        6
+      ],
+      "index": 0,
+      "name": "NVIDIA A40",
+      "total_memory_bytes": 47709159424
+    },
+    "model_dtype": "float32",
+    "numpy": "1.26.4",
+    "platform": "Linux-5.4.0-216-generic-x86_64-with-glibc2.31",
+    "python": "3.11.15",
+    "scipy": "1.13.1",
+    "torch": "2.6.0+cu124",
+    "transformers": "4.57.6"
+  },
+  "git": {
+    "commit": "a5facaa38b81db2407581e29a7de530d68864eb0",
+    "tracked_status": ""
+  },
+  "inputs": {
+    "collision_diagnostic": {
+      "path": "/home/lizhaohui/lzq/minimind-v/experiments/results/COMP-01_round1/phash_collision_diagnostic.json",
+      "sha256": "b5340e96828bbec61bc882df2220c9ca620886d80bd23d7281a1115670d4a7fa"
+    },
+    "final_confirmation_accessed": false,
+    "panel_audit": {
+      "path": "/home/lizhaohui/lzq/minimind-v/experiments/results/COMP-01_round1/panel_audit.json",
+      "sha256": "33a33375b8ffc4a0d6077b9230afac3add5e55d4adf881d0634b872f786068b4"
+    },
+    "panel_manifest": {
+      "path": "/home/lizhaohui/lzq/minimind-v/experiments/results/COMP-01_round1/panel_manifest.json",
+      "sha256": "9c66f501d4d090be7b4eb34f5bcfacc0fa4f8d7c15d6e08ad92cdca1fc6cc8e0"
+    }
+  },
+  "mapping_root": 43102,
+  "method": "M2",
+  "mode": "full",
+  "peak_cuda_memory_bytes": 1809464832,
+  "receipt_id": "COMP-01-round1-M2-current-seed-43102-full",
+  "runtime_preflight": {
+    "config_id": "M2-current-seed-43102",
+    "environment": {
+      "mode": "v6",
+      "pip_freeze_sha256": null,
+      "python_executable": "/home/lizhaohui/lzq/phase3_runtime/phase3_v5/env/bin/python3.11"
+    },
+    "git": {
+      "branch": "stage3-image-group-dependence-sgd-v1",
+      "head_commit": "a5facaa38b81db2407581e29a7de530d68864eb0",
+      "tracked_status": ""
+    },
+    "gpu": {
+      "free_memory_mib": 45495,
+      "idle_at_preflight": true,
+      "idle_definition": "absent from nvidia-smi compute-process GPU UUIDs at dispatch and at every formal stage preflight",
+      "minimum_free_memory_mib": 0,
+      "name": "NVIDIA A40",
+      "physical_index": 1,
+      "policy": "dynamic_idle_a40_pool",
+      "shared_gpu_execution": false,
+      "shared_gpu_user_authorized": false,
+      "uuid": "GPU-ea0ec4c5-625e-be0d-c5cf-9b18971e5e9c"
+    },
+    "stage2_protocol": {
+      "protocol_id": "minimind-v-stage2-joint-compression-v2",
+      "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3"
+    },
+    "status": "passed",
+    "training_data": {
+      "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/dataset/stage2_confirm_v2_seed2028/train.parquet",
+      "sha256": "3c3d90c525f43200d35ebd5b4ac1719c8336d278aecbf7e929997c8401b1d5ce"
+    }
+  },
+  "schema_version": 1,
+  "scoring": {
+    "aggregate_scientific_result_computed": false,
+    "deterministic_rerun_exact": false,
+    "grid_cells_per_pair": 4,
+    "pair_batch_size": 8,
+    "pair_count": 410,
+    "prompt": "Describe the image in one sentence.",
+    "raw_rows_sha256": "3622150f07559f0750dafd18f1093953c3acdbd5694ecf019a641ea0ab5feae7",
+    "raw_values_persisted": true,
+    "teacher_forced_target": "caption_plus_EOS",
+    "unit": "mean NLL bits per target token"
+  },
+  "status": "complete"
+}

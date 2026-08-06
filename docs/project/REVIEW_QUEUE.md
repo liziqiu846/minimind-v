@@ -45,3 +45,21 @@
 - **What Agent has already frozen**:
 - **Whether autonomous work can continue**:
 - **Recommended human decision**:
+
+## 2026-08-07｜COMP-01：外部组合 binding prediction 被否定
+
+- **Date**: 2026-08-07
+- **Idea / issue**: 标准 What’sUp controlled panel 上，生成式 caption+EOS NLL
+  binding margin 是否解释 M2/M3 development 风险排序。
+- **Why human should review it**: 这是首个真正未查看外部模型 prediction test；结果
+  否定当前 bridge，同时揭示生成 NLL 几乎被 pair 内同-caption 偏好支配。
+- **Current evidence**: 18/18 checkpoint、410 pairs、205-cluster bootstrap；
+  sign concordance `5/9`，仅 `1/9` 预测方向 CI 不跨 0，low/current/high 分别
+  `1/3,3/3,1/3`。触发 immutable plan 的 `≤5/9` 否定标准。
+- **What Agent has already frozen**: `COMP-01=REJECTED`；不得挑 current budget、
+  更换 panel/proxy、追加模型或训练来 rescue。保留 raw 四格 NLL、运行回执和
+  bootstrap 判定。
+- **Whether autonomous work can continue**: 可以；已转向 `XMC-01` model-retention
+  bridge。
+- **Recommended human decision**: 无需立即决定；之后审查时重点确认 cluster
+  bootstrap 与“生成 likelihood 不适合作为关系判别 bridge”的边界表述。
