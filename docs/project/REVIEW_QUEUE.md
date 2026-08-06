@@ -104,3 +104,25 @@
   证据约束新的训练时跨模态监督/优化 mechanism 搜索，不触发 `HARD_STOP`。
 - **Recommended human decision**: 无需立即决定；之后审查时重点确认 negative
   pooled \(V\) 的构念边界和局部 `6/9` 不应升格的联合判定逻辑。
+
+## 2026-08-07｜VISSUP-01：visually necessary paired pilot 被机制门否定
+
+- **Date**: 2026-08-07
+- **Idea / issue**: 相同 rotated pixels/labels/steps 下，9.16%
+  visual-necessary rotation instruction 是否比文本泄露 label 的 control 使
+  4,096-coordinate MiniMind-V 学到可迁移视觉结构。
+- **Why human should review it**: 文献中 V-GIFT 的较大模型、多 seed positive 没有
+  迁移到当前低维模型；必须防止把单一 CV margin 正方向当作成功，忽略预声明
+  rotation mechanism 与外部 accuracy 均为负。
+- **Current evidence**: root `43101` paired training 全部工程/配对门通过。rotation
+  control/visual accuracy=`0.25198/0.24504`，Δ=`-0.00694`、95% CI
+  `[-0.03770,0.02282]`；CV-Bench-2D=`0.35466/0.35327`，Δ=`-0.00139`、
+  95% CI `[-0.04242,0.04033]`。CV margin Δ=`+0.00284 bits/token`，但不足以覆盖
+  两项主 accuracy 失败。
+- **What Agent has already frozen**: `VISSUP-01=REJECTED`；不补
+  `43102/43103`，不换 rotation task、ratio、prompt、metric、subset 或 benchmark
+  rescue；raw scores、coordinates、training/scoring receipts 和 logs 全部保留。
+- **Whether autonomous work can continue**: 可以；转入 `LITMAP-03`，检索低维
+  visual trainability / module allocation / objective routing 的真正不同机制。
+- **Recommended human decision**: 无需立即决定；后续审查时确认结论限制为当前
+  低维/frozen-encoder setting，不外推为“视觉自监督一般无效”。

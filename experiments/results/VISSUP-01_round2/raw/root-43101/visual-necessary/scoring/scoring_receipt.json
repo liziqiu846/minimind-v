@@ -1,0 +1,97 @@
+{
+  "cache": {
+    "cache_key_sha256": "abef0ba1b31c63217d19d5aad2adc6d11698e80c796dd681d23b5c7d03f4f537",
+    "cache_mode": "model_local_cpu_memory_projected_features",
+    "checkpoint_sha256": "b6b05868e370d5be574af0def380d024d4da3352435c82f2a96fcafbbef16523",
+    "encoded_image_count": 2446,
+    "encoder_forward_call_count": 77,
+    "feature_content_sha256": "6c233fe94c1c51f8a0bbe08fe009fb5324fd9a54c67001d1fb92086e88d992c1",
+    "feature_dtype": "float32",
+    "feature_format_version": "phase3-v6-projected-vision-f32-cpu-v1",
+    "feature_shapes": [
+      [
+        64,
+        768
+      ]
+    ],
+    "feature_storage_device": "cpu",
+    "feature_total_bytes": 480903168,
+    "hit_count": 8918,
+    "model_id": "VISSUP-01-visual-necessary-root-43101",
+    "processor_config_sha256": "657b8cbd4d4ac0e2a8a9ac7a5f9a6841258ebf7401423681cd2c29ace4884843",
+    "unique_cached_image_count": 2446
+  },
+  "candidate": "VISSUP-01",
+  "checkpoint": {
+    "coordinate_path": "/home/lizhaohui/lzq/phase3_runtime/vissup01/models/root-43101/visual-necessary/training/coordinates.pt",
+    "coordinate_sha256": "b6b05868e370d5be574af0def380d024d4da3352435c82f2a96fcafbbef16523",
+    "training_manifest_path": "/home/lizhaohui/lzq/phase3_runtime/vissup01/models/root-43101/visual-necessary/training/training_manifest.json",
+    "training_manifest_sha256": "2f417b213af58b055d7b829270b74052d011d1ab33ff0869afe5d5395af0508a",
+    "training_runtime_seconds": 489.13398599624634
+  },
+  "condition": "visual-necessary",
+  "elapsed_seconds": 87.87628602981567,
+  "environment": {
+    "Pillow": "11.3.0",
+    "autocast_enabled": false,
+    "cuda": "12.4",
+    "cuda_available": true,
+    "cuda_matmul_allow_tf32": false,
+    "cudnn": 90100,
+    "cudnn_allow_tf32": false,
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": true,
+    "device": "cuda:0",
+    "gpu": {
+      "compute_capability": [
+        8,
+        6
+      ],
+      "index": 0,
+      "name": "NVIDIA A40",
+      "total_memory_bytes": 47709159424
+    },
+    "model_dtype": "float32",
+    "numpy": "1.26.4",
+    "platform": "Linux-5.4.0-216-generic-x86_64-with-glibc2.31",
+    "python": "3.10.18",
+    "scipy": "1.15.3",
+    "torch": "2.6.0+cu124",
+    "transformers": "4.57.6"
+  },
+  "final_confirmation_accessed": false,
+  "git": {
+    "commit": "da4c7aa18d5c2fc1aa3d7e6687b32fc330d0960d",
+    "tracked_status": ""
+  },
+  "mapping_root": 43101,
+  "mode": "full",
+  "peak_cuda_memory_bytes": 2243736576,
+  "prepared_inputs": {
+    "cvbench_audit_sha256": "33360a8d0e54ecf3b250e6c581af3b5ee51d790219aae94aa88b9b48d1f7b43a",
+    "cvbench_eligible_rows": 1438,
+    "cvbench_manifest_sha256": "32b9b6212e2e3578e447d9d73c33e08d8296ab7038f4b7c6e8be0e7c750f2949",
+    "data_audit_sha256": "26999a4451bc094ce6e148bcb1481d44efc5f9da58d9c727609d3b67d7400bea",
+    "final_confirmation_accessed": false,
+    "rotation_manifest_sha256": "131be931c243b863b91121664b8e60db817d82a234d4fe3c26d206531f8311cf"
+  },
+  "round": 2,
+  "schema_version": 1,
+  "scoring": {
+    "cvbench_labels": "per-row contiguous A-through-F",
+    "deterministic_rerun_exact": false,
+    "item_batch_size": 8,
+    "items": 2446,
+    "raw_rows_sha256": "7efa780fe257cd698a100bb72725eba7307febf1406510c290f12e0923f73e5c",
+    "raw_values_persisted": true,
+    "rotation_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "scientific_aggregate_computed": false,
+    "teacher_forced_target": "option_letter_plus_EOS"
+  },
+  "status": "complete"
+}

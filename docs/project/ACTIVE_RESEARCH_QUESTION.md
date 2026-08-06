@@ -210,6 +210,29 @@ Agent 可以自主改变：
 - **Mission relation**: 这是“训练监督关系 → 模型吸收视觉结构 → 未见视觉任务”
   的直接因果候选；若成功可自然导出 visually necessary sampling/data construction，
   若失败则否定该机制在当前低维 MiniMind-V 下的可迁移性。
+- **Status**: REJECTED；round1 在模型运行前发现 CV-Bench 为 2–6 choices，按规则
+  使用唯一 schema rescue。round2 root `43101` paired pilot 中，visual 相对 control
+  的 held-out rotation accuracy 差为 `-0.00694`，95% CI
+  `[-0.03770,0.02282]`；CV-Bench-2D 差为 `-0.00139`。visual condition 连预声明
+  mechanism 都未改变，禁止补 roots、换 rotation task/ratio/prompt/proxy。
+
+### 2026-08-07｜LITMAP-03 low-dimensional visual trainability gate
+
+- **Question**: VISSUP 显式视觉监督未进入 4,096-coordinate M2-current 的主要原因，
+  是否存在权威证据支持的 frozen-encoder identifiability、trainable-subspace
+  capacity/module allocation 或 objective competition 机制，并能由一个最小干预
+  区分至少两个解释？
+- **Why the old question was insufficient**: `VISSUP-01` 不仅没有外部迁移，held-out
+  rotation 本身也保持 chance；因此不能把失败只归因于 transfer benchmark，也不能
+  通过换 rotation ratio/task 来维护“必须看图就会学到”。
+- **Evidence origin**: VISSUP 的严格 paired pixels/labels/steps 结果；ROSS/ASVR/
+  JARVIS/LaVer 使用 richer latent target 或额外 component，而 V-GIFT 的较大模型
+  结果没有迁移到本低维设置。需要补查 parameter-efficient MLLM、visual adapter
+  capacity、gradient routing 与 frozen vision encoder task identifiability 的
+  primary sources。
+- **Mission relation**: 若能找到可判别机制，可解释为何相同参数码长/训练信号未产生
+  视觉能力，并自然导出 module-aware allocation 或视觉 target routing；若只有通用
+  PEFT engineering 或事后 gradient/representation proxy，则不进入主线。
 - **Status**: ACTIVE_PLAN_REQUIRED；必须先创建并 commit
-  `experiments/plans/VISSUP-01_round1.md`。candidate 已登记但尚未训练；不得先看
-  CV-Bench 新模型结果、搜索 ratio/task/prompt 或复用 MMStar no-pixel 指标。
+  `experiments/plans/LITMAP-03_round1.md`，再检索。不得重跑 VISSUP 或查看
+  `43102/43103`。

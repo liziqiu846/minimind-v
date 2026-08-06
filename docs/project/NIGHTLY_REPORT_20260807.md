@@ -193,3 +193,11 @@ checkpoint-only prediction test；不训练。
 - root `43101` 两条件各 2-sample smoke passed：loss `1.1187/1.1852`、gradient norm
   `0.8960/0.9925` 均 finite，shared initial frozen hash 相同，peak CUDA allocation
   均约 1.07 GiB；未持久化 coordinates、未作科学聚合。可以启动 paired pilot。
+- VISSUP root `43101` paired pilot 已完成并触发 `REJECT_IDEA`。两训练各
+  2,064/2,064 steps，permutation/frozen hash 全匹配。held-out rotation
+  control/visual=`0.2520/0.2450`，Δ=`-0.00694`、95% CI
+  `[-0.03770,0.02282]`；CV-Bench-2D=`0.3547/0.3533`，Δ=`-0.00139`、95% CI
+  `[-0.04242,0.04033]`。CV margin 虽为正，但机制与外部主 accuracy 均失败。
+- 按 pilot rule 不补 `43102/43103`，不换 task/ratio/prompt/proxy。全部 raw
+  scores、coordinates、receipts、paired differences 与 logs 已归档；ACTIVE 转为
+  `LITMAP-03` low-dimensional visual trainability literature/theory gate。

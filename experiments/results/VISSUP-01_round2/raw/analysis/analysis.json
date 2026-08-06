@@ -1,0 +1,130 @@
+{
+  "analysis_type": "paired_pilot",
+  "bootstrap": {
+    "base_seed": 20260807,
+    "replicates": 10000,
+    "unit": "independent normalized pixel group"
+  },
+  "candidate": "VISSUP-01",
+  "final_confirmation_accessed": false,
+  "inputs": {
+    "43101": {
+      "label-revealed": {
+        "item_scores_sha256": "653afedab5ea4b2d44dd85f5de963dcee2e6d6260de6f17dbfc16798264ce8bc",
+        "scoring_receipt_sha256": "25b1876b474998d6423fac504b1de3ea469df74d312f37a21225dae5364760ac",
+        "training_manifest_sha256": "3edf05d88491e6f59f23d36f8a46204f65b6076687f21e48819ed60a54252f19"
+      },
+      "visual-necessary": {
+        "item_scores_sha256": "7efa780fe257cd698a100bb72725eba7307febf1406510c290f12e0923f73e5c",
+        "scoring_receipt_sha256": "9b7079ecbd8e09f858b10ef52d9fd6a31f3e25fe3954408ec5184de3531fd096",
+        "training_manifest_sha256": "2f417b213af58b055d7b829270b74052d011d1ab33ff0869afe5d5395af0508a"
+      }
+    }
+  },
+  "judgment": {
+    "all_criteria_met": false,
+    "criteria": {
+      "cvbench_difference_at_least_0p01": false,
+      "cvbench_margin_difference_positive": true,
+      "paired_training_invariants_pass": true,
+      "rotation_ci_lower_above_zero": false,
+      "rotation_difference_at_least_0p05": false,
+      "visual_rotation_accuracy_at_least_0p30": false
+    },
+    "decision": "REJECT_IDEA",
+    "seed_escalation_authorized": false
+  },
+  "mapping_roots": [
+    43101
+  ],
+  "prepared_data_audit_sha256": "26999a4451bc094ce6e148bcb1481d44efc5f9da58d9c727609d3b67d7400bea",
+  "root_summaries": [
+    {
+      "mapping_root": 43101,
+      "panels": {
+        "cvbench": {
+          "accuracy_difference": -0.0013908205841446453,
+          "accuracy_difference_bootstrap": {
+            "ci95": [
+              -0.04242002781641168,
+              0.04033379694019471
+            ],
+            "mean": -0.0013908205841446453,
+            "replicates": 10000,
+            "seed": 20260818,
+            "unit_count": 1438
+          },
+          "by_source": {
+            "ADE20K": {
+              "accuracy_difference": -0.011058451816745656,
+              "independent_image_groups": 633,
+              "margin_difference_bits_per_token": -0.0006334639120534796,
+              "rows": 633
+            },
+            "COCO": {
+              "accuracy_difference": 0.006211180124223602,
+              "independent_image_groups": 805,
+              "margin_difference_bits_per_token": 0.005572788603372441,
+              "rows": 805
+            }
+          },
+          "by_task": {
+            "Count": {
+              "accuracy_difference": -0.0038071065989847717,
+              "independent_image_groups": 788,
+              "margin_difference_bits_per_token": 0.008503039698423816,
+              "rows": 788
+            },
+            "Relation": {
+              "accuracy_difference": 0.0015384615384615385,
+              "independent_image_groups": 650,
+              "margin_difference_bits_per_token": -0.004023512481496884,
+              "rows": 650
+            }
+          },
+          "control_accuracy": 0.35465924895688455,
+          "control_margin_bits_per_token": 0.01287062921676582,
+          "independent_image_groups": 1438,
+          "margin_difference_bits_per_token": 0.0028408290468602045,
+          "rows": 1438,
+          "visual_accuracy": 0.3532684283727399,
+          "visual_margin_bits_per_token": 0.015711458263626014
+        },
+        "rotation": {
+          "accuracy_difference": -0.006944444444444444,
+          "accuracy_difference_bootstrap": {
+            "ci95": [
+              -0.037698412698412696,
+              0.022817460317460316
+            ],
+            "mean": -0.006944444444444444,
+            "replicates": 10000,
+            "seed": 20260817,
+            "unit_count": 1008
+          },
+          "control_accuracy": 0.251984126984127,
+          "control_margin_bits_per_token": 0.03279868354722144,
+          "independent_image_groups": 1008,
+          "margin_difference_bits_per_token": -0.025345382346862823,
+          "rows": 1008,
+          "visual_accuracy": 0.24503968253968253,
+          "visual_margin_bits_per_token": 0.007453301200358615
+        }
+      },
+      "training_pair_checks": {
+        "coordinate_dimensions_match": true,
+        "data_rows_match": true,
+        "epoch_permutations_match": true,
+        "frozen_parameters_unchanged": true,
+        "gradient_norms_finite": true,
+        "initial_frozen_hash_matches": true,
+        "losses_finite": true,
+        "mapping_root_matches": true,
+        "training_configuration_matches": true
+      }
+    }
+  ],
+  "round": 2,
+  "schema_version": 1,
+  "status": "complete"
+}

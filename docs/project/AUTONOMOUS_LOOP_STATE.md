@@ -3,18 +3,18 @@
 ```text
 MODE: AUTONOMOUS_RESEARCH
 ACTIVE_RESEARCH_QUESTION: docs/project/ACTIVE_RESEARCH_QUESTION.md
-CURRENT_IDEA: VISSUP-01
-CURRENT_ROUND: 2
-CURRENT_STATE: VISSUP01_PILOT_VISUAL_SCORING
-RUNNING_JOB: root43101_visual_necessary_scoring;gpu7;pid966015;session66813
+CURRENT_IDEA: LITMAP-03
+CURRENT_ROUND: 1
+CURRENT_STATE: LITMAP03_PLAN_REQUIRED
+RUNNING_JOB: none
 LAST_PLAN: experiments/plans/VISSUP-01_round2.md
-LAST_RESULT: experiments/results/VISSUP-01_round2/PREFLIGHT.md
-GPU_HOURS_USED_THIS_CYCLE: 1.02
-ACTIVE_QUEUE: VISSUP-01
-NEXT_QUEUE: TBD_AFTER_VISSUP-01
+LAST_RESULT: experiments/results/VISSUP-01_round2/RESULT.md
+GPU_HOURS_USED_THIS_CYCLE: 1.07
+ACTIVE_QUEUE: LITMAP-03
+NEXT_QUEUE: TBD_FROM_LITMAP-03
 BACKLOG_QUEUE: OBJ-01,COVER-01
 WINOGROUND_ACCESS: blocked_by_access
-RESOURCE_NOTE: paired_train_complete;control_scoring_complete_80.1s;visual_full_scoring_started_GPU7
+RESOURCE_NOTE: no_running_gpu_job;VISSUP01_rejected_after_one_paired_root;raw_retained=experiments/results/VISSUP-01_round2/raw;no_seed_escalation
 HARD_STOP: false
 ```
 
