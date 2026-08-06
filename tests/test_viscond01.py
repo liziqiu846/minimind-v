@@ -1,5 +1,6 @@
 import unittest
 
+from experiments.analyze_viscond01 import paired_bootstrap_delta
 from experiments.viscond01 import (
     answer_margin,
     extract_option_labels,
@@ -45,6 +46,39 @@ class Viscond01Tests(unittest.TestCase):
     def test_prediction_tie_break_is_alphabetical(self):
         values = {"A": 1.0, "B": 1.0, "C": 2.0, "D": 3.0}
         self.assertEqual(predicted_label(values), "A")
+
+    def test_pair_bootstrap_aggregates_repeated_images_before_delta(self):
+        m2 = [
+            {
+                "normalized_pixel_sha256": "x",
+                "visual_increment_bits_per_token": 1.0,
+            },
+            {
+                "normalized_pixel_sha256": "x",
+                "visual_increment_bits_per_token": 3.0,
+            },
+            {
+                "normalized_pixel_sha256": "y",
+                "visual_increment_bits_per_token": 2.0,
+            },
+        ]
+        m3 = [
+            {
+                "normalized_pixel_sha256": "x",
+                "visual_increment_bits_per_token": 2.0,
+            },
+            {
+                "normalized_pixel_sha256": "x",
+                "visual_increment_bits_per_token": 4.0,
+            },
+            {
+                "normalized_pixel_sha256": "y",
+                "visual_increment_bits_per_token": 3.0,
+            },
+        ]
+        result = paired_bootstrap_delta(m2, m3)
+        self.assertEqual(result["group_count"], 2)
+        self.assertAlmostEqual(result["delta_V_bits_per_token"], 1.0)
 
 
 if __name__ == "__main__":
