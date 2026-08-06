@@ -18,6 +18,14 @@ class Viscond01Tests(unittest.TestCase):
             extract_option_labels(question),
             ("A", "B", "C", "D"),
         )
+        parenthesized = (
+            "Question: Which object?\nChoices:\n"
+            "(A) cat\n(B) dog\n(C) bird\n(D)fish"
+        )
+        self.assertEqual(
+            extract_option_labels(parenthesized),
+            ("A", "B", "C", "D"),
+        )
         with self.assertRaises(ValueError):
             extract_option_labels(
                 "Which object?\nOptions: A: cat, B: dog, D: fish"

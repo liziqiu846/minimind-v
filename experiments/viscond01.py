@@ -56,18 +56,26 @@ REQUIRED_COLUMNS = {
     "meta_info",
 }
 ANSWER_INSTRUCTION = "Answer with the option letter only."
-OPTION_PATTERN = re.compile(r"(?:Options: |, )([ABCD]):")
+COLON_OPTION_PATTERN = re.compile(r"(?:Options: |, )([ABCD]):")
+PAREN_OPTION_PATTERN = re.compile(r"^\(([ABCD])\)[ \t]*", re.MULTILINE)
 
 
 def extract_option_labels(question: str) -> tuple[str, ...]:
     if not isinstance(question, str) or not question:
         raise ValueError("MMStar question must be a nonempty string")
-    labels = tuple(OPTION_PATTERN.findall(question))
-    if labels != ANSWER_LABELS:
+    colon_labels = tuple(COLON_OPTION_PATTERN.findall(question))
+    paren_labels = tuple(PAREN_OPTION_PATTERN.findall(question))
+    matches = [
+        labels
+        for labels in (colon_labels, paren_labels)
+        if labels == ANSWER_LABELS
+    ]
+    if len(matches) != 1:
         raise ValueError(
-            f"MMStar question does not expose exactly A/B/C/D in order: {labels}"
+            "MMStar question does not expose exactly one recognized A/B/C/D "
+            f"inventory: colon={colon_labels}, paren={paren_labels}"
         )
-    return labels
+    return matches[0]
 
 
 def answer_margin(
@@ -221,14 +229,15 @@ def audit_panel(
         raise ValueError("MMStar six-category balance differs from frozen plan")
 
     manifest_rows = []
+    rejected_rows = []
     token_lengths = []
     answer_token_counts: dict[str, set[int]] = defaultdict(set)
+    decoded_image_count = 0
     for row in sorted(rows, key=lambda value: int(value["index"])):
         index = int(row["index"])
         question = row["question"]
-        labels = extract_option_labels(question)
         answer = row["answer"]
-        if answer not in labels:
+        if answer not in ANSWER_LABELS:
             raise ValueError(f"MMStar row {index} has invalid gold answer")
         if not isinstance(row["l2_category"], str) or not row["l2_category"]:
             raise ValueError(f"MMStar row {index} has invalid l2_category")
@@ -247,12 +256,31 @@ def audit_panel(
 
         raw_sha = sha256_bytes(row["image"])
         pixel_sha, image_info = normalized_pixel_sha256(row["image"])
+        decoded_image_count += 1
         image_path = image_root / f"{index:04d}.image"
         if image_path.exists():
             if sha256_file(image_path) != raw_sha:
                 raise ValueError(f"existing extracted image differs at row {index}")
         else:
             atomic_write_bytes(image_path, row["image"])
+
+        try:
+            labels = extract_option_labels(question)
+        except ValueError as error:
+            rejected_rows.append(
+                {
+                    "index": index,
+                    "reason": "option_inventory_not_exactly_A_B_C_D",
+                    "detail": str(error),
+                    "answer": answer,
+                    "category": row["category"],
+                    "l2_category": row["l2_category"],
+                    "image_path": str(image_path),
+                    "image_sha256": raw_sha,
+                    "normalized_pixel_sha256": pixel_sha,
+                }
+            )
+            continue
 
         row_max_length = 0
         token_counts = {}
@@ -291,20 +319,23 @@ def audit_panel(
         == MMSTAR_PARQUET_BYTES,
         "parquet_sha256_matches": parquet_sha == MMSTAR_PARQUET_SHA256,
         "schema_columns_match": set(table.column_names) == REQUIRED_COLUMNS,
-        "row_count_1500": len(manifest_rows) == EXPECTED_ROWS,
+        "source_row_count_1500": len(rows) == EXPECTED_ROWS,
         "unique_indices_1500": len(set(indices)) == EXPECTED_ROWS,
         "six_categories_balanced_250": (
             set(category_counts) == set(EXPECTED_CATEGORIES)
             and all(category_counts[name] == 250 for name in EXPECTED_CATEGORIES)
         ),
-        "all_questions_have_exactly_A_B_C_D": all(
+        "all_eligible_questions_have_exactly_A_B_C_D": all(
             tuple(row["option_labels"]) == ANSWER_LABELS
             for row in manifest_rows
         ),
-        "all_gold_answers_valid": all(
-            row["answer"] in ANSWER_LABELS for row in manifest_rows
+        "all_source_gold_answers_valid": all(
+            row["answer"] in ANSWER_LABELS for row in rows
         ),
-        "all_images_decoded_and_extracted": len(manifest_rows) == EXPECTED_ROWS,
+        "all_source_images_decoded_and_extracted": decoded_image_count
+        == EXPECTED_ROWS,
+        "eligible_rows_at_least_1350": len(manifest_rows)
+        >= MINIMUM_IMAGE_GROUPS,
         "independent_image_groups_at_least_1350": len(group_counts)
         >= MINIMUM_IMAGE_GROUPS,
         "all_token_sequences_fit_450": max(token_lengths)
@@ -327,6 +358,7 @@ def audit_panel(
             "parquet_sha256": parquet_sha,
         },
         "rows": manifest_rows,
+        "rejected_rows": rejected_rows,
     }
     audit = {
         "schema_version": 1,
@@ -339,6 +371,9 @@ def audit_panel(
         "source": manifest["source"],
         "panel": {
             "row_count": len(manifest_rows),
+            "source_row_count": len(rows),
+            "rejected_row_count": len(rejected_rows),
+            "rejected_rows": rejected_rows,
             "category_counts": dict(sorted(category_counts.items())),
             "l2_category_counts": dict(
                 sorted(Counter(row["l2_category"] for row in manifest_rows).items())
