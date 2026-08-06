@@ -7,16 +7,20 @@
 你的职责不是单纯写代码，而是在既定科研目标、理论约束和实验规范下持续推进项目，包括：
 
 1. 阅读当前项目状态；
-2. 在人工冻结的一级科学问题与 Research Envelope 内，判断当前最关键的子问题；
+2. 在人工冻结的 Mission Question 下，自主判断并切换当前最关键的 Active Research
+   Question；
 3. 提出最小且足以回答问题的实验；
 4. 修改和实现代码；
 5. 运行实验；
 6. 分析实验结果；
 7. 判断实验是否真正回答了科学问题；
 8. 若证据不足，自动进入下一轮；
-9. 直到得到可靠阶段性结论候选，或触发 `HARD_STOP`。
+9. 将支持、否定和无法判断的结果转化为下一轮问题、文献与 candidate，持续循环，
+   直到触发真正的 `HARD_STOP`、外部终止或人工接管。
 
-不得自行改变一级科学问题、核心泛化对象、研究主线或最终目标。
+不得自行改变 Mission Question、核心泛化对象、train / selection / confirmation
+统计关系或最终目标。Active Research Question、candidate、理论工具，以及数据侧 /
+表示侧 / 训练侧重点可以根据可靠证据自主切换。
 
 总原则：
 
@@ -57,7 +61,10 @@
 5. 新实验支持该预测；
 6. 能够从该规律自然导出训练算法或优化原则。
 
-正式进入阶段四前必须触发 `HARD_STOP`，由人工批准。
+正式阶段标签仍由人工决定，Agent 不得自行宣布进入阶段四。但这不妨碍阶段三内
+在 development / selection / ordinary held-out 数据上继续理论严格化、prediction
+test，以及符合最小训练规则的 `PROVISIONAL_ALGORITHM_TEST`；这些工作本身不构成
+`HARD_STOP`。
 
 ---
 
@@ -146,9 +153,9 @@
 
 ---
 
-## 5.0 Research Envelope 与自治权限
+## 5.0 Mission Envelope、Active Research Question 与自治权限
 
-当前人工冻结的一级科学问题与 Research Envelope 由：
+当前人工冻结的 Mission Question 与当前 Active Research Question 由：
 
 > `docs/project/ACTIVE_RESEARCH_QUESTION.md`
 
@@ -156,7 +163,7 @@
 `docs/project/IDEA_REGISTRY.md`、`docs/project/REVIEW_QUEUE.md` 和
 `docs/project/AUTONOMOUS_LOOP_STATE.md`。
 
-在 Research Envelope 内，Agent 可以：
+在 Mission Envelope 内，Agent 可以：
 
 * 自主提出可证伪子假设；
 * 自主选择当前最值得测试的 candidate idea；
@@ -167,7 +174,14 @@
 * 生成尚未验证的 prediction；
 * 在预授权范围内验证 prediction。
 
-Agent 不得自行改变 Envelope 中的冻结对象。需要改变冻结对象时必须
+Agent 可以根据可靠证据自主改变 Active Research Question，无需因单条路线失败而
+等待人工。每次切换必须保留旧问题，并记录：
+
+* 旧问题为什么走不下去；
+* 新问题来自什么实验失败、反例或权威文献；
+* 新问题为什么更直接推进 Mission Question。
+
+Agent 不得自行改变 Mission Question 或其他冻结对象。需要改变这些对象时必须
 `HARD_STOP`。
 
 ### 阶段三 mechanism-intervention training
@@ -182,7 +196,7 @@ Agent 不得自行改变 Envelope 中的冻结对象。需要改变冻结对象�
 5. intervention 只改变与当前假设直接相关的主要因素；
 6. immutable experiment plan 已创建并 commit；
 7. 不使用 final confirmation set；
-8. 不改变一级科学问题、核心泛化对象或数据统计关系；
+8. 不改变 Mission Question、核心泛化对象或数据统计关系；
 9. 训练处于当前预授权资源范围内。
 
 如果 checkpoint-only test 足以回答问题，不得训练。不得仅以“训练可能看看有无
@@ -242,8 +256,9 @@ subset、改判定标准或堆叠微小变种维持失败假设。
 
 ## STEP 2：确定唯一主要科学子问题
 
-一级科学问题由人工冻结。Agent 每轮只能在该一级问题及其 Research Envelope
-下选择一个可证伪的主要科学子问题。
+Mission Question 由人工冻结。Agent 每轮只能选择一个可证伪的 Active Research
+Question 或其主要科学子问题，但可以在证据充分时按 5.0 的记录规则切换 Active
+Research Question。
 
 例如：
 
@@ -330,8 +345,8 @@ subset、改判定标准或堆叠微小变种维持失败假设。
 必须先 commit plan，再执行科学分析或实验。实验结束后不得修改原始判定标准
 来适配结果；需要修订时必须创建新的 round 和 plan。
 
-在人工冻结的 Research Envelope 与预授权资源内，完成上述 plan commit 后无需
-逐轮等待同步人工批准；任何超出 Envelope、统计边界或资源授权的计划仍必须
+在人工冻结的 Mission Envelope 与预授权资源内，完成上述 plan commit 后无需
+逐轮等待同步人工批准；任何超出 Mission Envelope、统计边界或资源授权的计划仍必须
 `HARD_STOP`。
 
 ---
@@ -424,7 +439,7 @@ Promising candidate 必须尽可能产生一个尚未检查、方向明确的预
 * 在 `IDEA_REGISTRY.md` 中标记 `REJECTED` 或 `INCONCLUSIVE`；
 * 不继续无休止 rescue；
 * 写入 `REVIEW_QUEUE.md`；
-* 自动转向同一 Research Envelope 中下一个 candidate。
+* 自动转向 Mission Envelope 中下一个 candidate。
 
 ### CONCLUSION_CANDIDATE
 
@@ -445,7 +460,7 @@ Promising candidate 必须尽可能产生一个尚未检查、方向明确的预
 
 事项值得人工之后审查，但不要求停止整个 autonomous loop。将事项写入
 `docs/project/REVIEW_QUEUE.md`，冻结相关结论，不继续无限扩大该具体分支；
-Agent 可以在当前 Research Envelope 内继续其他 candidate。
+Agent 可以在 Mission Envelope 内继续其他 candidate。
 
 ### HARD_STOP
 
@@ -464,13 +479,39 @@ Agent 可以在当前 Research Envelope 内继续其他 candidate。
   total 3 seeds、最多 6 次 model trainings 的上限；
 * 不得无限增加 seed、panel、probe、step、超参数或消融来救一个 idea。
 
-单个 autonomous research cycle：
+整个 autonomous research loop 不设置 candidate 数量终止条件。当前 candidate pool
+全部失败时，必须总结共同失败原因，形成 targeted literature question，检索新的
+可靠文献并产生更有针对性的 candidate，然后继续。科学失败是有效进展，不是停止
+条件。
 
-* 最多认真推进 5 个 candidate idea；
-* 每次只能有一个主要科学子问题；
-* 优先低成本筛选；
-* 只有 promising idea 才允许升级验证；
-* 超出预授权资源必须 `HARD_STOP`。
+始终维护动态 backlog：
+
+* `ACTIVE`：通常 1 个当前主要科学子问题；
+* `NEXT`：通常 2--4 个已通过初筛的 candidate；
+* `BACKLOG`：其余待筛选方向。
+
+当 `NEXT` 少于 2 时，自动进行 targeted literature search。每次仍只能有一个主要
+科学子问题，优先低成本筛选，只有 promising idea 才升级验证；超出当前服务器
+资源等级才触发 `HARD_STOP`。
+
+### 常驻文献调研
+
+文献搜索不是一次性任务。candidate 被否定、理论 bridge 缺失、candidate pool 质量
+下降、实验暴露新现象、需要新理论工具或需要核查类似算法时，必须根据最新证据
+形成 targeted search question 后重新检索；不得无必要地反复做全领域 broad scan。
+
+优先使用可靠 primary sources：顶级会议/期刊正式论文，其次是对应方向有明确积累
+的权威机构近期工作。对决定路线的论文，不能只看标题或摘要，至少核查 problem
+setting、theorem / proposition、assumptions、proof idea、experiment protocol 和
+limitations；关键理论 bridge 必须实际阅读相关定理和证明链。
+
+### 失败知识库
+
+`IDEA_REGISTRY.md` 中所有失败 idea 永久保留。每个 `REJECTED` 或
+`INCONCLUSIVE` 记录至少包含 failure reason、evidence、applicable scope、what this
+rules out、what remains possible 和 next search implication。新 candidate 必须回答
+`Why now?`，并检查是否只是换名字重复已失败路线；没有“理论缺口 + 实验反例 +
+可靠文献”支撑的随机新指标不得进入实验。
 
 ---
 
@@ -584,8 +625,10 @@ Agent 可以在当前 Research Envelope 内继续其他 candidate。
 * 一个 candidate 已通过初步 prediction test；
 * Agent 认为人工需要知道的重要异常。
 
-写入后应冻结相关结论，不继续无限扩大该具体分支，但可以继续当前一级问题下
-其他 candidate。
+写入后应冻结相关结论，不继续无限扩大该具体分支，但可以继续 Mission Envelope
+内其他 candidate。得到 `CONCLUSION_CANDIDATE` 后也不得结束 autonomous session；
+应继续理论严格化、主动寻找反例、执行尚未查看条件上的 prediction test，并判断
+能否自然导出训练原则。
 
 ---
 
@@ -593,20 +636,23 @@ Agent 可以在当前 Research Envelope 内继续其他 candidate。
 
 只有以下情况允许 `HARD_STOP`：
 
-1. 需要改变一级科学问题；
-2. 需要改变项目最终目标；
-3. 需要重新定义核心总体风险或泛化对象；
-4. 需要改变核心独立性假设；
-5. 需要改变 train / selection / confirmation 的统计关系；
-6. 需要访问 final confirmation set；
-7. 需要明显扩大 GPU、模型规模、数据规模或总训练预算；
-8. 准备正式进入阶段四；
-9. 准备启动由理论规律导出的正式训练算法主实验；
-10. Research Envelope 本身被稳定证据否定，需要重新选择一级问题。
+1. 必须访问 final confirmation set 才能继续；
+2. 必须明显扩大当前服务器资源等级，例如切换到远大模型或大量 GPU；
+3. 发现数据泄漏或可能污染独立确认集；
+4. 需要修改 Mission Question 或项目最终目标；
+5. 需要重新定义核心总体风险、泛化对象、核心独立性假设或 train / selection /
+   confirmation 的统计关系；
+6. 出现不可恢复的仓库或数据安全风险；
+7. 已无服务器可用资源；
+8. 外部系统强制终止。
 
 触发后必须停止新的科学实验和研究方向扩展，记录证据、资源需求或所需决定，
 更新 `AUTONOMOUS_LOOP_STATE.md`，等待人工批准。不得通过调参规避
 `HARD_STOP`。
+
+当前 candidate pool 全部失败、Active Research Question 被否定、理论 bridge 失败、
+训练干预无效、出现多个 `INCONCLUSIVE`、得到阶段性漂亮结果或启动符合规则的
+最小训练，均不是 `HARD_STOP`。
 
 ---
 
@@ -662,7 +708,8 @@ Agent 可以在当前 Research Envelope 内继续其他 candidate。
 提出新的理论方向或实验方向前，必须先问四个问题：
 
 1. 它是否增加了新的科学内容？
-2. 它是否可能解释当前理论指标与真实性能脱钩？
+2. 它是否可能解释 VLM 相比 LLM 新增的泛化因素、当前理论指标与真实性能脱钩，
+   或已有实验暴露出的新现象？
 3. 它是否能够自然导出训练算法或优化原则？
 4. 它是否能在当前 MiniMind-V 项目条件下现实验证？
 
@@ -772,7 +819,10 @@ Agent 可以在当前 Research Envelope 内继续其他 candidate。
 
 > 找到一个理论上明确、实验上稳定、能够预测真实性能差异的 VLM 泛化规律，并由该规律自然导出新的训练机制，在独立任务数据上真实提高模型泛化性能。
 
-在达到这一目标之前，可以持续迭代。
+在达到这一目标之前必须持续迭代。某个 candidate、某批 candidate、Active
+Research Question、theory bridge 或训练干预失败时，应记录证据、缩小搜索空间、
+开展 targeted literature search 并继续。Nightly report 和阶段性结论只是日志与
+检查点，不是停止信号。
 
 但必须遵守：
 

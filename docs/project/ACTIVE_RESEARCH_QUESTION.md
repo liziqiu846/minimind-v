@@ -1,23 +1,38 @@
-# 当前一级研究问题
+# Research Mission 与当前 Active Research Question
 
 当前阶段：阶段三。
 
-## 冻结的一级科学问题
+## Mission Question（人工冻结）
 
-VLM 相比 LLM 新增的跨模态因素中，哪些因素能够解释：
+> VLM 相比 LLM 的泛化新增了什么科学因素，这些因素如何形成可验证理论规律，并
+> 最终指导训练以改善真实泛化？
 
-> checkpoint 描述长度下降，但真实 VLM 泛化没有稳定改善
+项目最终主线仍是：
 
-并进一步形成能够：
+> 理论 → 可验证预测 → 实验验证 → 训练方法 → 真实性能提升
 
-1. 解释真实性能差异；
-2. 在不同随机种子、预算或独立数据上稳定；
-3. 预测尚未验证的新模型、结构或训练现象；
-4. 最终自然导出训练算法或优化原则；
+Mission Question 不得由 Agent 自行改变。
 
-的 VLM 泛化规律？
+## 当前 Active Research Question
 
-## 当前允许探索的 Research Envelope
+当前经验起点是：
+
+> VLM checkpoint 描述长度下降但真实性能没有稳定改善时，哪一种 VLM 特有的
+> 数据、表示或训练机制能够解释这种脱钩，并产生可验证的新预测？
+
+这一问题是当前子问题，不是永久冻结的唯一主线。Agent 可以依据可靠实验、
+反例或权威文献自主切换 Active Research Question。
+
+每次切换必须：
+
+1. 保留旧问题及其适用范围；
+2. 记录旧问题为什么走不下去；
+3. 记录新问题来自什么证据或文献；
+4. 说明新问题为什么比旧问题更直接推进 Mission Question。
+
+不得删除历史问题，也不得用改名方式重复已经失败的路线。
+
+## 当前 Mission Envelope
 
 ### 数据侧
 
@@ -61,13 +76,22 @@ VLM 相比 LLM 新增的跨模态因素中，哪些因素能够解释：
 
 Agent 不得自行改变：
 
-- 一级科学问题；
+- Mission Question；
 - 项目最终目标；
 - VLM 泛化的广义定义；
 - 当前仍处于阶段三；
 - train / selection / confirmation 的统计关系；
 - final confirmation set 的角色；
 - MiniMind-V 作为低成本验证平台的定位。
+
+Agent 可以自主改变：
+
+- Active Research Question；
+- 当前 active candidate；
+- 数据侧、表示侧或训练侧重点；
+- 当前理论工具；
+
+前提是切换有证据、有文献依据，并明确服务于 Mission Question。
 
 ## 当前明确禁止
 
@@ -77,4 +101,16 @@ Agent 不得自行改变：
 - 机械按 vision / projector / language 名称拆复杂度；
 - 未经理论桥梁制造新的 proxy 后反向寻找解释；
 - 把经验 proxy 描述成正式互信息或严格理论量；
-- 自行进入阶段四。
+- 自行改变官方阶段标签。
+
+阶段三内允许在非 final confirmation 数据上进行符合预注册和最小训练规则的
+机制干预与 `PROVISIONAL_ALGORITHM_TEST`。
+
+## Active Research Question 历史
+
+### 2026-08-07｜初始 active question
+
+- **Question**: checkpoint 描述长度下降但真实 VLM 泛化没有稳定改善时，哪一种
+  VLM 特有机制能够解释这种脱钩并产生可验证预测？
+- **Origin**: 已有 phase 2 / phase 3 结果显示码长改善与真实性能并不稳定一致。
+- **Status**: ACTIVE；治理修正后保留为当前经验起点，后续可按上述规则切换。
