@@ -1,0 +1,696 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/jAI4gdjqMS5ypSr7nF+nvc7NPFg</id>
+  <title>arXiv Query: search_query=all:"multimodal large language model" AND (all:"parameter efficient" OR all:LoRA OR all:adapter) AND (all:projector OR all:"vision module")&amp;id_list=&amp;start=0&amp;max_results=100</title>
+  <updated>2026-08-06T20:34:15Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22multimodal+large+language+model%22+AND+((all:%22parameter+efficient%22+OR+(all:LoRA+OR+all:adapter))+AND+(all:projector+OR+all:%22vision+module%22))&amp;start=0&amp;max_results=100&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>100</opensearch:itemsPerPage>
+  <opensearch:totalResults>20</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2501.05067v3</id>
+    <title>LLaVA-Octopus: Unlocking Instruction-Driven Adaptive Projector Fusion for Video Understanding</title>
+    <updated>2026-04-20T07:42:35Z</updated>
+    <link href="https://arxiv.org/abs/2501.05067v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.05067v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we introduce LLaVA-Octopus, a novel video multimodal large language model. LLaVA-Octopus adaptively weights features from different visual projectors based on user instructions, enabling us to leverage the complementary strengths of each projector. We observe that different visual projectors exhibit distinct characteristics when handling specific tasks. For instance, some projectors excel at capturing static details, while others are more effective at processing temporal information, and some are better suited for tasks requiring temporal coherence. By dynamically adjusting feature weights according to user instructions, LLaVA-Octopus dynamically selects and combines the most suitable features, significantly enhancing the model's performance in multimodal tasks. Experimental results demonstrate that LLaVA-Octopus achieves excellent performance across multiple benchmarks, especially in tasks such as video question answering, long video understanding, and comprehensive multi-choices benchmarks, highlighting its broad application potential.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-01-09T08:43:57Z</published>
+    <arxiv:comment>18 pages, 10 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Boyuan Sun</name>
+    </author>
+    <author>
+      <name>Jiaxing Zhao</name>
+    </author>
+    <author>
+      <name>Xiang Chen</name>
+    </author>
+    <author>
+      <name>Xihan Wei</name>
+    </author>
+    <author>
+      <name>Qibin Hou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.13447v1</id>
+    <title>HyperLLaVA: Dynamic Visual and Language Expert Tuning for Multimodal Large Language Models</title>
+    <updated>2024-03-20T09:42:43Z</updated>
+    <link href="https://arxiv.org/abs/2403.13447v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.13447v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent advancements indicate that scaling up Multimodal Large Language Models (MLLMs) effectively enhances performance on downstream multimodal tasks. The prevailing MLLM paradigm, \emph{e.g.}, LLaVA, transforms visual features into text-like tokens using a \emph{static} vision-language mapper, thereby enabling \emph{static} LLMs to develop the capability to comprehend visual information through visual instruction tuning. Although promising, the \emph{static} tuning strategy~\footnote{The static tuning refers to the trained model with static parameters.} that shares the same parameters may constrain performance across different downstream multimodal tasks. In light of this, we introduce HyperLLaVA, which involves adaptive tuning of the projector and LLM parameters, in conjunction with a dynamic visual expert and language expert, respectively. These experts are derived from HyperNetworks, which generates adaptive parameter shifts through visual and language guidance, enabling dynamic projector and LLM modeling in two-stage training.
+  Our experiments demonstrate that our solution significantly surpasses LLaVA on existing MLLM benchmarks, including MME, MMBench, SEED-Bench, and LLaVA-Bench. ~\footnote{Our project is available on the link https://github.com/DCDmllm/HyperLLaVA}.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-20T09:42:43Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Wenqiao Zhang</name>
+    </author>
+    <author>
+      <name>Tianwei Lin</name>
+    </author>
+    <author>
+      <name>Jiang Liu</name>
+    </author>
+    <author>
+      <name>Fangxun Shu</name>
+    </author>
+    <author>
+      <name>Haoyuan Li</name>
+    </author>
+    <author>
+      <name>Lei Zhang</name>
+    </author>
+    <author>
+      <name>He Wanggui</name>
+    </author>
+    <author>
+      <name>Hao Zhou</name>
+    </author>
+    <author>
+      <name>Zheqi Lv</name>
+    </author>
+    <author>
+      <name>Hao Jiang</name>
+    </author>
+    <author>
+      <name>Juncheng Li</name>
+    </author>
+    <author>
+      <name>Siliang Tang</name>
+    </author>
+    <author>
+      <name>Yueting Zhuang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.00832v1</id>
+    <title>EventGPT: Event Stream Understanding with Multimodal Large Language Models</title>
+    <updated>2024-12-01T14:38:40Z</updated>
+    <link href="https://arxiv.org/abs/2412.00832v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.00832v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Event cameras record visual information as asynchronous pixel change streams, excelling at scene perception under unsatisfactory lighting or high-dynamic conditions. Existing multimodal large language models (MLLMs) concentrate on natural RGB images, failing in scenarios where event data fits better. In this paper, we introduce EventGPT, the first MLLM for event stream understanding, to the best of our knowledge, marking a pioneering attempt to integrate large language models (LLMs) with event stream comprehension. To mitigate the huge domain gaps, we develop a three-stage optimization paradigm to gradually equip a pre-trained LLM with the capability of understanding event-based scenes. Our EventGPT comprises an event encoder, followed by a spatio-temporal aggregator, a linear projector, an event-language adapter, and an LLM. Firstly, RGB image-text pairs generated by GPT are leveraged to warm up the linear projector, referring to LLaVA, as the gap between natural image and language modalities is relatively smaller. Secondly, we construct a synthetic yet large dataset, N-ImageNet-Chat, consisting of event frames and corresponding texts to enable the use of the spatio-temporal aggregator and to train the event-language adapter, thereby aligning event features more closely with the language space. Finally, we gather an instruction dataset, Event-Chat, which contains extensive real-world data to fine-tune the entire model, further enhancing its generalization ability. We construct a comprehensive benchmark, and experiments show that EventGPT surpasses previous state-of-the-art MLLMs in generation quality, descriptive accuracy, and reasoning capability.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-01T14:38:40Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Shaoyu Liu</name>
+    </author>
+    <author>
+      <name>Jianing Li</name>
+    </author>
+    <author>
+      <name>Guanghui Zhao</name>
+    </author>
+    <author>
+      <name>Yunjian Zhang</name>
+    </author>
+    <author>
+      <name>Xin Meng</name>
+    </author>
+    <author>
+      <name>Fei Richard Yu</name>
+    </author>
+    <author>
+      <name>Xiangyang Ji</name>
+    </author>
+    <author>
+      <name>Ming Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.20146v2</id>
+    <title>VMAD: Visual-enhanced Multimodal Large Language Model for Zero-Shot Anomaly Detection</title>
+    <updated>2026-04-01T15:59:05Z</updated>
+    <link href="https://arxiv.org/abs/2409.20146v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.20146v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Zero-shot anomaly detection (ZSAD) recognizes and localizes anomalies in previously unseen objects by establishing feature mapping between textual prompts and inspection images, demonstrating excellent research value in flexible industrial manufacturing. However, existing ZSAD methods are limited by closed-world settings, struggling to unseen defects with predefined prompts. Recently, adapting Multimodal Large Language Models (MLLMs) for Industrial Anomaly Detection (IAD) presents a viable solution. Unlike fixed-prompt methods, MLLMs exhibit a generative paradigm with open-ended text interpretation, enabling more adaptive anomaly analysis. However, this adaption faces inherent challenges as anomalies often manifest in fine-grained regions and exhibit minimal visual discrepancies from normal samples. To address these challenges, we propose a novel framework VMAD (Visual-enhanced MLLM Anomaly Detection) that enhances MLLM with visual-based IAD knowledge and fine-grained perception, simultaneously providing precise detection and comprehensive analysis of anomalies. Specifically, we design a Defect-Sensitive Structure Learning scheme that transfers patch-similarities cues from visual branch to our MLLM for improved anomaly discrimination. Besides, we introduce a novel visual projector, Locality-enhanced Token Compression, which mines multi-level features in local contexts to enhance fine-grained detection. Furthermore, we introduce the Real Industrial Anomaly Detection (RIAD), a comprehensive IAD dataset with detailed anomaly descriptions and analyses, offering a valuable resource for MLLM-based IAD development. Extensive experiments on zero-shot benchmarks, including MVTec-AD, Visa, WFDD, and RIAD datasets, demonstrate our superior performance over state-of-the-art methods. The code and dataset will be available soon.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-30T09:51:29Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Huilin Deng</name>
+    </author>
+    <author>
+      <name>Hongchen Luo</name>
+    </author>
+    <author>
+      <name>Wei Zhai</name>
+    </author>
+    <author>
+      <name>Yang Cao</name>
+    </author>
+    <author>
+      <name>Yu Kang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.09385v1</id>
+    <title>SLAM-LLM: A Modular, Open-Source Multimodal Large Language Model Framework and Best Practice for Speech, Language, Audio and Music Processing</title>
+    <updated>2026-01-14T11:25:36Z</updated>
+    <link href="https://arxiv.org/abs/2601.09385v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.09385v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The recent surge in open-source Multimodal Large Language Models (MLLM) frameworks, such as LLaVA, provides a convenient kickoff for artificial intelligence developers and researchers. However, most of the MLLM frameworks take vision as the main input modality, and provide limited in-depth support for the modality of speech, audio, and music. This situation hinders the development of audio-language models, and forces researchers to spend a lot of effort on code writing and hyperparameter tuning. We present SLAM-LLM, an open-source deep learning framework designed to train customized MLLMs, focused on speech, language, audio, and music processing. SLAM-LLM provides a modular configuration of different encoders, projectors, LLMs, and parameter-efficient fine-tuning plugins. SLAM-LLM also includes detailed training and inference recipes for mainstream tasks, along with high-performance checkpoints like LLM-based Automatic Speech Recognition (ASR), Automated Audio Captioning (AAC), and Music Captioning (MC). Some of these recipes have already reached or are nearing state-of-the-art performance, and some relevant techniques have also been accepted by academic papers. We hope SLAM-LLM will accelerate iteration, development, data engineering, and model training for researchers. We are committed to continually pushing forward audio-based MLLMs through this open-source framework, and call on the community to contribute to the LLM-based speech, audio and music processing.</summary>
+    <category term="cs.SD" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-14T11:25:36Z</published>
+    <arxiv:comment>Published in IEEE Journal of Selected Topics in Signal Processing (JSTSP)</arxiv:comment>
+    <arxiv:primary_category term="cs.SD"/>
+    <author>
+      <name>Ziyang Ma</name>
+    </author>
+    <author>
+      <name>Guanrou Yang</name>
+    </author>
+    <author>
+      <name>Wenxi Chen</name>
+    </author>
+    <author>
+      <name>Zhifu Gao</name>
+    </author>
+    <author>
+      <name>Yexing Du</name>
+    </author>
+    <author>
+      <name>Xiquan Li</name>
+    </author>
+    <author>
+      <name>Zhisheng Zheng</name>
+    </author>
+    <author>
+      <name>Haina Zhu</name>
+    </author>
+    <author>
+      <name>Jianheng Zhuo</name>
+    </author>
+    <author>
+      <name>Zheshu Song</name>
+    </author>
+    <author>
+      <name>Ruiyang Xu</name>
+    </author>
+    <author>
+      <name>Tiranrui Wang</name>
+    </author>
+    <author>
+      <name>Yifan Yang</name>
+    </author>
+    <author>
+      <name>Yanqiao Zhu</name>
+    </author>
+    <author>
+      <name>Zhikang Niu</name>
+    </author>
+    <author>
+      <name>Liumeng Xue</name>
+    </author>
+    <author>
+      <name>Yinghao Ma</name>
+    </author>
+    <author>
+      <name>Ruibin Yuan</name>
+    </author>
+    <author>
+      <name>Shiliang Zhang</name>
+    </author>
+    <author>
+      <name>Kai Yu</name>
+    </author>
+    <author>
+      <name>Eng Siong Chng</name>
+    </author>
+    <author>
+      <name>Xie Chen</name>
+    </author>
+    <arxiv:doi>10.1109/JSTSP.2026.3653157</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/JSTSP.2026.3653157" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.13676v1</id>
+    <title>Re-purposing SAM into Efficient Visual Projectors for MLLM-Based Referring Image Segmentation</title>
+    <updated>2025-09-17T04:04:08Z</updated>
+    <link href="https://arxiv.org/abs/2509.13676v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.13676v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, Referring Image Segmentation (RIS) frameworks that pair the Multimodal Large Language Model (MLLM) with the Segment Anything Model (SAM) have achieved impressive results. However, adapting MLLM to segmentation is computationally intensive, primarily due to visual token redundancy. We observe that traditional patch-wise visual projectors struggle to strike a balance between reducing the number of visual tokens and preserving semantic clarity, often retaining overly long token sequences to avoid performance drops. Inspired by text tokenizers, we propose a novel semantic visual projector that leverages semantic superpixels generated by SAM to identify "visual words" in an image. By compressing and projecting semantic superpixels as visual tokens, our approach adaptively shortens the token sequence according to scene complexity while minimizing semantic loss in compression. To mitigate loss of information, we propose a semantic superpixel positional embedding to strengthen MLLM's awareness of superpixel geometry and position, alongside a semantic superpixel aggregator to preserve both fine-grained details inside superpixels and global context outside. Experiments show that our method cuts visual tokens by 93% without compromising performance, notably speeding up MLLM training and inference, and outperforming existing compressive visual projectors on RIS.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-17T04:04:08Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xiaobo Yang</name>
+    </author>
+    <author>
+      <name>Xiaojin Gong</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.21232v1</id>
+    <title>QMoP: Query Guided Mixture-of-Projector for Efficient Visual Token Compression</title>
+    <updated>2026-03-22T13:42:24Z</updated>
+    <link href="https://arxiv.org/abs/2603.21232v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.21232v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal large language models suffer from severe computational and memory bottlenecks, as the number of visual tokens far exceeds that of textual tokens. While recent methods employ projector modules to align and compress visual tokens into text-aligned features, they typically depend on fixed heuristics that limit adaptability across diverse scenarios. In this paper, we first propose Query Guided Mixture-of-Projector (QMoP), a novel and flexible framework that adaptively compresses visual tokens via three collaborative branches: (1) a pooling-based branch for coarse-grained global semantics, (2) a resampler branch for extracting high-level semantic representations, and (3) a pruning-based branch for fine-grained token selection to preserve critical visual detail. To adaptively coordinate these branches, we introduce the Query Guided Router (QGR), which dynamically selects and weights the outputs from different branches based on both visual input and textual queries. A Mixture-of-Experts-style fusion mechanism is designed to aggregate the outputs, harnessing the strengths of each strategy while suppressing noise. To systematically evaluate the effects of Visual Token Compression, we also develop VTCBench, a dedicated benchmark for evaluating the information loss induced by visual token compression. Extensive experiments demonstrate that despite relying on fundamental compression modules, QMoP outperforms strong baselines and delivers significant savings in memory, computation, and inference time.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-22T13:42:24Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhongyang Li</name>
+    </author>
+    <author>
+      <name>Yaqian Li</name>
+    </author>
+    <author>
+      <name>Faming Fang</name>
+    </author>
+    <author>
+      <name>Rinyoichi Takezoe</name>
+    </author>
+    <author>
+      <name>Zi-Hao Bo</name>
+    </author>
+    <author>
+      <name>Cheng Qian</name>
+    </author>
+    <author>
+      <name>Mo Guang</name>
+    </author>
+    <author>
+      <name>Guixu Zhang</name>
+    </author>
+    <author>
+      <name>Kaiwen Long</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.17806v1</id>
+    <title>PGN: Design and Implementation of a Vision-Language Navigation System Based on Pangu Multimodal Foundation Model</title>
+    <updated>2026-07-20T10:48:48Z</updated>
+    <link href="https://arxiv.org/abs/2607.17806v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.17806v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-Language Navigation (VLN) requires an embodied agent to interpret a natural-language instruction and predict actions from temporally ordered visual observations. Adapting a multimodal large language model to VLN requires visual-language alignment, compact temporal inputs, action-space grounding, and stable training on the target hardware. This technical report presents PGN (Pangu Navigator), an offline VLN action-prediction system built on OpenPangu-7B. Training proceeds in two stages. First, PGMM aligns a frozen EVA-ViT-G/14 vision encoder with the frozen language backbone by training a Q-Former and a two-layer MLP projector. Second, PGN adapts the aligned model to expert navigation trajectories using five-observation windows, epoch-dependent temporal sampling, and a reasoning-then-action output format; this stage freezes the aligned visual pathway and updates three structural-token embeddings and LoRA adapters. The implementation combines mixed-precision computation, selective FP32 computation, and DeepSpeed ZeRO-2 on eight Ascend 910B NPUs. Under teacher-forced, open-loop evaluation on 500 held-out expert trajectories, V9 reports a 62.29% Normalized Action Match (NAM) and a 100.00% Non-empty Rate (NER). These metrics quantify offline expert-action alignment rather than closed-loop navigation success; evaluating error accumulation, path efficiency, and goal completion remains future work.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-20T10:48:48Z</published>
+    <arxiv:comment>6 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Li Xian</name>
+    </author>
+    <author>
+      <name>Mingxi Li</name>
+    </author>
+    <author>
+      <name>Yizheng Wang</name>
+    </author>
+    <author>
+      <name>Yiming Shen</name>
+    </author>
+    <author>
+      <name>Qi Chen</name>
+    </author>
+    <author>
+      <name>Zhuoling Xiao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.20985v1</id>
+    <title>DeCo: Decoupling Token Compression from Semantic Abstraction in Multimodal Large Language Models</title>
+    <updated>2024-05-31T16:31:38Z</updated>
+    <link href="https://arxiv.org/abs/2405.20985v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.20985v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The visual projector, which bridges the vision and language modalities and facilitates cross-modal alignment, serves as a crucial component in MLLMs. However, measuring the effectiveness of projectors in vision-language alignment remains under-explored, which currently can only be inferred from the performance of MLLMs on downstream tasks. Motivated by the problem, this study examines the projector module by interpreting the vision-language semantic flow within MLLMs. Specifically, we trace back the semantic relevance flow from generated language tokens to raw visual encoder patches and the intermediate outputs produced by projectors. Our findings reveal that compressive projectors (e.g., QFormer), abstract visual patches into a limited set of semantic concepts, such as objects or attributes, resulting in a 'double abstraction' phenomenon. This involves a first visual semantic abstraction by the projector referring to pre-defined query tokens, and a second extraction by the LLM based on text instructions. The double abstraction is inefficient in training and will result in cumulative vision semantics deficiency. To mitigate this issue, we propose the key insight of 'Decouple Compression from Abstraction (DeCo), that is compressing the visual token number at the patch level by projectors and allowing the LLM to handle visual semantic abstraction entirely. Consequently, we adopt a simple compressor, i.e., 2D Adaptive Pooling, to downsample visual patches in a parameter-free manner. Empirical evaluation demonstrates that DeCo surpasses traditional compressive projectors regarding both performance and efficiency. It achieves performance gains of 0.9%, 7.1%, and 2.9% across the MLLM Benchmarks, Visual Localization, and Open-ended VQA tasks with fewer trainable parameters and faster convergence speed.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-31T16:31:38Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Linli Yao</name>
+    </author>
+    <author>
+      <name>Lei Li</name>
+    </author>
+    <author>
+      <name>Shuhuai Ren</name>
+    </author>
+    <author>
+      <name>Lean Wang</name>
+    </author>
+    <author>
+      <name>Yuanxin Liu</name>
+    </author>
+    <author>
+      <name>Xu Sun</name>
+    </author>
+    <author>
+      <name>Lu Hou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.16742v1</id>
+    <title>Multi-Dimensional Quality Assessment for AI-Generated Human-Centric Videos: Dataset and Model</title>
+    <updated>2026-07-18T10:04:18Z</updated>
+    <link href="https://arxiv.org/abs/2607.16742v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.16742v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>AI-generated human-centric videos play a crucial role in a wide range of modern applications. However, they often suffer from quality issues and semantic mismatches, underscoring the importance of effective quality assessment for such videos. To this end, we extend our previous dataset HVEval with pairwise preference annotations, resulting in HVEval+, the largest holistic quality assessment dataset for AI-generated human-centric videos, which comprises 1k prompts based on a comprehensive taxonomy, 20k videos generated by 24 text-to-video (T2V) models, and extensive human annotations, including 60k mean opinion scores (MOSs) and 60k preference pairs across 3 dimensions (i.e., spatial quality, temporal quality, and text-video correspondence), as well as 20k category-specific question-answer (Q&amp;A) pairs. Along with the HVEval+ dataset, we further propose MoE-Rater, a Mixture-of-Experts (MoE)-inspired and multimodal large language model (MLLM)-based all-in-one method that supports multi-dimensional quality rating, multi-dimensional pairwise comparison, and category-specific question answering within a single model. Specifically, we introduce Mixture of Projector Experts (MoPE) and Mixture of LoRA Experts (MoLE), together with a three-stage training strategy consisting of task-aware pre-training, task-specific adaptation, and adaptive routing optimization, to effectively unify multiple tasks, resulting in superior performance on both HVEval+ and Human-AGVQA datasets. Extensive experiments and comprehensive analysis demonstrate the significant potential of the HVEval+ dataset and the MoE-Rater method in advancing AI-generated video quality assessment and further facilitating the evaluation and optimization of T2V models.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-18T10:04:18Z</published>
+    <arxiv:comment>Accepted for publication in IEEE TCSVT, 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Sijing Wu</name>
+    </author>
+    <author>
+      <name>Yunhao Li</name>
+    </author>
+    <author>
+      <name>Huiyu Duan</name>
+    </author>
+    <author>
+      <name>Yucheng Zhu</name>
+    </author>
+    <author>
+      <name>Xiongkuo Min</name>
+    </author>
+    <author>
+      <name>Patrick Le Callet</name>
+    </author>
+    <author>
+      <name>Guangtao Zhai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.10765v1</id>
+    <title>Dynamic Cross-Modal Prompt Generation for Multimodal Continual Instruction Tuning</title>
+    <updated>2026-05-11T15:59:06Z</updated>
+    <link href="https://arxiv.org/abs/2605.10765v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.10765v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Large Language Models (MLLMs) achieve strong performance through instruction tuning, yet real-world deployment often requires continual capability expansion across sequential tasks. In such scenarios, Multimodal Continual Instruction Tuning (MCIT) aims to acquire new capabilities while limiting catastrophic forgetting. Existing methods mainly follow a module-composition paradigm: they maintain task-level prompts or LoRA experts and dynamically route or aggregate a subset of them at inference. However, samples within the same task can still differ substantially in visual scenes, question intents, and reasoning demands. This motivates instance-level adaptation to individual query-image pairs rather than only selecting or combining task-level modules. To this end, we propose DRAPE (Dynamic Cross-Modal Prompt Generation), a prompt-learning framework that synthesizes continuous instance-specific soft prompts for MCIT. Instead of selecting prompts from a fixed pool, DRAPE derives prompt queries from the textual instruction and cross-attends to visual patch features, producing query-image conditioned prompts that are prepended to the frozen LLM. To mitigate forgetting during sequential updates, DRAPE applies null-space gradient projection to the shared projector and uses CLIP-based prototype routing for task-label-free generator selection at inference. Extensive experiments on MCIT benchmarks show that DRAPE achieves state-of-the-art performance among representative prompt-based and LoRA-based continual-learning baselines.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-11T15:59:06Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Tao Hu</name>
+    </author>
+    <author>
+      <name>Da-Wei Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.26947v2</id>
+    <title>Progressive Multimodal Alignment for Continual Instruction Tuning</title>
+    <updated>2026-07-31T09:19:33Z</updated>
+    <link href="https://arxiv.org/abs/2607.26947v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.26947v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Large Language Models (MLLMs) rely on a projector to align visual representations with the language embedding space, making it central to cross-modal understanding. In Multimodal Continual Instruction Tuning (MCIT), however, shifting visual distributions and evolving instruction semantics cause this shared projector to drift, leading to projector-level forgetting, an issue largely overlooked by methods that focus primarily on the LLM backbone. We introduce Progressive Multimodal Alignment (PMA), a framework that enables the projector to adapt continually while preserving previously learned alignment. PMA detects multimodal distribution shifts via a lightweight representation descriptor and progressively expands projector experts only when needed. An expandable router integrates expert outputs based on multimodal features, while the original pretrained projector is retained as a stable alignment anchor. This progressive mechanism balances stability and plasticity with sub-linear parameter growth and serves as a method-agnostic add-on to existing MCIT approaches. Extensive experiments on two recent MCIT benchmarks demonstrate that mitigating projector-level forgetting yields consistent gains over prior state-of-the-art methods when combined with PMA. Moreover, PMA scales across diverse MLLM backbones, demonstrating robust and broadly applicable MCIT performance.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-29T14:15:55Z</published>
+    <arxiv:comment>Accepted by ACM MM2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Duzhen Zhang</name>
+    </author>
+    <author>
+      <name>Yahan Yu</name>
+    </author>
+    <author>
+      <name>Qiaoyi Su</name>
+    </author>
+    <author>
+      <name>Jiahua Dong</name>
+    </author>
+    <author>
+      <name>Tielin Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.00505v3</id>
+    <title>LLaVA-SP: Enhancing Visual Representation with Visual Spatial Tokens for MLLMs</title>
+    <updated>2025-07-04T13:15:34Z</updated>
+    <link href="https://arxiv.org/abs/2507.00505v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.00505v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The architecture of multimodal large language models (MLLMs) commonly connects a vision encoder, often based on CLIP-ViT, to a large language model. While CLIP-ViT works well for capturing global image features, it struggles to model local relationships between adjacent patches, leading to weaker visual representation, which in turn affects the detailed understanding ability of MLLMs. To solve this, we propose LLaVA-SP, which only adds six spatial visual tokens to the original visual tokens to enhance the visual representation. Our approach offers three key advantages: 1) We propose a novel Projector, which uses convolutional kernels to derive visual spatial tokens from ViT patch features, simulating two visual spatial ordering approaches: "from central region to global" and "from abstract to specific". Then, a cross-attention mechanism is applied to fuse fine-grained visual information, enriching the overall visual representation. 2) We present two model variants: LLaVA-SP-Cropping, which focuses on detail features through progressive cropping, and LLaVA-SP-Pooling, which captures global semantics through adaptive pooling, enabling the model to handle diverse visual understanding tasks. 3) Extensive experiments show that LLaVA-SP, fine-tuned with LoRA, achieves significant performance improvements across various multimodal benchmarks, outperforming the state-of-the-art LLaVA-1.5 model in multiple tasks with nearly identical inference latency. The code and models are available at https://github.com/CnFaker/LLaVA-SP.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-01T07:20:11Z</published>
+    <arxiv:comment>Accepted to ICCV 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Haoran Lou</name>
+    </author>
+    <author>
+      <name>Chunxiao Fan</name>
+    </author>
+    <author>
+      <name>Ziyan Liu</name>
+    </author>
+    <author>
+      <name>Yuexin Wu</name>
+    </author>
+    <author>
+      <name>Xinliang Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.12319v2</id>
+    <title>Large Language Models are Strong Audio-Visual Speech Recognition Learners</title>
+    <updated>2025-03-07T09:30:16Z</updated>
+    <link href="https://arxiv.org/abs/2409.12319v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.12319v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal large language models (MLLMs) have recently become a focal point of research due to their formidable multimodal understanding capabilities. For example, in the audio and speech domains, an LLM can be equipped with (automatic) speech recognition (ASR) abilities by just concatenating the audio tokens, computed with an audio encoder, and the text tokens to achieve state-of-the-art results. On the contrary, tasks like visual and audio-visual speech recognition (VSR/AVSR), which also exploit noise-invariant lip movement information, have received little or no attention. To bridge this gap, we propose Llama-AVSR, a new MLLM with strong audio-visual speech recognition capabilities. It leverages pre-trained audio and video encoders to produce modality-specific tokens which, together with the text tokens, are processed by a pre-trained LLM (e.g., Llama3.1-8B) to yield the resulting response in an auto-regressive fashion. Llama-AVSR requires a small number of trainable parameters as only modality-specific projectors and LoRA modules are trained whereas the multi-modal encoders and LLM are kept frozen. We evaluate our proposed approach on LRS3, the largest public AVSR benchmark, and we achieve new state-of-the-art results for the tasks of ASR and AVSR with a WER of 0.79% and 0.77%, respectively. To bolster our results, we investigate the key factors that underpin the effectiveness of Llama-AVSR: the choice of the pre-trained encoders and LLM, the efficient integration of LoRA modules, and the optimal performance-efficiency trade-off obtained via modality-aware compression rates.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SD" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.AS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-18T21:17:27Z</published>
+    <arxiv:comment>Accepted for publication at ICASSP 2025. The code and checkpoints are available here: https://github.com/umbertocappellazzo/Llama-AVSR</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Umberto Cappellazzo</name>
+    </author>
+    <author>
+      <name>Minsu Kim</name>
+    </author>
+    <author>
+      <name>Honglie Chen</name>
+    </author>
+    <author>
+      <name>Pingchuan Ma</name>
+    </author>
+    <author>
+      <name>Stavros Petridis</name>
+    </author>
+    <author>
+      <name>Daniele Falavigna</name>
+    </author>
+    <author>
+      <name>Alessio Brutti</name>
+    </author>
+    <author>
+      <name>Maja Pantic</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.17954v1</id>
+    <title>A More Word-like Image Tokenization for MLLMs</title>
+    <updated>2026-05-18T07:09:46Z</updated>
+    <link href="https://arxiv.org/abs/2605.17954v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.17954v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Modern multimodal large language models (MLLMs) typically keep the language model fixed and train a visual projector that maps the pixels into a sequence of tokens in its embedding space, so that images can be presented in essentially the same form as text. However, the language model has been optimized to operate on discrete, semantically meaningful tokens, while prevailing visual projectors transform an image into a long stream of continuous and highly correlated embeddings. This causes the visual tokens to behave differently from the word-like units that LLMs are originally trained to understand. We propose a novel Disentangled Visual Tokenization (DiVT) that clusters patch embeddings into coherent semantic units, so each token corresponds to a distinct visual concept instead of a rigid grid cell. DiVT further adapts its token budget to image complexity, providing an explicit accuracy-compute trade-off modifying neither the vision encoder nor the language model. Across diverse multimodal benchmarks, DiVT matches or surpasses baselines with significantly fewer visual tokens, demonstrating robustness under limited token budgets, significantly reducing memory cost and latency while making visual inputs more compatible with LLMs. Our code is available at https://github.com/snuviplab/DiVT.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-18T07:09:46Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <arxiv:journal_ref>Proceedings of the IEEE/CVF International Conference on Pattern Recognition and Computer Vision (CVPR), 2026</arxiv:journal_ref>
+    <author>
+      <name>Hyun Lee</name>
+    </author>
+    <author>
+      <name>Hyemin Jeong</name>
+    </author>
+    <author>
+      <name>Yejin Kim</name>
+    </author>
+    <author>
+      <name>Hyungwook Choi</name>
+    </author>
+    <author>
+      <name>Hyunsoo Cho</name>
+    </author>
+    <author>
+      <name>Soo Kyung Kim</name>
+    </author>
+    <author>
+      <name>Joonseok Lee</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.06986v2</id>
+    <title>Rethinking the Mixture of Vision Encoders Paradigm for Enhanced Visual Understanding in Multimodal LLMs</title>
+    <updated>2026-03-06T03:29:58Z</updated>
+    <link href="https://arxiv.org/abs/2501.06986v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.06986v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Mixture of Vision Encoders (MoVE) has emerged as a powerful approach to enhance the fine-grained visual understanding of multimodal large language models (MLLMs), improving their ability to handle tasks such as complex optical character recognition and scene understanding. Despite these advances, effectively combining diverse encoders and their visual tokens, while also scaling to high-resolution inputs, remains an open challenge. In this work, we conduct a systematic study of fusion designs for MoVE-based MLLMs, highlighting principles for token-level integration across complementary encoders. Our study shows that a lightweight recipe consisting of post-adaptation fusion with independent projectors, tile-level sequence interleaving, and dynamic tiling with global context delivers strong performance on diverse benchmarks. We integrate these principles into a simple and effective architecture that we call LEO. Extensive evaluation on 11 vision-language benchmarks demonstrates that LEO achieves better results on the majority of tasks compared to existing MoVE-based approaches. Furthermore, LEO adapts effectively to the specialized domain of autonomous driving without altering its architecture or training recipe, achieving competitive performance against established baselines and thereby highlighting its ability to generalize. The code is available at https://github.com/Mozhgan91/LEO.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-01-13T00:29:55Z</published>
+    <arxiv:comment>Accepted by TMLR</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Mozhgan Nasr Azadani</name>
+    </author>
+    <author>
+      <name>James Riddell</name>
+    </author>
+    <author>
+      <name>Sean Sedwards</name>
+    </author>
+    <author>
+      <name>Krzysztof Czarnecki</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.03206v1</id>
+    <title>TC-LLaVA: Rethinking the Transfer from Image to Video Understanding with Temporal Considerations</title>
+    <updated>2024-09-05T02:54:17Z</updated>
+    <link href="https://arxiv.org/abs/2409.03206v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.03206v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Large Language Models (MLLMs) have significantly improved performance across various image-language applications. Recently, there has been a growing interest in adapting image pre-trained MLLMs for video-related tasks. However, most efforts concentrate on enhancing the vision encoder and projector components, while the core part, Large Language Models (LLMs), remains comparatively under-explored. In this paper, we propose two strategies to enhance the model's capability in video understanding tasks by improving inter-layer attention computation in LLMs. Specifically, the first approach focuses on the enhancement of Rotary Position Embedding (RoPE) with Temporal-Aware Dual RoPE, which introduces temporal position information to strengthen the MLLM's temporal modeling capabilities while preserving the relative position relationships of both visual and text tokens. The second approach involves enhancing the Attention Mask with the Frame-wise Block Causal Attention Mask, a simple yet effective method that broadens visual token interactions within and across video frames while maintaining the causal inference mechanism. Based on these proposed methods, we adapt LLaVA for video understanding tasks, naming it Temporal-Considered LLaVA (TC-LLaVA). Our TC-LLaVA achieves new state-of-the-art performance across various video understanding benchmarks with only supervised fine-tuning (SFT) on video-related datasets.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-05T02:54:17Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Mingze Gao</name>
+    </author>
+    <author>
+      <name>Jingyu Liu</name>
+    </author>
+    <author>
+      <name>Mingda Li</name>
+    </author>
+    <author>
+      <name>Jiangtao Xie</name>
+    </author>
+    <author>
+      <name>Qingbin Liu</name>
+    </author>
+    <author>
+      <name>Bo Zhao</name>
+    </author>
+    <author>
+      <name>Xi Chen</name>
+    </author>
+    <author>
+      <name>Hui Xiong</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.20273v1</id>
+    <title>Modality-Decoupled Online Recursive Editing</title>
+    <updated>2026-05-19T03:11:54Z</updated>
+    <link href="https://arxiv.org/abs/2605.20273v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.20273v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Online model editing for multimodal large language models (MLLMs) requires assimilating a stream of corrections under tight compute and memory budgets. Yet editors developed for text-only LLMs often degrade on MLLMs: visually dominant activations skew the statistics that shape updates, causing cross-modal conflict, while sequential writes become entangled in a shared edit space and amplify long-horizon interference, causing inter-edit interference. To address these, we propose M-ORE, a modality-decoupled online recursive editor for lifelong MLLM adaptation. M-ORE is derived from a unified proximal-projection formulation and admits a closed-form update with a Sherman-Morrison recursion, yielding constant per-edit overhead. It maintains module-wise locality statistics for the text stack and the visual projector to avoid visually dominated update shaping and performs continual updates in a fixed orthogonal low-rank edit subspace via a Sherman-Morrison recursion to mitigate long-horizon interference. Experiments on multiple MLLM backbones and online editing benchmarks show that our M-ORE method consistently improves reliability, generality, and locality over strong baselines, while achieving favorable quality-efficiency scaling. Our code is publicly available at https://github.com/lab-klc/M-ORE.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-19T03:11:54Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Siyuan Li</name>
+    </author>
+    <author>
+      <name>Youyuan Zhang</name>
+    </author>
+    <author>
+      <name>Fangming Liu</name>
+    </author>
+    <author>
+      <name>Jing Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.12112v1</id>
+    <title>Continual Learning with Elastic Regularization and Synthetic Replay for Federated MLLM Fine-Tuning</title>
+    <updated>2026-07-13T19:40:30Z</updated>
+    <link href="https://arxiv.org/abs/2607.12112v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.12112v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Federated fine-tuning of Multimodal Large Language Models (MLLMs) across distributed networks enables privacy-sensitive adaptation to evolving data streams, yet a fundamental obstacle prevents robust deployment in dynamic environments: catastrophic forgetting, wherein sequential task updates erase previously acquired knowledge across visual, linguistic, and cross-modal representations. Addressing this challenge is especially critical for autonomous networked AI operating in safety-sensitive domains, such as content moderation, where reliable retention of prior knowledge underpins system integrity. To overcome this, we propose Federated Continual Multimodal Learning (FedCMM), a framework that embeds continual-learning safeguards into the federated optimization loop at three complementary levels. At the parameter level, modality-aware elastic weight consolidation computes separate Fisher information matrices for the vision encoder, language backbone, and cross-modal projector, providing granular, asymmetry-aware protection against modality-specific forgetting. At the data level, each client trains a lightweight local generative replay module to synthesize raw-data-free embedding-level multimodal replay tuples without any raw data sharing. At the aggregation level, Task-similarity-aware gradient aggregation autonomously filters and reweights client updates by gradient cosine similarity, suppressing conflicting directions and stabilizing the global learning trajectory. Extensive experiments on two benchmarks demonstrate that FedCMM consistently outperforms recent baselines on accuracy and backward transfer, confirming that holistic, modality-aware optimization enables robust evolutive adaptation across heterogeneous networked AI deployments.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-13T19:40:30Z</published>
+    <arxiv:comment>submitted to IEEE JSTSP</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Jing Liu</name>
+    </author>
+    <author>
+      <name>Chenxuanyin Zou</name>
+    </author>
+    <author>
+      <name>Jiayang Ren</name>
+    </author>
+    <author>
+      <name>Gaoyun Fang</name>
+    </author>
+    <author>
+      <name>Chengfang Li</name>
+    </author>
+    <author>
+      <name>Yan Wang</name>
+    </author>
+    <author>
+      <name>Zhenchao Ma</name>
+    </author>
+    <author>
+      <name>Bo Hu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.31383v1</id>
+    <title>MS-Resampler: Multi-Scope Visual Resampling for Efficient Multimodal LLMs</title>
+    <updated>2026-06-30T09:11:50Z</updated>
+    <link href="https://arxiv.org/abs/2606.31383v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.31383v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal large language models (MLLMs) typically employ resampling-based projectors to transform dense visual features into a compact token sequence for language modeling. Most existing resamplers adopt a single, fixed aggregation scope via global cross-attention, which can blur fine-grained local evidence and limit the ability to capture both local details and global context within a fixed token budget. In this work, we propose MS-Resampler, a multi-scope visual resampling framework for MLLMs. MS-Resampler instantiates multiple scope-specific resamplers by injecting explicit spatial scope priors into the resampling attention, enabling each branch to aggregate visual information at a particular granularity from local to global. The outputs of these scope-specific resamplers are then adaptively fused to produce the final visual representations for language modeling. Extensive experiments on ten public multimodal benchmarks show that MS-Resampler consistently improves visual understanding and multimodal reasoning over conventional single-scope resamplers, while introducing only minimal computational overhead.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-30T09:11:50Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhongyang Li</name>
+    </author>
+    <author>
+      <name>Yaqian Li</name>
+    </author>
+    <author>
+      <name>Faming Fang</name>
+    </author>
+    <author>
+      <name>Rinyoichi Takezoe</name>
+    </author>
+    <author>
+      <name>Zi-Hao Bo</name>
+    </author>
+    <author>
+      <name>Cheng Qian</name>
+    </author>
+    <author>
+      <name>Mo Guang</name>
+    </author>
+    <author>
+      <name>Guixu Zhang</name>
+    </author>
+    <author>
+      <name>Kaiwen Long</name>
+    </author>
+  </entry>
+</feed>

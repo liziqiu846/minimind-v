@@ -1,0 +1,1571 @@
+[2408.06610] CROME: Cross-Modal Adapters for Efficient Multimodal LLM
+
+CROME: Cross-Modal Adapters
+
+for Efficient Multimodal LLM
+
+Sayna Ebrahimi, Sercan Ö. Arık, Tejas Nama, Tomas Pfister
+
+Google Cloud AI Research
+
+{saynae, soarik, tejasnama, tpfister}@google.com
+
+Abstract
+
+Multimodal Large Language Models (MLLMs) demonstrate remarkable image-language capabilities, but their widespread use faces challenges in cost-effective training and adaptation.
+Existing approaches often necessitate expensive language model retraining and limited adaptability.
+Additionally, the current focus on zero-shot performance improvements offers insufficient guidance for task-specific tuning.
+We propose CROME, an efficient vision-language instruction tuning framework. It features a novel gated cross-modal adapter that effectively combines visual and textual representations prior to input into a frozen LLM. This lightweight adapter, trained with minimal parameters, enables efficient cross-modal understanding. Notably, CROME demonstrates superior zero-shot performance on standard visual question answering and instruction-following benchmarks. Moreover, it yields fine-tuning with exceptional parameter efficiency, competing with task-specific specialist state-of-the-art methods. CROME demonstrates the potential of pre-LM alignment for building scalable, adaptable, and parameter-efficient multimodal models.
+
+Refer to caption
+
+Figure 1: CROME achieves state-of-the-art results on 6 MLLM benchmarks (top right) with its unique pre-LM cross-modal adapter (middle right). Bottom Right: Training data and parameter comparisons.
+Left: A qualitative example on the unusual "ironing man" image.
+
+Refer to caption
+
+Figure 2: Overview of our CROME model architecture with CROME-Adapter. CROME takes both image and text as input to generate output text autoregressively. The text input query is encoded by the Q-Former, which utilizes learnable queries to effectively represent instruction-aware visual features. These are then processed by a projection layer. The image input is encoded by a vision encoder and its patch embeddings are used in both the Q-Former’s cross-attention layers and a projection layer. Within the cross-modal adapter, the projected image and text features undergo individual down-projection using a gated linear unit ([see 3]). They are then up-projected through a weight sharing linear layer. Finally, the cross-modal adapter outputs for text and image are concatenated with the tokenized question and fed into the LLM to obtain the text output.
+
+1 Introduction
+
+Recent advancements in Multimodal Large Language Models (MLLMs) have yielded impressive breakthroughs across many scenarios, particularly in vision-language learning. Notably, OpenAI’s GPT-4v [1] and Google’s Gemini Pro Vision [2] demonstrate exceptional performance for tasks like image captioning and visual question answering. Such commercial models are typically available through prediction-only APIs that limit their wider adaptation and customization.
+On the other hand, there are notable open-sourced vision-language models, including LLaVA [3], InstructBLIP [4], Qwen-VL [5], and BLIVA [6]. These are often built using instruction tuning to improve multimodal capabilities of LLMs. Their success has been shown to depend on large-scale training data (can be hundreds of millions [7, 4, 8, 6] to over a billion [5]), often yielding high training costs[3, 9, 10, 5].
+Efficient methods for building large vision-language models from available vision-only or text-only pretrained models, as well as tuning them for target multimodal use cases, remain everlasting challenges.
+
+The extensive parameter counts involved in training image encoders and language models is one key challenge behind high computational costs.
+While retraining the LLMs with multimodal data helps align visual and textual tokens [3, 9, 10, 11], it can come with the risk of undermining the pretrained LLMs’ reasoning capabilities [12, 5].
+Furthermore, as the variety of LLMs continues to grow, a retraining approach hinders their potential for ‘plug-and-play integration’ within multimodal frameworks.
+We propose that pre-aligning visual and textual tokens before LLM ingestion offers a more flexible, efficient, and scalable strategy that remains under-explored.
+Our empirical findings demonstrate that the way image and text representations are adapted for LLM compatibility can significantly affect multimodal understanding and reasoning.
+Most models still rely on simplistic linear projections before token concatenation [3, 13].
+While BLIP-2 [7] and InstructBLIP [4] partially address the need for efficient cross-modal learning by introducing a Query Transformer (Q-Former) [4, 6], they still face challenges.
+Their pretraining remains computationally expensive (approximately 100 GPU hours on >100M image-text pairs), and fine-tuning for specific domains can be parameter-inefficient.
+
+For real-world applications, improving MLLMs to excel in specific tasks is essential, extending their value beyond zero-shot scenarios.
+While zero-shot performance results showcase their potential to handle diverse tasks without training data, there is also a significant opportunity to maximize their effectiveness for cases where data for specific downstream tasks are available.
+In such cases, the ability to implement efficient and adaptable tuning strategies becomes crucial.
+While some MLLMs, such as LLaVA, suggest parameter-efficient tuning techniques like LoRA [14] or selectively training the image-language projector layer, the optimal implementation and generalizability of these across diverse tasks and datasets warrant further exploration.
+Developing effective, cost-efficient and flexible tuning strategies would not only unlock the full potential of MLLMs for targeted applications but also ensure improved and robust performance beyond zero-shot benchmarks.
+
+In this paper, we propose CROME, a vision-language training framework featuring a vision encoder, query Transformer, and a novel gated cross-modal adapter depicted in 1. The proposed adapter unifies vision and language representations prior to LLM input, promoting superior cross-modal understanding while maintaining parameter efficiency by keeping both the LLM and vision encoder frozen. Our lightweight cross-modal fusion unit effectively learns cross-modal relations, making fine-tuning CROME remarkably straightforward. Our contributions can be summarized as:
+
+•
+
+We present CROME, a novel vision-language learning framework featuring a lightweight gated cross-modal adapter (CROME-Adapter) which is used for aligning visual and textual tokens before LLM input for multimodal learning. This avoids costly LLM training and maintains generalization on text understanding and reasoning tasks.
+
+•
+
+CROME introduces an effective, cost-efficient and flexible fine-tuning strategy to maximize MLLM effectiveness with availability of data from specific downstream tasks. The CROME-Adapter’s design enables both cross-modal understanding and parameter-efficient fine-tuning, as only the adapter is trained during adaptation.
+
+•
+
+We evaluate CROME’s performance on a diverse set of MLLM benchmarks for zero-shot and supervised fine-tuning scenarios and show that CROME outperforms the state-of-the-art open-source baselines on 6/8 benchmarks. Training only the cross-modal adapter (nearly 5M parameters), we demonstrate that CROME outperforms state-of-the-art methods specifically tailored for individual tasks.
+
+2 Related Work
+
+2.1 Multimodal large language models (MLLMs)
+
+Vision-language models (VLMs) are often based on aligning image and text features in a unified embedding space, as proposed by the notable works CLIP [15] and ALIGN [16], followed by the subsequent ones [17, 18, 19, 20]. This alignment is achieved through contrastive learning objectives applied to extensive image-text pair datasets. VLMs achieve strong zero-shot and few-shot performance, showcasing significant generalization abilities across a range of downstream tasks. Benefiting from existing LLMs and vision encoders of VLMs as the visual backbone (e.g. CLIP’s ViT encoder), recent MLLMs [3, 21, 2, 22, 4, 7, 10, 6, 4, 5, 13] achieve even greater visual perception, understanding, and reasoning abilities. Flamingo [11] establishes a connection between the vision encoder and LLMs using a Perceiver Resampler, showcasing remarkable few-shot performance. BLIP-2 [7] introduces a Q-former to align visual features with OPT [23] and FLAN-T5 [24]. MiniGPT-4 [25] connects a ViT and Q-former with Vicuna [26] as the LLM using a linear projector. Recently using large-scale paired instruction-image data has become a popular technique to adapt LLMs to answer questions regarding a given image [3, 21, 2, 22, 4, 7, 10]. These approaches often involve retraining the LLM and/or the vision encoder, which can be computationally demanding. As LLMs continue to evolve and gain capabilities, it becomes increasingly important for MLLMs to leverage the existing strengths of LLMs without requiring retraining. This can avoid the risk of catastrophic forgetting, where retraining could potentially degrade the LLM’s core natural language processing (NLP) abilities [12, 5]. Qwen-VL[5] avoids this by adding text-only data to their pretraining and instruction-tuning. Existing methods that avoid LLM or vision encoder retraining, such as InstructBLIP and BLIVA [4, 6], primarily focus on learning cross-modal interactions within a Q-Former module, which is then retrained during supervised fine-tuning. While CROME also utilizes a Q-Former, it introduces a novel, lightweight gated cross-modal adapter.
+This adapter differentiates our approach from BLIVA and InstructBLIP in two major ways:
+(i) it enhances cross-modal understanding, serving as an additional unit to further refine cross-modal interactions; and
+(ii) it acts as the sole trainable component during task-specific fine-tuning, maximizing tuning efficiency while preserving the existing instruction-aware capabilities in the Q-Former and the LLM.
+
+2.2 Parameter Efficient Tuning
+
+As LLMs grow in size, parameter-efficient tuning (PET) becomes essential for reducing memory and for cost-efficient training. PET involves selectively adding or adjusting a small number of parameters within a pretrained model for task-specific adaptation. Early PET methods focused on either language [27, 28, 29, 14] or vision data [30, 31, 32, 33]. Extending beyond unimodal learning, vision and language adapters were introduced for smaller models [34, 35, 36]. Approaches like MultiModal-GPT [37] and others [38, 9] utilized LoRA [14] within architectures like Flamingo [11]. Similarly, LLaMA-adapter employed prefix tuning [39] with image embeddings as prefix tokens. Recent methods like LaVIN [12] and PILL [40] focus on adapting LLMs for multimodal instructions. LaVIN employs the AdaMix adapter [41] in LLaMA and RepAdapter [33] in ViT in an end-to-end manner. However, these adapters are integrated within Transformer blocks, and their performance generalization to other language models remains unexplored.
+CROME distinguishes itself with a modular cross-modal adapter that works with encoder-decoder and decoder-only LLMs. During large-scale instruction tuning, both the adapter and Q-Former are trained. Crucially, for supervised fine-tuning on smaller datasets, the adapter becomes the sole trainable component. This approach yields more flexibility and efficiency given the wide range of adaptation scenarios, while protecting the LLMs’ existing capabilities.
+
+3 CROME: a Cross-modal adapter based MLLM
+
+CROME is a multimodal LLM framework which receives image and text as the multimodal input and generates text in an autoregressive manner.
+We first introduce CROME’s architecture, focusing on the proposed adapter modules for superior MLLM results. Then, we explain the applied multimodal training methods: pretraining, instruction tuning, and the optional task-specific tuning.
+
+3.1 Model architecture
+
+CROME is composed of a pretrained frozen LLM, frozen vision encoder, and a query Transformer components, as shown in  2.
+The projected image patch and query embeddings are passed to a cross modal adapter before getting concatenated with text embeddings and fed into the LLM.
+Note that although the high level architecture resembles the InstructBLIP family of MLLMs, this important aspect of how visual-text are processed before inputting them into LLMs differentiates CROME.
+Below, we go through the details of each component:
+
+Vision encoder. We utilize a vision encoder to extract image features, which are then processed by a linear projection layer and the Q-Former. During pretraining and instruction tuning, we keep the vision encoder itself frozen and maintain its pretrained visual representations, in order to obtain low-cost and parameter-efficient training. Only the associated projection layer is trained during these stages. For details on image preprocessing, please refer to the Appendix.
+
+Large language model. To ensure low-cost and parameter-efficient training, as well as improved generalization with limited tuning data, we propose keeping the LLM entirely frozen during all stages of training of the CROME. This enables utilizing both decoder-only and encoder-decoder type model architectures as the LLMs.
+
+Query Transformer (Q-Former). We employ a Q-Former architecture, in which queries interact with each other through self-attention and with frozen image features through cross-attention, which is inserted every other Transformer block. We initialize it with InstructBLIP’s model Q-Former and all its 188M parameters are trained during the instruction-tuning phase, which only has nearly 20% and 2.6% of the vision encoder and the LLM parameters, respectively, which ensures the parameter efficiency during large-scale instruction tuning.
+
+CROME adapter Inspired by the concept of adapter networks [42], which introduce parameter efficiency, we propose a lightweight cross-modal module within CROME. Crucially, unlike typical adapter placement after feed-forward and self-attention layers in Transformers, this module facilitates the fusion of textual and visual representations before they enter into the LLM. This pre-LLM fusion offers a potential advantage for aligning different modalities for optimal understanding within the LLM. During fine-tuning, the cross-modal adapters are the only trainable components, enabling remarkably-efficient adaptation of CROME allowing it to adapt to new tasks without extensive retraining of the core LLM.
+
+As shown in 2, we use a conventional bottleneck structure [42] with down-projection and up-projection units and skip connections. This design allows for efficient processing of high-dimensional input features. We use a modality-specific down-sampling unit for vision and text branches, where in each of them an input d𝑑d-dimensional feature vector is projected to a smaller dimension, m𝑚m. Inspired by the success of gated linear units in feedforward layers from Transformers [43, 44], in the down-projection unit we use the component-wise product of two linear transformations named as Wd∈ℝd×msubscriptW𝑑superscriptℝ𝑑𝑚\textbf{W}_{d}\in\mathbb{R}^{d\times m} and Wg∈ℝd×msubscriptW𝑔superscriptℝ𝑑𝑚\textbf{W}_{g}\in\mathbb{R}^{d\times m} where the input one of which is sigmoid-activated [45, 46]. This gating mechanism helps the adapter control the flow of information, potentially emphasizing the most useful and relevant multimodal relationships.
+
+For each down-projection unit, given an input text or image feature embedding of size x∈ℝd𝑥superscriptℝ𝑑x\in\mathbb{R}^{d}, the output is mapped as:
+
+z​(x)=SiLU​(x​Wd)⊗x​Wg,z𝑥tensor-productSiLU𝑥subscriptW𝑑𝑥subscriptW𝑔\textbf{z}(x)=\text{SiLU}(x\textbf{W}_{d})\otimes x\textbf{W}_{g},
+
+(1)
+
+where SiLU is Sigmoid Linear Unit function [45, 46]. On the other hand, the up-projection unit uses a weight-sharing mechanism between the two modalities where the m𝑚m-dimensional vector z∈ℝmzsuperscriptℝ𝑚\textbf{z}\in\mathbb{R}^{m} is projected back to d𝑑d input dimensions via Wu∈ℝm×dsubscriptW𝑢superscriptℝ𝑚𝑑\textbf{W}_{u}\in\mathbb{R}^{m\times d}, in order to better encourage learning of cross-modal relations. Overall, the output of each branch of the cross-modal adapter can be formulated as:
+
+CROME-Adapter​(x,Wd,Wg,Wu)=x+zWuCROME-Adapter𝑥subscriptW𝑑subscriptW𝑔subscriptW𝑢𝑥subscriptzW𝑢\text{CROME-Adapter}(x,\textbf{W}_{d},\textbf{W}_{g},\textbf{W}_{u})=x+\textbf{z}\textbf{W}_{u}
+
+(2)
+
+Finally, the inputs to the LLM are formed by concatenating the tokenized text, the output of the text branch within the CROME-Adapter, and the output of the vision branch of the CROME-Adapter (see 2).
+
+Refer to caption
+
+Figure 3: Overview of CROME training stages. Blue indicates frozen components, and red indicates trainable components. (a) Pretraining: CROME-Adapter and projection layers are trained on image-caption pairs. (b) Instruction-tuning: Q-Former, CROME-Adapter, and projection layers are trained on diverse image-instruction datasets. (c) Task-specific fine-tuning: CROME-Adapter facilitates efficient training on task-specific data.
+
+3.2 Training CROME
+
+In this section, we describe different training processes for CROME: (a) pretraining with image-caption pairs followed by (b) instruction tuning with image-instructions on a variety of tasks, and (c) optional task-specific efficient fine-tuning which is used if data is available for a specific target task to optimize CROME’s task-specific performance. Throughout these stages, we use next token prediction as the training objective where the LLM predicts the next word conditioned on previous multimodal visual and text tokens. This encourages the model to accurately generate subsequent tokens based on the context of preceding tokens. Figure 3 provides a visual representation of the training stages and trainable model components, described in detail below.
+
+Pretraining. Our approach begins with a pretraining phase designed to align modalities within the projection layers. As shown in 3(a), during this stage, we train the image and text projection layers alongside the cross-modal adapter. The remaining model layers are kept frozen.
+
+Instruction tuning. At this stage, the model is refined to follow instructions accurately. We utilize a diverse set of image-instruction pairs to train the model to answer specific queries about images, extending its abilities beyond the image captioning learned during pretraining. During instruction tuning, we train the Q-Former, projection layers, and CROME-adapter parameters. This enables the model to efficiently learn instruction-aware queries, facilitated by the cross-modal interaction between image embeddings and queries within the Q-Former (see  3(b)). The result of this instruction tuning is a model capable of strong zero-shot performance on visual question-answering benchmarks.
+
+Optional task-specific fine-tuning. When additional task-specific data (often smaller scale than the previous stage) is available, this step further optimizes CROME’s performance at the target task. The CROME-Adapter allows for efficient fine-tuning by limiting the number of trainable parameters to approximately 5M (see 3
+(c)). Besides low cost task-specific tuning, such parameter efficiency yields constitutes an effective mechanism to prevent overfitting, a commonly-observed challenge with small amount of task-specific data.
+
+4 Experiments
+
+In this section, we first discuss the datasets used to train CROME, followed by implementation details including model architecture and training parameters. We note that our model and data will be publicly available.
+Finally, we outline the benchmarks used to evaluate CROME’s performance.
+
+4.1 Datasets for Training CROME
+
+As for the pretraining (PT) dataset, we use the LLaVA Pretrain LCS-558K [3] which is a filtered subset of LAION/CC/SBU dataset as image-caption pairs consistently across all experiments.
+As for the instruction tuning (IT) dataset, we consider three different options for different experiments to highlight different outcomes:
+
+•
+
+IT Dataset 1 (665K samples), used for evaluating pre-LM modality alignment: To demonstrate the effectiveness of CROME’s pre-LM input alignment units compared to LLM retraining used in models such as LLaVA, we use the same 665K instruction-image pairs as LLaVA1.5 [3] 111LLaVA1.6 has not yet made their data publicly available.
+
+•
+
+IT Dataset 2 (1.2M samples), used for evaluating the effect of CROME-Adapter: To facilitate comparison with InstructBLIP and BLIVA models and showcase the CROME-Adapter’s effectiveness, we use a similar dataset with 1.2M samples. Where specific subsets are unavailable, we compensate by sampling additional examples from MSCOCO-based datasets with multiple questions and answers per image, ensuring a consistent 1.2M sample size.
+
+•
+
+IT Dataset 3 (8M samples), used for large-scale Instruction-tuning: We increase Dataset 2 to 8M image-instruction pairs, incorporating data from LVIS-Instruct4v [47], LAMM [48], Flickr30K [49], and ShareGPT4V [50]. This larger and more diverse dataset allows assessing CROME’s generalization to broader visual concepts and instructions, and further highlight its efficiency in adapting to large-scale data. Our main results are reported using the model trained on this dataset. Details on how we mixed these datasets are given in the Appendix.
+
+Dataset balancing. We follow InstructBLIP balancing strategy to sample datasets with ratios proportional to the square root of their sizes (the numbers of training samples). Given D𝐷D datasets with sizes {N1,N2,⋯,ND}subscript𝑁1subscript𝑁2⋯subscript𝑁𝐷\{N_{1},N_{2},\cdots,N_{D}\}, we set the probability of a data sample being selected from a dataset d𝑑d during training is pd=Nd∑i=1DNisubscript𝑝𝑑subscript𝑁𝑑superscriptsubscript𝑖1𝐷subscript𝑁𝑖p_{d}=\frac{\sqrt{N_{d}}}{\sum_{i=1}^{D}\sqrt{N_{i}}}.
+
+4.2 Implementation Details
+
+4.2.1 Model architectures
+
+We adopt the ViT-G/14 architecture from EVA-CLIP [51] as the vision encoder, that processes raw images of size 224x224. We extract features from its second to the last layer. As the LLM, we consider two distinct architectures: Vicuna7B/13B v1.5 (decoder-only), instruction-tuned from LLaMA2 [52]; and Flan-T5 XXL [24] (encoder-decoder), instruction-tuned from T5 [53]. Our Q-Former follows a design similar to BLIP2 and is initialized from the InstructBLIP model. It uses a set of 32 learnable query embeddings each with a dimension of 768.
+
+4.2.2 Training details
+
+We pretrain the projection layer for 5 epochs with a batch size of 32. During the instruction tuning stage, we employ a batch size of 16 with a maximum of 2M iterations, which roughly iterates over 4 epochs of the training data. For both training stages, we use the AdamW[54] optimizer, with β1=0.9subscript𝛽10.9\beta_{1}=0.9, β2=0.999subscript𝛽20.999\beta_{2}=0.999, and a weight decay of 0.05. Additionally, we apply a linear warmup of the learning rate during the initial 1K steps, increasing from 10−8superscript10810^{-8} to 10−5superscript10510^{-5}, followed by a cosine decay with a minimum learning rate of 0.
+
+4.2.3 MLLM zero-shot benchmarks
+
+We compare CROME on a list of benchmarks for open-source MLLMs and the ones that are accessibly only via prediction-only APIs. We report results in MMMU [55], MME Perception (MMEPsuperscriptMME𝑃\text{MME}^{P})[56], MME Cognition (MMECsuperscriptMME𝐶\text{MME}^{C})[56], MMBench (MMB)[57], MM-Vet [58], HallusionBench (HallB) [59], LLaVA-Bench In-the-Wild (LLaVAWsuperscriptLLaVA𝑊\text{LLaVA}^{W}) [3], and SEED-Bench Image Part (SEEDIsuperscriptSEED𝐼\text{SEED}^{I} ) [60]. MMMU benchmark is designed to evaluate multimodal models on multi-discipline tasks demanding college-level subject knowledge and deliberate reasoning. MMEPsuperscriptMME𝑃\text{MME}^{P} and MMECsuperscriptMME𝐶\text{MME}^{C} measure both perception and cognition abilities on a total of 14 subtasks. MMBench, contains approximately 3000 single choice questions covering 20 different ability dimensions, such as object localization and social reasoning.
+MM-Vet defines 6 core capabilities and examines the 16 integrations of interest derived from the capability combination. As the evaluation metrics, an LLM-based evaluator is used as ‘judge’ for open-ended outputs. HallusionBench comprises 346 images paired with 1129 questions, all crafted by human experts to evaluate image-context reasoning with respect to visual hallucination. LLaVA-Bench In-the-Wild is a small dataset with a set of 24 images with 60 questions in total, including indoor/outdoor scenes, memes, paintings, sketches, etc. to evaluate the MLLM capability at challenging tasks and generalizability to novel domains. Lastly, SEED-Bench is a benchmark to text instruction following capabilities, consisting of 19K multiple choice questions with accurate human annotations which can objectively measure MLLMs performance without the need for human or LLM judge intervention.
+
+4.2.4 Evaluation metrics
+
+For consistency, we report official metrics computed using the standard implementations associated with each benchmark.
+
+5 Results and Discussions
+
+5.1 Zero-shot Performance on Vision-Language Tasks
+
+Table 1 shows comparisons on zero-shot performance on the 8 commonly-used MLLM benchmarks across various models, including the open-sourced ones and those who are accessible only via prediction APIs. Among the open-sourced ones, CROME outperforms all baselines by a large margin on MMMU, MMEPsuperscriptMME𝑃\text{MME}^{P}, MMECsuperscriptMME𝐶\text{MME}^{C}, MMBench, MM-Vet, and SEEDIsuperscriptSEED𝐼\text{SEED}^{I}.
+Considering the ones accessible only via prediction APIs, CROME-Vicuna13B can outperform GPT4-V and Gemini Pro Vision on SEEDIsuperscriptSEED𝐼\text{SEED}^{I} and Gemini Pro Vision on LLaVAWsuperscriptLLaVA𝑊\text{LLaVA}^{W} and MMEPsuperscriptMME𝑃\text{MME}^{P}.
+
+Table 1: Zero-shot performance of different MLLMs on multimodal benchmarks. Input image resolutions, pretraining (PT) and instruction tuning (IT) dataset sizes are also shown. The best results among open-source modals are bold and the second best results are underlined.
+
+Method
+LLM
+Res.
+PT
+IT
+MMMU
+MMEPsuperscriptMME𝑃\text{MME}^{P}
+MMECsuperscriptMME𝐶\text{MME}^{C}
+MMB
+MM-Vet
+HaLLB
+LLaVAW
+SEEDIsuperscriptSEED𝐼\text{SEED}^{I}
+
+GPT4-V
+Unk
+Unk
+Unk
+Unk
+56.8
+1771.5
+77.0
+67.7
+65.8
+93.1
+69.1
+
+Gemini Pro Vision
+Unk
+Unk
+Unk
+Unk
+47.9
+1626.9
+531.1
+73.6
+64.3
+63.9
+79.9
+70.7
+
+OwenVL-Plus
+Unk
+Unk
+Unk
+Unk
+46.5
+2229.8
+67.0
+55.7
+56.4
+73.3
+72.7
+
+BLIP-2
+Vicuna-13B
+224
+129M
+–
+35.7
+1293.8
+290.0
+–
+22.4
+–
+38.1
+46.4
+
+BLIVA
+Vicuna-7B
+224
+558K
+1.2M
+27.3
+813.4
+224.6
+60.1
+30.4
+33.9
+80.1
+59.4
+
+BLIVA
+Flan-T5 XXL
+224
+558K
+1.2M
+–
+1337.7
+331.43
+62.2
+30.3
+–
+–
+–
+
+InstructBLIP
+Vicuna-7B
+224
+129M
+1.2M
+30.6
+–
+–
+33.9
+26.2
+53.6
+60.9
+53.4
+
+InstructBLIP
+Vicuna-13B
+224
+129M
+1.2M
+32.1
+–
+–
+–
+25.6
+–
+58.2
+–
+
+IDEFICS-80B
+LLaMA-65B
+224
+353M
+1M
+24.0
+–
+–
+54.5
+39.7
+46.1
+–
+–
+
+Qwen-VL-Chat
+Qwen-7B
+448
+1.4B
+50M
+35.9
+1487.6
+360.7
+61.8
+47.3
+56.4
+–
+65.4
+
+LLaVA-1.5
+Vicuna-7B
+336
+558K
+665K
+–
+–
+–
+64.3
+30.5
+–
+63.4
+58.6
+
+LLaVA-1.5
+Vicuna-13B
+336
+558K
+665K
+36.4
+1531
+295
+67.8
+35.4
+46.7
+70.7
+61.6
+
+LLaVA-1.6
+Vicuna-7B
+336
+558K
+760K
+35.8
+1519
+332
+67.4
+43.9
+–
+81.6
+70.2
+
+LLaVA-1.6
+Vicuna-13B
+336
+558K
+760K
+36.2
+1575
+326
+70.0
+48.4
+–
+87.3
+71.9
+
+CROME (ours)
+Vicuna-7B
+224
+558K
+8M
+38.8
+1590.6
+358.4
+67.1
+47.3
+48.3
+79.2
+68.2
+
+CROME (ours)
+Vicuna-13B
+224
+558K
+8M
+41.2
+1643.2
+369.5
+71.2
+55.1
+49.2
+86.8
+72.5
+
+CROME (ours)
+Flan-T5 XXL
+224
+558K
+8M
+38.1
+1521.3
+361.4
+65.5
+45.2
+51.3
+76.4
+73.5
+
+Table 2 compares CROME trained on different dataset sizes, each benchmarked against a corresponding baseline with similar LLM architecture and size. Comparing the models with Flan-T5 XXL backbone, CROME trained with 1.2M IT samples, shows superior performance on MMEPsuperscriptMME𝑃\text{MME}^{P}, MMBench, MM-Vet, LLaVAW and SEEDIsuperscriptSEED𝐼\text{SEED}^{I} benchmarks. When trained with 8M IT samples, CROME consistently outperforms BLIVA and InstructBLIP on all the benchmarks. This highlights that CROME can effectively take advantage of more instruction tuning samples.
+
+Using a similar instruction-tuning dataset as BLIVA and InstructBLIP, CROME achieves higher performance on 6 out of 8 benchmarks. On HallB, InstructBLIP’s larger pretraining dataset of 129M samples, contributes to its advantage, but CROME remains competitive. On LLaVAW, LLaVA and BLIVA outperform CROME with margins of 2.4 and 0.9 points respectively, while other models lag by at least 15 points. On SEEDIsuperscriptSEED𝐼\text{SEED}^{I}, CROME surpasses BLIVA and InstructBLIP but falls short of LLaVA, likely due to LLaVA’s higher-resolution image encoder which benefits this visually-rich benchmark.
+
+Intriguingly, when comparing CROME-Vicuna-7B across dataset sizes (1.2M and 8M) with LLaVA-7B-1.6, we see that larger training data (8M) enables CROME to outperform a model with more parameters. Further, increasing CROME’s LLM backbone (Vicuna 13B) widens the performance gap between CROME and LLaVA, emphasizing the effectiveness of our modality alignment module in leveraging the LLM’s existing capabilities.
+
+Table 2: Comparison between CROME models trained on different pretraining (PT) and instruction tuning (IT) dataset sizes and corresponding baselines with similar LLM backbones. The total number of trainable parameters and the input image resolutions are also shown. The best results in each LLM family of models are bold.
+
+Method
+LLM
+
+#params
+
+Res.
+PT
+IT
+MMMU
+MMEPsuperscriptMME𝑃\text{MME}^{P}
+MMECsuperscriptMME𝐶\text{MME}^{C}
+MMB
+MM-Vet
+HaLLB
+LLaVAW
+SEEDIsuperscriptSEED𝐼\text{SEED}^{I}
+
+InstructBLIP
+Flan-T5 XXL
+188M
+224
+129M
+1.2M
+35.7
+1212.8
+291.8
+–
+25.6
+–
+58.2
+52.7
+
+BLIVA
+Flan-T5 XXL
+194.61M
+224
+558K
+1.2M
+–
+1337.7
+331.4
+62.2
+30.3
+–
+–
+–
+
+CROME(ours)
+Flan-T5 XXL
+199.85M
+224
+558K
+1.2M
+33.1
+1380.6
+329.2
+63.1
+34.7
+40.1
+70.2
+62.7
+
+CROME (ours)
+Flan-T5 XXL
+199.85M
+224
+558K
+8M
+38.1
+1521.3
+361.4
+65.5
+45.2
+51.3
+76.4
+73.5
+
+InstructBLIP
+Vicuna-7B
+188M
+224
+129M
+1.2M
+30.6
+–
+–
+33.9
+26.2
+53.6
+60.9
+53.4
+
+BLIVA
+Vicuna-7B
+194.61M
+224
+558K
+1.2M
+27.3
+813.4
+224.6
+60.1
+30.4
+33.9
+80.1
+59.4
+
+LLaVA-1.6
+Vicuna-7B
+7B
+336
+558K
+760K
+35.8
+1519
+332
+67.4
+43.9
+–
+81.6
+70.2
+
+CROME(ours)
+Vicuna-7B
+199.85M
+224.
+558K
+1.2M
+32.4
+1170.4
+246.1
+62.8
+32.6
+42.3
+65.2
+60.3
+
+CROME (ours)
+Vicuna-7B
+199.85M
+224
+558K
+8M
+38.8
+1590.6
+358.4
+67.1
+47.3
+48.3
+79.2
+68.2
+
+LLaVA-1.6
+Vicuna-13B
+13B
+336
+558K
+760K
+36.2
+1575
+326
+70.0
+48.4
+–
+87.3
+71.9
+
+CROME (ours)
+Vicuna-13B
+203.39M
+224
+558K
+8M
+41.2
+1643.2
+369.5
+71.2
+55.1
+49.2
+86.8
+72.5
+
+Table 3: ScienceQA-Image results: zero-shot vs. fine-tuned performance.
+
+Methods
+
+Trainable
+
+params
+
+Accuracy (%)
+
+Zero-Shot Performance
+
+LLaVA 1.6-7B
+7B
+70.1
+
+InstructBLIP-Vicuna-7B
+188M
+60.5
+
+BLIVA-Vicuna-7B
+194.61M
+57.3
+
+CROME-Vicuna-7B (ours)
+199.85M
+61.2
+
+Supervised Fine-tuning
+
+Mutimodal-T-SciQLarge
+738M
+96.2
+
+MC-CoT-F-Large
+738M
+94.9
+
+LLaMA-Adapter
+1.8M
+85.2
+
+LaVIN-7B
+3.8M
+89.4
+
+LaVIN-13B
+5.4M
+90.8
+
+PILL-7B
+45 M
+91.2
+
+CROME-Vicuna-7B (ours)
+5.24M
+93.2
+
+Table 4: AI2D results: zero-shot vs. fine-tuned performance. Note that Qwen-VL-Chat includes AI2D in pretraining, while BLIVA, InstructBLIP and CROME do not.
+
+Methods
+
+Trainable
+
+params
+
+Accuracy (%)
+
+Zero-Shot Performance
+
+Qwen-VL-Chat∗
+   9.6B
+57.7
+
+InstructBLIP-Vicuna-7B
+   188M
+36.1
+
+BLIVA-Vicuna-7B
+   194.61M
+38.2
+
+CROME-Vicuna-7B (ours)
+   199.85M
+39.1
+
+Supervised Fine-tuning
+
+InstructBLIP-Vicuna-7B
+   188M
+65.0
+
+BLIVA-Vicuna-7B
+   194.61M
+69.2
+
+CROME-Vicuna-7B (ours)
+   5.24M
+75.3
+
+5.2 Task-Specific Fine-tuning
+
+We evaluate CROME’s task-specific fine-tuning capabilities considering small-scale labeled datasets for two tasks:
+(i) ScienceQA-Image (SQAIsuperscriptSQA𝐼\text{SQA}^{I}) [61], containing elementary and high school science curricula and
+(ii) AI2D [62], which covers diagrams from grade school science.
+These datasets are specifically chosen to assess CROME’s adaptation to unseen tasks, as neither they nor similar scientific or math VQA content are included in our training data.
+
+We initialize CROME from the instruction-tuned model (for which we report the zero-shot performance), and selectively train only the CROME-Adapter parameters during fine-tuning. Training details are provided in the Appendix.
+As they are both multiple-choice outputting tasks, we use accuracy as the evaluation metric.
+
+As shown in 5.1, CROME achieves an impressive 93.2% accuracy on SQAIsuperscriptSQA𝐼\text{SQA}^{I}, significantly improving its zero-shot performance by 32%. Despite lacking the data augmentation via prompting in chain-of-thought (CoT) baselines which have multiple stages of training to create rationals as additional context  [63, 64] and training with more parameters, CROME demonstrates competitive performance. Moreover, CROME outperforms other adapter-based approaches [12, 40] in accuracy while utilizing much lower amount of trainable parameters. Notably, the proposed adapter’s pre-LLM placement distinguishes it from LaVIN and PILL, which incorporate adapters within the Transformer layers of LLaMA-based models.
+
+Table 5.1 presents zero-shot and fine-tuned performance on the AI2D dataset for CROME, InstructBLIP, and BLIVA. We include Qwen-VL-Chat’s reported results as a baseline, noting their use of AI2D in pretraining, unlike the other models. At zero-shot, CROME surpasses BLIVA by 0.9% and InstructBLIP by 3%. However, without prior exposure to science-related VQA, none of the models achieve high accuracy. Despite extensive training (9.6B parameter updates) and including AI2D in its pretraining, Qwen-VL-Chat’s performance remains at 57.7% while fine-tuning CROME with its CROME-Adapter significantly boosts accuracy on this dataset, achieving a 36.2% improvement over its zero-shot performance. Compared to InstructBLIP and BLIVA, which retrain their Q-Former and projection layers during fine-tuning, CROME achieves 10.3% and 6.1% higher accuracy, respectively, while training only 2.5% of their parameters. This demonstrates the remarkable efficiency of our adapter-based fine-tuning approach.
+
+5.3 Ablation Studies
+
+To gain a deeper understanding of CROME, we conduct ablation studies focusing on its key components. We use the closely related BLIVA model as our baseline for comparison. For evaluation, we employ a zero-shot MLLM benchmark (MM-Vet) and the SQAIsuperscriptSQA𝐼\text{SQA}^{I} dataset which highlights our efficient fine-tuning strategy. Table 5 summarizes two types of ablations performed at model, CROME-Adapter in particular, and data levels.
+
+5.3.1 Architecture:
+
+We first ablate the CROME-Adapter to highlight its effect in our model. This ablation essentially reduces the architecture to BLIVA [6] for which the results are shown in the first row of 5. On MM-Vet, BLIVA achieves the score of 30.4 while adding the CROME-Adapter with its gating mechanism obtains 32.6 score (ablation #3) using similar pretraining and instruction-tuning data, LLM, and vision encoder. On SQAIsuperscriptSQA𝐼\text{SQA}^{I}, CROME achieves 61.2% zero-shot accuracy while BLIVA reaches 57.3% under similar conditions.
+
+Ablation #2 shows the effect of the gating mechanism in CROME-Adapter. For this ablation, we remove the gating layer of the adapter in the down projection unit which results in simplifying 1 to z​(x)=SiLU​(x​Wd)z𝑥SiLU𝑥subscriptW𝑑\textbf{z}(x)=\text{SiLU}(x\textbf{W}_{d}). We repeat pretraining and instruction-tuning CROME with Dataset #2. Notably, the performance on MM-Vet and SQAIsuperscriptSQA𝐼\text{SQA}^{I} downgrade by 1.7 and 3, respectively, which shows the effect of the component-wise product of the two linear layers in the down-project unit.
+
+Table 5: Ablation studies for CROME framework using CROME-Vicuna-7B on MM-Vet and ScienceQA-Image datasets
+
+#
+BLIVA [6]
+
+CROME-
+
+Adapter
+
+Gating
+
+Mechanism
+
+Pretraining
+
+Additional
+
+IT Data
+
+Task-specific
+
+IT Strategy
+
+MM-Vet
+SQAIsuperscriptSQA𝐼\text{SQA}^{I}
+
+1
+✓
+
+✓
+
+30.4 (+0)
+57.3% (+0)
+
+2
+✓
+✓
+
+✓
+
+28.7 (-1.7)
+54.3% (-3.0)
+
+3
+✓
+✓
+✓
+✓
+
+32.6 (+2.2)
+58.2% (+0.9)
+
+4
+✓
+✓
+✓
+
+31.8 (+1.4)
+57.6% (+0.3)
+
+5
+✓
+✓
+✓
+✓
+✓
+
+47.3 (+16.9)
+61.2% (+3.9)
+
+6
+✓
+
+✓
+
+✓
+          –
+84.4% (+27.1)
+
+7
+✓
+✓
+✓
+✓
+✓
+✓
+          –
+93.2% (+35.9)
+
+5.3.2 Data and training:
+
+Table 5, row #4, shows the effect of pretraining data in CROME which is not significant compared to other components (1.3 score difference on MM-Vet and 0.3% improvement on SQAIsuperscriptSQA𝐼\text{SQA}^{I}).
+
+Table 5, row #5, demonstrates the significant impact of expanding the instruction-tuning dataset from 1.2M to 8M samples. This leads to a 16.9 point improvement in CROME’s zero-shot performance on MM-Vet and a 3.9% increase on SQAIsuperscriptSQA𝐼\text{SQA}^{I}.
+
+Ablation #6 isolates the effects of the CROME-Adapter and additional instruction-tuning data, yielding 84.4% accuracy, 8.8% lower compared to the full CROME approach (row #7). This highlights the importance of the cross-modal gated adapter, supervised fine-tuning with it, and the better pretrained checkpoint trained on larger-scale instruction-tuning data.
+
+5.4 Qualitative Results
+
+In addition to 1 we include additional case examples from a variety of tasks performed by CROME and other models in the Appendix.
+
+6 Limitations
+
+CROME is designed to follow instructions and answer questions about images, outputting textual responses. Similar to other autoregressive LLMs, there is a potential for occasional inaccuracies or inconsistencies in its reasoning. While we prioritize the use of publicly available, curated data during training, it is important to acknowledge the potential for biases within these datasets that might influence CROME’s responses. Aside from these considerations, we are optimistic that CROME will contribute to streamlined training and adaptations of MLLMs. Addressing potential challenges related to hallucination mitigation and improved grounding in MLLMs remain important future work directions.
+
+7 Conclusion
+
+In this paper, we introduce CROME, a novel vision-language instruction tuning framework designed for parameter-efficient multimodal learning and task-specific adaptation.
+CROME features a lightweight, gated cross-modal adapter that fuses visual and textual representations before they are input into the LLM, which is proposed to kept frozen.
+This design promotes efficient cross-modal understanding while minimizing computational costs by avoiding extensive LLM retraining. Additionally, we highlight the potential for parameter-efficient fine-tuning of CROME: by training only the adapter’s small number of parameters (O(M)-O(10M)), we demonstrate outperforming the state-of-the-art approaches on two downstream tasks.
+Furthermore, CROME achieves superior zero-shot performance on commonly-used MLLM benchmarks.
+We leave extending CROME to incorporate other modalities (e.g. audio and video), investigating broader task-specific adaptation, and further optimizing CROME’s cross-modal adapter architecture to future work.
+
+References
+
+[1]
+
+Gpt-4v(ision) system card.
+
+2023.
+
+[2]
+
+Gemini Team, Rohan Anil, Sebastian Borgeaud, Yonghui Wu, Jean-Baptiste Alayrac,
+Jiahui Yu, Radu Soricut, Johan Schalkwyk, Andrew M Dai, Anja Hauth, et al.
+
+Gemini: a family of highly capable multimodal models.
+
+arXiv preprint arXiv:2312.11805, 2023.
+
+[3]
+
+Haotian Liu, Chunyuan Li, Qingyang Wu, and Yong Jae Lee.
+
+Visual instruction tuning.
+
+In NeurIPS, 2023.
+
+[4]
+
+Wenliang Dai, Junnan Li, Dongxu Li, Anthony Tiong, Junqi Zhao, Weisheng Wang,
+Boyang Li, Pascale Fung, and Steven Hoi.
+
+InstructBLIP: Towards general-purpose vision-language models with
+instruction tuning.
+
+In Thirty-seventh Conference on Neural Information Processing
+Systems, 2023.
+
+[5]
+
+Jinze Bai, Shuai Bai, Shusheng Yang, Shijie Wang, Sinan Tan, Peng Wang, Junyang
+Lin, Chang Zhou, and Jingren Zhou.
+
+Qwen-vl: A versatile vision-language model for understanding,
+localization, text reading, and beyond.
+
+2023.
+
+[6]
+
+Wenbo Hu, Yifan Xu, Yi Li, Weiyue Li, Zeyuan Chen, and Zhuowen Tu.
+
+Bliva: A simple multimodal llm for better handling of text-rich
+visual questions.
+
+In AAAI, 2024.
+
+[7]
+
+Junnan Li, Dongxu Li, Silvio Savarese, and Steven Hoi.
+
+Blip-2: Bootstrapping language-image pre-training with frozen image
+encoders and large language models.
+
+arXiv preprint arXiv:2301.12597, 2023.
+
+[8]
+
+Hugo Laurençon, Lucile Saulnier, Léo Tronchon, Stas Bekman, Amanpreet
+Singh, Anton Lozhkov, Thomas Wang, Siddharth Karamcheti, Alexander Rush,
+Douwe Kiela, et al.
+
+Obelics: An open web-scale filtered dataset of interleaved image-text
+documents.
+
+Advances in Neural Information Processing Systems, 36, 2024.
+
+[9]
+
+Qinghao Ye, Haiyang Xu, Guohai Xu, Jiabo Ye, Ming Yan, Yiyang Zhou, Junyang
+Wang, Anwen Hu, Pengcheng Shi, Yaya Shi, et al.
+
+mplug-owl: Modularization empowers large language models with
+multimodality.
+
+arXiv preprint arXiv:2304.14178, 2023.
+
+[10]
+
+Shaohan Huang, Li Dong, Wenhui Wang, Yaru Hao, Saksham Singhal, Shuming Ma,
+Tengchao Lv, Lei Cui, Owais Khan Mohammed, Qiang Liu, et al.
+
+Language is not all you need: Aligning perception with language
+models.
+
+arXiv preprint arXiv:2302.14045, 2023.
+
+[11]
+
+Jean-Baptiste Alayrac, Jeff Donahue, Pauline Luc, Antoine Miech, Iain Barr,
+Yana Hasson, Karel Lenc, Arthur Mensch, Katherine Millican, Malcolm Reynolds,
+et al.
+
+Flamingo: a visual language model for few-shot learning.
+
+Advances in Neural Information Processing Systems,
+35:23716–23736, 2022.
+
+[12]
+
+Gen Luo, Yiyi Zhou, Tianhe Ren, Shengxin Chen, Xiaoshuai Sun, and Rongrong Ji.
+
+Cheap and quick: Efficient vision-language instruction tuning for
+large language models.
+
+In Thirty-seventh Conference on Neural Information Processing
+Systems, 2023.
+
+[13]
+
+Keqin Chen, Zhao Zhang, Weili Zeng, Richong Zhang, Feng Zhu, and Rui Zhao.
+
+Shikra: Unleashing multimodal llm’s referential dialogue magic.
+
+arXiv preprint arXiv:2306.15195, 2023.
+
+[14]
+
+Edward J Hu, Yelong Shen, Phillip Wallis, Zeyuan Allen-Zhu, Yuanzhi Li, Shean
+Wang, Lu Wang, and Weizhu Chen.
+
+Lora: Low-rank adaptation of large language models.
+
+arXiv preprint arXiv:2106.09685, 2021.
+
+[15]
+
+Alec Radford, Jong Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh,
+Sandhini Agarwal, Girish Sastry, Amanda Askell, Pamela Mishkin, Jack Clark,
+et al.
+
+Learning transferable visual models from natural language
+supervision.
+
+In International conference on machine learning, pages
+8748–8763. PMLR, 2021.
+
+[16]
+
+Chao Jia, Yinfei Yang, Ye Xia, Yi-Ting Chen, Zarana Parekh, Hieu Pham, Quoc Le,
+Yun-Hsuan Sung, Zhen Li, and Tom Duerig.
+
+Scaling up visual and vision-language representation learning with
+noisy text supervision.
+
+In International conference on machine learning, pages
+4904–4916. PMLR, 2021.
+
+[17]
+
+Jiahui Yu, Zirui Wang, Vijay Vasudevan, Legg Yeung, Mojtaba Seyedhosseini, and
+Yonghui Wu.
+
+Coca: Contrastive captioners are image-text foundation models.
+
+arXiv preprint arXiv:2205.01917, 2022.
+
+[18]
+
+Xi Chen, Xiao Wang, Soravit Changpinyo, AJ Piergiovanni, Piotr Padlewski,
+Daniel Salz, Sebastian Goodman, Adam Grycner, Basil Mustafa, Lucas Beyer,
+et al.
+
+Pali: A jointly-scaled multilingual language-image model.
+
+arXiv preprint arXiv:2209.06794, 2022.
+
+[19]
+
+Junnan Li, Dongxu Li, Caiming Xiong, and Steven Hoi.
+
+Blip: Bootstrapping language-image pre-training for unified
+vision-language understanding and generation.
+
+In International Conference on Machine Learning, pages
+12888–12900. PMLR, 2022.
+
+[20]
+
+Peng Wang, An Yang, Rui Men, Junyang Lin, Shuai Bai, Zhikang Li, Jianxin Ma,
+Chang Zhou, Jingren Zhou, and Hongxia Yang.
+
+Ofa: Unifying architectures, tasks, and modalities through a simple
+sequence-to-sequence learning framework.
+
+In International Conference on Machine Learning, pages
+23318–23340. PMLR, 2022.
+
+[21]
+
+Deyao Zhu, Jun Chen, Xiaoqian Shen, Xiang Li, and Mohamed Elhoseiny.
+
+Minigpt-4: Enhancing vision-language understanding with advanced
+large language models.
+
+arXiv preprint arXiv:2304.10592, 2023.
+
+[22]
+
+OpenAI.
+
+Gpt-4 technical report.
+
+2023.
+
+[23]
+
+Susan Zhang, Stephen Roller, Naman Goyal, Mikel Artetxe, Moya Chen, Shuohui
+Chen, Christopher Dewan, Mona Diab, Xian Li, Xi Victoria Lin, et al.
+
+Opt: Open pre-trained transformer language models.
+
+arXiv preprint arXiv:2205.01068, 2022.
+
+[24]
+
+Hyung Won Chung, Le Hou, Shayne Longpre, Barret Zoph, Yi Tay, William Fedus,
+Yunxuan Li, Xuezhi Wang, Mostafa Dehghani, Siddhartha Brahma, et al.
+
+Scaling instruction-finetuned language models.
+
+arXiv preprint arXiv:2210.11416, 2022.
+
+[25]
+
+Deyao Zhu, Jun Chen, Xiaoqian Shen, Xiang Li, and Mohamed Elhoseiny.
+
+Minigpt-4: Enhancing vision-language understanding with advanced
+large language models.
+
+arXiv preprint arXiv:2304.10592, 2023.
+
+[26]
+
+Wei-Lin Chiang, Zhuohan Li, Zi Lin, Ying Sheng, Zhanghao Wu, Hao Zhang, Lianmin
+Zheng, Siyuan Zhuang, Yonghao Zhuang, Joseph E. Gonzalez, Ion Stoica, and
+Eric P. Xing.
+
+Vicuna: An open-source chatbot impressing gpt-4 with 90%* chatgpt
+quality, March 2023.
+
+[27]
+
+Neil Houlsby, Andrei Giurgiu, Stanislaw Jastrzebski, Bruna Morrone, Quentin
+De Laroussilhe, Andrea Gesmundo, Mona Attariyan, and Sylvain Gelly.
+
+Parameter-efficient transfer learning for nlp.
+
+In International Conference on Machine Learning, pages
+2790–2799. PMLR, 2019.
+
+[28]
+
+Junxian He, Chunting Zhou, Xuezhe Ma, Taylor Berg-Kirkpatrick, and Graham
+Neubig.
+
+Towards a unified view of parameter-efficient transfer learning.
+
+ArXiv, abs/2110.04366, 2021.
+
+[29]
+
+Jonas Pfeiffer, Aishwarya Kamath, Andreas Rücklé, Kyunghyun Cho, and
+Iryna Gurevych.
+
+Adapterfusion: Non-destructive task composition for transfer
+learning.
+
+ArXiv, abs/2005.00247, 2020.
+
+[30]
+
+Sylvestre-Alvise Rebuffi, Hakan Bilen, and Andrea Vedaldi.
+
+Learning multiple visual domains with residual adapters.
+
+ArXiv, abs/1705.08045, 2017.
+
+[31]
+
+Sylvestre-Alvise Rebuffi, Hakan Bilen, and Andrea Vedaldi.
+
+Efficient parametrization of multi-domain deep neural networks.
+
+2018 IEEE/CVF Conference on Computer Vision and Pattern
+Recognition, pages 8119–8127, 2018.
+
+[32]
+
+Shoufa Chen, Chongjian Ge, Zhan Tong, Jiangliu Wang, Yibing Song, Jue Wang, and
+Ping Luo.
+
+Adaptformer: Adapting vision transformers for scalable visual
+recognition.
+
+ArXiv, abs/2205.13535, 2022.
+
+[33]
+
+Gen Luo, Minglang Huang, Yiyi Zhou, Xiaoshuai Sun, Guangnan Jiang, Zhiyu Wang,
+and Rongrong Ji.
+
+Towards efficient visual adaption via structural re-parameterization.
+
+arXiv preprint arXiv:2302.08106, 2023.
+
+[34]
+
+Zi-Yuan Hu, Yanyang Li, Michael R. Lyu, and Liwei Wang.
+
+Vl-pet: Vision-and-language parameter-efficient tuning via
+granularity control.
+
+2023 IEEE/CVF International Conference on Computer Vision
+(ICCV), pages 2998–3008, 2023.
+
+[35]
+
+Tao Lei, Junwen Bai, Siddhartha Brahma, Joshua Ainslie, Kenton Lee, Yanqi Zhou,
+Nan Du, Vincent Zhao, Yuexin Wu, Bo Li, Yu Zhang, and Ming-Wei Chang.
+
+Conditional adapters: Parameter-efficient transfer learning with fast
+inference.
+
+ArXiv, abs/2304.04947, 2023.
+
+[36]
+
+Yi-Lin Sung, Jaemin Cho, and Mohit Bansal.
+
+Vl-adapter: Parameter-efficient transfer learning for
+vision-and-language tasks.
+
+2022 IEEE/CVF Conference on Computer Vision and Pattern
+Recognition (CVPR), pages 5217–5227, 2021.
+
+[37]
+
+Tao Gong, Chengqi Lyu, Shilong Zhang, Yudong Wang, Miao Zheng, Qian Zhao,
+Kuikun Liu, Wenwei Zhang, Ping Luo, and Kai Chen.
+
+Multimodal-gpt: A vision and language model for dialogue with humans,
+2023.
+
+[38]
+
+Zhengxiao Du, Yujie Qian, Xiao Liu, Ming Ding, Jiezhong Qiu, Zhilin Yang, and
+Jie Tang.
+
+Glm: General language model pretraining with autoregressive blank
+infilling.
+
+In Proceedings of the 60th Annual Meeting of the Association for
+Computational Linguistics (Volume 1: Long Papers), pages 320–335, 2022.
+
+[39]
+
+Xiang Lisa Li and Percy Liang.
+
+Prefix-tuning: Optimizing continuous prompts for generation.
+
+arXiv preprint arXiv:2101.00190, 2021.
+
+[40]
+
+Fangyuan Zhang, Tingting Liang, Zhengyuan Wu, and Yuyu Yin.
+
+Pill: Plug into llm with adapter expert and attention gate.
+
+arXiv preprint arXiv:2311.02126, 2023.
+
+[41]
+
+Yaqing Wang, Sahaj Agarwal, Subhabrata Mukherjee, Xiaodong Liu, Jing Gao,
+Ahmed Hassan Awadallah, and Jianfeng Gao.
+
+Adamix: Mixture-of-adaptations for parameter-efficient model tuning.
+
+arXiv preprint arXiv:2210.17451, 2022.
+
+[42]
+
+Neil Houlsby, Andrei Giurgiu, Stanislaw Jastrzebski, Bruna Morrone, Quentin
+De Laroussilhe, Andrea Gesmundo, Mona Attariyan, and Sylvain Gelly.
+
+Parameter-efficient transfer learning for NLP.
+
+In Kamalika Chaudhuri and Ruslan Salakhutdinov, editors, Proceedings of the 36th International Conference on Machine Learning,
+volume 97 of Proceedings of Machine Learning Research, pages
+2790–2799. PMLR, 09–15 Jun 2019.
+
+[43]
+
+Noam Shazeer.
+
+Glu variants improve transformer.
+
+arXiv preprint arXiv:2002.05202, 2020.
+
+[44]
+
+Yann N Dauphin, Angela Fan, Michael Auli, and David Grangier.
+
+Language modeling with gated convolutional networks.
+
+In International conference on machine learning, pages
+933–941. PMLR, 2017.
+
+[45]
+
+Dan Hendrycks and Kevin Gimpel.
+
+Gaussian error linear units (gelus).
+
+arXiv preprint arXiv:1606.08415, 2016.
+
+[46]
+
+Stefan Elfwing, Eiji Uchibe, and Kenji Doya.
+
+Sigmoid-weighted linear units for neural network function
+approximation in reinforcement learning.
+
+Neural networks, 107:3–11, 2018.
+
+[47]
+
+Junke Wang, Lingchen Meng, Zejia Weng, Bo He, Zuxuan Wu, and Yu-Gang Jiang.
+
+To see is to believe: Prompting gpt-4v for better visual instruction
+tuning.
+
+arXiv preprint arXiv:2311.07574, 2023.
+
+[48]
+
+Zhenfei Yin, Jiong Wang, Jianjian Cao, Zhelun Shi, Dingning Liu, Mukai Li,
+Xiaoshui Huang, Zhiyong Wang, Lu Sheng, Lei Bai, et al.
+
+Lamm: Language-assisted multi-modal instruction-tuning dataset,
+framework, and benchmark.
+
+Advances in Neural Information Processing Systems, 36, 2024.
+
+[49]
+
+Peter Young, Alice Lai, Micah Hodosh, and Julia Hockenmaier.
+
+From image descriptions to visual denotations: New similarity metrics
+for semantic inference over event descriptions.
+
+Transactions of the Association for Computational Linguistics,
+2:67–78, 2014.
+
+[50]
+
+Lin Chen, Jisong Li, Xiaoyi Dong, Pan Zhang, Conghui He, Jiaqi Wang, Feng Zhao,
+and Dahua Lin.
+
+Sharegpt4v: Improving large multi-modal models with better captions.
+
+arXiv preprint arXiv:2311.12793, 2023.
+
+[51]
+
+Quan Sun, Yuxin Fang, Ledell Wu, Xinlong Wang, and Yue Cao.
+
+Eva-clip: Improved training techniques for clip at scale.
+
+arXiv preprint arXiv:2303.15389, 2023.
+
+[52]
+
+Hugo Touvron, Thibaut Lavril, Gautier Izacard, Xavier Martinet, Marie-Anne
+Lachaux, Timothée Lacroix, Baptiste Rozière, Naman Goyal, Eric
+Hambro, Faisal Azhar, et al.
+
+Llama: Open and efficient foundation language models.
+
+arXiv preprint arXiv:2302.13971, 2023.
+
+[53]
+
+Colin Raffel, Noam Shazeer, Adam Roberts, Katherine Lee, Sharan Narang, Michael
+Matena, Yanqi Zhou, Wei Li, and Peter J Liu.
+
+Exploring the limits of transfer learning with a unified text-to-text
+transformer.
+
+The Journal of Machine Learning Research, 21(1):5485–5551,
+2020.
+
+[54]
+
+Ilya Loshchilov and Frank Hutter.
+
+Decoupled weight decay regularization.
+
+arXiv preprint arXiv:1711.05101, 2017.
+
+[55]
+
+Xiang Yue, Yuansheng Ni, Kai Zhang, Tianyu Zheng, Ruoqi Liu, Ge Zhang, Samuel
+Stevens, Dongfu Jiang, Weiming Ren, Yuxuan Sun, Cong Wei, Botao Yu, Ruibin
+Yuan, Renliang Sun, Ming Yin, Boyuan Zheng, Zhenzhu Yang, Yibo Liu, Wenhao
+Huang, Huan Sun, Yu Su, and Wenhu Chen.
+
+MMMU: A massive multi-discipline multimodal understanding and
+reasoning benchmark for expert agi.
+
+arXiv preprint arXiv:2311.16502, 2023.
+
+[56]
+
+Chaoyou Fu, Peixian Chen, Yunhang Shen, Yulei Qin, Mengdan Zhang, Xu Lin,
+Jinrui Yang, Xiawu Zheng, Ke Li, Xing Sun, et al.
+
+Mme: A comprehensive evaluation benchmark for multimodal large
+language models.
+
+arXiv preprint arXiv:2306.13394, 2023.
+
+[57]
+
+Yuanhan Zhang Bo Li Songyang Zhang Wangbo Zhao Yike Yuan Jiaqi Wang Conghui He
+Ziwei Liu Kai Chen Dahua Lin Yuan Liu, Haodong Duan.
+
+Mmbench: Is your multi-modal model an all-around player?
+
+arXiv:2307.06281, 2023.
+
+[58]
+
+Weihao Yu, Zhengyuan Yang, Linjie Li, Jianfeng Wang, Kevin Lin, Zicheng Liu,
+Xinchao Wang, and Lijuan Wang.
+
+Mm-vet: Evaluating large multimodal models for integrated
+capabilities.
+
+arXiv preprint arXiv:2308.02490, 2023.
+
+[59]
+
+Tianrui Guan, Fuxiao Liu, Xiyang Wu, Ruiqi Xian, Zongxia Li, Xiaoyu Liu, Xijun
+Wang, Lichang Chen, Furong Huang, Yaser Yacoob, et al.
+
+Hallusionbench: An advanced diagnostic suite for entangled language
+hallucination & visual illusion in large vision-language models.
+
+arXiv preprint arXiv:2310.14566, 2023.
+
+[60]
+
+Bohao Li, Rui Wang, Guangzhi Wang, Yuying Ge, Yixiao Ge, and Ying Shan.
+
+Seed-bench: Benchmarking multimodal llms with generative
+comprehension.
+
+arXiv preprint arXiv:2307.16125, 2023.
+
+[61]
+
+Pan Lu, Swaroop Mishra, Tony Xia, Liang Qiu, Kai-Wei Chang, Song-Chun Zhu,
+Oyvind Tafjord, Peter Clark, and Ashwin Kalyan.
+
+Learn to explain: Multimodal reasoning via thought chains for science
+question answering.
+
+In The 36th Conference on Neural Information Processing Systems
+(NeurIPS), 2022.
+
+[62]
+
+Aniruddha Kembhavi, Mike Salvato, Eric Kolve, Minjoon Seo, Hannaneh Hajishirzi,
+and Ali Farhadi.
+
+A diagram is worth a dozen images.
+
+In Computer Vision–ECCV 2016: 14th European Conference,
+Amsterdam, The Netherlands, October 11–14, 2016, Proceedings, Part IV 14,
+pages 235–251. Springer, 2016.
+
+[63]
+
+Cheng Tan, Jingxuan Wei, Zhangyang Gao, Linzhuang Sun, Siyuan Li, Xihong Yang,
+and Stan Z Li.
+
+Boosting the power of small multimodal reasoning models to match
+larger models with self-consistency training.
+
+arXiv preprint arXiv:2311.14109, 2023.
+
+[64]
+
+Zhuosheng Zhang, Aston Zhang, Mu Li, Hai Zhao, George Karypis, and Alex Smola.
+
+Multimodal chain-of-thought reasoning in language models.
+
+arXiv preprint arXiv:2302.00923, 2023.
+
+Appendix
+
+Appendix A Implementation Details
+
+A.1 Image pre-processing
+
+We pre-process the images using random crops, resizing to 224 ×\times 224 with an interpolation method of Bicubic, horizontal flips, converting them to tensor format, and normalizing them using mean = (0.48145466, 0.4578275, 0.40821073) and standard deviation = (0.26862954, 0.26130258, 0.27577711). During evaluation, we only used image resizing, converting to tensor format, and normalizing using the same mean and standard deviation values.
+
+A.2 Training details of task-specific fine-tuning
+
+On both ScienceQA-Image and AI2D datasets, we employ a batch size of 16 and used the AdamW[54] optimizer, with β1=0.9subscript𝛽10.9\beta_{1}=0.9, β2=0.999subscript𝛽20.999\beta_{2}=0.999, and a weight decay of 0.05. Additionally, we apply a linear warmup of the learning rate during the initial 1K steps, increasing from 10−8superscript10810^{-8} to 10−4superscript10410^{-4}, followed by a cosine decay with a minimum learning rate of 0.
+
+Appendix B Training Datasets
+
+Table 6 lists the datasets used in pretraining and instruction tuning of CROME. With the recent release of publicly available instruction tuning datasets such as ShareGPT4V, LAMM, and LVIS-Instruct4V, we were able to increase the dataset size to 8M image-text pairs. It should be noted that when multiple questions/instructions were available for the same image, we used up to 4 of them. Moreover, duplicated data across these datasets which had the same image and text were filtered during our cleaning process.
+
+Table 6: Datasets used in pretraing and instruction tuning CROME
+
+Phase
+
+Dataset
+
+Pretraining
+
+LLaVA 558K (filtered image-text pairs from LAION, CC-3M, SBU)
+
+IT w/ D1 (665K)
+
+LLaVA 158K, ShareGPT, VQAv2, OKVQA, A-OKVQA,
+
+OCR-VQA, TextCap, GQA, RefCOCO, VG
+
+IT w/ D2 (1.2M)
+
+LLaVA-Instruct 150K, VQAv2, OKVQA, A-OKVQA,
+
+OCR-VQA, TextCap, MSCOCO
+
+IT w/ D3 (8M)
+
+LLaVA-Instruct 150K, VQAv2, OKVQA, A-OKVQA,
+
+OCR-VQA, MSCOCO, LVIS-Instruct4V, LAMM,
+
+ShareGPT4V, Flickr30K
+
+B.1 Analysis on CROME-Adapter bottleneck dimension
+
+Table 7 shows how we chose the m𝑚m value for the hidden dimension of our CROME-Adapter. We only did this experiment on the CROME-Vicuna7B model and used the chose m𝑚m value for other variants of CROME-Vicuna13B and CROME-Flan T5 XXL. We used two datasets, one from the zero-shot MLLM benchmarks (MM-Vet) as well as one of the datasets we used for supervised finetuning adaptation (ScienceQA-Image). It is common to use a significantly smaller dimension for the bottleneck with respect to the input size (m<<d​(4096)much-less-than𝑚𝑑4096m<<d(4096)). We selected 4 values (64, 128, 256, 512) and pre-trained and instruction-tuned four models with them. Results on both datasets confirmed the choice of 256256256 for our model.
+
+Table 7: Analysis on choosing m𝑚m, the bottleneck dimension in CROME-Adapter using one dataset from zero-shot MLLM benchmarks as well as ScienceQA Image dataset.
+
+m𝑚m
+
+MM-Vet
+
+SQA-IMG
+
+64
+
+46.1
+
+89.1
+
+128
+
+46.8
+
+91.9
+
+256
+
+47.3
+
+93.2
+
+512
+
+46.
+
+92.3
+
+Appendix C Qualitative Results
+
+Figure 4 shows some qualitative results from CROME on various test samples.
+
+Refer to caption
+
+Figure 4: Qualitative examples from various zero-shot MLLM benchmarks we have evaluated CROME on.
+
+◄
+ar5iv homepage
+Feeling
+lucky?
+
+Conversion
+report
+Report
+an issue
+View original
+on arXiv►
+
+Copyright
+Privacy Policy
+
+Generated on Thu Sep 5 13:55:25 2024 by LaTeXML Mascot Sammy

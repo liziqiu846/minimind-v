@@ -1,0 +1,3310 @@
+[2603.21077] CoVFT: Context-aware Visual Fine-tuning for Multimodal Large Language Models
+
+CoVFT: Context-aware Visual Fine-tuning for Multimodal
+
+Large Language Models
+
+Nan Zhou1,2 Huiqun Wang1,2 Yaoyan Zheng1,2 Di Huang1,2
+
+1State Key Laboratory of Complex and Critical Software Environment, Beihang University
+
+2School of Computer Science and Engineering, Beihang University
+
+{zhounan0431,hqwangscse,yaoyanzheng,dhuang}@buaa.edu.cn
+Corresponding author.
+
+Abstract
+
+Multimodal large language models (MLLMs) achieve remarkable progress in cross-modal perception and reasoning, yet a fundamental question remains unresolved: should the vision encoder be fine-tuned or frozen? Despite the success of models such as LLaVA and Qwen-VL, inconsistent design choices and heterogeneous training setups hinder a unified understanding of visual fine-tuning (VFT) in MLLMs. Through a configuration-aligned benchmark, we find that existing VFT methods fail to consistently outperform the frozen baseline across multimodal tasks. Our analysis suggests that this instability arises from visual preference conflicts, where the context-agnostic nature of vision encoders induces divergent parameter updates under diverse multimodal context. To address this issue, we propose the Context-aware Visual Fine-tuning (CoVFT) framework, which explicitly incorporates multimodal context into visual adaptation. By integrating a Context Vector Extraction (CVE) and a Contextual Mixture-of-Experts (CoMoE) module, CoVFT decomposes conflicting optimization signals and enables stable, context-sensitive visual updates. Extensive experiments on 12 multimodal benchmarks demonstrate that CoVFT achieves state-of-the-art performance with superior stability. Notably, fine-tuning a 7B MLLM with CoVFT surpasses the average performance of its 13B counterpart, revealing substantial untapped potential in visual encoder optimization within MLLMs.
+
+Code: https://github.com/weeknan/CoVFT.
+
+1 Introduction
+
+Recent advancements in multimodal large language models (MLLMs) demonstrate remarkable progress in cross-modal perception and reasoning [5, 11]. These models effectively integrate the visual perception capabilities of vision encoders with the reasoning and language understanding abilities of large language models (LLMs), yielding strong cross-modal comprehension and generation capabilities.
+
+The current MLLM construction pipeline typically consists of two major stages [53]: a pre-training phase that aligns the vision encoder with the LLM, and an instruction-tuning phase that enhances cross-modal understanding and generation capabilities. A careful review of existing instruction-tuning practices reveals a notable divergence in visual fine-tuning (VFT)–specifically, how to fine-tune the vision encoder. Building on pre-trained vision foundation models [43, 56], VFT can be regarded as adapting the vision encoder from pure visual perception to multimodal understanding in collaboration with the LLM. However, influential MLLMs adopt distinct VFT strategies. For instance, models such as InstructBLIP [12] and LLaVA-1.5 [34] freeze the vision encoder during instruction-tuning, whereas InternVL [9] and Qwen-VL [5] jointly optimize both the vision encoder and other components. This divergence highlights inconsistencies in adapting pre-trained vision encoder to MLLM applications, making the decision of whether to fine-tune or freeze the vision encoder a long-standing yet unresolved issue in the community.
+
+Refer to caption
+
+Figure 1:
+(a) Performance comparison of distinct VFT methods on multimodal tasks, showing instability compared with Freeze baseline.
+(b) Illustration of the visual preference conflict phenomenon. Setup: we construct grounding and captioning tasks using identical images from the Visual Genome [30] dataset and train two independent MLLMs that differ only in their textual queries. (c) The L2 distance between the two vision encoders steadily increases during VFT, indicating growing divergence in learned, especially the deeper representations, which aligns with the classical finding that deeper layers tend to capture information with task-specific preferences [54, 37].
+
+To better understand this discrepancy, we follow previous studies [47, 28] and adopt the widely used LLaVA paradigm to systematically investigate the effect of different VFT strategies. Specifically, we compare three representative methods for training the vision encoder during instruction tuning: freezing, full fine-tuning, and parameter-efficient fine-tuning (PEFT) [23]. Interestingly, our experiments in Fig. 1 (a) reveal that VFT methods rarely achieve consistent improvements over the frozen-encoder baseline in MLLM settings. This finding contradicts the well-established advantages of VFT observed in prior pure-vision transfer studies [51, 59], where fine-tuning vision encoder consistently leads to better downstream performance, highlighting the absence of a stable and reliable VFT method for MLLMs.
+
+Upon examining the update dynamics of the vision encoder during VFT, we observe key differences between VFT in MLLMs and pure vision scenarios. Visual–language tasks, which rely on linguistic supervision, are inherently more ambiguous than explicit vision-only tasks. In MLLMs, the VFT process heavily depends on contextual variation, as visual patterns differ significantly across diverse linguistic inputs. For example, grounding tasks [30] emphasize localizing fine-grained objects, whereas captioning tasks [8] require capturing global semantics. Such diversity in context-driven visual preference is natural and desirable; however, when vision encoders are jointly fine-tuned across heterogeneous contexts, conflicting optimization signals emerge. These conflicts pull the encoder parameters in inconsistent directions, leading to unstable updates and degraded generalization. As illustrated in Fig. 1(b) and (c), we term this phenomenon visual preference conflicts.
+
+Motivated by these observations, we aim to design a context-driven VFT framework that explicitly accounts for multimodal ambiguity and task-dependent variation. This requires addressing two key challenges. First, the vision encoder’s updates should be guided not only by visual inputs but also by linguistic cues to achieve a more comprehensive understanding of the multimodal context. Second, the optimization process should remain generalizable across different types of visual preference conflicts and adaptable to varying perceptual patterns. To this end, we propose Context-aware Visual Fine-Tuning (CoVFT), a framework for context-adaptive visual adaptation in MLLMs. Specifically, we introduce a Contextual Vector Extraction (CVE) module that progressively derives a compact representation of multimodal context through text-guided cross-modal aggregation within the vision encoder. In parallel, a Contextual Mixture-of-Experts (CoMoE) module leverages this contextual signal to dynamically route visual tokens across multiple expert subspaces, effectively decomposing conflicting optimization signals into context-specialized updates. By integrating both modules, CoVFT aligns visual encoding with multimodal context, mitigating visual preference conflicts and enhancing multimodal capabilities.
+
+Experiments on 12 multimodal benchmarks demonstrate that CoVFT achieves state-of-the-art and remarkably stable performance among existing VFT methods. Notably, fine-tuning the vision encoder of a 7B-scale MLLM with CoVFT surpasses the average performance of its 13B counterpart, underscoring the importance of vision encoder fine-tuning in MLLMs, even though the vision encoder accounts for less than 5% of the total parameters. We hope this work sheds light on the underexplored yet essential problem of vision encoder training and inspires renewed attention to its design within the MLLM community.
+
+The main contributions are summarized as follows:
+
+•
+
+We systematically benchmark representative VFT methods under the LLaVA paradigm and identify the phenomenon of visual preference conflicts in MLLMs.
+
+•
+
+We propose the CoVFT framework, which integrates the CVE and CoMoE modules to incorporate contextual information into visual adaptation, enabling adaptive and context-conditioned fine-tuning.
+
+•
+
+We conduct experiments on 12 multimodal benchmarks, demonstrating that CoVFT not only outperforms state-of-the-art VFT methods but also exhibits strong data scalability and architectural generalizability.
+
+2 Related Work
+
+2.1 Multimodal Large Language Models
+
+MLLMs integrate the visual perception capabilities of vision encoders with the reasoning and language understanding abilities of LLMs, thereby advancing cross-modal perception, understanding, and generation [53]. Researchers have made rapid progress in developing architectures that effectively fuse visual and linguistic representations. Early works such as Flamingo [1] and the BLIP series [32, 31, 12] employ cross-attention mechanisms and Q-Former structures to bridge visual and textual embeddings, enabling the LLM to condition its reasoning on image content. More recently, LLaVA and LLaVA-1.5 [35, 34] simplify this design by replacing the Q-Former with a lightweight MLP projector, which substantially improves scalability and training stability. This paradigm has since been widely adopted due to its simplicity and competitive performance. Models such as Qwen-VL [4] and InternVL [9] further strengthen vision-language alignment through multi-stage training pipelines and large-scale multimodal supervision, achieving significantly improved cross-modal reasoning capabilities.
+
+Building on these advances, most current MLLMs are trained through a two-stage pipeline [53]. The pre-training stage leverages large-scale paired image–text data to align the projection layer and establish strong image–text correspondence. The subsequent instruction-tuning stage refines the LLM and projector with instruction-following data to enable higher-level reasoning and generalization. However, despite remarkable progress in large-scale pre-training and instruction-tuning, visual fine-tuning (VFT) strategies within MLLMs remain underexplored. InstructBLIP [12] and LLaVA [35, 34] freeze the vision encoder, whereas InternVL [9] and Qwen-VL [5] adopt end-to-end joint optimization. Consequently, existing approaches employ diverse and often inconsistent strategies, and prior studies report conflicting conclusions on whether freezing or fine-tuning the vision encoder yields better performance [28, 47], leaving open the question of how best to adapt pre-trained vision encoders for multimodal reasoning.
+
+2.2 Visual Fine-tuning Methods
+
+In contrast to its limited exploration in MLLMs, VFT has been extensively studied in vision domains [51, 22]. Mainstream VFT approaches can be broadly categorized into full parameter fine-tuning (Full FT) and linear probing (LP). Full FT updates all pre-trained model parameters, with subsequent works incorporating regularization techniques [52, 33, 19] to preserve pre-trained priors [61], or designing task-specific objectives [58, 20] to enhance downstream adaptation. LP, by contrast, freezes the vision backbone and trains only a lightweight task-specific head. Inspired by LP, parameter-efficient fine-tuning (PEFT) methods introduce lightweight adaptation modules to balance performance and efficiency. These include partial tuning [55, 24], which selectively updates sensitive parameters; prompt tuning [27, 21, 62], which learns visual prompts inserted into the input sequence; and adapter tuning [7, 25], which inserts additional low-rank or bottleneck layers into the network.
+
+Despite the success of VFT in vision tasks [22], our configuration-aligned benchmark shows that existing VFT methods remain unstable in MLLMs. We attribute this instability to visual preference conflicts, where a context-agnostic vision encoder receives conflicting update signals from diverse multimodal objectives. Although several works explore context-aware visual representations, such as conditioned visual embeddings for composed image retrieval [6] and text-conditioned queries for aggregating frozen visual features [31, 49], these methods are mainly developed for vision-language models (VLMs) [43] with limited reasoning capabilities or rely on frozen visual representations without adapting the vision encoder. Consequently, the impact of context-aware visual fine-tuning in large-scale MLLMs remains largely unexplored.
+
+Refer to caption
+
+Figure 2: Illustration of the proposed context-aware visual fine-tuning (CoVFT) framework. Contextual vector extraction (CVE) generates a contextual vector 𝒄\bm{c} by aggregating multimodal cues through text-guided cross-attention. Contextual mixture-of-experts (CoMoE) injects 𝒄\bm{c} into the vision encoder via context-conditioned expert routing, enabling adaptive visual parameter updates.
+
+3 Method
+
+3.1 Formulation
+
+Architecture. We consider an MLLM with LLaVA-style architecture [34], consisting of a vision encoder 𝒱\mathcal{V}, a projector 𝒫\mathcal{P}, and an LLM ℒ\mathcal{L}.
+Given an image 𝐈∈ℝH×W×3\mathbf{I}\!\in\!\mathbb{R}^{H\times W\times 3}, the vision encoder extracts visual embeddings
+
+𝒛=𝒱​(𝐈)∈ℝLv×Dv,\bm{z}=\mathcal{V}(\mathbf{I})\in\mathbb{R}^{L_{v}\times D_{v}},
+
+(1)
+
+where LvL_{v} and DvD_{v} denote the sequence length and embedding dimension of the visual features, respectively.
+The projector 𝒫\mathcal{P} projects 𝒛\bm{z} into the embedding space of the LLM:
+
+𝒛~=𝒫​(𝒛)∈ℝLv×Dt,\tilde{\bm{z}}=\mathcal{P}(\bm{z})\in\mathbb{R}^{L_{v}\times D_{t}},
+
+(2)
+
+where DtD_{t} is the textual embedding dimension of the LLM.
+The projected visual tokens are concatenated with the textual embeddings and jointly processed by the LLM:
+
+𝐡=ℒ​([𝒛~,Embed​(text)]).\mathbf{h}=\mathcal{L}([\tilde{\bm{z}},{\rm Embed}(\text{text})]).
+
+(3)
+
+Training pipeline. Most MLLMs are trained in two stages. The pre-training stage aligns the vision encoder with the LLM by training only the projector on paired image-caption data (𝐈,𝐂)(\mathbf{I},\mathbf{C}). The instruction-tuning stage further optimizes the MLLM on image-instruction-answer triplets (𝐈,𝐐,𝐀)(\mathbf{I},\mathbf{Q},\mathbf{A}), where 𝐀={a1,…,aT}\mathbf{A}=\{a_{1},\dots,a_{T}\} denotes the answer token sequence, with the next-token prediction loss:
+
+ℒinst=−∑t=1Tlog⁡p𝜽​(at∣a<t,𝐐,𝐈),\mathcal{L}_{\text{inst}}=-\sum_{t=1}^{T}\log p_{\bm{\theta}}(a_{t}\mid a_{<t},\mathbf{Q},\mathbf{I}),
+
+(4)
+
+where 𝜽={𝜽v,𝜽p,𝜽ℓ}{\bm{\theta}}=\{\bm{\theta}_{v},\bm{\theta}_{p},\bm{\theta}_{\ell}\} are the parameters of the vision encoder, projector, and LLM, respectively.
+
+Visual fine-tuning.
+In instruction-tuning, the vision encoder can either be frozen (i.e. ∇𝜽vℒinst=0\nabla_{\bm{\theta}_{v}}\mathcal{L}_{\text{inst}}=0) or fine-tuned jointly with other modules.
+Despite diverse practices, current VFT approaches all implicitly model a single posterior:
+
+p𝜽v​(𝒛∣𝐈),p_{\bm{\theta}_{v}}(\bm{z}\mid\mathbf{I}),
+
+(5)
+
+and update 𝜽v\bm{\theta}_{v} via ∇𝜽vℒinst\nabla_{\bm{\theta}_{v}}\mathcal{L}_{\text{inst}}.
+However, unlike pure vision fine-tuning, where supervision is derived solely from explicit visual labels, VFT in MLLMs depends on both image and linguistic context.
+Different instructions {𝐪1,𝐪2,…}\{\mathbf{q}_{1},\mathbf{q}_{2},\ldots\} induce distinct gradient directions ∇𝜽v(𝐪i)ℒinst\nabla_{\bm{\theta}_{v}}^{(\mathbf{q}_{i})}\mathcal{L}_{\text{inst}}, guiding the encoder toward different visual cues or semantic regions and producing visual preference conflicts.
+At an intuitive level, these conflicts correspond to inconsistent, task-dependent visual preferences; at the optimization level, they manifest as gradient misalignment that destabilizes VFT.
+
+3.2 Context-aware Visual Fine-tuning Framework
+
+To overcome the context-agnostic limitation of p𝜽v​(𝒛∣𝐈)p_{\bm{\theta}_{v}}(\bm{z}\mid\mathbf{I}), we introduce a latent contextual variable 𝒄\bm{c} and reformulate the learning objective as a context-aware posterior:
+
+p𝜽v​(𝒛∣𝐈,𝒄),p_{\bm{\theta}_{v}}(\bm{z}\mid\mathbf{I},\bm{c}),
+
+(6)
+
+where 𝒄\bm{c} encodes multimodal cues derived from the instruction triplet (𝐈,𝐐,𝐀)(\mathbf{I},\mathbf{Q},\mathbf{A}) and modulates visual representations accordingly. By conditioning the posterior on 𝒄\bm{c}, the optimization of visual parameters becomes explicitly dependent on contextual semantics. This allows the vision encoder to adapt its feature updates according to the task-specific multimodal context, rather than relying on a single fixed mapping p​(𝒛∣𝐈)p(\bm{z}\mid\mathbf{I}), so that gradient directions are better aligned with the underlying visual-linguistic intent. Such context conditioning mitigates interference among heterogeneous multimodal tasks and leads to more stable adaptation.
+
+Framework overview.
+As illustrated in Fig. 2, the proposed Context-aware Visual Fine-tuning (CoVFT) framework instantiates this formulation through two complementary modules:
+(1) Contextual Vector Extraction (CVE), which aggregates cross-modal information to produce 𝒄\bm{c} synchronously with the vision encoder, allowing text-guided attention to form a compact context vector that reflects task-specific visual preference;
+(2) Contextual Mixture-of-Experts (CoMoE), which injects 𝒄\bm{c} into the encoder via context-conditioned expert routing. This design decomposes conflicting update directions into specialized expert subspaces, while encourages shared learning across experts with similar contextual patterns. Through this unified view, CoVFT models the context-aware posterior p​(𝒛∣𝐈,𝒄)p(\bm{z}\mid\mathbf{I},\bm{c}), providing a principled framework for stable and adaptive visual encoder optimization in MLLMs.
+
+3.3 Contextual Vector Extraction
+
+The goal of contextual vector extraction (CVE) is to model the latent variable 𝒄\bm{c} as an explicit contextual vector for guiding context-aware visual adaptation.
+A desirable contextual vector should satisfy two properties:
+(1) it should evolve synchronously with the vision encoder during forward propagation, avoiding additional reasoning stages;
+(2) it should encode multimodal context, especially task-specific cues implied by the textual instruction, rather than being dominated by raw visual features.
+Given a textual instruction 𝐪\mathbf{q}, a frozen text encoder (e.g., BERT [13]) produces the textual embedding 𝒕\bm{t}.
+At a certain layer of the vision encoder, visual tokens 𝒛\bm{z} and textual embedding 𝒕\bm{t} are first refined by a lightweight residual block:
+
+fres​(𝐱)=𝐱+GELU​(𝐱⋅𝐖up)​𝐖down,f_{\text{res}}(\mathbf{x})=\mathbf{x}+{\rm GELU}(\mathbf{x}\cdot\mathbf{W}_{\rm up})\mathbf{W}_{\rm down},
+
+(7)
+
+yielding 𝒛^\hat{\bm{z}} and 𝒕^\hat{\bm{t}}. A cross-attention operation then extracts the contextual vector by using 𝒕^\hat{\bm{t}} as the query and the concatenated multimodal features as keys and values:
+
+𝒄i=CrossAttn​(norm​(𝒕^)q,[norm​(𝒛^),norm​(𝒕^)]k,v),\bm{c}_{i}={\rm CrossAttn}\big({\rm norm}(\hat{\bm{t}})_{\rm q},\;[{\rm norm}(\hat{\bm{z}}),{\rm norm}(\hat{\bm{t}})]_{\rm k,v}\big),
+
+(8)
+
+where norm​(⋅){\rm norm}(\cdot) denotes LayerNorm [3] and [⋅,⋅][\cdot,\cdot] indicates channel-wise concatenation. The resulting 𝒄\bm{c} is updated layer by layer as the encoder processes the image, ensuring that contextual information remains tightly coupled with the visual inference flow. As shown in Fig. 3 (a), the extracted contextual vectors exhibit coherent semantic clustering and align well with task-specific visual preference patterns, indicating that 𝒄\bm{c} provides an effective guidance signal for expert routing in CoMoE.
+
+3.4 Contextual Mixture-of-Experts
+
+While the contextual vector 𝒄\bm{c} provides multimodal cues, the original ViT [15] lacks mechanisms to incorporate non-visual conditioning into its parameter updates. We introduce the contextual mixture-of-experts (CoMoE) module to integrate 𝒄\bm{c} into the vision encoder, enabling context-aware feature extraction. As observed in Fig. 1 (c), visual preference conflicts are more pronounced in deeper layers. Therefore, starting from a designated layer, we replace the FFN with a set of NN parallel expert networks {ℰ1,…,ℰN}\{\mathcal{E}^{1},\dots,\mathcal{E}^{N}\}, each initialized from the original FFN. Given 𝒄\bm{c}, a learnable router computes context-conditioned routing weights:
+
+𝒈​(𝒄)=softmax​(𝐖​𝒄+𝒃)∈ℝN.\bm{g}(\bm{c})={\rm softmax}(\mathbf{W}\bm{c}+\bm{b})\in\mathbb{R}^{N}.
+
+(9)
+
+Each expert processes the visual tokens 𝒛\bm{z}, and their outputs are combined through dense aggregation:
+
+𝒛~=∑n=1Ngn​(𝒄)​ℰn​(𝒛).\tilde{\bm{z}}=\sum_{n=1}^{N}g^{n}(\bm{c})\,\mathcal{E}^{n}(\bm{z}).
+
+(10)
+
+We empirically find that the above dense routing performs better than the more commonly used sparse routing (e.g., top-kk activation [16]). A possible reason is that sparse routing reduces the number of samples assigned to each expert and may therefore lead to under-training when data per expert is limited, whereas dense routing allows all experts to receive gradients from every sample. Crucially, by computing routing weights from the contextual vector 𝒄\bm{c}, CoMoE modulates the gradients received by each expert in a context-dependent manner. Specifically, for the nn-th expert with parameters 𝜽en\bm{\theta}_{e}^{n}, its gradient under context 𝒄\bm{c} is scaled by the corresponding routing weight:
+
+∇𝜽enℒinst=gn​(𝒄)⋅∂ℒinst∂𝒛~​∂ℰn​(𝒛)∂𝜽en.\nabla_{\bm{\theta}_{e}^{n}}\mathcal{L}_{\text{inst}}=g^{n}(\bm{c})\,\cdot\frac{\partial\mathcal{L}_{\text{inst}}}{\partial\tilde{\bm{z}}}\frac{\partial\mathcal{E}^{n}(\bm{z})}{\partial\bm{\theta}_{e}^{n}}.
+
+(11)
+
+Thus, samples with similar contexts yield similar routing patterns and contribute more consistently to the same expert subspaces, while samples with different contexts are separated through differentiated gradient scaling. This context-aware gradient modulation alleviates interference among conflicting visual preferences, yielding more coherent convergence and more stable visual fine-tuning.
+
+4 Experiments
+
+Table 1:
+Comparison of diverse VFT methods on 12 multimodal benchmarks under the unified LLaVA-1.5  [34] pre-training and instruction-tuning pipeline. The best and second-best VFT results are highlighted in bold and underline, respectively. “G.”, “K.”, “V.”, and “Avg.” denote the mean scores of the three task groups, and the overall average. Results marked with “†\dagger” are obtained from LLaVA-1.5 or evaluating its official checkpoints, while “∗*” indicates our reproduction of LLaVA-1.5 Freeze baseline under the same configuration.
+
+General
+
+Knowledge & OCR
+
+Vision-centric
+
+Mean (%)
+
+Method
+
+MMEP{}^{\text{P}}
+
+MMBen{}^{\text{en}}
+
+MMBcn{}^{\text{cn}}
+
+GQA
+
+SQAI{}^{\text{I}}
+
+AI2D
+
+TextVQA
+
+MMVP
+
+RWQA
+
+COCO
+
+ADE
+
+Omni3D
+
+G.
+
+K.
+
+V.
+
+Avg.
+
+LLaVA-1.5-7B†
+
+1510.7
+
+64.30
+
+58.30
+
+62.00
+
+66.80
+
+55.21
+
+58.20
+
+27.33
+
+56.21
+
+67.45
+
+54.98
+
+63.25
+
+65.04
+
+60.07
+
+53.84
+
+59.13
+
+Freeze∗
+
+1473.7
+
+67.87
+
+60.30
+
+63.07
+
+69.31
+
+55.76
+
+58.53
+
+28.00
+
+56.73
+
+63.73
+
+49.61
+
+60.50
+
+66.23
+
+61.20
+
+51.71
+
+58.93
+
+Full fine-tuning
+
+1510.2
+
+67.44
+
+59.88
+
+63.92
+
+67.67
+
+56.51
+
+59.70
+
+27.33
+
+55.82
+
+65.71
+
+51.97
+
+60.00
+
+66.69
+
+61.29
+
+52.17
+
+59.29
+
+VPT
+
+1452.1
+
+67.10
+
+58.16
+
+63.17
+
+67.92
+
+56.08
+
+57.29
+
+24.67
+
+56.21
+
+65.09
+
+51.34
+
+58.67
+
+65.26
+
+60.43
+
+51.20
+
+58.19
+
+SVPT
+
+1431.7
+
+66.58
+
+57.90
+
+63.26
+
+68.82
+
+56.54
+
+57.89
+
+29.33
+
+56.86
+
+65.34
+
+51.03
+
+59.29
+
+64.83
+
+61.08
+
+52.37
+
+58.70
+
+LoRA
+
+1494.5
+
+67.44
+
+57.56
+
+63.98
+
+67.63
+
+55.76
+
+59.18
+
+28.66
+
+55.82
+
+64.22
+
+53.71
+
+59.83
+
+65.93
+
+60.86
+
+52.45
+
+59.04
+
+BitFit
+
+1496.8
+
+67.27
+
+59.02
+
+63.43
+
+68.86
+
+56.77
+
+59.12
+
+31.33
+
+57.12
+
+65.34
+
+51.03
+
+60.67
+
+66.14
+
+61.58
+
+53.10
+
+59.57
+
+CoVFT
+
+1525.2
+
+68.13
+
+60.40
+
+63.37
+
+69.51
+
+56.64
+
+59.64
+
+36.67
+
+57.52
+
+66.96
+
+56.08
+
+61.83
+
+67.04
+
+61.93
+
+55.81
+
+61.08
+
+LLaVA-1.5-13B†
+
+1531.3
+
+67.70
+
+63.60
+
+63.30
+
+71.60
+
+59.16
+
+63.10
+
+30.67
+
+55.29
+
+66.82
+
+47.95
+
+63.00
+
+67.79
+
+64.62
+
+52.75
+
+60.73
+
+Freeze∗
+
+1557.6
+
+69.93
+
+63.57
+
+63.73
+
+72.43
+
+60.20
+
+60.18
+
+34.00
+
+55.94
+
+65.09
+
+51.34
+
+62.83
+
+68.78
+
+64.27
+
+53.84
+
+61.43
+
+Full fine-tuning
+
+1555.4
+
+68.56
+
+63.49
+
+64.83
+
+71.99
+
+59.94
+
+61.36
+
+34.00
+
+55.82
+
+64.22
+
+50.39
+
+63.25
+
+68.66
+
+64.43
+
+53.54
+
+61.30
+
+BitFit
+
+1552.8
+
+70.02
+
+62.54
+
+63.98
+
+72.14
+
+59.52
+
+61.04
+
+38.00
+
+54.64
+
+63.22
+
+47.87
+
+66.50
+
+68.55
+
+64.23
+
+54.05
+
+61.43
+
+CoVFT
+
+1590.6
+
+70.45
+
+64.52
+
+63.84
+
+72.90
+
+60.65
+
+61.79
+
+38.67
+
+58.04
+
+65.22
+
+51.34
+
+67.58
+
+69.66
+
+65.11
+
+56.17
+
+62.90
+
+4.1 Experimental Setup
+
+Visual fine-tuning benchmark. To provide a comprehensive evaluation of representative VFT methods in MLLMs, we adopt the standard training configuration of LLaVA-1.5 [34] and consider the following approaches: (1) Freeze, the default strategy used in LLaVA-1.5; (2) Full fine-tuning; and (3) PEFT methods covering three major paradigms, including partial tuning (Bitfit [55]), prompt-based tuning (VPT [27] and SVPT [62], the latter reports state-of-the-art PEFT results on image classification [57]), and adapter tuning (LoRA [25]). We employ CLIP-ViT-L/14-336 [43] as the vision encoder, a two-layer MLP as the projection layer, and Vicuna-1.5 [10] as the LLM.
+
+Evaluation includes 12 multimodal benchmarks spanning three domains: (1) General VQA: MME-Perception (MMEP) [17], MMbench (MMB) [36], and GQA [26]; (2) Knowledge and OCR: ScienceQA-Image (SQAI) [39], AI2D [29], and TextVQA [45]; (3) Vision-centric tasks: MMVP [48], RealWorldQA (RWQA) [50], and CV-Bench (COCO, ADE, and Omni3D) [47].
+
+Training details. Pre-training uses 558K image–caption pairs, where only the projector is optimized with a learning rate of 1×10−31\times 10^{-3} and a batch size of 256. Instruction-tuning uses 665K image–instruction–answer triplets, during which the LLM and projector are jointly trained with a learning rate of 2×10−52\times 10^{-5} and a batch size of 128, while the vision encoder is updated according to each VFT method using its default hyperparameters for fairness.
+
+As for CoVFT, we apply the proposed CoMoE modules to the latter half of the ViT blocks by default. Each CoMoE layer comprises four expert networks. For the CVE module, we use the [CLS] token from a frozen BERT text encoder [13] (though other text encoders are also compatible) to derive the textual representation. During instruction tuning, the CVE and CoMoE modules, together with the LayerNorm statistics of the vision encoder, are optimized jointly, while all other vision parameters remain frozen.
+
+4.2 Main Results
+
+The detailed comparisons are presented in Table 1. From these results, we make three key observations:
+
+(1) Superiority and instability of VFT. Although several works choose to freeze the vision encoder, our benchmark shows that most VFT methods—including full fine-tuning, LoRA, and BitFit—outperform the default Freeze strategy in average performance. This trend aligns with the findings of Cambrian-1 [47] and suggests that VFT is generally beneficial for modular MLLMs, as the pre-training objective of the vision encoder often diverges from the multimodal instruction-following objective. Without visual fine-tuning, the vision encoder functions as a static bottleneck, forcing the LLM to bear the full burden of refining visual representations. However, the task-level results reveal significant instability: full fine-tuning, LoRA, and BitFit surpass the Freeze baseline on only 6, 6, and 9 out of 12 benchmarks, respectively. This inconsistency contrasts sharply with the stable benefits of fine-tuning observed in pure vision domains [61, 63], indicating that existing VFT methods share a common limitation in overlooking context-dependent supervision and thus struggle to maintain stable cross-task generalization.
+
+(2) Consistent and leading performance of CoVFT. Compared with the Freeze baseline, CoVFT consistently achieves improvements across all 12 benchmarks, yielding an average gain of 2.15%. Among all VFT methods, CoVFT attains state-of-the-art performance on 9 out of 12 tasks and all three task groups, achieving the highest overall average score of 61.08%. These results demonstrate that context-aware visual fine-tuning effectively mitigates visual preference conflicts and enhances the adaptability of the vision encoder to diverse multimodal contexts.
+
+(3) Scaling and capacity benefits of CoVFT. Notably, fine-tuning the vision encoder of a 7B-scale MLLM with CoVFT surpasses the average performance of its 13B counterpart under the Freeze setting. This observation highlights the substantial untapped potential of VFT: the vision encoder accounts for less than 5% of the total parameters in the 7B model, yet its optimization brings remarkable performance gains without scaling language parameters. We further evaluate CoVFT on the 13B model and compare it with both the Freeze baseline, Full fine-tuning and BitFit—the best-performing VFT method on the 7B model. CoVFT consistently achieves superior results over both, confirming that context-aware visual adaptation remains effective even at larger scales. These findings suggest that optimizing vision encoders is an underexplored yet promising direction for advancing MLLMs.
+
+Table 2: Ablation study of the contextual vector design in CVE and the routing strategy in CoMoE under LLaVA-1.5-7B.
+
+Ablation
+
+General
+
+Know.&OCR
+
+Vision
+
+Mean (%)
+
+N/A
+
+66.69
+
+61.29
+
+52.17
+
+59.29
+
+w.r.t. contextual vector
+
+Image-only
+
+66.60
+
+61.69
+
+53.17
+
+59.77
+
+Text-only
+
+66.84
+
+61.86
+
+54.73
+
+60.55
+
+Concat[I,T][\rm{I,T}]
+
+66.78
+
+61.79
+
+54.56
+
+60.44
+
+CVE
+
+67.04
+
+61.93
+
+55.81
+
+61.08
+
+w.r.t. routing strategy
+
+Random@2
+
+66.01
+
+61.24
+
+52.05
+
+59.00
+
+Uniform
+
+66.18
+
+61.75
+
+53.05
+
+59.60
+
+Sparse@2
+
+66.63
+
+61.78
+
+53.60
+
+60.10
+
+Dense
+
+67.04
+
+61.93
+
+55.81
+
+61.08
+
+Refer to caption
+
+Figure 3: (a) PCA [42] visualization of contextual vectors extracted from the CVE module. A subset of 5,000 instruction samples is clustered via k-means [2], showing clear semantic grouping aligned with distinct visual preference patterns. (b) Correlation between contextual similarity and inference similarity, computed as the cosine similarity of routing weights aggregated across CoMoE layers. The strong positive trend (r=0.76r=0.76) indicates that samples with similar contextual vectors yield similar expert activation patterns.
+
+4.3 Ablation Study
+
+To investigate the impact of the key design choices in CoVFT, we conduct ablation studies focusing on: (1) the formulation of the contextual vector 𝒄\bm{c} in the CVE module, and (2) the routing strategy in the CoMoE module.
+
+Contextual vector design.
+We examine several strategies for constructing the contextual vector 𝒄\bm{c}, including averaging visual tokens (Image-only), using the text encoder output (Text-only), directly concatenating image and text features (Concat), and the proposed text-guided aggregation in CVE. The baseline (N/A) corresponds to full fine-tuning the vision encoder without auxiliary context. As shown in Table 2, incorporating textual features yields clear gains over the Image-only variant, indicating that linguistic cues provide complementary context that mitigates visual preference conflicts. The naive concatenation of multimodal features (Concat) performs comparably to Text-only, suggesting that simple feature fusion cannot effectively capture fine-grained cross-modal dependencies. The proposed CVE achieves the highest overall performance and shows notable improvements on vision-centric benchmarks, confirming that text-guided visual aggregation is essential for generating context-aware representations and fully exploiting visual information in multimodal settings.
+
+Routing strategy in CoMoE.
+We compare different routing mechanisms within CoMoE, including sparse activation of the top-2 experts (Sparse@2) and dense activation (Dense) of all experts weighted by routing weights. We also evaluate variants that equally averages all expert outputs (Uniform) or randomly activates two experts (Random@2) to isolate the effect of the additional parameters introduced by the MoE architecture. As shown in Table 2, Dense consistently outperforms Sparse@2, suggesting that activating all experts enables better multimodal understanding and alleviates the under-training issue [14]. Despite this, we note that Sparse@2 still performs better than existing VFT methods in Table 1, implying that sparse routing remains viable. Exploring larger-scale data to balance performance with the efficiency advantages of sparse inference presents a promising direction for future work. In contrast, Random@2 and Uniform, despite increasing the model’s width, fail to yield stable gains, indicating that merely expanding the parameter space cannot resolve visual preference conflicts.
+
+Refer to caption
+
+Figure 4: Analysis of data scalability. Following the two-stage LLaVA training pipeline, models are fine-tuned with varying proportions of the 665K multimodal instruction dataset during the second-stage instruction-tuning. We compare the performance of the baseline model with a frozen or full fine-tuned vision encoder and our CoVFT framework under different data scales.
+
+Table 3: Generalization evaluation of CoVFT across different MLLM architectures on 12 multimodal benchmarks.
+
+MLLM
+
+V. E. & LLM
+
+VFT
+
+MMEP{}^{\text{P}}
+
+MMBen{}^{\text{en}}
+
+MMBcn{}^{\text{cn}}
+
+GQA
+
+SQAI{}^{\text{I}}
+
+AI2D
+
+TextVQA
+
+MMVP
+
+RWQA
+
+COCO
+
+ADE
+
+Omni3D
+
+Mean (%)
+
+LLaVA-1.5
+
+SigLIP-L/16
+
+Freeze
+
+1393.4
+
+65.81
+
+58.33
+
+62.32
+
+70.85
+
+55.67
+
+58.79
+
+28.00
+
+56.60
+
+61.37
+
+46.45
+
+56.67
+
+57.54
+
+Vicuna-7B
+
+CoVFT
+
+1466.8
+
+66.92
+
+60.74
+
+62.43
+
+69.96
+
+55.73
+
+61.57
+
+35.33
+
+57.65
+
+65.71
+
+50.71
+
+56.83
+
+59.74
+
+LLaVA-1.5
+
+DINOv3-L/16
+
+Freeze
+
+1237.4
+
+57.56
+
+51.03
+
+60.43
+
+65.20
+
+53.76
+
+47.22
+
+15.33
+
+47.58
+
+58.26
+
+49.45
+
+59.25
+
+52.25
+
+Vicuna-7B
+
+CoVFT
+
+1309.8
+
+58.33
+
+51.80
+
+62.50
+
+64.90
+
+52.95
+
+49.75
+
+20.00
+
+52.55
+
+67.08
+
+50.08
+
+62.17
+
+54.80
+
+InternVL 2.0
+
+InternViT-300M
+
+Full ft.
+
+1502.2
+
+71.99
+
+66.75
+
+63.65
+
+90.18
+
+75.39
+
+67.51
+
+37.33
+
+60.78
+
+72.05
+
+58.93
+
+70.42
+
+67.51
+
+Phi-3-mini
+
+CoVFT
+
+1527.0
+
+75.95
+
+69.33
+
+64.47
+
+94.25
+
+77.46
+
+71.16
+
+44.00
+
+62.35
+
+72.80
+
+60.35
+
+72.83
+
+70.11
+
+4.4 Analysis
+
+Contextual vector. To assess whether the contextual vector captures task-dependent multimodal cues and effectively guides expert routing in CoMoE, we conduct a two-stage analysis. As shown in Fig. 3 (a), the contextual vectors extracted from the CVE module form clear clusters, where samples within the same cluster tend to share similar visual preference requirements. The intra-cluster cosine similarity of visual and textual pairs increases by 19.23% and 10.67%, respectively, relative to inter-cluster pairs, indicating that the contextual vector encodes coherent multimodal semantics. Qualitative inspection further reveals that different clusters correspond to distinct visual preference patterns, such as relationship reasoning (requiring structural understanding) and region grounding (focusing on spatial localization). These observations suggest that the contextual vector captures task-dependent visual preferences and helps organize the heterogeneous multimodal space into more semantically coherent subregions.
+
+Moreover, as shown in Fig. 3 (b), inference similarity exhibits a positive correlation with contextual similarity, indicating that samples with similar contextual representations tend to follow similar expert activation patterns. This confirms that CoVFT leverages the contextual vector as a central bridge between multimodal context and the visual encoding process. By routing context-similar samples through similar expert combinations, CoVFT effectively mitigates visual preference conflicts within the vision encoder.
+
+Data scalability. We further investigate the scalability of CoVFT by conducting ablations on the amount of training data, as shown in Fig. 4. Across all data scales and task categories, CoVFT consistently outperforms the baseline, demonstrating its ability to capture fine-grained contextual dependencies and maintain stable performance under varying data volumes. Notably, CoVFT surpasses the full-data LLaVA-1.5-7B baseline when trained on 75% of the data, highlighting its strong data efficiency that is especially valuable in real-world multimodal scenarios where high-quality annotated data is limited or expensive to acquire.
+
+A closer examination of different task groups reveals distinct scaling behaviors. For general tasks, the performance gains of CoVFT gradually saturate as data volume increases, suggesting that visual preference conflicts in these tasks are relatively mild and can be partially mitigated through large-scale data exposure. For Knowledge and OCR tasks, CoVFT’s improvements increase steadily with more data, indicating robust generalization across diverse visual–linguistic contexts and a continued reduction of context-induced conflicts with richer multimodal supervision. For vision-centric tasks, CoVFT substantially enhances the capacity of the vision encoder: while the Freeze and Full ft. begin to plateau after 50% of the data, CoVFT continues to deliver consistent and significant gains. These results confirm the effectiveness of context-aware visual fine-tuning, particularly in scenarios that demand strong visual reasoning and high-level cross-modal alignment.
+
+Generalizability. To assess the generalizability of CoVFT across MLLMs with diverse modules and default VFT strategies, we replace the CLIP [43] encoder in LLaVA-1.5 with SigLiP [56] and DINOv3 [44], both adopted in recent MLLMs [38, 47], while keeping all other settings identical. As shown in Table 3, CoVFT consistently improves over the corresponding Freeze baselines on most benchmarks, demonstrating robustness to variations in visual representation quality and pre-training objectives. Applying CoVFT to InternVL 2.0 [9] further yields gains across multiple benchmarks, indicating that context-aware visual adaptation generalizes beyond the LLaVA-style pipeline. Overall, these results show that CoVFT remains broadly effective across heterogeneous MLLM architectures.
+
+5 Conclusion
+
+We introduce the Context-aware Visual Fine-tuning (CoVFT) framework for fine-tuning the vision encoder within MLLMs. Guided by a systematic benchmark of existing VFT methods and an analysis of visual preference conflicts, CoVFT integrates two components: the Contextual Vector Extraction (CVE) module, which aggregates multimodal signals into a compact contextual representation, and the Contextual Mixture-of-Experts (CoMoE) module, which enables context-aware routing within the vision encoder. Experiments demonstrate that CoVFT achieves state-of-the-art performance with superior stability over existing VFT methods, while further analysis shows that CoVFT remains consistent under varying data scales and MLLM architectures.
+
+Limitations and Future Works.
+While CoVFT demonstrates advantages, several limitations remain. Our evaluation focuses on models up to 13B parameters and million-scale training data due to computational constraints. Although the observed scalability suggests promising potential, exploring the behavior and upper bound of visual fine-tuning in larger MLLMs is an important direction. In addition, reinforcement learning has recently shown strong potential for post-training MLLMs, while vision encoder optimization under such settings still suffer from instability [41]. Developing stable visual encoder training strategies for RL-based MLLMs is therefore a promising direction for future work, and may contribute to more unified training pipelines for multimodal systems.
+
+Acknowledgment
+
+This work is partly supported by the National Key Research and Development Plan (2024YFB3309302), the National Natural Science
+Foundation of China (82441024), the Research Program of State Key Laboratory of Complex and Critical Software Environment, and the Fundamental Research Funds for the Central Universities.
+
+The authors sincerely thank Hebeizi Li and Xiefan Guo for insightful discussions on the framework design, Zhenghao Chen for assistance with the training framework, and the anonymous reviewers for their constructive comments.
+
+References
+
+[1]
+J. Alayrac, J. Donahue, P. Luc, A. Miech, I. Barr, Y. Hasson, K. Lenc, A. Mensch, K. Millican, M. Reynolds, et al. (2022)
+
+Flamingo: a visual language model for few-shot learning.
+
+NeurIPS.
+
+Cited by: §2.1.
+
+[2]
+M. R. Anderberg (2014)
+
+Cluster analysis for applications: probability and mathematical statistics: a series of monographs and textbooks.
+
+Academic press.
+
+Cited by: Figure 6,
+Figure 6,
+Appendix C,
+Figure 3,
+Figure 3.
+
+[3]
+J. L. Ba, J. R. Kiros, and G. E. Hinton (2016)
+
+Layer normalization.
+
+arXiv preprint arXiv:1607.06450.
+
+Cited by: §3.3.
+
+[4]
+S. Bai, Y. Cai, R. Chen, K. Chen, X. Chen, Z. Cheng, L. Deng, W. Ding, C. Gao, C. Ge, et al. (2025)
+
+Qwen3-vl technical report.
+
+arXiv preprint arXiv:2511.21631.
+
+Cited by: §2.1.
+
+[5]
+S. Bai, K. Chen, X. Liu, J. Wang, W. Ge, S. Song, K. Dang, P. Wang, S. Wang, J. Tang, et al. (2025)
+
+Qwen2. 5-vl technical report.
+
+arXiv preprint arXiv:2502.13923.
+
+Cited by: §1,
+§1,
+§2.1.
+
+[6]
+A. Baldrati, M. Bertini, T. Uricchio, and A. Del Bimbo (2022)
+
+Effective conditioned and composed image retrieval combining clip-based features.
+
+In CVPR,
+
+Cited by: §2.2.
+
+[7]
+S. Chen, G. Chongjian, Z. Tong, J. Wang, Y. Song, J. Wang, and P. Luo (2022)
+
+AdaptFormer: adapting vision transformers for scalable visual recognition.
+
+In NeurIPS,
+
+Cited by: §2.2.
+
+[8]
+X. Chen, H. Fang, T. Lin, R. Vedantam, S. Gupta, P. Dollár, and C. L. Zitnick (2015)
+
+Microsoft coco captions: data collection and evaluation server.
+
+arXiv preprint arXiv:1504.00325.
+
+Cited by: §1.
+
+[9]
+Z. Chen, W. Wang, H. Tian, S. Ye, Z. Gao, E. Cui, W. Tong, K. Hu, J. Luo, Z. Ma, et al. (2024)
+
+How far are we to gpt-4v? closing the gap to commercial multimodal models with open-source suites.
+
+Science China Information Sciences 67 (12), pp. 220101.
+
+Cited by: §1,
+§2.1,
+§2.1,
+§4.4.
+
+[10]
+W. Chiang, Z. Li, Z. Lin, Y. Sheng, Z. Wu, H. Zhang, L. Zheng, S. Zhuang, Y. Zhuang, J. E. Gonzalez, et al. (2023)
+
+Vicuna: an open-source chatbot impressing gpt-4 with 90%* chatgpt quality.
+
+.
+
+Cited by: §4.1.
+
+[11]
+G. Comanici, E. Bieber, M. Schaekermann, I. Pasupat, N. Sachdeva, I. Dhillon, M. Blistein, O. Ram, D. Zhang, E. Rosen, et al. (2025)
+
+Gemini 2.5: pushing the frontier with advanced reasoning, multimodality, long context, and next generation agentic capabilities.
+
+arXiv preprint arXiv:2507.06261.
+
+Cited by: §1.
+
+[12]
+W. Dai, J. Li, D. Li, A. Tiong, J. Zhao, W. Wang, B. Li, P. N. Fung, and S. Hoi (2023)
+
+Instructblip: towards general-purpose vision-language models with instruction tuning.
+
+In NeurIPS,
+
+Cited by: §1,
+§2.1,
+§2.1.
+
+[13]
+J. Devlin, M. Chang, K. Lee, and K. Toutanova (2019)
+
+Bert: pre-training of deep bidirectional transformers for language understanding.
+
+In NAACL,
+
+Cited by: §3.3,
+§4.1.
+
+[14]
+Y. Ding, J. Liu, Y. Wei, and L. Zhang (2024)
+
+Xft: unlocking the power of code instruction tuning by simply merging upcycled mixture-of-experts.
+
+In ACL,
+
+Cited by: §4.3.
+
+[15]
+A. Dosovitskiy, L. Beyer, A. Kolesnikov, D. Weissenborn, X. Zhai, T. Unterthiner, M. Dehghani, M. Minderer, G. Heigold, S. Gelly, et al. (2020)
+
+An image is worth 16x16 words: transformers for image recognition at scale.
+
+In ICLR,
+
+Cited by: §3.4.
+
+[16]
+W. Fedus, B. Zoph, and N. Shazeer (2022)
+
+Switch transformers: scaling to trillion parameter models with simple and efficient sparsity.
+
+JMLR 23 (120), pp. 1–39.
+
+Cited by: §3.4.
+
+[17]
+C. Fu, Y. Zhang, S. Yin, B. Li, X. Fang, S. Zhao, H. Duan, X. Sun, Z. Liu, L. Wang, et al. (2024)
+
+Mme-survey: a comprehensive survey on evaluation of multimodal llms.
+
+arXiv preprint arXiv:2411.15296.
+
+Cited by: §4.1.
+
+[18]
+R. Ganz, Y. Kittenplon, A. Aberdam, E. Ben Avraham, O. Nuriel, S. Mazor, and R. Litman (2024)
+
+Question aware vision transformer for multimodal reasoning.
+
+In CVPR,
+
+Cited by: Appendix B.
+
+[19]
+H. Gouk, T. Hospedales, et al. (2020)
+
+Distance-based regularisation of deep networks for fine-tuning.
+
+In ICLR,
+
+Cited by: §2.2.
+
+[20]
+B. Gunel, J. Du, A. Conneau, and V. Stoyanov (2020)
+
+Supervised contrastive learning for pre-trained language model fine-tuning.
+
+In ICLR,
+
+Cited by: §2.2.
+
+[21]
+C. Han, Q. Wang, Y. Cui, Z. Cao, W. Wang, S. Qi, and D. Liu (2023)
+
+Eˆ 2vpt: an effective and efficient approach for visual prompt tuning.
+
+In ICCV,
+
+Cited by: §2.2.
+
+[22]
+C. Han, Q. Wang, Y. Cui, W. Wang, L. Huang, S. Qi, and D. Liu (2024)
+
+Facing the elephant in the room: visual prompt tuning or full finetuning?.
+
+In ICLR,
+
+Cited by: §2.2,
+§2.2.
+
+[23]
+Z. Han, C. Gao, J. Liu, S. Q. Zhang, et al. (2024)
+
+Parameter-efficient fine-tuning for large models: a comprehensive survey.
+
+arXiv preprint arXiv:2403.14608.
+
+Cited by: §1.
+
+[24]
+H. He, J. Cai, J. Zhang, D. Tao, and B. Zhuang (2023)
+
+Sensitivity-aware visual parameter-efficient fine-tuning.
+
+In ICCV,
+
+Cited by: §2.2.
+
+[25]
+E. J. Hu, P. Wallis, Z. Allen-Zhu, Y. Li, S. Wang, L. Wang, W. Chen, et al. (2022)
+
+LoRA: low-rank adaptation of large language models.
+
+In ICLR,
+
+Cited by: §2.2,
+§4.1.
+
+[26]
+D. A. Hudson and C. D. Manning (2019)
+
+Gqa: a new dataset for real-world visual reasoning and compositional question answering.
+
+In CVPR,
+
+Cited by: §4.1.
+
+[27]
+M. Jia, L. Tang, B. Chen, C. Cardie, S. Belongie, B. Hariharan, and S. Lim (2022)
+
+Visual prompt tuning.
+
+In ECCV,
+
+Cited by: §2.2,
+§4.1.
+
+[28]
+S. Karamcheti, S. Nair, A. Balakrishna, P. Liang, T. Kollar, and D. Sadigh (2024)
+
+Prismatic vlms: investigating the design space of visually-conditioned language models.
+
+In ICML,
+
+Cited by: §1,
+§2.1.
+
+[29]
+A. Kembhavi, M. Salvato, E. Kolve, M. Seo, H. Hajishirzi, and A. Farhadi (2016)
+
+A diagram is worth a dozen images.
+
+In ECCV,
+
+Cited by: §4.1.
+
+[30]
+R. Krishna, Y. Zhu, O. Groth, J. Johnson, K. Hata, J. Kravitz, S. Chen, Y. Kalantidis, L. Li, D. A. Shamma, et al. (2017)
+
+Visual genome: connecting language and vision using crowdsourced dense image annotations.
+
+IJCV 123 (1), pp. 32–73.
+
+Cited by: Figure 1,
+Figure 1,
+§1.
+
+[31]
+J. Li, D. Li, S. Savarese, and S. Hoi (2023)
+
+Blip-2: bootstrapping language-image pre-training with frozen image encoders and large language models.
+
+In ICML,
+
+Cited by: §2.1,
+§2.2.
+
+[32]
+J. Li, D. Li, C. Xiong, and S. Hoi (2022)
+
+Blip: bootstrapping language-image pre-training for unified vision-language understanding and generation.
+
+In ICML,
+
+Cited by: §2.1.
+
+[33]
+X. Li, H. Xiong, H. Wang, Y. Rao, L. Liu, and J. Huan (2018)
+
+Delta: deep learning transfer using feature map with attention for convolutional networks.
+
+In ICLR,
+
+Cited by: §2.2.
+
+[34]
+H. Liu, C. Li, Y. Li, and Y. J. Lee (2024)
+
+Improved baselines with visual instruction tuning.
+
+In CVPR,
+
+Cited by: Appendix A,
+§1,
+§2.1,
+§2.1,
+§3.1,
+§4.1,
+Table 1,
+Table 1.
+
+[35]
+H. Liu, C. Li, Q. Wu, and Y. J. Lee (2023)
+
+Visual instruction tuning.
+
+In NeurIPS,
+
+Cited by: §2.1,
+§2.1.
+
+[36]
+Y. Liu, H. Duan, Y. Zhang, B. Li, S. Zhang, W. Zhao, Y. Yuan, J. Wang, C. He, Z. Liu, et al. (2024)
+
+Mmbench: is your multi-modal model an all-around player?.
+
+In ECCV,
+
+Cited by: §4.1.
+
+[37]
+M. Long, Y. Cao, J. Wang, and M. Jordan (2015)
+
+Learning transferable features with deep adaptation networks.
+
+In ICML,
+
+Cited by: Figure 1,
+Figure 1.
+
+[38]
+H. Lu, W. Liu, B. Zhang, B. Wang, K. Dong, B. Liu, J. Sun, T. Ren, Z. Li, H. Yang, et al. (2024)
+
+Deepseek-vl: towards real-world vision-language understanding.
+
+arXiv preprint arXiv:2403.05525.
+
+Cited by: §4.4.
+
+[39]
+P. Lu, S. Mishra, T. Xia, L. Qiu, K. Chang, S. Zhu, O. Tafjord, P. Clark, and A. Kalyan (2022)
+
+Learn to explain: multimodal reasoning via thought chains for science question answering.
+
+NeurIPS.
+
+Cited by: §4.1.
+
+[40]
+J. Ludziejewski, M. Pióro, J. Krajewski, M. Stefaniak, M. Krutul, J. Małaśnicki, M. Cygan, P. Sankowski, K. Adamczewski, P. Miłoś, et al. (2025)
+
+Joint moe scaling laws: mixture of experts can be memory efficient.
+
+arXiv preprint arXiv:2502.05172.
+
+Cited by: Appendix A.
+
+[41]
+Y. Ma, L. Du, X. Shen, S. Chen, P. Li, Q. Ren, L. Ma, Y. Dai, P. Liu, and J. Yan (2025)
+
+One rl to see them all: visual triple unified reinforcement learning.
+
+arXiv preprint arXiv:2505.18129.
+
+Cited by: §5.
+
+[42]
+K. Pearson (1901)
+
+LIII. on lines and planes of closest fit to systems of points in space.
+
+The London, Edinburgh, and Dublin philosophical magazine and journal of science.
+
+Cited by: Figure 6,
+Figure 6,
+Appendix C,
+Figure 3,
+Figure 3.
+
+[43]
+A. Radford, J. W. Kim, C. Hallacy, A. Ramesh, G. Goh, S. Agarwal, G. Sastry, A. Askell, P. Mishkin, J. Clark, et al. (2021)
+
+Learning transferable visual models from natural language supervision.
+
+In ICML,
+
+Cited by: §1,
+§2.2,
+§4.1,
+§4.4.
+
+[44]
+O. Siméoni, H. V. Vo, M. Seitzer, F. Baldassarre, M. Oquab, C. Jose, V. Khalidov, M. Szafraniec, S. Yi, M. Ramamonjisoa, et al. (2025)
+
+Dinov3.
+
+arXiv preprint arXiv:2508.10104.
+
+Cited by: §4.4.
+
+[45]
+A. Singh, V. Natarajan, M. Shah, Y. Jiang, X. Chen, D. Batra, D. Parikh, and M. Rohrbach (2019)
+
+Towards vqa models that can read.
+
+In CVPR,
+
+Cited by: §4.1.
+
+[46]
+C. Tian, K. Chen, J. Liu, Z. Liu, Z. Zhang, and J. Zhou (2025)
+
+Towards greater leverage: scaling laws for efficient mixture-of-experts language models.
+
+arXiv preprint arXiv:2507.17702.
+
+Cited by: Appendix A.
+
+[47]
+P. Tong, E. Brown, P. Wu, S. Woo, A. J. V. IYER, S. C. Akula, S. Yang, J. Yang, M. Middepogu, Z. Wang, et al. (2024)
+
+Cambrian-1: a fully open, vision-centric exploration of multimodal llms.
+
+In NeurIPS,
+
+Cited by: §1,
+§2.1,
+§4.1,
+§4.2,
+§4.4,
+footnote 1.
+
+[48]
+S. Tong, Z. Liu, Y. Zhai, Y. Ma, Y. LeCun, and S. Xie (2024)
+
+Eyes wide shut? exploring the visual shortcomings of multimodal llms.
+
+In CVPR,
+
+Cited by: §4.1.
+
+[49]
+H. Wang, J. Ren, Y. Ding, L. Ren, H. Jiang, W. Chen, F. Feng, and X. Wang (2024)
+
+Q-moe: connector for mllms with text-driven routing.
+
+In ACM MM,
+
+Cited by: Appendix B,
+§2.2.
+
+[50]
+xAI (2024)
+
+Grok-1.5 vision preview.
+
+In ,
+
+Cited by: §4.1.
+
+[51]
+Y. Xin, S. Luo, H. Zhou, J. Du, X. Liu, Y. Fan, Q. Li, and Y. Du (2024)
+
+Parameter-efficient fine-tuning for pre-trained vision models: a survey.
+
+arXiv e-prints, pp. arXiv–2402.
+
+Cited by: §1,
+§2.2.
+
+[52]
+L. Xuhong, Y. Grandvalet, and F. Davoine (2018)
+
+Explicit inductive bias for transfer learning with convolutional networks.
+
+In ICML,
+
+Cited by: §2.2.
+
+[53]
+S. Yin, C. Fu, S. Zhao, K. Li, X. Sun, T. Xu, and E. Chen (2024)
+
+A survey on multimodal large language models.
+
+National Science Review 11 (12), pp. nwae403.
+
+Cited by: §1,
+§2.1,
+§2.1.
+
+[54]
+J. Yosinski, J. Clune, Y. Bengio, and H. Lipson (2014)
+
+How transferable are features in deep neural networks?.
+
+In NeurIPS,
+
+Cited by: Figure 1,
+Figure 1.
+
+[55]
+E. B. Zaken, Y. Goldberg, and S. Ravfogel (2022)
+
+BitFit: simple parameter-efficient fine-tuning for transformer-based masked language-models.
+
+In ACL,
+
+Cited by: §2.2,
+§4.1.
+
+[56]
+X. Zhai, B. Mustafa, A. Kolesnikov, and L. Beyer (2023)
+
+Sigmoid loss for language image pre-training.
+
+In ICCV,
+
+Cited by: §1,
+§4.4.
+
+[57]
+X. Zhai, J. Puigcerver, A. Kolesnikov, P. Ruyssen, C. Riquelme, M. Lucic, J. Djolonga, A. S. Pinto, M. Neumann, A. Dosovitskiy, et al. (2019)
+
+A large-scale study of representation learning with the visual task adaptation benchmark.
+
+arXiv preprint arXiv:1910.04867.
+
+Cited by: §4.1.
+
+[58]
+X. Zhan, Z. Liu, P. Luo, X. Tang, and C. Loy (2018)
+
+Mix-and-match tuning for self-supervised semantic segmentation.
+
+In AAAI,
+
+Cited by: §2.2.
+
+[59]
+J. Zhang, J. Huang, S. Jin, and S. Lu (2024)
+
+Vision-language models for vision tasks: a survey.
+
+IEEE T-PAMI.
+
+Cited by: §1.
+
+[60]
+Z. Zhang, Y. Xia, H. Wang, D. Yang, C. Hu, X. Zhou, and D. Cheng (2024)
+
+Mpmoe: memory efficient moe for pre-trained models with adaptive pipeline parallelism.
+
+IEEE Transactions on Parallel and Distributed Systems 35 (6), pp. 998–1011.
+
+Cited by: Appendix B.
+
+[61]
+N. Zhou, J. Chen, and D. Huang (2023)
+
+DR-tune: improving fine-tuning of pretrained visual models by distribution regularization with semantic calibration.
+
+In ICCV,
+
+Cited by: §2.2,
+§4.2.
+
+[62]
+N. Zhou, J. Chen, and D. Huang (2025)
+
+Sharing task-relevant information in visual prompt tuning by cross-layer dynamic connection.
+
+IEEE T-IP.
+
+Cited by: §2.2,
+§4.1.
+
+[63]
+N. Zhou, H. Wang, Y. Zheng, and D. Huang (2025)
+
+Progressive parameter efficient transfer learning for semantic segmentation.
+
+In ICLR,
+
+Cited by: §4.2.
+
+Supplementary Material for CoVFT: Context-aware Visual Fine-tuning for Multimodal Large Language Models
+
+This supplementary document provides additional experimental results and extended analyses that complement the main paper. The content is organized as follows:
+
+•
+
+Section A presents extended ablation studies of CoVFT, including additional design choices and hyper-parameters.
+
+•
+
+Section B presents extended analyzes on the gradient conflict, context-aware counterparts, learnable parameters and computational overhead.
+
+•
+
+Section C provides visualizations of contextual vectors and multimodal samples.
+
+•
+
+Section D reports the complete benchmark results for all evaluated tasks, extending the averaged results shown in the main paper.
+
+Appendix A Extended Ablation Studies
+
+In this section, we provide additional analyses of key design choices in CoVFT, focusing on the placement of CoMoE layers and the number of experts per CoMoE block.
+
+Placement of CoMoE layers.
+
+We evaluate the impact of different CoMoE placements within the vision encoder in Table 4. Since only the first 23 ViT blocks participate in the LLaVA-1.5 forward pass [34], we index them from 0 to 22 and examine four representative configurations: inserting CoMoE into all eligible layers (0–22), into the first half (0–10), into the second half (11–22), and into progressively deeper subsets of layers.
+From Table 4, we observe that introducing CoMoE consistently improves performance over the baseline (N/A), which corresponds to full fine-tuning without CoMoE, demonstrating its overall effectiveness. Furthermore, deeper CoMoE placement generally yields larger gains under comparable layer budgets. This trend aligns with the observation in Fig. 1(c), where visual preference conflicts become increasingly pronounced in deeper layers of the vision encoder. We additionally evaluate several reduced-layer variants and find that placing CoMoE in layers 11–22 delivers the most consistent improvements across benchmarks. Consequently, we adopt this configuration as the default setting for CoVFT.
+
+Table 4: Ablation on the placement of CoMoE layers within the vision encoder.
+“Start” and “End” denote the layer range where CoMoE is inserted.
+“Num.” is the total number of CoMoE layers applied.
+The baseline (N/A) corresponds to full fine-tuning without CoMoE.
+
+Start
+
+End
+
+Num.
+
+General
+
+Know.&OCR
+
+Vision
+
+Mean (%)
+
+N/A
+
+66.69
+
+61.29
+
+52.17
+
+59.29
+
+0
+
+22
+
+23
+
+66.72
+
+61.43
+
+54.32
+
+60.23
+
+0
+
+10
+
+11
+
+66.75
+
+61.43
+
+52.13
+
+59.33
+
+11
+
+22
+
+12
+
+67.04
+
+61.93
+
+55.81
+
+61.08
+
+15
+
+22
+
+8
+
+66.96
+
+62.10
+
+52.87
+
+59.87
+
+19
+
+22
+
+4
+
+66.78
+
+61.70
+
+53.50
+
+59.98
+
+Table 5: Ablation on the number of experts in each CoMoE block.
+
+Num.
+
+General
+
+Know.&OCR
+
+Vision
+
+Mean (%)
+
+2
+
+66.24
+
+61.63
+
+55.16
+
+60.47
+
+4
+
+67.04
+
+61.93
+
+55.81
+
+61.08
+
+8
+
+66.12
+
+61.73
+
+56.03
+
+60.82
+
+Number of experts.
+
+Table 5 reports an ablation on the number of experts in each CoMoE block. Using four experts yields the best mean performance among the tested configurations. We note that the optimal number of experts is related to the scale and diversity of training data [46]. The hyperparameters in Table 5 are determined under an instruction-tuning set of roughly 665K samples. Based on existing MoE scaling observations [46, 40], we expect that larger-scale training may benefit from increasing the number of experts, and adjusting expert width according to empirical scaling rules may further improve performance.
+
+To further investigate the optimal MoE capacity under different levels of training data diversity, we partition the LLaVA-1.5 instruction data into 15 task types using Qwen-Plus, based on perceptual focus, semantic granularity, and reasoning requirements, and then ablate the number of experts. The results are shown in Table 6. As task diversity increases (3→\rightarrow15), the optimal number of experts also increases (2→\rightarrow4→\rightarrow8), indicating that the optimal MoE capacity scales with data diversity. This trend suggests that CoMoE allocates more specialized expert subspaces to accommodate heterogeneous visual preferences induced by increasingly diverse multimodal contexts.
+
+Table 6: Vision-centric task performance under different levels of task diversity and numbers of experts. Bold indicates the best configuration for each diversity level.
+
+# Experts
+
+# Task types→\rightarrow
+
+3
+
+6
+
+9
+
+12
+
+15
+
+Full ft.
+
+45.49
+
+47.66
+
+49.01
+
+51.79
+
+52.17
+
+2
+
+48.09
+
+49.55
+
+51.09
+
+53.14
+
+55.16
+
+4
+
+47.36
+
+48.71
+
+52.27
+
+54.72
+
+55.81
+
+8
+
+46.94
+
+48.35
+
+52.01
+
+54.50
+
+56.03
+
+Appendix B Extended Analysis
+
+Gradient conflict. In Fig. 1(a) of the main body, we analyze visual preference conflict from the perspective of parameter distance. Here, we further provide an analysis from the gradient perspective. Specifically, we compute the cosine similarity between each gradient update and the dominant gradient direction during training under the standard mixed-task setting. The results are shown in Fig. 5. Full fine-tuning exhibits frequent near-orthogonal or even opposing gradients, indicating update conflicts across heterogeneous instructions. In contrast, CoVFT substantially increases the mean gradient similarity (0.076→\rightarrow0.189) while reducing the standard deviation (0.112→\rightarrow0.051), suggesting that it improves gradient alignment and stabilizes optimization.
+
+Refer to caption
+
+Figure 5: Cosine similarity between each gradient update and the dominant gradient direction during training under the standard instruction-tuning setting.
+
+Comparison with context-aware counterparts. To further compare with existing context-aware counterparts, we re-implement QA-ViT [18] and Q-MoE [49] within LLaVA-1.5. CoVFT achieves 61.08% mean accuracy, outperforming QA-ViT (59.12%) and Q-MoE (59.29%) across 12 benchmarks, demonstrating the advantage of our method for context-aware visual adaptation in MLLMs.
+
+Parameter-matched comparison. We compare different methods under matched trainable parameter budgets. With 4 CoMoE layers, CoVFT matches LoRA (r=512r{=}512) in trainable parameters (6.85B vs. 6.86B) while achieving better overall performance (59.98 vs. 59.20), especially on vision-centric tasks (53.50 vs. 52.67). When increasing the number of CoMoE layers to 12, CoVFT continues to scale effectively, improving overall performance from 59.98 to 61.08 and vision-centric performance from 53.50 to 55.81. In contrast, existing PETL methods are more difficult to scale in this manner, highlighting the superior scalability and effectiveness of CoVFT under similar parameter budgets.
+
+Table 7: Comparison of diverse VFT methods under different trainable parameters. NN denotes the number of CoMoE layers.
+
+Method
+
+G.
+
+K.
+
+V.
+
+Mean (%)
+
+Param. (B)
+
+Freeze
+
+66.23
+
+61.20
+
+51.71
+
+58.93
+
+6.76
+
+LoRA (rr=8)
+
+65.93
+
+60.86
+
+52.45
+
+59.04
+
+6.76
+
+LoRA (rr=512)
+
+66.09
+
+60.90
+
+52.67
+
+59.20
+
+6.86
+
+CoVFT (NN=4)
+
+66.78
+
+61.70
+
+53.50
+
+59.98
+
+6.85
+
+Full fine-tuning
+
+66.69
+
+61.29
+
+52.17
+
+59.29
+
+7.06
+
+CoVFT (NN=12)
+
+67.04
+
+61.93
+
+55.81
+
+61.08
+
+7.24
+
+Computational overhead.
+
+We analyze the computational overhead of CoVFT and compare it with two widely used VFT baselines: Freeze and Full fine-tuning. All pre-training and instruction-tuning experiments are conducted on 8×\timesNVIDIA H100 GPUs, with batch sizes identical to those used in LLaVA-1.5. For inference, we evaluate each method on a single NVIDIA H100 GPU with a batch size of 1.
+
+The computational cost comparison among Freeze, Full FT, and CoVFT is reported in Table 8. Compared with the freeze setting and full fine-tuning, CoVFT introduces 18 minutes in total training time (approximately 3.8% overhead relative to Full FT), adds ∼\sim10ms latency during inference, and incurs a moderate increase in peak GPU memory usage (13.5% over Full FT). The frozen BERT encoder incurs around 1.14ms inference latency per sample. Importantly, this slight computational and memory overhead yields substantial accuracy gains across 12 multimodal benchmarks and delivers markedly improved stability, offering a significantly better trade-off among performance, robustness, and efficiency. This demonstrates that context-aware visual adaptation is both practical and cost-effective for modern MLLMs. Moreover, CoVFT remains fully compatible with existing MoE-parallelization and expert sharding techniques [60], which can further reduce training, inference, and memory costs, suggesting that its efficiency can be improved even further in future deployments.
+
+Table 8: Comparison of computational overhead across different VFT strategies.
+Training time is reported in hours and minutes; inference time is averaged per sample.
+
+Method
+
+Pre-training
+
+Instruction-tuning
+
+Total
+
+Inference
+
+Peak GPU memory
+
+Freeze
+
+2h 38m
+
+4h 28m
+
+7h 6m
+
+77.04ms
+
+41,352MB
+
+Full ft.
+
+2h 38m
+
+5h 14m
+
+7h 52m
+
+77.04ms
+
+44,036MB
+
+CoVFT
+
+2h 38m
+
+5h 32m
+
+8h 10m
+
+88.17ms
+
+49,974MB
+
+Refer to caption
+
+Figure 6: PCA [42] visualization of 5,000 contextual vectors extracted from the CVE module. Vectors are grouped using k-means [2], and for each cluster, four nearest samples to the cluster centroid are shown to illustrate representative task patterns.
+
+Appendix C Visualizations
+
+In the main paper (Fig. 3(a)), we visualize the contextual vectors extracted from the CVE module, showing clear semantic grouping aligned with distinct visual preference patterns. Here, we extend this analysis by presenting the full clustering results in Fig. 6, together with representative samples from each cluster.
+
+Visualization procedure.
+
+We randomly sample 5,000 multimodal instruction–image pairs from the LLaVA-665K instruction-tuning dataset and extract their contextual vectors from the penultimate vision encoder layer (i.e., the features actually fed to the LLM). These vectors are grouped using k-means [2] clustering, projected into two dimensions using PCA [42] for visualization, and we select the four samples nearest to each cluster centroid to illustrate the dominant characteristics of each cluster.
+
+Observed cluster patterns.
+
+As shown in Fig. 6, the contextual vectors exhibit a clear task-dependent organization: clusters naturally align with distinct types of multimodal reasoning despite the absence of explicit task labels. For example, Clusters 0 and 8 correspond to relationship reasoning involving structural or relational understanding across objects; Clusters 1 and 2 capture region captioning, focusing on localized box-level descriptions; and Clusters 3, 4, and 5 represent region grounding, mapping textual phrases to spatial coordinates. Other clusters display more heterogeneous behaviors: Cluster 7 leans toward visual entity recognition, including OCR and attribute-based identification; Cluster 9 frequently mixes grounding and captioning; while Cluster 6 spans diverse queries without a dominant pattern. These emergent structures indicate that CVE effectively organizes the multimodal space into semantically meaningful subregions, capturing latent task semantics purely from contextual signals. Building upon these structured contextual embeddings, CoMoE further routes samples to expert pathways that better align the vision encoder’s updates with multimodal instruction-following objectives while reducing conflicting optimization signals.
+
+Discussion.
+
+While CVE provides an effective mechanism for capturing contextual signals, the clustering results suggest room for further refinement. Some clusters (e.g., Cluster 6) exhibit coarse or mixed semantics, suggesting that contextual modeling could be made more discriminative. Conversely, overly fine-grained contextual partitioning may also hinder expert-level knowledge sharing. Balancing fine-grained modeling of visual preferences with the need for shared representation learning, as well as understanding how longer and more complex textual contexts shape these clusters, offers promising directions for future research.
+
+Appendix D Full Results
+
+For reasons of space, the main paper reports the averaged results for several groups of benchmarks. In this section, we provide the complete per-task results corresponding to all experiments in the main text111Following [47], we divide the MME Perception score by 20 to have the same scale as other benchmarks before averaging.. Specifically, Table 9 presents the full results for the design choices of the contextual vector and routing strategy (Table 2 in the main paper). Table 10 reports the per-task results under different data scales (Figure 4 in the main paper). Table 11 and Table 12 provide the detailed results for the ablations on the placement of CoMoE layers and the number of experts, respectively, corresponding to Tables 4 and 5 of the supplementary material.
+
+Table 9: Per task results by various ablation settings in Table 2 of the main body.
+
+General
+
+Knowledge & OCR
+
+Vision-centric
+
+Mean (%)
+
+Ablation
+
+MMEP{}^{\text{P}}
+
+MMBen{}^{\text{en}}
+
+MMBcn{}^{\text{cn}}
+
+GQA
+
+SQAI{}^{\text{I}}
+
+AI2D
+
+TextVQA
+
+MMVP
+
+RWQA
+
+COCO
+
+ADE
+
+Omni3D
+
+G.
+
+K.
+
+V.
+
+Avg.
+
+w.r.t. contextual vector
+
+N/A
+
+1510.2
+
+67.44
+
+59.88
+
+63.92
+
+67.67
+
+56.51
+
+59.70
+
+27.33
+
+55.82
+
+65.71
+
+51.97
+
+60.00
+
+66.69
+
+61.29
+
+52.17
+
+59.29
+
+Image-only
+
+1492.2
+
+68.56
+
+61.17
+
+62.04
+
+68.96
+
+56.80
+
+59.32
+
+26.00
+
+56.99
+
+66.71
+
+55.13
+
+61.00
+
+66.60
+
+61.69
+
+53.17
+
+59.77
+
+Text-only
+
+1505.6
+
+69.07
+
+60.22
+
+62.77
+
+68.72
+
+57.35
+
+59.52
+
+30.66
+
+56.99
+
+68.82
+
+57.35
+
+59.83
+
+66.84
+
+61.86
+
+54.73
+
+60.55
+
+Concat[I,T][\rm I,T]
+
+1498.6
+
+68.90
+
+60.48
+
+62.82
+
+69.16
+
+56.67
+
+59.54
+
+31.33
+
+55.82
+
+68.70
+
+55.29
+
+61.67
+
+66.78
+
+61.79
+
+54.56
+
+60.44
+
+CVE
+
+1525.2
+
+68.13
+
+60.40
+
+63.37
+
+69.51
+
+56.64
+
+59.64
+
+36.67
+
+57.52
+
+66.96
+
+56.08
+
+61.83
+
+67.04
+
+61.93
+
+55.81
+
+61.08
+
+w.r.t. routing strategy
+
+Uniform
+
+1478.8
+
+67.61
+
+59.28
+
+63.89
+
+69.26
+
+56.80
+
+59.20
+
+28.67
+
+57.65
+
+66.21
+
+51.03
+
+61.67
+
+66.18
+
+61.75
+
+53.05
+
+59.60
+
+Sparse@2
+
+1478.8
+
+69.07
+
+60.57
+
+62.91
+
+69.91
+
+56.67
+
+60.15
+
+30.00
+
+56.21
+
+67.20
+
+51.82
+
+62.75
+
+66.63
+
+61.78
+
+53.60
+
+60.10
+
+Dense
+
+1525.2
+
+68.13
+
+60.40
+
+63.37
+
+69.51
+
+56.64
+
+59.64
+
+36.67
+
+57.52
+
+66.96
+
+56.08
+
+61.83
+
+67.04
+
+61.93
+
+55.81
+
+61.08
+
+Table 10:
+Per task results by various ablation settings in Figure 4 of the main body.
+
+General
+
+Knowledge & OCR
+
+Vision-centric
+
+Mean (%)
+
+Method
+
+MMEP{}^{\text{P}}
+
+MMBen{}^{\text{en}}
+
+MMBcn{}^{\text{cn}}
+
+GQA
+
+SQAI{}^{\text{I}}
+
+AI2D
+
+TextVQA
+
+MMVP
+
+RWQA
+
+COCO
+
+ADE
+
+Omni3D
+
+G.
+
+K.
+
+V.
+
+Avg.
+
+100% data
+
+Freeze
+
+1473.7
+
+67.87
+
+60.30
+
+63.07
+
+69.31
+
+55.76
+
+58.53
+
+28.00
+
+56.73
+
+63.73
+
+49.61
+
+60.50
+
+66.23
+
+61.20
+
+51.71
+
+58.93
+
+Full fine-tuning
+
+1510.2
+
+67.44
+
+59.88
+
+63.92
+
+67.67
+
+56.51
+
+59.70
+
+27.33
+
+55.82
+
+65.71
+
+51.97
+
+60.00
+
+66.69
+
+61.29
+
+52.17
+
+59.29
+
+CoVFT
+
+1525.2
+
+68.13
+
+60.40
+
+63.37
+
+69.51
+
+56.64
+
+59.64
+
+36.67
+
+57.52
+
+66.96
+
+56.08
+
+61.83
+
+67.04
+
+61.93
+
+55.81
+
+61.08
+
+50% data
+
+Freeze
+
+1446.0
+
+65.55
+
+57.47
+
+60.84
+
+68.96
+
+55.63
+
+57.01
+
+28.00
+
+53.46
+
+64.72
+
+49.45
+
+59.42
+
+64.04
+
+60.53
+
+51.01
+
+57.73
+
+Full fine-tuning
+
+1445.2
+
+67.18
+
+56.87
+
+62.23
+
+66.09
+
+57.35
+
+57.40
+
+29.33
+
+53.59
+
+65.96
+
+52.13
+
+58.00
+
+64.63
+
+60.28
+
+51.80
+
+58.20
+
+CoVFT
+
+1492.0
+
+67.7
+
+58.08
+
+61.25
+
+68.32
+
+56.83
+
+58.07
+
+26.00
+
+55.29
+
+66.96
+
+49.92
+
+58.17
+
+65.41
+
+61.07
+
+51.27
+
+58.43
+
+25% data
+
+Freeze
+
+1463.4
+
+62.89
+
+55.07
+
+58.67
+
+67.82
+
+54.92
+
+55.54
+
+19.33
+
+51.63
+
+57.64
+
+47.39
+
+60.25
+
+62.45
+
+59.43
+
+47.25
+
+55.36
+
+Full fine-tuning
+
+1397.6
+
+63.32
+
+53.18
+
+60.43
+
+67.53
+
+54.76
+
+56.24
+
+24.67
+
+50.72
+
+57.76
+
+47.87
+
+62.92
+
+61.70
+
+59.51
+
+48.79
+
+55.77
+
+CoVFT
+
+1467.0
+
+64.35
+
+54.90
+
+59.91
+
+67.13
+
+55.60
+
+56.93
+
+23.33
+
+53.73
+
+57.27
+
+47.39
+
+59.83
+
+63.13
+
+59.89
+
+48.31
+
+56.14
+
+12.5% data
+
+Freeze
+
+1430.6
+
+59.19
+
+53.09
+
+56.11
+
+66.68
+
+54.60
+
+53.38
+
+15.33
+
+47.97
+
+55.53
+
+49.29
+
+58.17
+
+59.98
+
+58.55
+
+45.26
+
+53.49
+
+Full fine-tuning
+
+1408.2
+
+57.82
+
+50.52
+
+57.93
+
+66.63
+
+53.79
+
+54.50
+
+22.00
+
+50.46
+
+54.78
+
+46.45
+
+58.50
+
+59.17
+
+58.31
+
+46.44
+
+53.65
+
+CoVFT
+
+1382.2
+
+59.11
+
+50.69
+
+57.98
+
+66.34
+
+53.95
+
+55.37
+
+21.33
+
+49.93
+
+59.38
+
+48.18
+
+59.50
+
+59.22
+
+58.55
+
+47.66
+
+54.24
+
+Table 11:
+Per task results by various ablation settings in Table 4 of the supplementary material.
+
+General
+
+Knowledge & OCR
+
+Vision-centric
+
+Mean (%)
+
+Start
+
+End
+
+Num.
+
+MMEP{}^{\text{P}}
+
+MMBen{}^{\text{en}}
+
+MMBcn{}^{\text{cn}}
+
+GQA
+
+SQAI{}^{\text{I}}
+
+AI2D
+
+TextVQA
+
+MMVP
+
+RWQA
+
+COCO
+
+ADE
+
+Omni3D
+
+G.
+
+K.
+
+V.
+
+Avg.
+
+N/A
+
+1510.2
+
+67.44
+
+59.88
+
+63.92
+
+67.67
+
+56.51
+
+59.70
+
+27.33
+
+55.82
+
+65.71
+
+51.97
+
+60.00
+
+66.69
+
+61.29
+
+52.17
+
+59.29
+
+0
+
+22
+
+23
+
+1508.4
+
+68.08
+
+60.55
+
+62.84
+
+67.92
+
+56.93
+
+59.45
+
+30.67
+
+55.69
+
+67.20
+
+55.29
+
+62.75
+
+66.72
+
+61.43
+
+54.32
+
+60.23
+
+0
+
+10
+
+11
+
+1501.4
+
+68.04
+
+60.65
+
+63.22
+
+68.62
+
+56.99
+
+58.68
+
+27.33
+
+56.86
+
+62.11
+
+52.34
+
+62.00
+
+66.75
+
+61.43
+
+52.13
+
+59.33
+
+11
+
+22
+
+12
+
+1525.2
+
+68.13
+
+60.40
+
+63.37
+
+69.51
+
+56.64
+
+59.64
+
+36.67
+
+57.52
+
+66.96
+
+56.08
+
+61.83
+
+67.04
+
+61.93
+
+55.81
+
+61.08
+
+15
+
+22
+
+8
+
+1518.0
+
+68.21
+
+60.45
+
+63.29
+
+69.66
+
+56.77
+
+59.88
+
+31.33
+
+56.60
+
+64.57
+
+54.50
+
+57.33
+
+66.96
+
+62.10
+
+52.87
+
+59.87
+
+19
+
+22
+
+4
+
+1513.2
+
+68.10
+
+60.33
+
+63.01
+
+69.36
+
+56.25
+
+59.50
+
+29.33
+
+56.60
+
+66.71
+
+55.13
+
+59.75
+
+66.78
+
+61.70
+
+53.50
+
+59.98
+
+Table 12:
+Per task results by various ablation settings in Table 5 of the supplementary material.
+
+General
+
+Knowledge & OCR
+
+Vision-centric
+
+Mean (%)
+
+Num.
+
+MMEP{}^{\text{P}}
+
+MMBen{}^{\text{en}}
+
+MMBcn{}^{\text{cn}}
+
+GQA
+
+SQAI{}^{\text{I}}
+
+AI2D
+
+TextVQA
+
+MMVP
+
+RWQA
+
+COCO
+
+ADE
+
+Omni3D
+
+G.
+
+K.
+
+V.
+
+Avg.
+
+2
+
+1478.6
+
+67.61
+
+60.91
+
+62.51
+
+69.06
+
+56.25
+
+59.59
+
+32.00
+
+58.04
+
+68.57
+
+55.77
+
+61.42
+
+66.24
+
+61.63
+
+55.16
+
+60.47
+
+4
+
+1525.2
+
+68.13
+
+60.40
+
+63.37
+
+69.51
+
+56.64
+
+59.64
+
+36.67
+
+57.52
+
+66.96
+
+56.08
+
+61.83
+
+67.04
+
+61.93
+
+55.81
+
+61.08
+
+8
+
+1476.2
+
+67.61
+
+60.48
+
+62.57
+
+68.62
+
+56.99
+
+59.58
+
+30.67
+
+56.73
+
+70.68
+
+58.14
+
+63.92
+
+66.12
+
+61.73
+
+56.03
+
+60.82
+
+◄
+ar5iv homepage
+Feeling
+lucky?
+
+Conversion
+report
+Report
+an issue
+View original
+on arXiv►
+
+Copyright
+Privacy Policy
+
+Generated on Mon Apr 6 06:49:32 2026 by LaTeXML Mascot Sammy

@@ -126,3 +126,26 @@
   visual trainability / module allocation / objective routing 的真正不同机制。
 - **Recommended human decision**: 无需立即决定；后续审查时确认结论限制为当前
   低维/frozen-encoder setting，不外推为“视觉自监督一般无效”。
+
+## 2026-08-07｜LITMAP-03：选择 fixed-total projector allocation 路线
+
+- **Date**: 2026-08-07
+- **Idea / issue**: `VISSUP-01` 失败后，文献是否支持一个不换 task/ratio/proxy、
+  能区分 frozen-encoder identifiability 与 module-allocation capacity 的唯一最小
+  candidate。
+- **Why human should review it**: ACL 2024 PEFT/CROME 更支持 connector 或 pre-LLM
+  adapter，Cambrian-1 则支持 vision encoder unfreezing；公开研究没有匹配
+  trainable parameter count，因此本地 `1/4094/1` 方向是可证伪迁移，不是文献已证
+  结论。
+- **Current evidence**: 五族检索 541 raw records / 480 unique titles，核查 11 篇
+  primary sources；三篇独立 autoregressive-LVLM direct sources 证明 module
+  placement 重要但方向不闭合。本地 current 与 projector-dominant 均为 4,096
+  coordinates、22 个 factor mappings、无 unused coordinates。
+- **What Agent has already frozen**: 只登记 `PROJALLOC-01`；pilot 比较 current
+  `582/2327/1187` 与唯一正维极端 `1/4094/1`。不换成 vision-heavy、不搜索比例、
+  不运行旧 9-point/72-run sweep，也不以该结果翻转 `VISSUP-01=REJECTED`。
+- **Whether autonomous work can continue**: 可以；另建 immutable plan 后以 fresh
+  root `43201` 运行 paired pilot，阳性才补 `43202/43203`。
+- **Recommended human decision**: 无需立即决定；之后审查 fixed-total
+  intervention 是否充分隔离 module allocation，以及结论是否严格限制在当前
+  frozen-base / hashed-coordinate setting。

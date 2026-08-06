@@ -205,3 +205,24 @@ checkpoint-only prediction test；不训练。
   trainable-subspace/module allocation 与 objective competition 三个 competing
   explanations 检索；只接受至少两篇 direct autoregressive-LVLM sources、一个
   matched mechanism control 且能由单一最小干预区分两个解释的候选。本轮不训练。
+
+## 15. 持续日志：LITMAP-03 low-dimensional visual trainability gate
+
+- 五族 arXiv/OpenAlex 检索保存 541 raw records、480 unique titles，与旧搜索重复
+  45 个；全文核查 11 篇决定性 primary sources，raw responses、HTML/PDF/text、
+  exact metadata、索引和 41 项 SHA-256 manifest 全部归档。
+- ACL 2024 PEFT 显示 connector tuning 对 unseen tasks 更常有益而 visual encoder
+  unfreeze 多数无益；CROME 显示 frozen encoder+LLM 下仅训练 pre-LLM adapter 仍可
+  强适配；Cambrian-1 在 matched LLM/data/hyperparameters 下则显示 vision unfreeze
+  对多数 visual-centric tasks 有益，但增加参数和约 50–55% 时间。
+- 文献证明 module placement 值得干预，却不能裁决 encoder-vs-projector 且未固定
+  trainable count。只登记 `PROJALLOC-01`：current `582/2327/1187` 对唯一正维
+  projector-dominant `1/4094/1`，两者总计均为 4,096 coordinates。
+- mapping-only gate 已通过：两条件各 22 个 factor mappings、无 unused
+  coordinates。旧 9-point/72-run sweep 未执行且被当前 no-sweep gate 禁止。
+- 提交前 deterministic audit 发现索引脚本会把 exact-title decisive metadata
+  误纳入发现检索；已限定到五个冻结 query families，复现 541/480/45/95 计数且与
+  保存索引逐字节一致。该实现修复不改变 candidate 或科学判定。
+- 本轮 0 GPU、0 checkpoint、0 training，累计 GPU 用时仍约 1.07 h，未访问 final
+  confirmation。下一步先冻结并提交 `PROJALLOC-01_round1` plan，再使用 fresh root
+  `43201` 重训 paired conditions；pilot 任一预声明门失败即拒绝。

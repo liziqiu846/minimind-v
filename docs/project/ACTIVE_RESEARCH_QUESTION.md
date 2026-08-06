@@ -17,9 +17,10 @@ Mission Question 不得由 Agent 自行改变。
 
 当前 active question 是：
 
-> 在模型结构、训练图像、rotation label distribution 和算力相同时，使一小部分
-> autoregressive instruction 必须依赖图像，而不是在文本中泄露答案，能否使低维
-> MiniMind-V 学到可迁移的视觉结构并改善未见 vision-centric task？
+> 在总计 4,096 个 trainable coordinates、冻结 base、训练数据、visual-necessary
+> supervision 和算力都相同时，把低维更新容量集中到跨模态 projector，能否比当前
+> vision/projector/language allocation 更有效地吸收视觉结构并改善未见
+> vision-centric task？
 
 这一问题是当前子问题，不是永久冻结的唯一主线。Agent 可以依据可靠实验、
 反例或权威文献自主切换 Active Research Question。
@@ -233,6 +234,29 @@ Agent 可以自主改变：
 - **Mission relation**: 若能找到可判别机制，可解释为何相同参数码长/训练信号未产生
   视觉能力，并自然导出 module-aware allocation 或视觉 target routing；若只有通用
   PEFT engineering 或事后 gradient/representation proxy，则不进入主线。
-- **Status**: ACTIVE_PLAN_REQUIRED；必须先创建并 commit
-  `experiments/plans/LITMAP-03_round1.md`，再检索。不得重跑 VISSUP 或查看
-  `43102/43103`。
+- **Status**: COMPLETED_AS_GATE；五族检索得到 541 raw records / 480 unique titles，
+  全文核查 11 篇 primary sources。ACL 2024 PEFT 与 CROME 支持 connector /
+  pre-LLM adapter 的作用，Cambrian-1 支持 vision encoder unfreezing；方向冲突且均
+  未固定 trainable parameter count，因此只保留本地 fixed-total
+  `PROJALLOC-01`，不运行旧 module sweep。
+
+### 2026-08-07｜PROJALLOC-01 fixed-total projector allocation active question
+
+- **Question**: 在相同 frozen base、11 targets、总 4,096 trainable coordinates、
+  visual-necessary data、pixels、labels、prompt、optimizer、steps 与 scorers 下，
+  projector-dominant `1/4094/1` 是否比 current `582/2327/1187` 更能学习 held-out
+  rotation，并方向性改善尚未由这些新模型评分的 CV-Bench-2D？
+- **Why the old question was insufficient**: `LITMAP-03` 只能证明 module placement
+  值得干预；公开文献对 encoder-vs-projector 方向冲突，而且增加参数和 compute
+  混杂，不能裁决当前 4,096-coordinate setting。
+- **Evidence / literature origin**: ACL 2024 的 connector tune-vs-freeze 与 visual
+  encoder tune-vs-freeze、CROME 的 frozen encoder+LLM adapter-only adaptation、
+  Cambrian-1 的 matched LLM/data/hyperparameter encoder unfreezing；本地 arbitrary
+  private-coordinate constructor 已只读验证 `1/4094/1` 产生 22 个 factor mappings、
+  总计 4,096 coordinates、无 unused coordinates。
+- **Mission relation**: 该实验直接区分“frozen visual features 可读但 projector
+  subspace 容量不足”与“增加 projector 容量仍无法吸收视觉 cue”，可解释为何相同
+  参数复杂度对应不同跨模态泛化，并保留 module-aware PEFT 的算法出口。
+- **Status**: ACTIVE_PLAN_REQUIRED；先提交
+  `experiments/plans/PROJALLOC-01_round1.md`。不得先改训练代码，不得补 VISSUP
+  roots `43102/43103`，不得换成 vision-heavy、搜索比例或运行旧 9-point sweep。

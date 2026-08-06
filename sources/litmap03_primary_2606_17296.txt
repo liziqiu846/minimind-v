@@ -1,0 +1,1643 @@
+[2606.17296] Pareto LoRA: Mitigating Modality Imbalance in Unified Multimodal Models via Pareto-Optimal Gradient Integration
+
+Pareto LoRA: Mitigating Modality Imbalance in Unified Multimodal Models via Pareto-Optimal Gradient Integration
+
+Xiwen Wei
+
+Affiliation: The University of Texas at Austin
+
+Affiliation: xiwenwei@utexas.edu
+
+  
+Mark Nutter
+
+Affiliation: Advanced Micro Devices
+
+  
+Inc
+
+Affiliation: Mark.Nutter@amd.com
+
+  
+Madhusudhanan Srinivasan
+
+Affiliation: Advanced Micro Devices
+
+  
+Inc
+
+Affiliation: Madhu.Srinivasan2@amd.com
+
+  
+Radu Marculescu
+
+Affiliation: The University of Texas at Austin
+
+Affiliation: radum@utexas.edu
+
+Abstract
+
+Unified multimodal models (UMMs) have recently emerged as a promising paradigm for integrating multimodal understanding and generation within a single autoregressive transformer.
+However, during multimodal instruction tuning, these models often exhibit pronounced modality imbalance: language gradients dominate optimization, thus leading to lower image generation quality, especially under parameter-efficient fine-tuning such as LoRA.
+In this work, we systematically analyze modality imbalance in LoRA-based fine-tuning of UMMs for interleaved text–image generation.
+We show that vision modality performance degrades substantially more than text modality performance when compared to unimodal counterparts, and that modality-specific gradients can differ by orders of magnitude across various tasks and layers.
+Motivated by this observation, we reformulate the multimodal instruction tuning as a bi-objective optimization problem and propose Pareto LoRA, a Pareto-optimal gradient integration strategy that balances the text and image objectives by modulating the gradient direction and strength.
+Experiments on the CoMM benchmark with Emu2 demonstrate that Pareto LoRA consistently improves multimodal generation balance, achieving up to 44.9% gains in perceptual image quality over vanilla LoRA while maintaining comparable text performance.
+
+[Uncaptioned image]
+
+Figure 1: Qualitative comparison on interleaved text–image generation. Vanilla LoRA preserves fluent text generation but produces blurry and distorted images due to text-dominant modality imbalance. Pareto LoRA mitigates the gradient dominance and restores coherent, high-quality image outputs while maintaining comparable text responses.
+
+1 Introduction
+
+Traditional multimodal models are typically developed for either multimodal understanding
+(e.g., answering questions about images) or multimodal generation
+(e.g., synthesizing images from text prompts) 21; 24.
+Unified Multimodal Models (UMMs) seek to bridge this divide by integrating both capabilities
+within a single framework.
+Recent advances in UMMs 30; 39; 47; 36; 42; 18
+have demonstrated promising performance across a broad range of tasks,
+including interleaved text–image generation 1.
+These models commonly embed heterogeneous modalities into a shared representation space
+and employ a single transformer backbone to capture cross-modal interactions.
+
+Training UMMs typically follows a two-stage paradigm.
+In the first stage, models are pretrained to align text and visual representations at scale.
+In the second stage, they are adapted to downstream tasks via instruction tuning,
+which fine-tunes the model on diverse task-specific instructions paired with expected outputs.
+Instruction tuning has become a standard practice for improving alignment with human intent
+and enhancing task generalization 22; 2.
+
+Despite these advances, existing UMMs often struggle to generate interleaved text and images
+with balanced quality.
+In practice, these models tend to exhibit strong performance on language-dominant tasks
+while underperforming on vision-dominant tasks, indicating a pronounced modality imbalance
+during multimodal learning 43; 3.
+This observation raises a natural question:
+can instruction tuning improve image generation quality to the same extent as language modeling, or does modality imbalance remain a fundamental challenge?
+
+To investigate this issue, we conduct two quantitative studies using LoRA-based fine-tuning,
+which is widely adopted due to the large scale of modern UMMs.
+First, as illustrated in Figure 2, we fine-tune unimodal counterparts
+(vision-only and text-only models) on the same dataset and compare their performance
+against the multimodal model.
+We observe that, when comparing unimodal counterparts to the multimodal model,
+vision-only performance drops more significantly than text-only performance,
+revealing vision as the weaker modality and is more heavily suppressed under multimodal LoRA fine-tuning.
+
+Second, we analyze the relative gradient magnitudes of modality-specific losses
+with respect to the shared parameters during multimodal instruction tuning.
+A large gradient ratio implies that text modality dominates the learning process.
+As shown in Figure 3, we find that three out of four evaluated tasks
+exhibit significant gradient imbalance.
+
+Figure 2: Performance gap between unimodal counterparts and the Emu2 26 model after multimodal instruction tuning. Vision-only performance drops substantially more than text-only performance, indicating that image generation is the weaker modality under multimodal optimization.
+
+Figure 3: Relative gradient magnitude ratio between text and image objectives during multimodal instruction tuning. Curves correspond to Task 1 (image-to-text generation), Task 2 (text-to-image generation), Task 3 (interleaved image–text generation), and Task 4 (question-based interleaved image–text generation). Three out of four tasks exhibit strong text-dominant gradients, revealing severe modality imbalance in LoRA-based instruction tuning.
+
+To address this challenge, we draw inspiration from balanced multimodal learning
+and reformulate modality imbalance as a bi-objective optimization problem.
+Each modality is treated as a distinct learning objective, and the goal is to identify
+a Pareto-optimal solution that balances optimization across modalities.
+Rather than allowing the dominant modality to overwhelm optimization,
+we seek a gradient direction that simultaneously benefits all objectives,
+guiding training toward a stable trade-off.
+
+Based on this formulation, we propose Pareto LoRA,
+a Pareto-optimal gradient integration method for LoRA-based fine-tuning.
+Pareto LoRA ensures that the final update direction aligns with shared descent directions
+across modalities, preventing the suppression of weaker modalities
+while preserving overall learning efficiency.
+
+We summarize our contributions as follows:
+
+•
+
+We identify and empirically characterize modality imbalance during LoRA-based fine-tuning of UMMs for interleaved text–image generation.
+
+•
+
+We propose Pareto LoRA, a Pareto-optimal optimization method that mitigates modality imbalance by balancing modality-specific gradients.
+
+•
+
+We demonstrate through extensive experiments that Pareto LoRA improves multimodal balance without sacrificing overall performance.
+
+2 Related Work
+
+Unified multimodal models (UMMs).
+
+Early efforts to unify visual understanding and generation 27; 26; 32; 35 often combine large multimodal language models (MLLMs) with diffusion-based decoders, where the diffusion process is conditioned on embeddings produced by an autoregressive language backbone.
+While effective for instruction-guided generation, these hybrid designs typically rely on separate objectives and architectural components for language modeling and image synthesis, which may limit the degree of unified multimodal modeling 10.
+
+More recent approaches aim to treat both multimodal understanding and generation under a unified next-token prediction paradigm 20; 41; 29; 30.
+These models differ in how they represent the visual content.
+Some 30; 36; 17 employ discrete vision tokenizers (e.g., VQGAN/VQ-VAE 7; 34) to convert images into sequences of visual tokens, enabling fully autoregressive generation.
+Others encode images into continuous latent embeddings for multimodal reasoning, while still relying on diffusion or latent decoders for high-fidelity image synthesis 14; 35.
+Despite architectural differences, most UMMs share an autoregressive transformer backbone for joint multimodal modeling.
+
+In this work, we adopt Emu2 26, a 37B-parameter unified multimodal model trained with an autoregressive next-element prediction objective over interleaved text and visual embeddings.
+Emu2 consists of three components: a visual encoder, an LLM backbone (initialized from LLaMA-33B 33), and a diffusion-based visual decoder.
+Each input image is encoded into continuous embeddings, projected into the LLM token space, and interleaved with text tokens for multimodal autoregressive modeling.
+The predicted visual embeddings are subsequently decoded into images by the visual decoder.
+In our experiments, we fine-tune only the LLM backbone and the projection layers using LoRA, while keeping the visual encoder and decoder frozen.
+
+Instruction tuning and parameter-efficient tuning.
+
+Visual instruction tuning, popularized by LLaVA 21, demonstrates that large language models can be effectively adapted to follow multimodal instructions through supervised fine-tuning on large-scale vision–language data.
+Instruction tuning has since been widely applied to multimodal tasks such as image editing 8; 15, controllable image generation 31, interleaved multimodal understanding 16; 13, and interleaved text–image generation 43.
+
+Given the scale of modern MLLMs and UMMs, parameter-efficient fine-tuning (PEFT) methods have become the dominant adaptation strategy.
+These methods freeze the majority of pretrained parameters and update only a small set of newly introduced modules 12; 28.
+LoRA 12 is particularly effective and has been widely adopted for instruction tuning of multimodal foundation models 37; 9; 43.
+In this paper, we build upon LoRA and propose a gradient balancing strategy tailored for unified multimodal generation.
+
+Modality imbalance in multimodal learning.
+
+Recent studies have highlighted modality imbalance in multimodal training, where optimization tends to favor one dominant modality (often text), leading to degraded performance on the weaker modality 19; 44.
+MMPareto 38 addresses this issue by applying Pareto-based gradient integration between unimodal objectives and multimodal joint learning objectives.
+
+However, in unified multimodal models, text and image generation are tightly coupled within a single autoregressive backbone, making it difficult to cleanly separate unimodal and multimodal losses.
+Modality imbalance remains a persistent challenge in modern MLLMs and UMMs 40; 46; 45, often resulting in biased generation behavior toward the dominant modality.
+
+Several methods mitigate imbalance through module-wise dynamic updates, such as D-MoLE 9, which adjusts learning dynamics based on modality difficulty.
+In contrast, for unified architectures where both modalities share the same backbone and compete over the same parameters, imbalance must be addressed directly at the gradient level.
+We therefore propose Pareto LoRA, which explicitly balances text and image generation gradients during LoRA-based instruction tuning.
+Unlike MMPareto 38, which relies on separable unimodal objectives, Pareto LoRA operates directly on coupled modality gradients within a unified autoregressive model, making it particularly suitable for interleaved multimodal generation.
+
+3 Methodology
+
+3.1 Multimodal Instruction Tuning as Multi-Objective Optimization
+
+When fine-tuning UMMs for interleaved text–image generation
+(e.g., recipes or multimodal reasoning tasks),
+the training objective naturally consists of two modality-specific components:
+text generation and image generation 42; 47.
+The unified training objective is commonly written as:
+
+Lunified=Ltext+α​Limg,L_{\text{unified}}=L_{\text{text}}+\alpha L_{\text{img}},
+
+(1)
+
+where α\alpha is a scalar balancing coefficient.
+
+While simple and effective in practice, this formulation implicitly assumes that
+a fixed loss-level weighting can adequately balance modality learning.
+However, as shown in Section 1,
+optimizing the unified objective often leads to one modality dominating the optimization process,
+leaving the other underoptimized.
+Although one could tune the coefficient α\alpha,
+we observe that both the direction (which modality dominates)
+and the degree (how severe the imbalance is)
+vary across tasks, layers, and training stages
+(see Fig 3 and Fig 4).
+Consequently, loss-level reweighting alone is insufficient to address modality imbalance
+at the gradient level.
+
+Figure 4: Modality gradient magnitude ratio (‖gtxt‖2/‖gimg‖2\|g_{\text{txt}}\|_{2}/\|g_{\text{img}}\|_{2}) of each layer during training. The y–axis measures how much stronger text gradients are than image gradients at that layer. Text gradients dominate most LLM layers, while projection layers exhibit different imbalance behavior, motivating selective gradient modulation.
+
+3.2 Pareto Integration
+
+Multimodal learning is closely related to multi-task learning,
+as both involve jointly optimizing multiple objectives that share parameters 38.
+Motivated by the observed imbalance between modality-specific gradients,
+we reformulate multimodal instruction tuning as a bi-objective optimization problem,
+where text and image learning are treated as separate but coupled objectives.
+
+Let gtxtg_{\text{txt}} and gimgg_{\text{img}} denote the gradients of the text and image losses,
+respectively, computed on the same batch SS and with respect to the same trainable parameters mm
+(i.e., the LoRA-adapted parameters):
+
+gtxt=∇m,SLtext,gimg=∇m,SLimg.\vskip-3.00003ptg_{\text{txt}}=\nabla_{m,S}L_{\text{text}},\quad g_{\text{img}}=\nabla_{m,S}L_{\text{img}}.\vskip-1.99997pt
+
+(2)
+
+Rather than summing these gradients with a fixed coefficient,
+we seek a convex combination that yields a descent direction beneficial to both objectives; this leads to the following optimization problem:
+
+minλ,β⁡‖λ​gtxt+β​gimg‖22s.t. ​λ,β≥0,λ+β=1.\min_{\lambda,\beta}\left\|\lambda g_{\text{txt}}+\beta g_{\text{img}}\right\|_{2}^{2}\quad\text{s.t. }\lambda,\beta\geq 0,\;\;\lambda+\beta=1.
+
+(3)
+
+This formulation corresponds to finding the minimum-norm vector
+in the convex hull of {gtxt,gimg}\{g_{\text{txt}},g_{\text{img}}\}.
+The Multiple Gradient Descent Algorithm (MGDA) 6
+shows that either the minimum-norm solution is zero, indicating a Pareto-stationary point
+(a necessary condition for Pareto optimality),
+or the solution provides a common descent direction
+that simultaneously improves all objectives.
+
+Following 25,
+the optimal weighting coefficient admits a closed-form solution:
+
+λ=clip⁡((gtxt−gimg)⊤​gtxt‖gimg−gtxt‖22,0,1),β=1−λ.\lambda=\mathrm{clip}\left(\frac{(g_{\text{txt}}-g_{\text{img}})^{\top}g_{\text{txt}}}{\|g_{\text{img}}-g_{\text{txt}}\|_{2}^{2}},0,1\right),\quad\beta=1-\lambda.
+
+(4)
+
+3.3 Pareto LoRA
+
+Figure 5: Overview of Pareto LoRA gradient modulation. Depending on gradient cosine similarity and magnitude imbalance, Pareto LoRA applies (i) Pareto integration under conflict, (ii) gradient rescaling under severe imbalance, or (iii) no modification when gradients are aligned and balanced.
+
+Based on the above formulation, we propose Pareto LoRA, a gradient integration strategy tailored for LoRA-based multimodal fine-tuning. Rather than applying Pareto optimization uniformly at every step, Pareto LoRA first diagnoses the relationship between modality-specific gradients using two metrics: (i) cosine similarity, which captures directional conflict, and (ii) gradient magnitude ratio, which measures imbalance strength.
+
+Let gtxt=∇𝐦Ltxtg_{\text{txt}}=\nabla_{\mathbf{m}}L_{\text{txt}}
+and gimg=∇𝐦Limgg_{\text{img}}=\nabla_{\mathbf{m}}L_{\text{img}}
+denote the text and image gradients with respect to the trainable LoRA parameters 𝐦\mathbf{m}.
+We compute:
+
+c=gtxt⊤​gimg‖gtxt‖2​‖gimg‖2,r=‖gtxt‖2‖gimg‖2.\vskip-3.99994ptc=\frac{g_{\text{txt}}^{\top}g_{\text{img}}}{\|g_{\text{txt}}\|_{2}\,\|g_{\text{img}}\|_{2}},\qquad r=\frac{\|g_{\text{txt}}\|_{2}}{\|g_{\text{img}}\|_{2}}.
+
+(5)
+
+Figure 5 illustrates three cases and their corresponding strategies:
+
+Conflict case ((b) in Fig 5).
+
+We first consider the case where c<0c<0. In this case, the text and image gradients are directionally conflicting. It is essential to find a descent direction that is shared by both objectives. Therefore, we solve the Pareto optimization problem in Equation 3, obtaining λ\lambda and β\beta using Equation 4, which yields a non-conflicting update direction. The final gradient is then given by the corresponding weighted combination: g←λ​gtxt+β​gimgg\leftarrow\lambda g_{\text{txt}}+\beta g_{\text{img}}.
+
+Non-conflict but imbalanced case ((c) in Fig 5).
+
+For the case where c≥0c\geq 0 and r>τr>\tau, the gradients are directionally aligned, and any convex combination provides a common descent direction. However, significant imbalance in gradient strength can still cause one modality to dominate learning. To mitigate this, we rescale the weaker gradient to match the stronger one before aggregation. This avoids overly shrinking the dominant modality gradient, which could otherwise reduce effective learning.
+Specifically, letting gweakg_{\text{weak}} and gstrongg_{\text{strong}} denote the gradients
+with smaller and larger norms, respectively, we apply
+
+gweak←gweak⋅‖gstrong‖2‖gweak‖2.\vskip-3.00003ptg_{\text{weak}}\leftarrow g_{\text{weak}}\cdot\frac{\|g_{\text{strong}}\|_{2}}{\|g_{\text{weak}}\|_{2}}.\vskip-3.00003pt
+
+(6)
+
+The final update is then computed by standard summation:
+
+g←gtxt+gimg.\vskip-3.00003ptg\leftarrow g_{\text{txt}}+g_{\text{img}}.\vskip-3.00003pt
+
+(7)
+
+Non-conflict and balanced case((a) in Fig 5).
+
+When gradients are aligned and comparable in magnitude (c≥0c\geq 0 and r≤τr\leq\tau), we apply no modification and use the vanilla multimodal gradient update.
+
+Algorithm 1 summarizes Pareto LoRA.
+
+Algorithm 1 Pareto LoRA gradient modulation. The update adaptively switches between Pareto-optimal integration and magnitude matching based on gradient conflict and imbalance diagnostics.
+
+1:
+
+Text loss LtxtL_{\text{txt}}, image loss LimgL_{\text{img}}, threshold τ\tau
+
+2:
+
+Compute gradients
+gtxt=∇𝐦Ltxtg_{\text{txt}}=\nabla_{\mathbf{m}}L_{\text{txt}},
+gimg=∇𝐦Limgg_{\text{img}}=\nabla_{\mathbf{m}}L_{\text{img}}
+
+3:
+
+Compute cosine similarity
+c=gtxt⊤​gimg‖gtxt‖2​‖gimg‖2c=\frac{g_{\text{txt}}^{\top}g_{\text{img}}}{\|g_{\text{txt}}\|_{2}\|g_{\text{img}}\|_{2}}
+
+4:
+
+Compute magnitude ratio
+r=‖gtxt‖2‖gimg‖2r=\frac{\|g_{\text{txt}}\|_{2}}{\|g_{\text{img}}\|_{2}}
+
+5:
+
+if c<0c<0 then ⊳\triangleright Conflict case
+
+6:
+
+  Solve Eq. 3 to obtain (λ,β)(\lambda,\beta)
+
+7:
+
+  g←λ​gtxt+β​gimgg\leftarrow\lambda g_{\text{txt}}+\beta g_{\text{img}}
+
+8:
+
+else if c≥0c\geq 0 and r>τr>\tau then ⊳\triangleright Imbalance case
+
+9:
+
+  Rescale weaker gradient to match the stronger norm
+
+10:
+
+  g←gtxt+gimgg\leftarrow g_{\text{txt}}+g_{\text{img}}
+
+11:
+
+else⊳\triangleright Balanced case
+
+12:
+
+  g←gtxt+gimgg\leftarrow g_{\text{txt}}+g_{\text{img}}
+
+13:
+
+end if
+
+14:
+
+Update LoRA parameters using gradient gg
+
+In addition to gradient direction and magnitude modulation, it is important to determine which layers to modulate, since imbalance scenarios differ across layers in UMMs (Figure 4). According to our observations, LLM layers are typically dominated by the text modality, while the projection layer is dominated by the image modality. As shown in Figure 6, lower LLM layers (closer to the input) are more text-dominated than upper layers, while middle layers tend to be more modality-balanced. This motivates a layer-granular modulation strategy. However, modern UMMs are extremely large (e.g., 60 LLM layers in Emu2 26), making fully layer-wise computation of Equation 4 computationally expensive. We therefore group neighboring layers and apply modulation at the group level, which is both efficient and reasonable given the similarity of imbalance patterns across adjacent layers. Moreover, since middle layers are often balanced, selective modulation is preferred. In our experiments, modulating lower layers achieves the best performance, and we provide an ablation study on targeted modulation layers in Section 4.3.
+
+Figure 6: Per-layer modality gradient magnitude ratio across the 60 LLM layers of Emu2 model 26 on CoMM 4 Task 4. Text gradients dominate strongly in lower layers, become more balanced in intermediate layers, and exhibit renewed text dominance in upper layers closer to generation outputs. This non-uniform depth-wise imbalance motivates group-wise and selective modulation rather than uniform gradient balancing across all layers.
+
+By selectively invoking Pareto integration only when necessary, Pareto LoRA achieves balanced multimodal optimization while preserving training stability and efficiency.
+
+4 Experiments
+
+Table 1: Main quantitative results on CoMM Task 1 (image-to-text) and Task 2 (text-to-image). Pareto LoRA consistently improves perceptual quality and image coherence over vanilla LoRA. Relative gains (%) are reported w.r.t. vanilla LoRA. Best results within each task are highlighted in bold and second best results are highlighted underlined.
+
+Task 1
+
+Task 2
+
+Method
+
+Text quality (↑\uparrow)
+
+Perceptual Quality (↑\uparrow)
+
+Image Coherence (↑\uparrow)
+
+Zero Shot
+
+1.05
+
+1.02
+
+1.02
+
+Vanilla LoRA
+
+1.22
+
+1.67
+
+1.59
+
+GradNorm
+
+1.14
+
+1.70
+
+1.54
+
+Step Balance
+
+1.02
+
+1.68
+
+1.45
+
+Pareto LoRA
+
+1.24 (+1.64%)
+
+2.12 (+26.95%)
+
+1.94 (+22.01%)
+
+Unimodal Upper Bound
+
+1.40
+
+2.06
+
+1.91
+
+Table 2: Results on CoMM Task 3 (interleaved multimodal content generation). Pareto LoRA improves both image quality and overall helpfulness compared to vanilla LoRA. Best results are highlighted in bold and second best results are highlighted underlined.
+
+Method
+
+Text quality (↑\uparrow)
+
+Perceptual quality (↑\uparrow)
+
+Image Coherence (↑\uparrow)
+
+TIC (↑\uparrow)
+
+Helpfulness (↑\uparrow)
+
+Zero Shot
+
+1.32
+
+1.37
+
+1.30
+
+1.34
+
+1.91
+
+Vanilla LoRA
+
+1.83
+
+2.16
+
+2.24
+
+2.00
+
+2.09
+
+GradNorm
+
+1.60
+
+1.88
+
+1.74
+
+1.65
+
+1.87
+
+Step Balance
+
+1.46
+
+1.73
+
+1.76
+
+1.63
+
+2.02
+
+Pareto LoRA
+
+1.97 (+7.65%)
+
+2.79 (+29.17%)
+
+2.30 (+2.68%)
+
+1.94 (-3.00%)
+
+2.20 (+5.26%)
+
+Unimodal Upper Bound
+
+1.88
+
+2.82
+
+2.89
+
+2.44
+
+2.94
+
+Table 3: Results on CoMM Task 4 (question-based interleaved generation). Pareto LoRA substantially improves image-related metrics but may slightly reduce text helpfulness in language-centric regimes, highlighting task-dependent modulation effects. Best results within each task are highlighted in bold and second best results are highlighted underlined.
+
+Method
+
+Text quality (↑\uparrow)
+
+Perceptual quality (↑\uparrow)
+
+Image Coherence (↑\uparrow)
+
+TIC (↑\uparrow)
+
+Helpfulness (↑\uparrow)
+
+Zero Shot
+
+1.35
+
+1.36
+
+1.25
+
+1.30
+
+1.85
+
+Vanilla LoRA
+
+1.70
+
+1.96
+
+1.96
+
+1.72
+
+1.83
+
+GradNorm
+
+1.51
+
+1.33
+
+1.15
+
+1.87
+
+1.83
+
+Step Balance
+
+1.60
+
+1.54
+
+1.60
+
+1.35
+
+1.79
+
+Pareto LoRA
+
+1.57 (-7.65%)
+
+2.84 (+44.90%)
+
+2.54 (+29.59%)
+
+2.02 (+17.44%)
+
+1.66 (-9.29%)
+
+Unimodal Upper Bound
+
+1.62
+
+2.10
+
+2.04
+
+1.99
+
+1.81
+
+Table 4: Ablation study on targeted gradient modulation layers across the four CoMM tasks. Applying Pareto LoRA to lower LLM layer groups yields the strongest gains on visually grounded tasks, while upper-layer modulation can benefit language-centric settings such as Task 4. Best results within each task are highlighted in bold.
+
+Task 1
+
+Task 2
+
+Task 3
+
+Task 4
+
+Targeted Group
+
+TextQ
+
+PercQ
+
+ImgC
+
+TextQ
+
+PercQ
+
+ImgC
+
+TIC
+
+Help
+
+TextQ
+
+PercQ
+
+ImgC
+
+TIC
+
+Help
+
+Zero Shot
+
+1.05
+
+1.02
+
+1.02
+
+1.32
+
+1.37
+
+1.30
+
+1.34
+
+1.91
+
+1.35
+
+1.36
+
+1.25
+
+1.30
+
+1.85
+
+Lower
+
+1.24
+
+2.12
+
+1.94
+
+1.97
+
+2.79
+
+2.30
+
+1.94
+
+2.20
+
+1.57
+
+2.84
+
+2.54
+
+2.02
+
+1.66
+
+Middle
+
+1.31
+
+1.84
+
+1.58
+
+1.52
+
+1.96
+
+1.83
+
+1.63
+
+1.74
+
+1.66
+
+2.43
+
+2.29
+
+1.96
+
+1.83
+
+Upper
+
+1.28
+
+1.56
+
+1.39
+
+1.48
+
+2.02
+
+1.91
+
+1.70
+
+1.87
+
+1.77
+
+2.28
+
+2.13
+
+1.83
+
+1.87
+
+TextQ: Text quality, PercQ: Perceptual quality, ImgC: Image coherence, TIC: Text–image coherence, Help: Helpfulness.
+
+Table 5: Ablation on Pareto LoRA modulation components across the four CoMM tasks. Handling both gradient conflict (Pareto-only) and magnitude imbalance (Rescale-only) is necessary for consistent multimodal improvements, with the full method performing best overall. Best results within each task are highlighted in bold and second best results are highlighted underlined.
+
+Task 1
+
+Task 2
+
+Task 3
+
+Task 4
+
+Variant
+
+TextQ
+
+PercQ
+
+ImgC
+
+TextQ
+
+PercQ
+
+ImgC
+
+TIC
+
+Help
+
+TextQ
+
+PercQ
+
+ImgC
+
+TIC
+
+Help
+
+Vanilla LoRA
+
+1.22
+
+1.67
+
+1.59
+
+1.83
+
+2.16
+
+2.24
+
+2.00
+
+2.09
+
+1.70
+
+1.96
+
+1.96
+
+1.72
+
+1.83
+
+Rescale-only
+
+1.20
+
+1.85
+
+1.56
+
+1.62
+
+2.69
+
+2.34
+
+1.99
+
+2.16
+
+1.67
+
+2.37
+
+2.36
+
+1.95
+
+1.90
+
+Pareto-only
+
+1.23
+
+1.68
+
+1.50
+
+1.64
+
+2.17
+
+1.87
+
+1.73
+
+2.00
+
+1.79
+
+1.84
+
+1.98
+
+1.64
+
+1.91
+
+Full Pareto LoRA
+
+1.24
+
+2.12
+
+1.94
+
+1.97
+
+2.79
+
+2.30
+
+1.94
+
+2.20
+
+1.57
+
+2.84
+
+2.54
+
+2.02
+
+1.66
+
+TextQ: Text quality, PercQ: Perceptual quality, ImgC: Image coherence, TIC: Text–image coherence, Help: Helpfulness.
+
+Table 6: Ablation on τ\tau values. Best results within each task are highlighted in bold and second best results are highlighted underlined.
+
+Task 1
+
+Task 2
+
+Task 3
+
+Task 4
+
+τ\tau
+
+TextQ
+
+PercQ
+
+ImgC
+
+TextQ
+
+PercQ
+
+ImgC
+
+TIC
+
+Help
+
+TextQ
+
+PercQ
+
+ImgC
+
+TIC
+
+Help
+
+0.5
+
+1.24
+
+2.12
+
+1.94
+
+1.97
+
+2.79
+
+2.30
+
+1.94
+
+2.20
+
+1.57
+
+2.84
+
+2.54
+
+2.02
+
+1.66
+
+0.6
+
+1.40
+
+1.99
+
+1.84
+
+1.93
+
+2.68
+
+2.19
+
+1.93
+
+2.26
+
+1.54
+
+2.57
+
+2.48
+
+1.97
+
+1.84
+
+0.7
+
+1.40
+
+1.88
+
+1.85
+
+1.91
+
+2.69
+
+2.38
+
+2.03
+
+2.39
+
+1.56
+
+2.62
+
+2.54
+
+2.09
+
+1.74
+
+0.8
+
+1.36
+
+1.86
+
+1.89
+
+1.81
+
+2.76
+
+2.28
+
+2.14
+
+2.16
+
+1.60
+
+2.63
+
+2.46
+
+2.04
+
+1.74
+
+TextQ: Text quality, PercQ: Perceptual quality, ImgC: Image coherence, TIC: Text–image coherence, Help: Helpfulness.
+
+4.1 Datasets and Experimental Setup
+
+We conduct experiments on the CoMM dataset 4, which consists of four multimodal instruction tuning tasks:
+Task 1 (image-to-text generation),
+Task 2 (text-to-image generation),
+Task 3 (interleaved image–text content generation),
+and Task 4 (question-based interleaved image–text generation).
+We follow the published CoMM train/evaluation splits for all experiments.
+
+Our evaluation protocol follows 23.
+Specifically, we adopt GPT-4o as an automatic multimodal judge to assess model outputs from five aspects:
+text quality, perceptual quality, image coherence, text–image coherence (TIC), and helpfulness.
+For each aspect, GPT-4o assigns a discrete score from {1,2,3,4,5}\{1,2,3,4,5\} according to the detailed criteria provided in Table 8 of 23,
+where 1 denotes the worst quality (or empty output) and 5 denotes the best quality.
+In addition, we instruct GPT-4o to provide brief explanations to improve interpretability.
+
+We fine-tune the Emu2 model 26 using LoRA with rank r=32r{=}32, applied to all linear layers in the LLM backbone.
+We use a learning rate of 1×10−51\times 10^{-5} with BF16 precision.
+Training is performed on 8 AMD Instinct™ MI300X GPUs with a per-GPU batch size of 1.
+We set τ=0.5\tau=0.5 in all experiments unless otherwise stated. We also provide an ablation study on values of τ\tau in Section 4.5.
+
+We compare our proposed Pareto LoRA against vanilla LoRA, which applies standard LoRA fine-tuning without gradient modulation.
+We also include loss-level reweighting methods: GradNorm 5, which reweights losses by matching gradient magnitudes, and Step Balance 11. without fine-tuning.
+Finally, we include a unimodal counterpart by fine-tuning the model with only a single objective (text-only or image-only).
+We report the best score per metric among these unimodal models, representing the performance ceiling when no cross-modal trade-off is required.
+
+4.2 Instruction tuning on CoMM dataset
+
+Quantitative results.
+
+Tables 1, 2, 3 report our main results on the four CoMM tasks in comparison to the baseline method (vanilla LoRA).
+Overall, Pareto LoRA consistently improves multimodal instruction tuning performance, outperforming vanilla LoRA by up to 44.90% in perceptual image generation quality while also achieving slightly better text generation results.
+These gains suggest that by modulating gradient directions and relative modality strength, Pareto LoRA mitigates the dominance of the text modality during tuning of LLM layers (which constitute the majority of model parameters), thereby enhancing image modality learning without sacrificing language capability.
+In contrast, conventional loss balancing methods (GradNorm 5, Step Balance 11) struggle to address cross-modal gradient conflicts and heterogeneous layer-wise modality imbalance, often resulting in unstable trade-offs or degraded performance.
+
+However, we observe a performance drop in Task 4 on the text quality metric and overall helpfulness as in Table 3.
+We attribute this to the distinct input distribution of Task 4, where the context consists of open-ended questions in pure text with little or no visual grounding, whereas Task 3 contains both textual instructions and image inputs.
+In such a language-centric regime, multimodal gradient balancing may become less beneficial and can slightly over-regularize the optimization of text objectives, leading to reduced helpfulness.
+This highlights that Pareto LoRA is most effective in tasks with strong multimodal interactions and genuine cross-modal gradient competition.
+
+Refer to caption
+
+Figure 7: Qualitative comparison of text generation. Vanilla LoRA exhibits degeneration with duplicated content copied from the user query, whereas Pareto LoRA produces more concise and coherent responses.
+
+Refer to caption
+
+Figure 8: Qualitative comparison of interleaved text–image generation on CoMM. Vanilla LoRA often produces images that are weakly grounded or visually distorted despite fluent text, whereas Pareto LoRA improves perceptual quality and text–image coherence, yielding more consistent multimodal narratives.
+
+Qualitative results
+
+Figures 7,  8 and  1 present qualitative comparisons between our Pareto LoRA and vanilla LoRA.
+Overall, the visual examples demonstrate that Pareto LoRA produces more coherent and higher-quality multimodal generations.
+In particular, vanilla LoRA occasionally exhibits repetitive text outputs that echo the user query, whereas Pareto LoRA generates more fluent and diverse responses.
+Moreover, Pareto LoRA improves perceptual image quality, avoiding the distortion and blurriness observed in vanilla LoRA.
+Finally, Pareto LoRA yields stronger text–image coherence in interleaved generation, producing less repetitive and more consistent multimodal content.
+
+4.3 Ablation on Targeted Parameters
+
+We conduct an ablation study to examine the effect of applying Pareto gradient modulation to different subsets of LoRA-injected layers.
+As shown in Figure 4, modality imbalance varies across the LLM backbone: although all layers exhibit text-dominant gradients, the degree of imbalance is not uniform.
+
+To study targeted modulation, we partition the 60 LLM layers into five consecutive groups.
+The lower group is closest to the input, the upper group is closest to the output, and the remaining groups span the intermediate layers.
+We then apply gradient modulation to only one group at a time and evaluate performance.
+
+Table 4 reports the results.
+Overall, we find that modulating the lower layers yields the most consistent improvements on visually grounded generation tasks (Tasks 2–3), which motivates our default choice in the main experiments.
+This suggests that earlier layers play an important role in integrating visual representations, and modulation at this stage can better alleviate text dominance during multimodal alignment.
+
+Interestingly, we observe that modulating upper layers can be beneficial in more language-centric settings.
+For example, in Task 4, modulating the upper group achieves the best text quality and helpfulness.
+This is expected since Task 4 primarily involves open-ended text questions with minimal visual grounding, and the upper layers are more directly responsible for high-level semantic reasoning and final response generation.
+
+These results indicate that the optimal modulation layer group depends on the modality composition of the downstream task, while lower-layer modulation provides the strongest overall gains for multimodal generation.
+
+4.4 Ablation on Modulation Components
+
+To isolate the contribution of each component in Pareto LoRA,
+we evaluate two simplified variants:
+(i) Pareto-only, which applies MGDA integration only in the conflict case,
+and (ii) Rescale-only, which performs gradient magnitude matching without Pareto optimization.
+
+Table 5 shows that the full Pareto LoRA achieves the most consistent improvements across all four CoMM tasks,
+indicating that jointly handling gradient conflict and magnitude imbalance is beneficial for balanced multimodal instruction tuning.
+Among the simplified variants, Rescale-only typically yields the second-best performance, especially on image-related metrics,
+suggesting that gradient strength imbalance is a primary driver of modality suppression.
+This observation is consistent with our earlier analysis of modality gradient magnitude disparities
+(Figure 3).
+
+4.5 Ablation on τ\tau
+
+We present the results of ablation on the ratio threshold τ\tau. As shown in Table 6, when τ\tau is larger, text-related metrics (e.g. TextQ and helpfulness) are slightly improved, while τ=0.5\tau=0.5 achieves stronger perceptual and image coherence performance. We adopt τ=0.5\tau=0.5 as it offers the best overall balance in our setting.
+
+5 Conclusion
+
+Unified multimodal models enable interleaved text-image understanding and generation within a single autoregressive framework, yet they suffer from severe modality imbalance during instruction tuning. Our empirical analysis shows that LoRA-based fine-tuning is dominated by text gradients, suppressing vision learning and limiting multimodal generation quality.
+To address this, we propose Pareto LoRA, a Pareto-optimal gradient integration strategy that balances modality-specific objectives by modulating gradient direction and strength. Pareto LoRA activates selectively when gradient conflict or imbalance is detected, maintaining training stability while preventing weaker modalities from being overwhelmed.
+Experiments on the CoMM benchmark with Emu2 show that Pareto LoRA significantly improves perceptual image quality and multimodal coherence over vanilla LoRA, with gains up to 44.9%. Overall, Pareto LoRA offers a simple and effective solution to modality imbalance in unified multimodal instruction tuning.
+
+References
+
+[1]
+J. An, Z. Yang, L. Li, J. Wang, K. Lin, Z. Liu, L. Wang, and J. Luo (2023)
+
+Openleaf: Open-domain interleaved image-text generation and evaluation.
+
+arXiv preprint arXiv:2310.07749.
+
+Cited by: §1.
+
+[2]
+D. Chen, J. Liu, W. Dai, and B. Wang (2024)
+
+Visual instruction tuning with polite flamingo.
+
+In Proceedings of the AAAI Conference on Artificial Intelligence,
+
+pp. 17745–17753.
+
+Cited by: §1.
+
+[3]
+D. Chen, R. Chen, S. Pu, Z. Liu, Y. Wu, C. Chen, B. Liu, Y. Huang, Y. Wan, P. Zhou, et al. (2024)
+
+Interleaved scene graphs for interleaved text-and-image generation assessment.
+
+arXiv preprint arXiv:2411.17188.
+
+Cited by: §1.
+
+[4]
+W. Chen, L. Li, Y. Yang, B. Wen, F. Yang, T. Gao, Y. Wu, and L. Chen (2025)
+
+Comm: A coherent interleaved image-text dataset for multimodal understanding and generation.
+
+In Proceedings of the Computer Vision and Pattern Recognition Conference,
+
+pp. 8073–8082.
+
+Cited by: Figure 6,
+Figure 6,
+§4.1.
+
+[5]
+Z. Chen, V. Badrinarayanan, C. Lee, and A. Rabinovich (2018)
+
+Gradnorm: Gradient normalization for adaptive loss balancing in deep multitask networks.
+
+In International conference on machine learning,
+
+pp. 794–803.
+
+Cited by: §4.1,
+§4.2.
+
+[6]
+J. Désidéri (2012)
+
+Multiple-gradient descent algorithm (MGDA) for multiobjective optimization.
+
+Comptes Rendus Mathematique 350 (5-6), pp. 313–318.
+
+Cited by: §3.2.
+
+[7]
+P. Esser, R. Rombach, and B. Ommer (2021)
+
+Taming Transformers for High-Resolution Image Synthesis.
+
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition,
+
+pp. 12873-12883.
+
+Cited by: §2.
+
+[8]
+T. Fu, W. Hu, X. Du, W. Y. Wang, Y. Yang, and Z. Gan (2024)
+
+Guiding Instruction-based Image Editing via Multimodal Large Language Models.
+
+In The Twelfth International Conference on Learning Representations,
+
+Cited by: §2.
+
+[9]
+C. Ge, X. Wang, Z. Zhang, H. Chen, J. Fan, L. Huang, H. Xue, and W. Zhu (2025)
+
+Dynamic Mixture of Curriculum LoRA Experts for Continual Multimodal Instruction Tuning.
+
+In Forty-second International Conference on Machine Learning,
+
+Cited by: §2,
+§2.
+
+[10]
+D. Ghosh, H. Hajishirzi, and L. Schmidt (2023)
+
+Geneval: An object-focused framework for evaluating text-to-image alignment.
+
+Advances in Neural Information Processing Systems 36, pp. 52132–52152.
+
+Cited by: §2.
+
+[11]
+Q. Guo, K. Song, Z. Feng, Z. Ma, Q. Zhang, S. Gao, X. Yu, Y. Sun, T. Chang, J. Chen, et al. (2025)
+
+M2-omni: Advancing omni-mllm for comprehensive modality support with competitive performance.
+
+arXiv preprint arXiv:2502.18778.
+
+Cited by: §4.1,
+§4.2.
+
+[12]
+E. J. Hu, Y. Shen, P. Wallis, Z. Allen-Zhu, Y. Li, S. Wang, L. Wang, W. Chen, et al. (2022)
+
+Lora: Low-rank adaptation of large language models..
+
+ICLR 1 (2), pp. 3.
+
+Cited by: §2.
+
+[13]
+H. Hu, K. C. Chan, Y. Su, W. Chen, Y. Li, K. Sohn, Y. Zhao, X. Ben, B. Gong, W. Cohen, et al. (2024)
+
+Instruct-imagen: Image generation with multi-modal instruction.
+
+In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition,
+
+pp. 4754–4763.
+
+Cited by: §2.
+
+[14]
+R. Huang, C. Wang, J. Yang, G. Lu, Y. Yuan, J. Han, L. Hou, W. Zhang, L. Hong, H. Zhao, et al. (2025)
+
+ILLUME+: Illuminating Unified MLLM with Dual Visual Tokenization and Diffusion Refinement.
+
+arXiv preprint arXiv:2504.01934.
+
+Cited by: §2.
+
+[15]
+Y. Huang, L. Xie, X. Wang, Z. Yuan, X. Cun, Y. Ge, J. Zhou, C. Dong, R. Huang, R. Zhang, et al. (2024)
+
+Smartedit: Exploring complex instruction-based image editing with multimodal large language models.
+
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition,
+
+pp. 8362–8371.
+
+Cited by: §2.
+
+[16]
+D. Jiang, X. He, H. Zeng, C. Wei, M. Ku, Q. Liu, and W. Chen (2024)
+
+Mantis: Interleaved multi-image instruction tuning.
+
+arXiv preprint arXiv:2405.01483.
+
+Cited by: §2.
+
+[17]
+Y. Jin, K. Xu, K. Xu, L. Chen, C. Liao, J. Tan, Q. Huang, B. Chen, C. Song, d. meng, D. Zhang, W. Ou, K. Gai, and Y. Mu (2024)
+
+Unified Language-Vision Pretraining in LLM with Dynamic Discrete Visual Tokenization.
+
+In The Twelfth International Conference on Learning Representations,
+
+External Links: https://openreview.net/forum?id=FlvtjAB0gl
+
+Cited by: §2.
+
+[18]
+S. Kou, J. Jin, Z. Liu, C. Liu, Y. Ma, J. Jia, Q. Chen, P. Jiang, and Z. Deng (2025)
+
+Orthus: Autoregressive Interleaved Image-Text Generation with Modality-Specific Heads.
+
+In Forty-second International Conference on Machine Learning,
+
+External Links: https://openreview.net/forum?id=dPyA4ZYs7n
+
+Cited by: §1.
+
+[19]
+H. Li, X. Li, P. Hu, Y. Lei, C. Li, and Y. Zhou (2023)
+
+Boosting multi-modal model performance with adaptive gradient modulation.
+
+In Proceedings of the IEEE/CVF International Conference on Computer Vision,
+
+pp. 22214–22224.
+
+Cited by: §2.
+
+[20]
+H. Liu, W. Yan, M. Zaharia, and P. Abbeel (2025)
+
+World Model on Million-Length Video And Language With Blockwise RingAttention.
+
+In The Thirteenth International Conference on Learning Representations,
+
+External Links: https://openreview.net/forum?id=HN8V0flwJF
+
+Cited by: §2.
+
+[21]
+H. Liu, C. Li, Q. Wu, and Y. J. Lee (2023)
+
+Visual instruction tuning.
+
+Advances in neural information processing systems 36, pp. 34892–34916.
+
+Cited by: §1,
+§2.
+
+[22]
+H. Liu, C. Li, Q. Wu, and Y. J. Lee (2023)
+
+Visual instruction tuning.
+
+Advances in Neural Information Processing Systems 36, pp. 34892–34916.
+
+Cited by: §1.
+
+[23]
+M. Liu, Z. Xu, Z. Lin, T. Ashby, J. Rimchala, J. Zhang, and L. Huang (2024)
+
+Holistic evaluation for interleaved text-and-image generation.
+
+arXiv preprint arXiv:2406.14643.
+
+Cited by: §4.1.
+
+[24]
+R. Rombach, A. Blattmann, D. Lorenz, P. Esser, and B. Ommer (2022)
+
+High-resolution image synthesis with latent diffusion models.
+
+In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition,
+
+pp. 10684–10695.
+
+Cited by: §1.
+
+[25]
+O. Sener and V. Koltun (2018)
+
+Multi-task learning as multi-objective optimization.
+
+Advances in neural information processing systems 31.
+
+Cited by: §3.2.
+
+[26]
+Q. Sun, Y. Cui, X. Zhang, F. Zhang, Q. Yu, Y. Wang, Y. Rao, J. Liu, T. Huang, and X. Wang (2024)
+
+Generative multimodal models are in-context learners.
+
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition,
+
+pp. 14398–14409.
+
+Cited by: Figure 2,
+Figure 2,
+§2,
+§2,
+Figure 6,
+Figure 6,
+§3.3,
+§4.1.
+
+[27]
+Q. Sun, Q. Yu, Y. Cui, F. Zhang, X. Zhang, Y. Wang, H. Gao, J. Liu, T. Huang, and X. Wang (2024)
+
+Emu: Generative Pretraining in Multimodality.
+
+In The Twelfth International Conference on Learning Representations,
+
+External Links: https://openreview.net/forum?id=mL8Q9OOamV
+
+Cited by: §2.
+
+[28]
+Y. Sung, J. Cho, and M. Bansal (2022)
+
+Vl-adapter: Parameter-efficient transfer learning for vision-and-language tasks.
+
+In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition,
+
+pp. 5227–5237.
+
+Cited by: §2.
+
+[29]
+H. Tang, H. Liu, and X. Xiao (2025)
+
+UGen: Unified Autoregressive Multimodal Model with Progressive Vocabulary Learning.
+
+arXiv preprint arXiv:2503.21193.
+
+Cited by: §2.
+
+[30]
+C. Team (2024)
+
+Chameleon: Mixed-modal early-fusion foundation models.
+
+arXiv preprint arXiv:2405.09818.
+
+Cited by: §1,
+§2.
+
+[31]
+X. Tian, W. Li, B. Xu, Y. Yuan, Y. Wang, and H. Shen (2025)
+
+MIGE: Mutually Enhanced Multimodal Instruction-Based Image Generation and Editing.
+
+In Proceedings of the 33rd ACM International Conference on Multimedia,
+
+pp. 10622–10631.
+
+Cited by: §2.
+
+[32]
+S. Tong, D. Fan, J. Zhu, Y. Xiong, X. Chen, K. Sinha, M. Rabbat, Y. LeCun, S. Xie, and Z. Liu (2024)
+
+Metamorph: Multimodal understanding and generation via instruction tuning.
+
+arXiv preprint arXiv:2412.14164.
+
+Cited by: §2.
+
+[33]
+H. Touvron, T. Lavril, G. Izacard, X. Martinet, M. Lachaux, T. Lacroix, B. Rozière, N. Goyal, E. Hambro, F. Azhar, et al. (2023)
+
+Llama: Open and efficient foundation language models.
+
+arXiv preprint arXiv:2302.13971.
+
+Cited by: §2.
+
+[34]
+A. Van Den Oord O. Vinyals et al. (2017)
+
+Neural discrete representation learning.
+
+Advances in Neural Information Processing Systems 30.
+
+Cited by: §2.
+
+[35]
+C. Wang, G. Lu, J. Yang, R. Huang, J. Han, L. Hou, W. Zhang, and H. Xu (2024)
+
+Illume: Illuminating your llms to see, draw, and self-enhance.
+
+arXiv preprint arXiv:2412.06673.
+
+Cited by: §2,
+§2.
+
+[36]
+X. Wang, X. Zhang, Z. Luo, Q. Sun, Y. Cui, J. Wang, F. Zhang, Y. Wang, Z. Li, Q. Yu, et al. (2024)
+
+Emu3: Next-token prediction is all you need.
+
+arXiv preprint arXiv:2409.18869.
+
+Cited by: §1,
+§2.
+
+[37]
+X. Wei, M. Munir, and R. Marculescu (2025)
+
+Mitigating Intra-and Inter-modal Forgetting in Continual Learning of Unified Multimodal Models.
+
+In The Thirty-ninth Annual Conference on Neural Information Processing Systems,
+
+Cited by: §2.
+
+[38]
+Y. Wei and D. Hu (2024)
+
+Mmpareto: Boosting multimodal learning with innocent unimodal assistance.
+
+arXiv preprint arXiv:2405.17730.
+
+Cited by: §2,
+§2,
+§3.2.
+
+[39]
+C. Wu, X. Chen, Z. Wu, Y. Ma, X. Liu, Z. Pan, W. Liu, Z. Xie, X. Yu, C. Ruan, et al. (2025)
+
+Janus: Decoupling visual encoding for unified multimodal understanding and generation.
+
+In Proceedings of the Computer Vision and Pattern Recognition Conference,
+
+pp. 12966–12977.
+
+Cited by: §1.
+
+[40]
+J. Wu, X. Li, T. Yu, Y. Wang, X. Chen, J. Gu, L. Yao, J. Shang, and J. McAuley (2024)
+
+Commit: Coordinated instruction tuning for multimodal large language models.
+
+arXiv preprint arXiv:2407.20454.
+
+Cited by: §2.
+
+[41]
+Y. Wu, Z. Zhang, J. Chen, H. Tang, D. Li, Y. Fang, L. Zhu, E. Xie, H. Yin, L. Yi, S. Han, and Y. Lu (2025)
+
+VILA-U: a Unified Foundation Model Integrating Visual Understanding and Generation.
+
+In The Thirteenth International Conference on Learning Representations,
+
+External Links: https://openreview.net/forum?id=02haSpO453
+
+Cited by: §2.
+
+[42]
+J. Xie, W. Mao, Z. Bai, D. J. Zhang, W. Wang, K. Q. Lin, Y. Gu, Z. Chen, Z. Yang, and M. Z. Shou (2025)
+
+Show-o: One Single Transformer to Unify Multimodal Understanding and Generation.
+
+In The Thirteenth International Conference on Learning Representations,
+
+External Links: https://openreview.net/forum?id=o6Ynz6OIQ6
+
+Cited by: §1,
+§3.1.
+
+[43]
+Z. Xu, M. Liu, Y. Shen, J. Rimchala, J. Zhang, Q. Wang, Y. Cheng, and L. Huang (2025)
+
+Modality-Specialized Synergizers for Interleaved Vision-Language Generalists.
+
+In The Thirteenth International Conference on Learning Representations,
+
+External Links: https://openreview.net/forum?id=7UgQjFEadn
+
+Cited by: §1,
+§2,
+§2.
+
+[44]
+Y. Yang, H. Pan, Q. Jiang, Y. Xu, and J. Tang (2025)
+
+Learning to rebalance multi-modal optimization by adaptively masking subnetworks.
+
+IEEE Transactions on Pattern Analysis and Machine Intelligence.
+
+Cited by: §2.
+
+[45]
+Z. Zhang, W. Zhou, J. Zhao, and H. Li (2025)
+
+Robust Multimodal Large Language Models Against Modality Conflict.
+
+In Forty-second International Conference on Machine Learning,
+
+External Links: https://openreview.net/forum?id=SP43jVv7fJ
+
+Cited by: §2.
+
+[46]
+X. Zheng, C. Liao, Y. Fu, K. Lei, Y. Lyu, L. Jiang, B. Ren, J. Chen, J. Wang, C. Li, et al. (2025)
+
+MLLMs are Deeply Affected by Modality Bias.
+
+arXiv preprint arXiv:2505.18657.
+
+Cited by: §2.
+
+[47]
+C. Zhou, L. YU, A. Babu, K. Tirumala, M. Yasunaga, L. Shamis, J. Kahn, X. Ma, L. Zettlemoyer, and O. Levy (2025)
+
+Transfusion: Predict the Next Token and Diffuse Images with One Multi-Modal Model.
+
+In The Thirteenth International Conference on Learning Representations,
+
+External Links: https://openreview.net/forum?id=SI2hI0frk6
+
+Cited by: §1,
+§3.1.
+
+◄
+ar5iv homepage
+Feeling
+lucky?
+
+Conversion
+report
+Report
+an issue
+View original
+on arXiv►
+
+Copyright
+Privacy Policy
+
+Generated by LaTeXML Mascot Sammy (oxide)

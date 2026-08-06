@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/qzp4xqtw0jnFwpWWsXepkDI3gGE</id>
+  <title>arXiv Query: search_query=all:"large vision language model" AND all:"frozen vision encoder"&amp;id_list=&amp;start=0&amp;max_results=100</title>
+  <updated>2026-08-06T20:34:14Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22large+vision+language+model%22+AND+all:%22frozen+vision+encoder%22&amp;start=0&amp;max_results=100&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>100</opensearch:itemsPerPage>
+  <opensearch:totalResults>2</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2402.12336v2</id>
+    <title>Robust CLIP: Unsupervised Adversarial Fine-Tuning of Vision Embeddings for Robust Large Vision-Language Models</title>
+    <updated>2024-06-05T15:32:03Z</updated>
+    <link href="https://arxiv.org/abs/2402.12336v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.12336v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multi-modal foundation models like OpenFlamingo, LLaVA, and GPT-4 are increasingly used for various real-world tasks. Prior work has shown that these models are highly vulnerable to adversarial attacks on the vision modality. These attacks can be leveraged to spread fake information or defraud users, and thus pose a significant risk, which makes the robustness of large multi-modal foundation models a pressing problem. The CLIP model, or one of its variants, is used as a frozen vision encoder in many large vision-language models (LVLMs), e.g. LLaVA and OpenFlamingo. We propose an unsupervised adversarial fine-tuning scheme to obtain a robust CLIP vision encoder, which yields robustness on all vision down-stream tasks (LVLMs, zero-shot classification) that rely on CLIP. In particular, we show that stealth-attacks on users of LVLMs by a malicious third party providing manipulated images are no longer possible once one replaces the original CLIP model with our robust one. No retraining or fine-tuning of the down-stream LVLMs is required. The code and robust models are available at https://github.com/chs20/RobustVLM</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-19T18:09:48Z</published>
+    <arxiv:comment>ICML 2024 Oral</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Christian Schlarmann</name>
+    </author>
+    <author>
+      <name>Naman Deep Singh</name>
+    </author>
+    <author>
+      <name>Francesco Croce</name>
+    </author>
+    <author>
+      <name>Matthias Hein</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.10896v2</id>
+    <title>PaLM2-VAdapter: Progressively Aligned Language Model Makes a Strong Vision-language Adapter</title>
+    <updated>2024-06-01T01:06:16Z</updated>
+    <link href="https://arxiv.org/abs/2402.10896v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.10896v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper demonstrates that a progressively aligned language model can effectively bridge frozen vision encoders and large language models (LLMs). While the fundamental architecture and pre-training methods of vision encoders and LLMs have been extensively studied, the architecture and training strategy of vision-language adapters vary significantly across recent works. Our research undertakes a thorough exploration of the state-of-the-art perceiver resampler architecture and builds a strong baseline. However, we observe that the vision-language alignment with perceiver resampler exhibits slow convergence and limited scalability with a lack of direct supervision. To address this issue, we propose PaLM2-VAdapter, employing a progressively aligned language model as the vision-language adapter. Compared to the strong baseline with perceiver resampler, our method empirically shows faster convergence, higher performance, and stronger scalability. Extensive experiments across various Visual Question Answering (VQA) and captioning tasks on both images and videos demonstrate that our model exhibits state-of-the-art visual understanding and multi-modal reasoning capabilities. Notably, our method achieves these advancements with 30~70% fewer parameters than the state-of-the-art large vision-language models, marking a significant efficiency improvement.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-16T18:54:47Z</published>
+    <arxiv:comment>Technical report, 15 pages; v2 fix typos, add additional results in appendix</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Junfei Xiao</name>
+    </author>
+    <author>
+      <name>Zheng Xu</name>
+    </author>
+    <author>
+      <name>Alan Yuille</name>
+    </author>
+    <author>
+      <name>Shen Yan</name>
+    </author>
+    <author>
+      <name>Boyu Wang</name>
+    </author>
+  </entry>
+</feed>
