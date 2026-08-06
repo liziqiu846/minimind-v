@@ -245,3 +245,6 @@ checkpoint-only prediction test；不训练。
   `1.18519`，gradient norm=`0.99067/1.04601`，全部 finite；shared frozen hash 与
   data SHA 相同，peak CUDA allocation 均约 1.07 GiB。没有持久化 coordinates、没有
   科学聚合；可以按固定顺序启动 current 后 projector 的 paired full training。
+- root `43201` paired pilot 已在物理 GPU 5 启动，持久 session `92257` 固定顺序
+  current → projector，condition 间不评分。current 启动后进程存在、GPU 约 1.8 GiB
+  且有算力占用；进入 10–20 分钟低频检查。
