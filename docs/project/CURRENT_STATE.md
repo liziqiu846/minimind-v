@@ -12,6 +12,11 @@
 2. `docs/theory/VLM泛化理论基线.md`：理论单一事实来源。
 3. `docs/project/DECISION_LOG.md`：关键研究决策，只追加历史。
 4. `docs/project/EXPERIMENT_REGISTRY.md`：正式实验、审计、commit、状态与结论索引。
+5. `docs/project/ACTIVE_RESEARCH_QUESTION.md`：人工冻结的一级科学问题与 Research Envelope。
+6. `docs/project/IDEA_REGISTRY.md`：candidate idea 的长期登记与淘汰记录。
+7. `docs/project/REVIEW_QUEUE.md`：不停机的异步人工审查队列。
+8. `docs/project/AUTONOMOUS_LOOP_STATE.md`：跨调用恢复所需的最小机器状态。
+9. `docs/project/NIGHT_POLICY.md`：预授权夜间自治规则。
 
 若聊天记忆与仓库最新文档冲突，以仓库为准。
 
