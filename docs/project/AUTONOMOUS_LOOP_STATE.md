@@ -5,16 +5,16 @@ MODE: AUTONOMOUS_RESEARCH
 ACTIVE_RESEARCH_QUESTION: docs/project/ACTIVE_RESEARCH_QUESTION.md
 CURRENT_IDEA: VISSUP-01
 CURRENT_ROUND: 1
-CURRENT_STATE: VISSUP01_PLAN_REQUIRED
+CURRENT_STATE: VISSUP01_PLAN_FROZEN_READY
 RUNNING_JOB: none
-LAST_PLAN: experiments/plans/LITMAP-02_round1.md
+LAST_PLAN: experiments/plans/VISSUP-01_round1.md
 LAST_RESULT: experiments/results/LITMAP-02_round1/RESULT.md
 GPU_HOURS_USED_THIS_CYCLE: 0.75
 ACTIVE_QUEUE: VISSUP-01
 NEXT_QUEUE: TBD_AFTER_VISSUP-01
 BACKLOG_QUEUE: OBJ-01,COVER-01
 WINOGROUND_ACCESS: blocked_by_access
-RESOURCE_NOTE: no_running_gpu_job;VISSUP01_historical_single_train_about_715s_A40;paired_pilot_estimate_about_0.4_GPUh;disk-available-about-49GB
+RESOURCE_NOTE: no_running_gpu_job;free_A40_at_snapshot=1,5,7;paired_pilot_estimate_about_0.4_GPUh;disk_available_at_snapshot=24.5GB;single_GPU_sequential_only
 HARD_STOP: false
 ```
 

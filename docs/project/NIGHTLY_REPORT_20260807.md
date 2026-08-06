@@ -172,3 +172,7 @@ checkpoint-only prediction test；不训练。
   相同 rotated pixels、labels、sample order、steps 与 target token distribution，
   唯一主要差异是 prompt 是否泄露 rotation label；单 paired root positive 后才可补
   total 3 roots。
+- `VISSUP-01_round1` 已冻结：10,000 base rows + 1,008 rotation rows、
+  M2-current root `43101` paired pilot；held-out rotation 机制门与全新
+  CV-Bench-2D 外部方向必须同时达到预注册阈值才补 `43102/43103`。资源快照显示
+  1/5/7 号 A40 空闲但工作盘仅余约 24.5 GB，因此固定单卡顺序执行和紧凑 artifact。
