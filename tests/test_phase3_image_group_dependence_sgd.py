@@ -9,6 +9,10 @@ import numpy as np
 import torch
 
 from experiments.phase3_image_group_dependence_sgd_v1.configs import generate_matrix
+from experiments.phase3_image_group_dependence_sgd_v1.codec import (
+    decode_coordinates,
+    encode_and_verify,
+)
 from experiments.phase3_image_group_dependence_sgd_v1.diagnosis import (
     capture_rng,
     diagnose_replacement,
@@ -97,6 +101,20 @@ def test_matrix_is_exact_preregistered_12():
     assert len(matrix) == 12
     assert {row["budget"] for row in matrix} == {2048, 8192}
     assert 4096 not in {row["budget"] for row in matrix}
+
+
+def test_variable_budget_mms2_round_trip_has_bare_group_names():
+    for row in generate_matrix():
+        coordinates = {
+            name: torch.zeros(dimension)
+            for name, dimension in row["coordinate_dimensions"].items()
+        }
+        archive, receipt = encode_and_verify(
+            coordinates, row["structure"], row["seed"]
+        )
+        decoded, metadata = decode_coordinates(archive)
+        assert set(decoded) == set(row["coordinate_dimensions"])
+        assert metadata["archive_bits"] == receipt["archive_bits"]
 
 
 def test_diagnosis_on_off_trajectory_is_bit_identical():

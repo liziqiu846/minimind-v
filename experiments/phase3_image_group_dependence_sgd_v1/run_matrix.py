@@ -104,14 +104,29 @@ def dispatch(
 
     completed = {}
     with ThreadPoolExecutor(max_workers=len(devices)) as pool:
-        futures = {
-            pool.submit(one, config, devices[index % len(devices)]): config["config_id"]
-            for index, config in enumerate(matrix)
-        }
-        for future in as_completed(futures):
-            config_id = futures[future]
-            completed[config_id] = future.result()
+        pending = iter(matrix)
+        futures = {}
+        for device in devices:
+            try:
+                config = next(pending)
+            except StopIteration:
+                break
+            futures[pool.submit(one, config, device)] = (config["config_id"], device)
+        while futures:
+            future = next(as_completed(futures))
+            config_id, device = futures.pop(future)
+            try:
+                completed[config_id] = future.result()
+            except BaseException:
+                for active in futures:
+                    active.cancel()
+                raise
             print(json.dumps(completed[config_id], sort_keys=True), flush=True)
+            try:
+                config = next(pending)
+            except StopIteration:
+                continue
+            futures[pool.submit(one, config, device)] = (config["config_id"], device)
     receipt = {**manifest, "status": "complete", "completed": completed}
     write_json_atomic(results_root / "dispatch_receipt.json", receipt)
     return receipt

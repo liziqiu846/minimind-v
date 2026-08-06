@@ -272,7 +272,7 @@ def train(
             raise RuntimeError("frozen parameters changed")
         coordinates = {
             name: value.detach().cpu()
-            for name, value in model.stage2_coordinates.state_dict().items()
+            for name, value in model.stage2_coordinates.coordinates.items()
         }
         archive, encoding = encode_and_verify(
             coordinates, config["structure"], config["seed"]
