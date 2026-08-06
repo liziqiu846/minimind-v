@@ -237,3 +237,27 @@ D_I=\sum_t\eta_t^2\|g_t-g_t^{ghost}\|_2^2
 - 暂不开新 MiniMind-V / Codex 实验；
 - 下一步先以任务书和两篇核心论文为主干，按需补充可靠的新 VLM/CLIP 泛化文献；
 - 先回答“**VLM 相比 LLM，泛化问题到底新在哪里？**”，再用“科学新意、解释码长—性能脱钩、可导出算法、MiniMind-V 可验证”四项标准冻结新的阶段三主攻问题。
+
+---
+
+## 2026-08-07｜纯数据共现结构不能单独解释已审计 P/S 配对
+
+**决定**：`XMC-01` 保留为 promising candidate，但其纯数据版本不能作为已审计
+P/S 结构排序的解释；后续必须研究冻结模型是否保留任务相关跨模态结构。
+
+**依据**：
+
+1. Zhang et al. 2023 为图文配对语义误差与共现谱提供直接 MMCL 理论桥，但对象是
+   spectral contrastive dual encoder + linear probe，不是生成式 LVLM；
+2. read-only manifest audit 中，low/high × 3 seeds 共 6 个 P/S pair 的 dataset SHA、
+   训练规模和三个 epoch 的实际 permutation SHA 完全一致；
+3. current-budget 3 个 pair 的 config 虽一致，但 training manifest 缺失，故全矩阵
+   结论按预注册标准为 `DATA_GRAPH_IDENTITY_NOT_AUDITABLE`。
+
+**后果**：
+
+- 冻结“纯数据 XMC 不能解释已审计 6 对 P/S”；
+- 不把缺失回执当成默认相同，不宣称 9/9；
+- 不对历史结果批量试新 proxy；
+- 下一合法 prediction test 应使用冻结 checkpoint、标准外部同词反事实图文对，
+  检查模型保持/组合绑定，而不是重新训练。
