@@ -241,3 +241,7 @@ checkpoint-only prediction test；不训练。
   `PROJALLOC-01_round1/PREFLIGHT.json`：绑定同一 commit，current 与
   projector-dominant 的 frozen hash/target names 匹配，全部 dimension、mapping、
   zero-state 与 prepared-asset gates 通过；仍为 0 inference / 0 training。
+- root `43201` 两条件各 2-sample non-scientific smoke passed：loss 均为
+  `1.18519`，gradient norm=`0.99067/1.04601`，全部 finite；shared frozen hash 与
+  data SHA 相同，peak CUDA allocation 均约 1.07 GiB。没有持久化 coordinates、没有
+  科学聚合；可以按固定顺序启动 current 后 projector 的 paired full training。

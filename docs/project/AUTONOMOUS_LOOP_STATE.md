@@ -5,16 +5,16 @@ MODE: AUTONOMOUS_RESEARCH
 ACTIVE_RESEARCH_QUESTION: docs/project/ACTIVE_RESEARCH_QUESTION.md
 CURRENT_IDEA: PROJALLOC-01
 CURRENT_ROUND: 1
-CURRENT_STATE: PROJALLOC01_PREFLIGHT_PASSED_READY_FOR_PAIRED_SMOKE
+CURRENT_STATE: PROJALLOC01_SMOKE_PASSED_READY_FOR_PAIRED_PILOT
 RUNNING_JOB: none
 LAST_PLAN: experiments/plans/PROJALLOC-01_round1.md
-LAST_RESULT: experiments/results/PROJALLOC-01_round1/PREFLIGHT.json
+LAST_RESULT: experiments/results/PROJALLOC-01_round1/SMOKE.json
 GPU_HOURS_USED_THIS_CYCLE: 1.07
 ACTIVE_QUEUE: PROJALLOC-01
-NEXT_QUEUE: PROJALLOC-01_CURRENT_AND_PROJECTOR_TWO_SAMPLE_SMOKE
+NEXT_QUEUE: PROJALLOC-01_ROOT43201_CURRENT_THEN_PROJECTOR_FULL_TRAIN
 BACKLOG_QUEUE: OBJ-01,COVER-01
 WINOGROUND_ACCESS: blocked_by_access
-RESOURCE_NOTE: no_running_gpu_job;implementation_commit_487c81a;committed_tree_CPU_preflight_passed;paired_two_sample_smoke_next;no_final_confirmation
+RESOURCE_NOTE: no_running_gpu_job;CPU_preflight_and_paired_smoke_passed;run_current_full_then_projector_full_without_intermediate_scoring;no_final_confirmation
 HARD_STOP: false
 ```
 
