@@ -1,0 +1,159 @@
+{
+  "timestamp": "2026-08-06T16:14:26.107682",
+  "os": {
+    "system": "Linux",
+    "release": "5.4.0-216-generic",
+    "version": "#236-Ubuntu SMP Fri Apr 11 19:53:21 UTC 2025",
+    "machine": "x86_64",
+    "python_version": "3.8.10"
+  },
+  "cpu": {
+    "physical_cores": 32,
+    "logical_cores": 64,
+    "max_frequency_mhz": 3400.0,
+    "architecture": "x86_64",
+    "processor": "x86_64",
+    "current_frequency_mhz": 1301.9280156250002
+  },
+  "memory": {
+    "total_gb": 487.8,
+    "available_gb": 437.22,
+    "used_gb": 42.76,
+    "percent_used": 10.4,
+    "swap_total_gb": 141.2,
+    "swap_available_gb": 127.16
+  },
+  "disk": {
+    "path": "/home/lizhaohui/lzq/minimind-v",
+    "total_gb": 32341.1,
+    "available_gb": 26.03,
+    "used_gb": 32260.8,
+    "percent_used": 99.9
+  },
+  "gpu": {
+    "nvidia_gpus": [
+      {
+        "index": 0,
+        "name": "NVIDIA A40",
+        "memory_total_mb": 46068.0,
+        "memory_free_mb": 18872.0,
+        "driver_version": "570.133.20",
+        "compute_capability": "8.6",
+        "type": "NVIDIA",
+        "backend": "CUDA"
+      },
+      {
+        "index": 1,
+        "name": "NVIDIA A40",
+        "memory_total_mb": 46068.0,
+        "memory_free_mb": 45495.0,
+        "driver_version": "570.133.20",
+        "compute_capability": "8.6",
+        "type": "NVIDIA",
+        "backend": "CUDA"
+      },
+      {
+        "index": 2,
+        "name": "NVIDIA A40",
+        "memory_total_mb": 46068.0,
+        "memory_free_mb": 18873.0,
+        "driver_version": "570.133.20",
+        "compute_capability": "8.6",
+        "type": "NVIDIA",
+        "backend": "CUDA"
+      },
+      {
+        "index": 3,
+        "name": "NVIDIA A100-PCIE-40GB",
+        "memory_total_mb": 40960.0,
+        "memory_free_mb": 10412.0,
+        "driver_version": "570.133.20",
+        "compute_capability": "8.0",
+        "type": "NVIDIA",
+        "backend": "CUDA"
+      },
+      {
+        "index": 4,
+        "name": "NVIDIA A40",
+        "memory_total_mb": 46068.0,
+        "memory_free_mb": 18874.0,
+        "driver_version": "570.133.20",
+        "compute_capability": "8.6",
+        "type": "NVIDIA",
+        "backend": "CUDA"
+      },
+      {
+        "index": 5,
+        "name": "NVIDIA A40",
+        "memory_total_mb": 46068.0,
+        "memory_free_mb": 45494.0,
+        "driver_version": "570.133.20",
+        "compute_capability": "8.6",
+        "type": "NVIDIA",
+        "backend": "CUDA"
+      },
+      {
+        "index": 6,
+        "name": "NVIDIA A40",
+        "memory_total_mb": 46068.0,
+        "memory_free_mb": 13169.0,
+        "driver_version": "570.133.20",
+        "compute_capability": "8.6",
+        "type": "NVIDIA",
+        "backend": "CUDA"
+      },
+      {
+        "index": 7,
+        "name": "NVIDIA A40",
+        "memory_total_mb": 46068.0,
+        "memory_free_mb": 45495.0,
+        "driver_version": "570.133.20",
+        "compute_capability": "8.6",
+        "type": "NVIDIA",
+        "backend": "CUDA"
+      }
+    ],
+    "amd_gpus": [],
+    "apple_silicon": null,
+    "total_gpus": 8,
+    "available_backends": [
+      "CUDA"
+    ]
+  },
+  "recommendations": {
+    "parallel_processing": {
+      "strategy": "high_parallelism",
+      "suggested_workers": 62,
+      "libraries": [
+        "joblib",
+        "multiprocessing",
+        "dask"
+      ]
+    },
+    "memory_strategy": {
+      "strategy": "memory_abundant",
+      "note": "Can load most datasets into memory"
+    },
+    "gpu_acceleration": {
+      "available": true,
+      "backends": [
+        "CUDA"
+      ],
+      "suggested_libraries": [
+        "pytorch",
+        "tensorflow",
+        "jax",
+        "cupy",
+        "rapids"
+      ]
+    },
+    "large_data_handling": {
+      "strategy": "moderate_disk",
+      "libraries": [
+        "zarr",
+        "h5py",
+        "parquet"
+      ]
+    }
+  }
+}

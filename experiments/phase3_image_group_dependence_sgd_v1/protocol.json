@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "status": "preregistered",
+  "protocol_id": "phase3-image-group-dependence-sgd-v1",
+  "scientific_question": "image_group_data_dependence_proxy_vs_new_image_development_error",
+  "structures": ["P", "S"],
+  "budgets": [2048, 8192],
+  "seeds": [43101, 43102, 43103],
+  "candidate_count": 12,
+  "data": {
+    "source_catalog_relative_path": "dataset/stage2_confirm_v2_seed2028/eligible_catalog.parquet",
+    "source_catalog_sha256": "ac2ba7397f603bf4a10bed82af600e290654f8b8665f8aa5cf62074b2757ebaf",
+    "selection_seed": 2026,
+    "selection_rule": "ascending_sha256(protocol_id|selection_seed|catalog_unit_id), after development exact-image exclusion",
+    "train_unique_image_groups": 10000,
+    "ghost_pool_rule": "all remaining eligible groups after development exclusion and train selection",
+    "group_definition": "(exact image bytes, one fixed canonical conversation)",
+    "exact_image_hash": "SHA-256 of encoded image bytes",
+    "conversation_hash": "SHA-256 of canonical UTF-8 conversation",
+    "development_role": "existing_phase3_v6_development_only",
+    "development_expected_unique_images": 1345,
+    "final_independent_confirmation_access": false
+  },
+  "training": {
+    "optimizer": {
+      "name": "torch.optim.SGD",
+      "momentum": 0.0,
+      "dampening": 0.0,
+      "weight_decay": 0.0,
+      "nesterov": false,
+      "parameters": "coordinate tensors only"
+    },
+    "epochs": 3,
+    "micro_batch_size": 4,
+    "gradient_accumulation_steps": 4,
+    "effective_batch_size": 16,
+    "total_optimizer_steps": 1875,
+    "learning_rate": 0.05,
+    "learning_rate_schedule": {
+      "update_unit": "optimizer step",
+      "warmup_steps": 0,
+      "minimum_ratio": 0.1,
+      "formula": "lr_min+0.5*(lr_max-lr_min)*(1+cos(pi*t/(T-1)))"
+    },
+    "gradient_clip_global_l2": null,
+    "data_order_seed": 2026,
+    "determinism": {
+      "torch_deterministic_algorithms": true,
+      "cublas_workspace_config": ":4096:8",
+      "cudnn_deterministic": true,
+      "cudnn_benchmark": false
+    },
+    "max_sequence_length": 450,
+    "image_token_count": 64
+  },
+  "differences_from_frozen_ps_protocol": [
+    "candidate matrix removes budget 4096 (18 models to 12)",
+    "training units are 10000 unique exact-image groups instead of 10000 with-replacement draws",
+    "optimizer is plain SGD instead of AdamW",
+    "AdamW weight decay, betas, epsilon and AMSGrad fields do not apply",
+    "global gradient clipping is disabled so W_(t+1)=W_t-eta_t*g_t exactly",
+    "preregistered whole-image-group ghost gradient diagnostics are added",
+    "actual complete MMS2 bits are descriptive complexity C(h)"
+  ],
+  "diagnosis": {
+    "optimizer_steps": [0, 187, 374, 562, 749, 937, 1124, 1312, 1499, 1687, 1874],
+    "selected_group_rule": "uint64_le(SHA256(protocol_id|config_seed|optimizer_step|batch-position)[0:8]) modulo 16",
+    "ghost_group_rule": "uint64_le(SHA256(protocol_id|config_seed|optimizer_step|ghost)[0:8]) modulo ghost_pool_size",
+    "quantity": "D_I=sum_t learning_rate_t^2 * squared_l2(g_t-g_t_ghost)",
+    "claim_label": "image-group replacement sensitivity theoretical proxy",
+    "optimizer_step_for_ghost": false,
+    "state_mutation_allowed": false
+  },
+  "evaluation": {
+    "role": "development_only",
+    "implementation": "phase3_v6_bounded_visual_semantic_contrast_q",
+    "real_visual_performance": "visual_gain_empirical",
+    "error_metric": "visual_risk",
+    "final_independent_confirmation_access": false
+  },
+  "statistics": {
+    "primary": "Spearman",
+    "secondary": "Pearson",
+    "complexity": "actual complete MMS2 archive bits",
+    "criteria": {
+      "1": "Spearman(D_I,error) >= 0.5",
+      "2": "abs(Spearman(D_I,error)) > abs(Spearman(actual_mms2_bits,error))",
+      "3": "K>=3 and worse-performance member has larger D_I in at least 5/6 of decoupling pairs",
+      "4": "within-budget Spearman(D_I,error) has the same nonzero computable direction at 2048 and 8192"
+    }
+  },
+  "forbidden": {
+    "budget_4096": true,
+    "adaptive_diagnostic_steps_or_rules": true,
+    "adaptive_hyperparameters": true,
+    "final_independent_confirmation_access": true,
+    "optimizer_other_than_plain_sgd": true
+  }
+}
