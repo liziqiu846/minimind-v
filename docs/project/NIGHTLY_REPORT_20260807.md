@@ -226,3 +226,7 @@ checkpoint-only prediction test；不训练。
 - 本轮 0 GPU、0 checkpoint、0 training，累计 GPU 用时仍约 1.07 h，未访问 final
   confirmation。下一步先冻结并提交 `PROJALLOC-01_round1` plan，再使用 fresh root
   `43201` 重训 paired conditions；pilot 任一预声明门失败即拒绝。
+- `PROJALLOC-01_round1` 已冻结：两个条件逐字节复用同一个 visual-necessary
+  parquet，fixed total 4,096 coordinates，pilot root `43201`；rotation
+  `+5 pp / CI lower>0 / absolute>=0.30` 与 CV-Bench `+1 pp / margin>0` 必须同时
+  通过。未修改训练代码，下一步才进入 candidate-specific implementation。

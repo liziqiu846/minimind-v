@@ -257,6 +257,6 @@ Agent 可以自主改变：
 - **Mission relation**: 该实验直接区分“frozen visual features 可读但 projector
   subspace 容量不足”与“增加 projector 容量仍无法吸收视觉 cue”，可解释为何相同
   参数复杂度对应不同跨模态泛化，并保留 module-aware PEFT 的算法出口。
-- **Status**: ACTIVE_PLAN_REQUIRED；先提交
-  `experiments/plans/PROJALLOC-01_round1.md`。不得先改训练代码，不得补 VISSUP
-  roots `43102/43103`，不得换成 vision-heavy、搜索比例或运行旧 9-point sweep。
+- **Status**: ACTIVE_PLAN_FROZEN；`experiments/plans/PROJALLOC-01_round1.md`
+  已冻结，下一步实现、测试和双条件 smoke。不得补 VISSUP roots `43102/43103`，
+  不得换成 vision-heavy、搜索比例或运行旧 9-point sweep。
