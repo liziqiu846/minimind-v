@@ -43,6 +43,22 @@ class Viscond01Tests(unittest.TestCase):
         )
         self.assertEqual(predicted_label(correct), "A")
 
+    def test_identical_grids_have_zero_visual_increment(self):
+        grid = {"A": 1.25, "B": 2.5, "C": 0.75, "D": 4.0}
+        self.assertAlmostEqual(visual_increment(grid, grid, "C"), 0.0)
+
+    def test_margin_is_invariant_to_joint_label_permutation(self):
+        original = {"A": 1.0, "B": 4.0, "C": 3.0, "D": 2.0}
+        gold = "B"
+        permutation = {"A": "D", "B": "C", "C": "A", "D": "B"}
+        permuted = {
+            permutation[label]: value for label, value in original.items()
+        }
+        self.assertAlmostEqual(
+            answer_margin(original, gold),
+            answer_margin(permuted, permutation[gold]),
+        )
+
     def test_prediction_tie_break_is_alphabetical(self):
         values = {"A": 1.0, "B": 1.0, "C": 2.0, "D": 3.0}
         self.assertEqual(predicted_label(values), "A")
