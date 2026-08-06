@@ -237,3 +237,7 @@ checkpoint-only prediction test；不训练。
   4,096 exact-zero coordinates、无 unused coordinate，全部 prepared SHA 匹配；0
   inference、0 training。下一步先提交实现，再由 clean committed tree 生成正式
   preflight receipt 和运行双条件 GPU smoke。
+- 实现已提交为 `487c81a`。随后从 tracked-clean tree 生成正式
+  `PROJALLOC-01_round1/PREFLIGHT.json`：绑定同一 commit，current 与
+  projector-dominant 的 frozen hash/target names 匹配，全部 dimension、mapping、
+  zero-state 与 prepared-asset gates 通过；仍为 0 inference / 0 training。
