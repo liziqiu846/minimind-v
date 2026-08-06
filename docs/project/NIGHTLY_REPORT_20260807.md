@@ -251,3 +251,7 @@ checkpoint-only prediction test；不训练。
 - current full training 已完成且保持未评分；同一 session 已自动进入
   projector-dominant，进程/GPU 正常。待第二条件完成后才统一核查 paired training
   invariants。
+- paired training 全部完成：两条件各 `2,064/2,064` steps，training wall time
+  `472.84/493.59 s`，合计约 `0.268 GPU-hour`。data/permutation/seed/frozen hash/
+  11 targets 全匹配，dimensions 与 projection gates 正确，frozen parameters 未变，
+  loss/gradient 全 finite；此时仍无任何 scientific scoring。

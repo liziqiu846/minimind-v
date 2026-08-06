@@ -5,16 +5,16 @@ MODE: AUTONOMOUS_RESEARCH
 ACTIVE_RESEARCH_QUESTION: docs/project/ACTIVE_RESEARCH_QUESTION.md
 CURRENT_IDEA: PROJALLOC-01
 CURRENT_ROUND: 1
-CURRENT_STATE: PROJALLOC01_PAIRED_PILOT_PROJECTOR_TRAINING_RUNNING
-RUNNING_JOB: session=92257;driver_pid=1005590;projector_child_pid=1010430;physical_gpu=5;root=43201;current_complete_unscored;projector_running
+CURRENT_STATE: PROJALLOC01_PAIRED_TRAINING_VALID_READY_FOR_SCORING
+RUNNING_JOB: none
 LAST_PLAN: experiments/plans/PROJALLOC-01_round1.md
-LAST_RESULT: experiments/results/PROJALLOC-01_round1/SMOKE.json
-GPU_HOURS_USED_THIS_CYCLE: 1.07
+LAST_RESULT: experiments/results/PROJALLOC-01_round1/TRAINING_AUDIT.json
+GPU_HOURS_USED_THIS_CYCLE: 1.34
 ACTIVE_QUEUE: PROJALLOC-01
-NEXT_QUEUE: WAIT_PROJECTOR_COMPLETE_THEN_AUDIT_PAIRED_TRAINING_BEFORE_SCORING
+NEXT_QUEUE: SCORE_BOTH_MODELS_RAW_THEN_SINGLE_PILOT_ANALYSIS
 BACKLOG_QUEUE: OBJ-01,COVER-01
 WINOGROUND_ACCESS: blocked_by_access
-RESOURCE_NOTE: current_complete_without_scoring;projector_training_stable;GPU5_about_1p8GiB_and_active;low_frequency_check;no_final_confirmation
+RESOURCE_NOTE: paired_training_complete_0p268_GPUh;all_training_invariants_passed;no_scientific_scores_yet;score_both_then_analyze_once;no_final_confirmation
 HARD_STOP: false
 ```
 

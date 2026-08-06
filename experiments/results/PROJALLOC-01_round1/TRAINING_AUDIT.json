@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "candidate": "PROJALLOC-01",
+  "round": 1,
+  "status": "passed",
+  "mapping_root": 43201,
+  "conditions": {
+    "current-allocation": {
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 582
+      },
+      "optimizer_steps_observed": 2064,
+      "mean_micro_batch_loss": 2.6998813613354002,
+      "runtime_seconds": 472.84254217147827,
+      "training_manifest_sha256": "5f6ec5ce3d6586222cacbfaa48288886f3400b4fc8942f73e063f00367255f39",
+      "coordinate_sha256": "7381e78ed8938f199fa8d18b3a68a3b2317ec947761b82037287861d3014d64d",
+      "training_log_sha256": "ad087456784f6bd725103ccf53295c22bb14c6aae3bdf34c69df76f829d7e7e3"
+    },
+    "projector-dominant": {
+      "coordinate_dimensions": {
+        "language": 1,
+        "projector": 4094,
+        "vision": 1
+      },
+      "optimizer_steps_observed": 2064,
+      "mean_micro_batch_loss": 2.6965356058072905,
+      "runtime_seconds": 493.59484577178955,
+      "training_manifest_sha256": "70c2d50a434a302d2e5a26c62a071dce8f837547e8e88f46a8eeaed9dc7bdc16",
+      "coordinate_sha256": "784ea997089ed85ac5aa36f23415dcfcf8e9cfdcebbb4c2980232285b103eacd",
+      "training_log_sha256": "54c071c9f5d6e1937f4bedf58f41428b702f5bb2d222562f6648a604c7b7060f"
+    }
+  },
+  "total_runtime_seconds": 966.4373879432678,
+  "total_gpu_hours": 0.26845482998424106,
+  "paired_checks": {
+    "mapping_root_matches": true,
+    "current_dimensions_match_plan": true,
+    "projector_dimensions_match_plan": true,
+    "both_total_4096": true,
+    "target_names_match": true,
+    "mapping_factor_counts_match_plan": true,
+    "projection_preflight_current_pass": true,
+    "projection_preflight_projector_pass": true,
+    "initial_frozen_hash_matches": true,
+    "final_frozen_hash_matches": true,
+    "data_sha_matches": true,
+    "data_rows_match": true,
+    "data_condition_matches": true,
+    "training_configuration_matches": true,
+    "epoch_permutations_match": true,
+    "losses_finite": true,
+    "gradient_norms_finite": true,
+    "frozen_parameters_unchanged": true
+  },
+  "scientific_scoring_performed": false,
+  "final_confirmation_accessed": false
+}
