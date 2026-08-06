@@ -5,8 +5,8 @@ MODE: AUTONOMOUS_RESEARCH
 ACTIVE_RESEARCH_QUESTION: docs/project/ACTIVE_RESEARCH_QUESTION.md
 CURRENT_IDEA: VISSUP-01
 CURRENT_ROUND: 2
-CURRENT_STATE: VISSUP01_SMOKE_PASSED_PILOT_READY
-RUNNING_JOB: pending_root43101_label_revealed
+CURRENT_STATE: VISSUP01_PILOT_CONTROL_TRAINING
+RUNNING_JOB: root43101_label_revealed;gpu7;pid951237;session95362
 LAST_PLAN: experiments/plans/VISSUP-01_round2.md
 LAST_RESULT: experiments/results/VISSUP-01_round2/PREFLIGHT.md
 GPU_HOURS_USED_THIS_CYCLE: 0.75
@@ -14,7 +14,7 @@ ACTIVE_QUEUE: VISSUP-01
 NEXT_QUEUE: TBD_AFTER_VISSUP-01
 BACKLOG_QUEUE: OBJ-01,COVER-01
 WINOGROUND_ACCESS: blocked_by_access
-RESOURCE_NOTE: smoke_passed_both_conditions;shared_frozen_hash=8db8f60e;pilot_control_launch_pending_GPU7;single_GPU_sequential_only
+RESOURCE_NOTE: smoke_passed_both_conditions;control_training_started_GPU7;launcher_cleanup_attempt_had_zero_steps_and_no_artifacts;single_GPU_sequential_only
 HARD_STOP: false
 ```
 
