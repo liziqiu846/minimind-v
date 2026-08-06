@@ -284,13 +284,32 @@ def audit_panel(
 
         row_max_length = 0
         token_counts = {}
-        for label in ANSWER_LABELS:
-            record = build_answer_record(tokenizer, question, label)
-            row_max_length = max(
-                row_max_length, int(record["input_length_unpadded"])
+        try:
+            for label in ANSWER_LABELS:
+                record = build_answer_record(tokenizer, question, label)
+                row_max_length = max(
+                    row_max_length, int(record["input_length_unpadded"])
+                )
+                token_count = int(record["valid_token_count"])
+                token_counts[label] = token_count
+        except ValueError as error:
+            if str(error) != "full VLM token sequence exceeds maximum length":
+                raise
+            rejected_rows.append(
+                {
+                    "index": index,
+                    "reason": "token_sequence_exceeds_450",
+                    "detail": str(error),
+                    "answer": answer,
+                    "category": row["category"],
+                    "l2_category": row["l2_category"],
+                    "image_path": str(image_path),
+                    "image_sha256": raw_sha,
+                    "normalized_pixel_sha256": pixel_sha,
+                }
             )
-            token_count = int(record["valid_token_count"])
-            token_counts[label] = token_count
+            continue
+        for label, token_count in token_counts.items():
             answer_token_counts[label].add(token_count)
         token_lengths.append(row_max_length)
         manifest_rows.append(
