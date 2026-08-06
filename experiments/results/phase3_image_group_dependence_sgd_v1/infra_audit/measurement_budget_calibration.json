@@ -1,0 +1,47 @@
+{
+  "absolute_gpu_time": "cannot be recovered exactly from existing logs",
+  "analysis_scope": "existing infra_audit only; no retraining; no final confirmation access",
+  "conclusion": "NEED_DIAGNOSTIC_PILOT",
+  "identifiability": {
+    "formal_K_identifiable": false,
+    "formal_T_identifiable": false,
+    "reason": "three probe panels are one-to-one confounded with model seeds; eleven time/LR-weighted steps are non-exchangeable"
+  },
+  "panel_scale_reestimate_2048": {
+    "definition": "probe=sqrt(mean_step(sample_variance_panel(pair_mean(P,S)))); structure=sqrt(mean_panel_step((P-S)^2))",
+    "log_ratio": 5.936339027363161,
+    "naive_independent_1_over_sqrt_K_K_log": 36,
+    "naive_independent_1_over_sqrt_K_K_raw": 8,
+    "raw_ratio": 2.7265454103298628,
+    "usable_for_freeze": false
+  },
+  "recommended_single_configuration": {
+    "budget": 2048,
+    "diagnosis_calls": 594,
+    "diagnostic_steps_T": 33,
+    "models": 6,
+    "rationale": "minimum crossed panel design with three panels and three nonoverlapping 11-step-sized blocks per panel",
+    "relative_to_old_6x1x11": 9.0,
+    "role": "checkpoint-only diagnostic pilot, not formal freeze",
+    "shared_probe_panels_K": 3
+  },
+  "step_resampling": {
+    "T11_model_CV_range": [
+      0.3505953993647809,
+      0.4739046201796364
+    ],
+    "T33_median_max_fraction_range": [
+      0.11072327948247791,
+      0.17308251124341964
+    ],
+    "T33_median_top3_fraction_range": [
+      0.3169978620030104,
+      0.44763924484788176
+    ],
+    "T33_model_CV_range": [
+      0.20317005390829687,
+      0.27493670270171655
+    ],
+    "warning": "exchangeability assumption false; diagnostic only"
+  }
+}
