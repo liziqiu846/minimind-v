@@ -22,7 +22,9 @@ def _corr(x, y) -> dict:
     }
 
 
-def summarize(results_root: Path) -> dict:
+def summarize(results_root: Path, output_root: Path | None = None) -> dict:
+    output_root = results_root if output_root is None else output_root
+    output_root.mkdir(parents=True, exist_ok=True)
     rows = []
     for config in generate_matrix():
         root = results_root / config["config_id"]
@@ -104,8 +106,8 @@ def summarize(results_root: Path) -> dict:
         },
         "rows": rows,
     }
-    write_json_atomic(results_root / "summary.json", output)
-    with (results_root / "summary.csv").open("w", newline="", encoding="utf-8") as handle:
+    write_json_atomic(output_root / "summary.json", output)
+    with (output_root / "summary.csv").open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
         writer.writeheader()
         writer.writerows(rows)
@@ -115,8 +117,11 @@ def summarize(results_root: Path) -> dict:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--results-root", type=Path, required=True)
+    parser.add_argument("--output-root", type=Path)
     args = parser.parse_args()
-    print(json.dumps(summarize(args.results_root), indent=2, sort_keys=True))
+    print(json.dumps(
+        summarize(args.results_root, args.output_root), indent=2, sort_keys=True
+    ))
     return 0
 
 
