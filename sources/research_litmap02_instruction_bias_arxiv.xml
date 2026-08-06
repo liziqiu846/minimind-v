@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/8arusUdHq7DDaJtGqIRPk/9mvJk</id>
+  <title>arXiv Query: search_query=all:"multimodal large language model" AND all:"visual instruction tuning" AND (all:"language bias" OR all:"visual grounding")&amp;id_list=&amp;start=0&amp;max_results=75</title>
+  <updated>2026-08-06T19:24:35Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22multimodal+large+language+model%22+AND+(all:%22visual+instruction+tuning%22+AND+(all:%22language+bias%22+OR+all:%22visual+grounding%22))&amp;start=0&amp;max_results=75&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>75</opensearch:itemsPerPage>
+  <opensearch:totalResults>2</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2604.12966v1</id>
+    <title>Boosting Visual Instruction Tuning with Self-Supervised Guidance</title>
+    <updated>2026-04-14T16:59:53Z</updated>
+    <link href="https://arxiv.org/abs/2604.12966v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.12966v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal large language models (MLLMs) perform well on many vision-language tasks but often struggle with vision-centric problems that require fine-grained visual reasoning. Recent evidence suggests that this limitation arises not from weak visual representations, but from under-utilization of visual information during instruction tuning, where many tasks can be partially solved using language priors alone. We propose a simple and lightweight approach that augments visual instruction tuning with a small number of visually grounded self-supervised tasks expressed as natural language instructions. By reformulating classical self-supervised pretext tasks, such as rotation prediction, color matching, and cross-view correspondence, as image-instruction-response triplets, we introduce supervision that cannot be solved without relying on visual evidence. Our approach requires no human annotations, no architectural modifications, and no additional training stages. Across multiple models, training regimes, and benchmarks, injecting only a small fraction (3-10%) of such visually grounded instructions consistently improves performance on vision-centric evaluations. Our findings highlight instruction tuning with visually grounded SSL tasks as a powerful lever for improving visual reasoning in MLLMs through simple adjustments to the training data distribution. Code available at: https://github.com/sirkosophia/V-GIFT</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-14T16:59:53Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Sophia Sirko-Galouchenko</name>
+    </author>
+    <author>
+      <name>Monika Wysoczanska</name>
+    </author>
+    <author>
+      <name>Andrei Bursuc</name>
+    </author>
+    <author>
+      <name>Nicolas Thome</name>
+    </author>
+    <author>
+      <name>Spyros Gidaris</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2404.16375v2</id>
+    <title>List Items One by One: A New Data Source and Learning Paradigm for Multimodal LLMs</title>
+    <updated>2025-01-20T00:29:19Z</updated>
+    <link href="https://arxiv.org/abs/2404.16375v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2404.16375v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Set-of-Mark (SoM) Prompting unleashes the visual grounding capability of GPT-4V, by enabling the model to associate visual objects with tags inserted on the image. These tags, marked with alphanumerics, can be indexed via text tokens for easy reference. Despite the extraordinary performance from GPT-4V, we observe that other Multimodal Large Language Models (MLLMs) struggle to understand these visual tags. To promote the learning of SoM prompting for open-source models, we propose a new learning paradigm: "list items one by one," which asks the model to enumerate and describe all visual tags placed on the image following the alphanumeric orders of tags. By integrating our curated dataset with other visual instruction tuning datasets, we are able to equip existing MLLMs with the SoM prompting ability. Furthermore, we evaluate our finetuned SoM models on five MLLM benchmarks. We find that this new dataset, even in a relatively small size (10k-30k images with tags), significantly enhances visual reasoning capabilities and reduces hallucinations for MLLMs. Perhaps surprisingly, these improvements persist even when the visual tags are omitted from input images during inference. This suggests the potential of "list items one by one" as a new paradigm for training MLLMs, which strengthens the object-text alignment through the use of visual tags in the training stage. Finally, we conduct analyses by probing trained models to understand the working mechanism of SoM. Our code and data are available at \url{https://github.com/zzxslp/SoM-LLaVA}.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-04-25T07:29:17Z</published>
+    <arxiv:comment>published at COLM-2024</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>An Yan</name>
+    </author>
+    <author>
+      <name>Zhengyuan Yang</name>
+    </author>
+    <author>
+      <name>Junda Wu</name>
+    </author>
+    <author>
+      <name>Wanrong Zhu</name>
+    </author>
+    <author>
+      <name>Jianwei Yang</name>
+    </author>
+    <author>
+      <name>Linjie Li</name>
+    </author>
+    <author>
+      <name>Kevin Lin</name>
+    </author>
+    <author>
+      <name>Jianfeng Wang</name>
+    </author>
+    <author>
+      <name>Julian McAuley</name>
+    </author>
+    <author>
+      <name>Jianfeng Gao</name>
+    </author>
+    <author>
+      <name>Lijuan Wang</name>
+    </author>
+  </entry>
+</feed>

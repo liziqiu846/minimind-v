@@ -149,3 +149,26 @@ checkpoint-only prediction test；不训练。
 - `VISCOND-01` 已冻结为 `REJECTED` 并进入 `REVIEW_QUEUE`。原 `OBJ-01` 的
   VISCOND-positive 启动门未满足，禁止直接训练；ACTIVE 转为 `LITMAP-02`
   primary-source gate，目标是生成真正不同的训练时跨模态监督/优化候选。
+
+## 14. 持续日志：LITMAP-02 failure-driven training mechanism gate
+
+- 定向 arXiv/OpenAlex 检索保存 568 records、532 个 normalized unique titles；
+  全文核查 ROSS（ICLR 2025）、*Words or Vision*（CVPR 2025）、ASVR、JARVIS、
+  LaVer、V-GIFT 共 6 篇决定性 primary sources，原始响应、正文与 SHA-256 全部归档。
+- 现有正式理论只给出 text/multimodal mixture 的相邻 ERM risk decomposition，
+  不证明 rotation instruction 或当前 MiniMind-V 的风险；没有把经验 attention、
+  reconstruction loss 或 TVI 称作正式视觉风险。
+- ROSS/ASVR/JARVIS/LaVer 独立支持 caption-only output supervision 遗漏视觉结构，
+  但新增多个 head/loss/component 或要求事后选择 layer，不适合作为本地首个最小
+  判别实验。
+- V-GIFT 的 standard autoregressive visual instruction 通过本地门：三个 backbone、
+  full/LoRA、三 seed，且 matched extra iterations 和 single-image controls 排除单纯
+  compute 与新图像规模解释。保留 `VISSUP-01`；这不是对生成 NLL、no-pixel 或无桥
+  representation proxy 的 rescue。
+- 本地 10,000-draw train parquet、4,096-coordinate M2-current 结构和历史训练时长
+  均通过只读 artifact gate；现有 checkpoint 没有该 intervention，因此
+  checkpoint-only test 不足。尚未训练、尚未下载或评分 CV-Bench 新模型输出。
+- ACTIVE 已切换为 `VISSUP-01`。下一步必须先冻结并 commit 二条件 paired pilot：
+  相同 rotated pixels、labels、sample order、steps 与 target token distribution，
+  唯一主要差异是 prompt 是否泄露 rotation label；单 paired root positive 后才可补
+  total 3 roots。

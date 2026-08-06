@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/5UDH+6fxFF3DvKljR5bdvQiMuRQ</id>
+  <title>arXiv Query: search_query=ti:"Reconstructive Visual Instruction Tuning"&amp;id_list=&amp;start=0&amp;max_results=10</title>
+  <updated>2026-08-06T19:31:51Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=ti:%22Reconstructive+Visual+Instruction+Tuning%22&amp;start=0&amp;max_results=10&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>10</opensearch:itemsPerPage>
+  <opensearch:totalResults>2</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2410.09575v2</id>
+    <title>Reconstructive Visual Instruction Tuning</title>
+    <updated>2024-12-31T02:38:30Z</updated>
+    <link href="https://arxiv.org/abs/2410.09575v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.09575v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper introduces reconstructive visual instruction tuning (ROSS), a family of Large Multimodal Models (LMMs) that exploit vision-centric supervision signals. In contrast to conventional visual instruction tuning approaches that exclusively supervise text outputs, ROSS prompts LMMs to supervise visual outputs via reconstructing input images. By doing so, it capitalizes on the inherent richness and detail present within input images themselves, which are often lost in pure text supervision. However, producing meaningful feedback from natural images is challenging due to the heavy spatial redundancy of visual signals. To address this issue, ROSS employs a denoising objective to reconstruct latent representations of input images, avoiding directly regressing exact raw RGB values. This intrinsic activation design inherently encourages LMMs to maintain image detail, thereby enhancing their fine-grained comprehension capabilities and reducing hallucinations. Empirically, ROSS consistently brings significant improvements across different visual encoders and language models. In comparison with extrinsic assistance state-of-the-art alternatives that aggregate multiple visual experts, ROSS delivers competitive performance with a single SigLIP visual encoder, demonstrating the efficacy of our vision-centric supervision tailored for visual outputs.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-12T15:54:29Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Haochen Wang</name>
+    </author>
+    <author>
+      <name>Anlin Zheng</name>
+    </author>
+    <author>
+      <name>Yucheng Zhao</name>
+    </author>
+    <author>
+      <name>Tiancai Wang</name>
+    </author>
+    <author>
+      <name>Zheng Ge</name>
+    </author>
+    <author>
+      <name>Xiangyu Zhang</name>
+    </author>
+    <author>
+      <name>Zhaoxiang Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.01901v1</id>
+    <title>Ross3D: Reconstructive Visual Instruction Tuning with 3D-Awareness</title>
+    <updated>2025-04-02T16:59:55Z</updated>
+    <link href="https://arxiv.org/abs/2504.01901v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.01901v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The rapid development of Large Multimodal Models (LMMs) for 2D images and videos has spurred efforts to adapt these models for interpreting 3D scenes. However, the absence of large-scale 3D vision-language datasets has posed a significant obstacle. To address this issue, typical approaches focus on injecting 3D awareness into 2D LMMs by designing 3D input-level scene representations. This work provides a new perspective. We introduce reconstructive visual instruction tuning with 3D-awareness (Ross3D), which integrates 3D-aware visual supervision into the training procedure. Specifically, it incorporates cross-view and global-view reconstruction. The former requires reconstructing masked views by aggregating overlapping information from other views. The latter aims to aggregate information from all available views to recover Bird's-Eye-View images, contributing to a comprehensive overview of the entire scene. Empirically, Ross3D achieves state-of-the-art performance across various 3D scene understanding benchmarks. More importantly, our semi-supervised experiments demonstrate significant potential in leveraging large amounts of unlabeled 3D vision-only data.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-02T16:59:55Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Haochen Wang</name>
+    </author>
+    <author>
+      <name>Yucheng Zhao</name>
+    </author>
+    <author>
+      <name>Tiancai Wang</name>
+    </author>
+    <author>
+      <name>Haoqiang Fan</name>
+    </author>
+    <author>
+      <name>Xiangyu Zhang</name>
+    </author>
+    <author>
+      <name>Zhaoxiang Zhang</name>
+    </author>
+  </entry>
+</feed>

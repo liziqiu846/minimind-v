@@ -1,0 +1,173 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/N2BFHaN/IRvgzFiK0X2EnuO2VJ8</id>
+  <title>arXiv Query: search_query=all:"multimodal learning" AND (all:"gradient starvation" OR all:"modality competition" OR all:"optimization imbalance")&amp;id_list=&amp;start=0&amp;max_results=75</title>
+  <updated>2026-08-06T19:24:33Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22multimodal+learning%22+AND+(all:%22gradient+starvation%22+OR+(all:%22modality+competition%22+OR+all:%22optimization+imbalance%22))&amp;start=0&amp;max_results=75&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>75</opensearch:itemsPerPage>
+  <opensearch:totalResults>6</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2407.19514v1</id>
+    <title>Detached and Interactive Multimodal Learning</title>
+    <updated>2024-07-28T15:38:58Z</updated>
+    <link href="https://arxiv.org/abs/2407.19514v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.19514v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, Multimodal Learning (MML) has gained significant interest as it compensates for single-modality limitations through comprehensive complementary information within multimodal data. However, traditional MML methods generally use the joint learning framework with a uniform learning objective that can lead to the modality competition issue, where feedback predominantly comes from certain modalities, limiting the full potential of others. In response to this challenge, this paper introduces DI-MML, a novel detached MML framework designed to learn complementary information across modalities under the premise of avoiding modality competition. Specifically, DI-MML addresses competition by separately training each modality encoder with isolated learning objectives. It further encourages cross-modal interaction via a shared classifier that defines a common feature space and employing a dimension-decoupled unidirectional contrastive (DUC) loss to facilitate modality-level knowledge transfer. Additionally, to account for varying reliability in sample pairs, we devise a certainty-aware logit weighting strategy to effectively leverage complementary information at the instance level during inference. Extensive experiments conducted on audio-visual, flow-image, and front-rear view datasets show the superior performance of our proposed method. The code is released at https://github.com/fanyunfeng-bit/DI-MML.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-28T15:38:58Z</published>
+    <arxiv:comment>Accepted by ACM MM 24</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yunfeng Fan</name>
+    </author>
+    <author>
+      <name>Wenchao Xu</name>
+    </author>
+    <author>
+      <name>Haozhao Wang</name>
+    </author>
+    <author>
+      <name>Junhong Liu</name>
+    </author>
+    <author>
+      <name>Song Guo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2203.15332v1</id>
+    <title>Balanced Multimodal Learning via On-the-fly Gradient Modulation</title>
+    <updated>2022-03-29T08:26:38Z</updated>
+    <link href="https://arxiv.org/abs/2203.15332v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2203.15332v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal learning helps to comprehensively understand the world, by integrating different senses. Accordingly, multiple input modalities are expected to boost model performance, but we actually find that they are not fully exploited even when the multimodal model outperforms its uni-modal counterpart. Specifically, in this paper we point out that existing multimodal discriminative models, in which uniform objective is designed for all modalities, could remain under-optimized uni-modal representations, caused by another dominated modality in some scenarios, e.g., sound in blowing wind event, vision in drawing picture event, etc. To alleviate this optimization imbalance, we propose on-the-fly gradient modulation to adaptively control the optimization of each modality, via monitoring the discrepancy of their contribution towards the learning objective. Further, an extra Gaussian noise that changes dynamically is introduced to avoid possible generalization drop caused by gradient modulation. As a result, we achieve considerable improvement over common fusion methods on different multimodal tasks, and this simple strategy can also boost existing multimodal methods, which illustrates its efficacy and versatility. The source code is available at \url{https://github.com/GeWu-Lab/OGM-GE_CVPR2022}.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-03-29T08:26:38Z</published>
+    <arxiv:comment>Accepted by CVPR 2022 (ORAL)</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xiaokang Peng</name>
+    </author>
+    <author>
+      <name>Yake Wei</name>
+    </author>
+    <author>
+      <name>Andong Deng</name>
+    </author>
+    <author>
+      <name>Dong Wang</name>
+    </author>
+    <author>
+      <name>Di Hu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.04587v1</id>
+    <title>Multimodal Classification via Modal-Aware Interactive Enhancement</title>
+    <updated>2024-07-05T15:32:07Z</updated>
+    <link href="https://arxiv.org/abs/2407.04587v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.04587v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Due to the notorious modality imbalance problem, multimodal learning (MML) leads to the phenomenon of optimization imbalance, thus struggling to achieve satisfactory performance. Recently, some representative methods have been proposed to boost the performance, mainly focusing on adaptive adjusting the optimization of each modality to rebalance the learning speed of dominant and non-dominant modalities. To better facilitate the interaction of model information in multimodal learning, in this paper, we propose a novel multimodal learning method, called modal-aware interactive enhancement (MIE). Specifically, we first utilize an optimization strategy based on sharpness aware minimization (SAM) to smooth the learning objective during the forward phase. Then, with the help of the geometry property of SAM, we propose a gradient modification strategy to impose the influence between different modalities during the backward phase. Therefore, we can improve the generalization ability and alleviate the modality forgetting phenomenon simultaneously for multimodal learning. Extensive experiments on widely used datasets demonstrate that our proposed method can outperform various state-of-the-art baselines to achieve the best performance.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-05T15:32:07Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Qing-Yuan Jiang</name>
+    </author>
+    <author>
+      <name>Zhouyang Chi</name>
+    </author>
+    <author>
+      <name>Yang Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.13015v2</id>
+    <title>Multimodal Classification via Total Correlation Maximization</title>
+    <updated>2026-03-10T12:36:54Z</updated>
+    <link href="https://arxiv.org/abs/2602.13015v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.13015v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal learning integrates data from diverse sensors to effectively harness information from different modalities. However, recent studies reveal that joint learning often overfits certain modalities while neglecting others, leading to performance inferior to that of unimodal learning. Although previous efforts have sought to balance modal contributions or combine joint and unimodal learning, thereby mitigating the degradation of weaker modalities with promising outcomes, few have examined the relationship between joint and unimodal learning from an information-theoretic perspective. In this paper, we theoretically analyze modality competition and propose a method for multimodal classification by maximizing the total correlation between multimodal features and labels. By maximizing this objective, our approach alleviates modality competition while capturing inter-modal interactions via feature alignment. Building on Mutual Information Neural Estimation (MINE), we introduce Total Correlation Neural Estimation (TCNE) to derive a lower bound for total correlation. Subsequently, we present TCMax, a hyperparameter-free loss function that maximizes total correlation through variational bound optimization. Extensive experiments demonstrate that TCMax outperforms state-of-the-art joint and unimodal learning approaches. Our code is available at https://github.com/hubaak/TCMax.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-13T15:21:45Z</published>
+    <arxiv:comment>Accepted for publication at ICLR 2026; 19 pages; 2 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Feng Yu</name>
+    </author>
+    <author>
+      <name>Xiangyu Wu</name>
+    </author>
+    <author>
+      <name>Yang Yang</name>
+    </author>
+    <author>
+      <name>Jianfeng Lu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.07335v3</id>
+    <title>Balancing Multimodal Training Through Game-Theoretic Regularization</title>
+    <updated>2025-10-01T13:03:01Z</updated>
+    <link href="https://arxiv.org/abs/2411.07335v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.07335v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal learning holds promise for richer information extraction by capturing dependencies across data sources. Yet, current training methods often underperform due to modality competition, a phenomenon where modalities contend for training resources leaving some underoptimized. This raises a pivotal question: how can we address training imbalances, ensure adequate optimization across all modalities, and achieve consistent performance improvements as we transition from unimodal to multimodal data? This paper proposes the Multimodal Competition Regularizer (MCR), inspired by a mutual information (MI) decomposition designed to prevent the adverse effects of competition in multimodal training. Our key contributions are: 1) A game-theoretic framework that adaptively balances modality contributions by encouraging each to maximize its informative role in the final prediction 2) Refining lower and upper bounds for each MI term to enhance the extraction of both task-relevant unique and shared information across modalities. 3) Proposing latent space permutations for conditional MI estimation, significantly improving computational efficiency. MCR outperforms all previously suggested training strategies and simple baseline, clearly demonstrating that training modalities jointly leads to important performance gains on both synthetic and large real-world datasets. We release our code and models at https://github.com/kkontras/MCR.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.GT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-11T19:53:05Z</published>
+    <arxiv:comment>23 pages, 7 figures, 6 tables, 1 algorithm</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Konstantinos Kontras</name>
+    </author>
+    <author>
+      <name>Thomas Strypsteen</name>
+    </author>
+    <author>
+      <name>Christos Chatzichristos</name>
+    </author>
+    <author>
+      <name>Paul Pu Liang</name>
+    </author>
+    <author>
+      <name>Matthew Blaschko</name>
+    </author>
+    <author>
+      <name>Maarten De Vos</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.14175v1</id>
+    <title>Balancing Multimodal Domain Generalization via Gradient Modulation and Projection</title>
+    <updated>2026-03-15T01:28:26Z</updated>
+    <link href="https://arxiv.org/abs/2603.14175v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.14175v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Domain Generalization (MMDG) leverages the complementary strengths of multiple modalities to enhance model generalization on unseen domains. A central challenge in multimodal learning is optimization imbalance, where modalities converge at different speeds during training. This imbalance leads to unequal gradient contributions, allowing some modalities to dominate the learning process while others lag behind. Existing balancing strategies typically regulate each modality's gradient contribution based on its classification performance on the source domain to alleviate this issue. However, relying solely on source-domain accuracy neglects a key insight in MMDG: modalities that excel on the source domain may generalize poorly to unseen domains, limiting cross-domain gains. To overcome this limitation, we propose Gradient Modulation Projection (GMP), a unified strategy that promotes balanced optimization in MMDG. GMP first decouples gradients associated with classification and domain-invariance objectives. It then modulates each modality's gradient based on semantic and domain confidence. Moreover, GMP dynamically adjusts gradient projections by tracking the relative strength of each task, mitigating conflicts between classification and domain-invariant learning within modality-specific encoders. Extensive experiments demonstrate that GMP achieves state-of-the-art performance and integrates flexibly with diverse MMDG methods, significantly improving generalization across multiple benchmarks.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-15T01:28:26Z</published>
+    <arxiv:comment>AAAI 2026 Oral Accepted</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Hongzhao Li</name>
+    </author>
+    <author>
+      <name>Guohao Shen</name>
+    </author>
+    <author>
+      <name>Shupan Li</name>
+    </author>
+    <author>
+      <name>Mingliang Xu</name>
+    </author>
+    <author>
+      <name>Muhammad Haris Khan</name>
+    </author>
+  </entry>
+</feed>

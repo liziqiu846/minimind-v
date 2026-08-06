@@ -1,0 +1,821 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/z3/uiMgUYRR2EJw7GqrN/OxoKug</id>
+  <title>arXiv Query: search_query=all:"large vision language model" AND (all:"language bias" OR all:"language dominance" OR all:"visual dependence")&amp;id_list=&amp;start=0&amp;max_results=50</title>
+  <updated>2026-08-06T19:22:44Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22large+vision+language+model%22+AND+(all:%22language+bias%22+OR+(all:%22language+dominance%22+OR+all:%22visual+dependence%22))&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <opensearch:totalResults>26</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2606.08708v1</id>
+    <title>PRPO: Perception-Reinforced Policy Optimization via Token-Level Dynamic Advantage Reshaping</title>
+    <updated>2026-06-07T16:06:29Z</updated>
+    <link href="https://arxiv.org/abs/2606.08708v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.08708v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Reinforcement Learning with Verifiable Rewards (RLVR) has become an effective paradigm for improving the reasoning capability of Large Vision-Language Models (LVLMs). However, existing RLVR methods primarily rely on trajectory-level outcome rewards, which assign identical learning signals across all generated tokens. This coarse-grained credit assignment is fundamentally mismatched to multimodal reasoning, where only a sparse subset of tokens is causally grounded in visual evidence. Consequently, these pivotal perceptual tokens receive weak supervision and are often overwhelmed by language priors or reasoning-template tokens. To address this limitation, we propose Perception-Reinforced Policy Optimization (PRPO), a token-level reinforcement learning framework that explicitly identifies and reinforces pivotal perceptual tokens within long-horizon multimodal reasoning trajectories. PRPO introduces Robust Visual Dependency (RVD), a principled metric that identifies tokens whose predictions are both visually grounded and perturbation-stable, filtering out brittle or noisy visual tokens. Based on RVD, we further propose Perceptual Advantage Reshaping (PAR), a token-level credit assignment technique that amplifies perceptually informative tokens while preserving stable gradients for non-perceptual tokens. Extensive experiments on seven multimodal reasoning benchmarks demonstrate that PRPO consistently outperforms strong LVLM baselines across both 3B and 7B model scales, achieving average gains of 23.3% and 21.1%, respectively. PRPO achieves state-of-the-art performance with improved training efficiency and stronger cross-task generalization. Our findings highlight the importance of fine-grained credit assignment for scalable multimodal reinforcement learning.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-07T16:06:29Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Qiming Li</name>
+    </author>
+    <author>
+      <name>Tianlun Li</name>
+    </author>
+    <author>
+      <name>Xiaolong Cheng</name>
+    </author>
+    <author>
+      <name>Hangyu Li</name>
+    </author>
+    <author>
+      <name>Ruiyan Gong</name>
+    </author>
+    <author>
+      <name>Kangning Niu</name>
+    </author>
+    <author>
+      <name>Kaitao Jiang</name>
+    </author>
+    <author>
+      <name>Mu Xu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.26004v1</id>
+    <title>MAGIC: Multimodal Alignment &amp; Grounding-aware Instruction Coreset for Vision-Language Models</title>
+    <updated>2026-05-25T16:22:09Z</updated>
+    <link href="https://arxiv.org/abs/2605.26004v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.26004v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Instruction tuning of large vision-language models (LVLMs) increasingly depends on massive multimodal corpora, yet these datasets contain samples with substantial redundancy, low visual dependency, and highly imbalanced coverage of multimodal reasoning behaviors. As a result, uniform subsampling or naive score-based selection often yields suboptimal training subsets. We introduce MAGIC, a training-free, forward-only coreset selection method designed to construct compact yet behaviorally faithful subsets for multimodal instruction tuning. MAGIC is built on three intrinsic signals extracted from a pretrained VLM: Multimodal Gain, which measures the likelihood improvement obtained from visual input; Bridging Relevance, which captures the sharpness of answer-token grounding over visual tokens; and Skill-Neuron Signatures, which characterize the functional computation elicited by each sample via top-activated feed-forward neurons. MAGIC combines these signals in a three-stage pipeline: filtering low-gain examples, ranking candidates by a normalized quality objective, and performing bucket-wise budget allocation over discrete neuron signatures to preserve latent multimodal skill coverage. This formulation avoids backpropagation, auxiliary selector training, and expensive clustering in continuous activation spaces, while remaining efficient and easily deployable in existing VLMs. Across LLaVA-665K and Vision-Flan datasets, and transfer settings to large target models, LLaVA-1.5-7B and -13B, MAGIC consistently improves over strong baselines under matched 20% budgets: it achieves 100.3% relative performance to full finetuning on LLaVA-665K and 101.6% relative performance on Vision-Flan-186K, while yielding a 73.7% reduction in wall-clock run time.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-25T16:22:09Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Shristi Das Biswas</name>
+    </author>
+    <author>
+      <name>Kaushik Roy</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.25036v1</id>
+    <title>Language Bias in LVLMs: From In-Depth Analysis to Simple and Effective Mitigation</title>
+    <updated>2026-05-24T12:23:13Z</updated>
+    <link href="https://arxiv.org/abs/2605.25036v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.25036v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision-Language Models (LVLMs) extend large language models with visual understanding, but remain vulnerable to hallucination, where outputs are fluent yet inconsistent with images. Recent studies link this issue to language bias-the tendency of LVLMs to over-rely on text while neglecting visual inputs. Yet most analyses remain empirical without uncovering its underlying cause. In this paper, we provide a systematic study of language bias and identify its root in modality misalignment during training. Our analysis shows that both Visual Instruction Tuning (VIT) and Direct Preference Optimization (DPO) often prioritize textual improvements, which may cause LVLMs to overly lean toward language modeling rather than balanced multimodal understanding. To address this, we propose two simple yet effective methods: Language Bias Regularization (LBR) which mitigates language bias through regularization during instruction tuning, and Language Bias Penalty (LBP), which penalizes language bias in the DPO training process. Extensive experiments across diverse models and benchmarks demonstrate the effectiveness of our approach. LBR consistently improves performance on over ten general benchmarks, while LBP significantly reduces hallucination and improves trustworthiness. Together, these methods not only mitigate language bias but also advance the overall alignment of LVLMs, all without introducing any additional data or auxiliary models. Our code is publicly available at https://github.com/lab-klc/LVLM-Language-Bias.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-24T12:23:13Z</published>
+    <arxiv:comment>Accepted by ICML 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Yangneng Chen</name>
+    </author>
+    <author>
+      <name>Jing Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.21300v1</id>
+    <title>Reducing Object Hallucination in LVLMs via Emphasizing Image-negative Tokens</title>
+    <updated>2026-05-20T15:29:20Z</updated>
+    <link href="https://arxiv.org/abs/2605.21300v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.21300v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Object hallucination is a significant challenge that hinders the application of large vision-language models (LVLMs) in practice. We hypothesize that one possible origin of hallucination is the model's tendency to prioritize text generation over meaningful interaction with images. To explore this, we examine the generation process and categorize text tokens into three groups: image-positive, invariant, and negative, based on their visual dependence on input image tokens. Our analysis reveals that most generated tokens are minimally influenced by the image information. This suggests that during the model's training stage, more emphasis is placed on learning how to follow textual instructions, rather than extracting information from images. Based on this finding, we propose adjusting the training weights of different tokens depending on their visual dependence to control hallucination. Additionally, we remove a portion of the training data that potentially contains more hallucinations as a data filtering strategy. Both methods achieve a reduction in hallucination without compromising response length or introducing additional computational costs during inference. We validate our methods across three LVLM variants, demonstrating the effectiveness and general applicability.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-20T15:29:20Z</published>
+    <arxiv:comment>20 pages, 10 figures, 10 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Meng Shen</name>
+    </author>
+    <author>
+      <name>Minghao Wu</name>
+    </author>
+    <author>
+      <name>Deepu Rajan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.09614v1</id>
+    <title>Reflection Anchors for Propagation-Aware Visual Retention in Long-Chain Multimodal Reasoning</title>
+    <updated>2026-05-10T15:53:11Z</updated>
+    <link href="https://arxiv.org/abs/2605.09614v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.09614v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Long chain-of-thought (CoT) reasoning improves large vision--language models, but visual information often fades during generation, limiting long-horizon multimodal reasoning. Existing methods either re-inject vision at inference or train policies for stronger grounding, but where to intervene relies on perception heuristics rather than principled gain analysis, and how local visual influence propagates remains implicit. We study this problem from an information-theoretic standpoint and derive a lower bound on the downstream visual gain of a one-step intervention, which suggests two factors: local branching room (token entropy) and downstream visual propagation potential (suffix divergence from a vision-marginalized reference). Guided by this analysis, we propose reflection-anchor policy optimization (RAPO), a GRPO-based policy optimization method that selects high-entropy reflection anchors and optimizes a chain-masked finite-window KL surrogate for downstream visual dependence. Experiments on reasoning-intensive and general-domain benchmarks show that RAPO delivers substantial gains over strong baselines across multiple LVLM backbones. Mechanism analyses further indicate that reflection anchors are enriched for visually sensitive decision points and that RAPO increases contrastive visual-dependence signals along generated trajectories.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-10T15:53:11Z</published>
+    <arxiv:comment>Under Review</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xuan Gong</name>
+    </author>
+    <author>
+      <name>Hanbo Huang</name>
+    </author>
+    <author>
+      <name>Hao Zheng</name>
+    </author>
+    <author>
+      <name>Yiran Zhang</name>
+    </author>
+    <author>
+      <name>Wenbin Dai</name>
+    </author>
+    <author>
+      <name>Weishu Zhao</name>
+    </author>
+    <author>
+      <name>Shiyu Liang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.07274v1</id>
+    <title>Structured Role-Aware Policy Optimization for Multimodal Reasoning</title>
+    <updated>2026-05-08T05:37:08Z</updated>
+    <link href="https://arxiv.org/abs/2605.07274v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.07274v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Reinforcement learning from verifiable rewards (RLVR), especially with Group Relative Policy Optimization (GRPO), has shown strong potential for improving the reasoning capabilities of large vision-language models (LVLMs). However, in multimodal reasoning, final-answer rewards are typically assigned at the sequence level and do not distinguish the functional roles of different tokens, making it difficult to determine whether a correct answer is supported by task-relevant visual evidence. In this paper, we revisit multimodal RLVR from the perspective of role-aware token-level credit assignment, where structured responses are decomposed into perception tokens for extracting visual evidence and reasoning tokens for deriving answers from that evidence. Based on this perspective, we propose Structured Role-aware Policy Optimization (SRPO), which refines the sequence-level GRPO advantage into role-aware token-level advantages without changing the reward function. Specifically, SRPO assigns role-specific credit by using self-distilled on-policy contrasts: perception tokens are emphasized according to their visual dependency under original versus corrupted visual inputs, while reasoning tokens are emphasized according to their consistency with the generated perception. These role-specific signals are further unified through a shared trajectory-level baseline, yielding positive token weights that adjust relative update magnitudes while preserving the original GRPO reward and optimization direction, without requiring external reward models or separate teachers. Experiments across diverse multimodal reasoning benchmarks show that SRPO improves evidence-grounded reasoning, highlighting the importance of moving beyond uniform sequence-level credit toward role-aware optimization for reliable multimodal reasoning.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-08T05:37:08Z</published>
+    <arxiv:comment>32 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Bingqing Jiang</name>
+    </author>
+    <author>
+      <name>Difan Zou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.02730v1</id>
+    <title>Perceptual Flow Network for Visually Grounded Reasoning</title>
+    <updated>2026-05-04T15:31:11Z</updated>
+    <link href="https://arxiv.org/abs/2605.02730v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.02730v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Despite the success of Large-Vision Language Models (LVLMs), general optimization objectives (e.g., standard MLE) fail to constrain visual trajectories, leading to language bias and hallucination. To mitigate this, current methods introduce geometric priors from visual experts as additional supervision. However, we observe that such supervision is typically suboptimal: it is biased toward geometric precision and offers limited reasoning utility. To bridge this gap, we propose Perceptual Flow Network (PFlowNet), which eschews rigid alignment with the expert priors and achieves interpretable yet more effective visual reasoning. Specifically, PFlowNet decouples perception from reasoning to establish a self-conditioned generation process. Based on this, it integrates multi-dimensional rewards with vicinal geometric shaping via variational reinforcement learning, thereby facilitating reasoning-oriented perceptual behaviors while preserving visual reliability. PFlowNet delivers a provable performance guarantee and competitive empirical results, particularly setting new SOTA records on V* Bench (90.6%) and MME-RealWorld-lite (67.0%).</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-04T15:31:11Z</published>
+    <arxiv:comment>36 pages with 17 figures, Accepted at ICML 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yangfu Li</name>
+    </author>
+    <author>
+      <name>Yuning Gong</name>
+    </author>
+    <author>
+      <name>Hongjian Zhan</name>
+    </author>
+    <author>
+      <name>Teng Li</name>
+    </author>
+    <author>
+      <name>Yuanhuiyi Lyu</name>
+    </author>
+    <author>
+      <name>Tianyi Chen</name>
+    </author>
+    <author>
+      <name>Qi Liu</name>
+    </author>
+    <author>
+      <name>Ziyuan Huang</name>
+    </author>
+    <author>
+      <name>Zhihang Zhong</name>
+    </author>
+    <author>
+      <name>Dandan Zheng</name>
+    </author>
+    <author>
+      <name>Yue Lu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.01840v2</id>
+    <title>Not All Tokens See Equally: Perception-Grounded Policy Optimization for Large Vision-Language Models</title>
+    <updated>2026-04-08T10:48:57Z</updated>
+    <link href="https://arxiv.org/abs/2604.01840v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.01840v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>While Reinforcement Learning from Verifiable Rewards (RLVR) has advanced reasoning in Large Vision-Language Models (LVLMs), prevailing frameworks suffer from a foundational methodological flaw: by distributing identical advantages across all generated tokens, these methods inherently dilute the learning signals essential for optimizing the critical, visually-grounded steps of multimodal reasoning. To bridge this gap, we formulate \textit{Token Visual Dependency}, quantifying the causal information gain of visual inputs via the Kullback-Leibler (KL) divergence between visual-conditioned and text-only predictive distributions. Revealing that this dependency is highly sparse and semantically pivotal, we introduce Perception-Grounded Policy Optimization (PGPO), which is a novel fine-grained credit assignment framework that dynamically reshapes advantages at the token level. Through a threshold-gated, mass-conserving mechanism, PGPO actively amplifies learning signals for visually-dependent tokens while suppressing gradient noise from linguistic priors. Extensive experiments based on the Qwen2.5-VL series across seven challenging multimodal reasoning benchmarks demonstrate that PGPO boosts models by 18.7% on average. Both theoretical and empirical analyses confirm that PGPO effectively reduces gradient variance, prevents training collapse, and acts as a potent regularizer for robust, perception-grounded multimodal reasoning. Code will be released on https://github.com/Yzk1114/PGPO.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-02T09:53:20Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Zekai Ye</name>
+    </author>
+    <author>
+      <name>Qiming Li</name>
+    </author>
+    <author>
+      <name>Xiaocheng Feng</name>
+    </author>
+    <author>
+      <name>Ruihan Chen</name>
+    </author>
+    <author>
+      <name>Ziming Li</name>
+    </author>
+    <author>
+      <name>Haoyu Ren</name>
+    </author>
+    <author>
+      <name>Kun Chen</name>
+    </author>
+    <author>
+      <name>Dandan Tu</name>
+    </author>
+    <author>
+      <name>Bing Qin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.07659v2</id>
+    <title>Scaling Test-Time Robustness of Vision-Language Models via Self-Critical Inference Framework</title>
+    <updated>2026-03-25T15:12:36Z</updated>
+    <link href="https://arxiv.org/abs/2603.07659v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.07659v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The emergence of Large Language Models (LLMs) has driven rapid progress in multi-modal learning, particularly in the development of Large Vision-Language Models (LVLMs). However, existing LVLM training paradigms place excessive reliance on the LLM component, giving rise to two critical robustness challenges: language bias and language sensitivity. To address both issues simultaneously, we propose a novel Self-Critical Inference (SCI) framework that extends Visual Contrastive Decoding by conducting multi-round counterfactual reasoning through both textual and visual perturbations. This process further introduces a new strategy for improving robustness by scaling the number of counterfactual rounds. Moreover, we also observe that failure cases of LVLMs differ significantly across models, indicating that fixed robustness benchmarks may not be able to capture the true reliability of LVLMs. To this end, we propose the Dynamic Robustness Benchmark (DRBench), a model-specific evaluation framework targeting both language bias and sensitivity issues. Extensive experiments show that SCI consistently outperforms baseline methods on DRBench, and that increasing the number of inference rounds further boosts robustness beyond existing single-step counterfactual reasoning methods.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-08T14:46:19Z</published>
+    <arxiv:comment>Accepted to CVPR 2026. Code: https://github.com/KaihuaTang/Self-Critical-Inference-Framework</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Kaihua Tang</name>
+    </author>
+    <author>
+      <name>Jiaxin Qi</name>
+    </author>
+    <author>
+      <name>Jinli Ou</name>
+    </author>
+    <author>
+      <name>Yuhua Zheng</name>
+    </author>
+    <author>
+      <name>Jianqiang Huang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.17186v2</id>
+    <title>Focusing Where Vision Matters: Selective Training for Large Vision Language Models via Visual Information Gain</title>
+    <updated>2026-05-20T23:55:58Z</updated>
+    <link href="https://arxiv.org/abs/2602.17186v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.17186v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision Language Models (LVLMs) have achieved remarkable progress, yet they often suffer from language bias, producing answers without relying on visual evidence. While prior work attempts to mitigate this issue through decoding strategies, architectural modifications, or curated instruction data, they typically lack a quantitative measure of how much individual training samples or tokens actually benefit from the image. In this work, we introduce Visual Information Gain (VIG), a perplexity-based metric that measures the reduction in prediction uncertainty provided by visual input. VIG enables fine-grained analysis at both sample and token levels, effectively highlighting visually grounded elements such as colors, spatial relations, and attributes. Leveraging this, we propose a VIG-guided selective training scheme that prioritizes high-VIG samples and tokens. This approach improves visual grounding and mitigates language bias, achieving superior performance with significantly reduced supervision by focusing exclusively on visually informative samples and tokens.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-19T09:12:21Z</published>
+    <arxiv:comment>Accepted at ICML 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Seulbi Lee</name>
+    </author>
+    <author>
+      <name>Sangheum Hwang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.10425v1</id>
+    <title>HII-DPO: Eliminate Hallucination via Accurate Hallucination-Inducing Counterfactual Images</title>
+    <updated>2026-02-11T02:11:02Z</updated>
+    <link href="https://arxiv.org/abs/2602.10425v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.10425v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision-Language Models (VLMs) have achieved remarkable success across diverse multimodal tasks but remain vulnerable to hallucinations rooted in inherent language bias. Despite recent progress, existing hallucination mitigation methods often overlook the underlying hallucination patterns driven by language bias. In this work, we design a novel pipeline to accurately synthesize Hallucination-Inducing Images (HIIs). Using synthesized HIIs, we reveal a consistent scene-conditioned hallucination pattern: models tend to mention objects that are highly typical of the scene even when visual evidence is removed. To quantify the susceptibility of VLMs to this hallucination pattern, we establish the Masked-Object-Hallucination (MOH) benchmark to rigorously evaluate existing state-of-the-art alignment frameworks. Finally, we leverage HIIs to construct high-quality preference datasets for fine-grained alignment. Experimental results demonstrate that our approach effectively mitigates hallucinations while preserving general model capabilities. Specifically, our method achieves up to a 38% improvement over the current state-of-the-art on standard hallucination benchmarks.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-11T02:11:02Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yilin Yang</name>
+    </author>
+    <author>
+      <name>Zhenghui Guo</name>
+    </author>
+    <author>
+      <name>Yuke Wang</name>
+    </author>
+    <author>
+      <name>Omprakash Gnawali</name>
+    </author>
+    <author>
+      <name>Sheng Di</name>
+    </author>
+    <author>
+      <name>Chengming Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.09611v2</id>
+    <title>AGMark: Attention-Guided Dynamic Watermarking for Large Vision-Language Models</title>
+    <updated>2026-07-28T14:47:30Z</updated>
+    <link href="https://arxiv.org/abs/2602.09611v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.09611v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Watermarking has emerged as a pivotal solution for content traceability and intellectual property protection in large vision language models (LVLMs). However, vision-agnostic watermarks may introduce visually irrelevant tokens and disrupt visual grounding by enforcing indiscriminate pseudo-random biases. Additionally, current vision-specific watermarks rely on a static, one-time estimation of vision-critical weights and ignore the weight distribution density when determining the proportion of protected tokens. This design fails to account for dynamic changes in visual dependence during generation and may introduce low-quality tokens in the long tail. To address these challenges, we propose Attention-Guided Dynamic Watermarking (AGMark), a novel framework that embeds detectable signals while largely preserving visual-semantic fidelity. At each decoding step, AGMark first dynamically identifies semantic-critical evidence based on attention weights for visual relevance, together with context-aware coherence cues, resulting in a more adaptive and well-calibrated evidence-weight distribution. It then determines the proportion of semantic-critical tokens by jointly considering uncertainty awareness (token entropy) and evidence calibration (weight density), thereby enabling more reliable adaptive vocabulary partitioning to avoid irrelevant tokens. Empirical results consistently confirm that AGMark outperforms conventional methods, substantially improving generation quality and yielding particularly strong gains in visual semantic fidelity in the later stages of generation. Our framework maintains highly competitive detection performance (at least 99.36% AUC) and robust attack resilience (at least 88.61% AUC) without sacrificing inference efficiency, taking a significant step toward reliability-preserving multimodal watermarking.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-10T10:02:29Z</published>
+    <arxiv:comment>KDD 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yue Li</name>
+    </author>
+    <author>
+      <name>Xin Yi</name>
+    </author>
+    <author>
+      <name>Dongsheng Shi</name>
+    </author>
+    <author>
+      <name>Yongyi Cui</name>
+    </author>
+    <author>
+      <name>Gerard de Melo</name>
+    </author>
+    <author>
+      <name>Linlin Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.01957v1</id>
+    <title>AFTER: Mitigating the Object Hallucination of LVLM via Adaptive Factual-Guided Activation Editing</title>
+    <updated>2026-01-05T10:02:22Z</updated>
+    <link href="https://arxiv.org/abs/2601.01957v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.01957v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision-Language Models (LVLMs) have achieved substantial progress in cross-modal tasks. However, due to language bias, LVLMs are susceptible to object hallucination, which can be primarily divided into category, attribute, and relation hallucination, significantly impeding the trustworthy AI applications. Editing the internal activations of LVLMs has shown promising effectiveness in mitigating hallucinations with minimal cost. However, previous editing approaches neglect the effective guidance offered by factual textual semantics, thereby struggling to explicitly mitigate language bias. To address these issues, we propose Adaptive Factual-guided Visual-Textual Editing for hallucination mitigation (AFTER), which comprises Factual-Augmented Activation Steering (FAS) and Query-Adaptive Offset Optimization (QAO), to adaptively guides the original biased activations towards factual semantics. Specifically, FAS is proposed to provide factual and general guidance for activation editing, thereby explicitly modeling the precise visual-textual associations. Subsequently, QAO introduces a query-aware offset estimator to establish query-specific editing from the general steering vector, enhancing the diversity and granularity of editing. Extensive experiments on standard hallucination benchmarks across three widely adopted LVLMs validate the efficacy of the proposed AFTER, notably achieving up to a 16.3% reduction of hallucination over baseline on the AMBER benchmark. Our code and data will be released for reproducibility.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-05T10:02:22Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <arxiv:journal_ref>ICLR 2026</arxiv:journal_ref>
+    <author>
+      <name>Tianbo Wang</name>
+    </author>
+    <author>
+      <name>Yuqing Ma</name>
+    </author>
+    <author>
+      <name>Kewei Liao</name>
+    </author>
+    <author>
+      <name>Zhange Zhang</name>
+    </author>
+    <author>
+      <name>Simin Li</name>
+    </author>
+    <author>
+      <name>Jinyang Guo</name>
+    </author>
+    <author>
+      <name>Xianglong Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.07203v1</id>
+    <title>MMRPT: MultiModal Reinforcement Pre-Training via Masked Vision-Dependent Reasoning</title>
+    <updated>2025-12-08T06:26:13Z</updated>
+    <link href="https://arxiv.org/abs/2512.07203v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.07203v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal pre-training remains constrained by the descriptive bias of image-caption pairs, leading models to favor surface linguistic cues over grounded visual understanding. We introduce MMRPT, a masked multimodal reinforcement pre-training framework that strengthens visual reasoning in MLLMs. We are the first to incorporate reinforcement learning directly into the pre-training of large vision-language models, enabling learning signals that reward visual grounding rather than caption imitation. MMRPT constructs masked multimodal data by estimating sentence-level visual dependency via attention over visual tokens and masking highly vision-dependent segments; the model reconstructs these spans through vision-grounded reasoning guided by a semantic-visual reward. Experiments show consistent zero-shot gains across diverse benchmarks and substantially improved robustness under supervised fine-tuning, demonstrating that reinforcement-driven masked reasoning provides a more reliable and generalizable pre-training objective for multimodal models.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-08T06:26:13Z</published>
+    <arxiv:comment>7 pages, 1 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xuhui Zheng</name>
+    </author>
+    <author>
+      <name>Kang An</name>
+    </author>
+    <author>
+      <name>Ziliang Wang</name>
+    </author>
+    <author>
+      <name>Yuhang Wang</name>
+    </author>
+    <author>
+      <name>Faqiang Qian</name>
+    </author>
+    <author>
+      <name>Yichao Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.06759v1</id>
+    <title>VisChainBench: A Benchmark for Multi-Turn, Multi-Image Visual Reasoning Beyond Language Priors</title>
+    <updated>2025-12-07T09:48:10Z</updated>
+    <link href="https://arxiv.org/abs/2512.06759v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.06759v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Understanding multi-image, multi-turn scenarios is a critical yet underexplored capability for Large Vision-Language Models (LVLMs). Existing benchmarks predominantly focus on static or horizontal comparisons -- e.g., spotting visual differences or assessing appropriateness -- while relying heavily on language cues. Such settings overlook progressive, context-dependent reasoning and the challenge of visual-to-visual inference. To bridge this gap, we present VisChainBench, a large-scale benchmark designed to rigorously evaluate LVLMs' ability to perform multi-step visual reasoning across sequential, interdependent tasks with minimal language guidance. VisChainBench contains 1,457 tasks spanning over 20,000 images across three diverse domains (e.g., daily scenarios, engineering troubleshooting), structured to mimic real-world decision-making processes. Uniquely, the benchmark is constructed using a multi-agent generation pipeline, ensuring high visual diversity and controlled language bias. All the benchmark data and code for benchmark construction are available for viewing and download via following Link: https://huggingface.co/datasets/eyehole/VisChainBench</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-07T09:48:10Z</published>
+    <arxiv:comment>12 pages,13figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Wenbo Lyu</name>
+    </author>
+    <author>
+      <name>Yingjun Du</name>
+    </author>
+    <author>
+      <name>Jinglin Zhao</name>
+    </author>
+    <author>
+      <name>Xianton Zhen</name>
+    </author>
+    <author>
+      <name>Ling Shao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.19220v2</id>
+    <title>Are Large Vision Language Models Truly Grounded in Medical Images? Evidence from Italian Clinical Visual Question Answering</title>
+    <updated>2025-11-26T20:23:20Z</updated>
+    <link href="https://arxiv.org/abs/2511.19220v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.19220v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large vision language models (VLMs) have achieved impressive performance on medical visual question answering benchmarks, yet their reliance on visual information remains unclear. We investigate whether frontier VLMs demonstrate genuine visual grounding when answering Italian medical questions by testing four state-of-the-art models: Claude Sonnet 4.5, GPT-4o, GPT-5-mini, and Gemini 2.0 flash exp. Using 60 questions from the EuropeMedQA Italian dataset that explicitly require image interpretation, we substitute correct medical images with blank placeholders to test whether models truly integrate visual and textual information. Our results reveal striking variability in visual dependency: GPT-4o shows the strongest visual grounding with a 27.9pp accuracy drop (83.2% [74.6%, 91.7%] to 55.3% [44.1%, 66.6%]), while GPT-5-mini, Gemini, and Claude maintain high accuracy with modest drops of 8.5pp, 2.4pp, and 5.6pp respectively. Analysis of model-generated reasoning reveals confident explanations for fabricated visual interpretations across all models, suggesting varying degrees of reliance on textual shortcuts versus genuine visual analysis. These findings highlight critical differences in model robustness and the need for rigorous evaluation before clinical deployment.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-24T15:26:58Z</published>
+    <arxiv:comment>Accepted at the Workshop on Multimodal Representation Learning for Healthcare (MMRL4H), EurIPS 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Federico Felizzi</name>
+    </author>
+    <author>
+      <name>Olivia Riccomi</name>
+    </author>
+    <author>
+      <name>Michele Ferramola</name>
+    </author>
+    <author>
+      <name>Francesco Andrea Causio</name>
+    </author>
+    <author>
+      <name>Manuel Del Medico</name>
+    </author>
+    <author>
+      <name>Vittorio De Vita</name>
+    </author>
+    <author>
+      <name>Lorenzo De Mori</name>
+    </author>
+    <author>
+      <name>Alessandra Piscitelli</name>
+    </author>
+    <author>
+      <name>Pietro Eric Risuleo</name>
+    </author>
+    <author>
+      <name>Bianca Destro Castaniti</name>
+    </author>
+    <author>
+      <name>Antonio Cristiano</name>
+    </author>
+    <author>
+      <name>Alessia Longo</name>
+    </author>
+    <author>
+      <name>Luigi De Angelis</name>
+    </author>
+    <author>
+      <name>Mariapia Vassalli</name>
+    </author>
+    <author>
+      <name>Marcello Di Pumpo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.05017v3</id>
+    <title>Towards Mitigating Hallucinations in Large Vision-Language Models by Refining Textual Embeddings</title>
+    <updated>2026-06-12T16:49:45Z</updated>
+    <link href="https://arxiv.org/abs/2511.05017v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.05017v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Hallucinations in Large Vision-Language Models (LVLMs) remain a persistent challenge, often stemming from inadequate integration of visual information during multimodal reasoning. A key cause is the model's over-reliance on textual priors and underutilization of visual cues, leading to outputs that are linguistically fluent but visually inaccurate. For example, given an image of an empty kitchen countertop, an LVLM might hallucinate a "bowl of fruit" or "cup of coffee", relying on language associations rather than visual evidence. Most LVLMs incorporate visual features by appending them to the input stream of a pre-trained LLM and training on large-scale vision-language datasets. Our systematic analysis reveals that this strategy often leads to over-dependence on textual information due to the inherent bias of LLMs towards language-dominant representations. This imbalance skews attention towards the text over visual content, weakening the model's ability to ground outputs in visual inputs. To address this, we propose a simple yet effective visual feature incorporation method that encourages the model to learn visually-informed textual embeddings distinct from those of the base LLM and promotes a more balanced attention distribution. Experimental results across multiple hallucination benchmarks demonstrate that our method significantly reduces hallucinations and fosters more balanced multimodal reasoning. Notably, our approach achieves substantial gains, including +9.33% on MMVP-MLLM, +2.99% on POPE-AOKVQA, up to +3.4% on Merlin, and +3% on the hard-data split of HallusionBench.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-07T06:39:54Z</published>
+    <arxiv:comment>Accepted at The 64th Annual Meeting of the Association for Computational Linguistics</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Aakriti Agrawal</name>
+    </author>
+    <author>
+      <name>Gouthaman KV</name>
+    </author>
+    <author>
+      <name>Rohith Aralikatti</name>
+    </author>
+    <author>
+      <name>Gauri Jagatap</name>
+    </author>
+    <author>
+      <name>Jiaxin Yuan</name>
+    </author>
+    <author>
+      <name>Sarvesh Baskar</name>
+    </author>
+    <author>
+      <name>Vijay Kamarshi</name>
+    </author>
+    <author>
+      <name>Andrea Fanelli</name>
+    </author>
+    <author>
+      <name>Furong Huang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.09285v2</id>
+    <title>Spotlight on Token Perception for Multimodal Reinforcement Learning</title>
+    <updated>2026-03-02T11:25:20Z</updated>
+    <link href="https://arxiv.org/abs/2510.09285v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.09285v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>While Reinforcement Learning with Verifiable Rewards (RLVR) has advanced the reasoning capabilities of Large Vision-Language Models (LVLMs), most existing methods in multimodal reasoning neglect the critical role of visual perception within the RLVR optimization process. In this paper, we undertake a pioneering exploration of multimodal RLVR through the novel perspective of token perception, which measures the visual dependency of each generated token. With a granular analysis of Chain-of-Thought (CoT) processes, we uncover two key insights: first, token perception in a rollout trajectory is sparsely distributed, where only a small fraction of tokens have high visual dependency for visually-grounded reasoning; second, different trajectories exhibit significant divergence in their overall visual dependency. Based on these observations, we propose Visually-Perceptive Policy Optimization (VPPO), a novel policy gradient algorithm that explicitly leverages token perception to refine the learning signal. Specifically, VPPO achieves this through a dual mechanism: it reweights a trajectory's advantage by its overall visual dependency, and focuses policy updates exclusively on perceptually pivotal tokens. On a comprehensive suite of eight perception and reasoning benchmarks, VPPO demonstrates substantial gains over leading open-source RL-tuned models, with its effectiveness consistently validated across 7B and 32B model scales. Our findings not only establish a new token-level perceptual perspective for analyzing multimodal RLVR but also present a novel and effective optimization strategy to significantly enhance the multimodal reasoning capabilities of LVLMs.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-10T11:25:33Z</published>
+    <arxiv:comment>Accepted by ICLR 2026, project page: https://github.com/huaixuheqing/VPPO-RL</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Siyuan Huang</name>
+    </author>
+    <author>
+      <name>Xiaoye Qu</name>
+    </author>
+    <author>
+      <name>Yafu Li</name>
+    </author>
+    <author>
+      <name>Yun Luo</name>
+    </author>
+    <author>
+      <name>Zefeng He</name>
+    </author>
+    <author>
+      <name>Daizong Liu</name>
+    </author>
+    <author>
+      <name>Yu Cheng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.18589v4</id>
+    <title>Benchmarking Multimodal Mathematical Reasoning with Explicit Visual Dependency</title>
+    <updated>2025-05-13T06:32:02Z</updated>
+    <link href="https://arxiv.org/abs/2504.18589v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.18589v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent advancements in Large Vision-Language Models (LVLMs) have significantly enhanced their ability to integrate visual and linguistic information, achieving near-human proficiency in tasks like object recognition, captioning, and visual question answering. However, current benchmarks typically focus on knowledge-centric evaluations that assess domain-specific expertise, often neglecting the core ability to reason about fundamental mathematical elements and visual concepts. We identify a gap in evaluating elementary-level math problems, which rely on explicit visual dependencies-requiring models to discern, integrate, and reason across multiple images while incorporating commonsense knowledge, all of which are crucial for advancing toward broader AGI capabilities. To address this gap, we introduce VCBENCH, a comprehensive benchmark for multimodal mathematical reasoning with explicit visual dependencies. VCBENCH includes 1,720 problems across six cognitive domains, featuring 6,697 images (averaging 3.9 per question) to ensure multi-image reasoning. We evaluate 26 state-of-the-art LVLMs on VCBENCH, revealing substantial performance disparities, with even the top models unable to exceed 50% accuracy. Our findings highlight the ongoing challenges in visual-mathematical integration and suggest avenues for future LVLM advancements. The project can be found at https://alibaba-damo-academy.github.io/VCBench/.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-24T06:16:38Z</published>
+    <arxiv:comment>Home page: https://alibaba-damo-academy.github.io/VCBench/</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhikai Wang</name>
+    </author>
+    <author>
+      <name>Jiashuo Sun</name>
+    </author>
+    <author>
+      <name>Wenqi Zhang</name>
+    </author>
+    <author>
+      <name>Zhiqiang Hu</name>
+    </author>
+    <author>
+      <name>Xin Li</name>
+    </author>
+    <author>
+      <name>Fan Wang</name>
+    </author>
+    <author>
+      <name>Deli Zhao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.16602v1</id>
+    <title>VidLBEval: Benchmarking and Mitigating Language Bias in Video-Involved LVLMs</title>
+    <updated>2025-02-23T15:04:23Z</updated>
+    <link href="https://arxiv.org/abs/2502.16602v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.16602v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, Large Vision-Language Models (LVLMs) have made significant strides across diverse multimodal tasks and benchmarks. This paper reveals a largely under-explored problem from existing video-involved LVLMs - language bias, where models tend to prioritize language over video and thus result in incorrect responses. To address this research gap, we first collect a Video Language Bias Evaluation Benchmark, which is specifically designed to assess the language bias in video-involved LVLMs through two key tasks: ambiguous video contrast and interrogative question probing. Accordingly, we design accompanied evaluation metrics that aim to penalize LVLMs being biased by language. In addition, we also propose Multi-branch Contrastive Decoding (MCD), introducing two expert branches to simultaneously counteract language bias potentially generated by the amateur text-only branch. Our experiments demonstrate that i) existing video-involved LVLMs, including both proprietary and open-sourced, are largely limited by the language bias problem; ii) our MCD can effectively mitigate this issue and maintain general-purpose capabilities in various video-involved LVLMs without any additional retraining or alteration to model architectures.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-23T15:04:23Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yiming Yang</name>
+    </author>
+    <author>
+      <name>Yangyang Guo</name>
+    </author>
+    <author>
+      <name>Hui Lu</name>
+    </author>
+    <author>
+      <name>Yan Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.13928v2</id>
+    <title>Symmetrical Visual Contrastive Optimization: Aligning Vision-Language Models with Minimal Contrastive Images</title>
+    <updated>2025-06-02T18:36:08Z</updated>
+    <link href="https://arxiv.org/abs/2502.13928v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.13928v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent studies have shown that Large Vision-Language Models (VLMs) tend to neglect image content and over-rely on language-model priors, resulting in errors in visually grounded tasks and hallucinations. We hypothesize that this issue arises because existing VLMs are not explicitly trained to generate texts that are accurately grounded in fine-grained image details. To enhance visual feedback during VLM training, we propose S-VCO (Symmetrical Visual Contrastive Optimization), a novel finetuning objective that steers the model toward capturing important visual details and aligning them with corresponding text tokens. To further facilitate this detailed alignment, we introduce MVC, a paired image-text dataset built by automatically filtering and augmenting visual counterfactual data to challenge the model with hard contrastive cases involving Minimal Visual Contrasts. Experiments show that our method consistently improves VLM performance across diverse benchmarks covering various abilities and domains, achieving up to a 22% reduction in hallucinations, and significant gains in vision-centric and general tasks. Notably, these improvements become increasingly pronounced in benchmarks with higher visual dependency. In short, S-VCO offers a significant enhancement of VLM's visually-dependent task performance while retaining or even improving the model's general abilities. We opensource our code at https://s-vco.github.io/</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-19T18:05:42Z</published>
+    <arxiv:comment>Accepted to ACL 2025 Main. Project Website: https://s-vco.github.io/</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Shengguang Wu</name>
+    </author>
+    <author>
+      <name>Fan-Yun Sun</name>
+    </author>
+    <author>
+      <name>Kaiyue Wen</name>
+    </author>
+    <author>
+      <name>Nick Haber</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.01056v1</id>
+    <title>Mitigating Hallucinations in Large Vision-Language Models with Internal Fact-based Contrastive Decoding</title>
+    <updated>2025-02-03T05:08:35Z</updated>
+    <link href="https://arxiv.org/abs/2502.01056v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.01056v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Visual Language Models (LVLMs) integrate visual and linguistic modalities, exhibiting exceptional performance across various multimodal tasks. Nevertheless, LVLMs remain vulnerable to the issue of object hallucinations. Previous efforts to mitigate this issue focus on supervised fine-tuning (SFT) or incorporating external knowledge, both of which entail significant costs related to training and the acquisition of external data. To address these challenges, we propose a novel model-agnostic approach termed Internal Fact-based Contrastive Decoding (IFCD), designed to mitigate and suppress hallucinations during the inference process of LVLMs by exploiting the LVLMs' own hallucinations. IFCD is grounded in experimental observations that alterations to the LVLMs' internal representations tend to amplify hallucinations caused by language bias. By contrasting disturbed distribution, IFCD calibrates the LVLMs' output and effectively removes the hallucinatory logits from the final predictions. Experimental results validate that IFCD significantly alleviates both object-level and attribute-level hallucinations while achieving an average 9% accuracy improvement on POPE and 8% accuracy improvement on MME object hallucinations subset compared with direct decoding, respectively.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-03T05:08:35Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Chao Wang</name>
+    </author>
+    <author>
+      <name>Xuancheng Zhou</name>
+    </author>
+    <author>
+      <name>Weiwei Fu</name>
+    </author>
+    <author>
+      <name>Yang Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.05031v2</id>
+    <title>ECBench: Can Multi-modal Foundation Models Understand the Egocentric World? A Holistic Embodied Cognition Benchmark</title>
+    <updated>2025-03-13T07:45:55Z</updated>
+    <link href="https://arxiv.org/abs/2501.05031v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.05031v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The enhancement of generalization in robots by large vision-language models (LVLMs) is increasingly evident. Therefore, the embodied cognitive abilities of LVLMs based on egocentric videos are of great interest. However, current datasets for embodied video question answering lack comprehensive and systematic evaluation frameworks. Critical embodied cognitive issues, such as robotic self-cognition, dynamic scene perception, and hallucination, are rarely addressed. To tackle these challenges, we propose ECBench, a high-quality benchmark designed to systematically evaluate the embodied cognitive abilities of LVLMs. ECBench features a diverse range of scene video sources, open and varied question formats, and 30 dimensions of embodied cognition. To ensure quality, balance, and high visual dependence, ECBench uses class-independent meticulous human annotation and multi-round question screening strategies. Additionally, we introduce ECEval, a comprehensive evaluation system that ensures the fairness and rationality of the indicators. Utilizing ECBench, we conduct extensive evaluations of proprietary, open-source, and task-specific LVLMs. ECBench is pivotal in advancing the embodied cognitive capabilities of LVLMs, laying a solid foundation for developing reliable core models for embodied agents. All data and code are available at https://github.com/Rh-Dang/ECBench.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-01-09T07:43:49Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Ronghao Dang</name>
+    </author>
+    <author>
+      <name>Yuqian Yuan</name>
+    </author>
+    <author>
+      <name>Wenqi Zhang</name>
+    </author>
+    <author>
+      <name>Yifei Xin</name>
+    </author>
+    <author>
+      <name>Boqiang Zhang</name>
+    </author>
+    <author>
+      <name>Long Li</name>
+    </author>
+    <author>
+      <name>Liuyi Wang</name>
+    </author>
+    <author>
+      <name>Qinyang Zeng</name>
+    </author>
+    <author>
+      <name>Xin Li</name>
+    </author>
+    <author>
+      <name>Lidong Bing</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.14279v2</id>
+    <title>Looking Beyond Text: Reducing Language bias in Large Vision-Language Models via Multimodal Dual-Attention and Soft-Image Guidance</title>
+    <updated>2026-05-28T06:50:29Z</updated>
+    <link href="https://arxiv.org/abs/2411.14279v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.14279v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large vision-language models (LVLMs) have achieved impressive results in various vision-language tasks. However, despite showing promising performance, LVLMs suffer from hallucinations caused by language bias, leading to diminished focus on images and ineffective visual comprehension. We identify two primary reasons for this bias: 1. Different scales of training data between the pretraining stage of LLM and multimodal alignment stage. 2. The learned inference bias due to short-term dependency of text data. Therefore, we propose LACING, a systemic framework designed to address the language bias of LVLMs with muLtimodal duAl-attention meChanIsm (MDA) aNd soft-image Guidance (IFG). Specifically, MDA introduces a parallel dual-attention mechanism that enhances the integration of visual inputs across the model. IFG introduces a learnable soft visual prompt during training and inference to replace visual inputs, designed to compel LVLMs to prioritize text inputs. Then, IFG further proposes a novel decoding strategy using the soft visual prompt to mitigate the model's over-reliance on adjacent text inputs. Comprehensive experiments demonstrate that our method effectively debiases LVLMs from their language bias, enhancing visual comprehension and reducing hallucinations without requiring additional training resources or data. The code and model are available at [lacing-lvlm.github.io](https://lacing-lvlm.github.io).</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-21T16:33:30Z</published>
+    <arxiv:comment>EMNLP 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Haozhe Zhao</name>
+    </author>
+    <author>
+      <name>Shuzheng Si</name>
+    </author>
+    <author>
+      <name>Liang Chen</name>
+    </author>
+    <author>
+      <name>Yichi Zhang</name>
+    </author>
+    <author>
+      <name>Maosong Sun</name>
+    </author>
+    <author>
+      <name>Mingjia Zhang</name>
+    </author>
+    <author>
+      <name>Baobao Chang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.19732v2</id>
+    <title>Rethinking Visual Dependency in Long-Context Reasoning for Large Vision-Language Models</title>
+    <updated>2024-12-20T16:19:17Z</updated>
+    <link href="https://arxiv.org/abs/2410.19732v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.19732v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision-Language Models (LVLMs) excel in cross-model tasks but experience performance declines in long-context reasoning due to overreliance on textual information and reduced visual dependency. In this study, we empirically analyze LVLMs in long-context reasoning, revealing that increased context length leads to a higher dependence on language at the expense of visual dependency. To address this issue, we propose a novel training-free context pruning method that selectively removes less critical textual information. Our approach enhances visual dependency and reduces textual noise, thereby improving LVLM performance in long-context reasoning. We validate our method by constructing a long-context dataset, demonstrating its effectiveness across various LVLMs. Moreover, further analysis confirms the robustness of different token pruning strategies and preliminary explores scaling laws between pruning rates and context length.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-25T17:59:09Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Yucheng Zhou</name>
+    </author>
+    <author>
+      <name>Zhi Rao</name>
+    </author>
+    <author>
+      <name>Jun Wan</name>
+    </author>
+    <author>
+      <name>Jianbing Shen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.20330v2</id>
+    <title>Are We on the Right Way for Evaluating Large Vision-Language Models?</title>
+    <updated>2024-04-09T15:17:50Z</updated>
+    <link href="https://arxiv.org/abs/2403.20330v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.20330v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large vision-language models (LVLMs) have recently achieved rapid progress, sparking numerous studies to evaluate their multi-modal capabilities. However, we dig into current evaluation works and identify two primary issues: 1) Visual content is unnecessary for many samples. The answers can be directly inferred from the questions and options, or the world knowledge embedded in LLMs. This phenomenon is prevalent across current benchmarks. For instance, GeminiPro achieves 42.9% on the MMMU benchmark without any visual input, and outperforms the random choice baseline across six benchmarks over 24% on average. 2) Unintentional data leakage exists in LLM and LVLM training. LLM and LVLM could still answer some visual-necessary questions without visual content, indicating the memorizing of these samples within large-scale training data. For example, Sphinx-X-MoE gets 43.6% on MMMU without accessing images, surpassing its LLM backbone with 17.9%. Both problems lead to misjudgments of actual multi-modal gains and potentially misguide the study of LVLM. To this end, we present MMStar, an elite vision-indispensable multi-modal benchmark comprising 1,500 samples meticulously selected by humans. MMStar benchmarks 6 core capabilities and 18 detailed axes, aiming to evaluate LVLMs' multi-modal capacities with carefully balanced and purified samples. These samples are first roughly selected from current benchmarks with an automated pipeline, human review is then involved to ensure each curated sample exhibits visual dependency, minimal data leakage, and requires advanced multi-modal capabilities. Moreover, two metrics are developed to measure data leakage and actual performance gain in multi-modal training. We evaluate 16 leading LVLMs on MMStar to assess their multi-modal capabilities, and on 7 benchmarks with the proposed metrics to investigate their data leakage and actual multi-modal gain.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-29T17:59:34Z</published>
+    <arxiv:comment>Project page: https://mmstar-benchmark.github.io/</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Lin Chen</name>
+    </author>
+    <author>
+      <name>Jinsong Li</name>
+    </author>
+    <author>
+      <name>Xiaoyi Dong</name>
+    </author>
+    <author>
+      <name>Pan Zhang</name>
+    </author>
+    <author>
+      <name>Yuhang Zang</name>
+    </author>
+    <author>
+      <name>Zehui Chen</name>
+    </author>
+    <author>
+      <name>Haodong Duan</name>
+    </author>
+    <author>
+      <name>Jiaqi Wang</name>
+    </author>
+    <author>
+      <name>Yu Qiao</name>
+    </author>
+    <author>
+      <name>Dahua Lin</name>
+    </author>
+    <author>
+      <name>Feng Zhao</name>
+    </author>
+  </entry>
+</feed>

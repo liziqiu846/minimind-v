@@ -1,0 +1,568 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/zdJORYTlIds4dCmvph6NiinFPgU</id>
+  <title>arXiv Query: search_query=all:"multimodal large language model" AND (all:"training dynamics" OR all:"gradient conflict" OR all:"modality imbalance")&amp;id_list=&amp;start=0&amp;max_results=50</title>
+  <updated>2026-08-06T19:22:45Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22multimodal+large+language+model%22+AND+(all:%22training+dynamics%22+OR+(all:%22gradient+conflict%22+OR+all:%22modality+imbalance%22))&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <opensearch:totalResults>16</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2608.05131v1</id>
+    <title>OPD-V: Visual On-Policy Self-Distillation with Modality Balance</title>
+    <updated>2026-08-05T17:53:06Z</updated>
+    <link href="https://arxiv.org/abs/2608.05131v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.05131v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>On-Policy Self-Distillation (OPSD) has become a standard post-training approach for improving visual reasoning in multimodal large language models (MLLMs). Existing methods draw privileged information from diverse input sources to guide self-distillation. Yet these designs overlook Modality Imbalance, a challenge inherent to MLLM reasoning. When textual information dominates generation, the model cannot fully integrate its multimodal input. Consequently, carefully designed privileged information remains underused, limiting the effectiveness of OPSD. To examine this limitation, we construct a Positive Teacher with the Zoom-In Image and a Negative Teacher with the Mask Image, which exhibit different degrees of Modality Imbalance. Changes in their reasoning correctness and token logits reveal that Modality Balance can itself serve as privileged information. Motivated by this finding, we introduce OPD-V, a visual OPSD paradigm that instantiates such information through the Positive Teacher and Negative Teacher. Positive Modality-Balance Logits Margins define a Modality-Balance Trust Region that selects the on-policy tokens used for self-distillation. Experiments across 6 benchmarks, 4 MLLM backbones, and 5 post-training methods show that OPD-V consistently improves reasoning performance while reducing training cost.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-05T17:53:06Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name> Aniri</name>
+    </author>
+    <author>
+      <name>Jinhe Bi</name>
+    </author>
+    <author>
+      <name>Peng Liao</name>
+    </author>
+    <author>
+      <name>Zengjie Jin</name>
+    </author>
+    <author>
+      <name>Volker Tresp</name>
+    </author>
+    <author>
+      <name>Fei Shen</name>
+    </author>
+    <author>
+      <name>Yunpu Ma</name>
+    </author>
+    <author>
+      <name>Tat-Seng Chua</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.14448v1</id>
+    <title>Think When Needed: Adaptive Reasoning-Driven Multimodal Embeddings with a Dual-LoRA Architecture</title>
+    <updated>2026-05-14T06:41:53Z</updated>
+    <link href="https://arxiv.org/abs/2605.14448v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.14448v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal large language models (MLLMs) have emerged as a powerful backbone for multimodal embeddings. Recent methods introduce chain-of-thought (CoT) reasoning into the embedding pipeline to improve retrieval quality, but remain costly in both model size and inference cost. They typically employ separate reasoner and embedder with substantial parameter overhead, and generate CoT indiscriminately for every input. However, we observe that for simple inputs, discriminative embeddings already perform well, and redundant reasoning can even mislead the model, degrading performance. To address these limitations, we propose Think When Needed (TWN), a unified multimodal embedding framework with adaptive reasoning. TWN introduces a dual-LoRA architecture that attaches reasoning and embedding adapters to a shared frozen backbone, detaching gradients at their interface to mitigate gradient conflicts introduced by joint optimization while keeping parameters close to a single model. Building on this, an adaptive think mechanism uses a self-supervised routing gate to decide per input whether to generate CoT, skipping unnecessary reasoning to reduce inference overhead and even improve retrieval quality. We further explore embedding-guided RL to optimize CoT quality beyond supervised training. On the 78 tasks of MMEB-V2, TWN achieves state-of-the-art embedding quality while being substantially more efficient than existing generative methods, requiring only 3-5% additional parameters relative to the backbone and up to 50% fewer reasoning tokens compared to the full generative mode.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-14T06:41:53Z</published>
+    <arxiv:comment>30 pages, preprint</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Longxiang Zhang</name>
+    </author>
+    <author>
+      <name>Weilong Dai</name>
+    </author>
+    <author>
+      <name>Guanghao Zhang</name>
+    </author>
+    <author>
+      <name>Hao Jiang</name>
+    </author>
+    <author>
+      <name>Pipei Huang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.03179v1</id>
+    <title>Understanding the Role of Hallucination in Reinforcement Post-Training of Multimodal Reasoning Models</title>
+    <updated>2026-04-03T16:56:34Z</updated>
+    <link href="https://arxiv.org/abs/2604.03179v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.03179v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The recent success of reinforcement learning (RL) in large reasoning models has inspired the growing adoption of RL for post-training Multimodal Large Language Models (MLLMs) to enhance their visual reasoning capabilities. Although many studies have reported improved performance, it remains unclear whether RL training truly enables models to learn from visual information. In this work, we propose the Hallucination-as-Cue Framework, an analytical framework designed to investigate the effects of RL-based post-training on multimodal reasoning models from the perspective of model hallucination. Specifically, we introduce hallucination-inductive, modality-specific corruptions that remove or replace essential information required to derive correct answers, thereby forcing the model to reason by hallucination. By applying these corruptions during both training and evaluation, our framework provides a unique perspective for diagnosing RL training dynamics and understanding the intrinsic properties of datasets. Through extensive experiments and analyses across multiple multimodal reasoning benchmarks, we reveal that the role of model hallucination for RL-training is more significant than previously recognized. For instance, we find that RL post-training under purely hallucination-inductive settings can still significantly improve models' reasoning performance, and in some cases even outperform standard training. These findings challenge prevailing assumptions about MLLM reasoning training and motivate the development of more modality-aware RL-based training designs.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-03T16:56:34Z</published>
+    <arxiv:comment>CVPR 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Gengwei Zhang</name>
+    </author>
+    <author>
+      <name>Jie Peng</name>
+    </author>
+    <author>
+      <name>Zhen Tan</name>
+    </author>
+    <author>
+      <name>Mufan Qiu</name>
+    </author>
+    <author>
+      <name>Hossein Nourkhiz Mahjoub</name>
+    </author>
+    <author>
+      <name>Vaishnav Tadiparthi</name>
+    </author>
+    <author>
+      <name>Kwonjoon Lee</name>
+    </author>
+    <author>
+      <name>Yanyong Zhang</name>
+    </author>
+    <author>
+      <name>Tianlong Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.27744v1</id>
+    <title>Data Organization Matters in Multimodal Instruction Tuning: A Controlled Study of Capability Trade-offs</title>
+    <updated>2026-03-29T15:54:06Z</updated>
+    <link href="https://arxiv.org/abs/2603.27744v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.27744v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent multimodal large language models (MLLMs) perform strongly on general visual understanding, diagram and chart reasoning, and document-centric perception. However, these abilities are learned from heterogeneous supervision sources with very different task structures and learning demands, and the effect of their temporal organization during training remains underexplored. We study whether data organization affects the trade-off among general understanding, structured reasoning, and fine-grained OCR/document understanding in multimodal instruction tuning. To isolate this factor, we use a controlled three-stage training framework in which the backbone, trainable modules, and optimization pipeline are fixed across all runs, and only the temporal arrangement of post-alignment supervision is changed. We compare four strategies: direct mixture, curriculum training, balanced sampling, and reverse curriculum. Experiments on general visual instruction following, diagram reasoning, chart reasoning, scene-text question answering, and document question answering show that data organization is a first-order design variable in multimodal adaptation. Curriculum training gives the best overall trade-off and the strongest structured reasoning performance. Balanced sampling is better for OCR-oriented capability but weakens the broader capability balance. Reverse curriculum performs worst in both final performance and optimization stability. Training-dynamics analysis further suggests that building general understanding and reasoning before introducing OCR-intensive supervision leads to smoother optimization and faster convergence. These findings highlight data scheduling as an explicit design dimension for multimodal model adaptation.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-29T15:54:06Z</published>
+    <arxiv:comment>12 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Guowei Tang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.19779v1</id>
+    <title>One Model, Two Minds: Task-Conditioned Reasoning for Unified Image Quality and Aesthetic Assessment</title>
+    <updated>2026-03-20T09:14:33Z</updated>
+    <link href="https://arxiv.org/abs/2603.19779v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.19779v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Unifying Image Quality Assessment (IQA) and Image Aesthetic Assessment (IAA) in a single multimodal large language model is appealing, yet existing methods adopt a task-agnostic recipe that applies the same reasoning strategy and reward to both tasks. We show this is fundamentally misaligned: IQA relies on low-level, objective perceptual cues and benefits from concise distortion-focused reasoning, whereas IAA requires deliberative semantic judgment and is poorly served by point-wise score regression. We identify these as a reasoning mismatch and an optimization mismatch, and provide empirical evidence for both through controlled probes. Motivated by these findings, we propose TATAR (Task-Aware Thinking with Asymmetric Rewards), a unified framework that shares the visual-language backbone while conditioning post-training on each task's nature. TATAR combines three components: fast--slow task-specific reasoning construction that pairs IQA with concise perceptual rationales and IAA with deliberative aesthetic narratives; two-stage SFT+GRPO learning that establishes task-aware behavioral priors before reward-driven refinement; and asymmetric rewards that apply Gaussian score shaping for IQA and Thurstone-style completion ranking for IAA. Extensive experiments across eight benchmarks demonstrate that TATAR consistently outperforms prior unified baselines on both tasks under in-domain and cross-domain settings, remains competitive with task-specific specialized models, and yields more stable training dynamics for aesthetic assessment. Our results establish task-conditioned post-training as a principled paradigm for unified perceptual scoring. Our code is publicly available at https://github.com/yinwen2019/TATAR.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-20T09:14:33Z</published>
+    <arxiv:comment>10 pages,7 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Wen Yin</name>
+    </author>
+    <author>
+      <name>Cencen Liu</name>
+    </author>
+    <author>
+      <name>Dingrui Liu</name>
+    </author>
+    <author>
+      <name>Bing Su</name>
+    </author>
+    <author>
+      <name>Yuan-Fang Li</name>
+    </author>
+    <author>
+      <name>Tao He</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.00720v1</id>
+    <title>MARS: Harmonizing Multimodal Convergence via Adaptive Rank Search</title>
+    <updated>2026-02-28T15:58:28Z</updated>
+    <link href="https://arxiv.org/abs/2603.00720v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.00720v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Fine-tuning Multimodal Large Language Models (MLLMs) with parameter-efficient methods like Low-Rank Adaptation (LoRA) is crucial for task adaptation. However, imbalanced training dynamics across modalities often lead to suboptimal accuracy due to negative interference, a challenge typically addressed with inefficient heuristic methods such as manually tuning separate learning rates. To overcome this, we introduce MARS (Multimodal Adaptive Rank Search), an approach to discover optimal rank pairs that balance training dynamics while maximizing performance. Our key innovation, a proposed framework of dual scaling laws, enables this search: one law models module-specific convergence time to prune the search space to candidates with aligned dynamics, while the other predicts final task performance to select the optimal pair from the pruned set. By re-purposing the LoRA rank as a controller for modality-specific convergence speed, MARS outperforms baseline methods and provides a robust, automated strategy for optimizing MLLM fine-tuning.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-28T15:58:28Z</published>
+    <arxiv:comment>17 pages; Project Page: this https URL: https://minkyoungcho.github.io/mars/</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Minkyoung Cho</name>
+    </author>
+    <author>
+      <name>Insu Jang</name>
+    </author>
+    <author>
+      <name>Shuowei Jin</name>
+    </author>
+    <author>
+      <name>Zesen Zhao</name>
+    </author>
+    <author>
+      <name>Adityan Jothi</name>
+    </author>
+    <author>
+      <name>Ethem F. Can</name>
+    </author>
+    <author>
+      <name>Min-Hung Chen</name>
+    </author>
+    <author>
+      <name>Z. Morley Mao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.21628v2</id>
+    <title>RuCL: Stratified Rubric-Based Curriculum Learning for Multimodal Large Language Model Reasoning</title>
+    <updated>2026-03-03T09:05:32Z</updated>
+    <link href="https://arxiv.org/abs/2602.21628v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.21628v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Reinforcement Learning with Verifiable Rewards (RLVR) has emerged as a prevailing paradigm for enhancing reasoning in Multimodal Large Language Models (MLLMs). However, relying solely on outcome supervision risks reward hacking, where models learn spurious reasoning patterns to satisfy final answer checks. While recent rubric-based approaches offer fine-grained supervision signals, they suffer from high computational costs of instance-level generation and inefficient training dynamics caused by treating all rubrics as equally learnable. In this paper, we propose Stratified Rubric-based Curriculum Learning (RuCL), a novel framework that reformulates curriculum learning by shifting the focus from data selection to reward design. RuCL generates generalized rubrics for broad applicability and stratifies them based on the model's competence. By dynamically adjusting rubric weights during training, RuCL guides the model from mastering foundational perception to tackling advanced logical reasoning. Extensive experiments on various visual reasoning benchmarks show that RuCL yields a remarkable +7.83% average improvement over the Qwen2.5-VL-7B model, achieving a state-of-the-art accuracy of 60.06%.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-25T06:46:24Z</published>
+    <arxiv:comment>8 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Yukun Chen</name>
+    </author>
+    <author>
+      <name>Jiaming Li</name>
+    </author>
+    <author>
+      <name>Longze Chen</name>
+    </author>
+    <author>
+      <name>Ze Gong</name>
+    </author>
+    <author>
+      <name>Jingpeng Li</name>
+    </author>
+    <author>
+      <name>Zhen Qin</name>
+    </author>
+    <author>
+      <name>Hengyu Chang</name>
+    </author>
+    <author>
+      <name>Ancheng Xu</name>
+    </author>
+    <author>
+      <name>Zhihao Yang</name>
+    </author>
+    <author>
+      <name>Hamid Alinejad-Rokny</name>
+    </author>
+    <author>
+      <name>Qiang Qu</name>
+    </author>
+    <author>
+      <name>Bo Zheng</name>
+    </author>
+    <author>
+      <name>Min Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.20075v1</id>
+    <title>Sparse CLIP: Co-Optimizing Interpretability and Performance in Contrastive Learning</title>
+    <updated>2026-01-27T21:39:00Z</updated>
+    <link href="https://arxiv.org/abs/2601.20075v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.20075v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Contrastive Language-Image Pre-training (CLIP) has become a cornerstone in vision-language representation learning, powering diverse downstream tasks and serving as the default vision backbone in multimodal large language models (MLLMs). Despite its success, CLIP's dense and opaque latent representations pose significant interpretability challenges. A common assumption is that interpretability and performance are in tension: enforcing sparsity during training degrades accuracy, motivating recent post-hoc approaches such as Sparse Autoencoders (SAEs). However, these post-hoc approaches often suffer from degraded downstream performance and loss of CLIP's inherent multimodal capabilities, with most learned features remaining unimodal.
+  We propose a simple yet effective approach that integrates sparsity directly into CLIP training, yielding representations that are both interpretable and performant. Compared to SAEs, our Sparse CLIP representations preserve strong downstream task performance, achieve superior interpretability, and retain multimodal capabilities. We show that multimodal sparse features enable straightforward semantic concept alignment and reveal training dynamics of how cross-modal knowledge emerges. Finally, as a proof of concept, we train a vision-language model on sparse CLIP representations that enables interpretable, vision-based steering capabilities. Our findings challenge conventional wisdom that interpretability requires sacrificing accuracy and demonstrate that interpretability and performance can be co-optimized, offering a promising design principle for future models.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-27T21:39:00Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Chuan Qin</name>
+    </author>
+    <author>
+      <name>Constantin Venhoff</name>
+    </author>
+    <author>
+      <name>Sonia Joseph</name>
+    </author>
+    <author>
+      <name>Fanyi Xiao</name>
+    </author>
+    <author>
+      <name>Stefan Scherer</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.06281v1</id>
+    <title>Unleashing the Intrinsic Visual Representation Capability of Multimodal Large Language Models</title>
+    <updated>2025-12-06T04:20:13Z</updated>
+    <link href="https://arxiv.org/abs/2512.06281v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.06281v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Large Language Models (MLLMs) have demonstrated remarkable proficiency in multimodal tasks. Despite their impressive performance, MLLMs suffer from the modality imbalance issue, where visual information is often underutilized compared to textual representations in deeper layers, leading to degraded visual performance or hallucinations. This issue stems from the predominant reliance on next-text-token-prediction during training, which fails to provide direct visual supervisory signals, resulting in progressive homogenization of visual representations throughout the layers. To this end, we propose Latent Visual Reconstruction (LaVer), a novel training framework that facilitates MLLMs in learning more discriminative visual representations via masked image modeling in the joint latent semantic space of LLM. Our method offers direct visual activation to MLLMs, which exhibit increased visual attention allocation, indicating enhanced utilization of visual information. Extensive experiments across diverse benchmarks prove the superiority of our approach in various scenarios, especially those requiring dense visual capabilities. Code of LaVer is available at https://github.com/Fir-lat/LaVer.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-06T04:20:13Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Hengzhuang Li</name>
+    </author>
+    <author>
+      <name>Xinsong Zhang</name>
+    </author>
+    <author>
+      <name>Qiming Peng</name>
+    </author>
+    <author>
+      <name>Bin Luo</name>
+    </author>
+    <author>
+      <name>Han Hu</name>
+    </author>
+    <author>
+      <name>Dengyang Jiang</name>
+    </author>
+    <author>
+      <name>Han-Jia Ye</name>
+    </author>
+    <author>
+      <name>Teng Zhang</name>
+    </author>
+    <author>
+      <name>Hai Jin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.12449v3</id>
+    <title>MOON2.0: Dynamic Modality-balanced Multimodal Representation Learning for E-commerce Product Understanding</title>
+    <updated>2026-07-29T13:03:53Z</updated>
+    <link href="https://arxiv.org/abs/2511.12449v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.12449v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent Multimodal Large Language Models (MLLMs) have significantly advanced e-commerce product understanding. However, they still face three challenges: (i) the modality imbalance induced by modality mixed training; (ii) underutilization of the intrinsic alignment relationships among visual and textual information within a product; and (iii) limited handling of noise in e-commerce multimodal data. To address these, we propose MOON2.0, a dynamic modality-balanced MultimOdal representation learning framework for e-commerce prOduct uNderstanding. It comprises: (1) a Modality-driven Mixture-of-Experts (MoE) that adaptively processes input samples by their modality composition, enabling Multimodal Joint Learning to mitigate the modality imbalance; (2) a Dual-level Alignment method to better leverage semantic alignment properties inside individual products; and (3) an MLLM-based Image-text Co-augmentation strategy that integrates textual enrichment with visual expansion, coupled with Dynamic Sample Filtering to improve training data quality. We further release MBE2.0, a co-augmented Multimodal representation Benchmark for E-commerce representation learning and evaluation at https://huggingface.co/datasets/ZHNie/MBE2.0. Experiments show that MOON2.0 delivers state-of-the-art zero-shot performance on MBE2.0 and multiple public datasets. Furthermore, attention-based heatmap visualization provides qualitative evidence of improved multimodal alignment of MOON2.0.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-16T04:29:35Z</published>
+    <arxiv:comment>Accepted by the IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 2026. 11 pages, 7 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhanheng Nie</name>
+    </author>
+    <author>
+      <name>Chenghan Fu</name>
+    </author>
+    <author>
+      <name>Daoze Zhang</name>
+    </author>
+    <author>
+      <name>Junxian Wu</name>
+    </author>
+    <author>
+      <name>Wanxian Guan</name>
+    </author>
+    <author>
+      <name>Pengjie Wang</name>
+    </author>
+    <author>
+      <name>Jian Xu</name>
+    </author>
+    <author>
+      <name>Bo Zheng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.01805v1</id>
+    <title>M3LLM: Model Context Protocol-aided Mixture of Vision Experts For Multimodal LLMs in Networks</title>
+    <updated>2025-08-03T15:42:05Z</updated>
+    <link href="https://arxiv.org/abs/2508.01805v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.01805v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Current Multimodal Large Language Models (MLLMs) rely on centralized architectures and often suffer from poor alignment between the input task and their fixed visual encoding modules, which limits performance on diverse and dynamic visual tasks. With the increasing deployment of resource-efficient models on edge devices in wireless networks, a new opportunity emerges to dynamically use distributed vision experts for improved MLLM inference quality. To enable this, we propose M3LLM, where the Model Context Protocol (MCP) coordinates a mixture of vision experts to achieve distributed MLLMs. Specifically, MCP is an open protocol that structures the input task context into interpretable representations, enabling wireless network-aware coordination between the central model backbone and edge-hosted vision experts. Based on the MCP representation, M3LLM formulates vision expert routing as a joint optimization problem that balances task-expert semantic compatibility and channel performance. To solve the resulting gradient conflicts, we develop a dual-stream Soft Actor-Critic (SAC) algorithm with decoupled reward signals and introduce an Adaptive Stability Enhancement Module (ASEM) based on hierarchical Bayesian modeling to ensure effective routing. Experiments show that M3LLM improves task accuracy, reduces communication cost, and enhances expert routing adaptability under dynamic wireless network conditions.</summary>
+    <category term="cs.NI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-03T15:42:05Z</published>
+    <arxiv:primary_category term="cs.NI"/>
+    <author>
+      <name>Yongjie Zeng</name>
+    </author>
+    <author>
+      <name>Hongyang Du</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.11672v1</id>
+    <title>Dynamic Mixture of Curriculum LoRA Experts for Continual Multimodal Instruction Tuning</title>
+    <updated>2025-06-13T11:03:46Z</updated>
+    <link href="https://arxiv.org/abs/2506.11672v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.11672v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Continual multimodal instruction tuning is crucial for adapting Multimodal Large Language Models (MLLMs) to evolving tasks. However, most existing methods adopt a fixed architecture, struggling with adapting to new tasks due to static model capacity. We propose to evolve the architecture under parameter budgets for dynamic task adaptation, which remains unexplored and imposes two challenges: 1) task architecture conflict, where different tasks require varying layer-wise adaptations, and 2) modality imbalance, where different tasks rely unevenly on modalities, leading to unbalanced updates. To address these challenges, we propose a novel Dynamic Mixture of Curriculum LoRA Experts (D-MoLE) method, which automatically evolves MLLM's architecture with controlled parameter budgets to continually adapt to new tasks while retaining previously learned knowledge. Specifically, we propose a dynamic layer-wise expert allocator, which automatically allocates LoRA experts across layers to resolve architecture conflicts, and routes instructions layer-wisely to facilitate knowledge sharing among experts. Then, we propose a gradient-based inter-modal continual curriculum, which adjusts the update ratio of each module in MLLM based on the difficulty of each modality within the task to alleviate the modality imbalance problem. Extensive experiments show that D-MoLE significantly outperforms state-of-the-art baselines, achieving a 15% average improvement over the best baseline. To the best of our knowledge, this is the first study of continual learning for MLLMs from an architectural perspective.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-13T11:03:46Z</published>
+    <arxiv:comment>Accepted by ICML 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Chendi Ge</name>
+    </author>
+    <author>
+      <name>Xin Wang</name>
+    </author>
+    <author>
+      <name>Zeyang Zhang</name>
+    </author>
+    <author>
+      <name>Hong Chen</name>
+    </author>
+    <author>
+      <name>Jiapei Fan</name>
+    </author>
+    <author>
+      <name>Longtao Huang</name>
+    </author>
+    <author>
+      <name>Hui Xue</name>
+    </author>
+    <author>
+      <name>Wenwu Zhu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.02835v2</id>
+    <title>R1-Reward: Training Multimodal Reward Model Through Stable Reinforcement Learning</title>
+    <updated>2025-05-09T13:39:58Z</updated>
+    <link href="https://arxiv.org/abs/2505.02835v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.02835v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Reward Models (MRMs) play a crucial role in enhancing the performance of Multimodal Large Language Models (MLLMs). While recent advancements have primarily focused on improving the model structure and training data of MRMs, there has been limited exploration into the effectiveness of long-term reasoning capabilities for reward modeling and how to activate these capabilities in MRMs. In this paper, we explore how Reinforcement Learning (RL) can be used to improve reward modeling. Specifically, we reformulate the reward modeling problem as a rule-based RL task. However, we observe that directly applying existing RL algorithms, such as Reinforce++, to reward modeling often leads to training instability or even collapse due to the inherent limitations of these algorithms. To address this issue, we propose the StableReinforce algorithm, which refines the training loss, advantage estimation strategy, and reward design of existing RL methods. These refinements result in more stable training dynamics and superior performance. To facilitate MRM training, we collect 200K preference data from diverse datasets. Our reward model, R1-Reward, trained using the StableReinforce algorithm on this dataset, significantly improves performance on multimodal reward modeling benchmarks. Compared to previous SOTA models, R1-Reward achieves a $8.4\%$ improvement on the VL Reward-Bench and a $14.3\%$ improvement on the Multimodal Reward Bench. Moreover, with more inference compute, R1-Reward's performance is further enhanced, highlighting the potential of RL algorithms in optimizing MRMs.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-05T17:59:50Z</published>
+    <arxiv:comment>Home page: https://github.com/yfzhang114/r1_reward</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yi-Fan Zhang</name>
+    </author>
+    <author>
+      <name>Xingyu Lu</name>
+    </author>
+    <author>
+      <name>Xiao Hu</name>
+    </author>
+    <author>
+      <name>Chaoyou Fu</name>
+    </author>
+    <author>
+      <name>Bin Wen</name>
+    </author>
+    <author>
+      <name>Tianke Zhang</name>
+    </author>
+    <author>
+      <name>Changyi Liu</name>
+    </author>
+    <author>
+      <name>Kaiyu Jiang</name>
+    </author>
+    <author>
+      <name>Kaibing Chen</name>
+    </author>
+    <author>
+      <name>Kaiyu Tang</name>
+    </author>
+    <author>
+      <name>Haojie Ding</name>
+    </author>
+    <author>
+      <name>Jiankang Chen</name>
+    </author>
+    <author>
+      <name>Fan Yang</name>
+    </author>
+    <author>
+      <name>Zhang Zhang</name>
+    </author>
+    <author>
+      <name>Tingting Gao</name>
+    </author>
+    <author>
+      <name>Liang Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.12359v2</id>
+    <title>LLaVA Steering: Visual Instruction Tuning with 500x Fewer Parameters through Modality Linear Representation-Steering</title>
+    <updated>2025-01-07T15:36:54Z</updated>
+    <link href="https://arxiv.org/abs/2412.12359v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.12359v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Large Language Models (MLLMs) have significantly advanced visual tasks by integrating visual representations into large language models (LLMs). The textual modality, inherited from LLMs, equips MLLMs with abilities like instruction following and in-context learning. In contrast, the visual modality enhances performance in downstream tasks by leveraging rich semantic content, spatial information, and grounding capabilities. These intrinsic modalities work synergistically across various visual tasks. Our research initially reveals a persistent imbalance between these modalities, with text often dominating output generation during visual instruction tuning. This imbalance occurs when using both full fine-tuning and parameter-efficient fine-tuning (PEFT) methods. We then found that re-balancing these modalities can significantly reduce the number of trainable parameters required, inspiring a direction for further optimizing visual instruction tuning. We introduce Modality Linear Representation-Steering (MoReS) to achieve the goal. MoReS effectively re-balances the intrinsic modalities throughout the model, where the key idea is to steer visual representations through linear transformations in the visual subspace across each model layer. To validate our solution, we composed LLaVA Steering, a suite of models integrated with the proposed MoReS method. Evaluation results show that the composed LLaVA Steering models require, on average, 500 times fewer trainable parameters than LoRA needs while still achieving comparable performance across three visual benchmarks and eight visual question-answering tasks. Last, we present the LLaVA Steering Factory, an in-house developed platform that enables researchers to quickly customize various MLLMs with component-based architecture for seamlessly integrating state-of-the-art models, and evaluate their intrinsic modality imbalance.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-16T21:14:11Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jinhe Bi</name>
+    </author>
+    <author>
+      <name>Yujun Wang</name>
+    </author>
+    <author>
+      <name>Haokun Chen</name>
+    </author>
+    <author>
+      <name>Xun Xiao</name>
+    </author>
+    <author>
+      <name>Artur Hecker</name>
+    </author>
+    <author>
+      <name>Volker Tresp</name>
+    </author>
+    <author>
+      <name>Yunpu Ma</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.14401v2</id>
+    <title>Beyond Training: Dynamic Token Merging for Zero-Shot Video Understanding</title>
+    <updated>2025-03-24T15:08:16Z</updated>
+    <link href="https://arxiv.org/abs/2411.14401v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.14401v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent advancements in multimodal large language models (MLLMs) have opened new avenues for video understanding. However, achieving high fidelity in zero-shot video tasks remains challenging. Traditional video processing methods rely heavily on fine-tuning to capture nuanced spatial-temporal details, which incurs significant data and computation costs. In contrast, training-free approaches, though efficient, often lack robustness in preserving context-rich features across complex video content. To this end, we propose DYTO, a novel dynamic token merging framework for zero-shot video understanding that adaptively optimizes token efficiency while preserving crucial scene details. DYTO integrates a hierarchical frame selection and a bipartite token merging strategy to dynamically cluster key frames and selectively compress token sequences, striking a balance between computational efficiency with semantic richness. Extensive experiments across multiple benchmarks demonstrate the effectiveness of DYTO, achieving superior performance compared to both fine-tuned and training-free methods and setting a new state-of-the-art for zero-shot video understanding.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-21T18:30:11Z</published>
+    <arxiv:comment>Code is available at https://github.com/Jam1ezhang/DYTO</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yiming Zhang</name>
+    </author>
+    <author>
+      <name>Zhuokai Zhao</name>
+    </author>
+    <author>
+      <name>Zhaorun Chen</name>
+    </author>
+    <author>
+      <name>Zenghui Ding</name>
+    </author>
+    <author>
+      <name>Xianjun Yang</name>
+    </author>
+    <author>
+      <name>Yining Sun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2408.12763v2</id>
+    <title>Assessing Modality Bias in Video Question Answering Benchmarks with Multimodal Large Language Models</title>
+    <updated>2024-12-19T19:37:44Z</updated>
+    <link href="https://arxiv.org/abs/2408.12763v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2408.12763v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal large language models (MLLMs) can simultaneously process visual, textual, and auditory data, capturing insights that complement human analysis. However, existing video question-answering (VidQA) benchmarks and datasets often exhibit a bias toward a single modality, despite the goal of requiring advanced reasoning skills that integrate diverse modalities to answer the queries. In this work, we introduce the modality importance score (MIS) to identify such bias. It is designed to assess which modality embeds the necessary information to answer the question. Additionally, we propose an innovative method using state-of-the-art MLLMs to estimate the modality importance, which can serve as a proxy for human judgments of modality perception. With this MIS, we demonstrate the presence of unimodal bias and the scarcity of genuinely multimodal questions in existing datasets. We further validate the modality importance score with multiple ablation studies to evaluate the performance of MLLMs on permuted feature sets. Our results indicate that current models do not effectively integrate information due to modality imbalance in existing datasets. Our proposed MLLM-derived MIS can guide the curation of modality-balanced datasets that advance multimodal learning and enhance MLLMs' capabilities to understand and utilize synergistic relations across modalities.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-08-22T23:32:42Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Jean Park</name>
+    </author>
+    <author>
+      <name>Kuk Jin Jang</name>
+    </author>
+    <author>
+      <name>Basam Alasaly</name>
+    </author>
+    <author>
+      <name>Sriharsha Mopidevi</name>
+    </author>
+    <author>
+      <name>Andrew Zolensky</name>
+    </author>
+    <author>
+      <name>Eric Eaton</name>
+    </author>
+    <author>
+      <name>Insup Lee</name>
+    </author>
+    <author>
+      <name>Kevin Johnson</name>
+    </author>
+  </entry>
+</feed>

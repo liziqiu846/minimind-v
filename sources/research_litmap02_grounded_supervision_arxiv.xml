@@ -1,0 +1,1443 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/s7GwWu1+a+LwNvM5cY+/cWCIDa8</id>
+  <title>arXiv Query: search_query=all:"vision language model" AND (all:"visual instruction tuning" OR all:"image grounded" OR all:"visual token")&amp;id_list=&amp;start=0&amp;max_results=50</title>
+  <updated>2026-08-06T19:22:46Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22vision+language+model%22+AND+(all:%22visual+instruction+tuning%22+OR+(all:%22image+grounded%22+OR+all:%22visual+token%22))&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <opensearch:totalResults>444</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2608.04610v1</id>
+    <title>HiSC: Hierarchical Spatial Clustering Token Compression for Efficient 3D Scene Understanding</title>
+    <updated>2026-08-05T09:15:43Z</updated>
+    <link href="https://arxiv.org/abs/2608.04610v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.04610v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>3D vision-language models (3D VLMs) enable spatial reasoning over multi-view scenes but suffer from substantial token redundancy due to duplicated observations and large uninformative regions, leading to high computational cost. Although visual token compression has shown promise in accelerating 2D VLMs, it fails to capture the structured nature of 3D scenes and leads to incomplete spatial coverage and loss of fine-grained details. In this paper, we propose \textbf{HiSC}, a training-free framework for hierarchical spatial clustering token compression in 3D VLMs. HiSC lifts token compression from token-level selection to cluster-level processing by organizing tokens into spatially grounded clusters using joint geometric and semantic cues. Specifically, we first introduce a \textbf{spatial graph-based merging (SGraM) strategy} that models cross-view redundancy as spatial connectivity and consolidates physically consistent regions, effectively merging extremely similar redundant tokens prior to LLM inference. We then propose a \textbf{spatial clustering-based pruning (SCluP) paradigm} within LLM inference, which performs hierarchical compression across clusters and within clusters, preserving object instance completeness while retaining fine-grained details for important regions. Extensive experiments on diverse 3D reasoning benchmarks show validate the effectiveness of HiSC, particularly under high visual token pruning ratios. Besides, HiSC achieves over 90\% token reduction with minimal performance degradation. Code is accessible at https://github.com/elecreak/HiSC.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-05T09:15:43Z</published>
+    <arxiv:comment>Accepted by ACM MM 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jiuhe Qu</name>
+    </author>
+    <author>
+      <name>Yingping Liang</name>
+    </author>
+    <author>
+      <name>Ying Fu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.04496v1</id>
+    <title>DIVE: Dynamic Iterative Visual Evidence Construction for Efficient Vision-Language Models</title>
+    <updated>2026-08-05T06:32:25Z</updated>
+    <link href="https://arxiv.org/abs/2608.04496v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.04496v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Visual inputs in vision-language models (VLMs) are often encoded into substantially longer token sequences than text, making visual tokens a major bottleneck for efficient inference. Abundant recent methods address this bottleneck by scoring token importance and pruning low-scoring tokens in a single pass. However, one-shot scoring is insufficient because a token's prompt-relevant usefulness depends on the evidence already retained. Motivated by this insight, we introduce DIVE (Dynamic Iterative Visual Evidence Construction), a training-free framework that recasts visual-token pruning as dynamic evidence construction. DIVE repeatedly selects the remaining token with the highest residual-conditioned score, updates the visual and prompt residuals to discount the evidence already explained, and re-evaluates the remaining tokens. This select-update-re-evaluate process builds a retained set of complementary, prompt-relevant evidence. Experiments across eight image-understanding benchmarks show that DIVE consistently preserves performance across token budgets. With an 88.9% reduction in visual tokens, DIVE retains 98.2% of the uncompressed model's average performance. Code is available at https://github.com/Zhong-Chenchen/DIVE.git.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-05T06:32:25Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Chen Zhong</name>
+    </author>
+    <author>
+      <name>Xiao An</name>
+    </author>
+    <author>
+      <name>Zijie Wang</name>
+    </author>
+    <author>
+      <name>Jiepan Li</name>
+    </author>
+    <author>
+      <name>Guangyi Yang</name>
+    </author>
+    <author>
+      <name>Wei He</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.04483v1</id>
+    <title>Not All Redundant Tokens Are Alike: Analyzing Visual Token Pruning through Token Roles</title>
+    <updated>2026-08-05T06:16:53Z</updated>
+    <link href="https://arxiv.org/abs/2608.04483v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.04483v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-language models (VLMs) process an image as a sequence of visual tokens, which creates a substantial computational bottleneck during inference. Recent visual token pruning methods address this issue by removing seemingly redundant tokens, yet it remains unclear how these pruning decisions relate to the functional roles of visual tokens. In this work, we analyze visual token pruning through the lens of token roles identified by EmbedLens. We first show that representative pruning methods exhibit distinct token-role biases, but these biases do not directly correlate with downstream performance. To better understand this behavior, we refine the token-role assignment procedure and evaluate role-protected pruning variants. Our results show that preserving non-alive tokens can sometimes maintain or improve performance, suggesting that tokens with weak direct semantic alignment may still affect model behavior under pruning. Our code is publicly available at https://github.com/jaykim9870/Not_All_Redundant_Tokens_Are_Alike.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-05T06:16:53Z</published>
+    <arxiv:comment>Accepted to ECCV 2026 workshop, UniWorld</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Hyeonyu Kim</name>
+    </author>
+    <author>
+      <name>Sehwan Lim</name>
+    </author>
+    <author>
+      <name>Youngwon Choi</name>
+    </author>
+    <author>
+      <name>Taeyoun Kwon</name>
+    </author>
+    <author>
+      <name>Jaejin Kim</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.04132v1</id>
+    <title>RUTA: Principled Visual Token Allocation via Rate-Utility Optimization</title>
+    <updated>2026-08-04T18:37:26Z</updated>
+    <link href="https://arxiv.org/abs/2608.04132v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.04132v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>High-resolution images and long videos provide vision-language models with rich context for multimodal reasoning and fine-grained perception, but the resulting long visual token sequences make large language model-side computation and memory costly. Existing visual token reducers often operate at prescribed rates, while recent methods adapt token counts across inputs using method-specific learned thresholds or importance predictors. We introduce RUTA, a principled Rate-Utility Token Allocation method that performs pre-LLM reduction by jointly learning which tokens to retain and how many to allocate to each image-query pair. RUTA constructs query-conditioned candidate tokens and predicts a retention probability for each candidate. During training, these probabilities parameterize independent Bernoulli gates, while their sum provides a differentiable training-time estimate of the token count for each pair. Retained tokens serve as anchors that aggregate information from non-retained tokens according to semantic affinity and spatial proximity. RUTA is optimized with a penalized rate-utility objective that balances downstream task loss against expected token usage. Averaged across five benchmarks and measured relative to each backbone's full-token baseline, RUTA uses only $2.0\%$ and $4.2\%$ of visual tokens while preserving $88.2\%$ and $94.4\%$ of task performance on LLaVA-NeXT-7B and Qwen3-VL-8B, respectively.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-04T18:37:26Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jian Zou</name>
+    </author>
+    <author>
+      <name>Xiaoyu Xu</name>
+    </author>
+    <author>
+      <name>Zhihua Wang</name>
+    </author>
+    <author>
+      <name>Yilin Wang</name>
+    </author>
+    <author>
+      <name>Balu Adsumilli</name>
+    </author>
+    <author>
+      <name>Kede Ma</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.03580v1</id>
+    <title>SlimVLM: Sensitivity-aware Dynamic Structured Pruning with Adaptive Visual Token Selection for Efficient Vision-Language Models</title>
+    <updated>2026-08-04T12:34:46Z</updated>
+    <link href="https://arxiv.org/abs/2608.03580v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.03580v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>While Vision-Language Models (VLMs) have demonstrated remarkable performance in processing and understanding both text and images, their large parameter sizes lead to significant computational overhead, limiting their deployment on resource-constrained devices. While pruning has been effective for compressing Large Language Models (LLMs), directly applying it to VLMs leads to significant performance drops, largely due to redundant visual tokens interfering with importance estimation. To this end, we propose SlimVLM, a structured pruning framework designed to compress VLMs while preserving their task performance. We introduce an adaptive visual token selection strategy for VLMs that leverages average text-to-visual attention scores to assess the importance of visual tokens, removing redundant ones during pruning based on a set threshold, thereby optimizing the importance calculation. Recognizing the varying tolerance to sparsity across different modules, we also propose a Sensitivity-aware dynamic pruning mechanism that determines the appropriate pruning ratio for each module by calculating the linear reconstruction error between the outputs of the pruned and unpruned modules, ensuring overall performance stability. Experimental results show that SlimVLM outperforms existing methods across multiple multimodal benchmarks, achieving state-of-the-art performance.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-04T12:34:46Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yaozhi Wen</name>
+    </author>
+    <author>
+      <name>Jialong Guo</name>
+    </author>
+    <author>
+      <name>Zhenliang Ni</name>
+    </author>
+    <author>
+      <name>Han Shu</name>
+    </author>
+    <author>
+      <name>Xinghao Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.03112v1</id>
+    <title>Adaptive Two-Stage Visual Token Pruning for Efficient Inference in Video-Language Models</title>
+    <updated>2026-08-04T04:32:48Z</updated>
+    <link href="https://arxiv.org/abs/2608.03112v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.03112v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-language models excel at image and video understanding but suffer from high inference latency due to the need to process thousands of tokens per image, limiting their deployment on resource-constrained edge devices and in real-time surveillance applications. This challenge is further amplified in video processing, where multiple frames must be analyzed simultaneously. Existing token reduction techniques are largely developed for single-image inputs and therefore fail to account for the temporal and inter-frame redundancies present in video sequences. In addition, these methods generally rely on a fixed, uniform pruning ratio applied across all inputs, which is suboptimal because the degree of redundancy can vary significantly between different videos, necessitating content-dependent pruning levels to preserve critical information. To address these limitations, we propose a two-stage adaptive token pruning strategy specifically designed for video processing. In the first stage, we prune out the redundant frames, and in the second stage, token-level pruning is applied within the retained frames. Crucially, the pruning ratio in the second stage is determined adaptively based on the content of each video. This is achieved by analyzing the correlation structure of token embeddings to quantify redundancy, which is used to determine the ratio. Importantly, our method is entirely post-hoc and requires no additional training or fine-tuning, while achieving strong empirical gains; notably, it improves accuracy by +7\% on a video captioning benchmark at 10\% token retention, while reducing computation TFLOPs by 95\%.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-04T04:32:48Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Paribesh Regmi</name>
+    </author>
+    <author>
+      <name>Qingshuang Chen</name>
+    </author>
+    <author>
+      <name>Chi Zhang</name>
+    </author>
+    <author>
+      <name>Heba Aly</name>
+    </author>
+    <author>
+      <name>Yelin Kim</name>
+    </author>
+    <author>
+      <name>Hongda Mao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.02980v1</id>
+    <title>Qwen-3D: A Generalist 3D Vision-Language Model for Spatial Understanding</title>
+    <updated>2026-08-04T00:32:09Z</updated>
+    <link href="https://arxiv.org/abs/2608.02980v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.02980v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Multimodal Models (LMMs) have achieved remarkable success on images and short videos, yet scaling them to long videos remains challenging due to frame-centric tokenization and limited context windows. 3D geometry provides a natural compression mechanism for visual streams: depth and camera pose enable observations from multiple views and time steps to be fused into a persistent, world-aligned representation. While recent 3D LMMs leverage geometry-aware representations to improve spatial reasoning, they continue to lag behind specialist 3D perception systems on grounding and segmentation tasks. We argue that a key limitation is geometry-aware decoding: existing methods communicate 3D predictions through language tokens, proposal selection, or lightweight grounding queries, creating a bottleneck between language reasoning and dense geometric prediction. Building on these insights, we introduce Qwen-3D, a geometry-aware LMM that compresses visual information within the Qwen backbone using multi-view geometric cues, enabling efficient long-horizon visual reasoning over static scenes. Qwen-3D augments visual tokens with 3D Rotary Positional Embeddings, allowing attention to operate directly in 3D scene space rather than across independent image frames and thereby facilitating scalable cross-view and temporal reasoning. To bridge language and geometry, Qwen-3D incorporates a query-based segmentation decoder that grounds language directly in the underlying 3D scene representation, unifying referential grounding, instance segmentation, and visual question answering across both images and videos. Across a diverse set of benchmarks, Qwen-3D surpasses existing 3D LMMs and outperforms several large proprietary 2D models. Notably, Qwen-3D achieves these improvements while maintaining strong performance on standard 2D vision-language benchmarks by jointly training on 2D and 3D data.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-04T00:32:09Z</published>
+    <arxiv:comment>Project Page: https://qwen-3d.github.io/</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Lucy Lin</name>
+    </author>
+    <author>
+      <name>Ayush Jain</name>
+    </author>
+    <author>
+      <name>Yifan Liu</name>
+    </author>
+    <author>
+      <name>Katerina Fragkiadaki</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.02134v1</id>
+    <title>Messages, Not Tokens: Grounded Coresets for Faithful VLM Compression</title>
+    <updated>2026-08-03T12:23:06Z</updated>
+    <link href="https://arxiv.org/abs/2608.02134v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.02134v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Modern vision language models (VLMs) turn high-resolution images into long sequences of visual tokens. Every token traverses the language decoder and persists in its prompt KV cache, inflating inference cost and motivating aggressive visual compression. Existing score-based methods assign each token an independent importance score and retain the Top-K. However, text queries consume collective, signed attention messages from the visual population, not isolated patches. Consequently, equally sized Top-K sets can repeatedly cover one salient region, omit sparse but complementary evidence and discard information carried by the removed population. We therefore formulate faithful visual compression as constructing a compact coreset for decoder messages, and introduce our training-free Grounded Message Coreset Pruning (GMC) which jointly allocates support across query-grounded, appearance, and coordinate-aware evidence, then transports discarded states into selected representatives at their original multimodal positions before physical compaction and native attention resume. This decomposes faithful compression into two coupled components, including selecting carriers that cover the required message modes and realizing the signed population message on those carriers. We further derive bounds connecting their errors to signed-message distortion, visual innovation, and candidate-margin stability. Experiments across multiple VLM families and diverse benchmarks demonstrate strong performance, with GMC-H2 retaining 97.78% Full-relative mean capability on Qwen2.5-VL-7B using 80.2% fewer visual tokens, while GMC-L16 reaches 100.36%. Controlled interventions verify that collective support and population realization jointly drive these gains.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-03T12:23:06Z</published>
+    <arxiv:comment>32 pages, 6 figures, 18 tables, including appendix</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Long Qian</name>
+    </author>
+    <author>
+      <name>Jiaqi Wei</name>
+    </author>
+    <author>
+      <name>Bingke Zhu</name>
+    </author>
+    <author>
+      <name>Yingying Chen</name>
+    </author>
+    <author>
+      <name>Jinqiao Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.02124v1</id>
+    <title>HAFI-VLM: A Frequency Perspective for Diagnosing and Enhancing Visual Perception in Vision-Language Models</title>
+    <updated>2026-08-03T12:15:33Z</updated>
+    <link href="https://arxiv.org/abs/2608.02124v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.02124v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-language models (VLMs) remain unreliable when predictions require fine-grained visual evidence. We identify a previously overlooked cause: spectral response rigidity. Despite substantial frequency variation across images and tasks, pretrained vision encoders exhibit persistent, encoder-specific layerwise spectral profiles that change only marginally under downstream fine-tuning. Since pretrained vision encoders only receive images, they cannot adapt spectral extraction to the evidence required by the current query. We therefore propose HAFI-VLM, which introduces a task-conditioned frequency pathway while preserving the pretrained semantic representation. Hierarchical Adaptive Frequency Injection (HAFI) retrieves complementary low-, mid-, and high-frequency evidence at multiple encoder depths using text-modulated, spatially aligned cross-attention. A Visual Enrichment Layer Adapter further recalibrates shallow LLM attention to effectively utilize the enriched visual tokens. Experiments on LLaVA-1.5 and Qwen2.5-VL demonstrate consistent improvements in general VQA, text-rich understanding, and hallucination robustness, outperforming representation-level enhancement methods and most resolution- or cropping-based approaches without additional high-resolution encoding. Mechanistic analyses show that HAFI restores task-dependent spectral allocation while retaining semantic attention, establishing frequency enrichment as a distinct and effective route for improving VLM perception.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-03T12:15:33Z</published>
+    <arxiv:comment>11 pages, 8 figure</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jin Cui</name>
+    </author>
+    <author>
+      <name>Chuanchang Su</name>
+    </author>
+    <author>
+      <name>Jiayi Lu</name>
+    </author>
+    <author>
+      <name>Xinyue Long</name>
+    </author>
+    <author>
+      <name>Boran Zhao</name>
+    </author>
+    <author>
+      <name>Pengju Ren</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.01985v1</id>
+    <title>DiffPrune: differentiable information throttling for token pruning in vision-language models</title>
+    <updated>2026-08-03T09:46:32Z</updated>
+    <link href="https://arxiv.org/abs/2608.01985v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.01985v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Visual token pruning reduces the computational cost of Vision-Language Models (VLMs) by removing redundant visual tokens. The key is to learn a score that measures whether a token is useful. Existing methods typically rely on Gumbel-Softmax to approximate discrete selection during training. Such selectors make the score depend on the behavior of a relaxed pruning operator, not directly on the consequence of information loss. In this paper, we propose DiffPrune, which gives token scores a direct meaning. During training, DiffPrune keeps all tokens and weakens each token's information according to its score. If weakening a token hurts the task, the scorer is pushed to protect it; if not, the token can receive a lower score. Because the loss is differentiated through this actual information-throttling path, the scorer avoids the unstable surrogate path of relaxed token selection. DiffPrune implements this idea with an Information Throttler, which injects variance-preserving noise into visual tokens, where high-score tokens remain close to their original representations, while low-score tokens carry less original information. At inference, the throttler is removed, and hard top-K pruning is applied using the learned scores. Across ten VLM benchmarks, DiffPrune retains 96.5% of full-model accuracy while accelerating LLM prefill by 2.85x, with only 0.69 ms inference overhead. Code will be publicly available.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-03T09:46:32Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Landi He</name>
+    </author>
+    <author>
+      <name>Mingde Yao</name>
+    </author>
+    <author>
+      <name>Shawn Young</name>
+    </author>
+    <author>
+      <name>Lijian Xu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.01821v1</id>
+    <title>DAVET: Denoising-Aware Visual Evidence Trajectory Allocation for Diffusion Vision-Language Models</title>
+    <updated>2026-08-03T07:29:05Z</updated>
+    <link href="https://arxiv.org/abs/2608.01821v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.01821v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Diffusion vision-language models (dVLMs) iteratively denoise masked responses while conditioning each denoising step on visual evidence, making visual conditioning a substantial recurring inference cost. Unlike autoregressive decoding, diffusion generation repeatedly revisits the entire response as uncertainty evolves. Our analysis reveals that visual evidence demand is strongly step-dependent, motivating adaptive allocation across denoising steps. Existing inference acceleration methods operate through decoding-side strategies or visual token compression via pruning and merging, but do not explicitly treat visual evidence as a resource whose demand evolves across the diffusion process. Therefore, we present Denoising-Aware Visual Evidence Trajectory Allocation (DAVET), a training-free framework that allocates visual evidence according to the evolving generation state. Starting from a phase-conditioned evidence trajectory, the proposed allocation policy uses operation demand to set an evidence reserve whose allocation at each denoising step is modulated by trajectory risk. DAVET realizes the resulting budgets through a hierarchy of evidence views constructed from a single visual encoding, separating when and how much evidence is needed from how the evidence views are constructed. Evaluated on two representative dVLMs, LLaDA-V and LaViDa, across multiple visual-understanding benchmarks, DAVET achieves an average speedup of 1.55$\times$ with an average relative performance drop of 1.86\%, showing that denoising-aware visual evidence allocation can reduce visual conditioning cost while largely preserving generation quality.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-03T07:29:05Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yongkang Zhou</name>
+    </author>
+    <author>
+      <name>Xiang Xia</name>
+    </author>
+    <author>
+      <name>Cheng Yan</name>
+    </author>
+    <author>
+      <name>Fan Xu</name>
+    </author>
+    <author>
+      <name>Wuyang Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.01644v1</id>
+    <title>CRAFT: Compression via Recursive Adaptive Fusion of Video Tokens for Vision-Language Models</title>
+    <updated>2026-08-03T03:27:46Z</updated>
+    <link href="https://arxiv.org/abs/2608.01644v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.01644v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In video understanding, vision-language models (VLMs) must ingest massive numbers of visual tokens, causing the computational and memory cost of the prefill stage to rise sharply. Such visual sequences are highly redundant along the spatio-temporal dimension, yet a high compression ratio is often accompanied by the loss of critical details. Existing token-compression methods either employ heuristic, training-free compression with limited content adaptivity or introduce additional modules that require expensive alignment training, leaving the trade-off between efficiency and adaptivity unresolved. To alleviate this limitation, we propose CRAFT: Compression via Recursive Adaptive Fusion of Video Tokens. CRAFT recursively merges tokens by decoupling parameter-free token selection from learnable token fusion: global similarity determines which tokens to merge, while a position-aware weighting module and a content-adaptive channel-wise gate learn how to fuse them. The whole compression pipeline is query-agnostic. Because every retained token is a linear combination of the original tokens, CRAFT preserves their true spatio-temporal coordinates and stays aligned with the pre-trained language model's input distribution. Experiments on multiple representative video benchmarks show that CRAFT consistently outperforms prior state-of-the-art token-compression methods. At about $8\times$ compression, it retains roughly $97\%$ of the backbone's average accuracy and shows significant efficiency improvement.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-03T03:27:46Z</published>
+    <arxiv:comment>11 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yu Chen</name>
+    </author>
+    <author>
+      <name>Xiaohong Li</name>
+    </author>
+    <author>
+      <name>Xiaole Wang</name>
+    </author>
+    <author>
+      <name>Jianjin Zhang</name>
+    </author>
+    <author>
+      <name>Jun Sun</name>
+    </author>
+    <author>
+      <name>Yafeng Deng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.01207v2</id>
+    <title>It's the Decoding Format, Not the Perturbation: Auditing Consistency-Based Selection for Vision-Language Test-Time Scaling</title>
+    <updated>2026-08-05T05:56:24Z</updated>
+    <link href="https://arxiv.org/abs/2608.01207v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.01207v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Test-time scaling lifts large language model reasoning by sampling many candidate solutions and selecting among them, yet the same recipe transfers poorly to vision-language models (VLMs): recent work shows that simple majority voting beats selection methods built on the model's own self-verification, apparently because at the selection layer an image-grounded answer and a confident guess from the language prior look the same. A natural fix is to make the selection signal one that cannot be computed without the image. We study Perturbation Grounded Selection (Pgs), a label-free, training-free rule that scores each candidate by whether the model re-derives it under label-preserving perturbations of the input (cropping, background masking, mild photometric or geometric jitter); Pgs recovers majority voting when the perturbation set is empty. The decisive question is not whether Pgs beats chain-of-thought only majority voting, but whether the perturbation term adds anything once decoding format and budget are controlled. We therefore introduce a format-matched control (MatchedCtrl): the same short, no-CoT draws spent on the original image. Across TextVQA, MATH-Vision, MMMU, and ViLP, with a Qwen headline (three-seed means) and LLaVA-OneVision coverage in matched-budget selector tables, Pgs appears to beat plain majority voting by up to +31.8 points on TextVQA (Qwen), but MatchedCtrl tracks or exceeds Pgs within noise on every benchmark, including the vision-required ViLP; no Qwen category shows a significant gain over this control. The stability gap is real and image-dependent (up to +0.48), yet does not predict per-instance wins. The result is negative and diagnostic: perturbation consistency is at best a partial diagnostic of visual dependence and, on its own, not a usable selection signal once format is controlled; gains reported against CoT-only majority voting overstate such methods.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-02T12:47:39Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Puzhuo Zheng</name>
+    </author>
+    <author>
+      <name>Hasan Kurban</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.00345v1</id>
+    <title>ORCA: ORgan-Centroid Aggregation for Training-Free 3D CT Visual Token Compression</title>
+    <updated>2026-07-31T23:27:39Z</updated>
+    <link href="https://arxiv.org/abs/2608.00345v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.00345v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A 3D CT scan entering a vision-language model produces a long sequence of visual tokens, often thousands to tens of thousands per volume, and this sequence must be compressed before a language model can consume it. Token compression is well studied in general vision, but little of it targets 3D CT specifically. A common baseline is grid average, which pools regular grid cells and can blend distinct anatomy, lesion, and air into one token. We present \textbf{ORCA} (ORgan-Centroid Aggregation), a token compressor for 3D CT. It merges adjacent tokens with organ guidance and adds a sinusoidal encoding of each region's centroid to preserve spatial layout. This preserves the anatomical information a downstream model needs. ORCA is training-free and plug-and-play, producing an adjustable token set without any model change or text query. We evaluate it across two datasets (CT-RATE and Merlin) and five encoders. The evaluation spans two task types: attribute prediction over five families (size, density, location, texture, and disease) and text generation (visual question answering and report generation). At matched token budgets, ORCA improves consistently over existing compression methods. It shrinks the visual context $64\times$ and its KV-cache $50\times$, and is $31\times$ faster to process each volume. Code released at https://github.com/renjie-liang/ORCA-3DCT.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-31T23:27:39Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Renjie Liang</name>
+    </author>
+    <author>
+      <name>Zijian Xu</name>
+    </author>
+    <author>
+      <name>Jinqian Pan</name>
+    </author>
+    <author>
+      <name>Chengkun Sun</name>
+    </author>
+    <author>
+      <name>Zhengkang Fan</name>
+    </author>
+    <author>
+      <name>Shawn Li</name>
+    </author>
+    <author>
+      <name>You Qin</name>
+    </author>
+    <author>
+      <name>Mei Liu</name>
+    </author>
+    <author>
+      <name>Jie Xu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.00232v1</id>
+    <title>Real-Time Visual Obstruction Detection in Surgical Augmented Reality</title>
+    <updated>2026-07-31T19:23:51Z</updated>
+    <link href="https://arxiv.org/abs/2608.00232v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.00232v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Surgical augmented reality (AR) can provide contextual guidance by overlaying virtual annotations, tool cues, and procedural information onto the surgical workspace. However, the virtual content may obstruct task-relevant real-world information, such as surgical instruments, and interfere with users' perception during time-sensitive surgical tasks. In this paper, we investigate visual obstruction detection for surgical AR and present a latency-aware pipeline that combines vision-language model (VLM)-based surgical-object recognition with segmentation-based obstruction reasoning. To reduce inference overhead, the system adopts a cascaded small-to-large VLM architecture with segmentation-guided early exiting and attention-based visual token pruning. The small VLM handles easy frames when its key-object prediction is supported by segmentation consistency, while difficult frames are forwarded to a large VLM with pruned visual tokens. We construct a pseudo-AR surgical obstruction detection benchmark by overlaying virtual content onto surgical-tool images and labeling whether the virtual content obstructs task-relevant instruments. Evaluation results show that the proposed system achieves 87.43% obstruction detection accuracy with an average end-to-end latency of 479 ms, reducing latency by 62.90% compared with a cloud large-model baseline. These results demonstrate the feasibility of latency-aware obstruction detection for surgical AR and motivate future work on dynamic surgical videos, multi-object scenes, and clinically grounded AR guidance content.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-31T19:23:51Z</published>
+    <arxiv:comment>ISMAR 2026 Mecidal Workshop</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Shih-Chin Yang</name>
+    </author>
+    <author>
+      <name>Yanming Xiu</name>
+    </author>
+    <author>
+      <name>Hanting Ye</name>
+    </author>
+    <author>
+      <name>Qi Chen</name>
+    </author>
+    <author>
+      <name>Elias Rotondo</name>
+    </author>
+    <author>
+      <name>Maria Gorlatova</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.28627v1</id>
+    <title>ReToken: One Token to Improve Vision-Language Models for Visual Retrieval</title>
+    <updated>2026-07-30T17:59:56Z</updated>
+    <link href="https://arxiv.org/abs/2607.28627v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.28627v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Long visual context poses a challenge for vision-language models: performance degrades as the number of distractors grows, and processing all tokens at once is computationally infeasible under GPU memory constraints. We present ReToken, a single learnable embedding trained as an explicit retrieval target that selects a sparse set of query-relevant visual tokens from a pre-filled visual KV cache. Trained on only a small image-QA dataset, ReToken yields consistent gains across image and video benchmarks: on Visual Haystacks it improves Qwen3VL-8B by 13.4 points and InternVL3.5 by 12.4 points (&gt;20% relative), and on LVBench it transfers zero-shot to long video for an 8.0-point gain with Qwen3VL-8B. Thanks to its lightweight design, both training and long-video inference fit on a single H100. Code is available at: https://github.com/avaxiao/ReToken</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-30T17:59:56Z</published>
+    <arxiv:comment>Code: https://github.com/avaxiao/ReToken</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yao Xiao</name>
+    </author>
+    <author>
+      <name>Reuben Tan</name>
+    </author>
+    <author>
+      <name>Zhen Zhu</name>
+    </author>
+    <author>
+      <name>Yuqun Wu</name>
+    </author>
+    <author>
+      <name>Jianfeng Gao</name>
+    </author>
+    <author>
+      <name>Derek Hoiem</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.28463v1</id>
+    <title>VisualRouter: Query-Grounded Visual Sampling for Long Video Understanding</title>
+    <updated>2026-07-30T16:23:10Z</updated>
+    <link href="https://arxiv.org/abs/2607.28463v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.28463v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large vision-language models (LVLMs) have achieved significant progress in video understanding, yet understanding long videos remains challenging due to the large number of visual tokens and limited context windows. Visual sampling provides a practical solution by selecting an informative subset of frames. However, existing methods typically either rely on relevance-aware sampling, leading to redundant frame selection and insufficient temporal coverage, or adopt a fixed sampling strategy regardless of query type. In this paper, we propose VisualRouter, a training-free and plug-and-play framework for query-grounded visual sampling. VisualRouter first classifies each query as either global or local and then applies the corresponding sampling strategy. For global queries, it employs a relevance-coverage hybrid strategy that preserves temporal coverage while retaining query-relevant visual evidence. For local queries, it adopts an event-aware frame selection strategy that performs event partitioning, segment-level frame allocation, and intra-event frame selection, jointly balancing relevance, coverage, and diversity with a limited number of input frames. Experiments show that VisualRouter consistently improves multiple LVLMs over uniform sampling, achieving gains of 5.2%, 7.7%, and 11.6% on Video-MME, LongVideoBench, and MLVU with Qwen2.5-VL-7B, and outperforming existing training-free visual sampling methods under the same setting.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-30T16:23:10Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Haiyue Zhang</name>
+    </author>
+    <author>
+      <name>Yi Bin</name>
+    </author>
+    <author>
+      <name>Xun Jiang</name>
+    </author>
+    <author>
+      <name>Zeyu Ma</name>
+    </author>
+    <author>
+      <name>Duo Peng</name>
+    </author>
+    <author>
+      <name>Guoqing Wang</name>
+    </author>
+    <author>
+      <name>Yang Yang</name>
+    </author>
+    <author>
+      <name>Heng Tao Shen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.27700v1</id>
+    <title>Calibrate Before Reason: Robust Visual Token Reduction against Semantic Drift in VLMs</title>
+    <updated>2026-07-30T05:36:29Z</updated>
+    <link href="https://arxiv.org/abs/2607.27700v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.27700v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision-Language Models (VLMs) suffer from prohibitive inference overhead due to long sequences of visual tokens. However, existing visual token reduction methods mainly improve efficiency by pruning or compressing redundant tokens without examining whether the resulting representation remains semantically consistent with the original representation. Mapping the original N-token visual sequence to K tokens may discard, dilute, or misassign critical visual cues, triggering severe semantic drift that deviates the VLM's understanding. In this paper, we first introduce the principle of 'Calibrate Before Reason' to visual token reduction and propose CaRe, a training-free robust framework that calibrates compact visual representations before reasoning to preserve semantic fidelity in VLMs. CaRe consists of two mutually complementary modules: 1) Perturbation-Robust Calibration Anchoring, which identifies calibration anchors with stable model-side influence under multi-directional perturbations; 2) Confidence-Gated Token Calibration, which extracts reliable calibration signals from unselected tokens and injects them into anchors. Extensive evaluations across diverse VLM architectures and benchmarks verify that CaRe outperforms state-of-the-art token reduction baselines. While pruning 94.4% of visual tokens, our method retains 96.4% of the original full-token performance, delivering up to 2.30 times faster end-to-end inference speed relative to unpruned vanilla models.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-30T05:36:29Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jiasheng Li</name>
+    </author>
+    <author>
+      <name>Zhong Ji</name>
+    </author>
+    <author>
+      <name>Yan Zhang</name>
+    </author>
+    <author>
+      <name>Huihui Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.26554v1</id>
+    <title>MedARC: Training-Free Adaptive Redundancy Compression of Visual Tokens for 3D Medical Vision-Language Models</title>
+    <updated>2026-07-29T07:27:09Z</updated>
+    <link href="https://arxiv.org/abs/2607.26554v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.26554v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Integrating 3D medical images with vision-language models (VLMs) holds substantial promise for computer-aided diagnosis. However, volumetric images generate prohibitively long visual-token sequences with considerable spatial and inter-slice redundancy. Existing token compression methods typically apply uniform reduction or rely on a single importance signal, increasing the risk of removing regions that are clinically relevant to the query or structurally distinctive. To address this limitation, we propose MedARC, a unified, training-free framework for Adaptive Redundancy Compression of visual tokens in 3D medical VLMs. MedARC estimates token importance by integrating three complementary cues: self-attention from the VLM vision encoder, which reflects the model's intrinsic visual focus; similarity between projected visual tokens and text embeddings, which identifies query-relevant regions; and deviations of local visual foundation model features from the volume-level feature center, which highlight structurally distinctive anatomy. The resulting importance distribution guides a saliency-aware merging strategy that preserves informative tokens while consolidating redundant ones rather than simply discarding them. Experiments on CT-RATE and MR-RATE show that MedARC reduces visual-token overhead and inference time while preserving or improving diagnostic performance. Its multi-cue scoring cost is outweighed by the savings from processing fewer tokens, with greater benefits expected for larger language models.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-29T07:27:09Z</published>
+    <arxiv:comment>9 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yitao Zhu</name>
+    </author>
+    <author>
+      <name>Mengjun Liu</name>
+    </author>
+    <author>
+      <name>Yingji Fu</name>
+    </author>
+    <author>
+      <name>Haowen Pang</name>
+    </author>
+    <author>
+      <name>Anqi Qiu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.25527v1</id>
+    <title>Argus-Unified: Towards A Compact and Economical Unified Model for Image Understanding and Generation</title>
+    <updated>2026-07-28T10:12:06Z</updated>
+    <link href="https://arxiv.org/abs/2607.25527v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.25527v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Unifying visual understanding and generation in one model holds immense promise, but remains challenging and expensive due to heavy compute and data demands and conflicts between the visual features needed for these two capabilities. To address these challenges, we present Argus-Unified, a compact, effective and unified multimodal model built with low demand on computation and data. Instead of aligning modalities from scratch, Argus-Unified effectively leverages pretrained vision-language models (VLMs) that provide strong multimodal priors. Specifically, we introduce hybrid visual tokens that preserve continuous tokens for understanding while learning discrete tokens for generation from a frozen unified vision encoder. Our training pipeline includes two stages: the first stage learns a quantizer and image decoder on top of the frozen vision encoder, the second stage trains the LLM initialized from a pretrained VLM for the unified multimodal modeling. Using by far the least amount of data (15.6M) and the lowest cost (~$2,000), we demonstrate that unified multimodal models can be trained economically while achieving strong performance in both understanding and generation. Notably, our model attains state-of-the-art multimodal understanding on GQA, POPE, and VQAv2, and competitive generation quality compared to models with dedicated vision encoders (e.g., Janus, Janus-Pro), all at ~10x lower cost and with ~5x less data. We envision Argus-Unified as a useful baseline that lowers the development barrier for unified models.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-28T10:12:06Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Weiming Zhuang</name>
+    </author>
+    <author>
+      <name>Jiabo Huang</name>
+    </author>
+    <author>
+      <name>Jingtao Li</name>
+    </author>
+    <author>
+      <name>Zhizhong Li</name>
+    </author>
+    <author>
+      <name>Chen Chen</name>
+    </author>
+    <author>
+      <name>Sina Sajadmanesh</name>
+    </author>
+    <author>
+      <name>Lingjuan Lyu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.24904v1</id>
+    <title>Mage-VL: An Efficient Codec-Native Streaming Multimodal Foundation Model</title>
+    <updated>2026-07-27T17:59:53Z</updated>
+    <link href="https://arxiv.org/abs/2607.24904v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.24904v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Standard vision-language models (VLMs) suffer from Moravec's paradox: they excel at complex offline visual reasoning but struggle with simple streaming perception tasks and process them inefficiently. We present Mage-VL, an efficient codec-native streaming foundation model for real-time multimodal understanding and interaction. At its core, our custom tokenizer, Mage-ViT, replaces uniform frame sampling by selectively encoding dynamic, entropy-rich regions using motion vectors and residual energy across sparse anchor (I) and predicted (P) frames. Operating at a 16 x 16 patch level, this reduces visual token consumption by over 75% while preserving spatiotemporal context. Trained from scratch on approximately 560M unlabeled images and 100M unlabeled video frames, Mage-ViT matches or outperforms flagship encoders trained on billions of image-text pairs. We establish AI4AI data pipelines encompassing prompt-code joint optimization for multimodal captioning and AI-driven performance diagnosis to guide training recipes. Furthermore, through a bio-inspired dual-system architecture - a lightweight System 1 event gate and a causal System 2 decoder - Mage-VL enables proactive streaming perception. Extensive evaluations show that Mage-VL-4B matches Qwen3-VL-4B on static tasks while achieving strong gains in video understanding and 2D/3D spatial reasoning, with up to a 3.5x wall-clock inference speedup, and comprehensively surpasses the 15B Phi-4-reasoning-vision baseline. Beyond model artifacts, we deliver seven key empirical findings covering pre-training data efficiency, variable-resolution scaling, codec system acceleration, VideoQA SFT redundancy, motion-spatial synergy, AI4AI data pipelines, and Zero-Vision SFT for multimodal RL.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-27T17:59:53Z</published>
+    <arxiv:comment>Project page: https://microsoft.github.io/Mage</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Senqiao Yang</name>
+    </author>
+    <author>
+      <name>Kaichen Zhang</name>
+    </author>
+    <author>
+      <name>Zhaoyang Jia</name>
+    </author>
+    <author>
+      <name>Jinghao Guo</name>
+    </author>
+    <author>
+      <name>Yifei Shen</name>
+    </author>
+    <author>
+      <name>Xinjie Zhang</name>
+    </author>
+    <author>
+      <name>Xiaoyi Zhang</name>
+    </author>
+    <author>
+      <name>Haoqing Wang</name>
+    </author>
+    <author>
+      <name>Xiao Li</name>
+    </author>
+    <author>
+      <name>Peng Zhang</name>
+    </author>
+    <author>
+      <name>Xiang An</name>
+    </author>
+    <author>
+      <name>Yin Xie</name>
+    </author>
+    <author>
+      <name>Zhening Liu</name>
+    </author>
+    <author>
+      <name>Xun Guo</name>
+    </author>
+    <author>
+      <name>Jiahao Li</name>
+    </author>
+    <author>
+      <name>Shicheng Zheng</name>
+    </author>
+    <author>
+      <name>Jinglu Wang</name>
+    </author>
+    <author>
+      <name>Zongyu Guo</name>
+    </author>
+    <author>
+      <name>Wenxuan Xie</name>
+    </author>
+    <author>
+      <name>Zihan Zheng</name>
+    </author>
+    <author>
+      <name>Yuxuan Luo</name>
+    </author>
+    <author>
+      <name>Bin Li</name>
+    </author>
+    <author>
+      <name>Yan Lu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.24424v1</id>
+    <title>MAViE: A Multi-scale Adaptive Vision Encoder for Fine-grained Visual Perception and Efficient Multimodal Reasoning</title>
+    <updated>2026-07-27T13:36:08Z</updated>
+    <link href="https://arxiv.org/abs/2607.24424v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.24424v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-language models commonly project all tokens produced by a pretrained vision encoder into a large language model. However, final-layer features can discard text, local attributes, and spatial relationships, while high-resolution inputs substantially increase context length and inference latency. We introduce \method, a Multi-scale Adaptive Vision Encoder. \method uses position-dependent gates to fuse shallow, intermediate, and deep features from a vision Transformer, preserving global semantics while enhancing edges, text, and local structure. It then performs question-conditioned token routing according to question relevance, local information content, global semantics, and spatial coverage, with a token budget that adapts to image complexity. To mitigate compression loss, we further introduce full-to-compressed representation distillation and a spatial diversity regularizer. In an illustrative simulation under a unified 7B language-model framework, \method reduces the average number of SigLIP-SO400M visual tokens from 729 to 146 (approximately 80.0\%) and improves the mean score on VQAv2, GQA, TextVQA, ScienceQA-IMG, and MMBench by 2.2 percentage points, while reducing single-image time to first token from 228\,ms to 129\,ms. We provide the full model design and evaluation protocol. All reported numbers currently serve only as placeholders for paper organization and experimental design; formal claims require real training runs, independent replications, and official benchmark evaluation.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-27T13:36:08Z</published>
+    <arxiv:comment>10 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Shaofei Lei</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.23913v1</id>
+    <title>GOTS: Greedy Orthogonal Token Selection for High-Resolution Vision-Language Models</title>
+    <updated>2026-07-27T01:06:20Z</updated>
+    <link href="https://arxiv.org/abs/2607.23913v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.23913v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Modern vision-language models (VLMs) increasingly rely on dynamic or high-resolution visual encoding, producing thousands of visual tokens that substantially increase downstream language-model inference cost. Existing token-reduction methods assess token utility through token-wise importance, query relevance, coverage, pairwise diversity, or subset-level objectives. Our key insight is to view visual token reduction through selected-span complementarity: instead of scoring a token in isolation or through pairwise relations, we assess how much of its feature is orthogonal to the span of the already retained subset. Based on this perspective, we propose Greedy Orthogonal Token Selection (GOTS), a training-free and query-agnostic method. At each step, GOTS selects the token with the largest residual energy orthogonal to the current retained span. This rule exactly maximizes the one-step augmented Gram determinant among candidate additions, giving each greedy step a precise local geometric guarantee for subset expansion. Across five high-resolution VLM backbones from the Qwen-VL and InternVL families and eleven diverse benchmarks, GOTS achieves higher average performance retention than the strongest evaluated baselines, and a controlled OCRBench study shows that it reduces model-side time-to-first-token after accounting for selection overhead. Code is available at https://github.com/newLLing/GOTS.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-27T01:06:20Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Jun Ling</name>
+    </author>
+    <author>
+      <name>Tao Huang</name>
+    </author>
+    <author>
+      <name>Junzhuo Liu</name>
+    </author>
+    <author>
+      <name>Bowen Tang</name>
+    </author>
+    <author>
+      <name>Peng Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.23265v2</id>
+    <title>WaveZip: Wavelet-Driven Space-Time Decoupling for Video Token Condensation</title>
+    <updated>2026-08-03T14:35:14Z</updated>
+    <link href="https://arxiv.org/abs/2607.23265v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.23265v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Existing Large Vision-Language Models (LVLMs) struggle with long-form video understanding due to the quadratic computational cost of visual tokens. While recent efficient methods attempt to compress tokens via hard pruning or uniform merging, they operate strictly in the spatial feature domain, where robust structural context and discriminative semantic details are inherently entangled. In this work, we propose WaveZip, a joint signal-frequency-domain framework for efficient video inference. Driven by the insight that temporal redundancy resides in low-pass approximation scales while spatial saliency strongly correlates with high-frequency components, WaveZip leverages Discrete Wavelet Transforms (DWT) to disentangle these signals. Temporally, it employs 1D DWT to analyze query-frame relevance, and the resulting high-frequency coefficients are further gated by inter-frame differences, with both signals jointly driving the dynamic allocation of a precise frame-level token budget. Spatially, a 2D DWT decomposes features into low-frequency approximations and high-frequency detail components, where the high-frequency coefficients are modulated within query-salient regions to regulate spatial reconstruction. Importantly, WaveZip requires no task-specific training and can be seamlessly integrated into off-the-shelf LVLMs to boost inference efficiency. Extensive experiments on long video understanding benchmarks demonstrate that WaveZip retains 99.6% of the full performance under an extreme 10x compression ratio, consistently outperforming state-of-the-art methods.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-25T16:05:22Z</published>
+    <arxiv:comment>13 pages, 10 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yuhui Zeng</name>
+    </author>
+    <author>
+      <name>Wang Chen</name>
+    </author>
+    <author>
+      <name>Jinfa Huang</name>
+    </author>
+    <author>
+      <name>Tianyu Xie</name>
+    </author>
+    <author>
+      <name>Yongdong Luo</name>
+    </author>
+    <author>
+      <name>Jiayi Ji</name>
+    </author>
+    <author>
+      <name>Xiawu Zheng</name>
+    </author>
+    <author>
+      <name>jiebo Luo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.22200v1</id>
+    <title>LayoutLite: Token-Level Implicit Layout Analysis for Efficient Document OCR</title>
+    <updated>2026-07-24T11:13:44Z</updated>
+    <link href="https://arxiv.org/abs/2607.22200v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.22200v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>End-to-end OCR systems based on vision-language models have achieved strong performance in complex document OCR, but their efficiency is limited by the large number of visual tokens produced from document images. Many of these tokens correspond to blank margins or visually redundant regions, yet directly applying generic visual token compression methods may remove OCR-critical fine-grained details. In this paper, we propose LayoutLite, a lightweight plug-and-play module for efficient document OCR. Instead of relying on explicit document layout detection, LayoutLite performs implicit layout analysis at the token level between the vision encoder and the language decoder. It aggregates multi-layer visual representations from the vision encoder, and predicts an importance score for each visual token with a lightweight scoring network. Low-information tokens are then removed before entering the language decoder while preserving the original spatial positional information of retained tokens. To train LayoutLite without human annotations, we cast token selection as a reinforcement learning problem and optimize it with a group-relative policy optimization objective driven by OCR output consistency, together with an auxiliary layout supervision signal to stabilize training. Experiments on OmniDocBench demonstrate that LayoutLite can substantially reduce visual token length and inference cost with negligible degradation in recognition quality. We further evaluate LayoutLite on two OCR-specialized VLMs, FireRed-OCR and Logics-Parsing-V2. Under up to 50% token compression, LayoutLite preserves almost the same score on both models while reducing prefill latency, FLOPs, and KV cache memory by over 40%, with only a small additional inference overhead. These results show that token-level implicit layout analysis is an effective and practical approach for accelerating VLM-based OCR systems.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-24T11:13:44Z</published>
+    <arxiv:comment>11 pages, 7 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xudong Liu</name>
+    </author>
+    <author>
+      <name>Bicheng Wan</name>
+    </author>
+    <author>
+      <name>Yulin Jin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.22771v1</id>
+    <title>Cheap Probes Predict Expensive Training in 3D-CT Vision--Language Models</title>
+    <updated>2026-07-24T04:28:33Z</updated>
+    <link href="https://arxiv.org/abs/2607.22771v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.22771v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Picking the frozen image encoder for a 3D~CT vision--language model (VLM), together with the token-compression scheme on top of it, is a search over many candidates. There are several encoders, several ways to compress their tokens, and several token budgets, and the combinations grow fast. Comparing them the usual way means fine-tuning a large language model (LLM) on each combination, and running the whole sweep this way needs far more compute than most groups can spend. We ask whether a cheap probe on the encoder's cached embeddings can stand in for that comparison. We build an image-grounded probing benchmark over (encoder $\times$ compression) cells, with clinical attribute families and two validation gates, scale-sanity and probe-separability, that keep each attribute well-scaled and decodable. These gates are the main methodological contribution. On this benchmark we compare a range of read-out heads, and in a preliminary study we pair each probe with its matched downstream task. The early signal is encouraging: the cheap probe orders the candidates in close agreement with expensive fine-tuning, at about $r\approx0.95$ on the cells measured so far. We read this as an ordinal claim, a ranking predictor rather than an exact estimate, and we are explicit about where it stays preliminary. If it holds up, encoder and compression choices can be screened in minutes with frozen-token probes, with full training spent only on the finalists.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-24T04:28:33Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Renjie Liang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.19547v1</id>
+    <title>ChronoStitch: Training-Free Composition of Visual KV Memories for Long-Horizon Temporal Reasoning</title>
+    <updated>2026-07-21T19:46:38Z</updated>
+    <link href="https://arxiv.org/abs/2607.19547v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.19547v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Long-video question answering requires a model to preserve visual evidence over time without repeatedly reprocessing the same video. A practical approach is to store the vision-language model's internal key-value (KV) cache for each video chunk and retrieve that state at query time. However, independently cached video chunks do not compose correctly: every chunk is prefilled from local rotary position zero, so naive concatenation collides temporal phases and removes the global order required for questions about what happened first, how often events occurred, or what changed across the video. This paper presents ChronoStitch, a training-free method for composing independently stored visual KV memories. The method first re-bases stored post-rotary keys onto a global three-axis multimodal RoPE coordinate system that preserves time, height, and width structure. We show why a one-dimensional scalar re-indexing is geometrically inconsistent for visual tokens because it turns spatial order within a frame into false temporal displacement. We then address the residual content gap left by positional repair: later chunks were originally encoded without attending to earlier chunks. ChronoStitch therefore selectively recomputes a small fraction of high-deviation later-chunk visual tokens while allowing them to attend over the composed cache. On Qwen2.5-VL-3B and the temporal split of TempCompass, ChronoStitch outperforms naive composition and position-only variants, improving event-ordering accuracy while running 3.3x faster than full joint re-prefilling.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.IV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-21T19:46:38Z</published>
+    <arxiv:comment>6 pages, 4 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Santiram Tiwari</name>
+    </author>
+    <author>
+      <name>Nishant Sinha</name>
+    </author>
+    <author>
+      <name>Kunal Kislay</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.16105v1</id>
+    <title>Attention-Guided Saliency Maps for Interpreting Visualization Literacy in VLMs</title>
+    <updated>2026-07-17T16:40:23Z</updated>
+    <link href="https://arxiv.org/abs/2607.16105v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.16105v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Understanding how vision-language models (VLMs) interpret data visualizations remains an open problem, and is increasingly important as these models are used for analytical tasks where reliable reasoning is essential. We introduce a lightweight, diagnostic saliency map method tailored for text generation over images using transformer models, the current state-of-the-art models in visualization interpretation. Our approach aggregates the language model's attention over the visual tokens across all heads and layers, then maps this attention back onto the vision encoder's patch grid to localise it over the image, producing a direct correspondence between each generated answer token and the image regions it attended to. This yields fast, gradient-free saliency maps that expose how VLMs allocate focus across visual elements during answer generation, enabling inspection of whether model attention aligns with semantically relevant components. We evaluate our approach using a deletion metric which validates the causal faithfulness of our saliency maps to the model's behavior.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-17T16:40:23Z</published>
+    <arxiv:comment>To be presented at IEEE VIS 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Maeve Hutchinson</name>
+    </author>
+    <author>
+      <name>Abderrahmane Wassim Mehdaoui</name>
+    </author>
+    <author>
+      <name>Pranava Madhyastha</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.14581v1</id>
+    <title>Multi-LLM Collaborative MRI Report Generation for Visual Instruction Tuning in Brain Oncology</title>
+    <updated>2026-07-16T05:21:47Z</updated>
+    <link href="https://arxiv.org/abs/2607.14581v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.14581v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent advances in large language models (LLMs) and their extension to vision-language models (VLMs) have made it easier to combine text and images for tasks such as report generation. Existing VLMs in medicine typically focus on 2D images (chest X-rays), and their extension to 3D imaging has been difficult because of the lack of paired 3D imaging-text data. Thus, we introduce a new method for creating a 3D image-text dataset for brain oncology using 3D MRI scans of glioma and meningioma cases. We use a cooperative system in which several LLMs work together to generate and check reports, ensuring that they are accurate and clear. By leveraging the new 3D MRI-text dataset, we further build a VLM that converts MRI scans into tokens and aligns them with text instructions. Our VLM performed better in report generation and visual question answering tasks than other 2D and 3D methods. Our method not only improves the quality of reports but also helps with better diagnosis and treatment in brain oncology.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-16T05:21:47Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Sinyoung Ra</name>
+    </author>
+    <author>
+      <name>Jonghun Kim</name>
+    </author>
+    <author>
+      <name>Hyunjin Park</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.16326v1</id>
+    <title>CRISP: Pre-LLM Yet Text-Driven Visual Token Pruning for Efficient LVLM Inference</title>
+    <updated>2026-07-15T13:11:26Z</updated>
+    <link href="https://arxiv.org/abs/2607.16326v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.16326v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision-Language Models (LVLMs) typically require processing hundreds to thousands of visual tokens, leading to substantial inference overhead. Existing visual token pruning methods either operate before the LLM using text-agnostic heuristics or prune inside the LLM at the cost of efficiency and noisy cross-modal attention. To address these limitations, we propose CRISP, a pre-LLM yet text-driven visual token pruning framework that preserves both instruction-relevant evidence and essential scene context. CRISP works in a two-stage pipeline: Stage 1 first identifies text-aligned visual tokens, and Stage 2 enhances contextual completeness through semantic diversity. Extensive experiments on LLaVA-1.5 and LLaVA-NeXT demonstrate that CRISP achieves superior performance retention under aggressive pruning ratios, maintaining up to 99.5% accuracy while reducing inference cost and latency by more than 2 times. CRISP serves as a practical solution for efficient LVLM inference, especially in resource-constrained scenarios.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-15T13:11:26Z</published>
+    <arxiv:comment>Accepted by the 2026 IEEE International Conference on Multimedia and Expo (ICME 2026) as Oral</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xu Li</name>
+    </author>
+    <author>
+      <name>Yi Zheng</name>
+    </author>
+    <author>
+      <name>Mengyang Zhao</name>
+    </author>
+    <author>
+      <name>Yuxuan Liang</name>
+    </author>
+    <author>
+      <name>Zhe Liu</name>
+    </author>
+    <author>
+      <name>Rui Zhu</name>
+    </author>
+    <author>
+      <name>Xiaolei Chen</name>
+    </author>
+    <author>
+      <name>Wei Zhou</name>
+    </author>
+    <author>
+      <name>Baoquan Zhao</name>
+    </author>
+    <author>
+      <name>Juncen Guo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.13500v1</id>
+    <title>Attention-Free and Lightweight Token Reduction for Efficient Vision-Language Models</title>
+    <updated>2026-07-15T06:55:08Z</updated>
+    <link href="https://arxiv.org/abs/2607.13500v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.13500v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-Language Models (VLMs) have achieved strong performance in multimodal understanding, yet remain challenging to deploy on resource-constrained edge devices due to the substantial computational overhead of processing numerous visual tokens. Token reduction is a promising direction for accelerating VLMs inference, but existing approaches either rely on attention maps that are incompatible with modern acceleration frameworks or depend on computationally intensive pairwise similarity comparisons, which undermine scalability and negate their practical benefits in deployment. In this paper, we propose an attention-free and lightweight token reduction framework as a plug-and-play module for VLMs, which preserves both important and diverse tokens to produce a compact visual representation. First, to enable attention-free importance estimation, we adopt an information-theoretic perspective and quantify token information using a novel entropy-based criterion, retaining those with more expressive and less degenerate feature representations. Second, to ensure diverse visual coverage in a lightweight manner, we introduce a transformation-induced consistency signal where similar tokens yield similar signals, such that sorting by this signal places similar tokens close to each other and enables stride-based selection to produce a diverse token set. Extensive experiments across multiple VLMs benchmarks demonstrate that our framework achieves a favorable accuracy-efficiency trade-off, maintaining competitive performance under aggressive compression.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-15T06:55:08Z</published>
+    <arxiv:comment>This work has been submitted to the IEEE for possible publication</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xuanyi Hao</name>
+    </author>
+    <author>
+      <name>Zuoyuan Zhang</name>
+    </author>
+    <author>
+      <name>Zhibo Wang</name>
+    </author>
+    <author>
+      <name>Xiaoyi Pang</name>
+    </author>
+    <author>
+      <name>Jiahui Hu</name>
+    </author>
+    <author>
+      <name>Jiacheng Du</name>
+    </author>
+    <author>
+      <name>Shuguo Zhuo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.12756v1</id>
+    <title>VisCo: Leveraging Large Language Models as Intrinsic Encoders for Visual Token Compression</title>
+    <updated>2026-07-14T13:21:36Z</updated>
+    <link href="https://arxiv.org/abs/2607.12756v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.12756v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-language models (VLMs) process large numbers of visual tokens, resulting in substantial inference latency and memory overhead. This has motivated extensive research on visual token compression. While training-free strategies rely on heuristic metrics and suffer significant performance degradation under high compression ratios, many training-based methods introduce external compression modules that force the VLM backbone to adapt, incurring substantial retraining cost and compromising VLMs' priors. Effective visual token compression hinges on strong information encoding, a capability already present in pretrained VLMs but underutilized by existing approaches. Motivated by this, we propose VisCo, a training-efficient self-compression framework that reuses the pretrained VLM itself as an intrinsic compressor. VisCo is a parameter-sharing autoencoder that compresses visual information using a small set of memory tokens and transfers hierarchical information from encoding to decoding. Experiments show that VisCo surpasses prior methods across all evaluated compression ratios, with larger gains under more aggressive compression, and remains stable even in the extreme single-token setting. Moreover, when combined with the original visual tokens, the learned memory tokens can even improve the base model, suggesting that VisCo captures complementary representations beyond compression.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-14T13:21:36Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yupeng Zheng</name>
+    </author>
+    <author>
+      <name>Kai Zou</name>
+    </author>
+    <author>
+      <name>Bin Liu</name>
+    </author>
+    <author>
+      <name>Nenghai Yu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.12557v1</id>
+    <title>Gaussian Mixture Modeling for Event-Aware Visual Allocation in Long Video Understanding</title>
+    <updated>2026-07-14T09:27:25Z</updated>
+    <link href="https://arxiv.org/abs/2607.12557v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.12557v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision-Language Models (LVLMs) face significant challenges in long video understanding due to the excessive computational cost and information loss associated with uniform sampling. Existing keyframe selection methods often treat video frames as atomic entities and allocate visual budgets equally, thereby overlooking high-level semantic structures and introducing substantial redundancy. To address these limitations, we propose GMM-EVA (Gaussian Mixture Modeling for Event-Aware Visual Allocation), which leverages Gaussian Mixture Models to model event-level structure from discrete frame-wise observations. A differentiated allocation strategy is then applied to preserve one primary high-resolution keyframe per event for high-fidelity detail, while utilizing lower-resolution secondary keyframes to maintain temporal context and optimize token budgets. GMM-EVA is a training-free, plug-and-play framework that generalizes robustly across various relevance measures and downstream LVLMs. Extensive experiments on multiple long video benchmarks demonstrate that our method significantly outperforms uniform sampling. Notably, GMM-EVA achieves comparable performance to baseline selection methods while utilizing only approximately half of the visual token budget, highlighting its superior efficiency and effectiveness.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-14T09:27:25Z</published>
+    <arxiv:comment>accepted at PRCV 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yifan Lu</name>
+    </author>
+    <author>
+      <name>Ziqi Zhang</name>
+    </author>
+    <author>
+      <name>Chunfeng Yuan</name>
+    </author>
+    <author>
+      <name>Jun Gao</name>
+    </author>
+    <author>
+      <name>Bing Li</name>
+    </author>
+    <author>
+      <name>Weiming Hu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.10640v2</id>
+    <title>Spectral Heat Flow for Conservative Token Condensation in Vision-Language Models</title>
+    <updated>2026-07-18T07:25:10Z</updated>
+    <link href="https://arxiv.org/abs/2607.10640v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.10640v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-Language Models (VLMs) are costly at inference time because they must process long sequences of visual tokens. Existing token pruning methods often degrade under high compression by blindly discarding information, breaking spatial structure or collapsing diversity. We propose SpecFlow, a training-free framework that shifts the paradigm from destructive pruning to conservative condensation, strictly enforcing spatial coverage and statistical conservation to ensure stability. Treating visual tokens as nodes in a $k$NN graph, SpecFlow (i) computes a stable importance field via spectral heat flow to preserve structural coherence, (ii) allocates budgets via adaptive spatial partitioning to guarantee coverage, and (iii) aggregates discarded information into coreset sinks to maintain statistical conservation. The method is plug-and-play, requires no fine-tuning, and is compatible with FlashAttention. Experiments confirm that our SpecFlow outperforms SOTA methods across tasks, VLM architectures, and pruning ratios. Notably, LLaVA-1.5 with SpecFlow retains 95.6% of original performance despite pruning 88.9% of visual tokens, offering an exceptional efficiency-accuracy balance. Code is available at https://github.com/Lzy-dot/SpecFlow</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-12T08:12:45Z</published>
+    <arxiv:comment>Accepted by ICML 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhaoyang Li</name>
+    </author>
+    <author>
+      <name>Yanjun Li</name>
+    </author>
+    <author>
+      <name>Wangkai Li</name>
+    </author>
+    <author>
+      <name>Yujia Chen</name>
+    </author>
+    <author>
+      <name>Tianzhu Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.09520v1</id>
+    <title>Seeing is Free, Speaking is Not: Uncovering the True Energy Bottleneck in Edge VLM Inference</title>
+    <updated>2026-07-10T15:31:06Z</updated>
+    <link href="https://arxiv.org/abs/2607.09520v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.09520v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-Language Models (VLMs) are the perceptual backbone of embodied AI, but their energy footprint on edge hardware remains poorly understood. Existing efficiency efforts focus predominantly on reducing visual tokens, implicitly treating visual processing as the dominant energy cost. We overturn this implicit assumption through the first systematic energy profiling of on-device VLM inference, spanning five models across three architecture families, four input resolutions, and two hardware platforms (NVIDIA RTX 3070 and Jetson Orin NX). Our analysis yields three findings. First, average inference power is a model-intrinsic constant, invariant to input resolution, image complexity, and prompt type, with less than 5% variation across all conditions. This means that all energy variation across inputs must arise from variation in inference time, not from variation in power draw. Second, each output token costs 11 to 39x more wall-clock time than each input token due to the compute-bound and memory-bound asymmetry between prefill and decode, making output token count the dominant driver of both latency and energy. Third, image complexity, measured by the number of objects in an image, induces up to 4.1x energy differences at identical resolution. This variation arises not from increased visual processing cost, but from differences in output length. These findings expose a fundamental limitation of visual token pruning: even removing all visual tokens saves at most 10% of total energy for fixed-token models. Across models spanning 1 billion to 8 billion parameters, controlling output length saves up to 97% of total energy, with the energy dominance of decoding growing stronger at larger model scale. In short, the true energy bottleneck in edge VLM inference is not what the model sees, but how much it says.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-10T15:31:06Z</published>
+    <arxiv:comment>Accepted to ACM MM 2026. 10 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Junfei Zhan</name>
+    </author>
+    <author>
+      <name>Haoxun Shen</name>
+    </author>
+    <author>
+      <name>Mingang Guo</name>
+    </author>
+    <author>
+      <name>Zixuan Huang</name>
+    </author>
+    <author>
+      <name>Tengjiao He</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.07033v4</id>
+    <title>AnchorPrune: Relevance-Anchored Contextual Expansion for Visual Token Pruning</title>
+    <updated>2026-07-23T04:28:03Z</updated>
+    <link href="https://arxiv.org/abs/2607.07033v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.07033v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large vision-language models incur substantial inference costs because high-resolution inputs introduce thousands of visual tokens, many of which are redundant for a given query. Existing pruning methods often combine query relevance and token diversity, yet these objectives can conflict under aggressive compression: relevance-driven selection may overconcentrate the budget on correlated local evidence, while diversity-driven selection may suppress indispensable tokens or retain distinct but uninformative regions. We introduce AnchorPrune, a training-free framework that first constructs a protected relevance anchor and then expands it with complementary visual context. AnchorPrune adaptively determines the anchor size from the novelty profile of relevance-ranked tokens, preserving a compact set of query-critical evidence, and allocates the remaining budget through importance-weighted novelty to recover informative, non-redundant context relative to the anchor. This ordered design prevents contextual expansion from displacing indispensable query cues while improving overall visual coverage. AnchorPrune is lightweight, architecture-aware, and requires neither retraining nor model modification. Across image and video vision-language models and benchmarks, it consistently improves the accuracy-efficiency trade-off over training-free baselines, particularly under severe compression. On LLaVA-NeXT-7B, AnchorPrune preserves 97.6% of full-token performance using only 160 of 2,880 visual tokens. These results establish relevance-anchored contextual expansion as an effective principle for efficient multimodal inference. Code is available at https://github.com/MULTI-cau/AnchorPrune.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-08T06:07:06Z</published>
+    <arxiv:comment>ECCV 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Kyuan Oh</name>
+    </author>
+    <author>
+      <name>Bumsoo Kim</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.05859v1</id>
+    <title>AVA-VLM: Adaptive Visual Attention-Vision Language Model for In-the-Wild Construction Site Monitoring</title>
+    <updated>2026-07-07T05:30:13Z</updated>
+    <link href="https://arxiv.org/abs/2607.05859v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.05859v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-Language Models (VLMs) are promising for construction-site monitoring, and recent construction-tailored VLMs have primarily adapted pretrained VLMs through direct QA-style fine-tuning from a single global image. We argue that this direct paradigm remains limited for in-the-wild deployment in terms of operational range, reliability under reduced-resolution inputs, and inference efficiency. To address these challenges, we propose AVA-VLM, an Adaptive Visual Attention-Vision Language Model that follows a human-inspired coarse-to-fine reasoning strategy. AVA-VLM first reasons over a low-resolution global image and selectively requests a high-resolution local crop only when detailed inspection is needed, similar to how a human inspector zooms in on hard-to-see yet important areas. We further introduce a region-aware Chain-of-Thought dataset that teaches the model when to inspect, where to crop, and how to use local evidence. Experiments show that AVA-VLM improves reliability under long-distance and reduced-resolution conditions while substantially reducing visual-token usage.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-07T05:30:13Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Younggun Kim</name>
+    </author>
+    <author>
+      <name>Taeheon Kim</name>
+    </author>
+    <author>
+      <name>Youngseo Kim</name>
+    </author>
+    <author>
+      <name>Seunghee Park</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.04683v4</id>
+    <title>Failing to See or Failing to Know? Attributing Errors in Vision-Language Models</title>
+    <updated>2026-08-04T11:53:54Z</updated>
+    <link href="https://arxiv.org/abs/2607.04683v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.04683v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-language models (VLMs) can recognize entities in clear images yet still fail when answering questions that require factual knowledge beyond what is directly observable. Prior work has either examined individual failure modes in isolation or treated incorrect answers as monolithic, binary failures. We propose a tree-structured framework that organizes failures in knowledge-intensive visual question answering into model-specific operational outcomes. Across two datasets and four VLMs, we observe consistent distributions of operational outcomes: some failures occur before entity recognition, while others persist after the relevant entity is recognized. Visual token representations are most informative for recognition-related decisions. Prompt hidden states predict answer success more effectively, although factual-access attribution remains difficult and exhibits only a weak signal. These pre-generation signals support attribution-guided routing to targeted interventions, including image repair, entity support, question rewriting, and factual evidence.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-06T05:11:45Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Khang Nhat Hoang Vo</name>
+    </author>
+    <author>
+      <name>Artem Vazhentsev</name>
+    </author>
+    <author>
+      <name>Artem Shelmanov</name>
+    </author>
+    <author>
+      <name>Timothy Baldwin</name>
+    </author>
+    <author>
+      <name>Yova Kementchedjhieva</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.04593v1</id>
+    <title>TORINO: Token Reduction via Interpretable Concept Overlap in Vision-Language Models</title>
+    <updated>2026-07-06T01:43:09Z</updated>
+    <link href="https://arxiv.org/abs/2607.04593v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.04593v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-Language Models (VLMs) have demonstrated impressive capabilities across different tasks, but their computational cost is dominated by the large number of visual tokens fed to the language model. Existing token reduction methods rely on attention-based scores or pairwise similarity, without an explicit semantic representation of each token. We introduce TORINO (TOken Reduction via Interpretable coNcept Overlap), a plug-and-play framework for adaptive visual token reduction in VLMs that requires no fine-tuning of the underlying model. TORINO leverages Sparse Autoencoders (SAEs) to project visual tokens into an interpretable latent space where token relationships can be analyzed through shared concept activations. Specifically, we define concept overlap as the degree of agreement between active SAE latents and use it to group tokens that share semantic content. Reduction within each group is then performed by either pruning or merging, providing a unified framework that preserves semantically important visual information while removing redundancy. Unlike fixed-budget approaches, TORINO dynamically adapts the reduction rate to input complexity, allowing different images to retain different numbers of tokens. Experiments across multiple vision-language benchmarks show that TORINO achieves favorable efficiency-accuracy trade-offs, reducing the number of visual tokens with minimal performance loss.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-06T01:43:09Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Riccardo Renzulli</name>
+    </author>
+    <author>
+      <name>Gabriele Spadaro</name>
+    </author>
+    <author>
+      <name>Shruthi Gowda</name>
+    </author>
+    <author>
+      <name>Alaa Eddine Mazouz</name>
+    </author>
+    <author>
+      <name>Van-Tam Nguyen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.04163v1</id>
+    <title>SeeMe: Mitigating Hallucinations in Large Vision-Language Models through Effective Visual Token Engineering</title>
+    <updated>2026-07-05T08:07:51Z</updated>
+    <link href="https://arxiv.org/abs/2607.04163v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.04163v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision-Language Models (LVLMs) have achieved remarkable progress in visual understanding tasks such as image captioning and visual question answering. However, they remain susceptible to hallucinations, generating content that is inconsistent with the actual visual input. Existing methods primarily intervene at the decoding stage, while overlooking a critical source of hallucinations: irrelevant or noisy visual tokens that mislead the decoding process. To address this issue, we propose SeeMe, a training-free framework that introduces the concept of feature engineering from traditional machine learning into LVLMs. SeeMe restructures visual tokens through a three-stage token engineering process to suppress hallucination sources while preserving informative visual evidence. Experiments on MME, POPE, and AMBER benchmarks across four LVLMs demonstrate that SeeMe consistently reduces hallucinations and improves output consistency, providing a novel perspective for mitigating hallucinations in LVLMs.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-05T08:07:51Z</published>
+    <arxiv:comment>12 pages, 4 figures, 6 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Kai Tang</name>
+    </author>
+    <author>
+      <name>Jinhao You</name>
+    </author>
+    <author>
+      <name>Bohua Zhang</name>
+    </author>
+    <author>
+      <name>Yichen Guo</name>
+    </author>
+    <author>
+      <name>Yiding Sun</name>
+    </author>
+    <author>
+      <name>Dongxu Zhang</name>
+    </author>
+    <author>
+      <name>Chenxi Li</name>
+    </author>
+    <author>
+      <name>Xiande Huang</name>
+    </author>
+    <author>
+      <name>Shanghang Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.01707v1</id>
+    <title>LASER: A Corrective Lens for LVLMs via Visual Attention Preservation and Sink Suppression</title>
+    <updated>2026-07-02T04:59:56Z</updated>
+    <link href="https://arxiv.org/abs/2607.01707v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.01707v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large vision-language models (LVLMs) exhibit strong reasoning ability but suffer from visual forgetting during long-horizon decoding, where attention progressively drifts away from visual evidence. Existing methods largely treat this issue as a late-stage attention decay problem or attempt to mitigate it through heuristic reminders or post-hoc attention lifting. Through systematic empirical analysis, we find that performance degradation under visual forgetting is largely driven by two overlooked factors: early-stage attention decay disrupts evidence acquisition, and attention concentration on a subset of task-irrelevant visual sink tokens. Motivated by these insights, we propose LASER, a post-training framework that regulates both the visual attention trajectory and intra-visual token attention distribution during reasoning. Technically, LASER introduces two complementary rewards: a Visual Grounding Reward, which encourages the model to maintain attention on semantically salient visual tokens throughout decoding, and a Sink Suppression Reward, which penalizes excessive attention concentration on visual sink tokens. Together, these rewards preserve early-stage grounding while preventing attention collapse onto uninformative regions. Extensive experiments on eight benchmark datasets demonstrate that LASER consistently outperforms strong baselines, validating attention-aware training as an effective remedy for visual forgetting.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-02T04:59:56Z</published>
+    <arxiv:comment>The 19th European Conference on Computer Vision (ECCV 2026)</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Bowen Yuan</name>
+    </author>
+    <author>
+      <name>Zijian Wang</name>
+    </author>
+    <author>
+      <name>Yadan Luo</name>
+    </author>
+    <author>
+      <name>Shijie Wang</name>
+    </author>
+    <author>
+      <name>Zi Huang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.00465v1</id>
+    <title>StochasT: Learning with Stochastic Turn Depth for Visual Instruction Tuning</title>
+    <updated>2026-07-01T05:34:07Z</updated>
+    <link href="https://arxiv.org/abs/2607.00465v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.00465v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision-Language Models (LVLMs) rely extensively on Visual Instruction Tuning (VIT) to elicit their multimodal reasoning capabilities. However, we find a discrepancy: VIT often packs multiple language tasks about the same image for conversational, multi-turn training, whereas existing benchmarks evaluate LVLMs in isolated, single-turn scenarios. The models can suffer from visual attention decay and contextual overfitting during multi-turn training, making it hard for them to realize their full potential in the mismatched test phase. To close the gap, we propose learning with Stochastic Turn Depth (StochasT), which stochastically groups language tasks for the same image into clusters of varying sizes (turn depth) while preserving their organic order. Hence, while StochasT draws on Dropout and stochastic depth for ResNets, it does not actually drop anything to maximize the utility of the training data. Furthermore, we introduce a challenging, benchmark-agnostic evaluation mechanism based on the Balanced Latin Square to measure LVLMs' robustness under varying contextual dependencies. Extensive experiments demonstrate that StochasT effectively grants LVLMs strong, harmonized capabilities for both single-turn and multi-turn use cases.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-01T05:34:07Z</published>
+    <arxiv:comment>Accepted to ECCV 2026. Project page and code: https://yuanqing-ai.github.io/StochasT</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yuan Qing</name>
+    </author>
+    <author>
+      <name>Chengzhi Mao</name>
+    </author>
+    <author>
+      <name>Boqing Gong</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.31599v1</id>
+    <title>Token-Sparse Medical Multimodal Reasoning via Dual-Stream Reinforcement Learning</title>
+    <updated>2026-06-30T12:47:30Z</updated>
+    <link href="https://arxiv.org/abs/2606.31599v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.31599v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-language models (VLMs) combining reinforcement learning (RL) ignite remarkable progress in multimodal reasoning, yet still struggle with medical images, which typically exhibit extremely sparse visual evidence to inform clinical decision-making. We recognize that pruning visual tokens outside the grounding region greatly enhances medical reasoning. However, a united RL framework for active visual token pruning (VTP) and medical multimodal reasoning remains unestablished. Here, we propose a dual-stream RL framework, ViToS, to fulfill token pruning and question answering. ViToS trains one policy model with two task branches, where one focuses on grounding while the other conducts token-sparse reasoning after VTP. Furthermore, we solve the coupled policy learning problem by introducing the cross-feedback sequential optimization, avoiding gradient conflict and facilitating convergence of the shared policy model. Evaluated on seven medical benchmarks, our method reduces visual tokens to 77% of the original sequence length while achieving a 108.27% relative performance on Lingshu-7B and 104.16% relative performance on HuatuoGPT-Vision-7B. Overall, ViToS delivers superior performance and inference speedup, establishing an efficient paradigm for medical multimodal reasoning.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-30T12:47:30Z</published>
+    <arxiv:comment>ICML2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Kaitao Chen</name>
+    </author>
+    <author>
+      <name>Weiqian Zhao</name>
+    </author>
+    <author>
+      <name>Jiamin Wu</name>
+    </author>
+    <author>
+      <name>Qihao Zheng</name>
+    </author>
+    <author>
+      <name>Shangquan Sun</name>
+    </author>
+    <author>
+      <name>Chunfeng Song</name>
+    </author>
+    <author>
+      <name>Xiaosong Wang</name>
+    </author>
+    <author>
+      <name>Mu Zhou</name>
+    </author>
+    <author>
+      <name>Mianxin Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.30288v1</id>
+    <title>VisReflect: Latent Visual Reflection for Fine-Grained Perception in Long Visual Context</title>
+    <updated>2026-06-29T13:30:17Z</updated>
+    <link href="https://arxiv.org/abs/2606.30288v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.30288v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision Language Models (LVLMs) have achieved remarkable success on vision-language tasks, yet fine-grained perception over high-resolution images and long-context videos remains challenging. As the number of visual tokens increases, the visual attention sink phenomenon becomes increasingly severe, causing irrelevant tokens to absorb a disproportionate amount of attention mass. Recent approaches attempt to mitigate this issue by explicitly predicting bounding boxes or temporal spans and re-encoding the cropped visual regions. Such methods depend on unreliable numeric localization in the discrete token space and incur significant computational overhead due to additional forward passes. In this work, we propose **VisReflect**, a simple yet effective framework that improves fine-grained perception in long visual contexts through latent visual reflection. Instead of decoding intermediate predictions into discrete tokens, the model generates continuous visual reflection that represents question-relevant visual features in the latent space. These reflections selectively emphasize salient regions or frames, guiding attention towards relevant visual tokens within a single forward pass. We conduct comprehensive evaluations on challenging high-resolution image benchmarks, including BLINK, V*, and HRBench-4K/8K, as well as video understanding benchmarks such as MVBench, VideoMME, and MLVU. Our method consistently improves over strong baselines, achieving gains of 4.1% on image benchmarks and 1.8% on video benchmarks. Compared with zooming-based methods, our model achieves comparable performance while reducing inference time by roughly 44% on video understanding.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-29T13:30:17Z</published>
+    <arxiv:comment>Accepted to ECCV 2026; Project page: https://xiaoqian-shen.github.io/VisReflect</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xiaoqian Shen</name>
+    </author>
+    <author>
+      <name>Mohamed Elhoseiny</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.29350v1</id>
+    <title>Fast Enough to Act: Spatio-Temporal Visual Token Merging for Low-Latency Robotic VLMs and VLAs</title>
+    <updated>2026-06-28T11:42:55Z</updated>
+    <link href="https://arxiv.org/abs/2606.29350v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.29350v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-language models and vision-language action models endow the robot with unprecedented capabilities. However, the input of video and high-resolution images yields a massive number of visual tokens, leading to extremely high inference latency and severely hindering the robot's real-time control. To break through this computational bottleneck, we propose ST-Merge, a plug-and-play, training-free framework that efficiently fuses redundant tokens directly during the visual encoding phase. By explicitly constructing 3D spatiotemporal coordinates, it employs a multi-queue parallel matching and weighted aggregation mechanism to achieve efficient and geometrically consistent fusion of redundant tokens across frames. In addition, we introduce a post-merge positional correction mechanism that effectively eliminates spatial deviation caused by merging by dynamically re-evaluating the rotational position code of the weighted centroid of the vision token, thereby ensuring the high-precision spatial awareness required for dexterous operation. In the Video Question Answering task on the mainstream VLM, Qwen2.5-VL, ST-Merge achieves a 2$\times$ inference speedup with only a tiny 1\% loss in precision. When deployed on the $π_{0.5}$ VLA policy, ST-Merge achieves an 8.3$\times$ speedup at 1024 $\times$ 1024 resolution and matches the baseline success rate at this high-resolution setting. At lower resolutions, it introduces a small drop in accuracy.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-28T11:42:55Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Junzhou Chen</name>
+    </author>
+    <author>
+      <name>Jindong Wang</name>
+    </author>
+    <author>
+      <name>Gang Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.28556v1</id>
+    <title>IMCBench: A benchmark for multimodal LLMs in Image-grounded Medical Conversations</title>
+    <updated>2026-06-26T19:18:16Z</updated>
+    <link href="https://arxiv.org/abs/2606.28556v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.28556v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent advances in large language models and vision-language models have enabled reasoning over multimodal data, offering opportunities for clinical applications such as decision support and triaging. However, existing medical AI benchmarks are fragmented: some support multi-turn dialogues but lack images, while others provide multimodal inputs but focus on single-turn QA tasks. To address this gap, we introduce IMCBench, an image-grounded, multi-turn medical conversation benchmark that pairs real, publicly available clinical images with synthetic patient profiles to simulate realistic patient-clinician interactions. Each conversation is evaluated across three clinical dimensions: safety, accuracy, and appropriate use of uncertainty in diagnosis. We benchmark eight multimodal frontier models across four model families (Claude, GPT, Nova, and Llama), scoring each on a 1-5 scale using LLM-as-Jury scoring calibrated against expert clinician annotations. Our results show that Claude Opus 4.6 achieves the highest overall score (3.61), followed by Claude Sonnet 4.6 (3.30) and GPT-5.2 (3.29), though no model dominates all dimensions and safety degrades for both malignant and rare conditions ($Δ$ = -0.27 each). Ablation studies further reveal that both visual input and EHR context contribute to safe guidance (safety drops of 0.18 and 0.23 on average when each is removed), with stronger models leveraging visual features more effectively. Together, these findings demonstrate that accurate clinical description does not guarantee safe patient guidance, motivating the need for multi-dimensional evaluation frameworks in medical AI.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-26T19:18:16Z</published>
+    <arxiv:comment>Accepted at ECML PKDD 2026. 22 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Maria Xenochristou</name>
+    </author>
+    <author>
+      <name>Ashutosh Joshi</name>
+    </author>
+    <author>
+      <name>Korosh Vatanparvar</name>
+    </author>
+    <author>
+      <name>Mohammad Abuzar Hashemi</name>
+    </author>
+    <author>
+      <name>Prasad Kasu</name>
+    </author>
+    <author>
+      <name>Deepak Bansal</name>
+    </author>
+    <author>
+      <name>Anchal Nema</name>
+    </author>
+    <author>
+      <name>Nivedita Wadhwa</name>
+    </author>
+    <author>
+      <name>Prashams S Jain</name>
+    </author>
+    <author>
+      <name>Rebecca Abraham</name>
+    </author>
+    <author>
+      <name>Will Kimbrough</name>
+    </author>
+    <author>
+      <name>Dilek Hakkani-Tur</name>
+    </author>
+    <author>
+      <name>Wilko Schulz-Mahlendorf</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.27906v1</id>
+    <title>Phase Matters: Characterizing Heterogeneous Vision-Language Inference on a Mobile SoC</title>
+    <updated>2026-06-26T09:54:33Z</updated>
+    <link href="https://arxiv.org/abs/2606.27906v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.27906v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent phone-class mobile SoCs expose practical NPU execution paths for on-device vision-language model (VLM) inference, but developers still lack phase-level guidance for mapping VLM pipelines across heterogeneous backends. We present a hardware-in-the-loop characterization of VLM inference on the Qualcomm SM8750 (Snapdragon 8 Elite), covering phase throughput, cache-state effects, 100-run thermal stability, energy, heterogeneous CPU/NPU pipeline configurations, and visual-token-budget sensitivity. Using FastVLM-0.5B as an end-to-end case study, together with encoder-only measurements across four architecture families, we show that phase matters: NPU execution is highly phase-dependent, delivering 1.64x speedup for prefill but only 1.18x for decode, while vision encoders achieve 20-45x speedups over CPU. These gains translate into 10.47 degrees C lower steady-state temperature and 2.52x lower energy, avoiding thermal throttling in always-on settings. Finally, we show that a four-step graph rewrite enables previously unsupported encoders, such as Phi-3.5-V, to reach the QNN path with up to 22x speedup, providing a practical porting recipe for mobile VLM deployment.</summary>
+    <category term="cs.AR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-26T09:54:33Z</published>
+    <arxiv:comment>6 pages, 5 figures. Published in MobiSys Workshop '26</arxiv:comment>
+    <arxiv:primary_category term="cs.AR"/>
+    <arxiv:journal_ref>In Proceedings of the 24th Annual International Conference on Mobile Systems, Applications and Services Workshops (MobiSys Workshop '26), June 21-25, 2026, Cambridge, United Kingdom. ACM, New York, NY, USA, 6 pages</arxiv:journal_ref>
+    <author>
+      <name>Aryama V Murthy</name>
+    </author>
+    <author>
+      <name>Yashas N Kotre</name>
+    </author>
+    <author>
+      <name>Prathmesh Sharma</name>
+    </author>
+    <author>
+      <name>Pragya Mishra</name>
+    </author>
+    <author>
+      <name>Sanjith Ganapathi</name>
+    </author>
+    <author>
+      <name>Priyesh Shukla</name>
+    </author>
+    <arxiv:doi>10.1145/3812836.3814781</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3812836.3814781" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.27660v2</id>
+    <title>MVPruner: Dynamic Token Pruning for Accelerating Multi-view Vision-Language Models in Autonomous Driving</title>
+    <updated>2026-07-01T13:33:39Z</updated>
+    <link href="https://arxiv.org/abs/2606.27660v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.27660v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-Language Models (VLMs) improve generalization and interpretability in autonomous driving but suffer from efficiency issues due to long visual token sequences, particularly in standard multi-view settings. Existing token pruning methods employ fixed pruning rate allocation and static importance metrics, ignoring dynamic inter-view importance differences and the evolving information importance during inference. Our analysis reveals that multi-view VLMs inherently encode task-related view priors in deeper layers and exhibit dynamic information requirements. Motivated by these findings, we propose MVPruner, a two-stage adaptive token pruning method that aligns pruning behavior with the model's dynamic information requirements. The first stage allocates pruning budgets based on the information diversity of each view, and retains tokens with consistent contribution across stages, ensuring semantic representational capacity. The second stage allocates budgets and selects tokens guided by instruction text to guarantee task alignment. Experimental results on four benchmarks demonstrate the superior performance of our method. For example, DriveMM equipped with MVPruner achieves 87.3% reduction in FLOPs, 4.97* speedup in prefilling phase while retaining 98.5% accuracy on DriveLM benchmark.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-26T02:33:20Z</published>
+    <arxiv:comment>accepted by ECCV26</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Nan Yang</name>
+    </author>
+    <author>
+      <name>Zhanwen Liu</name>
+    </author>
+    <author>
+      <name>Linfeng Zhang</name>
+    </author>
+    <author>
+      <name>Shangyu Xie</name>
+    </author>
+    <author>
+      <name>Yang Wang</name>
+    </author>
+    <author>
+      <name>Wenzhuo Zhou</name>
+    </author>
+    <author>
+      <name>Xiangmo Zhao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.21734v1</id>
+    <title>HPP: Hierarchical Programmatic Probing for Long Video Understanding by Decoupling Perception and Reasoning</title>
+    <updated>2026-06-19T20:43:49Z</updated>
+    <link href="https://arxiv.org/abs/2606.21734v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.21734v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Understanding long videos requires fine-grained perception and multi-step, higher-order reasoning over complex, long-range spatio-temporal dynamics. Vision-language models (VLMs) encode video frames into visual tokens and attempt to perform both perception and multi-step planning latently, within a single forward pass. This coupled formulation, however, is bottlenecked by the LLM's limited capacity to discover and execute multi-step strategies in its latent representations. To address this bottleneck, we propose Hierarchical Programmatic Probing (HPP), a framework that decouples semantic perception from higher-order temporal reasoning by reformulating long video understanding as iterative, programmatic exploration of a hierarchically segmented video. Specifically, a coding-capable LLM plans and executes a multi-step strategy in an interactive coding environment, probing the video for information and invoking a VLM for localized perception on demand. To make probing tractable over long videos, we introduce three components: information-density-aware hierarchical segmentation, late-interaction semantic retrieval, and structured probing functions for coarse-to-fine temporal localization. We validate HPP on LongVideoBench, which requires both fine-grained perception and long-range relational reasoning, and show that decoupling the two via iterative programmatic probing yields substantial gains. Further results on EgoSchema, VideoMME, and MLVU demonstrate the effectiveness of our approach across diverse long-video benchmarks.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-19T20:43:49Z</published>
+    <arxiv:comment>Project page: https://awaisrauf.com/HPP</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Awais Rauf</name>
+    </author>
+    <author>
+      <name>Ahmed Hasssan</name>
+    </author>
+    <author>
+      <name>Greg Slabaugh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.20274v1</id>
+    <title>Lagrange: An Open-Vocabulary, Energy-Based Sparse Framework for Generalized End-to-End Driving</title>
+    <updated>2026-06-18T14:18:01Z</updated>
+    <link href="https://arxiv.org/abs/2606.20274v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.20274v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Scaling end-to-end autonomous driving to complex, open-world environments requires perceptual models that generalize to anomalous scenarios and planners that produce kinematically valid trajectories. Existing paradigms face a distinct dichotomy between representational efficiency and generalization capacity. Dense models (e.g., occupancy networks), while geometrically robust, incur critical computational bottlenecks and struggle with high-level semantic reasoning. Conversely, sparse, query-based planners are efficient but reliant on closed-set definitions, rendering them vulnerable to out-of-distribution (OOD) events. Although recent Vision-Language-Action (VLA) models offer open-vocabulary reasoning, their autoregressive, discrete token generation fundamentally conflicts with the continuous, high-frequency control requirements of vehicle dynamics. To address this, we propose Lagrange, an open-vocabulary, computationally sparse driving framework based on Masked Latent Fields (MLF). Rather than relying on dense volumetric reconstructions or closed-set query mechanisms, Lagrange exploits Vision-Language Models (VLMs) to encode class-agnostic object proposals into continuous semantic visual tokens. We introduce an intent-driven masked cross-attention module that temporally filters irrelevant entities, decoding the attended tokens into an implicit continuous energy field defined over spatial coordinates. By framing decision-making as a Lagrangian action minimization problem spanning this energy field, we enforce strict compliance with vehicle kinematics while executing collision avoidance. Extensive offline evaluations on both standard (nuScenes) and long-tail (CODA) benchmarks demonstrate that Lagrange establishes a promising framework for robust, interpretable, and kinematically feasible open-world autonomy.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-18T14:18:01Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Shihao Ji</name>
+    </author>
+    <author>
+      <name>HongXi Li</name>
+    </author>
+    <author>
+      <name>Zihui Song</name>
+    </author>
+    <author>
+      <name>Mingyu Li</name>
+    </author>
+  </entry>
+</feed>

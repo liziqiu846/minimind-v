@@ -1,0 +1,1154 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/a5hzp9D6uPi3KykWqmC/ShK7/t0</id>
+  <title>arXiv Query: search_query=(all:"masked image modeling" OR all:"visual reconstruction" OR all:"self-supervised visual") AND (all:"multimodal large language model" OR all:"vision language model")&amp;id_list=&amp;start=0&amp;max_results=75</title>
+  <updated>2026-08-06T19:25:21Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=(all:%22masked+image+modeling%22+OR+(all:%22visual+reconstruction%22+OR+all:%22self-supervised+visual%22))+AND+(all:%22multimodal+large+language+model%22+OR+all:%22vision+language+model%22)&amp;start=0&amp;max_results=75&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>75</opensearch:itemsPerPage>
+  <opensearch:totalResults>37</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2508.04942v1</id>
+    <title>Accelerating Conditional Prompt Learning via Masked Image Modeling for Vision-Language Models</title>
+    <updated>2025-08-07T00:08:31Z</updated>
+    <link href="https://arxiv.org/abs/2508.04942v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.04942v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-language models (VLMs) like CLIP excel in zero-shot learning but often require resource-intensive training to adapt to new tasks. Prompt learning techniques, such as CoOp and CoCoOp, offer efficient adaptation but tend to overfit to known classes, limiting generalization to unseen categories. We introduce ProMIM, a plug-and-play framework that enhances conditional prompt learning by integrating masked image modeling (MIM) into existing VLM pipelines. ProMIM leverages a simple yet effective masking strategy to generate robust, instance-conditioned prompts, seamlessly augmenting methods like CoOp and CoCoOp without altering their core architectures. By masking only visible image patches and using these representations to guide prompt generation, ProMIM improves feature robustness and mitigates overfitting, all while introducing negligible additional computational cost. Extensive experiments across zero-shot and few-shot classification tasks demonstrate that ProMIM consistently boosts generalization performance when plugged into existing approaches, providing a practical, lightweight solution for real-world vision-language applications.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-07T00:08:31Z</published>
+    <arxiv:comment>ACMMM-LAVA 2025, 10 pages, camera-ready version</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Phuoc-Nguyen Bui</name>
+    </author>
+    <author>
+      <name>Khanh-Binh Nguyen</name>
+    </author>
+    <author>
+      <name>Hyunseung Choo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.15885v1</id>
+    <title>Seeing Beyond Words: Self-Supervised Visual Learning for Multimodal Large Language Models</title>
+    <updated>2025-12-17T19:01:34Z</updated>
+    <link href="https://arxiv.org/abs/2512.15885v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.15885v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Large Language Models (MLLMs) have recently demonstrated impressive capabilities in connecting vision and language, yet their proficiency in fundamental visual reasoning tasks remains limited. This limitation can be attributed to the fact that MLLMs learn visual understanding primarily from textual descriptions, which constitute a subjective and inherently incomplete supervisory signal. Furthermore, the modest scale of multimodal instruction tuning compared to massive text-only pre-training leads MLLMs to overfit language priors while overlooking visual details. To address these issues, we introduce JARVIS, a JEPA-inspired framework for self-supervised visual enhancement in MLLMs. Specifically, we integrate the I-JEPA learning paradigm into the standard vision-language alignment pipeline of MLLMs training. Our approach leverages frozen vision foundation models as context and target encoders, while training the predictor, implemented as the early layers of an LLM, to learn structural and semantic regularities from images without relying exclusively on language supervision. Extensive experiments on standard MLLM benchmarks show that JARVIS consistently improves performance on vision-centric benchmarks across different LLM families, without degrading multimodal reasoning abilities. Our source code is publicly available at: https://github.com/aimagelab/JARVIS.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-17T19:01:34Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Davide Caffagni</name>
+    </author>
+    <author>
+      <name>Sara Sarto</name>
+    </author>
+    <author>
+      <name>Marcella Cornia</name>
+    </author>
+    <author>
+      <name>Lorenzo Baraldi</name>
+    </author>
+    <author>
+      <name>Pier Luigi Dovesi</name>
+    </author>
+    <author>
+      <name>Shaghayegh Roohi</name>
+    </author>
+    <author>
+      <name>Mark Granroth-Wilding</name>
+    </author>
+    <author>
+      <name>Rita Cucchiara</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2312.04960v5</id>
+    <title>MIMIR: Masked Image Modeling for Mutual Information-based Adversarial Robustness</title>
+    <updated>2025-12-15T22:24:07Z</updated>
+    <link href="https://arxiv.org/abs/2312.04960v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2312.04960v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision Transformers (ViTs) have emerged as a fundamental architecture and serve as the backbone of modern vision-language models. Despite their impressive performance, ViTs exhibit notable vulnerability to evasion attacks, necessitating the development of specialized Adversarial Training (AT) strategies tailored to their unique architecture. While a direct solution might involve applying existing AT methods to ViTs, our analysis reveals significant incompatibilities, particularly with state-of-the-art (SOTA) approaches such as Generalist (CVPR 2023) and DBAT (USENIX Security 2024). This paper presents a systematic investigation of adversarial robustness in ViTs and provides a novel theoretical Mutual Information (MI) analysis in its autoencoder-based self-supervised pre-training. Specifically, we show that MI between the adversarial example and its latent representation in ViT-based autoencoders should be constrained via derived MI bounds. Building on this insight, we propose a self-supervised AT method, MIMIR, that employs an MI penalty to facilitate adversarial pre-training by masked image modeling with autoencoders. Extensive experiments on CIFAR-10, Tiny-ImageNet, and ImageNet-1K show that MIMIR can consistently provide improved natural and robust accuracy, where MIMIR outperforms SOTA AT results on ImageNet-1K. Notably, MIMIR demonstrates superior robustness against unforeseen attacks and common corruption data and can also withstand adaptive attacks where the adversary possesses full knowledge of the defense mechanism. Our code and trained models are publicly available at: https://github.com/xiaoyunxxy/MIMIR.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-12-08T10:50:02Z</published>
+    <arxiv:comment>Accepted by NDSS 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xiaoyun Xu</name>
+    </author>
+    <author>
+      <name>Shujian Yu</name>
+    </author>
+    <author>
+      <name>Zhuoran Liu</name>
+    </author>
+    <author>
+      <name>Stjepan Picek</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.06281v1</id>
+    <title>Unleashing the Intrinsic Visual Representation Capability of Multimodal Large Language Models</title>
+    <updated>2025-12-06T04:20:13Z</updated>
+    <link href="https://arxiv.org/abs/2512.06281v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.06281v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Large Language Models (MLLMs) have demonstrated remarkable proficiency in multimodal tasks. Despite their impressive performance, MLLMs suffer from the modality imbalance issue, where visual information is often underutilized compared to textual representations in deeper layers, leading to degraded visual performance or hallucinations. This issue stems from the predominant reliance on next-text-token-prediction during training, which fails to provide direct visual supervisory signals, resulting in progressive homogenization of visual representations throughout the layers. To this end, we propose Latent Visual Reconstruction (LaVer), a novel training framework that facilitates MLLMs in learning more discriminative visual representations via masked image modeling in the joint latent semantic space of LLM. Our method offers direct visual activation to MLLMs, which exhibit increased visual attention allocation, indicating enhanced utilization of visual information. Extensive experiments across diverse benchmarks prove the superiority of our approach in various scenarios, especially those requiring dense visual capabilities. Code of LaVer is available at https://github.com/Fir-lat/LaVer.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-06T04:20:13Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Hengzhuang Li</name>
+    </author>
+    <author>
+      <name>Xinsong Zhang</name>
+    </author>
+    <author>
+      <name>Qiming Peng</name>
+    </author>
+    <author>
+      <name>Bin Luo</name>
+    </author>
+    <author>
+      <name>Han Hu</name>
+    </author>
+    <author>
+      <name>Dengyang Jiang</name>
+    </author>
+    <author>
+      <name>Han-Jia Ye</name>
+    </author>
+    <author>
+      <name>Teng Zhang</name>
+    </author>
+    <author>
+      <name>Hai Jin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2401.00254v4</id>
+    <title>Morphing Tokens Draw Strong Masked Image Models</title>
+    <updated>2025-03-21T09:24:14Z</updated>
+    <link href="https://arxiv.org/abs/2401.00254v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2401.00254v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Masked image modeling (MIM) has emerged as a promising approach for pre-training Vision Transformers (ViTs). MIMs predict masked tokens token-wise to recover target signals that are tokenized from images or generated by pre-trained models like vision-language models. While using tokenizers or pre-trained models is viable, they often offer spatially inconsistent supervision even for neighboring tokens, hindering models from learning discriminative representations. Our pilot study identifies spatial inconsistency in supervisory signals and suggests that addressing it can improve representation learning. Building upon this insight, we introduce Dynamic Token Morphing (DTM), a novel method that dynamically aggregates tokens while preserving context to generate contextualized targets, thereby likely reducing spatial inconsistency. DTM is compatible with various SSL frameworks; we showcase significantly improved MIM results, barely introducing extra training costs. Our method facilitates MIM training by using more spatially consistent targets, resulting in improved training trends as evidenced by lower losses. Experiments on ImageNet-1K and ADE20K demonstrate DTM's superiority, which surpasses complex state-of-the-art MIM methods. Furthermore, the evaluation of transfer learning on downstream tasks like iNaturalist, along with extensive empirical studies, supports DTM's effectiveness.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-12-30T14:53:09Z</published>
+    <arxiv:comment>24 pages, 16 tables, 8 figures. To be presented at ICLR'25</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Taekyung Kim</name>
+    </author>
+    <author>
+      <name>Byeongho Heo</name>
+    </author>
+    <author>
+      <name>Dongyoon Han</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.09072v1</id>
+    <title>UniCode: Learning a Unified Codebook for Multimodal Large Language Models</title>
+    <updated>2024-03-14T03:29:58Z</updated>
+    <link href="https://arxiv.org/abs/2403.09072v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.09072v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we propose \textbf{UniCode}, a novel approach within the domain of multimodal large language models (MLLMs) that learns a unified codebook to efficiently tokenize visual, text, and potentially other types of signals. This innovation addresses a critical limitation in existing MLLMs: their reliance on a text-only codebook, which restricts MLLM's ability to generate images and texts in a multimodal context. Towards this end, we propose a language-driven iterative training paradigm, coupled with an in-context pre-training task we term ``image decompression'', enabling our model to interpret compressed visual data and generate high-quality images.The unified codebook empowers our model to extend visual instruction tuning to non-linguistic generation tasks. Moreover, UniCode is adaptable to diverse stacked quantization approaches in order to compress visual signals into a more compact token representation. Despite using significantly fewer parameters and less data during training, Unicode demonstrates promising capabilities in visual reconstruction and generation. It also achieves performances comparable to leading MLLMs across a spectrum of VQA benchmarks.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-14T03:29:58Z</published>
+    <arxiv:comment>14 pages, 2 figures, 11 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Sipeng Zheng</name>
+    </author>
+    <author>
+      <name>Bohan Zhou</name>
+    </author>
+    <author>
+      <name>Yicheng Feng</name>
+    </author>
+    <author>
+      <name>Ye Wang</name>
+    </author>
+    <author>
+      <name>Zongqing Lu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.20705v1</id>
+    <title>SSL-R1: Self-Supervised Visual Reinforcement Post-Training for Multimodal Large Language Models</title>
+    <updated>2026-04-22T15:46:42Z</updated>
+    <link href="https://arxiv.org/abs/2604.20705v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.20705v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Reinforcement learning (RL) with verifiable rewards (RLVR) has demonstrated the great potential of enhancing the reasoning abilities in multimodal large language models (MLLMs). However, the reliance on language-centric priors and expensive manual annotations prevents MLLMs' intrinsic visual understanding and scalable reward designs. In this work, we introduce SSL-R1, a generic self-supervised RL framework that derives verifiable rewards directly from images. To this end, we revisit self-supervised learning (SSL) in visual domains and reformulate widely-used SSL tasks into a set of verifiable visual puzzles for RL post-training, requiring neither human nor external model supervision. Training MLLMs on these tasks substantially improves their performance on multimodal understanding and reasoning benchmarks, highlighting the potential of leveraging vision-centric self-supervised tasks for MLLM post-training. We think this work will provide useful experience in devising effective self-supervised verifiable rewards to enable RL at scale. Project page: https://github.com/Jiahao000/SSL-R1.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-22T15:46:42Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jiahao Xie</name>
+    </author>
+    <author>
+      <name>Alessio Tonioni</name>
+    </author>
+    <author>
+      <name>Nathalie Rauschmayr</name>
+    </author>
+    <author>
+      <name>Federico Tombari</name>
+    </author>
+    <author>
+      <name>Bernt Schiele</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.09040v2</id>
+    <title>Autoregressive Semantic Visual Reconstruction Helps VLMs Understand Better</title>
+    <updated>2026-01-05T10:14:19Z</updated>
+    <link href="https://arxiv.org/abs/2506.09040v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.09040v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Typical large vision-language models (LVLMs) apply autoregressive supervision solely to textual sequences, without fully incorporating the visual modality into the learning process. This results in three key limitations: (1) an inability to utilize images without accompanying captions, (2) the risk that captions omit critical visual details, and (3) the challenge that certain vision-centric content cannot be adequately conveyed through text. As a result, current LVLMs often prioritize vision-to-language alignment while potentially overlooking fine-grained visual information. While some prior works have explored autoregressive image generation, effectively leveraging autoregressive visual supervision to enhance image understanding remains an open challenge. In this paper, we introduce Autoregressive Semantic Visual Reconstruction (ASVR), which enables joint learning of visual and textual modalities within a unified autoregressive framework. We show that autoregressively reconstructing the raw visual appearance of images does not enhance and may even impair multimodal understanding. In contrast, autoregressively reconstructing the semantic representation of images consistently improves comprehension. Notably, we find that even when models are given continuous image features as input, they can effectively reconstruct discrete semantic tokens, resulting in stable and consistent improvements across a wide range of multimodal understanding benchmarks. Our approach delivers significant performance gains across varying data scales (556k-2M) and types of LLM bacbones. Specifically, ASVR improves LLaVA-1.5 by 5% in average scores across 14 multimodal benchmarks. The code is available at https://github.com/AlenjandroWang/ASVR.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-10T17:57:50Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Dianyi Wang</name>
+    </author>
+    <author>
+      <name>Wei Song</name>
+    </author>
+    <author>
+      <name>Yikun Wang</name>
+    </author>
+    <author>
+      <name>Siyuan Wang</name>
+    </author>
+    <author>
+      <name>Kaicheng Yu</name>
+    </author>
+    <author>
+      <name>Zhongyu Wei</name>
+    </author>
+    <author>
+      <name>Jiaqi Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.22613v1</id>
+    <title>RICO: Improving Accuracy and Completeness in Image Recaptioning via Visual Reconstruction</title>
+    <updated>2025-05-28T17:29:34Z</updated>
+    <link href="https://arxiv.org/abs/2505.22613v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.22613v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Image recaptioning is widely used to generate training datasets with enhanced quality for various multimodal tasks. Existing recaptioning methods typically rely on powerful multimodal large language models (MLLMs) to enhance textual descriptions, but often suffer from inaccuracies due to hallucinations and incompleteness caused by missing fine-grained details. To address these limitations, we propose RICO, a novel framework that refines captions through visual reconstruction. Specifically, we leverage a text-to-image model to reconstruct a caption into a reference image, and prompt an MLLM to identify discrepancies between the original and reconstructed images to refine the caption. This process is performed iteratively, further progressively promoting the generation of more faithful and comprehensive descriptions. To mitigate the additional computational cost induced by the iterative process, we introduce RICO-Flash, which learns to generate captions like RICO using DPO. Extensive experiments demonstrate that our approach significantly improves caption accuracy and completeness, outperforms most baselines by approximately 10% on both CapsBench and CompreCap. Code released at https://github.com/wangyuchi369/RICO.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-28T17:29:34Z</published>
+    <arxiv:comment>code: https://github.com/wangyuchi369/RICO</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yuchi Wang</name>
+    </author>
+    <author>
+      <name>Yishuo Cai</name>
+    </author>
+    <author>
+      <name>Shuhuai Ren</name>
+    </author>
+    <author>
+      <name>Sihan Yang</name>
+    </author>
+    <author>
+      <name>Linli Yao</name>
+    </author>
+    <author>
+      <name>Yuanxin Liu</name>
+    </author>
+    <author>
+      <name>Yuanxing Zhang</name>
+    </author>
+    <author>
+      <name>Pengfei Wan</name>
+    </author>
+    <author>
+      <name>Xu Sun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.16201v2</id>
+    <title>Visual Alignment of Medical Vision-Language Models for Grounded Radiology Report Generation</title>
+    <updated>2026-03-13T06:20:55Z</updated>
+    <link href="https://arxiv.org/abs/2512.16201v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.16201v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Radiology Report Generation (RRG) is a critical step toward automating healthcare workflows, facilitating accurate patient assessments, and reducing the workload of medical professionals. Despite recent progress in Large Medical Vision-Language Models (Med-VLMs), generating radiology reports that are both visually grounded and clinically accurate remains a significant challenge. Existing approaches often rely on large labeled corpora for pre-training, costly task-specific preference data, or retrieval-based knowledge. However, these strategies do not adequately mitigate hallucinations arising from poor cross-modal alignment between visual and linguistic representations. To address these limitations, we propose VALOR: Visual Alignment of Medical Vision-Language Models for GrOunded Radiology Report Generation, which tackles visual hallucinations through two complementary reasoning stages: (1) Clinically Informed Textual Reasoning guides the model with verifiable natural language and clinical metric rewards to produce semantically complete reports with precise medical terminology. (2) Self-Supervised Visual Reasoning leverages a frozen domain expert to compute image-text similarity scores between the input chest X-ray and generated candidates, converting these into rank-normalized advantages that explicitly steer the policy toward visually grounded outputs, requiring no preference pairs, retrieval databases, or additional annotations. Extensive experiments on multiple benchmarks demonstrate that VALOR substantially improves generation quality, as well as clinical accuracy which are visually grounded, achieving significant performance gains over state-of-the-art medical report generation benchmarks.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-18T05:48:21Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Sarosij Bose</name>
+    </author>
+    <author>
+      <name>Ravi K. Rajendran</name>
+    </author>
+    <author>
+      <name>Biplob Debnath</name>
+    </author>
+    <author>
+      <name>Konstantinos Karydis</name>
+    </author>
+    <author>
+      <name>Amit K. Roy-Chowdhury</name>
+    </author>
+    <author>
+      <name>Srimat Chakradhar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2404.10501v2</id>
+    <title>Self-Supervised Visual Preference Alignment</title>
+    <updated>2024-08-21T11:36:47Z</updated>
+    <link href="https://arxiv.org/abs/2404.10501v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2404.10501v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper makes the first attempt towards unsupervised preference alignment in Vision-Language Models (VLMs). We generate chosen and rejected responses with regard to the original and augmented image pairs, and conduct preference alignment with direct preference optimization. It is based on a core idea: properly designed augmentation to the image input will induce VLM to generate false but hard negative responses, which helps the model to learn from and produce more robust and powerful answers. The whole pipeline no longer hinges on supervision from GPT-4 or human involvement during alignment, and is highly efficient with few lines of code. With only 8k randomly sampled unsupervised data, it achieves 90\% relative score to GPT-4 on complex reasoning in LLaVA-Bench, and improves LLaVA-7B/13B by 6.7\%/5.6\% score on complex multi-modal benchmark MM-Vet. Visualizations shows its improved ability to align with user-intentions. A series of ablations are firmly conducted to reveal the latent mechanism of the approach, which also indicates its potential towards further scaling. Code are available in https://github.com/Kevinz-code/SeVa.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-04-16T12:19:54Z</published>
+    <arxiv:comment>MM2024 oral</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Ke Zhu</name>
+    </author>
+    <author>
+      <name>Zheng Ge</name>
+    </author>
+    <author>
+      <name>Liang Zhao</name>
+    </author>
+    <author>
+      <name>Xiangyu Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.19009v2</id>
+    <title>Enhancing Vision-Language Model with Unmasked Token Alignment</title>
+    <updated>2024-06-14T14:29:41Z</updated>
+    <link href="https://arxiv.org/abs/2405.19009v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.19009v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Contrastive pre-training on image-text pairs, exemplified by CLIP, becomes a standard technique for learning multi-modal visual-language representations. Although CLIP has demonstrated remarkable performance, training it from scratch on noisy web-scale datasets is computationally demanding. On the other hand, mask-then-predict pre-training approaches, like Masked Image Modeling (MIM), offer efficient self-supervised learning for single-modal representations. This paper introduces Unmasked Token Alignment (UTA), a method that leverages existing CLIP models to further enhance its vision-language representations. UTA trains a Vision Transformer (ViT) by aligning unmasked visual tokens to the corresponding image tokens from a frozen CLIP vision encoder, which automatically aligns the ViT model with the CLIP text encoder. The pre-trained ViT can be directly applied for zero-shot evaluation even without training on image-text pairs. Compared to MIM approaches, UTA does not suffer from training-finetuning inconsistency and is much more training-efficient by avoiding using the extra [MASK] tokens. Extensive experimental results demonstrate that UTA can enhance CLIP models and outperform existing MIM methods on various uni- and multi-modal benchmarks. Code and models are available at https://github.com/jihaonew/UTA.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-29T11:48:17Z</published>
+    <arxiv:comment>Accepted by TMLR; Code and models are available at https://github.com/jihaonew/UTA</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jihao Liu</name>
+    </author>
+    <author>
+      <name>Jinliang Zheng</name>
+    </author>
+    <author>
+      <name>Boxiao Liu</name>
+    </author>
+    <author>
+      <name>Yu Liu</name>
+    </author>
+    <author>
+      <name>Hongsheng Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2206.01127v2</id>
+    <title>VL-BEiT: Generative Vision-Language Pretraining</title>
+    <updated>2022-09-03T14:18:55Z</updated>
+    <link href="https://arxiv.org/abs/2206.01127v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2206.01127v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce a vision-language foundation model called VL-BEiT, which is a bidirectional multimodal Transformer learned by generative pretraining. Our minimalist solution conducts masked prediction on both monomodal and multimodal data with a shared Transformer. Specifically, we perform masked vision-language modeling on image-text pairs, masked language modeling on texts, and masked image modeling on images. VL-BEiT is learned from scratch with one unified pretraining task, one shared backbone, and one-stage training. Our method is conceptually simple and empirically effective. Experimental results show that VL-BEiT obtains strong results on various vision-language benchmarks, such as visual question answering, visual reasoning, and image-text retrieval. Moreover, our method learns transferable visual features, achieving competitive performance on image classification, and semantic segmentation.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-06-02T16:14:19Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Hangbo Bao</name>
+    </author>
+    <author>
+      <name>Wenhui Wang</name>
+    </author>
+    <author>
+      <name>Li Dong</name>
+    </author>
+    <author>
+      <name>Furu Wei</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.16334v1</id>
+    <title>DINOv2 Meets Text: A Unified Framework for Image- and Pixel-Level Vision-Language Alignment</title>
+    <updated>2024-12-20T20:46:48Z</updated>
+    <link href="https://arxiv.org/abs/2412.16334v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.16334v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Self-supervised visual foundation models produce powerful embeddings that achieve remarkable performance on a wide range of downstream tasks. However, unlike vision-language models such as CLIP, self-supervised visual features are not readily aligned with language, hindering their adoption in open-vocabulary tasks. Our method, named dino.txt, unlocks this new ability for DINOv2, a widely used self-supervised visual encoder. We build upon the LiT training strategy, which trains a text encoder to align with a frozen vision model but leads to unsatisfactory results on dense tasks. We propose several key ingredients to improve performance on both global and dense tasks, such as concatenating the [CLS] token with the patch average to train the alignment and curating data using both text and image modalities. With these, we successfully train a CLIP-like model with only a fraction of the computational cost compared to CLIP while achieving state-of-the-art results in zero-shot classification and open-vocabulary semantic segmentation.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-20T20:46:48Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Cijo Jose</name>
+    </author>
+    <author>
+      <name>Théo Moutakanni</name>
+    </author>
+    <author>
+      <name>Dahyun Kang</name>
+    </author>
+    <author>
+      <name>Federico Baldassarre</name>
+    </author>
+    <author>
+      <name>Timothée Darcet</name>
+    </author>
+    <author>
+      <name>Hu Xu</name>
+    </author>
+    <author>
+      <name>Daniel Li</name>
+    </author>
+    <author>
+      <name>Marc Szafraniec</name>
+    </author>
+    <author>
+      <name>Michaël Ramamonjisoa</name>
+    </author>
+    <author>
+      <name>Maxime Oquab</name>
+    </author>
+    <author>
+      <name>Oriane Siméoni</name>
+    </author>
+    <author>
+      <name>Huy V. Vo</name>
+    </author>
+    <author>
+      <name>Patrick Labatut</name>
+    </author>
+    <author>
+      <name>Piotr Bojanowski</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.08063v1</id>
+    <title>EEG2Vision: A Multimodal EEG-Based Framework for 2D Visual Reconstruction in Cognitive Neuroscience</title>
+    <updated>2026-04-09T10:25:54Z</updated>
+    <link href="https://arxiv.org/abs/2604.08063v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.08063v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Reconstructing visual stimuli from non-invasive electroencephalography (EEG) remains challenging due to its low spatial resolution and high noise, particularly under realistic low-density electrode configurations. To address this, we present EEG2Vision, a modular, end-to-end EEG-to-image framework that systematically evaluates reconstruction performance across different EEG resolutions (128, 64, 32, and 24 channels) and enhances visual quality through a prompt-guided post-reconstruction boosting mechanism. Starting from EEG-conditioned diffusion reconstruction, the boosting stage uses a multimodal large language model to extract semantic descriptions and leverages image-to-image diffusion to refine geometry and perceptual coherence while preserving EEG-grounded structure. Our experiments show that semantic decoding accuracy degrades significantly with channel reduction (e.g., 50-way Top-1 Acc from 89% to 38%), while reconstruction quality slight decreases (e.g., FID from 76.77 to 80.51). The proposed boosting consistently improves perceptual metrics across all configurations, achieving up to 9.71% IS gains in low-channel settings. A user study confirms the clear perceptual preference for boosted reconstructions. The proposed approach significantly boosts the feasibility of real-time brain-2-image applications using low-resolution EEG devices, potentially unlocking this type of applications outside laboratory settings.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-09T10:25:54Z</published>
+    <arxiv:comment>17 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Emanuele Balloni</name>
+    </author>
+    <author>
+      <name>Emanuele Frontoni</name>
+    </author>
+    <author>
+      <name>Chiara Matti</name>
+    </author>
+    <author>
+      <name>Marina Paolanti</name>
+    </author>
+    <author>
+      <name>Roberto Pierdicca</name>
+    </author>
+    <author>
+      <name>Emiliano Santarnecchi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2203.05175v1</id>
+    <title>MVP: Multimodality-guided Visual Pre-training</title>
+    <updated>2022-03-10T06:11:20Z</updated>
+    <link href="https://arxiv.org/abs/2203.05175v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2203.05175v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, masked image modeling (MIM) has become a promising direction for visual pre-training. In the context of vision transformers, MIM learns effective visual representation by aligning the token-level features with a pre-defined space (e.g., BEIT used a d-VAE trained on a large image corpus as the tokenizer). In this paper, we go one step further by introducing guidance from other modalities and validating that such additional knowledge leads to impressive gains for visual pre-training. The proposed approach is named Multimodality-guided Visual Pre-training (MVP), in which we replace the tokenizer with the vision branch of CLIP, a vision-language model pre-trained on 400 million image-text pairs. We demonstrate the effectiveness of MVP by performing standard experiments, i.e., pre-training the ViT models on ImageNet and fine-tuning them on a series of downstream visual recognition tasks. In particular, pre-training ViT-Base/16 for 300 epochs, MVP reports a 52.4% mIoU on ADE20K, surpassing BEIT (the baseline and previous state-of-the-art) with an impressive margin of 6.8%.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-03-10T06:11:20Z</published>
+    <arxiv:comment>14 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Longhui Wei</name>
+    </author>
+    <author>
+      <name>Lingxi Xie</name>
+    </author>
+    <author>
+      <name>Wengang Zhou</name>
+    </author>
+    <author>
+      <name>Houqiang Li</name>
+    </author>
+    <author>
+      <name>Qi Tian</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.16953v2</id>
+    <title>Towards Real Zero-Shot Camouflaged Object Segmentation without Camouflaged Annotations</title>
+    <updated>2026-03-02T09:55:09Z</updated>
+    <link href="https://arxiv.org/abs/2410.16953v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.16953v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Camouflaged Object Segmentation (COS) faces significant challenges due to the scarcity of annotated data, where meticulous pixel-level annotation is both labor-intensive and costly, primarily due to the intricate object-background boundaries. Addressing the core question, "Can COS be effectively achieved in a zero-shot manner without manual annotations for any camouflaged object?" we affirmatively respond and introduce a robust zero-shot COS framework. This framework leverages the inherent local pattern bias of COS and employs a broad semantic feature space derived from salient object segmentation (SOS) for efficient zero-shot transfer. We incorporate an Masked Image Modeling (MIM) based image encoder optimized for Parameter-Efficient Fine-Tuning (PEFT), a Multimodal Large Language Model (M-LLM), and a Multi-scale Fine-grained Alignment (MFA) mechanism. The MIM pre-trained image encoder focuses on capturing essential low-level features, while the M-LLM generates caption embeddings processed alongside these visual cues. These embeddings are precisely aligned using MFA, enabling our framework to accurately interpret and navigate complex semantic contexts. To optimize operational efficiency, we introduce a learnable codebook that represents the M-LLM during inference, significantly reducing computational overhead. Our framework demonstrates its versatility and efficacy through rigorous experimentation, achieving state-of-the-art performance in zero-shot COS with $F_β^w$ scores of 72.9\% on CAMO and 71.7\% on COD10K. By removing the M-LLM during inference, we achieve an inference speed comparable to that of traditional end-to-end models, reaching 18.1 FPS. Code: https://github.com/AVC2-UESTC/ZSCOS-CaMF</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-22T12:33:38Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Cheng Lei</name>
+    </author>
+    <author>
+      <name>Jie Fan</name>
+    </author>
+    <author>
+      <name>Xinran Li</name>
+    </author>
+    <author>
+      <name>Tianzhu Xiang</name>
+    </author>
+    <author>
+      <name>Ao Li</name>
+    </author>
+    <author>
+      <name>Ce Zhu</name>
+    </author>
+    <author>
+      <name>Le Zhang</name>
+    </author>
+    <arxiv:doi>10.1109/TPAMI.2025.3600461</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/TPAMI.2025.3600461" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.22470v1</id>
+    <title>Hybrid, Unified and Iterative: A Novel Framework for Text-based Person Anomaly Retrieval</title>
+    <updated>2025-11-27T14:00:53Z</updated>
+    <link href="https://arxiv.org/abs/2511.22470v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.22470v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Text-based person anomaly retrieval has emerged as a challenging task, with most existing approaches relying on complex deep-learning techniques. This raises a research question: How can the model be optimized to achieve greater fine-grained features? To address this, we propose a Local-Global Hybrid Perspective (LHP) module integrated with a Vision-Language Model (VLM), designed to explore the effectiveness of incorporating both fine-grained features alongside coarse-grained features. Additionally, we investigate a Unified Image-Text (UIT) model that combines multiple objective loss functions, including Image-Text Contrastive (ITC), Image-Text Matching (ITM), Masked Language Modeling (MLM), and Masked Image Modeling (MIM) loss. Beyond this, we propose a novel iterative ensemble strategy, by combining iteratively instead of using model results simultaneously like other ensemble methods. To take advantage of the superior performance of the LHP model, we introduce a novel feature selection algorithm based on its guidance, which helps improve the model's performance. Extensive experiments demonstrate the effectiveness of our method in achieving state-of-the-art (SOTA) performance on PAB dataset, compared with previous work, with a 9.70\% improvement in R@1, 1.77\% improvement in R@5, and 1.01\% improvement in R@10.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-27T14:00:53Z</published>
+    <arxiv:comment>Accepted on World Wide Web 2025 Workshop</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Tien-Huy Nguyen</name>
+    </author>
+    <author>
+      <name>Huu-Loc Tran</name>
+    </author>
+    <author>
+      <name>Huu-Phong Phan-Nguyen</name>
+    </author>
+    <author>
+      <name>Quang-Vinh Dinh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.19627v2</id>
+    <title>VCM: Vision Concept Modeling Based on Implicit Contrastive Learning with Vision-Language Instruction Fine-Tuning</title>
+    <updated>2025-05-19T13:44:04Z</updated>
+    <link href="https://arxiv.org/abs/2504.19627v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.19627v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision-Language Models (LVLMs) are pivotal for real-world AI tasks like embodied intelligence due to their strong vision-language reasoning abilities. However, current LVLMs process entire images at the token level, which is inefficient compared to humans who analyze information and generate content at the conceptual level, extracting relevant visual concepts with minimal effort. This inefficiency, stemming from the lack of a visual concept model, limits LVLMs' usability in real-world applications. To address this, we propose VCM, an end-to-end self-supervised visual concept modeling framework. VCM leverages implicit contrastive learning across multiple sampled instances and vision-language fine-tuning to construct a visual concept model without requiring costly concept-level annotations. Our results show that VCM significantly reduces computational costs (e.g., 85\% fewer FLOPs for LLaVA-1.5-7B) while maintaining strong performance across diverse image understanding tasks. Moreover, VCM enhances visual encoders' capabilities in classic visual concept perception tasks. Extensive quantitative and qualitative experiments validate the effectiveness and efficiency of VCM.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-28T09:39:07Z</published>
+    <arxiv:comment>VCM</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Run Luo</name>
+    </author>
+    <author>
+      <name>Renke Shan</name>
+    </author>
+    <author>
+      <name>Longze Chen</name>
+    </author>
+    <author>
+      <name>Ziqiang Liu</name>
+    </author>
+    <author>
+      <name>Lu Wang</name>
+    </author>
+    <author>
+      <name>Min Yang</name>
+    </author>
+    <author>
+      <name>Xiaobo Xia</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.31204v1</id>
+    <title>AC3S: Adaptive Conditioning for 3D-Aware Synthetic Data Generation</title>
+    <updated>2026-06-30T06:33:55Z</updated>
+    <link href="https://arxiv.org/abs/2606.31204v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.31204v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Synthetic data generation has emerged as a powerful tool for improving data scalability in computer vision. Recent diffusion-based pipelines have demonstrated strong photorealism. However, how to enforce precise 3D structure and pose consistency in generated images remains challenging. Existing methods leverage visual prompts such as edge maps to guide diffusion models, but often suffer from over-conditioning artifacts that degrade image realism and limit dataset quality. In this paper, we present a diffusion-based image generation framework that enforces 3D structural alignment while preserving photorealism through adaptive conditioning. Our framework, Adaptive Conditioning for 3D-Aware Synthetic Data Generation (AC3S), introduces a self-supervised visual prompt modulator that dynamically adjusts the strength of ControlNet conditioning, preventing over-conditioning and enabling the diffusion model to retain its generative expressiveness. To further enhance diversity and semantic consistency, we develop a multi-agent vision language model framework that composes detailed and 3D-aware prompts aligned with the underlying geometric structure. Together, these components enable the scalable generation of high-quality synthetic datasets with accurate 2D and 3D annotations. Extensive experiments demonstrate that our method significantly improves image quality and downstream utility.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-30T06:33:55Z</published>
+    <arxiv:comment>Accepted by ECCV 2026. Project page: https://ac3s.cvmlgroup.web.illinois.edu/</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Eric Ji</name>
+    </author>
+    <author>
+      <name>Qiran Hu</name>
+    </author>
+    <author>
+      <name>Wufei Ma</name>
+    </author>
+    <author>
+      <name>Sarthak Jain</name>
+    </author>
+    <author>
+      <name>Yingying Li</name>
+    </author>
+    <author>
+      <name>Minh N. Do</name>
+    </author>
+    <author>
+      <name>Yaoyao Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.19331v3</id>
+    <title>Talking to DINO: Bridging Self-Supervised Vision Backbones with Language for Open-Vocabulary Segmentation</title>
+    <updated>2025-09-16T10:01:27Z</updated>
+    <link href="https://arxiv.org/abs/2411.19331v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.19331v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Open-Vocabulary Segmentation (OVS) aims at segmenting images from free-form textual concepts without predefined training classes. While existing vision-language models such as CLIP can generate segmentation masks by leveraging coarse spatial information from Vision Transformers, they face challenges in spatial localization due to their global alignment of image and text features. Conversely, self-supervised visual models like DINO excel in fine-grained visual encoding but lack integration with language. To bridge this gap, we present Talk2DINO, a novel hybrid approach that combines the spatial accuracy of DINOv2 with the language understanding of CLIP. Our approach aligns the textual embeddings of CLIP to the patch-level features of DINOv2 through a learned mapping function without the need to fine-tune the underlying backbones. At training time, we exploit the attention maps of DINOv2 to selectively align local visual patches with textual embeddings. We show that the powerful semantic and localization abilities of Talk2DINO can enhance the segmentation process, resulting in more natural and less noisy segmentations, and that our approach can also effectively distinguish foreground objects from the background. Experimental results demonstrate that Talk2DINO achieves state-of-the-art performance across several unsupervised OVS benchmarks. Source code and models are publicly available at: https://lorebianchi98.github.io/Talk2DINO/.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-28T19:00:03Z</published>
+    <arxiv:comment>ICCV 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Luca Barsellotti</name>
+    </author>
+    <author>
+      <name>Lorenzo Bianchi</name>
+    </author>
+    <author>
+      <name>Nicola Messina</name>
+    </author>
+    <author>
+      <name>Fabio Carrara</name>
+    </author>
+    <author>
+      <name>Marcella Cornia</name>
+    </author>
+    <author>
+      <name>Lorenzo Baraldi</name>
+    </author>
+    <author>
+      <name>Fabrizio Falchi</name>
+    </author>
+    <author>
+      <name>Rita Cucchiara</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.16793v2</id>
+    <title>REOBench: Benchmarking Robustness of Earth Observation Foundation Models</title>
+    <updated>2025-10-23T15:43:31Z</updated>
+    <link href="https://arxiv.org/abs/2505.16793v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.16793v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Earth observation foundation models have shown strong generalization across multiple Earth observation tasks, but their robustness under real-world perturbations remains underexplored. To bridge this gap, we introduce REOBench, the first comprehensive benchmark for evaluating the robustness of Earth observation foundation models across six tasks and twelve types of image corruptions, including both appearance-based and geometric perturbations. To ensure realistic and fine-grained evaluation, our benchmark focuses on high-resolution optical remote sensing images, which are widely used in critical applications such as urban planning and disaster response. We conduct a systematic evaluation of a broad range of models trained using masked image modeling, contrastive learning, and vision-language pre-training paradigms. Our results reveal that (1) existing Earth observation foundation models experience significant performance degradation when exposed to input corruptions. (2) The severity of degradation varies across tasks, model architectures, backbone sizes, and types of corruption, with performance drop varying from less than 1% to over 20%. (3) Vision-language models show enhanced robustness, particularly in multimodal tasks. REOBench underscores the vulnerability of current Earth observation foundation models to real-world corruptions and provides actionable insights for developing more robust and reliable models. Code and data are publicly available at https://github.com/lx709/REOBench.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-22T15:34:50Z</published>
+    <arxiv:comment>Accepted to NeruIPS 2025 D&amp;B Track</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xiang Li</name>
+    </author>
+    <author>
+      <name>Yong Tao</name>
+    </author>
+    <author>
+      <name>Siyuan Zhang</name>
+    </author>
+    <author>
+      <name>Siwei Liu</name>
+    </author>
+    <author>
+      <name>Zhitong Xiong</name>
+    </author>
+    <author>
+      <name>Chunbo Luo</name>
+    </author>
+    <author>
+      <name>Lu Liu</name>
+    </author>
+    <author>
+      <name>Mykola Pechenizkiy</name>
+    </author>
+    <author>
+      <name>Xiao Xiang Zhu</name>
+    </author>
+    <author>
+      <name>Tianjin Huang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.03231v1</id>
+    <title>CoME-VL: Scaling Complementary Multi-Encoder Vision-Language Learning</title>
+    <updated>2026-04-03T17:59:51Z</updated>
+    <link href="https://arxiv.org/abs/2604.03231v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.03231v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent vision-language models (VLMs) typically rely on a single vision encoder trained with contrastive image-text objectives, such as CLIP-style pretraining. While contrastive encoders are effective for cross-modal alignment and retrieval, self-supervised visual encoders often capture richer dense semantics and exhibit stronger robustness on recognition and understanding tasks. In this work, we investigate how to scale the fusion of these complementary visual representations for vision-language modeling. We propose CoME-VL: Complementary Multi-Encoder Vision-Language, a modular fusion framework that integrates a contrastively trained vision encoder with a self-supervised DINO encoder. Our approach performs representation-level fusion by (i) entropy-guided multi-layer aggregation with orthogonality-constrained projections to reduce redundancy, and (ii) RoPE-enhanced cross-attention to align heterogeneous token grids and produce compact fused visual tokens. The fused tokens can be injected into a decoder-only LLM with minimal changes to standard VLM pipelines. Extensive experiments across diverse vision-language benchmarks demonstrate that CoME-VL consistently outperforms single-encoder baselines. In particular, we observe an average improvement of 4.9% on visual understanding tasks and 5.4% on grounding tasks. Our method achieves state-of-the-art performance on RefCOCO for detection while improving over the baseline by a large margin. Finally, we conduct ablation studies on layer merging, non-redundant feature mixing, and fusion capacity to evaluate how complementary contrastive and self-supervised signals affect VLM performance.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-03T17:59:51Z</published>
+    <arxiv:comment>16 pages, 10 figures, 5 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Ankan Deria</name>
+    </author>
+    <author>
+      <name>Komal Kumar</name>
+    </author>
+    <author>
+      <name>Xilin He</name>
+    </author>
+    <author>
+      <name>Imran Razzak</name>
+    </author>
+    <author>
+      <name>Hisham Cholakkal</name>
+    </author>
+    <author>
+      <name>Fahad Shahbaz Khan</name>
+    </author>
+    <author>
+      <name>Salman Khan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2401.02137v1</id>
+    <title>SyCoCa: Symmetrizing Contrastive Captioners with Attentive Masking for Multimodal Alignment</title>
+    <updated>2024-01-04T08:42:36Z</updated>
+    <link href="https://arxiv.org/abs/2401.02137v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2401.02137v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal alignment between language and vision is the fundamental topic in current vision-language model research. Contrastive Captioners (CoCa), as a representative method, integrates Contrastive Language-Image Pretraining (CLIP) and Image Caption (IC) into a unified framework, resulting in impressive results. CLIP imposes a bidirectional constraints on global representation of entire images and sentences. Although IC conducts an unidirectional image-to-text generation on local representation, it lacks any constraint on local text-to-image reconstruction, which limits the ability to understand images at a fine-grained level when aligned with texts. To achieve multimodal alignment from both global and local perspectives, this paper proposes Symmetrizing Contrastive Captioners (SyCoCa), which introduces bidirectional interactions on images and texts across the global and local representation levels. Specifically, we expand a Text-Guided Masked Image Modeling (TG-MIM) head based on ITC and IC heads. The improved SyCoCa can further leverage textual cues to reconstruct contextual images and visual cues to predict textual contents. When implementing bidirectional local interactions, the local contents of images tend to be cluttered or unrelated to their textual descriptions. Thus, we employ an attentive masking strategy to select effective image patches for interaction. Extensive experiments on five vision-language tasks, including image-text retrieval, image-captioning, visual question answering, and zero-shot/finetuned image classification, validate the effectiveness of our proposed method.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-01-04T08:42:36Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Ziping Ma</name>
+    </author>
+    <author>
+      <name>Furong Xu</name>
+    </author>
+    <author>
+      <name>Jian Liu</name>
+    </author>
+    <author>
+      <name>Ming Yang</name>
+    </author>
+    <author>
+      <name>Qingpei Guo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2404.01156v1</id>
+    <title>SyncMask: Synchronized Attentional Masking for Fashion-centric Vision-Language Pretraining</title>
+    <updated>2024-04-01T15:01:38Z</updated>
+    <link href="https://arxiv.org/abs/2404.01156v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2404.01156v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-language models (VLMs) have made significant strides in cross-modal understanding through large-scale paired datasets. However, in fashion domain, datasets often exhibit a disparity between the information conveyed in image and text. This issue stems from datasets containing multiple images of a single fashion item all paired with one text, leading to cases where some textual details are not visible in individual images. This mismatch, particularly when non-co-occurring elements are masked, undermines the training of conventional VLM objectives like Masked Language Modeling and Masked Image Modeling, thereby hindering the model's ability to accurately align fine-grained visual and textual features. Addressing this problem, we propose Synchronized attentional Masking (SyncMask), which generate masks that pinpoint the image patches and word tokens where the information co-occur in both image and text. This synchronization is accomplished by harnessing cross-attentional features obtained from a momentum model, ensuring a precise alignment between the two modalities. Additionally, we enhance grouped batch sampling with semi-hard negatives, effectively mitigating false negative issues in Image-Text Matching and Image-Text Contrastive learning objectives within fashion datasets. Our experiments demonstrate the effectiveness of the proposed approach, outperforming existing methods in three downstream tasks.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-04-01T15:01:38Z</published>
+    <arxiv:comment>CVPR2024 Accepted</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Chull Hwan Song</name>
+    </author>
+    <author>
+      <name>Taebaek Hwang</name>
+    </author>
+    <author>
+      <name>Jooyoung Yoon</name>
+    </author>
+    <author>
+      <name>Shunghyun Choi</name>
+    </author>
+    <author>
+      <name>Yeong Hyeon Gu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.02360v4</id>
+    <title>LaRe: Latent Refocusing for Multimodal Reasoning</title>
+    <updated>2026-05-26T12:26:50Z</updated>
+    <link href="https://arxiv.org/abs/2511.02360v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.02360v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Chain of Thought (CoT) reasoning enhances logical performance by decomposing complex tasks, yet its multimodal extension faces a trade-off. The prevailing Thinking with Images paradigm achieves visual refocusing by explicitly cropping image regions, yet incurs rapidly growing computational overhead. The emerging line of latent-space reasoning reduces token consumption, but lacks the capacity for dynamic refocusing. We argue that this trade-off stems from a tacitly accepted premise that effective visual refocusing must occur in the form of explicit tokens. Building on this, we propose Latent Refocusing (LaRe), a new multimodal reasoning paradigm in which visual refocusing takes place entirely within the latent space. We further design a semantic augmentation training strategy that ensures the semantic structure of the latent space through visual reconstruction objective. Experimental evaluations demonstrate that LaRe improves average accuracy by 7.6% compared to existing baselines while reducing the number of tokens required for inference by 59.7%. When scaled to a 8B-parameter Vision-Language Model backbone, LaRe achieves performance comparable to state-of-the-art methods, demonstrating the efficacy of our proposed latent refocusing paradigm for multimodal reasoning.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-04T08:28:46Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jizheng Ma</name>
+    </author>
+    <author>
+      <name>Xiaofei Zhou</name>
+    </author>
+    <author>
+      <name>Geyuan Zhang</name>
+    </author>
+    <author>
+      <name>Yanlong Song</name>
+    </author>
+    <author>
+      <name>Han Yan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.12341v3</id>
+    <title>Semantic Discrepancy-aware Detector for Image Forgery Identification</title>
+    <updated>2025-09-28T12:48:18Z</updated>
+    <link href="https://arxiv.org/abs/2508.12341v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.12341v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>With the rapid advancement of image generation techniques, robust forgery detection has become increasingly imperative to ensure the trustworthiness of digital media. Recent research indicates that the learned semantic concepts of pre-trained models are critical for identifying fake images. However, the misalignment between the forgery and semantic concept spaces hinders the model's forgery detection performance. To address this problem, we propose a novel Semantic Discrepancy-aware Detector (SDD) that leverages reconstruction learning to align the two spaces at a fine-grained visual level. By exploiting the conceptual knowledge embedded in the pre-trained vision language model, we specifically design a semantic token sampling module to mitigate the space shifts caused by features irrelevant to both forgery traces and semantic concepts. A concept-level forgery discrepancy learning module, built upon a visual reconstruction paradigm, is proposed to strengthen the interaction between visual semantic concepts and forgery traces, effectively capturing discrepancies under the concepts' guidance. Finally, the low-level forgery feature enhancemer integrates the learned concept level forgery discrepancies to minimize redundant forgery information. Experiments conducted on two standard image forgery datasets demonstrate the efficacy of the proposed SDD, which achieves superior results compared to existing methods. The code is available at https://github.com/wzy1111111/SSD.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-17T12:11:09Z</published>
+    <arxiv:comment>10 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Ziye Wang</name>
+    </author>
+    <author>
+      <name>Minghang Yu</name>
+    </author>
+    <author>
+      <name>Chunyan Xu</name>
+    </author>
+    <author>
+      <name>Zhen Cui</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.23054v2</id>
+    <title>Mask What Matters: Controllable Text-Guided Masking for Self-Supervised Medical Image Analysis</title>
+    <updated>2025-10-04T07:50:36Z</updated>
+    <link href="https://arxiv.org/abs/2509.23054v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.23054v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The scarcity of annotated data in specialized domains such as medical imaging presents significant challenges to training robust vision models. While self-supervised masked image modeling (MIM) offers a promising solution, existing approaches largely rely on random high-ratio masking, leading to inefficiency and poor semantic alignment. Moreover, region-aware variants typically depend on reconstruction heuristics or supervised signals, limiting their adaptability across tasks and modalities. We propose Mask What Matters, a controllable text-guided masking framework for self-supervised medical image analysis. By leveraging vision-language models for prompt-based region localization, our method flexibly applies differentiated masking to emphasize diagnostically relevant regions while reducing redundancy in background areas. This controllable design enables better semantic alignment, improved representation learning, and stronger cross-task generalizability. Comprehensive evaluation across multiple medical imaging modalities, including brain MRI, chest CT, and lung X-ray, shows that Mask What Matters consistently outperforms existing MIM methods (e.g., SparK), achieving gains of up to +3.1 percentage points in classification accuracy, +1.3 in box average precision (BoxAP), and +1.1 in mask average precision (MaskAP) for detection. Notably, it achieves these improvements with substantially lower overall masking ratios (e.g., 40\% vs. 70\%). This work demonstrates that controllable, text-driven masking can enable semantically aligned self-supervised learning, advancing the development of robust vision models for medical image analysis.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-27T02:26:56Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Ruilang Wang</name>
+    </author>
+    <author>
+      <name>Shuotong Xu</name>
+    </author>
+    <author>
+      <name>Bowen Liu</name>
+    </author>
+    <author>
+      <name>Runlin Huang</name>
+    </author>
+    <author>
+      <name>Donglong Chen</name>
+    </author>
+    <author>
+      <name>Weifeng Su</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.20520v1</id>
+    <title>How Do Inpainting Artifacts Propagate to Language?</title>
+    <updated>2026-02-24T03:46:33Z</updated>
+    <link href="https://arxiv.org/abs/2602.20520v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.20520v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study how visual artifacts introduced by diffusion-based inpainting affect language generation in vision-language models. We use a two-stage diagnostic setup in which masked image regions are reconstructed and then provided to captioning models, enabling controlled comparisons between captions generated from original and reconstructed inputs. Across multiple datasets, we analyze the relationship between reconstruction fidelity and downstream caption quality. We observe consistent associations between pixel-level and perceptual reconstruction metrics and both lexical and semantic captioning performance. Additional analysis of intermediate visual representations and attention patterns shows that inpainting artifacts lead to systematic, layer-dependent changes in model behavior. Together, these results provide a practical diagnostic framework for examining how visual reconstruction quality influences language generation in multimodal systems.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-24T03:46:33Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Pratham Yashwante</name>
+    </author>
+    <author>
+      <name>Davit Abrahamyan</name>
+    </author>
+    <author>
+      <name>Shresth Grover</name>
+    </author>
+    <author>
+      <name>Sukruth Rao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.22665v3</id>
+    <title>SARVLM: A Vision Language Foundation Model for Semantic Understanding in SAR Imagery</title>
+    <updated>2026-05-15T05:24:29Z</updated>
+    <link href="https://arxiv.org/abs/2510.22665v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.22665v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Synthetic Aperture Radar (SAR) is a critical imaging modality due to its all-weather operational capability. Although recent advances in self-supervised learning and masked image modeling (MIM) have enabled SAR foundation models, these approaches primarily focus on low-level visual features and often neglect multi-modal representation. Moreover, multimodal data for SAR is scarce, limiting the development of robust cross-modal models. To address this limitation, we construct SARVLM-1M, a large-scale vision-language dataset comprising over one million image-text pairs aggregated from existing datasets. Furthermore, to mitigate the substantial differences between SAR and natural imagery, we propose a two-stage domain transfer training strategy that leverages optical remote sensing data as an intermediate bridge, facilitating effective knowledge transfer from natural images to SAR domains. Based on this strategy, we develop SARVLM, the first vision-language foundation model tailored for SAR, consisting of SARCLIP and SARCap. In addition, an ensemble strategy is utilized to improve the cross-scene generalization capability of the model. Moreover, SARDet and SARRot further validate the capability of the proposed framework in object detection. Extensive experiments on 13 benchmarks across image-text retrieval, target recognition, zero-shot classification, object detection, semantic localization, and image captioning demonstrate the superior feature extraction and interpretation capabilities of SARVLM. It consistently outperforms state-of-the-art vision-language models and advances semantic understanding in SAR imagery. Code and datasets will be released on https://github.com/KlayMa527/SARVLM.git.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-26T13:04:50Z</published>
+    <arxiv:comment>13 pages, 13 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Qiwei Ma</name>
+    </author>
+    <author>
+      <name>Xukun Lu</name>
+    </author>
+    <author>
+      <name>Wang Liu</name>
+    </author>
+    <author>
+      <name>Puhong Duan</name>
+    </author>
+    <author>
+      <name>Xudong Kang</name>
+    </author>
+    <author>
+      <name>Shutao Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.22434v1</id>
+    <title>MiCo: Multi-image Contrast for Reinforcement Visual Reasoning</title>
+    <updated>2025-06-27T17:59:27Z</updated>
+    <link href="https://arxiv.org/abs/2506.22434v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.22434v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This work explores enabling Chain-of-Thought (CoT) reasoning to link visual cues across multiple images. A straightforward solution is to adapt rule-based reinforcement learning for Vision-Language Models (VLMs). However, such methods typically rely on manually curated question-answer pairs, which can be particularly challenging when dealing with fine grained visual details and complex logic across images. Inspired by self-supervised visual representation learning, we observe that images contain inherent constraints that can serve as supervision. Based on this insight, we construct image triplets comprising two augmented views of the same image and a third, similar but distinct image. During training, the model is prompted to generate a reasoning process to compare these images (i.e., determine same or different). Then we optimize the model with rule-based reinforcement learning. Due to the high visual similarity and the presence of augmentations, the model must attend to subtle visual changes and perform logical reasoning to succeed. Experiments show that, although trained solely on visual comparison tasks, the learned reasoning ability generalizes effectively to a wide range of questions. Without relying on any human-annotated question-answer pairs, our method achieves significant improvements on multi-image reasoning benchmarks and shows strong performance on general vision tasks.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-27T17:59:27Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xi Chen</name>
+    </author>
+    <author>
+      <name>Mingkang Zhu</name>
+    </author>
+    <author>
+      <name>Shaoteng Liu</name>
+    </author>
+    <author>
+      <name>Xiaoyang Wu</name>
+    </author>
+    <author>
+      <name>Xiaogang Xu</name>
+    </author>
+    <author>
+      <name>Yu Liu</name>
+    </author>
+    <author>
+      <name>Xiang Bai</name>
+    </author>
+    <author>
+      <name>Hengshuang Zhao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.13851v1</id>
+    <title>X-Former: Unifying Contrastive and Reconstruction Learning for MLLMs</title>
+    <updated>2024-07-18T18:39:54Z</updated>
+    <link href="https://arxiv.org/abs/2407.13851v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.13851v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent advancements in Multimodal Large Language Models (MLLMs) have revolutionized the field of vision-language understanding by integrating visual perception capabilities into Large Language Models (LLMs). The prevailing trend in this field involves the utilization of a vision encoder derived from vision-language contrastive learning (CL), showing expertise in capturing overall representations while facing difficulties in capturing detailed local patterns. In this work, we focus on enhancing the visual representations for MLLMs by combining high-frequency and detailed visual representations, obtained through masked image modeling (MIM), with semantically-enriched low-frequency representations captured by CL. To achieve this goal, we introduce X-Former which is a lightweight transformer module designed to exploit the complementary strengths of CL and MIM through an innovative interaction mechanism. Specifically, X-Former first bootstraps vision-language representation learning and multimodal-to-multimodal generative learning from two frozen vision encoders, i.e., CLIP-ViT (CL-based) and MAE-ViT (MIM-based). It further bootstraps vision-to-language generative learning from a frozen LLM to ensure visual features from X-Former can be interpreted by the LLM. To demonstrate the effectiveness of our approach, we assess its performance on tasks demanding detailed visual understanding. Extensive evaluations indicate that X-Former excels in visual reasoning tasks involving both structural and semantic categories in the GQA dataset. Assessment on fine-grained visual perception benchmark further confirms its superior capabilities in visual understanding.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-18T18:39:54Z</published>
+    <arxiv:comment>Accepted at ECCV2024</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Sirnam Swetha</name>
+    </author>
+    <author>
+      <name>Jinyu Yang</name>
+    </author>
+    <author>
+      <name>Tal Neiman</name>
+    </author>
+    <author>
+      <name>Mamshad Nayeem Rizve</name>
+    </author>
+    <author>
+      <name>Son Tran</name>
+    </author>
+    <author>
+      <name>Benjamin Yao</name>
+    </author>
+    <author>
+      <name>Trishul Chilimbi</name>
+    </author>
+    <author>
+      <name>Mubarak Shah</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.10066v2</id>
+    <title>LayLens: Improving Deepfake Understanding through Simplified Explanations</title>
+    <updated>2025-08-12T14:34:03Z</updated>
+    <link href="https://arxiv.org/abs/2507.10066v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.10066v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This demonstration paper presents $\mathbf{LayLens}$, a tool aimed to make deepfake understanding easier for users of all educational backgrounds. While prior works often rely on outputs containing technical jargon, LayLens bridges the gap between model reasoning and human understanding through a three-stage pipeline: (1) explainable deepfake detection using a state-of-the-art forgery localization model, (2) natural language simplification of technical explanations using a vision-language model, and (3) visual reconstruction of a plausible original image via guided image editing. The interface presents both technical and layperson-friendly explanations in addition to a side-by-side comparison of the uploaded and reconstructed images. A user study with 15 participants shows that simplified explanations significantly improve clarity and reduce cognitive load, with most users expressing increased confidence in identifying deepfakes. LayLens offers a step toward transparent, trustworthy, and user-centric deepfake forensics.</summary>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-14T08:52:03Z</published>
+    <arxiv:comment>Accepted to ACM ICMI 2025 Demos</arxiv:comment>
+    <arxiv:primary_category term="cs.MM"/>
+    <author>
+      <name>Abhijeet Narang</name>
+    </author>
+    <author>
+      <name>Parul Gupta</name>
+    </author>
+    <author>
+      <name>Liuyijia Su</name>
+    </author>
+    <author>
+      <name>Abhinav Dhall</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.01788v1</id>
+    <title>PlatonicNav: Unveiling Semantic Correspondence in Navigation with Platonic Topological Maps</title>
+    <updated>2026-06-01T07:08:50Z</updated>
+    <link href="https://arxiv.org/abs/2606.01788v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.01788v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Embodied visual navigation, where an agent perceives a complex environment and acts to reach a goal from raw sensory input, underpins a wide range of applications such as household service robotics, assistive robotics, and large-scale autonomous exploration. However, recent attempts to unify vision-and-language navigation (VLN) and object goal navigation (ObjNav) remain at the level of architectural fusion, mixed-task training, and large vision-language pretraining, without examining whether independently trained vision and language encoders may already share a common semantic structure. Moreover, even object-centric topological maps still ground language goals through explicit cross-modal supervision such as CLIP or large vision-language models, leaving open whether such grounding is possible from a purely vision-built map. To address these challenges, we extend the Platonic Representation Hypothesis to embodied navigation and recast vision-only ObjNav, cross-modal ObjNav, and VLN as three different interfaces to the same object-centric semantic manifold. We further introduce PlatonicNav, a training-free framework whose Platonic Topological Map fuses geometric and semantic node distances from a self-supervised visual encoder, and grounds language goals via blind matching without any paired vision-language data. Extensive experiments on simulation benchmarks including HM3D-IIN, OVON, and R2R-CE on MP3D, together with deployment on Unitree Go2, demonstrate that PlatonicNav generalizes across tasks, modalities, and embodiments without explicit cross-modal training. Code: https://github.com/AIGeeksGroup/PlatonicNav. Website: https://aigeeksgroup.github.io/PlatonicNav.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-01T07:08:50Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Junlin Long</name>
+    </author>
+    <author>
+      <name>Zeyu Zhang</name>
+    </author>
+    <author>
+      <name>Xu Deng</name>
+    </author>
+    <author>
+      <name>Yiran Wang</name>
+    </author>
+    <author>
+      <name>Yue Yang</name>
+    </author>
+    <author>
+      <name>Luke Borgnolo</name>
+    </author>
+    <author>
+      <name>Maxwell Twelftree</name>
+    </author>
+    <author>
+      <name>Yang Zhao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.16388v1</id>
+    <title>ChronoSC: Task-Oriented Semantic Communication via Temporal-to-Color Encoding</title>
+    <updated>2026-05-11T17:29:05Z</updated>
+    <link href="https://arxiv.org/abs/2605.16388v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.16388v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Semantic communication (SC) aims to reduce transmission overhead by conveying task-relevant information rather than raw data. However, existing SC approaches for video largely focus on pixel-level reconstruction or rely on complex spatiotemporal pipelines, leading to excessive bandwidth usage and latency that are unsuitable for low-resource deployments. In this paper, we propose ChronoSC, a task-oriented semantic communication framework for Video Question Answering (VideoQA). ChronoSC introduces Chrono-Color Stacking, a lightweight and lossless projection scheme that encodes temporal video dynamics into a single static image, enabling extreme temporal compression before transmission. This compact semantic representation is transmitted using a lightweight Deep Joint Source-Channel Coding (DeepJSCC) transceiver and explicitly reconstructed at the receiver. Unlike latent-space methods, explicit visual reconstruction enables the direct reuse of pre-trained vision-language models; specifically, a pre-trained BLIP model is employed to infer answers from noisy, reconstructed chrono-images. Experiments on the CLEVRER dataset show that ChronoSC achieves up to 192 times bandwidth reduction compared to raw video transmission while maintaining high VideoQA accuracy.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-11T17:29:05Z</published>
+    <arxiv:comment>6 pages, IEEE ICCE 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Phuc H. Nguyen</name>
+    </author>
+    <author>
+      <name>Trung T. Nguyen</name>
+    </author>
+    <author>
+      <name>Quy N. Duong</name>
+    </author>
+    <author>
+      <name>Van-Dinh Nguyen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.06306v1</id>
+    <title>UI2App: Benchmarking Visual Interaction Inference in Executable Web Application Generation</title>
+    <updated>2026-07-07T14:08:55Z</updated>
+    <link href="https://arxiv.org/abs/2607.06306v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.06306v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models (LLMs) have demonstrated growing competence in web page generation. However, existing text-driven approaches rely on complex prompts that impose substantial demands on users and offer limited expressivity for page layout and cross-page visual coherence. Image-driven paradigms, which take UI screenshots as input, align more closely with real development workflows. However, current benchmarks focus primarily on visual fidelity and lack a systematic evaluation of the interaction capabilities in generated artifacts. To address this gap, we introduce UI2App, the first benchmark targeting interaction inference, the ability to recover application behavior from screenshots alone, without any textual or behavioral guidance. UI2App comprises 327 screenshots grouped into 45 state-coherent screenshot sets for runnable multi-route web applications. We design an end-to-end pipeline that evaluates each artifact along four dimensions: executability, navigation reachability, visual fidelity, and interaction inference. The interaction metric (IIS) assesses inferred interactions by functional correctness and state-management complexity, crediting any valid implementation rather than matching a single reference. Experiments on six frontier vision-language models reveal a marked capability mismatch between visual reconstruction and interaction realization: the visual-fidelity leader scores only 7.5 on IIS, ranking fourth and trailing the IIS leader by 5.2x. High-complexity interactions such as cross-page state remain a pervasive bottleneck, with half of the evaluated models scoring exactly zero on this dimension. Overall, the results indicate that inferring complete interaction behavior from static screenshots remains a key challenge for models.</summary>
+    <category term="cs.SE" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-07T14:08:55Z</published>
+    <arxiv:primary_category term="cs.SE"/>
+    <author>
+      <name>Grace Man Chen</name>
+    </author>
+    <author>
+      <name>Litao Guo</name>
+    </author>
+    <author>
+      <name>Yifan Wu</name>
+    </author>
+    <author>
+      <name>Yiyu Chen</name>
+    </author>
+    <author>
+      <name>Yenchi Tseng</name>
+    </author>
+    <author>
+      <name>Sicheng Liu</name>
+    </author>
+    <author>
+      <name>Yuyu Luo</name>
+    </author>
+    <author>
+      <name>Ying-Cong Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.15036v1</id>
+    <title>MoEcho: Exploiting Side-Channel Attacks to Compromise User Privacy in Mixture-of-Experts LLMs</title>
+    <updated>2025-08-20T20:02:35Z</updated>
+    <link href="https://arxiv.org/abs/2508.15036v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.15036v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The transformer architecture has become a cornerstone of modern AI, fueling remarkable progress across applications in natural language processing, computer vision, and multimodal learning. As these models continue to scale explosively for performance, implementation efficiency remains a critical challenge. Mixture of Experts (MoE) architectures, selectively activating specialized subnetworks (experts), offer a unique balance between model accuracy and computational cost. However, the adaptive routing in MoE architectures, where input tokens are dynamically directed to specialized experts based on their semantic meaning inadvertently opens up a new attack surface for privacy breaches. These input-dependent activation patterns leave distinctive temporal and spatial traces in hardware execution, which adversaries could exploit to deduce sensitive user data. In this work, we propose MoEcho, discovering a side channel analysis based attack surface that compromises user privacy on MoE based systems. Specifically, in MoEcho, we introduce four novel architectural side channels on different computing platforms, including Cache Occupancy Channels and Pageout+Reload on CPUs, and Performance Counter and TLB Evict+Reload on GPUs, respectively. Exploiting these vulnerabilities, we propose four attacks that effectively breach user privacy in large language models (LLMs) and vision language models (VLMs) based on MoE architectures: Prompt Inference Attack, Response Reconstruction Attack, Visual Inference Attack, and Visual Reconstruction Attack. MoEcho is the first runtime architecture level security analysis of the popular MoE structure common in modern transformers, highlighting a serious security and privacy threat and calling for effective and timely safeguards when harnessing MoE based models for developing efficient large scale AI services.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-20T20:02:35Z</published>
+    <arxiv:comment>This paper will appear in CCS 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Ruyi Ding</name>
+    </author>
+    <author>
+      <name>Tianhong Xu</name>
+    </author>
+    <author>
+      <name>Xinyi Shen</name>
+    </author>
+    <author>
+      <name>Aidong Adam Ding</name>
+    </author>
+    <author>
+      <name>Yunsi Fei</name>
+    </author>
+  </entry>
+</feed>

@@ -17,9 +17,9 @@ Mission Question 不得由 Agent 自行改变。
 
 当前 active question 是：
 
-> 在生成 NLL 关系绑定、无桥表示保持量和 correct-image vs no-pixel 条件增量均未
-> 形成稳定机制后，是否存在一个以训练时跨模态监督信息或优化动力学为核心、具有
-> 权威机制证据且能由最小受控干预区分竞争解释的 VLM 泛化候选？
+> 在模型结构、训练图像、rotation label distribution 和算力相同时，使一小部分
+> autoregressive instruction 必须依赖图像，而不是在文本中泄露答案，能否使低维
+> MiniMind-V 学到可迁移的视觉结构并改善未见 vision-centric task？
 
 这一问题是当前子问题，不是永久冻结的唯一主线。Agent 可以依据可靠实验、
 反例或权威文献自主切换 Active Research Question。
@@ -185,5 +185,31 @@ Agent 可以自主改变：
 - **Mission relation**: 转向训练时可干预对象可以直接区分“跨模态信号没有被学习”
   与“冻结输出代理不具构念效度”，并保留从科学规律自然导出训练机制的出口；正式
   登记候选前必须先通过定向 primary-source literature/theory gate。
-- **Status**: ACTIVE_LITERATURE_GATE；当前只允许创建并 commit `LITMAP-02`
-  immutable plan，然后检索和筛选。不得因“训练可能有效”直接启动实验。
+- **Status**: COMPLETED_AS_GATE；定向检索 568 records / 532 unique titles，全文
+  核查 6 篇 primary sources。ROSS、ASVR、JARVIS、LaVer 和 V-GIFT 为生成式 LVLM
+  提供相互独立的直接视觉 target 干预；其中只有 V-GIFT 同时给出三 seed、
+  matched-compute、single-image 与本地最小可实现设计。保留 `VISSUP-01`，其余多
+  head/loss/layer 方案不进入本地首测。
+
+### 2026-08-07｜VISSUP-01 visually necessary instruction active question
+
+- **Question**: 在相同 M2-current 结构、base draws、rotated pixels、rotation label
+  distribution、optimizer steps 与 target token format 下，visual-necessary
+  rotation instruction 是否比文本直接泄露 label 的 control 更能形成可迁移视觉
+  能力，并改善尚未评分的新外部 CV-Bench-2D performance？
+- **Why the old question was insufficient**: 训练侧 broad question 仍允许多种 loss、
+  layer、head 和 data mixture；LITMAP-02 显示其中多数需要事后选择。V-GIFT 的
+  standard autoregressive instruction 数据干预可以把主差异收缩为“任务是否必须
+  看图”，且不复用前三个失败 proxy。
+- **Evidence / literature origin**: V-GIFT 在 full/LoRA、三个 backbone 和三 seed
+  上报告 vision-centric 平均改善；matched extra iterations 无改善，复用原图和
+  single-image views 仍有效。ICLR 2025 ROSS 以及 ASVR/JARVIS/LaVer 独立支持
+  text-only output supervision 遗漏视觉结构；CVPR 2025 *Words or Vision* 只提供
+  text/multimodal mixture 的正式相邻 risk decomposition，不被当作本 candidate
+  theorem。
+- **Mission relation**: 这是“训练监督关系 → 模型吸收视觉结构 → 未见视觉任务”
+  的直接因果候选；若成功可自然导出 visually necessary sampling/data construction，
+  若失败则否定该机制在当前低维 MiniMind-V 下的可迁移性。
+- **Status**: ACTIVE_PLAN_REQUIRED；必须先创建并 commit
+  `experiments/plans/VISSUP-01_round1.md`。candidate 已登记但尚未训练；不得先看
+  CV-Bench 新模型结果、搜索 ratio/task/prompt 或复用 MMStar no-pixel 指标。
