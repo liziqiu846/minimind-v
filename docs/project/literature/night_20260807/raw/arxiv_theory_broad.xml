@@ -1,0 +1,1449 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/9lTxNNdcOdcRlaaZz45F00YPf/k</id>
+  <title>arXiv Query: search_query=(all:multimodal AND all:contrastive AND all:generalization) OR (all:"multi-view" AND all:contrastive AND all:generalization)&amp;id_list=&amp;start=0&amp;max_results=50</title>
+  <updated>2026-08-06T16:15:34Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=(all:multimodal+AND+(all:contrastive+AND+all:generalization))+OR+(all:%22multi-view%22+AND+(all:contrastive+AND+all:generalization))&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <opensearch:totalResults>1576</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2303.09166v1</id>
+    <title>Identifiability Results for Multimodal Contrastive Learning</title>
+    <updated>2023-03-16T09:14:26Z</updated>
+    <link href="https://arxiv.org/abs/2303.09166v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2303.09166v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Contrastive learning is a cornerstone underlying recent progress in multi-view and multimodal learning, e.g., in representation learning with image/caption pairs. While its effectiveness is not yet fully understood, a line of recent work reveals that contrastive learning can invert the data generating process and recover ground truth latent factors shared between views. In this work, we present new identifiability results for multimodal contrastive learning, showing that it is possible to recover shared factors in a more general setup than the multi-view setting studied previously. Specifically, we distinguish between the multi-view setting with one generative mechanism (e.g., multiple cameras of the same type) and the multimodal setting that is characterized by distinct mechanisms (e.g., cameras and microphones). Our work generalizes previous identifiability results by redefining the generative process in terms of distinct mechanisms with modality-specific latent variables. We prove that contrastive learning can block-identify latent factors shared between modalities, even when there are nontrivial dependencies between factors. We empirically verify our identifiability results with numerical simulations and corroborate our findings on a complex multimodal dataset of image/text pairs. Zooming out, our work provides a theoretical basis for multimodal representation learning and explains in which settings multimodal contrastive learning can be effective in practice.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-03-16T09:14:26Z</published>
+    <arxiv:comment>ICLR 2023 camera-ready version</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Imant Daunhawer</name>
+    </author>
+    <author>
+      <name>Alice Bizeul</name>
+    </author>
+    <author>
+      <name>Emanuele Palumbo</name>
+    </author>
+    <author>
+      <name>Alexander Marx</name>
+    </author>
+    <author>
+      <name>Julia E. Vogt</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.06979v1</id>
+    <title>A Principled Framework for Multi-View Contrastive Learning</title>
+    <updated>2025-07-09T16:07:17Z</updated>
+    <link href="https://arxiv.org/abs/2507.06979v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.06979v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Contrastive Learning (CL), a leading paradigm in Self-Supervised Learning (SSL), typically relies on pairs of data views generated through augmentation. While multiple augmentations per instance (more than two) improve generalization in supervised learning, current CL methods handle additional views suboptimally by simply aggregating different pairwise objectives. This approach suffers from four critical limitations: (L1) it utilizes multiple optimization terms per data point resulting to conflicting objectives, (L2) it fails to model all interactions across views and data points, (L3) it inherits fundamental limitations (e.g. alignment-uniformity coupling) from pairwise CL losses, and (L4) it prevents fully realizing the benefits of increased view multiplicity observed in supervised settings. We address these limitations through two novel loss functions: MV-InfoNCE, which extends InfoNCE to incorporate all possible view interactions simultaneously in one term per data point, and MV-DHEL, which decouples alignment from uniformity across views while scaling interaction complexity with view multiplicity. Both approaches are theoretically grounded - we prove they asymptotically optimize for alignment of all views and uniformity, providing principled extensions to multi-view contrastive learning. Our empirical results on ImageNet1K and three other datasets demonstrate that our methods consistently outperform existing multi-view approaches and effectively scale with increasing view multiplicity. We also apply our objectives to multimodal data and show that, in contrast to other contrastive objectives, they can scale beyond just two modalities. Most significantly, ablation studies reveal that MV-DHEL with five or more views effectively mitigates dimensionality collapse by fully utilizing the embedding space, thereby delivering multi-view benefits observed in supervised learning.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-09T16:07:17Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Panagiotis Koromilas</name>
+    </author>
+    <author>
+      <name>Efthymios Georgiou</name>
+    </author>
+    <author>
+      <name>Giorgos Bouritsas</name>
+    </author>
+    <author>
+      <name>Theodoros Giannakopoulos</name>
+    </author>
+    <author>
+      <name>Mihalis A. Nicolaou</name>
+    </author>
+    <author>
+      <name>Yannis Panagakis</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.12519v3</id>
+    <title>Multi-View Adaptive Contrastive Learning for Information Retrieval Based Fault Localization</title>
+    <updated>2026-02-05T11:31:43Z</updated>
+    <link href="https://arxiv.org/abs/2409.12519v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.12519v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Most studies focused on information retrieval-based techniques for fault localization, which built representations for bug reports and source code files and matched their semantic vectors through similarity measurement. However, such approaches often ignore some useful information that might help improve localization performance, such as 1) the interaction relationship between bug reports and source code files; 2) the similarity relationship between bug reports; and 3) the co-citation relationship between source code files. In this paper, we propose a novel approach named Multi-View Adaptive Contrastive Learning for Information Retrieval Fault Localization (MACL-IRFL) to learn the above-mentioned relationships for software fault localization. Specifically, we first generate data augmentations from report-code interaction view, report-report similarity view and code-code co-citation view separately, and adopt graph neural network to aggregate the information of bug reports or source code files from the three views in the embedding process. Moreover, we perform contrastive learning across these views. Our design of contrastive learning task will force the bug report representations to encode information shared by report-report and report-code views,and the source code file representations shared by code-code and report-code views, thereby alleviating the noise from auxiliary information. Finally, to evaluate the performance of our approach, we conduct extensive experiments on five open-source Java projects. The results show that our model can improve over the best baseline up to 28.93%, 25.57% and 20.35% on Accuracy@1, MAP and MRR, respectively.</summary>
+    <category term="cs.SE" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-19T07:20:10Z</published>
+    <arxiv:comment>The paper was accepted by Automated Software Engineering in 18 October 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.SE"/>
+    <arxiv:journal_ref>Zhou, C., Xie, X., Chen, G. et al. Multi-view adaptive contrastive learning for information retrieval based fault localization. Autom Softw Eng 33, 29 (2026)</arxiv:journal_ref>
+    <author>
+      <name>Chunying Zhou</name>
+    </author>
+    <author>
+      <name>Xiaoyuan Xie</name>
+    </author>
+    <author>
+      <name>Gong Chen</name>
+    </author>
+    <author>
+      <name>Peng He</name>
+    </author>
+    <author>
+      <name>Bing Li</name>
+    </author>
+    <arxiv:doi>10.1007/s10515-025-00573-x</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s10515-025-00573-x" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2108.06723v1</id>
+    <title>Self-supervised Contrastive Learning of Multi-view Facial Expressions</title>
+    <updated>2021-08-15T11:23:34Z</updated>
+    <link href="https://arxiv.org/abs/2108.06723v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2108.06723v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Facial expression recognition (FER) has emerged as an important component of human-computer interaction systems. Despite recent advancements in FER, performance often drops significantly for non-frontal facial images. We propose Contrastive Learning of Multi-view facial Expressions (CL-MEx) to exploit facial images captured simultaneously from different angles towards FER. CL-MEx is a two-step training framework. In the first step, an encoder network is pre-trained with the proposed self-supervised contrastive loss, where it learns to generate view-invariant embeddings for different views of a subject. The model is then fine-tuned with labeled data in a supervised setting. We demonstrate the performance of the proposed method on two multi-view FER datasets, KDEF and DDCF, where state-of-the-art performances are achieved. Further experiments show the robustness of our method in dealing with challenging angles and reduced amounts of labeled data.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-08-15T11:23:34Z</published>
+    <arxiv:comment>Accepted by 23rd ACM International Conference on Multimodal Interaction (ICMI 2021)</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Shuvendu Roy</name>
+    </author>
+    <author>
+      <name>Ali Etemad</name>
+    </author>
+    <arxiv:doi>10.1145/3462244.3479955</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3462244.3479955" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.08692v1</id>
+    <title>Contrastive Knowledge Distillation for Robust Multimodal Sentiment Analysis</title>
+    <updated>2024-10-11T10:24:36Z</updated>
+    <link href="https://arxiv.org/abs/2410.08692v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.08692v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal sentiment analysis (MSA) systems leverage information from different modalities to predict human sentiment intensities. Incomplete modality is an important issue that may cause a significant performance drop in MSA systems. By generative imputation, i.e., recovering the missing data from available data, systems may achieve robust performance but will lead to high computational costs. This paper introduces a knowledge distillation method, called `Multi-Modal Contrastive Knowledge Distillation' (MM-CKD), to address the issue of incomplete modality in video sentiment analysis with lower computation cost, as a novel non-imputation-based method. We employ Multi-view Supervised Contrastive Learning (MVSC) to transfer knowledge from a teacher model to student models. This approach not only leverages cross-modal knowledge but also introduces cross-sample knowledge with supervision, jointly improving the performance of both teacher and student models through online learning. Our method gives competitive results with significantly lower computational costs than state-of-the-art imputation-based methods.</summary>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-11T10:24:36Z</published>
+    <arxiv:primary_category term="cs.MM"/>
+    <author>
+      <name>Zhongyi Sang</name>
+    </author>
+    <author>
+      <name>Kotaro Funakoshi</name>
+    </author>
+    <author>
+      <name>Manabu Okumura</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2110.11842v1</id>
+    <title>Multi-view Contrastive Graph Clustering</title>
+    <updated>2021-10-22T15:22:42Z</updated>
+    <link href="https://arxiv.org/abs/2110.11842v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2110.11842v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>With the explosive growth of information technology, multi-view graph data have become increasingly prevalent and valuable. Most existing multi-view clustering techniques either focus on the scenario of multiple graphs or multi-view attributes. In this paper, we propose a generic framework to cluster multi-view attributed graph data. Specifically, inspired by the success of contrastive learning, we propose multi-view contrastive graph clustering (MCGC) method to learn a consensus graph since the original graph could be noisy or incomplete and is not directly applicable. Our method composes of two key steps: we first filter out the undesirable high-frequency noise while preserving the graph geometric features via graph filtering and obtain a smooth representation of nodes; we then learn a consensus graph regularized by graph contrastive loss. Results on several benchmark datasets show the superiority of our method with respect to state-of-the-art approaches. In particular, our simple approach outperforms existing deep learning-based methods.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-10-22T15:22:42Z</published>
+    <arxiv:comment>Accepted by NeurIPS 2021</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Erlin Pan</name>
+    </author>
+    <author>
+      <name>Zhao Kang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.09185v2</id>
+    <title>Incomplete Multi-view Clustering via Diffusion Contrastive Generation</title>
+    <updated>2025-06-29T05:58:32Z</updated>
+    <link href="https://arxiv.org/abs/2503.09185v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.09185v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Incomplete multi-view clustering (IMVC) has garnered increasing attention in recent years due to the common issue of missing data in multi-view datasets. The primary approach to address this challenge involves recovering the missing views before applying conventional multi-view clustering methods. Although imputation-based IMVC methods have achieved significant improvements, they still encounter notable limitations: 1) heavy reliance on paired data for training the data recovery module, which is impractical in real scenarios with high missing data rates; 2) the generated data often lacks diversity and discriminability, resulting in suboptimal clustering results. To address these shortcomings, we propose a novel IMVC method called Diffusion Contrastive Generation (DCG). Motivated by the consistency between the diffusion and clustering processes, DCG learns the distribution characteristics to enhance clustering by applying forward diffusion and reverse denoising processes to intra-view data. By performing contrastive learning on a limited set of paired multi-view samples, DCG can align the generated views with the real views, facilitating accurate recovery of views across arbitrary missing view scenarios. Additionally, DCG integrates instance-level and category-level interactive learning to exploit the consistent and complementary information available in multi-view data, achieving robust and end-to-end clustering. Extensive experiments demonstrate that our method outperforms state-of-the-art approaches. The code is available at https://github.com/zhangyuanyang21/2025-AAAI-DCG.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-12T09:27:25Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <arxiv:journal_ref>AAAI 2025</arxiv:journal_ref>
+    <author>
+      <name>Yuanyang Zhang</name>
+    </author>
+    <author>
+      <name>Yijie Lin</name>
+    </author>
+    <author>
+      <name>Weiqing Yan</name>
+    </author>
+    <author>
+      <name>Li Yao</name>
+    </author>
+    <author>
+      <name>Xinhang Wan</name>
+    </author>
+    <author>
+      <name>Guangyuan Li</name>
+    </author>
+    <author>
+      <name>Chao Zhang</name>
+    </author>
+    <author>
+      <name>Guanzhou Ke</name>
+    </author>
+    <author>
+      <name>Jie Xu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.09527v2</id>
+    <title>Generative Diffusion Contrastive Network for Multi-View Clustering</title>
+    <updated>2026-01-18T09:49:25Z</updated>
+    <link href="https://arxiv.org/abs/2509.09527v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.09527v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In recent years, Multi-View Clustering (MVC) has been significantly advanced under the influence of deep learning. By integrating heterogeneous data from multiple views, MVC enhances clustering analysis, making multi-view fusion critical to clustering performance. However, there is a problem of low-quality data in multi-view fusion. This problem primarily arises from two reasons: 1) Certain views are contaminated by noisy data. 2) Some views suffer from missing data. This paper proposes a novel Stochastic Generative Diffusion Fusion (SGDF) method to address this problem. SGDF leverages a multiple generative mechanism for the multi-view feature of each sample. It is robust to low-quality data. Building on SGDF, we further present the Generative Diffusion Contrastive Network (GDCN). Extensive experiments show that GDCN achieves the state-of-the-art results in deep MVC tasks. The source code is publicly available at https://github.com/HackerHyper/GDCN.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-11T15:09:26Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jian Zhu</name>
+    </author>
+    <author>
+      <name>Xin Zou</name>
+    </author>
+    <author>
+      <name>Xi Wang</name>
+    </author>
+    <author>
+      <name>Lei Liu</name>
+    </author>
+    <author>
+      <name>Chang Tang</name>
+    </author>
+    <author>
+      <name>Li-Rong Dai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.12377v1</id>
+    <title>Contrastive Multi-View Graph Hashing</title>
+    <updated>2025-08-17T14:27:20Z</updated>
+    <link href="https://arxiv.org/abs/2508.12377v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.12377v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multi-view graph data, which both captures node attributes and rich relational information from diverse sources, is becoming increasingly prevalent in various domains. The effective and efficient retrieval of such data is an important task. Although multi-view hashing techniques have offered a paradigm for fusing diverse information into compact binary codes, they typically assume attributes-based inputs per view. This makes them unsuitable for multi-view graph data, where effectively encoding and fusing complex topological information from multiple heterogeneous graph views to generate unified binary embeddings remains a significant challenge. In this work, we propose Contrastive Multi-view Graph Hashing (CMGHash), a novel end-to-end framework designed to learn unified and discriminative binary embeddings from multi-view graph data. CMGHash learns a consensus node representation space using a contrastive multi-view graph loss, which aims to pull $k$-nearest neighbors from all graphs closer while pushing away negative pairs, i.e., non-neighbor nodes. Moreover, we impose binarization constraints on this consensus space, enabling its conversion to a corresponding binary embedding space at minimal cost. Extensive experiments on several benchmark datasets demonstrate that CMGHash significantly outperforms existing approaches in terms of retrieval accuracy.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-17T14:27:20Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Yang Xu</name>
+    </author>
+    <author>
+      <name>Zuliang Yang</name>
+    </author>
+    <author>
+      <name>Kai Ming Ting</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.16493v1</id>
+    <title>Trunk-branch Contrastive Network with Multi-view Deformable Aggregation for Multi-view Action Recognition</title>
+    <updated>2025-02-23T08:10:20Z</updated>
+    <link href="https://arxiv.org/abs/2502.16493v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.16493v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multi-view action recognition aims to identify actions in a given multi-view scene. Traditional studies initially extracted refined features from each view, followed by implemented paired interaction and integration, but they potentially overlooked the critical local features in each view. When observing objects from multiple perspectives, individuals typically form a comprehensive impression and subsequently fill in specific details. Drawing inspiration from this cognitive process, we propose a novel trunk-branch contrastive network (TBCNet) for RGB-based multi-view action recognition. Distinctively, TBCNet first obtains fused features in the trunk block and then implicitly supplements vital details provided by the branch block via contrastive learning, generating a more informative and comprehensive action representation. Within this framework, we construct two core components: the multi-view deformable aggregation and the trunk-branch contrastive learning. MVDA employed in the trunk block effectively facilitates multi-view feature fusion and adaptive cross-view spatio-temporal correlation, where a global aggregation module is utilized to emphasize significant spatial information and a composite relative position bias is designed to capture the intra- and cross-view relative positions. Moreover, a trunk-branch contrastive loss is constructed between aggregated features and refined details from each view. By incorporating two distinct weights for positive and negative samples, a weighted trunk-branch contrastive loss is proposed to extract valuable information and emphasize subtle inter-class differences. The effectiveness of TBCNet is verified by extensive experiments on four datasets including NTU-RGB+D 60, NTU-RGB+D 120, PKU-MMD, and N-UCLA dataset. Compared to other RGB-based methods, our approach achieves state-of-the-art performance in cross-subject and cross-setting protocols.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-23T08:10:20Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yingyuan Yang</name>
+    </author>
+    <author>
+      <name>Guoyuan Liang</name>
+    </author>
+    <author>
+      <name>Can Wang</name>
+    </author>
+    <author>
+      <name>Xiaojun Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.17354v2</id>
+    <title>DWCL: Dual-Weighted Contrastive Learning for Multi-View Clustering</title>
+    <updated>2025-01-23T05:52:26Z</updated>
+    <link href="https://arxiv.org/abs/2411.17354v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.17354v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multi-view contrastive clustering (MVCC) has gained significant attention for generating consistent clustering structures from multiple views through contrastive learning. However, most existing MVCC methods create cross-views by combining any two views, leading to a high volume of unreliable pairs. Furthermore, these approaches often overlook discrepancies in multi-view representations, resulting in representation degeneration. To address these challenges, we introduce a novel model called Dual-Weighted Contrastive Learning (DWCL) for Multi-View Clustering. Specifically, to reduce the impact of unreliable cross-views, we introduce an innovative Best-Other (B-O) contrastive mechanism that enhances the representation of individual views at a low computational cost. Furthermore, we develop a dual weighting strategy that combines a view quality weight, reflecting the quality of each view, with a view discrepancy weight. This approach effectively mitigates representation degeneration by downplaying cross-views that are both low in quality and high in discrepancy. We theoretically validate the efficiency of the B-O contrastive mechanism and the effectiveness of the dual weighting strategy. Extensive experiments demonstrate that DWCL outperforms previous methods across eight multi-view datasets, showcasing superior performance and robustness in MVCC. Specifically, our method achieves absolute accuracy improvements of 5.4\% and 5.6\% compared to state-of-the-art methods on the Caltech6V7 and MSRCv1 datasets, respectively.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-26T11:57:20Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Hanning Yuan</name>
+    </author>
+    <author>
+      <name>Zhihui Zhang</name>
+    </author>
+    <author>
+      <name>Qi Guo</name>
+    </author>
+    <author>
+      <name>Lianhua Chi</name>
+    </author>
+    <author>
+      <name>Sijie Ruan</name>
+    </author>
+    <author>
+      <name>Jinhui Pang</name>
+    </author>
+    <author>
+      <name>Xiaoshuai Hao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.17482v4</id>
+    <title>MVCNet: Multi-View Contrastive Network for Motor Imagery Classification</title>
+    <updated>2025-07-31T08:10:59Z</updated>
+    <link href="https://arxiv.org/abs/2502.17482v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.17482v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Electroencephalography (EEG)-based brain-computer interfaces (BCIs) enable neural interaction by decoding brain activity for external communication. Motor imagery (MI) decoding has received significant attention due to its intuitive mechanism. However, most existing models rely on single-stream architectures and overlook the multi-view nature of EEG signals, leading to limited performance and generalization. We propose a multi-view contrastive network (MVCNet), a dual-branch architecture that parallelly integrates CNN and Transformer blocks to capture both local spatial-temporal features and global temporal dependencies. To enhance the informativeness of training data, MVCNet incorporates a unified augmentation pipeline across time, frequency, and spatial domains. Two contrastive modules are further introduced: a cross-view contrastive module that enforces consistency of original and augmented views, and a cross-model contrastive module that aligns features extracted from both branches. Final representations are fused and jointly optimized by contrastive and classification losses. Experiments on five public MI datasets across three scenarios demonstrate that MVCNet consistently outperforms nine state-of-the-art MI decoding networks, highlighting its effectiveness and generalization ability. MVCNet provides a robust solution for MI decoding by integrating multi-view information and dual-branch modeling, contributing to the development of more reliable BCI systems.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-18T10:30:53Z</published>
+    <arxiv:comment>12 pages, 9 figures</arxiv:comment>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Ziwei Wang</name>
+    </author>
+    <author>
+      <name>Siyang Li</name>
+    </author>
+    <author>
+      <name>Xiaoqing Chen</name>
+    </author>
+    <author>
+      <name>Dongrui Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2404.02225v2</id>
+    <title>CHOSEN: Contrastive Hypothesis Selection for Multi-View Depth Refinement</title>
+    <updated>2025-05-05T15:35:26Z</updated>
+    <link href="https://arxiv.org/abs/2404.02225v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2404.02225v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose CHOSEN, a simple yet flexible, robust and effective multi-view depth refinement framework. It can be employed in any existing multi-view stereo pipeline, with straightforward generalization capability for different multi-view capture systems such as camera relative positioning and lenses. Given an initial depth estimation, CHOSEN iteratively re-samples and selects the best hypotheses, and automatically adapts to different metric or intrinsic scales determined by the capture system. The key to our approach is the application of contrastive learning in an appropriate solution space and a carefully designed hypothesis feature, based on which positive and negative hypotheses can be effectively distinguished. Integrated in a simple baseline multi-view stereo pipeline, CHOSEN delivers impressive quality in terms of depth and normal accuracy compared to many current deep learning based multi-view stereo pipelines.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-04-02T18:27:03Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Di Qiu</name>
+    </author>
+    <author>
+      <name>Yinda Zhang</name>
+    </author>
+    <author>
+      <name>Thabo Beeler</name>
+    </author>
+    <author>
+      <name>Vladimir Tankovich</name>
+    </author>
+    <author>
+      <name>Christian Häne</name>
+    </author>
+    <author>
+      <name>Sean Fanello</name>
+    </author>
+    <author>
+      <name>Christoph Rhemann</name>
+    </author>
+    <author>
+      <name>Sergio Orts Escolano</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2311.16751v3</id>
+    <title>MultiCBR: Multi-view Contrastive Learning for Bundle Recommendation</title>
+    <updated>2024-01-11T14:17:44Z</updated>
+    <link href="https://arxiv.org/abs/2311.16751v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2311.16751v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Bundle recommendation seeks to recommend a bundle of related items to users to improve both user experience and the profits of platform. Existing bundle recommendation models have progressed from capturing only user-bundle interactions to the modeling of multiple relations among users, bundles and items. CrossCBR, in particular, incorporates cross-view contrastive learning into a two-view preference learning framework, significantly improving SOTA performance. It does, however, have two limitations: 1) the two-view formulation does not fully exploit all the heterogeneous relations among users, bundles and items; and 2) the "early contrast and late fusion" framework is less effective in capturing user preference and difficult to generalize to multiple views. In this paper, we present MultiCBR, a novel Multi-view Contrastive learning framework for Bundle Recommendation. First, we devise a multi-view representation learning framework capable of capturing all the user-bundle, user-item and bundle-item relations, especially better utilizing the bundle-item affiliations to enhance sparse bundles' representations. Second, we innovatively adopt an "early fusion and late contrast" design that first fuses the multi-view representations before performing self-supervised contrastive learning. In comparison to existing approaches, our framework reverses the order of fusion and contrast, introducing the following advantages: 1)our framework is capable of modeling both cross-view and ego-view preferences, allowing us to achieve enhanced user preference modeling; and 2) instead of requiring quadratic number of cross-view contrastive losses, we only require two self-supervised contrastive losses, resulting in minimal extra costs. Experimental results on three public datasets indicate that our method outperforms SOTA methods.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-11-28T12:50:40Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <arxiv:journal_ref>TOIS 2024</arxiv:journal_ref>
+    <author>
+      <name>Yunshan Ma</name>
+    </author>
+    <author>
+      <name>Yingzhi He</name>
+    </author>
+    <author>
+      <name>Xiang Wang</name>
+    </author>
+    <author>
+      <name>Yinwei Wei</name>
+    </author>
+    <author>
+      <name>Xiaoyu Du</name>
+    </author>
+    <author>
+      <name>Yuyangzi Fu</name>
+    </author>
+    <author>
+      <name>Tat-Seng Chua</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2210.00248v2</id>
+    <title>Heterogeneous Graph Contrastive Multi-view Learning</title>
+    <updated>2023-01-01T12:48:13Z</updated>
+    <link href="https://arxiv.org/abs/2210.00248v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.00248v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Inspired by the success of contrastive learning (CL) in computer vision and natural language processing, graph contrastive learning (GCL) has been developed to learn discriminative node representations on graph datasets. However, the development of GCL on Heterogeneous Information Networks (HINs) is still in the infant stage. For example, it is unclear how to augment the HINs without substantially altering the underlying semantics, and how to design the contrastive objective to fully capture the rich semantics. Moreover, early investigations demonstrate that CL suffers from sampling bias, whereas conventional debiasing techniques are empirically shown to be inadequate for GCL. How to mitigate the sampling bias for heterogeneous GCL is another important problem. To address the aforementioned challenges, we propose a novel Heterogeneous Graph Contrastive Multi-view Learning (HGCML) model. In particular, we use metapaths as the augmentation to generate multiple subgraphs as multi-views, and propose a contrastive objective to maximize the mutual information between any pairs of metapath-induced views. To alleviate the sampling bias, we further propose a positive sampling strategy to explicitly select positives for each node via jointly considering semantic and structural information preserved on each metapath view. Extensive experiments demonstrate HGCML consistently outperforms state-of-the-art baselines on five real-world benchmark datasets.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-01T10:53:48Z</published>
+    <arxiv:comment>Accepted by SDM 2023</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Zehong Wang</name>
+    </author>
+    <author>
+      <name>Qi Li</name>
+    </author>
+    <author>
+      <name>Donghua Yu</name>
+    </author>
+    <author>
+      <name>Xiaolong Han</name>
+    </author>
+    <author>
+      <name>Xiao-Zhi Gao</name>
+    </author>
+    <author>
+      <name>Shigen Shen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2308.06477v2</id>
+    <title>Leveraging multi-view data without annotations for prostate MRI segmentation: A contrastive approach</title>
+    <updated>2023-09-15T09:46:14Z</updated>
+    <link href="https://arxiv.org/abs/2308.06477v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2308.06477v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>An accurate prostate delineation and volume characterization can support the clinical assessment of prostate cancer. A large amount of automatic prostate segmentation tools consider exclusively the axial MRI direction in spite of the availability as per acquisition protocols of multi-view data. Further, when multi-view data is exploited, manual annotations and availability at test time for all the views is commonly assumed. In this work, we explore a contrastive approach at training time to leverage multi-view data without annotations and provide flexibility at deployment time in the event of missing views. We propose a triplet encoder and single decoder network based on U-Net, tU-Net (triplet U-Net). Our proposed architecture is able to exploit non-annotated sagittal and coronal views via contrastive learning to improve the segmentation from a volumetric perspective. For that purpose, we introduce the concept of inter-view similarity in the latent space. To guide the training, we combine a dice score loss calculated with respect to the axial view and its manual annotations together with a multi-view contrastive loss. tU-Net shows statistical improvement in dice score coefficient (DSC) with respect to only axial view (91.25+-0.52% compared to 86.40+-1.50%,P&lt;.001). Sensitivity analysis reveals the volumetric positive impact of the contrastive loss when paired with tU-Net (2.85+-1.34% compared to 3.81+-1.88%,P&lt;.001). Further, our approach shows good external volumetric generalization in an in-house dataset when tested with multi-view data (2.76+-1.89% compared to 3.92+-3.31%,P=.002), showing the feasibility of exploiting non-annotated multi-view data through contrastive learning whilst providing flexibility at deployment in the event of missing views.</summary>
+    <category term="eess.IV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-12T06:07:47Z</published>
+    <arxiv:comment>Under review</arxiv:comment>
+    <arxiv:primary_category term="eess.IV"/>
+    <author>
+      <name>Tim Nikolass Lindeijer</name>
+    </author>
+    <author>
+      <name>Tord Martin Ytredal</name>
+    </author>
+    <author>
+      <name>Trygve Eftestøl</name>
+    </author>
+    <author>
+      <name>Tobias Nordström</name>
+    </author>
+    <author>
+      <name>Fredrik Jäderling</name>
+    </author>
+    <author>
+      <name>Martin Eklund</name>
+    </author>
+    <author>
+      <name>Alvaro Fernandez-Quilez</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.10224v2</id>
+    <title>EVOKE: Elevating Chest X-ray Report Generation via Multi-View Contrastive Learning and Patient-Specific Knowledge</title>
+    <updated>2025-03-12T09:38:02Z</updated>
+    <link href="https://arxiv.org/abs/2411.10224v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.10224v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Radiology reports are crucial for planning treatment strategies and facilitating effective doctor-patient communication. However, the manual creation of these reports places a significant burden on radiologists. While automatic radiology report generation presents a promising solution, existing methods often rely on single-view radiographs, which constrain diagnostic accuracy. To address this challenge, we propose \textbf{EVOKE}, a novel chest X-ray report generation framework that incorporates multi-view contrastive learning and patient-specific knowledge. Specifically, we introduce a multi-view contrastive learning method that enhances visual representation by aligning multi-view radiographs with their corresponding report. After that, we present a knowledge-guided report generation module that integrates available patient-specific indications (e.g., symptom descriptions) to trigger the production of accurate and coherent radiology reports. To support research in multi-view report generation, we construct Multi-view CXR and Two-view CXR datasets using publicly available sources. Our proposed EVOKE surpasses recent state-of-the-art methods across multiple datasets, achieving a 2.9\% F\textsubscript{1} RadGraph improvement on MIMIC-CXR, a 7.3\% BLEU-1 improvement on MIMIC-ABN, a 3.1\% BLEU-4 improvement on Multi-view CXR, and an 8.2\% F\textsubscript{1,mic-14} CheXbert improvement on Two-view CXR.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-15T14:38:13Z</published>
+    <arxiv:comment>The code is available at https://github.com/mk-runner/EVOKE</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <arxiv:journal_ref>Bioinformatics, 2026</arxiv:journal_ref>
+    <author>
+      <name>Qiguang Miao</name>
+    </author>
+    <author>
+      <name>Kang Liu</name>
+    </author>
+    <author>
+      <name>Zhuoqi Ma</name>
+    </author>
+    <author>
+      <name>Yunan Li</name>
+    </author>
+    <author>
+      <name>Xiaolu Kang</name>
+    </author>
+    <author>
+      <name>Ruixuan Liu</name>
+    </author>
+    <author>
+      <name>Tianyi Liu</name>
+    </author>
+    <author>
+      <name>Kun Xie</name>
+    </author>
+    <author>
+      <name>Zhicheng Jiao</name>
+    </author>
+    <arxiv:doi>10.1093/bioinformatics/btag566</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1093/bioinformatics/btag566" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.20056v1</id>
+    <title>Enhanced Contrastive Learning with Multi-view Longitudinal Data for Chest X-ray Report Generation</title>
+    <updated>2025-02-27T12:59:04Z</updated>
+    <link href="https://arxiv.org/abs/2502.20056v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.20056v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Automated radiology report generation offers an effective solution to alleviate radiologists' workload. However, most existing methods focus primarily on single or fixed-view images to model current disease conditions, which limits diagnostic accuracy and overlooks disease progression. Although some approaches utilize longitudinal data to track disease progression, they still rely on single images to analyze current visits. To address these issues, we propose enhanced contrastive learning with Multi-view Longitudinal data to facilitate chest X-ray Report Generation, named MLRG. Specifically, we introduce a multi-view longitudinal contrastive learning method that integrates spatial information from current multi-view images and temporal information from longitudinal data. This method also utilizes the inherent spatiotemporal information of radiology reports to supervise the pre-training of visual and textual representations. Subsequently, we present a tokenized absence encoding technique to flexibly handle missing patient-specific prior knowledge, allowing the model to produce more accurate radiology reports based on available prior knowledge. Extensive experiments on MIMIC-CXR, MIMIC-ABN, and Two-view CXR datasets demonstrate that our MLRG outperforms recent state-of-the-art methods, achieving a 2.3% BLEU-4 improvement on MIMIC-CXR, a 5.5% F1 score improvement on MIMIC-ABN, and a 2.7% F1 RadGraph improvement on Two-view CXR.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-27T12:59:04Z</published>
+    <arxiv:comment>Accepted by CVPR 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <arxiv:journal_ref>2025 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), Nashville, TN, USA, 2025, pp. 10348-10359</arxiv:journal_ref>
+    <author>
+      <name>Kang Liu</name>
+    </author>
+    <author>
+      <name>Zhuoqi Ma</name>
+    </author>
+    <author>
+      <name>Xiaolu Kang</name>
+    </author>
+    <author>
+      <name>Yunan Li</name>
+    </author>
+    <author>
+      <name>Kun Xie</name>
+    </author>
+    <author>
+      <name>Zhicheng Jiao</name>
+    </author>
+    <author>
+      <name>Qiguang Miao</name>
+    </author>
+    <arxiv:doi>10.1109/CVPR52734.2025.00968</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/CVPR52734.2025.00968" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.21516v1</id>
+    <title>Global-Graph Guided and Local-Graph Weighted Contrastive Learning for Unified Clustering on Incomplete and Noise Multi-View Data</title>
+    <updated>2025-12-25T05:41:05Z</updated>
+    <link href="https://arxiv.org/abs/2512.21516v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.21516v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, contrastive learning (CL) plays an important role in exploring complementary information for multi-view clustering (MVC) and has attracted increasing attention. Nevertheless, real-world multi-view data suffer from data incompleteness or noise, resulting in rare-paired samples or mis-paired samples which significantly challenges the effectiveness of CL-based MVC. That is, rare-paired issue prevents MVC from extracting sufficient multi-view complementary information, and mis-paired issue causes contrastive learning to optimize the model in the wrong direction. To address these issues, we propose a unified CL-based MVC framework for enhancing clustering effectiveness on incomplete and noise multi-view data. First, to overcome the rare-paired issue, we design a global-graph guided contrastive learning, where all view samples construct a global-view affinity graph to form new sample pairs for fully exploring complementary information. Second, to mitigate the mis-paired issue, we propose a local-graph weighted contrastive learning, which leverages local neighbors to generate pair-wise weights to adaptively strength or weaken the pair-wise contrastive learning. Our method is imputation-free and can be integrated into a unified global-local graph-guided contrastive learning framework. Extensive experiments on both incomplete and noise settings of multi-view data demonstrate that our method achieves superior performance compared with state-of-the-art approaches.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-25T05:41:05Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Hongqing He</name>
+    </author>
+    <author>
+      <name>Jie Xu</name>
+    </author>
+    <author>
+      <name>Wenyuan Yang</name>
+    </author>
+    <author>
+      <name>Yonghua Zhu</name>
+    </author>
+    <author>
+      <name>Guoqiu Wen</name>
+    </author>
+    <author>
+      <name>Xiaofeng Zhu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.13565v1</id>
+    <title>Exploring Multi-view Pixel Contrast for General and Robust Image Forgery Localization</title>
+    <updated>2024-06-19T13:51:52Z</updated>
+    <link href="https://arxiv.org/abs/2406.13565v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.13565v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Image forgery localization, which aims to segment tampered regions in an image, is a fundamental yet challenging digital forensic task. While some deep learning-based forensic methods have achieved impressive results, they directly learn pixel-to-label mappings without fully exploiting the relationship between pixels in the feature space. To address such deficiency, we propose a Multi-view Pixel-wise Contrastive algorithm (MPC) for image forgery localization. Specifically, we first pre-train the backbone network with the supervised contrastive loss to model pixel relationships from the perspectives of within-image, cross-scale and cross-modality. That is aimed at increasing intra-class compactness and inter-class separability. Then the localization head is fine-tuned using the cross-entropy loss, resulting in a better pixel localizer. The MPC is trained on three different scale training datasets to make a comprehensive and fair comparison with existing image forgery localization algorithms. Extensive experiments on the small, medium and large scale training datasets show that the proposed MPC achieves higher generalization performance and robustness against post-processing than the state-of-the-arts. Code will be available at https://github.com/multimediaFor/MPC.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-19T13:51:52Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zijie Lou</name>
+    </author>
+    <author>
+      <name>Gang Cao</name>
+    </author>
+    <author>
+      <name>Kun Guo</name>
+    </author>
+    <author>
+      <name>Haochen Zhu</name>
+    </author>
+    <author>
+      <name>Lifang Yu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2212.07892v3</id>
+    <title>Integrating Multimodal Data for Joint Generative Modeling of Complex Dynamics</title>
+    <updated>2024-06-07T11:12:00Z</updated>
+    <link href="https://arxiv.org/abs/2212.07892v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2212.07892v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Many, if not most, systems of interest in science are naturally described as nonlinear dynamical systems. Empirically, we commonly access these systems through time series measurements. Often such time series may consist of discrete random variables rather than continuous measurements, or may be composed of measurements from multiple data modalities observed simultaneously. For instance, in neuroscience we may have behavioral labels in addition to spike counts and continuous physiological recordings. While by now there is a burgeoning literature on deep learning for dynamical systems reconstruction (DSR), multimodal data integration has hardly been considered in this context. Here we provide such an efficient and flexible algorithmic framework that rests on a multimodal variational autoencoder for generating a sparse teacher signal that guides training of a reconstruction model, exploiting recent advances in DSR training techniques. It enables to combine various sources of information for optimal reconstruction, even allows for reconstruction from symbolic data (class labels) alone, and connects different types of observations within a common latent dynamics space. In contrast to previous multimodal data integration techniques for scientific applications, our framework is fully \textit{generative}, producing, after training, trajectories with the same geometrical and temporal structure as those of the ground truth system.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nlin.CD" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-12-15T15:21:28Z</published>
+    <arxiv:comment>ICML 2024. Previously published as a workshop paper for the AAAI 2023 Workshop MLmDS as "Multimodal Teacher Forcing for Reconstructing Nonlinear Dynamical Systems"</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Manuel Brenner</name>
+    </author>
+    <author>
+      <name>Florian Hess</name>
+    </author>
+    <author>
+      <name>Georgia Koppe</name>
+    </author>
+    <author>
+      <name>Daniel Durstewitz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2310.12008v1</id>
+    <title>Multi-view Contrastive Learning for Entity Typing over Knowledge Graphs</title>
+    <updated>2023-10-18T14:41:09Z</updated>
+    <link href="https://arxiv.org/abs/2310.12008v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2310.12008v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Knowledge graph entity typing (KGET) aims at inferring plausible types of entities in knowledge graphs. Existing approaches to KGET focus on how to better encode the knowledge provided by the neighbors and types of an entity into its representation. However, they ignore the semantic knowledge provided by the way in which types can be clustered together. In this paper, we propose a novel method called Multi-view Contrastive Learning for knowledge graph Entity Typing (MCLET), which effectively encodes the coarse-grained knowledge provided by clusters into entity and type embeddings. MCLET is composed of three modules: i) Multi-view Generation and Encoder module, which encodes structured information from entity-type, entity-cluster and cluster-type views; ii) Cross-view Contrastive Learning module, which encourages different views to collaboratively improve view-specific representations of entities and types; iii) Entity Typing Prediction module, which integrates multi-head attention and a Mixture-of-Experts strategy to infer missing entity types. Extensive experiments show the strong performance of MCLET compared to the state-of-the-art</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-10-18T14:41:09Z</published>
+    <arxiv:comment>Accepted at EMNLP 2023 Main</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Zhiwei Hu</name>
+    </author>
+    <author>
+      <name>Víctor Gutiérrez-Basulto</name>
+    </author>
+    <author>
+      <name>Zhiliang Xiang</name>
+    </author>
+    <author>
+      <name>Ru Li</name>
+    </author>
+    <author>
+      <name>Jeff Z. Pan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.13770v1</id>
+    <title>Enhancing Semi-Supervised Multi-View Graph Convolutional Networks via Supervised Contrastive Learning and Self-Training</title>
+    <updated>2025-12-15T16:39:23Z</updated>
+    <link href="https://arxiv.org/abs/2512.13770v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.13770v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The advent of graph convolutional network (GCN)-based multi-view learning provides a powerful framework for integrating structural information from heterogeneous views, enabling effective modeling of complex multi-view data. However, existing methods often fail to fully exploit the complementary information across views, leading to suboptimal feature representations and limited performance. To address this, we propose MV-SupGCN, a semi-supervised GCN model that integrates several complementary components with clear motivations and mutual reinforcement. First, to better capture discriminative features and improve model generalization, we design a joint loss function that combines Cross-Entropy loss with Supervised Contrastive loss, encouraging the model to simultaneously minimize intra-class variance and maximize inter-class separability in the latent space. Second, recognizing the instability and incompleteness of single graph construction methods, we combine both KNN-based and semi-supervised graph construction approaches on each view, thereby enhancing the robustness of the data structure representation and reducing generalization error. Third, to effectively utilize abundant unlabeled data and enhance semantic alignment across multiple views, we propose a unified framework that integrates contrastive learning in order to enforce consistency among multi-view embeddings and capture meaningful inter-view relationships, together with pseudo-labeling, which provides additional supervision applied to both the cross-entropy and contrastive loss functions to enhance model generalization. Extensive experiments demonstrate that MV-SupGCN consistently surpasses state-of-the-art methods across multiple benchmarks, validating the effectiveness of our integrated approach. The source code is available at https://github.com/HuaiyuanXiao/MVSupGCN</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-15T16:39:23Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Huaiyuan Xiao</name>
+    </author>
+    <author>
+      <name>Fadi Dornaika</name>
+    </author>
+    <author>
+      <name>Jingjun Bi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.19212v1</id>
+    <title>Steering Multimodal Large Language Models Decoding for Context-Aware Safety</title>
+    <updated>2025-09-23T16:32:25Z</updated>
+    <link href="https://arxiv.org/abs/2509.19212v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.19212v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Large Language Models (MLLMs) are increasingly deployed in real-world applications, yet their ability to make context-aware safety decisions remains limited. Existing methods often fail to balance oversensitivity (unjustified refusals of benign queries) and undersensitivity (missed detection of visually grounded risks), leaving a persistent gap in safety alignment. To address this issue, we introduce Safety-aware Contrastive Decoding (SafeCoDe), a lightweight and model-agnostic decoding framework that dynamically adjusts token generation based on multimodal context. SafeCoDe operates in two stages: (1) a contrastive decoding mechanism that highlights tokens sensitive to visual context by contrasting real and Gaussian-noised images, and (2) a global-aware token modulation strategy that integrates scene-level reasoning with token-level adjustment to adapt refusals according to the predicted safety verdict. Extensive experiments across diverse MLLM architectures and safety benchmarks, covering undersensitivity, oversensitivity, and general safety evaluations, show that SafeCoDe consistently improves context-sensitive refusal behaviors while preserving model helpfulness.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-23T16:32:25Z</published>
+    <arxiv:comment>A lightweight and model-agnostic decoding framework that dynamically adjusts token generation based on multimodal context</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Zheyuan Liu</name>
+    </author>
+    <author>
+      <name>Zhangchen Xu</name>
+    </author>
+    <author>
+      <name>Guangyao Dou</name>
+    </author>
+    <author>
+      <name>Xiangchi Yuan</name>
+    </author>
+    <author>
+      <name>Zhaoxuan Tan</name>
+    </author>
+    <author>
+      <name>Radha Poovendran</name>
+    </author>
+    <author>
+      <name>Meng Jiang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2309.15135v2</id>
+    <title>Contrastive Continual Multi-view Clustering with Filtered Structural Fusion</title>
+    <updated>2024-03-04T05:05:24Z</updated>
+    <link href="https://arxiv.org/abs/2309.15135v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2309.15135v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multi-view clustering thrives in applications where views are collected in advance by extracting consistent and complementary information among views. However, it overlooks scenarios where data views are collected sequentially, i.e., real-time data. Due to privacy issues or memory burden, previous views are not available with time in these situations. Some methods are proposed to handle it but are trapped in a stability-plasticity dilemma. In specific, these methods undergo a catastrophic forgetting of prior knowledge when a new view is attained. Such a catastrophic forgetting problem (CFP) would cause the consistent and complementary information hard to get and affect the clustering performance. To tackle this, we propose a novel method termed Contrastive Continual Multi-view Clustering with Filtered Structural Fusion (CCMVC-FSF). Precisely, considering that data correlations play a vital role in clustering and prior knowledge ought to guide the clustering process of a new view, we develop a data buffer with fixed size to store filtered structural information and utilize it to guide the generation of a robust partition matrix via contrastive learning. Furthermore, we theoretically connect CCMVC-FSF with semi-supervised learning and knowledge distillation. Extensive experiments exhibit the excellence of the proposed method.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-26T14:18:29Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Xinhang Wan</name>
+    </author>
+    <author>
+      <name>Jiyuan Liu</name>
+    </author>
+    <author>
+      <name>Hao Yu</name>
+    </author>
+    <author>
+      <name>Ao Li</name>
+    </author>
+    <author>
+      <name>Xinwang Liu</name>
+    </author>
+    <author>
+      <name>Ke Liang</name>
+    </author>
+    <author>
+      <name>Zhibin Dong</name>
+    </author>
+    <author>
+      <name>En Zhu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2307.16026v1</id>
+    <title>MUSE: Multi-View Contrastive Learning for Heterophilic Graphs</title>
+    <updated>2023-07-29T16:54:34Z</updated>
+    <link href="https://arxiv.org/abs/2307.16026v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2307.16026v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In recent years, self-supervised learning has emerged as a promising approach in addressing the issues of label dependency and poor generalization performance in traditional GNNs. However, existing self-supervised methods have limited effectiveness on heterophilic graphs, due to the homophily assumption that results in similar node representations for connected nodes. In this work, we propose a multi-view contrastive learning model for heterophilic graphs, namely, MUSE. Specifically, we construct two views to capture the information of the ego node and its neighborhood by GNNs enhanced with contrastive learning, respectively. Then we integrate the information from these two views to fuse the node representations. Fusion contrast is utilized to enhance the effectiveness of fused node representations. Further, considering that the influence of neighboring contextual information on information fusion may vary across different ego nodes, we employ an information fusion controller to model the diversity of node-neighborhood similarity at both the local and global levels. Finally, an alternating training scheme is adopted to ensure that unsupervised node representation learning and information fusion controller can mutually reinforce each other. We conduct extensive experiments to evaluate the performance of MUSE on 9 benchmark datasets. Our results show the effectiveness of MUSE on both node classification and clustering tasks.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-07-29T16:54:34Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Mengyi Yuan</name>
+    </author>
+    <author>
+      <name>Minjie Chen</name>
+    </author>
+    <author>
+      <name>Xiang Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2111.10827v1</id>
+    <title>Domain Generalization for Mammography Detection via Multi-style and Multi-view Contrastive Learning</title>
+    <updated>2021-11-21T14:29:50Z</updated>
+    <link href="https://arxiv.org/abs/2111.10827v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2111.10827v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Lesion detection is a fundamental problem in the computer-aided diagnosis scheme for mammography. The advance of deep learning techniques have made a remarkable progress for this task, provided that the training data are large and sufficiently diverse in terms of image style and quality. In particular, the diversity of image style may be majorly attributed to the vendor factor. However, the collection of mammograms from vendors as many as possible is very expensive and sometimes impractical for laboratory-scale studies. Accordingly, to further augment the generalization capability of deep learning model to various vendors with limited resources, a new contrastive learning scheme is developed. Specifically, the backbone network is firstly trained with a multi-style and multi-view unsupervised self-learning scheme for the embedding of invariant features to various vendor-styles. Afterward, the backbone network is then recalibrated to the downstream task of lesion detection with the specific supervised learning. The proposed method is evaluated with mammograms from four vendors and one unseen public dataset. The experimental results suggest that our approach can effectively improve detection performance on both seen and unseen domains, and outperforms many state-of-the-art (SOTA) generalization methods.</summary>
+    <category term="eess.IV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-11-21T14:29:50Z</published>
+    <arxiv:comment>Pages 98-108</arxiv:comment>
+    <arxiv:primary_category term="eess.IV"/>
+    <arxiv:journal_ref>International Conference on Medical Image Computing and Computer-Assisted Intervention 2021</arxiv:journal_ref>
+    <author>
+      <name>Zheren Li</name>
+    </author>
+    <author>
+      <name>Zhiming Cui</name>
+    </author>
+    <author>
+      <name>Sheng Wang</name>
+    </author>
+    <author>
+      <name>Yuji Qi</name>
+    </author>
+    <author>
+      <name>Xi Ouyang</name>
+    </author>
+    <author>
+      <name>Qitian Chen</name>
+    </author>
+    <author>
+      <name>Yuezhi Yang</name>
+    </author>
+    <author>
+      <name>Zhong Xue</name>
+    </author>
+    <author>
+      <name>Dinggang Shen</name>
+    </author>
+    <author>
+      <name>Jie-Zhi Cheng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.25638v1</id>
+    <title>Generalized Contrastive Learning for Universal Multimodal Retrieval</title>
+    <updated>2025-09-30T01:25:04Z</updated>
+    <link href="https://arxiv.org/abs/2509.25638v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.25638v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Despite their consistent performance improvements, cross-modal retrieval models (e.g., CLIP) show degraded performances with retrieving keys composed of fused image-text modality (e.g., Wikipedia pages with both images and text). To address this critical challenge, multimodal retrieval has been recently explored to develop a unified single retrieval model capable of retrieving keys across diverse modality combinations. A common approach involves constructing new composed sets of image-text triplets (e.g., retrieving a pair of image and text given a query image). However, such an approach requires careful curation to ensure the dataset quality and fails to generalize to unseen modality combinations. To overcome these limitations, this paper proposes Generalized Contrastive Learning (GCL), a novel loss formulation that improves multimodal retrieval performance without the burdensome need for new dataset curation. Specifically, GCL operates by enforcing contrastive learning across all modalities within a mini-batch, utilizing existing image-caption paired datasets to learn a unified representation space. We demonstrate the effectiveness of GCL by showing consistent performance improvements on off-the-shelf multimodal retrieval models (e.g., VISTA, CLIP, and TinyCLIP) using the M-BEIR, MMEB, and CoVR benchmarks.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-30T01:25:04Z</published>
+    <arxiv:comment>Accepted to NeurIPS 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jungsoo Lee</name>
+    </author>
+    <author>
+      <name>Janghoon Cho</name>
+    </author>
+    <author>
+      <name>Hyojin Park</name>
+    </author>
+    <author>
+      <name>Munawar Hayat</name>
+    </author>
+    <author>
+      <name>Kyuwoong Hwang</name>
+    </author>
+    <author>
+      <name>Fatih Porikli</name>
+    </author>
+    <author>
+      <name>Sungha Choi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.17248v1</id>
+    <title>Pathology-Aware Multi-View Contrastive Learning for Patient-Independent ECG Reconstruction</title>
+    <updated>2026-03-18T01:06:30Z</updated>
+    <link href="https://arxiv.org/abs/2603.17248v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.17248v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Reconstructing a 12-lead electrocardiogram (ECG) from a reduced lead set is an ill-posed inverse problem due to anatomical variability. Standard deep learning methods often ignore underlying cardiac pathology losing vital morphology in precordial leads. We propose Pathology-Aware Multi-View Contrastive Learning, a framework that regularizes the latent space through a pathological manifold. Our architecture integrates high-fidelity time-domain waveforms with pathology-aware embeddings learned via supervised contrastive alignment. By maximizing mutual information between latent representations and clinical labels, the framework learns to filter anatomical "nuisance" variables. On the PTB-XL dataset, our method achieves approx. 76\% reduction in RMSE compared to state-of-the-art model in patient-independent setting. Cross-dataset evaluation on the PTB Diagnostic Database confirms superior generalization, bridging the gap between hardware portability and diagnostic-grade reconstruction.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-18T01:06:30Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Youssef Youssef</name>
+    </author>
+    <author>
+      <name>Jitin Singla</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2203.00186v1</id>
+    <title>ACTIVE:Augmentation-Free Graph Contrastive Learning for Partial Multi-View Clustering</title>
+    <updated>2022-03-01T02:32:25Z</updated>
+    <link href="https://arxiv.org/abs/2203.00186v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2203.00186v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we propose an augmentation-free graph contrastive learning framework, namely ACTIVE, to solve the problem of partial multi-view clustering. Notably, we suppose that the representations of similar samples (i.e., belonging to the same cluster) and their multiply views features should be similar. This is distinct from the general unsupervised contrastive learning that assumes an image and its augmentations share a similar representation. Specifically, relation graphs are constructed using the nearest neighbours to identify existing similar samples, then the constructed inter-instance relation graphs are transferred to the missing views to build graphs on the corresponding missing data. Subsequently, two main components, within-view graph contrastive learning (WGC) and cross-view graph consistency learning (CGC), are devised to maximize the mutual information of different views within a cluster. The proposed approach elevates instance-level contrastive learning and missing data inference to the cluster-level, effectively mitigating the impact of individual missing data on clustering. Experiments on several challenging datasets demonstrate the superiority of our proposed methods.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-03-01T02:32:25Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yiming Wang</name>
+    </author>
+    <author>
+      <name>Dongxia Chang</name>
+    </author>
+    <author>
+      <name>Zhiqiang Fu</name>
+    </author>
+    <author>
+      <name>Jie Wen</name>
+    </author>
+    <author>
+      <name>Yao Zhao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2210.11694v2</id>
+    <title>Multi-View Reasoning: Consistent Contrastive Learning for Math Word Problem</title>
+    <updated>2023-08-26T05:57:06Z</updated>
+    <link href="https://arxiv.org/abs/2210.11694v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.11694v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Math word problem solver requires both precise relation reasoning about quantities in the text and reliable generation for the diverse equation. Current sequence-to-tree or relation extraction methods regard this only from a fixed view, struggling to simultaneously handle complex semantics and diverse equations. However, human solving naturally involves two consistent reasoning views: top-down and bottom-up, just as math equations also can be expressed in multiple equivalent forms: pre-order and post-order. We propose a multi-view consistent contrastive learning for a more complete semantics-to-equation mapping. The entire process is decoupled into two independent but consistent views: top-down decomposition and bottom-up construction, and the two reasoning views are aligned in multi-granularity for consistency, enhancing global generation and precise reasoning. Experiments on multiple datasets across two languages show our approach significantly outperforms the existing baselines, especially on complex problems. We also show after consistent alignment, multi-view can absorb the merits of both views and generate more diverse results consistent with the mathematical laws.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-21T02:44:55Z</published>
+    <arxiv:comment>14 pages, 5 figures, 3 appendix figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Wenqi Zhang</name>
+    </author>
+    <author>
+      <name>Yongliang Shen</name>
+    </author>
+    <author>
+      <name>Yanna Ma</name>
+    </author>
+    <author>
+      <name>Xiaoxia Cheng</name>
+    </author>
+    <author>
+      <name>Zeqi Tan</name>
+    </author>
+    <author>
+      <name>Qingpeng Nong</name>
+    </author>
+    <author>
+      <name>Weiming Lu</name>
+    </author>
+    <arxiv:doi>10.18653/v1/2022.findings-emnlp.79</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.18653/v1/2022.findings-emnlp.79" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.14963v3</id>
+    <title>Continual Multimodal Contrastive Learning</title>
+    <updated>2025-09-22T08:37:48Z</updated>
+    <link href="https://arxiv.org/abs/2503.14963v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.14963v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Contrastive Learning (MCL) advances in aligning different modalities and generating multimodal representations in a joint space. By leveraging contrastive learning across diverse modalities, large-scale multimodal data enhances representational quality. However, a critical yet often overlooked challenge remains: multimodal data is rarely collected in a single process, and training from scratch is computationally expensive. Instead, emergent multimodal data can be used to optimize existing models gradually, i.e., models are trained on a sequence of modality pair data. We define this problem as Continual Multimodal Contrastive Learning (CMCL), an underexplored yet crucial research direction at the intersection of multimodal and continual learning. In this paper, we formulate CMCL through two specialized principles of stability and plasticity. We theoretically derive a novel optimization-based method, which projects updated gradients from dual sides onto subspaces where any gradient is prevented from interfering with the previously learned knowledge. Two upper bounds provide theoretical insights on both stability and plasticity in our solution. Beyond our theoretical contributions, we conduct experiments on multiple datasets by comparing our method against advanced continual learning baselines. The empirical results further support our claims and demonstrate the efficacy of our method. Our codes are available at https://github.com/Xiaohao-Liu/CMCL.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-19T07:57:08Z</published>
+    <arxiv:comment>Accepted by NeurIPS 2025. Codes are available at https://github.com/Xiaohao-Liu/CMCL</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Xiaohao Liu</name>
+    </author>
+    <author>
+      <name>Xiaobo Xia</name>
+    </author>
+    <author>
+      <name>See-Kiong Ng</name>
+    </author>
+    <author>
+      <name>Tat-Seng Chua</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2007.01179v2</id>
+    <title>Relating by Contrasting: A Data-efficient Framework for Multimodal Generative Models</title>
+    <updated>2021-04-21T09:58:33Z</updated>
+    <link href="https://arxiv.org/abs/2007.01179v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2007.01179v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal learning for generative models often refers to the learning of abstract concepts from the commonality of information in multiple modalities, such as vision and language. While it has proven effective for learning generalisable representations, the training of such models often requires a large amount of "related" multimodal data that shares commonality, which can be expensive to come by. To mitigate this, we develop a novel contrastive framework for generative model learning, allowing us to train the model not just by the commonality between modalities, but by the distinction between "related" and "unrelated" multimodal data. We show in experiments that our method enables data-efficient multimodal learning on challenging datasets for various multimodal VAE models. We also show that under our proposed framework, the generative model can accurately identify related samples from unrelated ones, making it possible to make use of the plentiful unlabeled, unpaired multimodal data.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-07-02T15:08:11Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Yuge Shi</name>
+    </author>
+    <author>
+      <name>Brooks Paige</name>
+    </author>
+    <author>
+      <name>Philip H. S. Torr</name>
+    </author>
+    <author>
+      <name>N. Siddharth</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.05876v5</id>
+    <title>MoEGCL: Mixture of Ego-Graphs Contrastive Representation Learning for Multi-View Clustering</title>
+    <updated>2026-03-24T11:14:19Z</updated>
+    <link href="https://arxiv.org/abs/2511.05876v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.05876v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In recent years, the advancement of Graph Neural Networks (GNNs) has significantly propelled progress in Multi-View Clustering (MVC). However, existing methods face the problem of coarse-grained graph fusion. Specifically, current approaches typically generate a separate graph structure for each view and then perform weighted fusion of graph structures at the view level, which is a relatively rough strategy. To address this limitation, we present a novel Mixture of Ego-Graphs Contrastive Representation Learning (MoEGCL). It mainly consists of two modules. In particular, we propose an innovative Mixture of Ego-Graphs Fusion (MoEGF), which constructs ego graphs and utilizes a Mixture-of-Experts network to implement fine-grained fusion of ego graphs at the sample level, rather than the conventional view-level fusion. Additionally, we present the Ego Graph Contrastive Learning (EGCL) module to align the fused representation with the view-specific representation. The EGCL module enhances the representation similarity of samples from the same cluster, not merely from the same sample, further boosting fine-grained graph representation. Extensive experiments demonstrate that MoEGCL achieves state-of-the-art results in deep multi-view clustering tasks. The source code is publicly available at https://github.com/HackerHyper/MoEGCL.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-08T06:27:27Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jian Zhu</name>
+    </author>
+    <author>
+      <name>Xin Zou</name>
+    </author>
+    <author>
+      <name>Jun Sun</name>
+    </author>
+    <author>
+      <name>Cheng Luo</name>
+    </author>
+    <author>
+      <name>Lei Liu</name>
+    </author>
+    <author>
+      <name>Lingfang Zeng</name>
+    </author>
+    <author>
+      <name>Ning Zhang</name>
+    </author>
+    <author>
+      <name>Bian Wu</name>
+    </author>
+    <author>
+      <name>Chang Tang</name>
+    </author>
+    <author>
+      <name>Lirong Dai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.09367v1</id>
+    <title>M3GCLR: Multi-View Mini-Max Infinite Skeleton-Data Game Contrastive Learning For Skeleton-Based Action Recognition</title>
+    <updated>2026-03-10T08:45:14Z</updated>
+    <link href="https://arxiv.org/abs/2603.09367v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.09367v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In recent years, contrastive learning has drawn significant attention as an effective approach to reducing reliance on labeled data. However, existing methods for self-supervised skeleton-based action recognition still face three major limitations: insufficient modeling of view discrepancies, lack of effective adversarial mechanisms, and uncontrollable augmentation perturbations. To tackle these issues, we propose the Multi-view Mini-Max infinite skeleton-data Game Contrastive Learning for skeleton-based action Recognition (M3GCLR), a game-theoretic contrastive framework. First, we establish the Infinite Skeleton-data Game (ISG) model and the ISG equilibrium theorem, and further provide a rigorous proof, enabling mini-max optimization based on multi-view mutual information. Then, we generate normal-extreme data pairs through multi-view rotation augmentation and adopt temporally averaged input as a neutral anchor to achieve structural alignment, thereby explicitly characterizing perturbation strength. Next, leveraging the proposed equilibrium theorem, we construct a strongly adversarial mini-max skeleton-data game to encourage the model to mine richer action-discriminative information. Finally, we introduce the dual-loss equilibrium optimizer to optimize the game equilibrium, allowing the learning process to maximize action-relevant information while minimizing encoding redundancy, and we prove the equivalence between the proposed optimizer and the ISG model. Extensive Experiments show that M3GCLR achieves three-stream 82.1%, 85.8% accuracy on NTU RGB+D 60 (X-Sub, X-View) and 72.3%, 75.0% accuracy on NTU RGB+D 120 (X-Sub, X-Set). On PKU-MMD Part I and II, it attains 89.1%, 45.2% in three-stream respectively, all results matching or outperforming state-of-the-art performance. Ablation studies confirm the effectiveness of each component.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-10T08:45:14Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yanshan Li</name>
+    </author>
+    <author>
+      <name>Ke Ma</name>
+    </author>
+    <author>
+      <name>Miaomiao Wei</name>
+    </author>
+    <author>
+      <name>Linhui Dai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.25220v1</id>
+    <title>Multi-view Consistent 3D Gaussian Head Avatars 'without' Multi-view Generation</title>
+    <updated>2026-05-24T19:09:15Z</updated>
+    <link href="https://arxiv.org/abs/2605.25220v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.25220v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>High-fidelity 3D Gaussian head avatar generation is critical for applications such as AR/VR, telepresence, and digital humans. Existing methods depend on multi-view datasets, 3D captures, or intermediate 2D view synthesis. In contrast, we learn both conditional and unconditional 3D head models from randomly sampled 2D images alone, without using multi-view data, 3D supervision, or intermediate view generation. We introduce MVCHead, a single-shot state space model that enforces multi-view consistency (MVC) directly in the 3D representation while regressing 3D Gaussians under these constraints. At its core, we propose a Hierarchical State Space (HiSS) block that progressively refines Gaussians from coarse to fine, while capturing long-range dependencies. Within each HiSS block, we modify Mamba's standard unidirectional scan with the proposed Hierarchical Bi-directional State Scan (HiBiSS) that aligns recurrence with the axes along which multi-view inconsistencies are strongest. Finally, we design an SE(3) Multi-view Critic that judges whether a set of self-renders arises from a single underlying 3D configuration, rewarding cross-view pixel alignment without observing real multi-view pairs. MVCHead achieves state-of-the-art perceptual quality, surpasses prior methods in both texture and geometric consistency, and maintains comparable shape consistency. To demonstrate scalability, we release FaceGS-10K, the first large-scale dataset of ready-to-use 3D Gaussian head assets for training and evaluation of 3D head models. Project Page and code: https://humansensinglab.github.io/MVCHead/</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-24T19:09:15Z</published>
+    <arxiv:comment>CVPR 2026; Project Website: https://humansensinglab.github.io/MVCHead/</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <arxiv:journal_ref>CVPR, Denver, CO, USA, 2026, pp. 40163-40174</arxiv:journal_ref>
+    <author>
+      <name>Aviral Chharia</name>
+    </author>
+    <author>
+      <name>Fernando De la Torre</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2306.15796v1</id>
+    <title>ConKI: Contrastive Knowledge Injection for Multimodal Sentiment Analysis</title>
+    <updated>2023-06-27T20:51:03Z</updated>
+    <link href="https://arxiv.org/abs/2306.15796v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2306.15796v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Sentiment Analysis leverages multimodal signals to detect the sentiment of a speaker. Previous approaches concentrate on performing multimodal fusion and representation learning based on general knowledge obtained from pretrained models, which neglects the effect of domain-specific knowledge. In this paper, we propose Contrastive Knowledge Injection (ConKI) for multimodal sentiment analysis, where specific-knowledge representations for each modality can be learned together with general knowledge representations via knowledge injection based on an adapter architecture. In addition, ConKI uses a hierarchical contrastive learning procedure performed between knowledge types within every single modality, across modalities within each sample, and across samples to facilitate the effective learning of the proposed representations, hence improving multimodal sentiment predictions. The experiments on three popular multimodal sentiment analysis benchmarks show that ConKI outperforms all prior methods on a variety of performance metrics.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-06-27T20:51:03Z</published>
+    <arxiv:comment>Accepted by ACL Findings 2023</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Yakun Yu</name>
+    </author>
+    <author>
+      <name>Mingjun Zhao</name>
+    </author>
+    <author>
+      <name>Shi-ang Qi</name>
+    </author>
+    <author>
+      <name>Feiran Sun</name>
+    </author>
+    <author>
+      <name>Baoxun Wang</name>
+    </author>
+    <author>
+      <name>Weidong Guo</name>
+    </author>
+    <author>
+      <name>Xiaoli Wang</name>
+    </author>
+    <author>
+      <name>Lei Yang</name>
+    </author>
+    <author>
+      <name>Di Niu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2310.18890v2</id>
+    <title>Towards Generalized Multi-stage Clustering: Multi-view Self-distillation</title>
+    <updated>2023-12-16T15:24:18Z</updated>
+    <link href="https://arxiv.org/abs/2310.18890v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2310.18890v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Existing multi-stage clustering methods independently learn the salient features from multiple views and then perform the clustering task. Particularly, multi-view clustering (MVC) has attracted a lot of attention in multi-view or multi-modal scenarios. MVC aims at exploring common semantics and pseudo-labels from multiple views and clustering in a self-supervised manner. However, limited by noisy data and inadequate feature learning, such a clustering paradigm generates overconfident pseudo-labels that mis-guide the model to produce inaccurate predictions. Therefore, it is desirable to have a method that can correct this pseudo-label mistraction in multi-stage clustering to avoid the bias accumulation. To alleviate the effect of overconfident pseudo-labels and improve the generalization ability of the model, this paper proposes a novel multi-stage deep MVC framework where multi-view self-distillation (DistilMVC) is introduced to distill dark knowledge of label distribution. Specifically, in the feature subspace at different hierarchies, we explore the common semantics of multiple views through contrastive learning and obtain pseudo-labels by maximizing the mutual information between views. Additionally, a teacher network is responsible for distilling pseudo-labels into dark knowledge, supervising the student network and improving its predictive capabilities to enhance the robustness. Extensive experiments on real-world multi-view datasets show that our method has better clustering performance than state-of-the-art methods.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-10-29T03:35:34Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jiatai Wang</name>
+    </author>
+    <author>
+      <name>Zhiwei Xu</name>
+    </author>
+    <author>
+      <name>Xin Wang</name>
+    </author>
+    <author>
+      <name>Tao Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.14926v3</id>
+    <title>Contrastive Learning on Multimodal Analysis of Electronic Health Records</title>
+    <updated>2026-07-10T12:24:40Z</updated>
+    <link href="https://arxiv.org/abs/2403.14926v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.14926v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Electronic health record (EHR) systems capture a wealth of multimodal clinical data, encompassing both structured clinical codes and unstructured clinical notes. Yet, many EHR-focused studies have traditionally examined these modalities in isolation or combined them using simplistic methods, overlooking the intrinsic synergy between them. In reality, these modalities are deeply interconnected, each containing clinically relevant and complementary information that, when integrated effectively, can provide a more comprehensive understanding of patient health. Despite the success of multimodal contrastive learning in vision-language applications, its potential remains under-explored in multimodal EHR, particularly in terms of theoretical understanding. To support statistical analysis of multimodal EHR data, we propose a multimodal feature embedding generative model and design a multimodal contrastive loss to learn EHR feature representations. Our theoretical analysis demonstrates the effectiveness of multimodal learning over single-modality learning and connects the solution of the loss function to the singular value decomposition of a pointwise mutual information matrix. This connection leads to a privacy-preserving algorithm tailored for multimodal EHR representation learning. Simulation studies show that the proposed algorithm performs well under a variety of configurations. We further validate its clinical utility using real-world EHR data.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-22T03:01:42Z</published>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Tianxi Cai</name>
+    </author>
+    <author>
+      <name>Feiqing Huang</name>
+    </author>
+    <author>
+      <name>Ryumei Nakada</name>
+    </author>
+    <author>
+      <name>Linjun Zhang</name>
+    </author>
+    <author>
+      <name>Doudou Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.17777v4</id>
+    <title>Harnessing Shared Relations via Multimodal Mixup Contrastive Learning for Multimodal Classification</title>
+    <updated>2025-06-30T07:55:13Z</updated>
+    <link href="https://arxiv.org/abs/2409.17777v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.17777v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Deep multimodal learning has shown remarkable success by leveraging contrastive learning to capture explicit one-to-one relations across modalities. However, real-world data often exhibits shared relations beyond simple pairwise associations. We propose M3CoL, a Multimodal Mixup Contrastive Learning approach to capture nuanced shared relations inherent in multimodal data. Our key contribution is a Mixup-based contrastive loss that learns robust representations by aligning mixed samples from one modality with their corresponding samples from other modalities thereby capturing shared relations between them. For multimodal classification tasks, we introduce a framework that integrates a fusion module with unimodal prediction modules for auxiliary supervision during training, complemented by our proposed Mixup-based contrastive loss. Through extensive experiments on diverse datasets (N24News, ROSMAP, BRCA, and Food-101), we demonstrate that M3CoL effectively captures shared multimodal relations and generalizes across domains. It outperforms state-of-the-art methods on N24News, ROSMAP, and BRCA, while achieving comparable performance on Food-101. Our work highlights the significance of learning shared relations for robust multimodal learning, opening up promising avenues for future research. Our code is publicly available at https://github.com/RaghavSinghal10/M3CoL.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-26T12:15:13Z</published>
+    <arxiv:comment>Transactions on Machine Learning Research (TMLR). Raja Kumar and Raghav Singhal contributed equally to this work</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Raja Kumar</name>
+    </author>
+    <author>
+      <name>Raghav Singhal</name>
+    </author>
+    <author>
+      <name>Pranamya Kulkarni</name>
+    </author>
+    <author>
+      <name>Deval Mehta</name>
+    </author>
+    <author>
+      <name>Kshitij Jadhav</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.09131v1</id>
+    <title>RobustMVS: Single Domain Generalized Deep Multi-view Stereo</title>
+    <updated>2024-05-15T06:56:05Z</updated>
+    <link href="https://arxiv.org/abs/2405.09131v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.09131v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Despite the impressive performance of Multi-view Stereo (MVS) approaches given plenty of training samples, the performance degradation when generalizing to unseen domains has not been clearly explored yet. In this work, we focus on the domain generalization problem in MVS. To evaluate the generalization results, we build a novel MVS domain generalization benchmark including synthetic and real-world datasets. In contrast to conventional domain generalization benchmarks, we consider a more realistic but challenging scenario, where only one source domain is available for training. The MVS problem can be analogized back to the feature matching task, and maintaining robust feature consistency among views is an important factor for improving generalization performance. To address the domain generalization problem in MVS, we propose a novel MVS framework, namely RobustMVS. A DepthClustering-guided Whitening (DCW) loss is further introduced to preserve the feature consistency among different views, which decorrelates multi-view features from viewpoint-specific style information based on geometric priors from depth maps. The experimental results further show that our method achieves superior performance on the domain generalization benchmark.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-15T06:56:05Z</published>
+    <arxiv:comment>Accepted to TCSVT. Code will be released at: https://github.com/ToughStoneX/Robust-MVS. Benchmark will be released at: https://github.com/ToughStoneX/MVS_Evaluation_Benchmark</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Hongbin Xu</name>
+    </author>
+    <author>
+      <name>Weitao Chen</name>
+    </author>
+    <author>
+      <name>Baigui Sun</name>
+    </author>
+    <author>
+      <name>Xuansong Xie</name>
+    </author>
+    <author>
+      <name>Wenxiong Kang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.21387v1</id>
+    <title>Automatically Identify and Rectify: Robust Deep Contrastive Multi-view Clustering in Noisy Scenarios</title>
+    <updated>2025-05-27T16:16:54Z</updated>
+    <link href="https://arxiv.org/abs/2505.21387v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.21387v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Leveraging the powerful representation learning capabilities, deep multi-view clustering methods have demonstrated reliable performance by effectively integrating multi-source information from diverse views in recent years. Most existing methods rely on the assumption of clean views. However, noise is pervasive in real-world scenarios, leading to a significant degradation in performance. To tackle this problem, we propose a novel multi-view clustering framework for the automatic identification and rectification of noisy data, termed AIRMVC. Specifically, we reformulate noisy identification as an anomaly identification problem using GMM. We then design a hybrid rectification strategy to mitigate the adverse effects of noisy data based on the identification results. Furthermore, we introduce a noise-robust contrastive mechanism to generate reliable representations. Additionally, we provide a theoretical proof demonstrating that these representations can discard noisy information, thereby improving the performance of downstream tasks. Extensive experiments on six benchmark datasets demonstrate that AIRMVC outperforms state-of-the-art algorithms in terms of robustness in noisy scenarios. The code of AIRMVC are available at https://github.com/xihongyang1999/AIRMVC on Github.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-27T16:16:54Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xihong Yang</name>
+    </author>
+    <author>
+      <name>Siwei Wang</name>
+    </author>
+    <author>
+      <name>Fangdi Wang</name>
+    </author>
+    <author>
+      <name>Jiaqi Jin</name>
+    </author>
+    <author>
+      <name>Suyuan Liu</name>
+    </author>
+    <author>
+      <name>Yue Liu</name>
+    </author>
+    <author>
+      <name>En Zhu</name>
+    </author>
+    <author>
+      <name>Xinwang Liu</name>
+    </author>
+    <author>
+      <name>Yueming Jin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2312.10493v2</id>
+    <title>Debiasing Multimodal Sarcasm Detection with Contrastive Learning</title>
+    <updated>2023-12-19T15:55:23Z</updated>
+    <link href="https://arxiv.org/abs/2312.10493v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2312.10493v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Despite commendable achievements made by existing work, prevailing multimodal sarcasm detection studies rely more on textual content over visual information. It unavoidably induces spurious correlations between textual words and labels, thereby significantly hindering the models' generalization capability. To address this problem, we define the task of out-of-distribution (OOD) multimodal sarcasm detection, which aims to evaluate models' generalizability when the word distribution is different in training and testing settings. Moreover, we propose a novel debiasing multimodal sarcasm detection framework with contrastive learning, which aims to mitigate the harmful effect of biased textual factors for robust OOD generalization. In particular, we first design counterfactual data augmentation to construct the positive samples with dissimilar word biases and negative samples with similar word biases. Subsequently, we devise an adapted debiasing contrastive learning mechanism to empower the model to learn robust task-relevant features and alleviate the adverse effect of biased words. Extensive experiments show the superiority of the proposed framework.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-12-16T16:14:50Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Mengzhao Jia</name>
+    </author>
+    <author>
+      <name>Can Xie</name>
+    </author>
+    <author>
+      <name>Liqiang Jing</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1503.07906v1</id>
+    <title>Generalized K-fan Multimodal Deep Model with Shared Representations</title>
+    <updated>2015-03-26T21:17:46Z</updated>
+    <link href="https://arxiv.org/abs/1503.07906v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1503.07906v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal learning with deep Boltzmann machines (DBMs) is an generative approach to fuse multimodal inputs, and can learn the shared representation via Contrastive Divergence (CD) for classification and information retrieval tasks. However, it is a 2-fan DBM model, and cannot effectively handle multiple prediction tasks. Moreover, this model cannot recover the hidden representations well by sampling from the conditional distribution when more than one modalities are missing. In this paper, we propose a K-fan deep structure model, which can handle the multi-input and muti-output learning problems effectively. In particular, the deep structure has K-branch for different inputs where each branch can be composed of a multi-layer deep model, and a shared representation is learned in an discriminative manner to tackle multimodal tasks. Given the deep structure, we propose two objective functions to handle two multi-input and multi-output tasks: joint visual restoration and labeling, and the multi-view multi-calss object recognition tasks. To estimate the model parameters, we initialize the deep model parameters with CD to maximize the joint distribution, and then we use backpropagation to update the model according to specific objective function. The experimental results demonstrate that the model can effectively leverages multi-source information and predict multiple tasks well over competitive baselines.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-03-26T21:17:46Z</published>
+    <arxiv:comment>11 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Gang Chen</name>
+    </author>
+    <author>
+      <name>Sargur N. Srihari</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2210.05188v1</id>
+    <title>Legal Element-oriented Modeling with Multi-view Contrastive Learning for Legal Case Retrieval</title>
+    <updated>2022-10-11T06:47:23Z</updated>
+    <link href="https://arxiv.org/abs/2210.05188v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.05188v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Legal case retrieval, which aims to retrieve relevant cases given a query case, plays an essential role in the legal system. While recent research efforts improve the performance of traditional ad-hoc retrieval models, legal case retrieval is still challenging since queries are legal cases, which contain hundreds of tokens. Legal cases are much longer and more complicated than keywords queries. Apart from that, the definition of legal relevance is beyond the general definition. In addition to general topical relevance, the relevant cases also involve similar situations and legal elements, which can support the judgment of the current case. In this paper, we propose an interaction-focused network for legal case retrieval with a multi-view contrastive learning objective. The contrastive learning views, including case-view and element-view, aim to overcome the above challenges. The case-view contrastive learning minimizes the hidden space distance between relevant legal case representations produced by a pre-trained language model (PLM) encoder. The element-view builds positive and negative instances by changing legal elements of cases to help the network better compute legal relevance. To achieve this, we employ a legal element knowledge-aware indicator to detect legal elements of cases. We conduct extensive experiments on the benchmark of relevant case retrieval. Evaluation results indicate our proposed method obtains significant improvement over the existing methods.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-11T06:47:23Z</published>
+    <arxiv:comment>accepted by the 2022 IEEE International Joint Conference on Neural Networks (IJCNN 2022)</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Zhaowei Wang</name>
+    </author>
+    <arxiv:doi>10.1109/IJCNN55064.2022.9892487</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/IJCNN55064.2022.9892487" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.01066v1</id>
+    <title>DiffCL: A Diffusion-Based Contrastive Learning Framework with Semantic Alignment for Multimodal Recommendations</title>
+    <updated>2025-01-02T05:30:19Z</updated>
+    <link href="https://arxiv.org/abs/2501.01066v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.01066v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal recommendation systems integrate diverse multimodal information into the feature representations of both items and users, thereby enabling a more comprehensive modeling of user preferences. However, existing methods are hindered by data sparsity and the inherent noise within multimodal data, which impedes the accurate capture of users' interest preferences. Additionally, discrepancies in the semantic representations of items across different modalities can adversely impact the prediction accuracy of recommendation models. To address these challenges, we introduce a novel diffusion-based contrastive learning framework (DiffCL) for multimodal recommendation. DiffCL employs a diffusion model to generate contrastive views that effectively mitigate the impact of noise during the contrastive learning phase. Furthermore, it improves semantic consistency across modalities by aligning distinct visual and textual semantic information through stable ID embeddings. Finally, the introduction of the Item-Item Graph enhances multimodal feature representations, thereby alleviating the adverse effects of data sparsity on the overall system performance. We conduct extensive experiments on three public datasets, and the results demonstrate the superiority and effectiveness of the DiffCL.</summary>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-01-02T05:30:19Z</published>
+    <arxiv:primary_category term="cs.MM"/>
+    <author>
+      <name>Qiya Song</name>
+    </author>
+    <author>
+      <name>Jiajun Hu</name>
+    </author>
+    <author>
+      <name>Lin Xiao</name>
+    </author>
+    <author>
+      <name>Bin Sun</name>
+    </author>
+    <author>
+      <name>Xieping Gao</name>
+    </author>
+    <author>
+      <name>Shutao Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2006.06325v2</id>
+    <title>CoMIR: Contrastive Multimodal Image Representation for Registration</title>
+    <updated>2020-10-23T08:54:38Z</updated>
+    <link href="https://arxiv.org/abs/2006.06325v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2006.06325v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose contrastive coding to learn shared, dense image representations, referred to as CoMIRs (Contrastive Multimodal Image Representations). CoMIRs enable the registration of multimodal images where existing registration methods often fail due to a lack of sufficiently similar image structures. CoMIRs reduce the multimodal registration problem to a monomodal one, in which general intensity-based, as well as feature-based, registration algorithms can be applied. The method involves training one neural network per modality on aligned images, using a contrastive loss based on noise-contrastive estimation (InfoNCE). Unlike other contrastive coding methods, used for, e.g., classification, our approach generates image-like representations that contain the information shared between modalities. We introduce a novel, hyperparameter-free modification to InfoNCE, to enforce rotational equivariance of the learnt representations, a property essential to the registration task. We assess the extent of achieved rotational equivariance and the stability of the representations with respect to weight initialization, training set, and hyperparameter settings, on a remote sensing dataset of RGB and near-infrared images. We evaluate the learnt representations through registration of a biomedical dataset of bright-field and second-harmonic generation microscopy images; two modalities with very little apparent correlation. The proposed approach based on CoMIRs significantly outperforms registration of representations created by GAN-based image-to-image translation, as well as a state-of-the-art, application-specific method which takes additional knowledge about the data into account. Code is available at: https://github.com/MIDA-group/CoMIR.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.IV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-06-11T10:51:33Z</published>
+    <arxiv:comment>21 pages, 11 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <arxiv:journal_ref>NeurIPS 2020</arxiv:journal_ref>
+    <author>
+      <name>Nicolas Pielawski</name>
+    </author>
+    <author>
+      <name>Elisabeth Wetzer</name>
+    </author>
+    <author>
+      <name>Johan Öfverstedt</name>
+    </author>
+    <author>
+      <name>Jiahao Lu</name>
+    </author>
+    <author>
+      <name>Carolina Wählby</name>
+    </author>
+    <author>
+      <name>Joakim Lindblad</name>
+    </author>
+    <author>
+      <name>Nataša Sladoje</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.06216v4</id>
+    <title>Adaptive Multi-view Graph Contrastive Learning via Fractional-order Neural Diffusion Networks</title>
+    <updated>2026-05-10T15:35:17Z</updated>
+    <link href="https://arxiv.org/abs/2511.06216v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.06216v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Graph contrastive learning (GCL) learns node and graph representations by contrasting multiple views of the same graph. Existing methods typically rely on fixed, handcrafted views-usually a local and a global perspective, which limits their ability to capture multi-scale structural patterns. We present an augmentation-free, multi-view GCL framework grounded in fractional-order continuous dynamics. By varying the fractional derivative order $α\in (0,1]$, our encoders produce a continuous spectrum of views: small $α$ yields localized features, while large $α$ induces broader, global aggregation. We treat $α$ as a learnable parameter so the model can adapt diffusion scales to the data and automatically discover informative views. This principled approach generates diverse, complementary representations without manual augmentations. Extensive experiments on standard benchmarks demonstrate that our method produces more robust and expressive embeddings and outperforms state-of-the-art GCL baselines.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-09T04:01:46Z</published>
+    <arxiv:comment>Machine learning, diffusion neural networks. arXiv admin note: text overlap with arXiv:2504.16748</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Yanan Zhao</name>
+    </author>
+    <author>
+      <name>Feng Ji</name>
+    </author>
+    <author>
+      <name>Jingyang Dai</name>
+    </author>
+    <author>
+      <name>Jiaze Ma</name>
+    </author>
+    <author>
+      <name>Keyue Jiang</name>
+    </author>
+    <author>
+      <name>Kai Zhao</name>
+    </author>
+    <author>
+      <name>Wee Peng Tay</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2203.15788v1</id>
+    <title>COMPASS: Contrastive Multimodal Pretraining for Autonomous Systems</title>
+    <updated>2022-02-20T02:52:19Z</updated>
+    <link href="https://arxiv.org/abs/2203.15788v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2203.15788v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Learning representations that generalize across tasks and domains is challenging yet necessary for autonomous systems. Although task-driven approaches are appealing, designing models specific to each application can be difficult in the face of limited data, especially when dealing with highly variable multimodal input spaces arising from different tasks in different environments.We introduce the first general-purpose pretraining pipeline, COntrastive Multimodal Pretraining for AutonomouS Systems (COMPASS), to overcome the limitations of task-specific models and existing pretraining approaches. COMPASS constructs a multimodal graph by considering the essential information for autonomous systems and the properties of different modalities. Through this graph, multimodal signals are connected and mapped into two factorized spatio-temporal latent spaces: a "motion pattern space" and a "current state space." By learning from multimodal correspondences in each latent space, COMPASS creates state representations that models necessary information such as temporal dynamics, geometry, and semantics. We pretrain COMPASS on a large-scale multimodal simulation dataset TartanAir \cite{tartanair2020iros} and evaluate it on drone navigation, vehicle racing, and visual odometry tasks. The experiments indicate that COMPASS can tackle all three scenarios and can also generalize to unseen environments and real-world data.</summary>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-02-20T02:52:19Z</published>
+    <arxiv:primary_category term="cs.RO"/>
+    <author>
+      <name>Shuang Ma</name>
+    </author>
+    <author>
+      <name>Sai Vemprala</name>
+    </author>
+    <author>
+      <name>Wenshan Wang</name>
+    </author>
+    <author>
+      <name>Jayesh K. Gupta</name>
+    </author>
+    <author>
+      <name>Yale Song</name>
+    </author>
+    <author>
+      <name>Daniel McDuff</name>
+    </author>
+    <author>
+      <name>Ashish Kapoor</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.28733v1</id>
+    <title>Utility-Aware Multimodal Contrastive Learning for Product Image Generation</title>
+    <updated>2026-05-27T16:54:51Z</updated>
+    <link href="https://arxiv.org/abs/2605.28733v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.28733v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Product images strongly influence consumer decision-making in online marketplaces. Empowered by multimodal contrastive learning, generative AI can output images that closely align with text prompts. Yet existing generative AI models do not directly optimize marketplace performance. This is a critical gap, since semantic alignment alone does not guarantee that an image will sell. To address this limitation, we propose a \textit{utility-aware multimodal contrastive learning} framework that incorporates consumer demand into a novel Utility-Aware InfoNCE loss. Optimizing this utility-aware objective guides generation toward images that are both semantically coherent and demand-enhancing. This effect arises directly from a shift in the learned image-text representation space toward demand-driven visual cues, which we also validate through the theoretical bound of the proposed objective. In downstream applications on Amazon and Airbnb, product images generated and edited by our method outperform state-of-the-art models in increasing demand and preserving fidelity, while maintaining text-image consistency. Notably, our utility-aware framework preserves inverse U-shaped demand patterns for attributes such as aesthetics and uniqueness, improving demand-based performance while preserving fidelity and semantic consistency. Human-subject experiments further validate its commercial effectiveness. As generative AI technology continues to evolve, our utility-aware component can be flexibly embedded into emerging generative models to improve direct commercial use.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-27T16:54:51Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Xiaohang Feng</name>
+    </author>
+    <author>
+      <name>Yiling Xie</name>
+    </author>
+  </entry>
+</feed>

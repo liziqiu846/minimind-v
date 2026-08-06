@@ -1,0 +1,570 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/IEUuLrDdIGmxfaZECn0Y/oS2DTc</id>
+  <title>arXiv Query: search_query=all:"language bias" AND all:"vision-language"&amp;id_list=&amp;start=0&amp;max_results=30</title>
+  <updated>2026-08-06T16:12:38Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22language+bias%22+AND+all:%22vision-language%22&amp;start=0&amp;max_results=30&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>30</opensearch:itemsPerPage>
+  <opensearch:totalResults>19</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2411.14279v2</id>
+    <title>Looking Beyond Text: Reducing Language bias in Large Vision-Language Models via Multimodal Dual-Attention and Soft-Image Guidance</title>
+    <updated>2026-05-28T06:50:29Z</updated>
+    <link href="https://arxiv.org/abs/2411.14279v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.14279v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large vision-language models (LVLMs) have achieved impressive results in various vision-language tasks. However, despite showing promising performance, LVLMs suffer from hallucinations caused by language bias, leading to diminished focus on images and ineffective visual comprehension. We identify two primary reasons for this bias: 1. Different scales of training data between the pretraining stage of LLM and multimodal alignment stage. 2. The learned inference bias due to short-term dependency of text data. Therefore, we propose LACING, a systemic framework designed to address the language bias of LVLMs with muLtimodal duAl-attention meChanIsm (MDA) aNd soft-image Guidance (IFG). Specifically, MDA introduces a parallel dual-attention mechanism that enhances the integration of visual inputs across the model. IFG introduces a learnable soft visual prompt during training and inference to replace visual inputs, designed to compel LVLMs to prioritize text inputs. Then, IFG further proposes a novel decoding strategy using the soft visual prompt to mitigate the model's over-reliance on adjacent text inputs. Comprehensive experiments demonstrate that our method effectively debiases LVLMs from their language bias, enhancing visual comprehension and reducing hallucinations without requiring additional training resources or data. The code and model are available at [lacing-lvlm.github.io](https://lacing-lvlm.github.io).</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-21T16:33:30Z</published>
+    <arxiv:comment>EMNLP 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Haozhe Zhao</name>
+    </author>
+    <author>
+      <name>Shuzheng Si</name>
+    </author>
+    <author>
+      <name>Liang Chen</name>
+    </author>
+    <author>
+      <name>Yichi Zhang</name>
+    </author>
+    <author>
+      <name>Maosong Sun</name>
+    </author>
+    <author>
+      <name>Mingjia Zhang</name>
+    </author>
+    <author>
+      <name>Baobao Chang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.25036v1</id>
+    <title>Language Bias in LVLMs: From In-Depth Analysis to Simple and Effective Mitigation</title>
+    <updated>2026-05-24T12:23:13Z</updated>
+    <link href="https://arxiv.org/abs/2605.25036v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.25036v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision-Language Models (LVLMs) extend large language models with visual understanding, but remain vulnerable to hallucination, where outputs are fluent yet inconsistent with images. Recent studies link this issue to language bias-the tendency of LVLMs to over-rely on text while neglecting visual inputs. Yet most analyses remain empirical without uncovering its underlying cause. In this paper, we provide a systematic study of language bias and identify its root in modality misalignment during training. Our analysis shows that both Visual Instruction Tuning (VIT) and Direct Preference Optimization (DPO) often prioritize textual improvements, which may cause LVLMs to overly lean toward language modeling rather than balanced multimodal understanding. To address this, we propose two simple yet effective methods: Language Bias Regularization (LBR) which mitigates language bias through regularization during instruction tuning, and Language Bias Penalty (LBP), which penalizes language bias in the DPO training process. Extensive experiments across diverse models and benchmarks demonstrate the effectiveness of our approach. LBR consistently improves performance on over ten general benchmarks, while LBP significantly reduces hallucination and improves trustworthiness. Together, these methods not only mitigate language bias but also advance the overall alignment of LVLMs, all without introducing any additional data or auxiliary models. Our code is publicly available at https://github.com/lab-klc/LVLM-Language-Bias.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-24T12:23:13Z</published>
+    <arxiv:comment>Accepted by ICML 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Yangneng Chen</name>
+    </author>
+    <author>
+      <name>Jing Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2309.07915v3</id>
+    <title>MMICL: Empowering Vision-language Model with Multi-Modal In-Context Learning</title>
+    <updated>2024-03-20T16:17:02Z</updated>
+    <link href="https://arxiv.org/abs/2309.07915v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2309.07915v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Since the resurgence of deep learning, vision-language models (VLMs) enhanced by large language models (LLMs) have grown exponentially in popularity. However, while LLMs can utilize extensive background knowledge and task information with in-context learning, most VLMs still struggle with understanding complex multi-modal prompts with multiple images, making VLMs less effective in downstream vision-language tasks. In this paper, we address the limitation above by 1) introducing vision-language Model with Multi-Modal In-Context Learning(MMICL), a new approach to allow the VLM to deal with multi-modal inputs efficiently; 2) proposing a novel context scheme to augment the in-context learning ability of the VLM; 3) constructing the Multi-modal In-Context Learning (MIC) dataset, designed to enhance the VLM's ability to understand complex multi-modal prompts. Our experiments confirm that MMICL achieves new state-of-the-art zero-shot performance on a wide range of general vision-language tasks, especially for complex benchmarks, including MME and MMBench. Our analysis demonstrates that MMICL effectively tackles the challenge of complex multi-modal prompt understanding and emerges the impressive ICL ability. Furthermore, we observe that MMICL successfully alleviates language bias in VLMs, a common issue for VLMs that often leads to hallucination when faced with extensive textual context. Our code, dataset, dataset tool, and model are available at https://github.com/PKUnlp-icler/MIC</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-14T17:59:17Z</published>
+    <arxiv:comment>Accepted by ICLR2024</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Haozhe Zhao</name>
+    </author>
+    <author>
+      <name>Zefan Cai</name>
+    </author>
+    <author>
+      <name>Shuzheng Si</name>
+    </author>
+    <author>
+      <name>Xiaojian Ma</name>
+    </author>
+    <author>
+      <name>Kaikai An</name>
+    </author>
+    <author>
+      <name>Liang Chen</name>
+    </author>
+    <author>
+      <name>Zixuan Liu</name>
+    </author>
+    <author>
+      <name>Sheng Wang</name>
+    </author>
+    <author>
+      <name>Wenjuan Han</name>
+    </author>
+    <author>
+      <name>Baobao Chang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.16602v1</id>
+    <title>VidLBEval: Benchmarking and Mitigating Language Bias in Video-Involved LVLMs</title>
+    <updated>2025-02-23T15:04:23Z</updated>
+    <link href="https://arxiv.org/abs/2502.16602v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.16602v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, Large Vision-Language Models (LVLMs) have made significant strides across diverse multimodal tasks and benchmarks. This paper reveals a largely under-explored problem from existing video-involved LVLMs - language bias, where models tend to prioritize language over video and thus result in incorrect responses. To address this research gap, we first collect a Video Language Bias Evaluation Benchmark, which is specifically designed to assess the language bias in video-involved LVLMs through two key tasks: ambiguous video contrast and interrogative question probing. Accordingly, we design accompanied evaluation metrics that aim to penalize LVLMs being biased by language. In addition, we also propose Multi-branch Contrastive Decoding (MCD), introducing two expert branches to simultaneously counteract language bias potentially generated by the amateur text-only branch. Our experiments demonstrate that i) existing video-involved LVLMs, including both proprietary and open-sourced, are largely limited by the language bias problem; ii) our MCD can effectively mitigate this issue and maintain general-purpose capabilities in various video-involved LVLMs without any additional retraining or alteration to model architectures.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-23T15:04:23Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yiming Yang</name>
+    </author>
+    <author>
+      <name>Yangyang Guo</name>
+    </author>
+    <author>
+      <name>Hui Lu</name>
+    </author>
+    <author>
+      <name>Yan Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.04479v3</id>
+    <title>ThaiOCRBench: A Task-Diverse Benchmark for Vision-Language Understanding in Thai</title>
+    <updated>2025-12-04T10:03:25Z</updated>
+    <link href="https://arxiv.org/abs/2511.04479v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.04479v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present ThaiOCRBench, the first comprehensive benchmark for evaluating vision-language models (VLMs) on Thai text-rich visual understanding tasks. Despite recent progress in multimodal modeling, existing benchmarks predominantly focus on high-resource languages, leaving Thai underrepresented, especially in tasks requiring document structure understanding. ThaiOCRBench addresses this gap by offering a diverse, human-annotated dataset comprising 2,808 samples across 13 task categories. We evaluate a wide range of state-of-the-art VLMs in a zero-shot setting, spanning both proprietary and open-source systems. Results show a significant performance gap, with proprietary models (e.g., Gemini 2.5 Pro) outperforming open-source counterparts. Notably, fine-grained text recognition and handwritten content extraction exhibit the steepest performance drops among open-source models. Through detailed error analysis, we identify key challenges such as language bias, structural mismatch, and hallucinated content. ThaiOCRBench provides a standardized framework for assessing VLMs in low-resource, script-complex settings, and provides actionable insights for improving Thai-language document understanding.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-06T15:57:39Z</published>
+    <arxiv:comment>Accepted at IJCNLP-AACL 2025 (Main). This version includes the corrected Table 2 and an updated conclusion regarding the deletion count of the Gemma model</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Surapon Nonesung</name>
+    </author>
+    <author>
+      <name>Teetouch Jaknamon</name>
+    </author>
+    <author>
+      <name>Sirinya Chaiophat</name>
+    </author>
+    <author>
+      <name>Natapong Nitarach</name>
+    </author>
+    <author>
+      <name>Chanakan Wittayasakpan</name>
+    </author>
+    <author>
+      <name>Warit Sirichotedumrong</name>
+    </author>
+    <author>
+      <name>Adisai Na-Thalang</name>
+    </author>
+    <author>
+      <name>Kunat Pipatanakul</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.10466v1</id>
+    <title>When Images Speak Louder: Mitigating Language Bias-induced Hallucinations in VLMs through Cross-Modal Guidance</title>
+    <updated>2025-10-12T06:17:13Z</updated>
+    <link href="https://arxiv.org/abs/2510.10466v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.10466v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-Language Models (VLMs) have shown solid ability for multimodal understanding of both visual and language contexts. However, existing VLMs often face severe challenges of hallucinations, meaning that VLMs tend to generate responses that are only fluent in the language but irrelevant to images in previous contexts. To address this issue, we analyze how language bias contributes to hallucinations and then introduce Cross-Modal Guidance(CMG), a training-free decoding method that addresses the hallucinations by leveraging the difference between the output distributions of the original model and the one with degraded visual-language attention. In practice, we adaptively mask the attention weight of the most influential image tokens in selected transformer layers to corrupt the visual-language perception as a concrete type of degradation. Such a degradation-induced decoding emphasizes the perception of visual contexts and therefore significantly reduces language bias without harming the ability of VLMs. In experiment sections, we conduct comprehensive studies. All results demonstrate the superior advantages of CMG with neither additional conditions nor training costs. We also quantitatively show CMG can improve different VLM's performance on hallucination-specific benchmarks and generalize effectively.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-12T06:17:13Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jinjin Cao</name>
+    </author>
+    <author>
+      <name>Zhiyang Chen</name>
+    </author>
+    <author>
+      <name>Zijun Wang</name>
+    </author>
+    <author>
+      <name>Liyuan Ma</name>
+    </author>
+    <author>
+      <name>Weijian Luo</name>
+    </author>
+    <author>
+      <name>Guojun Qi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.07659v2</id>
+    <title>Scaling Test-Time Robustness of Vision-Language Models via Self-Critical Inference Framework</title>
+    <updated>2026-03-25T15:12:36Z</updated>
+    <link href="https://arxiv.org/abs/2603.07659v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.07659v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The emergence of Large Language Models (LLMs) has driven rapid progress in multi-modal learning, particularly in the development of Large Vision-Language Models (LVLMs). However, existing LVLM training paradigms place excessive reliance on the LLM component, giving rise to two critical robustness challenges: language bias and language sensitivity. To address both issues simultaneously, we propose a novel Self-Critical Inference (SCI) framework that extends Visual Contrastive Decoding by conducting multi-round counterfactual reasoning through both textual and visual perturbations. This process further introduces a new strategy for improving robustness by scaling the number of counterfactual rounds. Moreover, we also observe that failure cases of LVLMs differ significantly across models, indicating that fixed robustness benchmarks may not be able to capture the true reliability of LVLMs. To this end, we propose the Dynamic Robustness Benchmark (DRBench), a model-specific evaluation framework targeting both language bias and sensitivity issues. Extensive experiments show that SCI consistently outperforms baseline methods on DRBench, and that increasing the number of inference rounds further boosts robustness beyond existing single-step counterfactual reasoning methods.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-08T14:46:19Z</published>
+    <arxiv:comment>Accepted to CVPR 2026. Code: https://github.com/KaihuaTang/Self-Critical-Inference-Framework</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Kaihua Tang</name>
+    </author>
+    <author>
+      <name>Jiaxin Qi</name>
+    </author>
+    <author>
+      <name>Jinli Ou</name>
+    </author>
+    <author>
+      <name>Yuhua Zheng</name>
+    </author>
+    <author>
+      <name>Jianqiang Huang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.16934v1</id>
+    <title>Do Vision-Language Transformers Exhibit Visual Commonsense? An Empirical Study of VCR</title>
+    <updated>2024-05-27T08:26:58Z</updated>
+    <link href="https://arxiv.org/abs/2405.16934v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.16934v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Visual Commonsense Reasoning (VCR) calls for explanatory reasoning behind question answering over visual scenes. To achieve this goal, a model is required to provide an acceptable rationale as the reason for the predicted answers. Progress on the benchmark dataset stems largely from the recent advancement of Vision-Language Transformers (VL Transformers). These models are first pre-trained on some generic large-scale vision-text datasets, and then the learned representations are transferred to the downstream VCR task. Despite their attractive performance, this paper posits that the VL Transformers do not exhibit visual commonsense, which is the key to VCR. In particular, our empirical results pinpoint several shortcomings of existing VL Transformers: small gains from pre-training, unexpected language bias, limited model architecture for the two inseparable sub-tasks, and neglect of the important object-tag correlation. With these findings, we tentatively suggest some future directions from the aspect of dataset, evaluation metric, and training tricks. We believe this work could make researchers revisit the intuition and goals of VCR, and thus help tackle the remaining challenges in visual reasoning.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-27T08:26:58Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhenyang Li</name>
+    </author>
+    <author>
+      <name>Yangyang Guo</name>
+    </author>
+    <author>
+      <name>Kejie Wang</name>
+    </author>
+    <author>
+      <name>Xiaolin Chen</name>
+    </author>
+    <author>
+      <name>Liqiang Nie</name>
+    </author>
+    <author>
+      <name>Mohan Kankanhalli</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.12953v4</id>
+    <title>JourneyBench: A Challenging One-Stop Vision-Language Understanding Benchmark of Generated Images</title>
+    <updated>2025-01-10T02:31:03Z</updated>
+    <link href="https://arxiv.org/abs/2409.12953v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.12953v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Existing vision-language understanding benchmarks largely consist of images of objects in their usual contexts. As a consequence, recent multimodal large language models can perform well with only a shallow visual understanding by relying on background language biases. Thus, strong performance on these benchmarks does not necessarily correlate with strong visual understanding. In this paper, we release JourneyBench, a comprehensive human-annotated benchmark of generated images designed to assess the model's fine-grained multimodal reasoning abilities across five tasks: complementary multimodal chain of thought, multi-image VQA, imaginary image captioning, VQA with hallucination triggers, and fine-grained retrieval with sample-specific distractors. Unlike existing benchmarks, JourneyBench explicitly requires fine-grained multimodal reasoning in unusual imaginary scenarios where language bias and holistic image gist are insufficient. We benchmark state-of-the-art models on JourneyBench and analyze performance along a number of fine-grained dimensions. Results across all five tasks show that JourneyBench is exceptionally challenging for even the best models, indicating that models' visual reasoning abilities are not as strong as they first appear. We discuss the implications of our findings and propose avenues for further research.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-19T17:58:16Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhecan Wang</name>
+    </author>
+    <author>
+      <name>Junzhang Liu</name>
+    </author>
+    <author>
+      <name>Chia-Wei Tang</name>
+    </author>
+    <author>
+      <name>Hani Alomari</name>
+    </author>
+    <author>
+      <name>Anushka Sivakumar</name>
+    </author>
+    <author>
+      <name>Rui Sun</name>
+    </author>
+    <author>
+      <name>Wenhao Li</name>
+    </author>
+    <author>
+      <name>Md. Atabuzzaman</name>
+    </author>
+    <author>
+      <name>Hammad Ayyubi</name>
+    </author>
+    <author>
+      <name>Haoxuan You</name>
+    </author>
+    <author>
+      <name>Alvi Ishmam</name>
+    </author>
+    <author>
+      <name>Kai-Wei Chang</name>
+    </author>
+    <author>
+      <name>Shih-Fu Chang</name>
+    </author>
+    <author>
+      <name>Chris Thomas</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2311.01573v1</id>
+    <title>Improving Fairness using Vision-Language Driven Image Augmentation</title>
+    <updated>2023-11-02T19:51:10Z</updated>
+    <link href="https://arxiv.org/abs/2311.01573v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2311.01573v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Fairness is crucial when training a deep-learning discriminative model, especially in the facial domain. Models tend to correlate specific characteristics (such as age and skin color) with unrelated attributes (downstream tasks), resulting in biases which do not correspond to reality. It is common knowledge that these correlations are present in the data and are then transferred to the models during training. This paper proposes a method to mitigate these correlations to improve fairness. To do so, we learn interpretable and meaningful paths lying in the semantic space of a pre-trained diffusion model (DiffAE) -- such paths being supervised by contrastive text dipoles. That is, we learn to edit protected characteristics (age and skin color). These paths are then applied to augment images to improve the fairness of a given dataset. We test the proposed method on CelebA-HQ and UTKFace on several downstream tasks with age and skin color as protected characteristics. As a proxy for fairness, we compute the difference in accuracy with respect to the protected characteristics. Quantitative results show how the augmented images help the model improve the overall accuracy, the aforementioned metric, and the disparity of equal opportunity. Code is available at: https://github.com/Moreno98/Vision-Language-Bias-Control.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-11-02T19:51:10Z</published>
+    <arxiv:comment>Accepted for publication in WACV 2024</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Moreno D'Incà</name>
+    </author>
+    <author>
+      <name>Christos Tzelepis</name>
+    </author>
+    <author>
+      <name>Ioannis Patras</name>
+    </author>
+    <author>
+      <name>Nicu Sebe</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.17186v2</id>
+    <title>Focusing Where Vision Matters: Selective Training for Large Vision Language Models via Visual Information Gain</title>
+    <updated>2026-05-20T23:55:58Z</updated>
+    <link href="https://arxiv.org/abs/2602.17186v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.17186v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision Language Models (LVLMs) have achieved remarkable progress, yet they often suffer from language bias, producing answers without relying on visual evidence. While prior work attempts to mitigate this issue through decoding strategies, architectural modifications, or curated instruction data, they typically lack a quantitative measure of how much individual training samples or tokens actually benefit from the image. In this work, we introduce Visual Information Gain (VIG), a perplexity-based metric that measures the reduction in prediction uncertainty provided by visual input. VIG enables fine-grained analysis at both sample and token levels, effectively highlighting visually grounded elements such as colors, spatial relations, and attributes. Leveraging this, we propose a VIG-guided selective training scheme that prioritizes high-VIG samples and tokens. This approach improves visual grounding and mitigates language bias, achieving superior performance with significantly reduced supervision by focusing exclusively on visually informative samples and tokens.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-19T09:12:21Z</published>
+    <arxiv:comment>Accepted at ICML 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Seulbi Lee</name>
+    </author>
+    <author>
+      <name>Sangheum Hwang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.09014v1</id>
+    <title>COCO-Urdu: A Large-Scale Urdu Image-Caption Dataset with Multimodal Quality Estimation</title>
+    <updated>2025-09-10T21:17:32Z</updated>
+    <link href="https://arxiv.org/abs/2509.09014v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.09014v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Urdu, spoken by over 250 million people, remains critically under-served in multimodal and vision-language research. The absence of large-scale, high-quality datasets has limited the development of Urdu-capable systems and reinforced biases in multilingual vision-language models trained primarily on high-resource languages. To address this gap, we present COCO-Urdu, a large-scale image-caption dataset derived from MS COCO, containing 59,000 images and 319,000 Urdu captions selected through stratified sampling to preserve the original distribution. Captions were translated using SeamlessM4T v2 and validated with a hybrid multimodal quality estimation framework that integrates COMET-Kiwi for translation quality, CLIP-based similarity for visual grounding, and BERTScore with back-translation for semantic consistency; low-scoring captions were iteratively refined using open-source large language models. We further benchmark COCO-Urdu on BLEU, SacreBLEU, and chrF, reporting consistently strong results. To the best of our knowledge, COCO-Urdu is the largest publicly available Urdu captioning dataset. By releasing both the dataset and the quality estimation pipeline, we aim to reduce language bias in multimodal research and establish a foundation for inclusive vision-language systems.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-10T21:17:32Z</published>
+    <arxiv:comment>17 pages, 3 figures, 3 tables. Dataset available at https://huggingface.co/datasets/umairhassan02/urdu-translated-coco-captions-subset. Scripts and notebooks to reproduce results available at https://github.com/umair-hassan2/COCO-Urdu</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Umair Hassan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.01056v1</id>
+    <title>Mitigating Hallucinations in Large Vision-Language Models with Internal Fact-based Contrastive Decoding</title>
+    <updated>2025-02-03T05:08:35Z</updated>
+    <link href="https://arxiv.org/abs/2502.01056v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.01056v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Visual Language Models (LVLMs) integrate visual and linguistic modalities, exhibiting exceptional performance across various multimodal tasks. Nevertheless, LVLMs remain vulnerable to the issue of object hallucinations. Previous efforts to mitigate this issue focus on supervised fine-tuning (SFT) or incorporating external knowledge, both of which entail significant costs related to training and the acquisition of external data. To address these challenges, we propose a novel model-agnostic approach termed Internal Fact-based Contrastive Decoding (IFCD), designed to mitigate and suppress hallucinations during the inference process of LVLMs by exploiting the LVLMs' own hallucinations. IFCD is grounded in experimental observations that alterations to the LVLMs' internal representations tend to amplify hallucinations caused by language bias. By contrasting disturbed distribution, IFCD calibrates the LVLMs' output and effectively removes the hallucinatory logits from the final predictions. Experimental results validate that IFCD significantly alleviates both object-level and attribute-level hallucinations while achieving an average 9% accuracy improvement on POPE and 8% accuracy improvement on MME object hallucinations subset compared with direct decoding, respectively.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-03T05:08:35Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Chao Wang</name>
+    </author>
+    <author>
+      <name>Xuancheng Zhou</name>
+    </author>
+    <author>
+      <name>Weiwei Fu</name>
+    </author>
+    <author>
+      <name>Yang Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2104.03762v1</id>
+    <title>Video Question Answering with Phrases via Semantic Roles</title>
+    <updated>2021-04-08T13:27:43Z</updated>
+    <link href="https://arxiv.org/abs/2104.03762v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2104.03762v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Video Question Answering (VidQA) evaluation metrics have been limited to a single-word answer or selecting a phrase from a fixed set of phrases. These metrics limit the VidQA models' application scenario. In this work, we leverage semantic roles derived from video descriptions to mask out certain phrases, to introduce VidQAP which poses VidQA as a fill-in-the-phrase task. To enable evaluation of answer phrases, we compute the relative improvement of the predicted answer compared to an empty string. To reduce the influence of language bias in VidQA datasets, we retrieve a video having a different answer for the same question. To facilitate research, we construct ActivityNet-SRL-QA and Charades-SRL-QA and benchmark them by extending three vision-language models. We further perform extensive analysis and ablative studies to guide future work.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-04-08T13:27:43Z</published>
+    <arxiv:comment>NAACL21 Camera Ready including appendix</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Arka Sadhu</name>
+    </author>
+    <author>
+      <name>Kan Chen</name>
+    </author>
+    <author>
+      <name>Ram Nevatia</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.10425v1</id>
+    <title>HII-DPO: Eliminate Hallucination via Accurate Hallucination-Inducing Counterfactual Images</title>
+    <updated>2026-02-11T02:11:02Z</updated>
+    <link href="https://arxiv.org/abs/2602.10425v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.10425v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision-Language Models (VLMs) have achieved remarkable success across diverse multimodal tasks but remain vulnerable to hallucinations rooted in inherent language bias. Despite recent progress, existing hallucination mitigation methods often overlook the underlying hallucination patterns driven by language bias. In this work, we design a novel pipeline to accurately synthesize Hallucination-Inducing Images (HIIs). Using synthesized HIIs, we reveal a consistent scene-conditioned hallucination pattern: models tend to mention objects that are highly typical of the scene even when visual evidence is removed. To quantify the susceptibility of VLMs to this hallucination pattern, we establish the Masked-Object-Hallucination (MOH) benchmark to rigorously evaluate existing state-of-the-art alignment frameworks. Finally, we leverage HIIs to construct high-quality preference datasets for fine-grained alignment. Experimental results demonstrate that our approach effectively mitigates hallucinations while preserving general model capabilities. Specifically, our method achieves up to a 38% improvement over the current state-of-the-art on standard hallucination benchmarks.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-11T02:11:02Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yilin Yang</name>
+    </author>
+    <author>
+      <name>Zhenghui Guo</name>
+    </author>
+    <author>
+      <name>Yuke Wang</name>
+    </author>
+    <author>
+      <name>Omprakash Gnawali</name>
+    </author>
+    <author>
+      <name>Sheng Di</name>
+    </author>
+    <author>
+      <name>Chengming Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.01957v1</id>
+    <title>AFTER: Mitigating the Object Hallucination of LVLM via Adaptive Factual-Guided Activation Editing</title>
+    <updated>2026-01-05T10:02:22Z</updated>
+    <link href="https://arxiv.org/abs/2601.01957v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.01957v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision-Language Models (LVLMs) have achieved substantial progress in cross-modal tasks. However, due to language bias, LVLMs are susceptible to object hallucination, which can be primarily divided into category, attribute, and relation hallucination, significantly impeding the trustworthy AI applications. Editing the internal activations of LVLMs has shown promising effectiveness in mitigating hallucinations with minimal cost. However, previous editing approaches neglect the effective guidance offered by factual textual semantics, thereby struggling to explicitly mitigate language bias. To address these issues, we propose Adaptive Factual-guided Visual-Textual Editing for hallucination mitigation (AFTER), which comprises Factual-Augmented Activation Steering (FAS) and Query-Adaptive Offset Optimization (QAO), to adaptively guides the original biased activations towards factual semantics. Specifically, FAS is proposed to provide factual and general guidance for activation editing, thereby explicitly modeling the precise visual-textual associations. Subsequently, QAO introduces a query-aware offset estimator to establish query-specific editing from the general steering vector, enhancing the diversity and granularity of editing. Extensive experiments on standard hallucination benchmarks across three widely adopted LVLMs validate the efficacy of the proposed AFTER, notably achieving up to a 16.3% reduction of hallucination over baseline on the AMBER benchmark. Our code and data will be released for reproducibility.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-05T10:02:22Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <arxiv:journal_ref>ICLR 2026</arxiv:journal_ref>
+    <author>
+      <name>Tianbo Wang</name>
+    </author>
+    <author>
+      <name>Yuqing Ma</name>
+    </author>
+    <author>
+      <name>Kewei Liao</name>
+    </author>
+    <author>
+      <name>Zhange Zhang</name>
+    </author>
+    <author>
+      <name>Simin Li</name>
+    </author>
+    <author>
+      <name>Jinyang Guo</name>
+    </author>
+    <author>
+      <name>Xianglong Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.01503v1</id>
+    <title>Disentangling Pictorial Cue Understanding from Language Bias in VLMs via Depth Ordering Task</title>
+    <updated>2026-07-01T22:02:30Z</updated>
+    <link href="https://arxiv.org/abs/2607.01503v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.01503v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we study depth perception of vision-language models (VLMs) to isolate the effects of pictorial depth cues and disentangle vision and language influences on model performance. To this end, we combine depth-ordering and odd-one-out psychophysical tasks: the VLMs are presented with images where one object is at different depth relative to other, otherwise identical, objects, and must determine whether the odd-one-out target is closer or farther to the observer. To create stimuli, we generate 2D views from simulated and real 3D scenes while controlling the presence of individual pictorial depth cues, enabling a fine-grained analysis of cue-level contributions. Language effects are examined by varying referring expression clarity. We also introduce a novel metric to quantify vision-vs-language sensitivities. Applying this methodology, we create the Odd-One-Out Depth (O3-D) dataset with 37K real and synthetic images and 147K image-question pairs. Evaluation of 12 open-source and commercial models on O3-D shows under-utilization of depth cues and depth-ordering accuracies between 47% and 56%, with no model above chance level. At the same time, our metric reveals strong linguistic bias in the answers. Neither chain-of-thought (CoT) nor in-context learning (ICL) significantly improves performance, suggesting that static image data alone may be insufficient for depth understanding. All code, the image generation pipeline, and the O3-D dataset are publicly released at https://github.com/lyiqian/o3-d.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-01T22:02:30Z</published>
+    <arxiv:comment>15 pages, 7 figures, accepted to ECCV 2026 (30 pages, 13 figures, supplementary materials included)</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yiqian Liu</name>
+    </author>
+    <author>
+      <name>Iuliia Kotseruba</name>
+    </author>
+    <author>
+      <name>John K. Tsotsos</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.06759v1</id>
+    <title>VisChainBench: A Benchmark for Multi-Turn, Multi-Image Visual Reasoning Beyond Language Priors</title>
+    <updated>2025-12-07T09:48:10Z</updated>
+    <link href="https://arxiv.org/abs/2512.06759v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.06759v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Understanding multi-image, multi-turn scenarios is a critical yet underexplored capability for Large Vision-Language Models (LVLMs). Existing benchmarks predominantly focus on static or horizontal comparisons -- e.g., spotting visual differences or assessing appropriateness -- while relying heavily on language cues. Such settings overlook progressive, context-dependent reasoning and the challenge of visual-to-visual inference. To bridge this gap, we present VisChainBench, a large-scale benchmark designed to rigorously evaluate LVLMs' ability to perform multi-step visual reasoning across sequential, interdependent tasks with minimal language guidance. VisChainBench contains 1,457 tasks spanning over 20,000 images across three diverse domains (e.g., daily scenarios, engineering troubleshooting), structured to mimic real-world decision-making processes. Uniquely, the benchmark is constructed using a multi-agent generation pipeline, ensuring high visual diversity and controlled language bias. All the benchmark data and code for benchmark construction are available for viewing and download via following Link: https://huggingface.co/datasets/eyehole/VisChainBench</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-07T09:48:10Z</published>
+    <arxiv:comment>12 pages,13figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Wenbo Lyu</name>
+    </author>
+    <author>
+      <name>Yingjun Du</name>
+    </author>
+    <author>
+      <name>Jinglin Zhao</name>
+    </author>
+    <author>
+      <name>Xianton Zhen</name>
+    </author>
+    <author>
+      <name>Ling Shao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.02730v1</id>
+    <title>Perceptual Flow Network for Visually Grounded Reasoning</title>
+    <updated>2026-05-04T15:31:11Z</updated>
+    <link href="https://arxiv.org/abs/2605.02730v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.02730v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Despite the success of Large-Vision Language Models (LVLMs), general optimization objectives (e.g., standard MLE) fail to constrain visual trajectories, leading to language bias and hallucination. To mitigate this, current methods introduce geometric priors from visual experts as additional supervision. However, we observe that such supervision is typically suboptimal: it is biased toward geometric precision and offers limited reasoning utility. To bridge this gap, we propose Perceptual Flow Network (PFlowNet), which eschews rigid alignment with the expert priors and achieves interpretable yet more effective visual reasoning. Specifically, PFlowNet decouples perception from reasoning to establish a self-conditioned generation process. Based on this, it integrates multi-dimensional rewards with vicinal geometric shaping via variational reinforcement learning, thereby facilitating reasoning-oriented perceptual behaviors while preserving visual reliability. PFlowNet delivers a provable performance guarantee and competitive empirical results, particularly setting new SOTA records on V* Bench (90.6%) and MME-RealWorld-lite (67.0%).</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-04T15:31:11Z</published>
+    <arxiv:comment>36 pages with 17 figures, Accepted at ICML 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yangfu Li</name>
+    </author>
+    <author>
+      <name>Yuning Gong</name>
+    </author>
+    <author>
+      <name>Hongjian Zhan</name>
+    </author>
+    <author>
+      <name>Teng Li</name>
+    </author>
+    <author>
+      <name>Yuanhuiyi Lyu</name>
+    </author>
+    <author>
+      <name>Tianyi Chen</name>
+    </author>
+    <author>
+      <name>Qi Liu</name>
+    </author>
+    <author>
+      <name>Ziyuan Huang</name>
+    </author>
+    <author>
+      <name>Zhihang Zhong</name>
+    </author>
+    <author>
+      <name>Dandan Zheng</name>
+    </author>
+    <author>
+      <name>Yue Lu</name>
+    </author>
+  </entry>
+</feed>

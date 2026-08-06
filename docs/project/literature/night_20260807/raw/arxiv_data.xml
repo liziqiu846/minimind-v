@@ -1,0 +1,1020 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/SQnCylFTG3+WAOQ3vqBnE31Pn9I</id>
+  <title>arXiv Query: search_query=all:"image-text data" AND all:generalization&amp;id_list=&amp;start=0&amp;max_results=30</title>
+  <updated>2026-08-06T16:12:29Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22image-text+data%22+AND+all:generalization&amp;start=0&amp;max_results=30&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>30</opensearch:itemsPerPage>
+  <opensearch:totalResults>98</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2406.07543v2</id>
+    <title>Vision Model Pre-training on Interleaved Image-Text Data via Latent Compression Learning</title>
+    <updated>2024-12-20T17:24:44Z</updated>
+    <link href="https://arxiv.org/abs/2406.07543v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.07543v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, vision model pre-training has evolved from relying on manually annotated datasets to leveraging large-scale, web-crawled image-text data. Despite these advances, there is no pre-training method that effectively exploits the interleaved image-text data, which is very prevalent on the Internet. Inspired by the recent success of compression learning in natural language processing, we propose a novel vision model pre-training method called Latent Compression Learning (LCL) for interleaved image-text data. This method performs latent compression learning by maximizing the mutual information between the inputs and outputs of a causal attention model. The training objective can be decomposed into two basic tasks: 1) contrastive learning between visual representation and preceding context, and 2) generating subsequent text based on visual representation. Our experiments demonstrate that our method not only matches the performance of CLIP on paired pre-training datasets (e.g., LAION), but can also leverage interleaved pre-training data (e.g., MMC4) to learn robust visual representation from scratch, showcasing the potential of vision model pre-training with interleaved image-text data. Code is released at https://github.com/OpenGVLab/LCL.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-11T17:59:35Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Chenyu Yang</name>
+    </author>
+    <author>
+      <name>Xizhou Zhu</name>
+    </author>
+    <author>
+      <name>Jinguo Zhu</name>
+    </author>
+    <author>
+      <name>Weijie Su</name>
+    </author>
+    <author>
+      <name>Junjie Wang</name>
+    </author>
+    <author>
+      <name>Xuan Dong</name>
+    </author>
+    <author>
+      <name>Wenhai Wang</name>
+    </author>
+    <author>
+      <name>Lewei Lu</name>
+    </author>
+    <author>
+      <name>Bin Li</name>
+    </author>
+    <author>
+      <name>Jie Zhou</name>
+    </author>
+    <author>
+      <name>Yu Qiao</name>
+    </author>
+    <author>
+      <name>Jifeng Dai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.02677v1</id>
+    <title>Finetuned Multimodal Language Models Are High-Quality Image-Text Data Filters</title>
+    <updated>2024-03-05T06:05:15Z</updated>
+    <link href="https://arxiv.org/abs/2403.02677v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.02677v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose a novel framework for filtering image-text data by leveraging fine-tuned Multimodal Language Models (MLMs). Our approach outperforms predominant filtering methods (e.g., CLIPScore) via integrating the recent advances in MLMs. We design four distinct yet complementary metrics to holistically measure the quality of image-text data. A new pipeline is established to construct high-quality instruction data for fine-tuning MLMs as data filters. Comparing with CLIPScore, our MLM filters produce more precise and comprehensive scores that directly improve the quality of filtered data and boost the performance of pre-trained models. We achieve significant improvements over CLIPScore on popular foundation models (i.e., CLIP and BLIP2) and various downstream tasks. Our MLM filter can generalize to different models and tasks, and be used as a drop-in replacement for CLIPScore. An additional ablation study is provided to verify our design choices for the MLM filter.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-05T06:05:15Z</published>
+    <arxiv:comment>Project Website: https://mlm-filter.github.io</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Weizhi Wang</name>
+    </author>
+    <author>
+      <name>Khalil Mrini</name>
+    </author>
+    <author>
+      <name>Linjie Yang</name>
+    </author>
+    <author>
+      <name>Sateesh Kumar</name>
+    </author>
+    <author>
+      <name>Yu Tian</name>
+    </author>
+    <author>
+      <name>Xifeng Yan</name>
+    </author>
+    <author>
+      <name>Heng Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2305.12964v2</id>
+    <title>Text-based Person Search without Parallel Image-Text Data</title>
+    <updated>2023-08-04T13:04:24Z</updated>
+    <link href="https://arxiv.org/abs/2305.12964v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2305.12964v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Text-based person search (TBPS) aims to retrieve the images of the target person from a large image gallery based on a given natural language description. Existing methods are dominated by training models with parallel image-text pairs, which are very costly to collect. In this paper, we make the first attempt to explore TBPS without parallel image-text data ($μ$-TBPS), in which only non-parallel images and texts, or even image-only data, can be adopted. Towards this end, we propose a two-stage framework, generation-then-retrieval (GTR), to first generate the corresponding pseudo text for each image and then perform the retrieval in a supervised manner. In the generation stage, we propose a fine-grained image captioning strategy to obtain an enriched description of the person image, which firstly utilizes a set of instruction prompts to activate the off-the-shelf pretrained vision-language model to capture and generate fine-grained person attributes, and then converts the extracted attributes into a textual description via the finetuned large language model or the hand-crafted template. In the retrieval stage, considering the noise interference of the generated texts for training model, we develop a confidence score-based training scheme by enabling more reliable texts to contribute more during the training. Experimental results on multiple TBPS benchmarks (i.e., CUHK-PEDES, ICFG-PEDES and RSTPReid) show that the proposed GTR can achieve a promising performance without relying on parallel image-text data.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-05-22T12:13:08Z</published>
+    <arxiv:comment>Accepted by ACM MM 2023</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yang Bai</name>
+    </author>
+    <author>
+      <name>Jingyao Wang</name>
+    </author>
+    <author>
+      <name>Min Cao</name>
+    </author>
+    <author>
+      <name>Chen Chen</name>
+    </author>
+    <author>
+      <name>Ziqiang Cao</name>
+    </author>
+    <author>
+      <name>Liqiang Nie</name>
+    </author>
+    <author>
+      <name>Min Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2310.03734v1</id>
+    <title>Leveraging Unpaired Data for Vision-Language Generative Models via Cycle Consistency</title>
+    <updated>2023-10-05T17:55:19Z</updated>
+    <link href="https://arxiv.org/abs/2310.03734v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2310.03734v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Current vision-language generative models rely on expansive corpora of paired image-text data to attain optimal performance and generalization capabilities. However, automatically collecting such data (e.g. via large-scale web scraping) leads to low quality and poor image-text correlation, while human annotation is more accurate but requires significant manual effort and expense. We introduce $\textbf{ITIT}$ ($\textbf{I}$n$\textbf{T}$egrating $\textbf{I}$mage $\textbf{T}$ext): an innovative training paradigm grounded in the concept of cycle consistency which allows vision-language training on unpaired image and text data. ITIT is comprised of a joint image-text encoder with disjoint image and text decoders that enable bidirectional image-to-text and text-to-image generation in a single framework. During training, ITIT leverages a small set of paired image-text data to ensure its output matches the input reasonably well in both directions. Simultaneously, the model is also trained on much larger datasets containing only images or texts. This is achieved by enforcing cycle consistency between the original unpaired samples and the cycle-generated counterparts. For instance, it generates a caption for a given input image and then uses the caption to create an output image, and enforces similarity between the input and output images. Our experiments show that ITIT with unpaired datasets exhibits similar scaling behavior as using high-quality paired data. We demonstrate image generation and captioning performance on par with state-of-the-art text-to-image and image-to-text models with orders of magnitude fewer (only 3M) paired image-text data.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-10-05T17:55:19Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Tianhong Li</name>
+    </author>
+    <author>
+      <name>Sangnie Bhardwaj</name>
+    </author>
+    <author>
+      <name>Yonglong Tian</name>
+    </author>
+    <author>
+      <name>Han Zhang</name>
+    </author>
+    <author>
+      <name>Jarred Barber</name>
+    </author>
+    <author>
+      <name>Dina Katabi</name>
+    </author>
+    <author>
+      <name>Guillaume Lajoie</name>
+    </author>
+    <author>
+      <name>Huiwen Chang</name>
+    </author>
+    <author>
+      <name>Dilip Krishnan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2305.03204v1</id>
+    <title>VideoOFA: Two-Stage Pre-Training for Video-to-Text Generation</title>
+    <updated>2023-05-04T23:27:21Z</updated>
+    <link href="https://arxiv.org/abs/2305.03204v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2305.03204v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose a new two-stage pre-training framework for video-to-text generation tasks such as video captioning and video question answering: A generative encoder-decoder model is first jointly pre-trained on massive image-text data to learn fundamental vision-language concepts, and then adapted to video data in an intermediate video-text pre-training stage to learn video-specific skills such as spatio-temporal reasoning. As a result, our VideoOFA model achieves new state-of-the-art performance on four Video Captioning benchmarks, beating prior art by an average of 9.7 points in CIDEr score. It also outperforms existing models on two open-ended Video Question Answering datasets, showcasing its generalization capability as a universal video-to-text model.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-05-04T23:27:21Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xilun Chen</name>
+    </author>
+    <author>
+      <name>Lili Yu</name>
+    </author>
+    <author>
+      <name>Wenhan Xiong</name>
+    </author>
+    <author>
+      <name>Barlas Oğuz</name>
+    </author>
+    <author>
+      <name>Yashar Mehdad</name>
+    </author>
+    <author>
+      <name>Wen-tau Yih</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.05204v1</id>
+    <title>Data-Efficient Generalization for Zero-shot Composed Image Retrieval</title>
+    <updated>2025-03-07T07:49:31Z</updated>
+    <link href="https://arxiv.org/abs/2503.05204v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.05204v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Zero-shot Composed Image Retrieval (ZS-CIR) aims to retrieve the target image based on a reference image and a text description without requiring in-distribution triplets for training. One prevalent approach follows the vision-language pretraining paradigm that employs a mapping network to transfer the image embedding to a pseudo-word token in the text embedding space. However, this approach tends to impede network generalization due to modality discrepancy and distribution shift between training and inference. To this end, we propose a Data-efficient Generalization (DeG) framework, including two novel designs, namely, Textual Supplement (TS) module and Semantic-Set (S-Set). The TS module exploits compositional textual semantics during training, enhancing the pseudo-word token with more linguistic semantics and thus mitigating the modality discrepancy effectively. The S-Set exploits the zero-shot capability of pretrained Vision-Language Models (VLMs), alleviating the distribution shift and mitigating the overfitting issue from the redundancy of the large-scale image-text data. Extensive experiments over four ZS-CIR benchmarks show that DeG outperforms the state-of-the-art (SOTA) methods with much less training data, and saves substantial training and inference time for practical usage.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-07T07:49:31Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zining Chen</name>
+    </author>
+    <author>
+      <name>Zhicheng Zhao</name>
+    </author>
+    <author>
+      <name>Fei Su</name>
+    </author>
+    <author>
+      <name>Xiaoqin Zhang</name>
+    </author>
+    <author>
+      <name>Shijian Lu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.08348v1</id>
+    <title>Visually Dehallucinative Instruction Generation</title>
+    <updated>2024-02-13T10:25:45Z</updated>
+    <link href="https://arxiv.org/abs/2402.08348v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.08348v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In recent years, synthetic visual instructions by generative language model have demonstrated plausible text generation performance on the visual question-answering tasks. However, challenges persist in the hallucination of generative language models, i.e., the generated image-text data contains unintended contents. This paper presents a novel and scalable method for generating visually dehallucinative instructions, dubbed CAP2QA, that constrains the scope to only image contents. Our key contributions lie in introducing image-aligned instructive QA dataset CAP2QA-COCO and its scalable recipe. In our experiments, we compare synthetic visual instruction datasets that share the same source data by visual instruction tuning and conduct general visual recognition tasks. It shows that our proposed method significantly reduces visual hallucination while consistently improving visual recognition ability and expressiveness.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-13T10:25:45Z</published>
+    <arxiv:comment>Accepted in ICASSP2024</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Sungguk Cha</name>
+    </author>
+    <author>
+      <name>Jusung Lee</name>
+    </author>
+    <author>
+      <name>Younghyun Lee</name>
+    </author>
+    <author>
+      <name>Cheoljong Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2401.10208v2</id>
+    <title>MM-Interleaved: Interleaved Image-Text Generative Modeling via Multi-modal Feature Synchronizer</title>
+    <updated>2024-04-02T09:20:50Z</updated>
+    <link href="https://arxiv.org/abs/2401.10208v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2401.10208v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Developing generative models for interleaved image-text data has both research and practical value. It requires models to understand the interleaved sequences and subsequently generate images and text. However, existing attempts are limited by the issue that the fixed number of visual tokens cannot efficiently capture image details, which is particularly problematic in the multi-image scenarios. To address this, this paper presents MM-Interleaved, an end-to-end generative model for interleaved image-text data. It introduces a multi-scale and multi-image feature synchronizer module, allowing direct access to fine-grained image features in the previous context during the generation process. MM-Interleaved is end-to-end pre-trained on both paired and interleaved image-text corpora. It is further enhanced through a supervised fine-tuning phase, wherein the model improves its ability to follow complex multi-modal instructions. Experiments demonstrate the versatility of MM-Interleaved in recognizing visual details following multi-modal instructions and generating consistent images following both textual and visual conditions. Code and models are available at \url{https://github.com/OpenGVLab/MM-Interleaved}.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-01-18T18:50:16Z</published>
+    <arxiv:comment>20 pages, 9 figures, 17 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Changyao Tian</name>
+    </author>
+    <author>
+      <name>Xizhou Zhu</name>
+    </author>
+    <author>
+      <name>Yuwen Xiong</name>
+    </author>
+    <author>
+      <name>Weiyun Wang</name>
+    </author>
+    <author>
+      <name>Zhe Chen</name>
+    </author>
+    <author>
+      <name>Wenhai Wang</name>
+    </author>
+    <author>
+      <name>Yuntao Chen</name>
+    </author>
+    <author>
+      <name>Lewei Lu</name>
+    </author>
+    <author>
+      <name>Tong Lu</name>
+    </author>
+    <author>
+      <name>Jie Zhou</name>
+    </author>
+    <author>
+      <name>Hongsheng Li</name>
+    </author>
+    <author>
+      <name>Yu Qiao</name>
+    </author>
+    <author>
+      <name>Jifeng Dai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.07110v2</id>
+    <title>DashCLIP: Leveraging multimodal models for generating semantic embeddings for DoorDash</title>
+    <updated>2025-11-06T18:08:18Z</updated>
+    <link href="https://arxiv.org/abs/2504.07110v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.07110v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Despite the success of vision-language models in various generative tasks, obtaining high-quality semantic representations for products and user intents is still challenging due to the inability of off-the-shelf models to capture nuanced relationships between the entities. In this paper, we introduce a joint training framework for product and user queries by aligning uni-modal and multi-modal encoders through contrastive learning on image-text data. Our novel approach trains a query encoder with an LLM-curated relevance dataset, eliminating the reliance on engagement history. These embeddings demonstrate strong generalization capabilities and improve performance across applications, including product categorization and relevance prediction. For personalized ads recommendation, a significant uplift in the click-through rate and conversion rate after the deployment further confirms the impact on key business metrics. We believe that the flexibility of our framework makes it a promising solution toward enriching the user experience across the e-commerce landscape.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-18T20:38:31Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Omkar Gurjar</name>
+    </author>
+    <author>
+      <name>Kin Sum Liu</name>
+    </author>
+    <author>
+      <name>Praveen Kolli</name>
+    </author>
+    <author>
+      <name>Utsaw Kumar</name>
+    </author>
+    <author>
+      <name>Mandar Rahurkar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2206.09378v1</id>
+    <title>A Self-Guided Framework for Radiology Report Generation</title>
+    <updated>2022-06-19T11:09:27Z</updated>
+    <link href="https://arxiv.org/abs/2206.09378v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2206.09378v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Automatic radiology report generation is essential to computer-aided diagnosis. Through the success of image captioning, medical report generation has been achievable. However, the lack of annotated disease labels is still the bottleneck of this area. In addition, the image-text data bias problem and complex sentences make it more difficult to generate accurate reports. To address these gaps, we pre-sent a self-guided framework (SGF), a suite of unsupervised and supervised deep learning methods to mimic the process of human learning and writing. In detail, our framework obtains the domain knowledge from medical reports with-out extra disease labels and guides itself to extract fined-grain visual features as-sociated with the text. Moreover, SGF successfully improves the accuracy and length of medical report generation by incorporating a similarity comparison mechanism that imitates the process of human self-improvement through compar-ative practice. Extensive experiments demonstrate the utility of our SGF in the majority of cases, showing its superior performance over state-of-the-art meth-ods. Our results highlight the capacity of the proposed framework to distinguish fined-grained visual details between words and verify its advantage in generating medical reports.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-06-19T11:09:27Z</published>
+    <arxiv:comment>11 pages, 3 figures, accepted by Medical Image Computing and Computer Assisted Intervention 2022(MICCAI 2022)</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Jun Li</name>
+    </author>
+    <author>
+      <name>Shibo Li</name>
+    </author>
+    <author>
+      <name>Ying Hu</name>
+    </author>
+    <author>
+      <name>Huiren Tao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2312.09251v1</id>
+    <title>VL-GPT: A Generative Pre-trained Transformer for Vision and Language Understanding and Generation</title>
+    <updated>2023-12-14T18:59:43Z</updated>
+    <link href="https://arxiv.org/abs/2312.09251v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2312.09251v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this work, we introduce Vision-Language Generative Pre-trained Transformer (VL-GPT), a transformer model proficient at concurrently perceiving and generating visual and linguistic data. VL-GPT achieves a unified pre-training approach for both image and text modalities by employing a straightforward auto-regressive objective, thereby enabling the model to process image and text as seamlessly as a language model processes text. To accomplish this, we initially propose a novel image tokenizer-detokenizer framework for visual data, specifically designed to transform raw images into a sequence of continuous embeddings and reconstruct them accordingly. In combination with the existing text tokenizer and detokenizer, this framework allows for the encoding of interleaved image-text data into a multimodal sequence, which can subsequently be fed into the transformer model. Consequently, VL-GPT can perform large-scale pre-training on multimodal corpora utilizing a unified auto-regressive objective (i.e., next-token prediction). Upon completion of pre-training, VL-GPT exhibits remarkable zero-shot and few-shot performance across a diverse range of vision and language understanding and generation tasks, including image captioning, visual question answering, text-to-image generation, and more. Additionally, the pre-trained model retrains in-context learning capabilities when provided with multimodal prompts. We further conduct instruction tuning on our VL-GPT, highlighting its exceptional potential for multimodal assistance. The source code and model weights shall be released.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-12-14T18:59:43Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jinguo Zhu</name>
+    </author>
+    <author>
+      <name>Xiaohan Ding</name>
+    </author>
+    <author>
+      <name>Yixiao Ge</name>
+    </author>
+    <author>
+      <name>Yuying Ge</name>
+    </author>
+    <author>
+      <name>Sijie Zhao</name>
+    </author>
+    <author>
+      <name>Hengshuang Zhao</name>
+    </author>
+    <author>
+      <name>Xiaohua Wang</name>
+    </author>
+    <author>
+      <name>Ying Shan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.04699v1</id>
+    <title>A Visual Leap in CLIP Compositionality Reasoning through Generation of Counterfactual Sets</title>
+    <updated>2025-07-07T06:47:10Z</updated>
+    <link href="https://arxiv.org/abs/2507.04699v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.04699v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-language models (VLMs) often struggle with compositional reasoning due to insufficient high-quality image-text data. To tackle this challenge, we propose a novel block-based diffusion approach that automatically generates counterfactual datasets without manual annotation. Our method utilizes large language models to identify entities and their spatial relationships. It then independently generates image blocks as "puzzle pieces" coherently arranged according to specified compositional rules. This process creates diverse, high-fidelity counterfactual image-text pairs with precisely controlled variations. In addition, we introduce a specialized loss function that differentiates inter-set from intra-set samples, enhancing training efficiency and reducing the need for negative samples. Experiments demonstrate that fine-tuning VLMs with our counterfactual datasets significantly improves visual reasoning performance. Our approach achieves state-of-the-art results across multiple benchmarks while using substantially less training data than existing methods.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-07T06:47:10Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zexi Jia</name>
+    </author>
+    <author>
+      <name>Chuanwei Huang</name>
+    </author>
+    <author>
+      <name>Hongyan Fei</name>
+    </author>
+    <author>
+      <name>Yeshuang Zhu</name>
+    </author>
+    <author>
+      <name>Zhiqiang Yuan</name>
+    </author>
+    <author>
+      <name>Ying Deng</name>
+    </author>
+    <author>
+      <name>Jiapei Zhang</name>
+    </author>
+    <author>
+      <name>Jinchao Zhang</name>
+    </author>
+    <author>
+      <name>Jie Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2303.12208v1</id>
+    <title>MAGVLT: Masked Generative Vision-and-Language Transformer</title>
+    <updated>2023-03-21T21:49:39Z</updated>
+    <link href="https://arxiv.org/abs/2303.12208v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2303.12208v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>While generative modeling on multimodal image-text data has been actively developed with large-scale paired datasets, there have been limited attempts to generate both image and text data by a single model rather than a generation of one fixed modality conditioned on the other modality. In this paper, we explore a unified generative vision-and-language (VL) model that can produce both images and text sequences. Especially, we propose a generative VL transformer based on the non-autoregressive mask prediction, named MAGVLT, and compare it with an autoregressive generative VL transformer (ARGVLT). In comparison to ARGVLT, the proposed MAGVLT enables bidirectional context encoding, fast decoding by parallel token predictions in an iterative refinement, and extended editing capabilities such as image and text infilling. For rigorous training of our MAGVLT with image-text pairs from scratch, we combine the image-to-text, text-to-image, and joint image-and-text mask prediction tasks. Moreover, we devise two additional tasks based on the step-unrolled mask prediction and the selective prediction on the mixture of two image-text pairs. Experimental results on various downstream generation tasks of VL benchmarks show that our MAGVLT outperforms ARGVLT by a large margin even with significant inference speedup. Particularly, MAGVLT achieves competitive results on both zero-shot image-to-text and text-to-image generation tasks from MS-COCO by one moderate-sized model (fewer than 500M parameters) even without the use of monomodal data and networks.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-03-21T21:49:39Z</published>
+    <arxiv:comment>CVPR 2023</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Sungwoong Kim</name>
+    </author>
+    <author>
+      <name>Daejin Jo</name>
+    </author>
+    <author>
+      <name>Donghoon Lee</name>
+    </author>
+    <author>
+      <name>Jongmin Kim</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.14905v1</id>
+    <title>Measuring and Mitigating Hallucinations in Vision-Language Dataset Generation for Remote Sensing</title>
+    <updated>2025-01-24T20:13:29Z</updated>
+    <link href="https://arxiv.org/abs/2501.14905v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.14905v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision language models have achieved impressive results across various fields. However, adoption in remote sensing remains limited, largely due to the scarcity of paired image-text data. To bridge this gap, synthetic caption generation has gained interest, traditionally relying on rule-based methods that use metadata or bounding boxes. While these approaches provide some description, they often lack the depth needed to capture complex wide-area scenes. Large language models (LLMs) offer a promising alternative for generating more descriptive captions, yet they can produce generic outputs and are prone to hallucination. In this paper, we propose a new method to enhance vision-language datasets for remote sensing by integrating maps as external data sources, enabling the generation of detailed, context-rich captions. Additionally, we present methods to measure and mitigate hallucinations in LLM-generated text. We introduce fMoW-mm, a multimodal dataset incorporating satellite imagery, maps, metadata, and text annotations. We demonstrate its effectiveness for automatic target recognition in few-shot settings, achieving superior performance compared to other vision-language remote sensing datasets.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-01-24T20:13:29Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Madeline Anderson</name>
+    </author>
+    <author>
+      <name>Miriam Cha</name>
+    </author>
+    <author>
+      <name>William T. Freeman</name>
+    </author>
+    <author>
+      <name>J. Taylor Perron</name>
+    </author>
+    <author>
+      <name>Nathaniel Maidel</name>
+    </author>
+    <author>
+      <name>Kerri Cahoy</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2305.03668v2</id>
+    <title>A Suite of Generative Tasks for Multi-Level Multimodal Webpage Understanding</title>
+    <updated>2023-10-20T13:18:06Z</updated>
+    <link href="https://arxiv.org/abs/2305.03668v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2305.03668v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Webpages have been a rich, scalable resource for vision-language and language only tasks. Yet only pieces of webpages are kept in existing datasets: image-caption pairs, long text articles, or raw HTML, never all in one place. Webpage tasks have resultingly received little attention and structured image-text data left underused. To study multimodal webpage understanding, we introduce the Wikipedia Webpage suite (WikiWeb2M) containing 2M pages with all of the associated image, text, and structure data. We verify its utility on three generative tasks: page description generation, section summarization, and contextual image captioning. We design a novel attention mechanism Prefix Global, which selects the most relevant image and text content as global tokens to attend to the rest of the webpage for context. By using page structure to separate such tokens, it performs better than full attention with lower computational complexity. Extensive experiments show that the new data in WikiWeb2M improves task performance compared to prior work.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-05-05T16:38:05Z</published>
+    <arxiv:comment>Accepted in EMNLP 2023, revision contains camera ready edits. Data can be downloaded at https://github.com/google-research-datasets/wit/blob/main/wikiweb2m.md</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Andrea Burns</name>
+    </author>
+    <author>
+      <name>Krishna Srinivasan</name>
+    </author>
+    <author>
+      <name>Joshua Ainslie</name>
+    </author>
+    <author>
+      <name>Geoff Brown</name>
+    </author>
+    <author>
+      <name>Bryan A. Plummer</name>
+    </author>
+    <author>
+      <name>Kate Saenko</name>
+    </author>
+    <author>
+      <name>Jianmo Ni</name>
+    </author>
+    <author>
+      <name>Mandy Guo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.14563v1</id>
+    <title>Learning Visual Grounding from Generative Vision and Language Model</title>
+    <updated>2024-07-18T20:29:49Z</updated>
+    <link href="https://arxiv.org/abs/2407.14563v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.14563v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Visual grounding tasks aim to localize image regions based on natural language references. In this work, we explore whether generative VLMs predominantly trained on image-text data could be leveraged to scale up the text annotation of visual grounding data. We find that grounding knowledge already exists in generative VLM and can be elicited by proper prompting. We thus prompt a VLM to generate object-level descriptions by feeding it object regions from existing object detection datasets. We further propose attribute modeling to explicitly capture the important object attributes, and spatial relation modeling to capture inter-object relationship, both of which are common linguistic pattern in referring expression. Our constructed dataset (500K images, 1M objects, 16M referring expressions) is one of the largest grounding datasets to date, and the first grounding dataset with purely model-generated queries and human-annotated objects. To verify the quality of this data, we conduct zero-shot transfer experiments to the popular RefCOCO benchmarks for both referring expression comprehension (REC) and segmentation (RES) tasks. On both tasks, our model significantly outperform the state-of-the-art approaches without using human annotated visual grounding data. Our results demonstrate the promise of generative VLM to scale up visual grounding in the real world. Code and models will be released.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-18T20:29:49Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Shijie Wang</name>
+    </author>
+    <author>
+      <name>Dahun Kim</name>
+    </author>
+    <author>
+      <name>Ali Taalimi</name>
+    </author>
+    <author>
+      <name>Chen Sun</name>
+    </author>
+    <author>
+      <name>Weicheng Kuo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.14523v2</id>
+    <title>Learning from Reasoning Failures via Synthetic Data Generation</title>
+    <updated>2026-01-12T11:31:03Z</updated>
+    <link href="https://arxiv.org/abs/2504.14523v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.14523v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Training models on synthetic data has emerged as an increasingly important strategy for improving the performance of generative AI. This approach is particularly helpful for large multimodal models (LMMs) due to the relative scarcity of high-quality paired image-text data compared to language-only data. While a variety of methods have been proposed for generating large multimodal datasets, they do not tailor the synthetic data to address specific deficiencies in the reasoning abilities of LMMs which will be trained with the generated dataset. In contrast, humans often learn in a more efficient manner by seeking out examples related to the types of reasoning where they have failed previously. Inspired by this observation, we propose a new approach for synthetic data generation which is grounded in the analysis of an existing LMM's reasoning failures. Our methodology leverages frontier models to automatically analyze errors produced by a weaker LMM and propose new examples which can be used to correct the reasoning failure via additional training, which are then further filtered to ensure high quality. We generate a large multimodal instruction tuning dataset containing over 553k examples using our approach and conduct extensive experiments demonstrating its utility for improving the performance of LMMs on multiple downstream tasks. Our results show that models trained on our synthetic data can even exceed the performance of LMMs trained on an equivalent amount of additional real data, demonstrating the high value of generating synthetic data targeted to specific reasoning failure modes in LMMs. We will make our dataset and code publicly available.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-20T07:45:53Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Gabriela Ben Melech Stan</name>
+    </author>
+    <author>
+      <name>Estelle Aflalo</name>
+    </author>
+    <author>
+      <name>Avinash Madasu</name>
+    </author>
+    <author>
+      <name>Vasudev Lal</name>
+    </author>
+    <author>
+      <name>Phillip Howard</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.07837v1</id>
+    <title>HAIBU-ReMUD: Reasoning Multimodal Ultrasound Dataset and Model Bridging to General Specific Domains</title>
+    <updated>2025-06-09T15:01:38Z</updated>
+    <link href="https://arxiv.org/abs/2506.07837v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.07837v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal large language models (MLLMs) have shown great potential in general domains but perform poorly in some specific domains due to a lack of domain-specific data, such as image-text data or vedio-text data. In some specific domains, there is abundant graphic and textual data scattered around, but lacks standardized arrangement. In the field of medical ultrasound, there are ultrasonic diagnostic books, ultrasonic clinical guidelines, ultrasonic diagnostic reports, and so on. However, these ultrasonic materials are often saved in the forms of PDF, images, etc., and cannot be directly used for the training of MLLMs. This paper proposes a novel image-text reasoning supervised fine-tuning data generation pipeline to create specific domain quadruplets (image, question, thinking trace, and answer) from domain-specific materials. A medical ultrasound domain dataset ReMUD is established, containing over 45,000 reasoning and non-reasoning supervised fine-tuning Question Answering (QA) and Visual Question Answering (VQA) data. The ReMUD-7B model, fine-tuned on Qwen2.5-VL-7B-Instruct, outperforms general-domain MLLMs in medical ultrasound field. To facilitate research, the ReMUD dataset, data generation codebase, and ReMUD-7B parameters will be released at https://github.com/ShiDaizi/ReMUD, addressing the data shortage issue in specific domain MLLMs.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-09T15:01:38Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Shijie Wang</name>
+    </author>
+    <author>
+      <name>Yilun Zhang</name>
+    </author>
+    <author>
+      <name>Zeyu Lai</name>
+    </author>
+    <author>
+      <name>Dexing Kong</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2109.02227v1</id>
+    <title>Learning to Generate Scene Graph from Natural Language Supervision</title>
+    <updated>2021-09-06T03:38:52Z</updated>
+    <link href="https://arxiv.org/abs/2109.02227v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2109.02227v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Learning from image-text data has demonstrated recent success for many recognition tasks, yet is currently limited to visual features or individual visual concepts such as objects. In this paper, we propose one of the first methods that learn from image-sentence pairs to extract a graphical representation of localized objects and their relationships within an image, known as scene graph. To bridge the gap between images and texts, we leverage an off-the-shelf object detector to identify and localize object instances, match labels of detected regions to concepts parsed from captions, and thus create "pseudo" labels for learning scene graph. Further, we design a Transformer-based model to predict these "pseudo" labels via a masked token prediction task. Learning from only image-sentence pairs, our model achieves 30% relative gain over a latest method trained with human-annotated unlocalized scene graphs. Our model also shows strong results for weakly and fully supervised scene graph generation. In addition, we explore an open-vocabulary setting for detecting scene graphs, and present the first result for open-set scene graph generation. Our code is available at https://github.com/YiwuZhong/SGG_from_NLS.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-09-06T03:38:52Z</published>
+    <arxiv:comment>Accepted to ICCV 2021</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yiwu Zhong</name>
+    </author>
+    <author>
+      <name>Jing Shi</name>
+    </author>
+    <author>
+      <name>Jianwei Yang</name>
+    </author>
+    <author>
+      <name>Chenliang Xu</name>
+    </author>
+    <author>
+      <name>Yin Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2209.14491v3</id>
+    <title>Re-Imagen: Retrieval-Augmented Text-to-Image Generator</title>
+    <updated>2022-11-22T02:09:38Z</updated>
+    <link href="https://arxiv.org/abs/2209.14491v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2209.14491v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Research on text-to-image generation has witnessed significant progress in generating diverse and photo-realistic images, driven by diffusion and auto-regressive models trained on large-scale image-text data. Though state-of-the-art models can generate high-quality images of common entities, they often have difficulty generating images of uncommon entities, such as `Chortai (dog)' or `Picarones (food)'. To tackle this issue, we present the Retrieval-Augmented Text-to-Image Generator (Re-Imagen), a generative model that uses retrieved information to produce high-fidelity and faithful images, even for rare or unseen entities. Given a text prompt, Re-Imagen accesses an external multi-modal knowledge base to retrieve relevant (image, text) pairs and uses them as references to generate the image. With this retrieval step, Re-Imagen is augmented with the knowledge of high-level semantics and low-level visual details of the mentioned entities, and thus improves its accuracy in generating the entities' visual appearances. We train Re-Imagen on a constructed dataset containing (image, text, retrieval) triples to teach the model to ground on both text prompt and retrieval. Furthermore, we develop a new sampling strategy to interleave the classifier-free guidance for text and retrieval conditions to balance the text and retrieval alignment. Re-Imagen achieves significant gain on FID score over COCO and WikiImage. To further evaluate the capabilities of the model, we introduce EntityDrawBench, a new benchmark that evaluates image generation for diverse entities, from frequent to rare, across multiple object categories including dogs, foods, landmarks, birds, and characters. Human evaluation on EntityDrawBench shows that Re-Imagen can significantly improve the fidelity of generated images, especially on less frequent entities.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-09-29T00:57:28Z</published>
+    <arxiv:comment>9 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Wenhu Chen</name>
+    </author>
+    <author>
+      <name>Hexiang Hu</name>
+    </author>
+    <author>
+      <name>Chitwan Saharia</name>
+    </author>
+    <author>
+      <name>William W. Cohen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.07516v2</id>
+    <title>Controlling Multimodal Conversational Agents with Coverage-Enhanced Latent Actions</title>
+    <updated>2026-04-13T02:40:35Z</updated>
+    <link href="https://arxiv.org/abs/2601.07516v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.07516v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-language models are increasingly employed as multimodal conversational agents (MCAs) for diverse conversational tasks. Recently, reinforcement learning (RL) has been widely explored for adapting MCAs to various human-AI interaction scenarios. Despite showing great enhancement in generalization performance, fine-tuning MCAs via RL still faces challenges in handling the extremely large text token space. To address this, we learn a compact latent action space for RL fine-tuning instead. Specifically, we adopt the learning from observation mechanism to construct the codebook for the latent action space, where future observations are leveraged to estimate current latent actions that could further be used to reconstruct future observations. However, the scarcity of paired image-text data hinders learning a codebook with sufficient coverage. Thus, we leverage both paired image-text data and text-only data to construct the latent action space, using a cross-modal projector for transforming text embeddings into image-text embeddings. We initialize the cross-modal projector on paired image-text data, and further train it on massive text-only data with a novel cycle consistency loss to enhance its robustness. We show that our latent action based method outperforms competitive baselines on two conversation tasks across various RL algorithms.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-12T13:13:24Z</published>
+    <arxiv:comment>Accepted to ACL 2026 (Main), camera-ready version</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Yongqi Li</name>
+    </author>
+    <author>
+      <name>Hao Lang</name>
+    </author>
+    <author>
+      <name>Tieyun Qian</name>
+    </author>
+    <author>
+      <name>Yongbin Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.14522v2</id>
+    <title>GMAI-VL &amp; GMAI-VL-5.5M: A Large Vision-Language Model and A Comprehensive Multimodal Dataset Towards General Medical AI</title>
+    <updated>2025-03-27T15:24:29Z</updated>
+    <link href="https://arxiv.org/abs/2411.14522v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.14522v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Despite significant advancements in general AI, its effectiveness in the medical domain is limited by the lack of specialized medical knowledge. To address this, we formulate GMAI-VL-5.5M, a multimodal medical dataset created by converting hundreds of specialized medical datasets with various annotations into high-quality image-text pairs. This dataset offers comprehensive task coverage, diverse modalities, and rich image-text data. Building upon this dataset, we develop GMAI-VL, a general medical vision-language model, with a three-stage training strategy that enhances the integration of visual and textual information. This approach significantly improves the model's ability to process multimodal data, supporting accurate diagnoses and clinical decision-making. Experiments show that GMAI-VL achieves state-of-the-art performance across various multimodal medical tasks, including visual question answering and medical image diagnosis.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-21T18:59:36Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Tianbin Li</name>
+    </author>
+    <author>
+      <name>Yanzhou Su</name>
+    </author>
+    <author>
+      <name>Wei Li</name>
+    </author>
+    <author>
+      <name>Bin Fu</name>
+    </author>
+    <author>
+      <name>Zhe Chen</name>
+    </author>
+    <author>
+      <name>Ziyan Huang</name>
+    </author>
+    <author>
+      <name>Guoan Wang</name>
+    </author>
+    <author>
+      <name>Chenglong Ma</name>
+    </author>
+    <author>
+      <name>Ying Chen</name>
+    </author>
+    <author>
+      <name>Ming Hu</name>
+    </author>
+    <author>
+      <name>Yanjun Li</name>
+    </author>
+    <author>
+      <name>Pengcheng Chen</name>
+    </author>
+    <author>
+      <name>Xiaowei Hu</name>
+    </author>
+    <author>
+      <name>Zhongying Deng</name>
+    </author>
+    <author>
+      <name>Yuanfeng Ji</name>
+    </author>
+    <author>
+      <name>Jin Ye</name>
+    </author>
+    <author>
+      <name>Yu Qiao</name>
+    </author>
+    <author>
+      <name>Junjun He</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.09604v1</id>
+    <title>SynerGen-VL: Towards Synergistic Image Understanding and Generation with Vision Experts and Token Folding</title>
+    <updated>2024-12-12T18:59:26Z</updated>
+    <link href="https://arxiv.org/abs/2412.09604v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.09604v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The remarkable success of Large Language Models (LLMs) has extended to the multimodal domain, achieving outstanding performance in image understanding and generation. Recent efforts to develop unified Multimodal Large Language Models (MLLMs) that integrate these capabilities have shown promising results. However, existing approaches often involve complex designs in model architecture or training pipeline, increasing the difficulty of model training and scaling. In this paper, we propose SynerGen-VL, a simple yet powerful encoder-free MLLM capable of both image understanding and generation. To address challenges identified in existing encoder-free unified MLLMs, we introduce the token folding mechanism and the vision-expert-based progressive alignment pretraining strategy, which effectively support high-resolution image understanding while reducing training complexity. After being trained on large-scale mixed image-text data with a unified next-token prediction objective, SynerGen-VL achieves or surpasses the performance of existing encoder-free unified MLLMs with comparable or smaller parameter sizes, and narrows the gap with task-specific state-of-the-art models, highlighting a promising path toward future unified MLLMs. Our code and models shall be released.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-12T18:59:26Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Hao Li</name>
+    </author>
+    <author>
+      <name>Changyao Tian</name>
+    </author>
+    <author>
+      <name>Jie Shao</name>
+    </author>
+    <author>
+      <name>Xizhou Zhu</name>
+    </author>
+    <author>
+      <name>Zhaokai Wang</name>
+    </author>
+    <author>
+      <name>Jinguo Zhu</name>
+    </author>
+    <author>
+      <name>Wenhan Dou</name>
+    </author>
+    <author>
+      <name>Xiaogang Wang</name>
+    </author>
+    <author>
+      <name>Hongsheng Li</name>
+    </author>
+    <author>
+      <name>Lewei Lu</name>
+    </author>
+    <author>
+      <name>Jifeng Dai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.01030v3</id>
+    <title>Lotus-2: Advancing Geometric Dense Prediction with Powerful Image Generative Model</title>
+    <updated>2026-05-18T02:06:07Z</updated>
+    <link href="https://arxiv.org/abs/2512.01030v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.01030v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recovering pixel-wise geometric properties from a single image is fundamentally ill-posed due to appearance ambiguity and non-injective mappings between 2D observations and 3D structures. While discriminative regression models achieve strong performance through large-scale supervision, their success is bounded by the scale, quality, and diversity of available data, as well as by limited physical reasoning. Recent diffusion models exhibit powerful world priors that encode geometry and semantics learned from massive image-text data, yet directly reusing their stochastic generative formulation is suboptimal for deterministic geometric inference: the former is optimized for diverse and high-fidelity image generation, whereas the latter requires stable and accurate predictions. In this work, we propose Lotus-2, a two-stage deterministic framework for stable, accurate and fine-grained geometric dense prediction, aiming to provide an optimal adaptation protocol to fully exploit the pre-trained generative priors. Specifically, in the first stage, the core predictor employs a single-step deterministic formulation with a clean-data objective and a lightweight local continuity module (LCM) to generate globally coherent structures without grid artifacts. In the second stage, the detail sharpener performs a constrained multi-step rectified-flow refinement within the manifold defined by the core predictor, enhancing fine-grained geometry through noise-free deterministic flow matching. Using only 59K training samples, less than 1% of existing large-scale datasets, Lotus-2 establishes new state-of-the-art results in monocular depth estimation and highly competitive surface normal prediction. These results demonstrate that diffusion models can serve as deterministic world priors, enabling high-quality geometric reasoning beyond traditional discriminative and generative paradigms.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-30T18:57:25Z</published>
+    <arxiv:comment>v3: Fixed some typos. Project page: https://lotus-2.github.io/</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jing He</name>
+    </author>
+    <author>
+      <name>Haodong Li</name>
+    </author>
+    <author>
+      <name>Mingzhi Sheng</name>
+    </author>
+    <author>
+      <name>Ying-Cong Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2308.12038v3</id>
+    <title>Large Multilingual Models Pivot Zero-Shot Multimodal Learning across Languages</title>
+    <updated>2024-03-22T02:24:57Z</updated>
+    <link href="https://arxiv.org/abs/2308.12038v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2308.12038v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently there has been a significant surge in multimodal learning in terms of both image-to-text and text-to-image generation. However, the success is typically limited to English, leaving other languages largely behind. Building a competitive counterpart in other languages is highly challenging due to the low-resource nature of non-English multimodal data (i.e., lack of large-scale, high-quality image-text data). In this work, we propose MPM, an effective training paradigm for training large multimodal models in non-English languages. MPM demonstrates that Multilingual language models can Pivot zero-shot Multimodal learning across languages. Specifically, based on a strong multilingual large language model, multimodal models pretrained on English-only image-text data can well generalize to other languages in a (quasi)-zero-shot manner, even surpassing models trained on image-text data in native languages. Taking Chinese as a practice of MPM, we build large multimodal models VisCPM in image-to-text and text-to-image generation, which achieve state-of-the-art (open-source) performance in Chinese. To facilitate future research, we open-source codes and model weights at https://github.com/OpenBMB/VisCPM.git.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-23T09:55:41Z</published>
+    <arxiv:comment>https://github.com/OpenBMB/VisCPM.git</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Jinyi Hu</name>
+    </author>
+    <author>
+      <name>Yuan Yao</name>
+    </author>
+    <author>
+      <name>Chongyi Wang</name>
+    </author>
+    <author>
+      <name>Shan Wang</name>
+    </author>
+    <author>
+      <name>Yinxu Pan</name>
+    </author>
+    <author>
+      <name>Qianyu Chen</name>
+    </author>
+    <author>
+      <name>Tianyu Yu</name>
+    </author>
+    <author>
+      <name>Hanghao Wu</name>
+    </author>
+    <author>
+      <name>Yue Zhao</name>
+    </author>
+    <author>
+      <name>Haoye Zhang</name>
+    </author>
+    <author>
+      <name>Xu Han</name>
+    </author>
+    <author>
+      <name>Yankai Lin</name>
+    </author>
+    <author>
+      <name>Jiao Xue</name>
+    </author>
+    <author>
+      <name>Dahai Li</name>
+    </author>
+    <author>
+      <name>Zhiyuan Liu</name>
+    </author>
+    <author>
+      <name>Maosong Sun</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2311.15075v1</id>
+    <title>Mug-STAN: Adapting Image-Language Pretrained Models for General Video Understanding</title>
+    <updated>2023-11-25T17:01:38Z</updated>
+    <link href="https://arxiv.org/abs/2311.15075v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2311.15075v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large-scale image-language pretrained models, e.g., CLIP, have demonstrated remarkable proficiency in acquiring general multi-modal knowledge through web-scale image-text data. Despite the impressive performance of image-language models on various image tasks, how to effectively expand them on general video understanding remains an area of ongoing exploration. In this paper, we investigate the image-to-video transferring from the perspective of the model and the data, unveiling two key obstacles impeding the adaptation of image-language models: non-generalizable temporal modeling and partially misaligned video-text data. To address these challenges, we propose Spatial-Temporal Auxiliary Network with Mutual-guided alignment module (Mug-STAN), a simple yet effective framework extending image-text model to diverse video tasks and video-text data.Specifically, STAN adopts a branch structure with decomposed spatial-temporal modules to enable generalizable temporal modeling, while Mug suppresses misalignment by introducing token-wise feature aggregation of either modality from the other. Extensive experimental results verify Mug-STAN significantly improves adaptation of language-image pretrained models such as CLIP and CoCa at both video-text post-pretraining and finetuning stages. With our solution, state-of-the-art zero-shot and finetuning results on various downstream datasets, including MSR-VTT, DiDeMo, LSMDC, Kinetics-400, Something-Something-2, HMDB-51, UCF- 101, and AVA, are achieved. Moreover, by integrating pretrained Mug-STAN with the emerging multimodal dialogue model, we can realize zero-shot video chatting. Codes are available at https://github.com/farewellthree/STAN</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-11-25T17:01:38Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Ruyang Liu</name>
+    </author>
+    <author>
+      <name>Jingjia Huang</name>
+    </author>
+    <author>
+      <name>Wei Gao</name>
+    </author>
+    <author>
+      <name>Thomas H. Li</name>
+    </author>
+    <author>
+      <name>Ge Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.18588v2</id>
+    <title>UniECG: Understanding and Generating ECG in One Unified Model</title>
+    <updated>2026-06-17T07:22:49Z</updated>
+    <link href="https://arxiv.org/abs/2509.18588v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.18588v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Electrocardiogram (ECG) interpretation is a fundamental skill in medical education, yet students often need more than static examples to connect waveform evidence with diagnostic reasoning. This paper presents UniECG as a step toward interactive ECG education. UniECG supports two complementary learning interactions: given an ECG signal or image, it generates an evidence-based explanation; given a textual learning objective, it generates a corresponding ECG signal example for case-based learning. The model follows a two-stage design. First, it learns grounded ECG explanation from ECG signal--image--text data. Second, it introduces special ECG generation tokens and aligns their hidden representations with a pretrained text-conditioned ECG diffusion model, enabling controllable signal-level ECG generation. We evaluate UniECG through grounded ECG explanation and generation-oriented qualitative analysis, examining its potential to support explanation and case-based learning. UniECG is intended as an educational aid and a research step toward interactive AI-assisted ECG learning, rather than a clinically validated diagnostic system.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-23T03:15:53Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Jiarui Jin</name>
+    </author>
+    <author>
+      <name>Haoyu Wang</name>
+    </author>
+    <author>
+      <name>Xiang Lan</name>
+    </author>
+    <author>
+      <name>Jun Li</name>
+    </author>
+    <author>
+      <name>Hongyan Li</name>
+    </author>
+    <author>
+      <name>Shenda Hong</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2312.14238v3</id>
+    <title>InternVL: Scaling up Vision Foundation Models and Aligning for Generic Visual-Linguistic Tasks</title>
+    <updated>2024-01-15T15:23:55Z</updated>
+    <link href="https://arxiv.org/abs/2312.14238v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2312.14238v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The exponential growth of large language models (LLMs) has opened up numerous possibilities for multimodal AGI systems. However, the progress in vision and vision-language foundation models, which are also critical elements of multi-modal AGI, has not kept pace with LLMs. In this work, we design a large-scale vision-language foundation model (InternVL), which scales up the vision foundation model to 6 billion parameters and progressively aligns it with the LLM, using web-scale image-text data from various sources. This model can be broadly applied to and achieve state-of-the-art performance on 32 generic visual-linguistic benchmarks including visual perception tasks such as image-level or pixel-level recognition, vision-language tasks such as zero-shot image/video classification, zero-shot image/video-text retrieval, and link with LLMs to create multi-modal dialogue systems. It has powerful visual capabilities and can be a good alternative to the ViT-22B. We hope that our research could contribute to the development of multi-modal large models. Code and models are available at https://github.com/OpenGVLab/InternVL.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-12-21T18:59:31Z</published>
+    <arxiv:comment>25 pages, 5 figures, 28 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhe Chen</name>
+    </author>
+    <author>
+      <name>Jiannan Wu</name>
+    </author>
+    <author>
+      <name>Wenhai Wang</name>
+    </author>
+    <author>
+      <name>Weijie Su</name>
+    </author>
+    <author>
+      <name>Guo Chen</name>
+    </author>
+    <author>
+      <name>Sen Xing</name>
+    </author>
+    <author>
+      <name>Muyan Zhong</name>
+    </author>
+    <author>
+      <name>Qinglong Zhang</name>
+    </author>
+    <author>
+      <name>Xizhou Zhu</name>
+    </author>
+    <author>
+      <name>Lewei Lu</name>
+    </author>
+    <author>
+      <name>Bin Li</name>
+    </author>
+    <author>
+      <name>Ping Luo</name>
+    </author>
+    <author>
+      <name>Tong Lu</name>
+    </author>
+    <author>
+      <name>Yu Qiao</name>
+    </author>
+    <author>
+      <name>Jifeng Dai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2111.11431v1</id>
+    <title>RedCaps: web-curated image-text data created by the people, for the people</title>
+    <updated>2021-11-22T18:59:34Z</updated>
+    <link href="https://arxiv.org/abs/2111.11431v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2111.11431v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large datasets of paired images and text have become increasingly popular for learning generic representations for vision and vision-and-language tasks. Such datasets have been built by querying search engines or collecting HTML alt-text -- since web data is noisy, they require complex filtering pipelines to maintain quality. We explore alternate data sources to collect high quality data with minimal filtering. We introduce RedCaps -- a large-scale dataset of 12M image-text pairs collected from Reddit. Images and captions from Reddit depict and describe a wide variety of objects and scenes. We collect data from a manually curated set of subreddits, which give coarse image labels and allow us to steer the dataset composition without labeling individual instances. We show that captioning models trained on RedCaps produce rich and varied captions preferred by humans, and learn visual representations that transfer to many downstream tasks.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-11-22T18:59:34Z</published>
+    <arxiv:comment>NeurIPS 2021 Datasets and Benchmarks. Website: https://redcaps.xyz</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Karan Desai</name>
+    </author>
+    <author>
+      <name>Gaurav Kaul</name>
+    </author>
+    <author>
+      <name>Zubin Aysola</name>
+    </author>
+    <author>
+      <name>Justin Johnson</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2212.13563v2</id>
+    <title>Noise-aware Learning from Web-crawled Image-Text Data for Image Captioning</title>
+    <updated>2023-09-27T07:26:12Z</updated>
+    <link href="https://arxiv.org/abs/2212.13563v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2212.13563v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Image captioning is one of the straightforward tasks that can take advantage of large-scale web-crawled data which provides rich knowledge about the visual world for a captioning model. However, since web-crawled data contains image-text pairs that are aligned at different levels, the inherent noises (e.g., misaligned pairs) make it difficult to learn a precise captioning model. While the filtering strategy can effectively remove noisy data, it leads to a decrease in learnable knowledge and sometimes brings about a new problem of data deficiency. To take the best of both worlds, we propose a Noise-aware Captioning (NoC) framework, which learns rich knowledge from the whole web-crawled data while being less affected by the noises. This is achieved by the proposed alignment-level-controllable captioner, which is learned using alignment levels of the image-text pairs as a control signal during training. The alignment-level-conditioned training allows the model to generate high-quality captions by simply setting the control signal to the desired alignment level at inference time. An in-depth analysis shows the effectiveness of our framework in handling noise. With two tasks of zero-shot captioning and text-to-image retrieval using generated captions (i.e., self-retrieval), we also demonstrate our model can produce high-quality captions in terms of descriptiveness and distinctiveness. The code is available at \url{https://github.com/kakaobrain/noc}.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-12-27T17:33:40Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Wooyoung Kang</name>
+    </author>
+    <author>
+      <name>Jonghwan Mun</name>
+    </author>
+    <author>
+      <name>Sungjun Lee</name>
+    </author>
+    <author>
+      <name>Byungseok Roh</name>
+    </author>
+  </entry>
+</feed>

@@ -1,0 +1,1067 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/IogLBkpQN+bdSkV0wxCu3YAToAI</id>
+  <title>arXiv Query: search_query=all:"visual information" AND all:"large vision language"&amp;id_list=&amp;start=0&amp;max_results=30</title>
+  <updated>2026-08-06T16:12:57Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22visual+information%22+AND+all:%22large+vision+language%22&amp;start=0&amp;max_results=30&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>30</opensearch:itemsPerPage>
+  <opensearch:totalResults>120</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2602.17186v2</id>
+    <title>Focusing Where Vision Matters: Selective Training for Large Vision Language Models via Visual Information Gain</title>
+    <updated>2026-05-20T23:55:58Z</updated>
+    <link href="https://arxiv.org/abs/2602.17186v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.17186v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision Language Models (LVLMs) have achieved remarkable progress, yet they often suffer from language bias, producing answers without relying on visual evidence. While prior work attempts to mitigate this issue through decoding strategies, architectural modifications, or curated instruction data, they typically lack a quantitative measure of how much individual training samples or tokens actually benefit from the image. In this work, we introduce Visual Information Gain (VIG), a perplexity-based metric that measures the reduction in prediction uncertainty provided by visual input. VIG enables fine-grained analysis at both sample and token levels, effectively highlighting visually grounded elements such as colors, spatial relations, and attributes. Leveraging this, we propose a VIG-guided selective training scheme that prioritizes high-VIG samples and tokens. This approach improves visual grounding and mitigates language bias, achieving superior performance with significantly reduced supervision by focusing exclusively on visually informative samples and tokens.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-19T09:12:21Z</published>
+    <arxiv:comment>Accepted at ICML 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Seulbi Lee</name>
+    </author>
+    <author>
+      <name>Sangheum Hwang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.03628v2</id>
+    <title>The Hidden Life of Tokens: Reducing Hallucination of Large Vision-Language Models via Visual Information Steering</title>
+    <updated>2025-07-01T16:02:21Z</updated>
+    <link href="https://arxiv.org/abs/2502.03628v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.03628v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision-Language Models (LVLMs) can reason effectively over both textual and visual inputs, but they tend to hallucinate syntactically coherent yet visually ungrounded contents. In this paper, we investigate the internal dynamics of hallucination by examining the tokens logits ranking throughout the generation process, revealing three key patterns in how LVLMs process information: (1) gradual visual information loss - visually grounded tokens gradually become less favored throughout generation, and (2) early excitation - semantically meaningful tokens achieve peak activation in the layers earlier than the final layer. (3) hidden genuine information - visually grounded tokens though not being eventually decoded still retain relatively high rankings at inference. Based on these insights, we propose VISTA (Visual Information Steering with Token-logit Augmentation), a training-free inference-time intervention framework that reduces hallucination while promoting genuine information. VISTA works by combining two complementary approaches: reinforcing visual information in activation space and leveraging early layer activations to promote semantically meaningful decoding. Compared to existing methods, VISTA requires no external supervision and is applicable to various decoding strategies. Extensive experiments show that VISTA on average reduces hallucination by about 40% on evaluated open-ended generation task, and it consistently outperforms existing methods on four benchmarks across four architectures under three decoding strategies. Code is available at https://github.com/LzVv123456/VISTA.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-05T21:34:02Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhuowei Li</name>
+    </author>
+    <author>
+      <name>Haizhou Shi</name>
+    </author>
+    <author>
+      <name>Yunhe Gao</name>
+    </author>
+    <author>
+      <name>Di Liu</name>
+    </author>
+    <author>
+      <name>Zhenting Wang</name>
+    </author>
+    <author>
+      <name>Yuxiao Chen</name>
+    </author>
+    <author>
+      <name>Ting Liu</name>
+    </author>
+    <author>
+      <name>Long Zhao</name>
+    </author>
+    <author>
+      <name>Hao Wang</name>
+    </author>
+    <author>
+      <name>Dimitris N. Metaxas</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.22723v1</id>
+    <title>Visual Information Extraction from Documents via Classification-Guided Large Vision-Language Models</title>
+    <updated>2026-07-22T03:27:50Z</updated>
+    <link href="https://arxiv.org/abs/2607.22723v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.22723v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Visual information extraction (VIE) from visually rich documents remains challenging due to high layout variability and real-world impairments. Existing methods typically rely on sequential OCR pipelines or end-to-end models requiring extensive labeled data and layout-specific training, limiting their scalability.We propose a classification-guided large vision-language model (LVLM) framework for multi-type VIE that achieves high accuracy with minimal supervision. The approach decouples document-type classification from content extraction and employs in-context learning (ICL)-based dynamic prompt engineering to inject task-specific knowledge, enabling robust zero-shot inference across diverse layouts. From a theoretical perspective, the proposed method can be viewed as a form of conditional computation that reduces task uncertainty and improves information efficiency during prompt-based inference. Evaluated on a real-world bidding dataset with 16 certificate types, our zero-shot method (based on Qwen2.5-VL-7B) outperforms a strong supervised baseline by 18.35 percentage points in F1-score (86.43\% vs. 68.08\%) and 0.23 in normalized edit distance (0.90 vs. 0.67). Optional domain-specific fine-tuning further improves performance to 93.65\% F1 and 0.93 NED, demonstrating superior robustness against seals, watermarks, and low contrast. The framework offers an efficient, scalable solution for complex document understanding in office automation. Code is available at https://github.com/FairmeHIT/Multi-VIE, and fine-tuned models at https://huggingface.co/fairme/Qwen2.5-VL-7B-SFT.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-22T03:27:50Z</published>
+    <arxiv:comment>14 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <arxiv:journal_ref>Scientific Reports 16, 14158 (2026)</arxiv:journal_ref>
+    <author>
+      <name>Huafu Li</name>
+    </author>
+    <author>
+      <name>Guo Chen</name>
+    </author>
+    <author>
+      <name>Jia Xia</name>
+    </author>
+    <author>
+      <name>Lei Wang</name>
+    </author>
+    <author>
+      <name>Wei Du</name>
+    </author>
+    <author>
+      <name>Yun Yao</name>
+    </author>
+    <author>
+      <name>Weijun Peng</name>
+    </author>
+    <author>
+      <name>Liming Li</name>
+    </author>
+    <arxiv:doi>10.1038/s41598-026-49319-z</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1038/s41598-026-49319-z" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.08510v1</id>
+    <title>To Sink or Not to Sink: Visual Information Pathways in Large Vision-Language Models</title>
+    <updated>2025-10-09T17:44:42Z</updated>
+    <link href="https://arxiv.org/abs/2510.08510v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.08510v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision Language Models (LVLMs) have recently emerged as powerful architectures capable of understanding and reasoning over both visual and textual information. These models typically rely on two key components: a Vision Transformer (ViT) and a Large Language Model (LLM). ViT encodes visual content into a sequence of image tokens and serves as the perceptual front-end -- the eyes of the model. In contrast, the LLM interprets these tokens to perform high-level reasoning, generates responses, and functions as the cognitive core -- the brain of the model. However, it remains unclear which visual tokens contribute most significantly to understanding and reasoning, and how effectively these signals are propagated from ViT to the LLM. While most existing works have focused on identifying attention sinks, low-semantic tokens receiving disproportionately high attention, within the LLM, we shift the focus to the vision encoder by identifying a class of high-norm visual tokens from ViT, referred to as ViT attention sinks -- a problem that has been rarely studied but is indeed very important for LVLMs. Our findings show that these ViT sinks encapsulate high-level semantic concepts from images, allowing the LLM to perform more effective understanding and reasoning. Despite their importance, these sink tokens are often overlooked in existing LVLM architectures. To explore their contribution, we present both qualitative and quantitative analyses of the information embedded in these sink tokens. We also propose both training-free and training-based approaches to better leverage how this information is interpreted by the LLM, and to what extent. By explicitly utilizing these tokens, we demonstrate substantial improvements across a range of LVLMs and visual reasoning tasks, highlighting the untapped potential of ViT attention sinks in enhancing visual reasoning.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-09T17:44:42Z</published>
+    <arxiv:comment>Preprint. Project page: https://davidhalladay.github.io/diysink_demo</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jiayun Luo</name>
+    </author>
+    <author>
+      <name>Wan-Cyuan Fan</name>
+    </author>
+    <author>
+      <name>Lyuyang Wang</name>
+    </author>
+    <author>
+      <name>Xiangteng He</name>
+    </author>
+    <author>
+      <name>Tanzila Rahman</name>
+    </author>
+    <author>
+      <name>Purang Abolmaesumi</name>
+    </author>
+    <author>
+      <name>Leonid Sigal</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.19716v2</id>
+    <title>Enhancing Large Vision Language Models with Self-Training on Image Comprehension</title>
+    <updated>2024-11-24T03:47:38Z</updated>
+    <link href="https://arxiv.org/abs/2405.19716v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.19716v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large vision language models (LVLMs) integrate large language models (LLMs) with pre-trained vision encoders, thereby activating the perception capability of the model to understand image inputs for different queries and conduct subsequent reasoning. Improving this capability requires high-quality vision-language data, which is costly and labor-intensive to acquire. Self-training approaches have been effective in single-modal settings to alleviate the need for labeled data by leveraging model's own generation. However, effective self-training remains a challenge regarding the unique visual perception and reasoning capability of LVLMs. To address this, we introduce Self-Training on Image Comprehension (STIC), which emphasizes a self-training approach specifically for image comprehension. First, the model self-constructs a preference dataset for image descriptions using unlabeled images. Preferred responses are generated through a step-by-step prompt, while dis-preferred responses are generated from either corrupted images or misleading prompts. To further self-improve reasoning on the extracted visual information, we let the model reuse a small portion of existing instruction-tuning data and append its self-generated image descriptions to the prompts. We validate the effectiveness of STIC across seven different benchmarks, demonstrating substantial performance gains of 4.0% on average while using 70% less supervised fine-tuning data than the current method. Further studies investigate various components of STIC and highlight its potential to leverage vast quantities of unlabeled images for self-training. Code and data are made publicly available.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-30T05:53:49Z</published>
+    <arxiv:comment>22 pages, 14 figures, 9 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yihe Deng</name>
+    </author>
+    <author>
+      <name>Pan Lu</name>
+    </author>
+    <author>
+      <name>Fan Yin</name>
+    </author>
+    <author>
+      <name>Ziniu Hu</name>
+    </author>
+    <author>
+      <name>Sheng Shen</name>
+    </author>
+    <author>
+      <name>Quanquan Gu</name>
+    </author>
+    <author>
+      <name>James Zou</name>
+    </author>
+    <author>
+      <name>Kai-Wei Chang</name>
+    </author>
+    <author>
+      <name>Wei Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.00947v3</id>
+    <title>VisOnlyQA: Large Vision Language Models Still Struggle with Visual Perception of Geometric Information</title>
+    <updated>2025-07-13T22:29:38Z</updated>
+    <link href="https://arxiv.org/abs/2412.00947v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.00947v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision Language Models (LVLMs) have achieved remarkable performance in various vision-language tasks. However, it is still unclear how accurately LVLMs can perceive visual information in images. In particular, the capability of LVLMs to perceive geometric information, such as shape, angle, and size, remains insufficiently analyzed, although the perception of these properties is crucial for tasks that require a detailed visual understanding. In this work, we introduce VisOnlyQA, a dataset for evaluating the geometric perception of LVLMs, and reveal that LVLMs often cannot accurately perceive basic geometric information in images, while human performance is nearly perfect. VisOnlyQA consists of 12 tasks that directly ask about geometric information in geometric shapes, charts, chemical structures, and 3D shapes. Our experiments highlight the following findings: (i) State-of-the-art LVLMs struggle with basic geometric perception. 23 LVLMs we evaluate, including GPT-4o and Gemini 2.5 Pro, work poorly on VisOnlyQA. (ii) Additional training data does not resolve this issue. Fine-tuning on the training set of VisOnlyQA is not always effective, even for in-distribution tasks. (iii) LLM may be the bottleneck. LVLMs using stronger LLMs exhibit better geometric perception on VisOnlyQA, while it does not require complex reasoning, suggesting that the way LVLMs process information from visual encoders is a bottleneck. The datasets, code, and model responses are provided at https://github.com/psunlpgroup/VisOnlyQA.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-01T19:46:22Z</published>
+    <arxiv:comment>COLM 2025. VisOnlyQA dataset, code, and model responses are provided at https://github.com/psunlpgroup/VisOnlyQA. Please also refer to our project website at https://visonlyqa.github.io/</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Ryo Kamoi</name>
+    </author>
+    <author>
+      <name>Yusen Zhang</name>
+    </author>
+    <author>
+      <name>Sarkar Snigdha Sarathi Das</name>
+    </author>
+    <author>
+      <name>Ranran Haoran Zhang</name>
+    </author>
+    <author>
+      <name>Rui Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.01236v1</id>
+    <title>Mitigating Information Loss under High Pruning Rates for Efficient Large Vision Language Models</title>
+    <updated>2025-08-02T07:22:08Z</updated>
+    <link href="https://arxiv.org/abs/2508.01236v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.01236v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Despite the great success of Large Vision Language Models (LVLMs), their high computational cost severely limits their broad applications. The computational cost of LVLMs mainly stems from the visual sequence of the input, which consists of hundreds or even thousands of tokens. Although existing methods have made progress by removing redundant tokens, they suffer from severe performance degradation with high pruning rates due to the loss of visual information. In this paper, we propose an Adaptive Content Compensation Method (ACCM), which can effectively mitigate the visual information loss via an image caption. Specifically, ACCM comprises two key components: a lightweight caption model and a selector. Firstly the caption model generates question-related descriptions under the guidance of the user instruction. Then the selector further identifies a contextually appropriate caption from multiple candidates. Leveraging self-supervised learning, our modules could be learned efficiently without any human or automated labeling. We conduct extensive experiments across seven benchmarks and the results show that ACCM significantly outperforms existing methods with lower FLOPs (e.g., surpassing SOTA by 20.6% with 6.5% fewer FLOPs).</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-02T07:22:08Z</published>
+    <arxiv:comment>accepted by ACM MM 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Mingyu Fu</name>
+    </author>
+    <author>
+      <name>Wei Suo</name>
+    </author>
+    <author>
+      <name>Ji Ma</name>
+    </author>
+    <author>
+      <name>Lin Yuanbo Wu</name>
+    </author>
+    <author>
+      <name>Peng Wang</name>
+    </author>
+    <author>
+      <name>Yanning Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.15268v1</id>
+    <title>ICT: Image-Object Cross-Level Trusted Intervention for Mitigating Object Hallucination in Large Vision-Language Models</title>
+    <updated>2024-11-22T12:22:21Z</updated>
+    <link href="https://arxiv.org/abs/2411.15268v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.15268v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Despite the recent breakthroughs achieved by Large Vision Language Models (LVLMs) in understanding and responding to complex visual-textual contexts, their inherent hallucination tendencies limit their practical application in real-world scenarios that demand high levels of precision. Existing methods typically either fine-tune the LVLMs using additional data, which incurs extra costs in manual annotation and computational resources or perform comparisons at the decoding stage, which may eliminate useful language priors for reasoning while introducing inference time overhead. Therefore, we propose ICT, a lightweight, training-free method that calculates an intervention direction to shift the model's focus towards different levels of visual information, enhancing its attention to high-level and fine-grained visual details. During the forward pass stage, the intervention is applied to the attention heads that encode the overall image information and the fine-grained object details, effectively mitigating the phenomenon of overly language priors, and thereby alleviating hallucinations. Extensive experiments demonstrate that ICT achieves strong performance with a small amount of data and generalizes well across different datasets and models. Our code will be public.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-22T12:22:21Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Junzhe Chen</name>
+    </author>
+    <author>
+      <name>Tianshu Zhang</name>
+    </author>
+    <author>
+      <name>Shiyu Huang</name>
+    </author>
+    <author>
+      <name>Yuwei Niu</name>
+    </author>
+    <author>
+      <name>Linfeng Zhang</name>
+    </author>
+    <author>
+      <name>Lijie Wen</name>
+    </author>
+    <author>
+      <name>Xuming Hu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.00569v4</id>
+    <title>Investigating and Mitigating the Multimodal Hallucination Snowballing in Large Vision-Language Models</title>
+    <updated>2024-08-03T17:52:43Z</updated>
+    <link href="https://arxiv.org/abs/2407.00569v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.00569v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Though advanced in understanding visual information with human languages, Large Vision-Language Models (LVLMs) still suffer from multimodal hallucinations. A natural concern is that during multimodal interaction, the generated hallucinations could influence the LVLMs' subsequent generation. Thus, we raise a question: When presented with a query relevant to the previously generated hallucination, will LVLMs be misled and respond incorrectly, even though the ground visual information exists? To answer this, we propose a framework called MMHalSnowball to evaluate LVLMs' behaviors when encountering generated hallucinations, where LVLMs are required to answer specific visual questions within a curated hallucinatory conversation. Crucially, our experiment shows that the performance of open-source LVLMs drops by at least $31\%$, indicating that LVLMs are prone to accept the generated hallucinations and make false claims that they would not have supported without distractions. We term this phenomenon Multimodal Hallucination Snowballing. To mitigate this, we further propose a training-free method called Residual Visual Decoding, where we revise the output distribution of LVLMs with the one derived from the residual visual input, providing models with direct access to the visual information. Experiments show that our method can mitigate more than $24\%$ of the snowballed multimodal hallucination while maintaining capabilities.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-30T03:04:11Z</published>
+    <arxiv:comment>Accepted to ACL 2024 Main Conference. 21 pages, 20 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Weihong Zhong</name>
+    </author>
+    <author>
+      <name>Xiaocheng Feng</name>
+    </author>
+    <author>
+      <name>Liang Zhao</name>
+    </author>
+    <author>
+      <name>Qiming Li</name>
+    </author>
+    <author>
+      <name>Lei Huang</name>
+    </author>
+    <author>
+      <name>Yuxuan Gu</name>
+    </author>
+    <author>
+      <name>Weitao Ma</name>
+    </author>
+    <author>
+      <name>Yuan Xu</name>
+    </author>
+    <author>
+      <name>Bing Qin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.02865v1</id>
+    <title>Nodes Are Early, Edges Are Late: Probing Diagram Representations in Large Vision-Language Models</title>
+    <updated>2026-03-03T11:17:31Z</updated>
+    <link href="https://arxiv.org/abs/2603.02865v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.02865v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large vision-language models (LVLMs) demonstrate strong performance on diagram understanding benchmarks, yet they still struggle with understanding relationships between elements, particularly those represented by nodes and directed edges (e.g., arrows and lines). To investigate the underlying causes of this limitation, we probe the internal representation of LVLMs using a carefully constructed synthetic diagram dataset based on directed graphs. Our probing experiments reveal that edge information is not linearly separable in the vision encoder and becomes linearly encoded only in the text tokens in the language model. In contrast, node information and global structural features are already linearly encoded in individual hidden states of the vision encoder. These findings suggest that the stage at which linearly separable representations are formed varies depending on the type of visual information. In particular, the delayed emergence of edge representations may help explain why LVLMs struggle with relational understanding, such as interpreting edge directions, which require more abstract, compositionally integrated processes.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-03T11:17:31Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Haruto Yoshida</name>
+    </author>
+    <author>
+      <name>Keito Kudo</name>
+    </author>
+    <author>
+      <name>Yoichi Aoki</name>
+    </author>
+    <author>
+      <name>Ryota Tanaka</name>
+    </author>
+    <author>
+      <name>Itsumi Saito</name>
+    </author>
+    <author>
+      <name>Keisuke Sakaguchi</name>
+    </author>
+    <author>
+      <name>Kentaro Inui</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.10292v2</id>
+    <title>Adaptive Residual-Update Steering for Low-Overhead Hallucination Mitigation in Large Vision Language Models</title>
+    <updated>2026-05-19T09:24:10Z</updated>
+    <link href="https://arxiv.org/abs/2511.10292v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.10292v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision-Language Models (LVLMs) typically process visual inputs as a prefix to the language decoder. As the model autoregressively generates text, this initial visual information inevitably undergoes "dilution" leading the model to over-rely on language priors and hallucinate objects. Existing interventions attempt to correct this by contrasting logits or iteratively refining outputs, but they incur prohibitive latency costs. We propose Residual-Update Directed DEcoding Regulation (RUDDER), a framework that counters visual dilution by creating a persistent visual anchor. We extract a robust evidence direction (CARD) directly from the model's prefill residual updates, and inject it into the decoding process. This injection is modulated by an adaptive gate, the Beta Gate, which acts as a trust mechanism and ensures the visual reminder is applied only when necessary. Experiments on LLaVA-1.5 (7B/13B), Idefics2, InstructBLIP, and Qwen2.5-VL demonstrate that RUDDER consistently mitigates hallucination (with greedy decoding, RUDDER reduces CHAIR_S by an average of 24.4% and CHAIR_i by 23.6% relative) and scales effectively across architectures, all while maintaining &gt;96.0% throughput.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-13T13:29:38Z</published>
+    <arxiv:comment>Accepted by ICML 2026; Code available at: https://github.com/Akko000/RUDDER-Residual-Update-Directed-DEcoding-Regulation-</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhengtao Zou</name>
+    </author>
+    <author>
+      <name>Ya Gao</name>
+    </author>
+    <author>
+      <name>Jiarui Guan</name>
+    </author>
+    <author>
+      <name>Bin Li</name>
+    </author>
+    <author>
+      <name>Pekka Marttinen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.13836v1</id>
+    <title>Diving into Mitigating Hallucinations from a Vision Perspective for Large Vision-Language Models</title>
+    <updated>2025-09-17T09:08:05Z</updated>
+    <link href="https://arxiv.org/abs/2509.13836v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.13836v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Object hallucination in Large Vision-Language Models (LVLMs) significantly impedes their real-world applicability. As the primary component for accurately interpreting visual information, the choice of visual encoder is pivotal. We hypothesize that the diverse training paradigms employed by different visual encoders instill them with distinct inductive biases, which leads to their diverse hallucination performances. Existing benchmarks typically focus on coarse-grained hallucination detection and fail to capture the diverse hallucinations elaborated in our hypothesis. To systematically analyze these effects, we introduce VHBench-10, a comprehensive benchmark with approximately 10,000 samples for evaluating LVLMs across ten fine-grained hallucination categories. Our evaluations confirm encoders exhibit unique hallucination characteristics. Building on these insights and the suboptimality of simple feature fusion, we propose VisionWeaver, a novel Context-Aware Routing Network. It employs global visual features to generate routing signals, dynamically aggregating visual features from multiple specialized experts. Comprehensive experiments confirm the effectiveness of VisionWeaver in significantly reducing hallucinations and improving overall model performance.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-17T09:08:05Z</published>
+    <arxiv:comment>Accepted by EMNLP2025 Finding</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Weihang Wang</name>
+    </author>
+    <author>
+      <name>Xinhao Li</name>
+    </author>
+    <author>
+      <name>Ziyue Wang</name>
+    </author>
+    <author>
+      <name>Yan Pang</name>
+    </author>
+    <author>
+      <name>Jielei Zhang</name>
+    </author>
+    <author>
+      <name>Peiyi Li</name>
+    </author>
+    <author>
+      <name>Qiang Zhang</name>
+    </author>
+    <author>
+      <name>Longwen Gao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.12206v3</id>
+    <title>PAINT: Paying Attention to INformed Tokens to Mitigate Hallucination in Large Vision-Language Model</title>
+    <updated>2025-03-26T01:49:37Z</updated>
+    <link href="https://arxiv.org/abs/2501.12206v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.12206v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision Language Models (LVLMs) have demonstrated remarkable capabilities in understanding and describing visual content, achieving state-of-the-art performance across various vision-language tasks. However, these models often generate descriptions containing objects or details that are absent in the input image, a phenomenon commonly known as hallucination. Our work investigates the key reasons behind this issue by analyzing the pattern of self-attention in transformer layers. We find that hallucinations often arise from the progressive weakening of attention weight to visual tokens in the deeper layers of the LLM. Some previous works naively boost the attention of all visual tokens to mitigate this issue, resulting in suboptimal hallucination reduction. To address this, we identify two critical sets of visual tokens that facilitate the transfer of visual information from the vision encoder to the LLM. Local tokens encode grounded information about objects present in an image, while summary tokens capture the overall aggregated representation of the image. Importantly, these two sets of tokens require different levels of weight enhancement. To this end, we propose \textbf{PAINT} (\textbf{P}aying \textbf{A}ttention to \textbf{IN}formed \textbf{T}okens), a plug-and-play framework that intervenes in the self-attention mechanism of the LLM, selectively boosting the attention weights of local and summary tokens with experimentally learned margins. Evaluation on the MSCOCO image captioning dataset demonstrate that our approach reduces hallucination rates by up to 62.3\% compared to baseline models while maintaining accuracy. Code is available at \href{https://github.com/hasanar1f/PAINT}{https://github.com/hasanar1f/PAINT}</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-01-21T15:22:31Z</published>
+    <arxiv:comment>6 pages, 4 tables, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Kazi Hasan Ibn Arif</name>
+    </author>
+    <author>
+      <name>Sajib Acharjee Dip</name>
+    </author>
+    <author>
+      <name>Khizar Hussain</name>
+    </author>
+    <author>
+      <name>Lang Zhang</name>
+    </author>
+    <author>
+      <name>Chris Thomas</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.18381v1</id>
+    <title>Language-Specific Layer Matters: Efficient Multilingual Enhancement for Large Vision-Language Models</title>
+    <updated>2025-08-25T18:15:25Z</updated>
+    <link href="https://arxiv.org/abs/2508.18381v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.18381v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large vision-language models (LVLMs) have demonstrated exceptional capabilities in understanding visual information with human languages but also exhibit an imbalance in multilingual capabilities. In this work, we delve into the multilingual working pattern of LVLMs and identify a salient correlation between the multilingual understanding ability of LVLMs and language-specific neuron activations in shallow layers. Building on this insight, we introduce PLAST, a training recipe that achieves efficient multilingual enhancement for LVLMs by Precise LAnguage-Specific layers fine-Tuning. PLAST first identifies layers involved in multilingual understanding by monitoring language-specific neuron activations. These layers are then precisely fine-tuned with question-translation pairs to achieve multilingual alignment. Our empirical results on MM-Bench and MMMB demonstrate that PLAST effectively improves the multilingual capabilities of LVLMs and achieves significant efficiency with only 14% of the parameters tuned. Further analysis reveals that PLAST can be generalized to low-resource and complex visual reasoning tasks, facilitating the language-specific visual information engagement in shallow layers.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-25T18:15:25Z</published>
+    <arxiv:comment>Accepted by EMNLP 2025 findings</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Yuchun Fan</name>
+    </author>
+    <author>
+      <name>Yilin Wang</name>
+    </author>
+    <author>
+      <name>Yongyu Mu</name>
+    </author>
+    <author>
+      <name>Lei Huang</name>
+    </author>
+    <author>
+      <name>Bei Li</name>
+    </author>
+    <author>
+      <name>Xiaocheng Feng</name>
+    </author>
+    <author>
+      <name>Tong Xiao</name>
+    </author>
+    <author>
+      <name>Jingbo Zhu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.17243v2</id>
+    <title>CoViPAL: Layer-wise Contextualized Visual Token Pruning for Large Vision-Language Models</title>
+    <updated>2025-08-30T07:59:19Z</updated>
+    <link href="https://arxiv.org/abs/2508.17243v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.17243v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision-Language Models (LVLMs) process multimodal inputs consisting of text tokens and vision tokens extracted from images or videos. Due to the rich visual information, a single image can generate thousands of vision tokens, leading to high computational costs during the prefilling stage and significant memory overhead during decoding. Existing methods attempt to prune redundant vision tokens, revealing substantial redundancy in visual representations. However, these methods often struggle in shallow layers due to the lack of sufficient contextual information. We argue that many visual tokens are inherently redundant even in shallow layers and can be safely and effectively pruned with appropriate contextual signals. In this work, we propose CoViPAL, a layer-wise contextualized visual token pruning method that employs a Plug-and-Play Pruning Module (PPM) to predict and remove redundant vision tokens before they are processed by the LVLM. The PPM is lightweight, model-agnostic, and operates independently of the LVLM architecture, ensuring seamless integration with various models. Extensive experiments on multiple benchmarks demonstrate that CoViPAL outperforms training-free pruning methods under equal token budgets and surpasses training-based methods with comparable supervision. CoViPAL offers a scalable and efficient solution to improve inference efficiency in LVLMs without compromising accuracy.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-24T07:47:00Z</published>
+    <arxiv:comment>Accepted by EMNLP 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zicong Tang</name>
+    </author>
+    <author>
+      <name>Ziyang Ma</name>
+    </author>
+    <author>
+      <name>Suqing Wang</name>
+    </author>
+    <author>
+      <name>Zuchao Li</name>
+    </author>
+    <author>
+      <name>Lefei Zhang</name>
+    </author>
+    <author>
+      <name>Hai Zhao</name>
+    </author>
+    <author>
+      <name>Yun Li</name>
+    </author>
+    <author>
+      <name>Qianren Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.01345v6</id>
+    <title>Skip \n: A Simple Method to Reduce Hallucination in Large Vision-Language Models</title>
+    <updated>2024-05-08T02:15:45Z</updated>
+    <link href="https://arxiv.org/abs/2402.01345v6" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.01345v6" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent advancements in large vision-language models (LVLMs) have demonstrated impressive capability in visual information understanding with human language. Despite these advances, LVLMs still face challenges with multimodal hallucination, such as generating text descriptions of objects that are not present in the visual information. However, the underlying fundamental reasons of multimodal hallucinations remain poorly explored. In this paper, we propose a new perspective, suggesting that the inherent biases in LVLMs might be a key factor in hallucinations. Specifically, we systematically identify a semantic shift bias related to paragraph breaks (\n\n), where the content before and after '\n\n' in the training data frequently exhibit significant semantic changes. This pattern leads the model to infer that the contents following '\n\n' should be obviously different from the preceding contents with less hallucinatory descriptions, thereby increasing the probability of hallucinatory descriptions subsequent to the '\n\n'. We have validated this hypothesis on multiple publicly available LVLMs. Besides, we find that deliberately inserting '\n\n' at the generated description can induce more hallucinations. A simple method is proposed to effectively mitigate the hallucination of LVLMs by skipping the output of '\n'.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-02T12:02:46Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zongbo Han</name>
+    </author>
+    <author>
+      <name>Zechen Bai</name>
+    </author>
+    <author>
+      <name>Haiyang Mei</name>
+    </author>
+    <author>
+      <name>Qianli Xu</name>
+    </author>
+    <author>
+      <name>Changqing Zhang</name>
+    </author>
+    <author>
+      <name>Mike Zheng Shou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.00455v1</id>
+    <title>First Logit Boosting: Visual Grounding Method to Mitigate Object Hallucination in Large Vision-Language Models</title>
+    <updated>2026-04-01T04:05:50Z</updated>
+    <link href="https://arxiv.org/abs/2604.00455v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.00455v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent Large Vision-Language Models (LVLMs) have demonstrated remarkable performance across various multimodal tasks that require understanding both visual and linguistic inputs. However, object hallucination -- the generation of nonexistent objects in answers -- remains a persistent challenge. Although several approaches such as retraining and external grounding methods have been proposed to mitigate this issue, they still suffer from high data costs or structural complexity. Training-free methods such as Contrastive Decoding (CD) are more cost-effective, avoiding additional training or external models, but still suffer from long-term decay, where visual grounding weakens and language priors dominate as the generation progresses. In this paper, we propose First Logit Boosting (FLB), a simple yet effective training-free technique designed to alleviate long-term decay in LVLMs. FLB stores the logit of the first generated token and adds it to subsequent token predictions, effectively mitigating long-term decay of visual information. We observe that FLB (1) sustains the visual information embedded in the first token throughout generation, and (2) suppresses hallucinated words through the stabilizing effect of the ``The'' token. Experimental results show that FLB significantly reduces object hallucination across various tasks, benchmarks, and backbone models. Notably, it causes negligible inference overhead, making it highly applicable to real-time multimodal systems. Code is available at https://github.com/jiwooha20/FLB</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-01T04:05:50Z</published>
+    <arxiv:comment>19 pages, 13 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jiwoo Ha</name>
+    </author>
+    <author>
+      <name>Jongwoo Baek</name>
+    </author>
+    <author>
+      <name>Jinhyun So</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.23934v1</id>
+    <title>Revealing Multi-View Hallucination in Large Vision-Language Models</title>
+    <updated>2026-03-25T04:50:11Z</updated>
+    <link href="https://arxiv.org/abs/2603.23934v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.23934v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large vision-language models (LVLMs) are increasingly being applied to multi-view image inputs captured from diverse viewpoints. However, despite this growing use, current LVLMs often confuse or mismatch visual information originating from different instances or viewpoints, a phenomenon we term multi-view hallucination. To systematically analyze this problem, we construct MVH-Bench, a benchmark comprising 4.8k question-answer pairs targeting two types of hallucination: cross-instance and cross-view. Empirical results show that recent LVLMs struggle to correctly associate visual evidence with its corresponding instance or viewpoint. To overcome this limitation, we propose Reference Shift Contrastive Decoding (RSCD), a training-free decoding technique that suppresses visual interference by generating negative logits through attention masking. Experiments on MVH-Bench with Qwen2.5-VL and LLaVA-OneVision demonstrate that RSCD consistently improves performance by up to 21.1 and 34.6 points over existing hallucination mitigation methods, highlighting the effectiveness of our approach.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-25T04:50:11Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Wooje Park</name>
+    </author>
+    <author>
+      <name>Insu Lee</name>
+    </author>
+    <author>
+      <name>Soohyun Kim</name>
+    </author>
+    <author>
+      <name>Jaeyun Jang</name>
+    </author>
+    <author>
+      <name>Minyoung Noh</name>
+    </author>
+    <author>
+      <name>Kyuhong Shim</name>
+    </author>
+    <author>
+      <name>Byonghyo Shim</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.13891v1</id>
+    <title>Where do Large Vision-Language Models Look at when Answering Questions?</title>
+    <updated>2025-03-18T04:34:43Z</updated>
+    <link href="https://arxiv.org/abs/2503.13891v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.13891v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision-Language Models (LVLMs) have shown promising performance in vision-language understanding and reasoning tasks. However, their visual understanding behaviors remain underexplored. A fundamental question arises: to what extent do LVLMs rely on visual input, and which image regions contribute to their responses? It is non-trivial to interpret the free-form generation of LVLMs due to their complicated visual architecture (e.g., multiple encoders and multi-resolution) and variable-length outputs. In this paper, we extend existing heatmap visualization methods (e.g., iGOS++) to support LVLMs for open-ended visual question answering. We propose a method to select visually relevant tokens that reflect the relevance between generated answers and input image. Furthermore, we conduct a comprehensive analysis of state-of-the-art LVLMs on benchmarks designed to require visual information to answer. Our findings offer several insights into LVLM behavior, including the relationship between focus region and answer correctness, differences in visual attention across architectures, and the impact of LLM scale on visual understanding. The code and data are available at https://github.com/bytedance/LVLM_Interpretation.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-18T04:34:43Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xiaoying Xing</name>
+    </author>
+    <author>
+      <name>Chia-Wen Kuo</name>
+    </author>
+    <author>
+      <name>Li Fuxin</name>
+    </author>
+    <author>
+      <name>Yulei Niu</name>
+    </author>
+    <author>
+      <name>Fan Chen</name>
+    </author>
+    <author>
+      <name>Ming Li</name>
+    </author>
+    <author>
+      <name>Ying Wu</name>
+    </author>
+    <author>
+      <name>Longyin Wen</name>
+    </author>
+    <author>
+      <name>Sijie Zhu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.17821v2</id>
+    <title>RITUAL: Random Image Transformations as a Universal Anti-hallucination Lever in Large Vision Language Models</title>
+    <updated>2024-12-16T10:27:35Z</updated>
+    <link href="https://arxiv.org/abs/2405.17821v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.17821v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent advancements in Large Vision Language Models (LVLMs) have revolutionized how machines understand and generate textual responses based on visual inputs, yet they often produce "hallucinatory" outputs that misinterpret visual information, posing challenges in reliability and trustworthiness. We propose RITUAL, a simple decoding method that reduces hallucinations by leveraging randomly transformed images as complementary inputs during decoding, adjusting the output probability distribution without additional training or external models. Our key insight is that random transformations expose the model to diverse visual perspectives, enabling it to correct misinterpretations that lead to hallucinations. Specifically, when a model hallucinates based on the original image, the transformed images -- altered in aspects such as orientation, scale, or color -- provide alternative viewpoints that help recalibrate the model's predictions. By integrating the probability distributions from both the original and transformed images, RITUAL effectively reduces hallucinations. To further improve reliability and address potential instability from arbitrary transformations, we introduce RITUAL+, an extension that selects image transformations based on self-feedback from the LVLM. Instead of applying transformations randomly, RITUAL+ uses the LVLM to evaluate and choose transformations that are most beneficial for reducing hallucinations in a given context. This self-adaptive approach mitigates the potential negative impact of certain transformations on specific tasks, ensuring more consistent performance across different scenarios. Experiments demonstrate that RITUAL and RITUAL+ significantly reduce hallucinations across several object hallucination benchmarks.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-28T04:41:02Z</published>
+    <arxiv:comment>Project: https://sangminwoo.github.io/RITUAL/</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Sangmin Woo</name>
+    </author>
+    <author>
+      <name>Jaehyuk Jang</name>
+    </author>
+    <author>
+      <name>Donguk Kim</name>
+    </author>
+    <author>
+      <name>Yubin Choi</name>
+    </author>
+    <author>
+      <name>Changick Kim</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.05017v3</id>
+    <title>Towards Mitigating Hallucinations in Large Vision-Language Models by Refining Textual Embeddings</title>
+    <updated>2026-06-12T16:49:45Z</updated>
+    <link href="https://arxiv.org/abs/2511.05017v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.05017v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Hallucinations in Large Vision-Language Models (LVLMs) remain a persistent challenge, often stemming from inadequate integration of visual information during multimodal reasoning. A key cause is the model's over-reliance on textual priors and underutilization of visual cues, leading to outputs that are linguistically fluent but visually inaccurate. For example, given an image of an empty kitchen countertop, an LVLM might hallucinate a "bowl of fruit" or "cup of coffee", relying on language associations rather than visual evidence. Most LVLMs incorporate visual features by appending them to the input stream of a pre-trained LLM and training on large-scale vision-language datasets. Our systematic analysis reveals that this strategy often leads to over-dependence on textual information due to the inherent bias of LLMs towards language-dominant representations. This imbalance skews attention towards the text over visual content, weakening the model's ability to ground outputs in visual inputs. To address this, we propose a simple yet effective visual feature incorporation method that encourages the model to learn visually-informed textual embeddings distinct from those of the base LLM and promotes a more balanced attention distribution. Experimental results across multiple hallucination benchmarks demonstrate that our method significantly reduces hallucinations and fosters more balanced multimodal reasoning. Notably, our approach achieves substantial gains, including +9.33% on MMVP-MLLM, +2.99% on POPE-AOKVQA, up to +3.4% on Merlin, and +3% on the hard-data split of HallusionBench.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-07T06:39:54Z</published>
+    <arxiv:comment>Accepted at The 64th Annual Meeting of the Association for Computational Linguistics</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Aakriti Agrawal</name>
+    </author>
+    <author>
+      <name>Gouthaman KV</name>
+    </author>
+    <author>
+      <name>Rohith Aralikatti</name>
+    </author>
+    <author>
+      <name>Gauri Jagatap</name>
+    </author>
+    <author>
+      <name>Jiaxin Yuan</name>
+    </author>
+    <author>
+      <name>Sarvesh Baskar</name>
+    </author>
+    <author>
+      <name>Vijay Kamarshi</name>
+    </author>
+    <author>
+      <name>Andrea Fanelli</name>
+    </author>
+    <author>
+      <name>Furong Huang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.17818v1</id>
+    <title>ViTCoP: Accelerating Large Vision-Language Models via Visual and Textual Semantic Collaborative Pruning</title>
+    <updated>2026-01-25T12:47:30Z</updated>
+    <link href="https://arxiv.org/abs/2601.17818v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.17818v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision-Language Models (LVLMs) incur high computational costs due to significant redundancy in their visual tokens. To effectively reduce this cost, researchers have proposed various visual token pruning methods. However, existing methods are generally limited, either losing critical visual information prematurely due to pruning in the vision encoder, or leading to information redundancy among the selected tokens due to pruning in the Large Language Models (LLMs). To address these challenges, we propose a Visual and Textual Semantic Collaborative Pruning framework (ViTCoP) that combines redundancy filtering in the vision encoder with step-wise co-pruning within the LLM based on its hierarchical characteristics, to efficiently preserve critical and informationally diverse visual tokens. Meanwhile, to ensure compatibility with acceleration techniques like FlashAttention, we introduce the L2 norm of K-vectors as the token saliency metric in the LLM. Extensive experiments on various Large Vision-Language Models demonstrate that ViTCoP not only achieves state-of-the-art performance surpassing existing methods on both image and video understanding tasks, but also significantly reduces model inference latency and GPU memory consumption. Notably, its performance advantage over other methods becomes even more pronounced under extreme pruning rates.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-25T12:47:30Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Wen Luo</name>
+    </author>
+    <author>
+      <name>Peng Chen</name>
+    </author>
+    <author>
+      <name>Xiaotao Huang</name>
+    </author>
+    <author>
+      <name>LiQun Huang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.19220v2</id>
+    <title>Are Large Vision Language Models Truly Grounded in Medical Images? Evidence from Italian Clinical Visual Question Answering</title>
+    <updated>2025-11-26T20:23:20Z</updated>
+    <link href="https://arxiv.org/abs/2511.19220v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.19220v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large vision language models (VLMs) have achieved impressive performance on medical visual question answering benchmarks, yet their reliance on visual information remains unclear. We investigate whether frontier VLMs demonstrate genuine visual grounding when answering Italian medical questions by testing four state-of-the-art models: Claude Sonnet 4.5, GPT-4o, GPT-5-mini, and Gemini 2.0 flash exp. Using 60 questions from the EuropeMedQA Italian dataset that explicitly require image interpretation, we substitute correct medical images with blank placeholders to test whether models truly integrate visual and textual information. Our results reveal striking variability in visual dependency: GPT-4o shows the strongest visual grounding with a 27.9pp accuracy drop (83.2% [74.6%, 91.7%] to 55.3% [44.1%, 66.6%]), while GPT-5-mini, Gemini, and Claude maintain high accuracy with modest drops of 8.5pp, 2.4pp, and 5.6pp respectively. Analysis of model-generated reasoning reveals confident explanations for fabricated visual interpretations across all models, suggesting varying degrees of reliance on textual shortcuts versus genuine visual analysis. These findings highlight critical differences in model robustness and the need for rigorous evaluation before clinical deployment.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-24T15:26:58Z</published>
+    <arxiv:comment>Accepted at the Workshop on Multimodal Representation Learning for Healthcare (MMRL4H), EurIPS 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Federico Felizzi</name>
+    </author>
+    <author>
+      <name>Olivia Riccomi</name>
+    </author>
+    <author>
+      <name>Michele Ferramola</name>
+    </author>
+    <author>
+      <name>Francesco Andrea Causio</name>
+    </author>
+    <author>
+      <name>Manuel Del Medico</name>
+    </author>
+    <author>
+      <name>Vittorio De Vita</name>
+    </author>
+    <author>
+      <name>Lorenzo De Mori</name>
+    </author>
+    <author>
+      <name>Alessandra Piscitelli</name>
+    </author>
+    <author>
+      <name>Pietro Eric Risuleo</name>
+    </author>
+    <author>
+      <name>Bianca Destro Castaniti</name>
+    </author>
+    <author>
+      <name>Antonio Cristiano</name>
+    </author>
+    <author>
+      <name>Alessia Longo</name>
+    </author>
+    <author>
+      <name>Luigi De Angelis</name>
+    </author>
+    <author>
+      <name>Mariapia Vassalli</name>
+    </author>
+    <author>
+      <name>Marcello Di Pumpo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.22144v1</id>
+    <title>NoLan: Mitigating Object Hallucinations in Large Vision-Language Models via Dynamic Suppression of Language Priors</title>
+    <updated>2026-02-25T17:50:41Z</updated>
+    <link href="https://arxiv.org/abs/2602.22144v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.22144v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Object hallucination is a critical issue in Large Vision-Language Models (LVLMs), where outputs include objects that do not appear in the input image. A natural question arises from this phenomenon: Which component of the LVLM pipeline primarily contributes to object hallucinations? The vision encoder to perceive visual information, or the language decoder to generate text responses? In this work, we strive to answer this question through designing a systematic experiment to analyze the roles of the vision encoder and the language decoder in hallucination generation. Our observations reveal that object hallucinations are predominantly associated with the strong priors from the language decoder. Based on this finding, we propose a simple and training-free framework, No-Language-Hallucination Decoding, NoLan, which refines the output distribution by dynamically suppressing language priors, modulated based on the output distribution difference between multimodal and text-only inputs. Experimental results demonstrate that NoLan effectively reduces object hallucinations across various LVLMs on different tasks. For instance, NoLan achieves substantial improvements on POPE, enhancing the accuracy of LLaVA-1.5 7B and Qwen-VL 7B by up to 6.45 and 7.21, respectively. The code is publicly available at: https://github.com/lingfengren/NoLan.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-25T17:50:41Z</published>
+    <arxiv:comment>Code: https://github.com/lingfengren/NoLan</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Lingfeng Ren</name>
+    </author>
+    <author>
+      <name>Weihao Yu</name>
+    </author>
+    <author>
+      <name>Runpeng Yu</name>
+    </author>
+    <author>
+      <name>Xinchao Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.21984v2</id>
+    <title>Beyond the Vision Encoder: Identifying and Mitigating Spatial Bias in Large Vision-Language Models</title>
+    <updated>2026-02-03T08:40:04Z</updated>
+    <link href="https://arxiv.org/abs/2509.21984v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.21984v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision-Language Models (LVLMs) have achieved remarkable success across a wide range of multimodal tasks, yet their robustness to spatial variations remains insufficiently understood. In this work, we conduct a systematic study of the spatial bias of LVLMs, examining how models respond when identical key visual information is placed at different locations within an image. Through controlled probing experiments, we observe that current LVLMs often produce inconsistent outputs under such spatial shifts, revealing a clear spatial bias in their semantic understanding. Further analysis indicates that this bias does not stem from the vision encoder, but rather from a mismatch in attention mechanisms between the vision encoder and the large language model, which disrupts the global information flow. Motivated by this insight, we propose Adaptive Global Context Injection (AGCI), a lightweight mechanism that dynamically injects shared global visual context into each image token. AGCI works without architectural modifications, mitigating spatial bias by enhancing the semantic accessibility of image tokens while preserving the model's intrinsic capabilities. Extensive experiments demonstrate that AGCI not only enhances the spatial robustness of LVLMs, but also achieves strong performance on various downstream tasks and hallucination benchmarks.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-26T07:07:03Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yingjie Zhu</name>
+    </author>
+    <author>
+      <name>Xuefeng Bai</name>
+    </author>
+    <author>
+      <name>Kehai Chen</name>
+    </author>
+    <author>
+      <name>Yang Xiang</name>
+    </author>
+    <author>
+      <name>Youcheng Pan</name>
+    </author>
+    <author>
+      <name>Yongshuai Hou</name>
+    </author>
+    <author>
+      <name>Weili Guan</name>
+    </author>
+    <author>
+      <name>Jun Yu</name>
+    </author>
+    <author>
+      <name>Min Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.23590v1</id>
+    <title>CAI: Caption-Sensitive Attention Intervention for Mitigating Object Hallucination in Large Vision-Language Models</title>
+    <updated>2025-06-30T07:52:36Z</updated>
+    <link href="https://arxiv.org/abs/2506.23590v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.23590v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Although Large Vision-Language Models (LVLMs) have demonstrated powerful capabilities in interpreting visual information, they frequently produce content that deviates from visual information, leading to object hallucination. To tackle this, recent works mostly depend on expensive manual annotations and training cost, or significantly increase inference time. In this work, we observe that LVLMs' attention to visual information is significantly stronger when answering caption queries compared to non-caption queries. Inspired by this phenomenon, we propose Caption-sensitive Attention Intervention (CAI), a training-free, plug-and-play hallucination mitigation method that leverages the attention activation pattern in response to caption queries to enhance LVLMs' visual perception capability. Extensive experimental results across four benchmarks covering both discriminative and generative tasks, demonstrate that CAI achieves state-of-the-art (SOTA) hallucination mitigating performance only with minimal additional inference cost.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-30T07:52:36Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Qiming Li</name>
+    </author>
+    <author>
+      <name>Zekai Ye</name>
+    </author>
+    <author>
+      <name>Xiaocheng Feng</name>
+    </author>
+    <author>
+      <name>Weihong Zhong</name>
+    </author>
+    <author>
+      <name>Libo Qin</name>
+    </author>
+    <author>
+      <name>Ruihan Chen</name>
+    </author>
+    <author>
+      <name>Baohang Li</name>
+    </author>
+    <author>
+      <name>Kui Jiang</name>
+    </author>
+    <author>
+      <name>Yaowei Wang</name>
+    </author>
+    <author>
+      <name>Ting Liu</name>
+    </author>
+    <author>
+      <name>Bing Qin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.23312v1</id>
+    <title>LaViC: Adapting Large Vision-Language Models to Visually-Aware Conversational Recommendation</title>
+    <updated>2025-03-30T04:44:13Z</updated>
+    <link href="https://arxiv.org/abs/2503.23312v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.23312v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Conversational recommender systems engage users in dialogues to refine their needs and provide more personalized suggestions. Although textual information suffices for many domains, visually driven categories such as fashion or home decor potentially require detailed visual information related to color, style, or design. To address this challenge, we propose LaViC (Large Vision-Language Conversational Recommendation Framework), a novel approach that integrates compact image representations into dialogue-based recommendation systems. LaViC leverages a large vision-language model in a two-stage process: (1) visual knowledge self-distillation, which condenses product images from hundreds of tokens into a small set of visual tokens in a self-distillation manner, significantly reducing computational overhead, and (2) recommendation prompt tuning, which enables the model to incorporate both dialogue context and distilled visual tokens, providing a unified mechanism for capturing textual and visual features. To support rigorous evaluation of visually-aware conversational recommendation, we construct a new dataset by aligning Reddit conversations with Amazon product listings across multiple visually oriented categories (e.g., fashion, beauty, and home). This dataset covers realistic user queries and product appearances in domains where visual details are crucial. Extensive experiments demonstrate that LaViC significantly outperforms text-only conversational recommendation methods and open-source vision-language baselines. Moreover, LaViC achieves competitive or superior accuracy compared to prominent proprietary baselines (e.g., GPT-3.5-turbo, GPT-4o-mini, and GPT-4o), demonstrating the necessity of explicitly using visual data for capturing product attributes and showing the effectiveness of our vision-language integration. Our code and dataset are available at https://github.com/jeon185/LaViC.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-30T04:44:13Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Hyunsik Jeon</name>
+    </author>
+    <author>
+      <name>Satoshi Koide</name>
+    </author>
+    <author>
+      <name>Yu Wang</name>
+    </author>
+    <author>
+      <name>Zhankui He</name>
+    </author>
+    <author>
+      <name>Julian McAuley</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.27375v1</id>
+    <title>Bridging Visual Representation and Reinforcement Learning from Verifiable Rewards in Large Vision-Language Models</title>
+    <updated>2026-03-28T18:40:14Z</updated>
+    <link href="https://arxiv.org/abs/2603.27375v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.27375v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Reinforcement Learning from Verifiable Rewards (RLVR) has substantially enhanced the reasoning capabilities of large language models in abstract reasoning tasks. However, its application to Large Vision-Language Models (LVLMs) remains constrained by a structural representational bottleneck. Existing approaches generally lack explicit modeling and effective utilization of visual information, preventing visual representations from being tightly coupled with the reinforcement learning optimization process and thereby limiting further improvements in multimodal reasoning performance. To address this limitation, we propose KAWHI (Key-Region Aligned Weighted Harmonic Incentive), a plug-and-play reward reweighting mechanism that explicitly incorporates structured visual information into uniform reward policy optimization methods (e.g., GRPO and GSPO). The method adaptively localizes semantically salient regions through hierarchical geometric aggregation, identifies vision-critical attention heads via structured attribution, and performs paragraph-level credit reallocation to align spatial visual evidence with semantically decisive reasoning steps. Extensive empirical evaluations on diverse reasoning benchmarks substantiate KAWHI as a general-purpose enhancement module, consistently improving the performance of various uniform reward optimization methods. Project page: KAWHI (https://kawhiiiileo.github.io/KAWHI_PAGE/)</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-28T18:40:14Z</published>
+    <arxiv:comment>Homepage: \url{https://kawhiiiileo.github.io/KAWHI_PAGE/}</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yuhang Han</name>
+    </author>
+    <author>
+      <name>Yuyang Wu</name>
+    </author>
+    <author>
+      <name>Zhengbo Jiao</name>
+    </author>
+    <author>
+      <name>Yiyu Wang</name>
+    </author>
+    <author>
+      <name>Xuyang Liu</name>
+    </author>
+    <author>
+      <name>Shaobo Wang</name>
+    </author>
+    <author>
+      <name>Hanlin Xu</name>
+    </author>
+    <author>
+      <name>Xuming Hu</name>
+    </author>
+    <author>
+      <name>Linfeng Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.14156v4</id>
+    <title>Unveiling the Tapestry of Consistency in Large Vision-Language Models</title>
+    <updated>2024-10-06T09:51:25Z</updated>
+    <link href="https://arxiv.org/abs/2405.14156v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.14156v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large vision-language models (LVLMs) have recently achieved rapid progress, exhibiting great perception and reasoning abilities concerning visual information. However, when faced with prompts in different sizes of solution spaces, LVLMs fail to always give consistent answers regarding the same knowledge point. This inconsistency of answers between different solution spaces is prevalent in LVLMs and erodes trust. To this end, we provide a multi-modal benchmark ConBench, to intuitively analyze how LVLMs perform when the solution space of a prompt revolves around a knowledge point. Based on the ConBench tool, we are the first to reveal the tapestry and get the following findings: (1) In the discriminate realm, the larger the solution space of the prompt, the lower the accuracy of the answers. (2) Establish the relationship between the discriminative and generative realms: the accuracy of the discriminative question type exhibits a strong positive correlation with its Consistency with the caption. (3) Compared to open-source models, closed-source models exhibit a pronounced bias advantage in terms of Consistency. Eventually, we ameliorate the consistency of LVLMs by trigger-based diagnostic refinement, indirectly improving the performance of their caption. We hope this paper will accelerate the research community in better evaluating their models and encourage future advancements in the consistency domain. The project is available at https://github.com/foundation-multimodal-models/ConBench.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-23T04:08:23Z</published>
+    <arxiv:comment>Accepted by NeurIPS 2024</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yuan Zhang</name>
+    </author>
+    <author>
+      <name>Fei Xiao</name>
+    </author>
+    <author>
+      <name>Tao Huang</name>
+    </author>
+    <author>
+      <name>Chun-Kai Fan</name>
+    </author>
+    <author>
+      <name>Hongyuan Dong</name>
+    </author>
+    <author>
+      <name>Jiawen Li</name>
+    </author>
+    <author>
+      <name>Jiacong Wang</name>
+    </author>
+    <author>
+      <name>Kuan Cheng</name>
+    </author>
+    <author>
+      <name>Shanghang Zhang</name>
+    </author>
+    <author>
+      <name>Haoyuan Guo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.12359v1</id>
+    <title>LanP: Rethinking the Impact of Language Priors in Large Vision-Language Models</title>
+    <updated>2025-02-17T22:48:34Z</updated>
+    <link href="https://arxiv.org/abs/2502.12359v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.12359v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Vision-Language Models (LVLMs) have shown impressive performance in various tasks. However, LVLMs suffer from hallucination, which hinders their adoption in the real world. Existing studies emphasized that the strong language priors of LVLMs can overpower visual information, causing hallucinations. However, the positive role of language priors is the key to a powerful LVLM. If the language priors are too weak, LVLMs will struggle to leverage rich parameter knowledge and instruction understanding abilities to complete tasks in challenging visual scenarios where visual information alone is insufficient. Therefore, we propose a benchmark called LanP to rethink the impact of Language Priors in LVLMs. It is designed to investigate how strong language priors are in current LVLMs. LanP consists of 170 images and 340 corresponding well-designed questions. Extensive experiments on 25 popular LVLMs reveal that many LVLMs' language priors are not strong enough to effectively aid question answering when objects are partially hidden. Many models, including GPT-4 Turbo, exhibit an accuracy below 0.5 in such a scenario.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-17T22:48:34Z</published>
+    <arxiv:comment>Preprint</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zongyu Wu</name>
+    </author>
+    <author>
+      <name>Yuwei Niu</name>
+    </author>
+    <author>
+      <name>Hongcheng Gao</name>
+    </author>
+    <author>
+      <name>Minhua Lin</name>
+    </author>
+    <author>
+      <name>Zhiwei Zhang</name>
+    </author>
+    <author>
+      <name>Zhifang Zhang</name>
+    </author>
+    <author>
+      <name>Qi Shi</name>
+    </author>
+    <author>
+      <name>Yilong Wang</name>
+    </author>
+    <author>
+      <name>Sike Fu</name>
+    </author>
+    <author>
+      <name>Junjie Xu</name>
+    </author>
+    <author>
+      <name>Junjie Ao</name>
+    </author>
+    <author>
+      <name>Enyan Dai</name>
+    </author>
+    <author>
+      <name>Lei Feng</name>
+    </author>
+    <author>
+      <name>Xiang Zhang</name>
+    </author>
+    <author>
+      <name>Suhang Wang</name>
+    </author>
+  </entry>
+</feed>

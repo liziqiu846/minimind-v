@@ -1,0 +1,943 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/Bwurhwvf3K3I4ly+gqBnCkMmjEM</id>
+  <title>arXiv Query: search_query=all:"modality gap" AND all:multimodal&amp;id_list=&amp;start=0&amp;max_results=30</title>
+  <updated>2026-08-06T16:12:34Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22modality+gap%22+AND+all:multimodal&amp;start=0&amp;max_results=30&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>30</opensearch:itemsPerPage>
+  <opensearch:totalResults>186</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2412.07909v2</id>
+    <title>Explaining and Mitigating the Modality Gap in Contrastive Multimodal Learning</title>
+    <updated>2026-02-13T01:00:01Z</updated>
+    <link href="https://arxiv.org/abs/2412.07909v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.07909v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal learning has recently gained significant popularity, demonstrating impressive performance across various zero-shot classification tasks and a range of perceptive and generative applications. Models such as Contrastive Language-Image Pretraining (CLIP) are designed to bridge different modalities, such as images and text, by learning a shared representation space through contrastive learning. Despite their success, the working mechanisms underlying multimodal learning are not yet well understood. Notably, these models often exhibit a modality gap, where different modalities occupy distinct regions within the shared representation space. In this work, we conduct an in-depth analysis of the emergence of modality gap by characterizing the gradient flow learning dynamics. Specifically, we identify the critical roles of mismatched data pairs and a learnable temperature parameter in causing and perpetuating the modality gap during training. Furthermore, our theoretical insights are validated through experiments on practical CLIP models. These findings provide principled guidance for mitigating the modality gap, including strategies such as appropriate temperature scheduling and modality swapping. Additionally, we demonstrate that closing the modality gap leads to improved performance on tasks such as image-text retrieval.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-10T20:36:49Z</published>
+    <arxiv:comment>The first two authors contributed equally to this work</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Can Yaras</name>
+    </author>
+    <author>
+      <name>Siyi Chen</name>
+    </author>
+    <author>
+      <name>Peng Wang</name>
+    </author>
+    <author>
+      <name>Qing Qu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.28640v1</id>
+    <title>TokenSwap: Benchmarking and Reducing the Modality Gap in Multimodal LLMs</title>
+    <updated>2026-05-20T00:25:52Z</updated>
+    <link href="https://arxiv.org/abs/2607.28640v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.28640v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal large language models (MLLMs) should generate consistent responses given semantically equivalent inputs across modalities. However, we observe a systematic discrepancy in model predictions under such cross-modal variations. Specifically, we define the modality gap as the difference in model performance under semantically equivalent textual and multimodal inputs. We introduce TokenSwap, a method that constructs such inputs by replacing textual concepts with semantically aligned images, resulting in sequences where visual tokens are interleaved with text tokens. Based on TokenSwap, we transform existing text-based benchmarks such as MMLU into image-interleaved counterparts, resulting in TokenSwap-Bench. Across 42 MLLMs, we observe a pervasive modality gap, with performance decreasing by 4.2% to 47.4% when moving from text-only to image-interleaved inputs, averaging 19.6% +/- 3.3% across models. Notably, we observe that reasoning models exhibit consistently smaller gaps, achieving an average gap of 10.1% compared to 25.5% for non-reasoning models. In contrast, neither prompting strategies nor scaling training compute alone reliably reduces the modality gap. Finally, we demonstrate that incorporating TokenSwap during training effectively mitigates this gap while preserving strong text-only and vision-language performance.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-20T00:25:52Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Andong Hua</name>
+    </author>
+    <author>
+      <name>Colton Bishop</name>
+    </author>
+    <author>
+      <name>Igor Mordatch</name>
+    </author>
+    <author>
+      <name>Arian Hosseini</name>
+    </author>
+    <author>
+      <name>Jindong Gu</name>
+    </author>
+    <author>
+      <name>Aleksandra Faust</name>
+    </author>
+    <author>
+      <name>Rebecca Roelofs</name>
+    </author>
+    <author>
+      <name>Yao Qin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.07026v3</id>
+    <title>Modality Gap-Driven Subspace Alignment Training Paradigm For Multimodal Large Language Models</title>
+    <updated>2026-06-05T02:27:27Z</updated>
+    <link href="https://arxiv.org/abs/2602.07026v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.07026v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Despite the success of multimodal contrastive learning in aligning visual and linguistic representations, a persistent geometric anomaly, the Modality Gap, remains: embeddings of distinct modalities expressing identical semantics occupy systematically offset regions. Prior approaches to bridge this gap are largely limited by oversimplified isotropic assumptions, hindering their application in large-scale scenarios. In this paper, we address these limitations by precisely characterizing the geometric shape of the modality gap and leveraging it for efficient model scaling. First, we propose the Fixed-frame Modality Gap Theory, which decomposes the modality gap within a frozen reference frame into stable biases and anisotropic residuals. Guided by this precise modeling, we introduce ReAlign, a training-free modality alignment strategy. Utilizing statistics from massive unpaired data, ReAlign aligns text representation into the image representation distribution via a three-step process comprising Anchor, Trace, and Centroid Alignment, thereby explicitly rectifying geometric misalignment. Building on ReAlign, we propose ReVision, a scalable training paradigm for Multimodal Large Language Models~(MLLMs). ReVision integrates ReAlign into the pretraining stage, enabling the model to learn the distribution of visual representations from unpaired text before visual instruction tuning, without the need for large-scale, high-quality image-text pairs. Our framework demonstrates that statistically aligned unpaired data can effectively substitute for expensive image-text pairs, offering a robust path for the efficient scaling of MLLMs.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-02T13:59:39Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xiaomin Yu</name>
+    </author>
+    <author>
+      <name>Yi Xin</name>
+    </author>
+    <author>
+      <name>Yuhui Zhang</name>
+    </author>
+    <author>
+      <name>Wenjie Zhang</name>
+    </author>
+    <author>
+      <name>Chonghan Liu</name>
+    </author>
+    <author>
+      <name>Hanzhen Zhao</name>
+    </author>
+    <author>
+      <name>Chen Liu</name>
+    </author>
+    <author>
+      <name>Xiaoxing Hu</name>
+    </author>
+    <author>
+      <name>Ziyue Qiao</name>
+    </author>
+    <author>
+      <name>Hao Tang</name>
+    </author>
+    <author>
+      <name>Xiaobin Hu</name>
+    </author>
+    <author>
+      <name>Chengwei Qin</name>
+    </author>
+    <author>
+      <name>Hui Xiong</name>
+    </author>
+    <author>
+      <name>Yu Qiao</name>
+    </author>
+    <author>
+      <name>Shuicheng Yan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.03268v2</id>
+    <title>Decipher the Modality Gap in Multimodal Contrastive Learning: From Convergent Representations to Pairwise Alignment</title>
+    <updated>2025-10-07T18:46:38Z</updated>
+    <link href="https://arxiv.org/abs/2510.03268v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.03268v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal contrastive learning (MCL) aims to embed data from different modalities in a shared embedding space. However, empirical evidence shows that representations from different modalities occupy completely separate regions of embedding space, a phenomenon referred to as the modality gap. Moreover, experimental findings on how the size of the modality gap influences downstream performance are inconsistent. These observations raise two key questions: (1) What causes the modality gap? (2) How does it affect downstream tasks? To address these questions, this paper introduces the first theoretical framework for analyzing the convergent optimal representations of MCL and the modality alignment when training is optimized. Specifically, we prove that without any constraint or under the cone constraint, the modality gap converges to zero. Under the subspace constraint (i.e., representations of two modalities fall into two distinct hyperplanes due to dimension collapse), the modality gap converges to the smallest angle between the two hyperplanes. This result identifies \emph{dimension collapse} as the fundamental origin of the modality gap. Furthermore, our theorems demonstrate that paired samples cannot be perfectly aligned under the subspace constraint. The modality gap influences downstream performance by affecting the alignment between sample pairs. We prove that, in this case, perfect alignment between two modalities can still be achieved via two ways: hyperplane rotation and shared space projection.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-27T04:21:00Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Lingjie Yi</name>
+    </author>
+    <author>
+      <name>Raphael Douady</name>
+    </author>
+    <author>
+      <name>Chao Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.29628v1</id>
+    <title>COMET: Concept Space Dissection of the Modality Gap in Audio-Text Multimodal Contrastive Embeddings</title>
+    <updated>2026-05-28T09:00:44Z</updated>
+    <link href="https://arxiv.org/abs/2605.29628v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.29628v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Contrastive Language-Audio Pretraining (CLAP) models are widely used for audio understanding and support modality-agnostic condition swapping in many zero-shot applications. However, their performance is heavily affected by the modality gap between audio and text embeddings. Existing explanations mainly attribute this gap to the cone effect, treating it as a shift between mean embeddings, yet correcting the mean alone yields only limited improvements. Alternative hypotheses, such as information imbalance and dimensionality collapse, have also been proposed, but they remain insufficiently verified and have not been thoroughly studied in the audio domain. Meanwhile, several works attempt to decompose multimodal contrastive embeddings into interpretable concepts, but none explicitly analyze the modality gap from the perspective of concept decomposition. In this work, we introduce COMET (Concept space Organization and Modality gap Explanation with PLS-SVD Transformation), a novel partial least squares singular value decomposition (PLS-SVD) framework for CLAP that unveils a broader perspective of the modality gap. Our framework reveals that only a small, interpretable subset of axes, which captures shared concepts, contributes substantially to similarity computation, and that the mean component represents only partially the modality gap. Building on this insight, we propose a simple spectral truncation method that mitigates the modality gap in a training-free manner. The method enables zero-shot audio captioning with condition swapping to approach fully supervised performance, without requiring large auxiliary memory banks or expensive computation. At the same time, it achieves substantial embedding dimensionality reduction while preserving strong performance on retrieval and audio captioning tasks.</summary>
+    <category term="cs.SD" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.AS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-28T09:00:44Z</published>
+    <arxiv:primary_category term="cs.SD"/>
+    <author>
+      <name>Yonggang Zhu</name>
+    </author>
+    <author>
+      <name>Liting Gao</name>
+    </author>
+    <author>
+      <name>Aidong Men</name>
+    </author>
+    <author>
+      <name>Wenwu Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.18807v1</id>
+    <title>Single-Branch Network Architectures to Close the Modality Gap in Multimodal Recommendation</title>
+    <updated>2025-09-23T08:58:53Z</updated>
+    <link href="https://arxiv.org/abs/2509.18807v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.18807v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Traditional recommender systems rely on collaborative filtering, using past user-item interactions to help users discover new items in a vast collection. In cold start, i.e., when interaction histories of users or items are not available, content-based recommender systems use side information instead. Hybrid recommender systems (HRSs) often employ multimodal learning to combine collaborative and side information, which we jointly refer to as modalities. Though HRSs can provide recommendations when some modalities are missing, their quality degrades. In this work, we utilize single-branch neural networks equipped with weight sharing, modality sampling, and contrastive loss to provide accurate recommendations even in missing modality scenarios by narrowing the modality gap. We compare these networks with multi-branch alternatives and conduct extensive experiments on three datasets. Six accuracy-based and four beyond-accuracy-based metrics help assess the recommendation quality for the different training paradigms and their hyperparameters in warm-start and missing modality scenarios. We quantitatively and qualitatively study the effects of these different aspects on bridging the modality gap. Our results show that single-branch networks achieve competitive performance in warm-start scenarios and are significantly better in missing modality settings. Moreover, our approach leads to closer proximity of an item's modalities in the embedding space. Our full experimental setup is available at https://github.com/hcai-mms/single-branch-networks.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-23T08:58:53Z</published>
+    <arxiv:comment>Accepted by ACM Transactions on Recommender Systems (TORS)</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Christian Ganhör</name>
+    </author>
+    <author>
+      <name>Marta Moscati</name>
+    </author>
+    <author>
+      <name>Anna Hausberger</name>
+    </author>
+    <author>
+      <name>Shah Nawaz</name>
+    </author>
+    <author>
+      <name>Markus Schedl</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.17246v2</id>
+    <title>On the Cone Effect and Modality Gap in Medical Vision-Language Embeddings</title>
+    <updated>2026-03-20T15:22:06Z</updated>
+    <link href="https://arxiv.org/abs/2603.17246v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.17246v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-Language Models (VLMs) exhibit a characteristic "cone effect" in which nonlinear encoders map embeddings into highly concentrated regions of the representation space, contributing to cross-modal separation known as the modality gap. While this phenomenon has been widely observed, its practical impact on supervised multimodal learning -- particularly in medical domains -- remains unclear. In this work, we introduce a lightweight post-hoc mechanism that keeps pretrained VLM encoders frozen while continuously controlling cross-modal separation through a single hyperparameter {λ}. This enables systematic analysis of how the modality gap affects downstream multimodal performance without expensive retraining. We evaluate generalist (CLIP, SigLIP) and medically specialized (BioMedCLIP, MedSigLIP) models across diverse medical and natural datasets in a supervised multimodal settings. Results consistently show that reducing excessive modality gap improves downstream performance, with medical datasets exhibiting stronger sensitivity to gap modulation; however, fully collapsing the gap is not always optimal, and intermediate, task-dependent separation yields the best results. These findings position the modality gap as a tunable property of multimodal representations rather than a quantity that should be universally minimized.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-18T01:04:21Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>David Restrepo</name>
+    </author>
+    <author>
+      <name>Miguel L Martins</name>
+    </author>
+    <author>
+      <name>Chenwei Wu</name>
+    </author>
+    <author>
+      <name>Luis Filipe Nakayama</name>
+    </author>
+    <author>
+      <name>Diego M Lopez</name>
+    </author>
+    <author>
+      <name>Stergios Christodoulidis</name>
+    </author>
+    <author>
+      <name>Maria Vakalopoulou</name>
+    </author>
+    <author>
+      <name>Enzo Ferrante</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.11330v1</id>
+    <title>Diffusion-Link: Diffusion Probabilistic Model for Bridging the Audio-Text Modality Gap</title>
+    <updated>2025-10-13T12:25:33Z</updated>
+    <link href="https://arxiv.org/abs/2510.11330v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.11330v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Contrastive audio-language pretraining yields powerful joint representations, yet a persistent audio-text modality gap limits the benefits of coupling multimodal encoders with large language models (LLMs). We present Diffusion-Link, a diffusion-based modality-bridging module that generatively maps audio embeddings into the text-embedding distribution. The module is trained at the output embedding from the frozen multimodal encoder and implemented as a lightweight network with three residual MLP blocks. To assess the effect of Diffusion-Link on multimodal encoder-LLM coupling, we evaluate on Automatic Audio Captioning (AAC); to our knowledge, this is the first application of diffusion-based modality bridging to AAC. We report two results. (1) Modality-gap analysis: on similarity and geometric criteria, Diffusion-Link reduces the modality gap the most among prior diffusion-based methods and shows a collective migration of audio embeddings toward the text distribution. (2) Downstream AAC: attaching Diffusion-Link to the same multimodal LLM baseline achieves state-of-the-art on AudioCaps in both zero-shot and fully supervised captioning without external knowledge, with relative gains up to 52.5% and 7.5%, respectively. These findings show that closing the modality gap is pivotal for effective coupling between multimodal encoders and LLMs, and diffusion-based modality bridging offers a promising direction beyond knowledge-retrieval-centric designs. Code will be released upon acceptance https://github.com/DevKiHyun/Diffusion-Link</summary>
+    <category term="cs.SD" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.AS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-13T12:25:33Z</published>
+    <arxiv:comment>5 pages. Submitted to IEEE ICASSP 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.SD"/>
+    <author>
+      <name>KiHyun Nam</name>
+    </author>
+    <author>
+      <name>Jongmin Choi</name>
+    </author>
+    <author>
+      <name>Hyeongkeun Lee</name>
+    </author>
+    <author>
+      <name>Jungwoo Heo</name>
+    </author>
+    <author>
+      <name>Joon Son Chung</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.09095v3</id>
+    <title>Reading, Not Thinking: Understanding and Bridging the Modality Gap When Text Becomes Pixels in Multimodal LLMs</title>
+    <updated>2026-05-30T05:14:01Z</updated>
+    <link href="https://arxiv.org/abs/2603.09095v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.09095v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal large language models (MLLMs) can process text presented as images, yet they often perform worse than when the same content is provided as textual tokens.
+  We systematically diagnose this "modality gap" by evaluating seven MLLMs across seven benchmarks in five input modes, spanning both synthetically rendered text and realistic document images from arXiv PDFs to Wikipedia pages.
+  We find that the gap is highly sensitive to rendering choices such as font and resolution, and that natural document images often exhibit much smaller gaps, suggesting the performance difference partly reflects evaluation artifacts rather than fundamental limitations.
+  Through a grounded-theory error analysis of over 4,000 examples, we identify the primary cause: image input alone suppresses reasoning effort, with models producing 5--19x shorter outputs that skip step-by-step computation or reasoning.
+  The reluctance to reason, not a failure of perception or knowledge retrieval, drives the performance gap, particularly on tasks requiring multi-step reasoning.
+  We show that a simple, lightweight on-policy self-distillation method by fine-tuning models on their own text-mode reasoning traces paired with image inputs closes this gap, raising image-mode accuracy to match or exceed text-mode performance with over 50\% improvement, and the gains transfer to unseen benchmarks without catastrophic forgetting. Overall, our results and analyses provide a systematic understanding of the modality gap and suggest a practical path toward improving visual text understanding in multimodal language models.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-10T02:14:23Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Kaiser Sun</name>
+    </author>
+    <author>
+      <name>Xiaochuang Yuan</name>
+    </author>
+    <author>
+      <name>Hongjun Liu</name>
+    </author>
+    <author>
+      <name>Chen Zhao</name>
+    </author>
+    <author>
+      <name>Cheng Zhang</name>
+    </author>
+    <author>
+      <name>Mark Dredze</name>
+    </author>
+    <author>
+      <name>Fan Bai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.19054v1</id>
+    <title>Closing the Modality Gap for Mixed Modality Search</title>
+    <updated>2025-07-25T08:15:28Z</updated>
+    <link href="https://arxiv.org/abs/2507.19054v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.19054v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Mixed modality search -- retrieving information across a heterogeneous corpus composed of images, texts, and multimodal documents -- is an important yet underexplored real-world application. In this work, we investigate how contrastive vision-language models, such as CLIP, perform on the mixed modality search task. Our analysis reveals a critical limitation: these models exhibit a pronounced modality gap in the embedding space, where image and text embeddings form distinct clusters, leading to intra-modal ranking bias and inter-modal fusion failure. To address this issue, we propose GR-CLIP, a lightweight post-hoc calibration method that removes the modality gap in CLIP's embedding space. Evaluated on MixBench -- the first benchmark specifically designed for mixed modality search -- GR-CLIP improves NDCG@10 by up to 26 percentage points over CLIP, surpasses recent vision-language generative embedding models by 4 percentage points, while using 75x less compute.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-25T08:15:28Z</published>
+    <arxiv:comment>Project page: https://yuhui-zh15.github.io/MixedModalitySearch/</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Binxu Li</name>
+    </author>
+    <author>
+      <name>Yuhui Zhang</name>
+    </author>
+    <author>
+      <name>Xiaohan Wang</name>
+    </author>
+    <author>
+      <name>Weixin Liang</name>
+    </author>
+    <author>
+      <name>Ludwig Schmidt</name>
+    </author>
+    <author>
+      <name>Serena Yeung-Levy</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.18525v1</id>
+    <title>Closing the Modality Gap Aligns Group-Wise Semantics</title>
+    <updated>2026-01-26T14:36:04Z</updated>
+    <link href="https://arxiv.org/abs/2601.18525v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.18525v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In multimodal learning, CLIP has been recognized as the \textit{de facto} method for learning a shared latent space across multiple modalities, placing similar representations close to each other and moving them away from dissimilar ones. Although CLIP-based losses effectively align modalities at the semantic level, the resulting latent spaces often remain only partially shared, revealing a structural mismatch known as the modality gap. While the necessity of addressing this phenomenon remains debated, particularly given its limited impact on instance-wise tasks (e.g., retrieval), we prove that its influence is instead strongly pronounced in group-level tasks (e.g., clustering). To support this claim, we introduce a novel method designed to consistently reduce this discrepancy in two-modal settings, with a straightforward extension to the general $n$-modal case. Through our extensive evaluation, we demonstrate our novel insight: while reducing the gap provides only marginal or inconsistent improvements in traditional instance-wise tasks, it significantly enhances group-wise tasks. These findings may reshape our understanding of the modality gap, highlighting its key role in improving performance on tasks requiring semantic grouping.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-26T14:36:04Z</published>
+    <arxiv:comment>ICLR 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Eleonora Grassucci</name>
+    </author>
+    <author>
+      <name>Giordano Cicchetti</name>
+    </author>
+    <author>
+      <name>Emanuele Frasca</name>
+    </author>
+    <author>
+      <name>Aurelio Uncini</name>
+    </author>
+    <author>
+      <name>Danilo Comminiello</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.03703v1</id>
+    <title>Fill the Gap: Quantifying and Reducing the Modality Gap in Image-Text Representation Learning</title>
+    <updated>2025-05-06T17:24:41Z</updated>
+    <link href="https://arxiv.org/abs/2505.03703v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.03703v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-language models (VLMs) allow to embed texts and images in a shared representation space. However, it has been shown that these models are subject to a modality gap phenomenon meaning there exists a clear separation between the embeddings from one modality and another in the embedding space. While this misalignment is detrimental for downstream tasks such as multimodal retrieval, multimodal clustering or zero-shot classification, etc. no generic and practical methods have so far been proposed to assess it precisely and even reduce it. We therefore propose novel measures and effective techniques (spectral- and optimal transport-based methods) to achieve this goal. Extensive experiments conducted on several image-text datasets and models demonstrate their effectiveness and beneficial effects on downstream tasks. Our code is available at the URL provided in the paper's abstract.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-06T17:24:41Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>François Role</name>
+    </author>
+    <author>
+      <name>Sébastien Meyer</name>
+    </author>
+    <author>
+      <name>Victor Amblard</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.16892v1</id>
+    <title>CrossFlowDG: Bridging the Modality Gap with Cross-modal Flow Matching for Domain Generalization</title>
+    <updated>2026-04-18T07:53:50Z</updated>
+    <link href="https://arxiv.org/abs/2604.16892v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.16892v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Domain generalization (DG) aims to maintain performance under domain shift, which in computer vision appears primarily as stylistic variations that cause models to overfit to domain-specific appearance cues rather than class semantics. To overcome this, recent methods use textual representations as stable, domain-invariant anchors. However, multimodal approaches that rely on cosine similarity-based contrastive alignment leave a modality gap where image and text embeddings remain geometrically separated despite semantic correspondence. We propose CrossFlowDG, a novel DG framework that addresses this residual gap using noise-free, cross-modal flow matching. By learning a continuous transformation in the joint Euclidean latent space, our framework explicitly transports domain-biased image embeddings toward domain-invariant text embeddings of the correct class. Using the efficient VMamba image encoder and CLIP's text encoder, CrossFlowDG is tested against four common DG benchmarks, and achieves competitive performance on several benchmarks and state-of-the-art on TerraIncognita. Code is available at: https://github.com/ajkrit/CrossFlowDG</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-18T07:53:50Z</published>
+    <arxiv:comment>Accepted in CVPRW 2026 (DG-EBF Workshop)</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Antonios Kritikos</name>
+    </author>
+    <author>
+      <name>Nikolaos Spanos</name>
+    </author>
+    <author>
+      <name>Athanasios Voulodimos</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.12664v2</id>
+    <title>From Text to Forecasts: Bridging Modality Gap with Temporal Evolution Semantic Space</title>
+    <updated>2026-03-16T10:24:41Z</updated>
+    <link href="https://arxiv.org/abs/2603.12664v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.12664v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Incorporating textual information into time-series forecasting holds promise for addressing event-driven non-stationarity; however, a fundamental modality gap hinders effective fusion: textual descriptions express temporal impacts implicitly and qualitatively, whereas forecasting models rely on explicit and quantitative signals. Through controlled semi-synthetic experiments, we show that existing methods over-attend to redundant tokens and struggle to reliably translate textual semantics into usable numerical cues. To bridge this gap, we propose TESS, which introduces a Temporal Evolution Semantic Space as an intermediate bottleneck between modalities. This space consists of interpretable, numerically grounded temporal primitives (mean shift, volatility, shape, and lag) extracted from text by an LLM via structured prompting and filtered through confidence-aware gating. Experiments on four real-world datasets demonstrate up to a 29 percent reduction in forecasting error compared to state-of-the-art unimodal and multimodal baselines. The code will be released after acceptance.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-13T05:11:54Z</published>
+    <arxiv:comment>15 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Lehui Li</name>
+    </author>
+    <author>
+      <name>Yuyao Wang</name>
+    </author>
+    <author>
+      <name>Jisheng Yan</name>
+    </author>
+    <author>
+      <name>Wei Zhang</name>
+    </author>
+    <author>
+      <name>Jinliang Deng</name>
+    </author>
+    <author>
+      <name>Haoliang Sun</name>
+    </author>
+    <author>
+      <name>Zhongyi Han</name>
+    </author>
+    <author>
+      <name>Yongshun Gong</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.14888v4</id>
+    <title>Beyond Cross-Modal Alignment: Measuring and Leveraging Modality Gap in Vision-Language Models</title>
+    <updated>2026-04-25T16:29:51Z</updated>
+    <link href="https://arxiv.org/abs/2502.14888v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.14888v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The success of vision-language models is primarily attributed to effective alignment across modalities such as vision and language. However, modality gaps persist in existing alignment algorithms and appear necessary for human perception as evidenced by modality-specific phenomena like visual texture and linguistic tone. These observations motivate us to computationally measure and leverage modality gaps to improve downstream tasks. We first introduce the Modality Dominance Score (MDS), which attributes multimodal features to specific modalities by categorizing them into three classes: vision-dominant features, language-dominant features, and cross-modal features. We then propose automatic interpretability metrics to evaluate these modality-specific features in a scalable manner. Finally, we demonstrate that the training-free model editing enhances multiple downstream tasks, including mitigating bias in gender classification, generating cross-modal adversarial examples, and enabling modality-specific control in text-to-image generation. Combined with task-agnostic interpretability tools, our work offers insights for systematic analysis and lightweight editing of multimodal models.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-16T14:51:07Z</published>
+    <arxiv:comment>accepted by ACL26-findings</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Hanqi Yan</name>
+    </author>
+    <author>
+      <name>Xiangxiang Cui</name>
+    </author>
+    <author>
+      <name>Lu Yin</name>
+    </author>
+    <author>
+      <name>Jindong Gu</name>
+    </author>
+    <author>
+      <name>Paul Pu Liang</name>
+    </author>
+    <author>
+      <name>Yulan He</name>
+    </author>
+    <author>
+      <name>Yifei Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2103.14431v3</id>
+    <title>Multimodal Knowledge Expansion</title>
+    <updated>2021-10-29T00:01:33Z</updated>
+    <link href="https://arxiv.org/abs/2103.14431v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2103.14431v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The popularity of multimodal sensors and the accessibility of the Internet have brought us a massive amount of unlabeled multimodal data. Since existing datasets and well-trained models are primarily unimodal, the modality gap between a unimodal network and unlabeled multimodal data poses an interesting problem: how to transfer a pre-trained unimodal network to perform the same task on unlabeled multimodal data? In this work, we propose multimodal knowledge expansion (MKE), a knowledge distillation-based framework to effectively utilize multimodal data without requiring labels. Opposite to traditional knowledge distillation, where the student is designed to be lightweight and inferior to the teacher, we observe that a multimodal student model consistently denoises pseudo labels and generalizes better than its teacher. Extensive experiments on four tasks and different modalities verify this finding. Furthermore, we connect the mechanism of MKE to semi-supervised learning and offer both empirical and theoretical explanations to understand the denoising capability of a multimodal student.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-03-26T12:32:07Z</published>
+    <arxiv:comment>Accepted by ICCV 2021. Project website: https://tsinghua-mars-lab.github.io/MKE/</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zihui Xue</name>
+    </author>
+    <author>
+      <name>Sucheng Ren</name>
+    </author>
+    <author>
+      <name>Zhengqi Gao</name>
+    </author>
+    <author>
+      <name>Hang Zhao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.09126v1</id>
+    <title>Enhancing Modality Representation and Alignment for Multimodal Cold-start Active Learning</title>
+    <updated>2024-12-12T10:03:46Z</updated>
+    <link href="https://arxiv.org/abs/2412.09126v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.09126v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Training multimodal models requires a large amount of labeled data. Active learning (AL) aim to reduce labeling costs. Most AL methods employ warm-start approaches, which rely on sufficient labeled data to train a well-calibrated model that can assess the uncertainty and diversity of unlabeled data. However, when assembling a dataset, labeled data are often scarce initially, leading to a cold-start problem. Additionally, most AL methods seldom address multimodal data, highlighting a research gap in this field. Our research addresses these issues by developing a two-stage method for Multi-Modal Cold-Start Active Learning (MMCSAL).
+  Firstly, we observe the modality gap, a significant distance between the centroids of representations from different modalities, when only using cross-modal pairing information as self-supervision signals. This modality gap affects data selection process, as we calculate both uni-modal and cross-modal distances. To address this, we introduce uni-modal prototypes to bridge the modality gap. Secondly, conventional AL methods often falter in multimodal scenarios where alignment between modalities is overlooked. Therefore, we propose enhancing cross-modal alignment through regularization, thereby improving the quality of selected multimodal data pairs in AL. Finally, our experiments demonstrate MMCSAL's efficacy in selecting multimodal data pairs across three multimodal datasets.</summary>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-12T10:03:46Z</published>
+    <arxiv:comment>11 pages, ACMMM Asia 2024, Oral Presentation</arxiv:comment>
+    <arxiv:primary_category term="cs.MM"/>
+    <author>
+      <name>Meng Shen</name>
+    </author>
+    <author>
+      <name>Yake Wei</name>
+    </author>
+    <author>
+      <name>Jianxiong Yin</name>
+    </author>
+    <author>
+      <name>Deepu Rajan</name>
+    </author>
+    <author>
+      <name>Di Hu</name>
+    </author>
+    <author>
+      <name>Simon See</name>
+    </author>
+    <arxiv:doi>10.1145/3696409.3700225</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3696409.3700225" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.06076v2</id>
+    <title>Learning Visual Spatial Planning from Symbolic State via Modality-Gap-Aware Self-Distillation</title>
+    <updated>2026-06-06T12:18:07Z</updated>
+    <link href="https://arxiv.org/abs/2606.06076v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.06076v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>While vision-language models excel at general multimodal understanding, they still struggle with visual spatial planning. We attribute this to a perception-reasoning modality gap: visual planning requires models to infer latent state structures from pixels and then reason over the recovered structure to produce valid actions, whereas symbolic planning directly leverages explicit objects and constraints. This creates dual bottlenecks in visual state recovery and multi-step planning. To address this, we propose MGSD, a two-stage modality-gap-aware self-distillation framework. First, a cold-start grounding stage equips the visual student with reliable state representations, minimizing early perception noise. Second, a privileged teacher transfers planning capabilities via on-policy distillation, using explicit symbolic states to supervise the student's own visual rollout prefixes. Crucially, symbolic data is used strictly during training, leaving inference purely visual. Experiments on visual planning benchmarks show that MGSD consistently improves visual planning across both 4B and 8B backbones, raising the macro average by 19.3% and 18.4%, respectively. The resulting models narrow the gap to symbolic-input upper bounds, while ablations and diagnostics confirm that the improvement comes from both visual state recovery and optimal-path reasoning. These results suggest that modality-gap-aware self-distillation improves not only how models perceive actionable states, but also how they plan over the inferred structure. Code is available at https://github.com/Oranger-l/MGSD.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-04T12:13:24Z</published>
+    <arxiv:comment>17 pages, preprint</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Haocheng Luo</name>
+    </author>
+    <author>
+      <name>Jiahui Liu</name>
+    </author>
+    <author>
+      <name>Ruicheng Zhang</name>
+    </author>
+    <author>
+      <name>Zhizhou Zhong</name>
+    </author>
+    <author>
+      <name>Jiaqi Huang</name>
+    </author>
+    <author>
+      <name>Zunnan Xu</name>
+    </author>
+    <author>
+      <name>Quan Shi</name>
+    </author>
+    <author>
+      <name>Jun Zhou</name>
+    </author>
+    <author>
+      <name>Xiu Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.19140v1</id>
+    <title>CaReFlow: Cyclic Adaptive Rectified Flow for Multimodal Fusion</title>
+    <updated>2026-02-22T12:12:05Z</updated>
+    <link href="https://arxiv.org/abs/2602.19140v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.19140v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Modality gap significantly restricts the effectiveness of multimodal fusion. Previous methods often use techniques such as diffusion models and adversarial learning to reduce the modality gap, but they typically focus on one-to-one alignment without exposing the data points of the source modality to the global distribution information of the target modality. To this end, leveraging the characteristic of rectified flow that can map one distribution to another via a straight trajectory, we extend rectified flow for modality distribution mapping. Specifically, we leverage the `one-to-many mapping' strategy in rectified flow that allows each data point of the source modality to observe the overall target distribution. This also alleviates the issue of insufficient paired data within each sample, enabling a more robust distribution transformation. Moreover, to achieve more accurate distribution mapping and address the ambiguous flow directions in one-to-many mapping, we design `adaptive relaxed alignment', enforcing stricter alignment for modality pairs belonging to the same sample, while applying relaxed mapping for pairs not belonging to the same sample or category. Additionally, to prevent information loss during distribution mapping, we introduce `cyclic rectified flow' to ensure the transferred features can be translated back to the original features, allowing multimodal representations to learn sufficient modality-specific information. After distribution alignment, our approach achieves very competitive results on multiple tasks of multimodal affective computing even with a simple fusion method, and visualizations verify that it can effectively reduce the modality gap.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-22T12:12:05Z</published>
+    <arxiv:comment>Accepted by CVPR 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Sijie Mai</name>
+    </author>
+    <author>
+      <name>Shiqin Han</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.12580v1</id>
+    <title>E5-V: Universal Embeddings with Multimodal Large Language Models</title>
+    <updated>2024-07-17T14:04:12Z</updated>
+    <link href="https://arxiv.org/abs/2407.12580v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.12580v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal large language models (MLLMs) have shown promising advancements in general visual and language understanding. However, the representation of multimodal information using MLLMs remains largely unexplored. In this work, we introduce a new framework, E5-V, designed to adapt MLLMs for achieving universal multimodal embeddings. Our findings highlight the significant potential of MLLMs in representing multimodal inputs compared to previous approaches. By leveraging MLLMs with prompts, E5-V effectively bridges the modality gap between different types of inputs, demonstrating strong performance in multimodal embeddings even without fine-tuning. We propose a single modality training approach for E5-V, where the model is trained exclusively on text pairs. This method demonstrates significant improvements over traditional multimodal training on image-text pairs, while reducing training costs by approximately 95%. Additionally, this approach eliminates the need for costly multimodal training data collection. Extensive experiments across four types of tasks demonstrate the effectiveness of E5-V. As a universal multimodal model, E5-V not only achieves but often surpasses state-of-the-art performance in each task, despite being trained on a single modality.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-17T14:04:12Z</published>
+    <arxiv:comment>Code and models are available at https://github.com/kongds/E5-V</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Ting Jiang</name>
+    </author>
+    <author>
+      <name>Minghui Song</name>
+    </author>
+    <author>
+      <name>Zihan Zhang</name>
+    </author>
+    <author>
+      <name>Haizhen Huang</name>
+    </author>
+    <author>
+      <name>Weiwei Deng</name>
+    </author>
+    <author>
+      <name>Feng Sun</name>
+    </author>
+    <author>
+      <name>Qi Zhang</name>
+    </author>
+    <author>
+      <name>Deqing Wang</name>
+    </author>
+    <author>
+      <name>Fuzhen Zhuang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.20046v1</id>
+    <title>Closing the gap in multimodal medical representation alignment</title>
+    <updated>2026-02-23T16:57:39Z</updated>
+    <link href="https://arxiv.org/abs/2602.20046v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.20046v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In multimodal learning, CLIP has emerged as the de-facto approach for mapping different modalities into a shared latent space by bringing semantically similar representations closer while pushing apart dissimilar ones. However, CLIP-based contrastive losses exhibit unintended behaviors that negatively impact true semantic alignment, leading to sparse and fragmented latent spaces. This phenomenon, known as the modality gap, has been partially mitigated for standard text and image pairs but remains unknown and unresolved in more complex multimodal settings, such as the medical domain. In this work, we study this phenomenon in the latter case, revealing that the modality gap is present also in medical alignment, and we propose a modality-agnostic framework that closes this gap, ensuring that semantically related representations are more aligned, regardless of their source modality. Our method enhances alignment between radiology images and clinical text, improving cross-modal retrieval and image captioning.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-23T16:57:39Z</published>
+    <arxiv:comment>Accepted at MLSP2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Eleonora Grassucci</name>
+    </author>
+    <author>
+      <name>Giordano Cicchetti</name>
+    </author>
+    <author>
+      <name>Danilo Comminiello</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2005.03545v3</id>
+    <title>MISA: Modality-Invariant and -Specific Representations for Multimodal Sentiment Analysis</title>
+    <updated>2020-10-19T13:41:27Z</updated>
+    <link href="https://arxiv.org/abs/2005.03545v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2005.03545v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Sentiment Analysis is an active area of research that leverages multimodal signals for affective understanding of user-generated videos. The predominant approach, addressing this task, has been to develop sophisticated fusion techniques. However, the heterogeneous nature of the signals creates distributional modality gaps that pose significant challenges. In this paper, we aim to learn effective modality representations to aid the process of fusion. We propose a novel framework, MISA, which projects each modality to two distinct subspaces. The first subspace is modality-invariant, where the representations across modalities learn their commonalities and reduce the modality gap. The second subspace is modality-specific, which is private to each modality and captures their characteristic features. These representations provide a holistic view of the multimodal data, which is used for fusion that leads to task predictions. Our experiments on popular sentiment analysis benchmarks, MOSI and MOSEI, demonstrate significant gains over state-of-the-art models. We also consider the task of Multimodal Humor Detection and experiment on the recently proposed UR_FUNNY dataset. Here too, our model fares better than strong baselines, establishing MISA as a useful multimodal framework.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-05-07T15:13:23Z</published>
+    <arxiv:comment>Accepted at ACM MM 2020 (Oral Paper)</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Devamanyu Hazarika</name>
+    </author>
+    <author>
+      <name>Roger Zimmermann</name>
+    </author>
+    <author>
+      <name>Soujanya Poria</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.13036v1</id>
+    <title>Unsupervised Homography Estimation on Multimodal Image Pair via Alternating Optimization</title>
+    <updated>2024-11-20T04:56:19Z</updated>
+    <link href="https://arxiv.org/abs/2411.13036v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.13036v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Estimating the homography between two images is crucial for mid- or high-level vision tasks, such as image stitching and fusion. However, using supervised learning methods is often challenging or costly due to the difficulty of collecting ground-truth data. In response, unsupervised learning approaches have emerged. Most early methods, though, assume that the given image pairs are from the same camera or have minor lighting differences. Consequently, while these methods perform effectively under such conditions, they generally fail when input image pairs come from different domains, referred to as multimodal image pairs. To address these limitations, we propose AltO, an unsupervised learning framework for estimating homography in multimodal image pairs. Our method employs a two-phase alternating optimization framework, similar to Expectation-Maximization (EM), where one phase reduces the geometry gap and the other addresses the modality gap. To handle these gaps, we use Barlow Twins loss for the modality gap and propose an extended version, Geometry Barlow Twins, for the geometry gap. As a result, we demonstrate that our method, AltO, can be trained on multimodal datasets without any ground-truth data. It not only outperforms other unsupervised methods but is also compatible with various architectures of homography estimators. The source code can be found at:~\url{https://github.com/songsang7/AltO}</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-20T04:56:19Z</published>
+    <arxiv:comment>This paper is accepted to the Thirty-Eighth Annual Conference on Neural Information Processing Systems (NeurIPS 2024)</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Sanghyeob Song</name>
+    </author>
+    <author>
+      <name>Jaihyun Lew</name>
+    </author>
+    <author>
+      <name>Hyemi Jang</name>
+    </author>
+    <author>
+      <name>Sungroh Yoon</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.01529v1</id>
+    <title>Robo-MUTUAL: Robotic Multimodal Task Specification via Unimodal Learning</title>
+    <updated>2024-10-02T13:23:02Z</updated>
+    <link href="https://arxiv.org/abs/2410.01529v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.01529v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal task specification is essential for enhanced robotic performance, where \textit{Cross-modality Alignment} enables the robot to holistically understand complex task instructions. Directly annotating multimodal instructions for model training proves impractical, due to the sparsity of paired multimodal data. In this study, we demonstrate that by leveraging unimodal instructions abundant in real data, we can effectively teach robots to learn multimodal task specifications. First, we endow the robot with strong \textit{Cross-modality Alignment} capabilities, by pretraining a robotic multimodal encoder using extensive out-of-domain data. Then, we employ two Collapse and Corrupt operations to further bridge the remaining modality gap in the learned multimodal representation. This approach projects different modalities of identical task goal as interchangeable representations, thus enabling accurate robotic operations within a well-aligned multimodal latent space. Evaluation across more than 130 tasks and 4000 evaluations on both simulated LIBERO benchmark and real robot platforms showcases the superior capabilities of our proposed framework, demonstrating significant advantage in overcoming data constraints in robotic learning. Website: zh1hao.wang/Robo_MUTUAL</summary>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-02T13:23:02Z</published>
+    <arxiv:comment>preprint</arxiv:comment>
+    <arxiv:primary_category term="cs.RO"/>
+    <author>
+      <name>Jianxiong Li</name>
+    </author>
+    <author>
+      <name>Zhihao Wang</name>
+    </author>
+    <author>
+      <name>Jinliang Zheng</name>
+    </author>
+    <author>
+      <name>Xiaoai Zhou</name>
+    </author>
+    <author>
+      <name>Guanming Wang</name>
+    </author>
+    <author>
+      <name>Guanglu Song</name>
+    </author>
+    <author>
+      <name>Yu Liu</name>
+    </author>
+    <author>
+      <name>Jingjing Liu</name>
+    </author>
+    <author>
+      <name>Ya-Qin Zhang</name>
+    </author>
+    <author>
+      <name>Junzhi Yu</name>
+    </author>
+    <author>
+      <name>Xianyuan Zhan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.17040v2</id>
+    <title>Multimodal Alignment and Fusion: A Survey</title>
+    <updated>2025-10-11T13:22:25Z</updated>
+    <link href="https://arxiv.org/abs/2411.17040v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.17040v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This survey provides a comprehensive overview of recent advances in multimodal alignment and fusion within the field of machine learning, driven by the increasing availability and diversity of data modalities such as text, images, audio, and video. Unlike previous surveys that often focus on specific modalities or limited fusion strategies, our work presents a structure-centric and method-driven framework that emphasizes generalizable techniques. We systematically categorize and analyze key approaches to alignment and fusion through both structural perspectives -- data-level, feature-level, and output-level fusion -- and methodological paradigms -- including statistical, kernel-based, graphical, generative, contrastive, attention-based, and large language model (LLM)-based methods, drawing insights from an extensive review of over 260 relevant studies. Furthermore, this survey highlights critical challenges such as cross-modal misalignment, computational bottlenecks, data quality issues, and the modality gap, along with recent efforts to address them. Applications ranging from social media analysis and medical imaging to emotion recognition and embodied AI are explored to illustrate the real-world impact of robust multimodal systems. The insights provided aim to guide future research toward optimizing multimodal learning systems for improved scalability, robustness, and generalizability across diverse domains.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-26T02:10:27Z</published>
+    <arxiv:comment>Accepted to IJCV 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Songtao Li</name>
+    </author>
+    <author>
+      <name>Hao Tang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.07108v1</id>
+    <title>Multi-level Mixture of Experts for Multimodal Entity Linking</title>
+    <updated>2025-06-03T14:46:51Z</updated>
+    <link href="https://arxiv.org/abs/2507.07108v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.07108v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Entity Linking (MEL) aims to link ambiguous mentions within multimodal contexts to associated entities in a multimodal knowledge base. Existing approaches to MEL introduce multimodal interaction and fusion mechanisms to bridge the modality gap and enable multi-grained semantic matching. However, they do not address two important problems: (i) mention ambiguity, i.e., the lack of semantic content caused by the brevity and omission of key information in the mention's textual context; (ii) dynamic selection of modal content, i.e., to dynamically distinguish the importance of different parts of modal information. To mitigate these issues, we propose a Multi-level Mixture of Experts (MMoE) model for MEL. MMoE has four components: (i) the description-aware mention enhancement module leverages large language models to identify the WikiData descriptions that best match a mention, considering the mention's textual context; (ii) the multimodal feature extraction module adopts multimodal feature encoders to obtain textual and visual embeddings for both mentions and entities; (iii)-(iv) the intra-level mixture of experts and inter-level mixture of experts modules apply a switch mixture of experts mechanism to dynamically and adaptively select features from relevant regions of information. Extensive experiments demonstrate the outstanding performance of MMoE compared to the state-of-the-art. MMoE's code is available at: https://github.com/zhiweihu1103/MEL-MMoE.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-03T14:46:51Z</published>
+    <arxiv:comment>Accepted at KDD 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhiwei Hu</name>
+    </author>
+    <author>
+      <name>Víctor Gutiérrez-Basulto</name>
+    </author>
+    <author>
+      <name>Zhiliang Xiang</name>
+    </author>
+    <author>
+      <name>Ru Li</name>
+    </author>
+    <author>
+      <name>Jeff Z. Pan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2210.15359v1</id>
+    <title>Exploiting modality-invariant feature for robust multimodal emotion recognition with missing modalities</title>
+    <updated>2022-10-27T12:16:25Z</updated>
+    <link href="https://arxiv.org/abs/2210.15359v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.15359v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal emotion recognition leverages complementary information across modalities to gain performance. However, we cannot guarantee that the data of all modalities are always present in practice. In the studies to predict the missing data across modalities, the inherent difference between heterogeneous modalities, namely the modality gap, presents a challenge. To address this, we propose to use invariant features for a missing modality imagination network (IF-MMIN) which includes two novel mechanisms: 1) an invariant feature learning strategy that is based on the central moment discrepancy (CMD) distance under the full-modality scenario; 2) an invariant feature based imagination module (IF-IM) to alleviate the modality gap during the missing modalities prediction, thus improving the robustness of multimodal joint representation. Comprehensive experiments on the benchmark dataset IEMOCAP demonstrate that the proposed model outperforms all baselines and invariantly improves the overall emotion recognition performance under uncertain missing-modality conditions. We release the code at: https://github.com/ZhuoYulang/IF-MMIN.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-27T12:16:25Z</published>
+    <arxiv:comment>5 pages, 3 figures, 1 table. Submitted to ICASSP 2023. We release the code at: https://github.com/ZhuoYulang/IF-MMIN</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Haolin Zuo</name>
+    </author>
+    <author>
+      <name>Rui Liu</name>
+    </author>
+    <author>
+      <name>Jinming Zhao</name>
+    </author>
+    <author>
+      <name>Guanglai Gao</name>
+    </author>
+    <author>
+      <name>Haizhou Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.01934v2</id>
+    <title>Optimal Transport Guided Correlation Assignment for Multimodal Entity Linking</title>
+    <updated>2024-06-05T12:13:56Z</updated>
+    <link href="https://arxiv.org/abs/2406.01934v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.01934v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Entity Linking (MEL) aims to link ambiguous mentions in multimodal contexts to entities in a multimodal knowledge graph. A pivotal challenge is to fully leverage multi-element correlations between mentions and entities to bridge modality gap and enable fine-grained semantic matching. Existing methods attempt several local correlative mechanisms, relying heavily on the automatically learned attention weights, which may over-concentrate on partial correlations. To mitigate this issue, we formulate the correlation assignment problem as an optimal transport (OT) problem, and propose a novel MEL framework, namely OT-MEL, with OT-guided correlation assignment. Thereby, we exploit the correlation between multimodal features to enhance multimodal fusion, and the correlation between mentions and entities to enhance fine-grained matching. To accelerate model prediction, we further leverage knowledge distillation to transfer OT assignment knowledge to attention mechanism. Experimental results show that our model significantly outperforms previous state-of-the-art baselines and confirm the effectiveness of the OT-guided correlation assignment.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-04T03:35:25Z</published>
+    <arxiv:comment>Findings of ACL 2024</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Zefeng Zhang</name>
+    </author>
+    <author>
+      <name>Jiawei Sheng</name>
+    </author>
+    <author>
+      <name>Chuang Zhang</name>
+    </author>
+    <author>
+      <name>Yunzhi Liang</name>
+    </author>
+    <author>
+      <name>Wenyuan Zhang</name>
+    </author>
+    <author>
+      <name>Siqi Wang</name>
+    </author>
+    <author>
+      <name>Tingwen Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.12286v2</id>
+    <title>Mind the Gap No More: Achieving Zero-Gap Multimodal Integration via One Tokenizer</title>
+    <updated>2026-05-08T11:20:50Z</updated>
+    <link href="https://arxiv.org/abs/2602.12286v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.12286v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A central challenge in developing Multimodal Large Language Models (MLLMs) is effectively integrating heterogeneous inputs into a cohesive reasoning engine. Current paradigms predominantly rely on modular architectures that introduce modality-specific encoders and cross-modal fusion mechanisms. However, these designs are fundamentally bottlenecked by a geometric modality gap, forcing the LLM to expend significant computational capacity on geometric reconciliation rather than deep cross-modal reasoning. In this work, we formally characterize this modality gap and theoretically demonstrate that native architectures, specifically those employing a unified vocabulary, intrinsically maintain a zero-gap state across all hidden layers. Guided by these theoretical findings, we propose \textit{One Tokenizer}, a native architecture that maps all modalities directly into a shared token space. We empirically validate this framework on a DNA--text multimodal testbed. Our extensive evaluations reveal that by achieving seamless integration within the LLM's native latent space, One Tokenizer consistently outperforms encoder-based modular counterparts, providing a fundamentally superior framework for deep biological reasoning.</summary>
+    <category term="q-bio.GN" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-21T07:46:36Z</published>
+    <arxiv:comment>Under review at NeurIPS 2026</arxiv:comment>
+    <arxiv:primary_category term="q-bio.GN"/>
+    <author>
+      <name>Yanan Li</name>
+    </author>
+    <author>
+      <name>Christina Yi Jin</name>
+    </author>
+    <author>
+      <name>Yuan Jin</name>
+    </author>
+    <author>
+      <name>Manli Luo</name>
+    </author>
+    <author>
+      <name>Tie Xu</name>
+    </author>
+    <author>
+      <name>Shuai Jiao</name>
+    </author>
+    <author>
+      <name>Wei He</name>
+    </author>
+    <author>
+      <name>Qing Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.14445v1</id>
+    <title>Vela: Scalable Embeddings with Voice Large Language Models for Multimodal Retrieval</title>
+    <updated>2025-06-17T12:10:19Z</updated>
+    <link href="https://arxiv.org/abs/2506.14445v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.14445v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal large language models (MLLMs) have seen substantial progress in recent years. However, their ability to represent multimodal information in the acoustic domain remains underexplored. In this work, we introduce Vela, a novel framework designed to adapt MLLMs for the generation of universal multimodal embeddings. By leveraging MLLMs with specially crafted prompts and selected in-context learning examples, Vela effectively bridges the modality gap across various modalities. We then propose a single-modality training approach, where the model is trained exclusively on text pairs. Our experiments show that Vela outperforms traditional CLAP models in standard text-audio retrieval tasks. Furthermore, we introduce new benchmarks that expose CLAP models' limitations in handling long texts and complex retrieval tasks. In contrast, Vela, by harnessing the capabilities of MLLMs, demonstrates robust performance in these scenarios. Our code will soon be available.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-17T12:10:19Z</published>
+    <arxiv:comment>Accepted by Interspeech 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Ruofan Hu</name>
+    </author>
+    <author>
+      <name>Yan Xia</name>
+    </author>
+    <author>
+      <name>Minjie Hong</name>
+    </author>
+    <author>
+      <name>Jieming Zhu</name>
+    </author>
+    <author>
+      <name>Bo Chen</name>
+    </author>
+    <author>
+      <name>Xiaoda Yang</name>
+    </author>
+    <author>
+      <name>Minghui Fang</name>
+    </author>
+    <author>
+      <name>Tao Jin</name>
+    </author>
+  </entry>
+</feed>

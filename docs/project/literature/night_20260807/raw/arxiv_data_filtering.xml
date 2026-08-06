@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/LVtMcqypRwFy/Hqh/K7qE1BtXac</id>
+  <title>arXiv Query: search_query=all:"Data Filtering Networks" OR all:"multimodal data filtering" OR all:"image-text data filters"&amp;id_list=&amp;start=0&amp;max_results=20</title>
+  <updated>2026-08-06T16:16:33Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22Data+Filtering+Networks%22+OR+(all:%22multimodal+data+filtering%22+OR+all:%22image-text+data+filters%22)&amp;start=0&amp;max_results=20&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>20</opensearch:itemsPerPage>
+  <opensearch:totalResults>3</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2309.17425v3</id>
+    <title>Data Filtering Networks</title>
+    <updated>2023-11-06T02:47:51Z</updated>
+    <link href="https://arxiv.org/abs/2309.17425v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2309.17425v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large training sets have become a cornerstone of machine learning and are the foundation for recent advances in language modeling and multimodal learning. While data curation for pre-training is often still ad-hoc, one common paradigm is to first collect a massive pool of data from the Web and then filter this candidate pool down to an actual training set via various heuristics. In this work, we study the problem of learning a data filtering network (DFN) for this second step of filtering a large uncurated dataset. Our key finding is that the quality of a network for filtering is distinct from its performance on downstream tasks: for instance, a model that performs well on ImageNet can yield worse training sets than a model with low ImageNet accuracy that is trained on a small amount of high-quality data. Based on our insights, we construct new data filtering networks that induce state-of-the-art image-text datasets. Specifically, our best performing dataset DFN-5B enables us to train state-of-the-art CLIP models for their compute budgets: among other improvements on a variety of tasks, a ViT-H trained on our dataset achieves 84.4% zero-shot transfer accuracy on ImageNet, out-performing models trained on other datasets such as LAION-2B, DataComp-1B, or OpenAI's WIT. In order to facilitate further research in dataset design, we also release a new 2 billion example dataset DFN-2B and show that high performance data filtering networks can be trained from scratch using only publicly available data.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-29T17:37:29Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Alex Fang</name>
+    </author>
+    <author>
+      <name>Albin Madappally Jose</name>
+    </author>
+    <author>
+      <name>Amit Jain</name>
+    </author>
+    <author>
+      <name>Ludwig Schmidt</name>
+    </author>
+    <author>
+      <name>Alexander Toshev</name>
+    </author>
+    <author>
+      <name>Vaishaal Shankar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.02677v1</id>
+    <title>Finetuned Multimodal Language Models Are High-Quality Image-Text Data Filters</title>
+    <updated>2024-03-05T06:05:15Z</updated>
+    <link href="https://arxiv.org/abs/2403.02677v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.02677v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose a novel framework for filtering image-text data by leveraging fine-tuned Multimodal Language Models (MLMs). Our approach outperforms predominant filtering methods (e.g., CLIPScore) via integrating the recent advances in MLMs. We design four distinct yet complementary metrics to holistically measure the quality of image-text data. A new pipeline is established to construct high-quality instruction data for fine-tuning MLMs as data filters. Comparing with CLIPScore, our MLM filters produce more precise and comprehensive scores that directly improve the quality of filtered data and boost the performance of pre-trained models. We achieve significant improvements over CLIPScore on popular foundation models (i.e., CLIP and BLIP2) and various downstream tasks. Our MLM filter can generalize to different models and tasks, and be used as a drop-in replacement for CLIPScore. An additional ablation study is provided to verify our design choices for the MLM filter.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-05T06:05:15Z</published>
+    <arxiv:comment>Project Website: https://mlm-filter.github.io</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Weizhi Wang</name>
+    </author>
+    <author>
+      <name>Khalil Mrini</name>
+    </author>
+    <author>
+      <name>Linjie Yang</name>
+    </author>
+    <author>
+      <name>Sateesh Kumar</name>
+    </author>
+    <author>
+      <name>Yu Tian</name>
+    </author>
+    <author>
+      <name>Xifeng Yan</name>
+    </author>
+    <author>
+      <name>Heng Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.08209v2</id>
+    <title>Who's in and who's out? A case study of multimodal CLIP-filtering in DataComp</title>
+    <updated>2024-10-09T19:34:13Z</updated>
+    <link href="https://arxiv.org/abs/2405.08209v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.08209v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As training datasets become increasingly drawn from unstructured, uncontrolled environments such as the web, researchers and industry practitioners have increasingly relied upon data filtering techniques to "filter out the noise" of web-scraped data. While datasets have been widely shown to reflect the biases and values of their creators, in this paper we contribute to an emerging body of research that assesses the filters used to create these datasets. We show that image-text data filtering also has biases and is value-laden, encoding specific notions of what is counted as "high-quality" data. In our work, we audit a standard approach of image-text CLIP-filtering on the academic benchmark DataComp's CommonPool by analyzing discrepancies of filtering through various annotation techniques across multiple modalities of image, text, and website source. We find that data relating to several imputed demographic groups -- such as LGBTQ+ people, older women, and younger men -- are associated with higher rates of exclusion. Moreover, we demonstrate cases of exclusion amplification: not only are certain marginalized groups already underrepresented in the unfiltered data, but CLIP-filtering excludes data from these groups at higher rates. The data-filtering step in the machine learning pipeline can therefore exacerbate representation disparities already present in the data-gathering step, especially when existing filters are designed to optimize a specifically-chosen downstream performance metric like zero-shot image classification accuracy. Finally, we show that the NSFW filter fails to remove sexually-explicit content from CommonPool, and that CLIP-filtering includes several categories of copyrighted content at high rates. Our conclusions point to a need for fundamental changes in dataset creation and filtering practices.</summary>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-13T21:53:06Z</published>
+    <arxiv:comment>Content warning: This paper discusses societal stereotypes and sexually-explicit material that may be disturbing, distressing, and/or offensive to the reader</arxiv:comment>
+    <arxiv:primary_category term="cs.CY"/>
+    <arxiv:journal_ref>Proceedings of the 4th ACM Conference on Equity and Access in Algorithms, Mechanisms, and Optimization (EAAMO 2024)</arxiv:journal_ref>
+    <author>
+      <name>Rachel Hong</name>
+    </author>
+    <author>
+      <name>William Agnew</name>
+    </author>
+    <author>
+      <name>Tadayoshi Kohno</name>
+    </author>
+    <author>
+      <name>Jamie Morgenstern</name>
+    </author>
+    <arxiv:doi>10.1145/3689904.3694702</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3689904.3694702" title="doi"/>
+  </entry>
+</feed>

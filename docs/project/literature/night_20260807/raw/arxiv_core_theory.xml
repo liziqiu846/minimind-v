@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/Jgum66MF4Nbtl+1f1KQQF6d7rYA</id>
+  <title>arXiv Query: search_query=ti:"On the Generalization of Multi-modal Contrastive Learning" OR ti:"A Generalization Theory for Zero-Shot Prediction" OR ti:"When and How Does CLIP Enable Domain and Compositional Generalization"&amp;id_list=&amp;start=0&amp;max_results=10</title>
+  <updated>2026-08-06T16:19:20Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=ti:%22On+the+Generalization+of+Multi-modal+Contrastive+Learning%22+OR+(ti:%22A+Generalization+Theory+for+Zero-Shot+Prediction%22+OR+ti:%22When+and+How+Does+CLIP+Enable+Domain+and+Compositional+Generalization%22)&amp;start=0&amp;max_results=10&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>10</opensearch:itemsPerPage>
+  <opensearch:totalResults>3</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2502.09507v3</id>
+    <title>When and How Does CLIP Enable Domain and Compositional Generalization?</title>
+    <updated>2025-09-12T08:50:44Z</updated>
+    <link href="https://arxiv.org/abs/2502.09507v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.09507v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The remarkable generalization performance of contrastive vision-language models like CLIP is often attributed to the diversity of their training distributions. However, key questions remain unanswered: Can CLIP generalize to an entirely unseen domain when trained on a diverse mixture of domains (domain generalization)? Can it generalize to unseen classes within partially seen domains (compositional generalization)? What factors affect such generalization? To answer these questions, we trained CLIP models on systematically constructed training distributions with controlled domain diversity and object class exposure. Our experiments show that domain diversity is essential for both domain and compositional generalization, yet compositional generalization can be surprisingly weaker than domain generalization when the training distribution contains a suboptimal subset of the test domain. Through data-centric and mechanistic analyses, we find that successful generalization requires the learning of sufficiently shared representations in intermediate layers and circuits.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-13T17:21:37Z</published>
+    <arxiv:comment>ICML 2025 (Spotlight)</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Elias Kempf</name>
+    </author>
+    <author>
+      <name>Simon Schrodi</name>
+    </author>
+    <author>
+      <name>Max Argus</name>
+    </author>
+    <author>
+      <name>Thomas Brox</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.09128v2</id>
+    <title>A Generalization Theory for Zero-Shot Prediction</title>
+    <updated>2025-08-31T14:34:38Z</updated>
+    <link href="https://arxiv.org/abs/2507.09128v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.09128v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A modern paradigm for generalization in machine learning and AI consists of pre-training a task-agnostic foundation model, generally obtained using self-supervised and multimodal contrastive learning. The resulting representations can be used for prediction on a downstream task for which no labeled data is available. We present a theoretical framework to better understand this approach, called zero-shot prediction. We identify the target quantities that zero-shot prediction aims to learn, or learns in passing, and the key conditional independence relationships that enable its generalization ability.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-12T03:37:57Z</published>
+    <arxiv:comment>Published at ICML '25 (Oral)</arxiv:comment>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Ronak Mehta</name>
+    </author>
+    <author>
+      <name>Zaid Harchaoui</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2306.04272v1</id>
+    <title>On the Generalization of Multi-modal Contrastive Learning</title>
+    <updated>2023-06-07T09:13:56Z</updated>
+    <link href="https://arxiv.org/abs/2306.04272v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2306.04272v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multi-modal contrastive learning (MMCL) has recently garnered considerable interest due to its superior performance in visual tasks, achieved by embedding multi-modal data, such as visual-language pairs. However, there still lack theoretical understandings of how MMCL extracts useful visual representation from multi-modal pairs, and particularly, how MMCL outperforms previous approaches like self-supervised contrastive learning (SSCL). In this paper, by drawing an intrinsic connection between MMCL and asymmetric matrix factorization, we establish the first generalization guarantees of MMCL for visual downstream tasks. Based on this framework, we further unify MMCL and SSCL by showing that MMCL implicitly performs SSCL with (pseudo) positive pairs induced by text pairs. Through this unified perspective, we characterize the advantage of MMCL by showing that text pairs induce more semantically consistent and diverse positive pairs, which, according to our analysis, provably benefit downstream generalization. Inspired by this finding, we propose CLIP-guided resampling methods to significantly improve the downstream performance of SSCL on ImageNet by leveraging multi-modal information. Code is available at https://github.com/PKU-ML/CLIP-Help-SimCLR.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-06-07T09:13:56Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Qi Zhang</name>
+    </author>
+    <author>
+      <name>Yifei Wang</name>
+    </author>
+    <author>
+      <name>Yisen Wang</name>
+    </author>
+  </entry>
+</feed>

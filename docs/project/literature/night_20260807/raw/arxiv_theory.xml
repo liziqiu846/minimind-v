@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/kVmS0/DQOIsq/y+0ix50Os3PTbM</id>
+  <title>arXiv Query: search_query=all:"multimodal contrastive learning" AND all:theory&amp;id_list=&amp;start=0&amp;max_results=30</title>
+  <updated>2026-08-06T16:12:48Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22multimodal+contrastive+learning%22+AND+all:theory&amp;start=0&amp;max_results=30&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>30</opensearch:itemsPerPage>
+  <opensearch:totalResults>3</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2507.09128v2</id>
+    <title>A Generalization Theory for Zero-Shot Prediction</title>
+    <updated>2025-08-31T14:34:38Z</updated>
+    <link href="https://arxiv.org/abs/2507.09128v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.09128v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A modern paradigm for generalization in machine learning and AI consists of pre-training a task-agnostic foundation model, generally obtained using self-supervised and multimodal contrastive learning. The resulting representations can be used for prediction on a downstream task for which no labeled data is available. We present a theoretical framework to better understand this approach, called zero-shot prediction. We identify the target quantities that zero-shot prediction aims to learn, or learns in passing, and the key conditional independence relationships that enable its generalization ability.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-12T03:37:57Z</published>
+    <arxiv:comment>Published at ICML '25 (Oral)</arxiv:comment>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Ronak Mehta</name>
+    </author>
+    <author>
+      <name>Zaid Harchaoui</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.06223v3</id>
+    <title>Beyond DAGs: A Latent Partial Causal Model for Multimodal Learning</title>
+    <updated>2026-02-27T23:52:08Z</updated>
+    <link href="https://arxiv.org/abs/2402.06223v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.06223v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Directed Acyclic Graphs (DAGs) are a standard tool in causal modeling, but their suitability for capturing the complexity of large-scale multimodal data is questionable. In practice, real-world multimodal datasets are often collected from heterogeneous generative processes that do not conform to a single DAG. Instead, they may involve multiple, and even opposing, DAG structures with inverse causal directions. To address this gap, in this work, we first propose a novel latent partial causal model tailored for multimodal data representation learning, featuring two latent coupled variables parts connected by an undirected edge, to represent the transfer of knowledge across modalities. Under specific statistical assumptions, we establish an identifiability result, demonstrating that representations learned by MultiModal Contrastive Learning (MMCL) correspond to the latent coupled variables up to a trivial transformation. This result deepens our understanding of the why MMCL works, highlights its potential for representation disentanglement, and expands the utility of pre-trained models like CLIP. Synthetic experiments confirm the robustness of our findings, even when the assumptions are partially violated. Most importantly, experiments on a pre-trained CLIP model embodies disentangled representations, enabling few-shot learning and improving domain generalization across diverse real-world datasets. Together, these contributions push the boundaries of MMCL, both in theory and in practical applications.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-09T07:18:06Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Yuhang Liu</name>
+    </author>
+    <author>
+      <name>Zhen Zhang</name>
+    </author>
+    <author>
+      <name>Dong Gong</name>
+    </author>
+    <author>
+      <name>Erdun Gao</name>
+    </author>
+    <author>
+      <name>Biwei Huang</name>
+    </author>
+    <author>
+      <name>Mingming Gong</name>
+    </author>
+    <author>
+      <name>Anton van den Hengel</name>
+    </author>
+    <author>
+      <name>Kun Zhang</name>
+    </author>
+    <author>
+      <name>Javen Qinfeng Shi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.07026v3</id>
+    <title>Modality Gap-Driven Subspace Alignment Training Paradigm For Multimodal Large Language Models</title>
+    <updated>2026-06-05T02:27:27Z</updated>
+    <link href="https://arxiv.org/abs/2602.07026v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.07026v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Despite the success of multimodal contrastive learning in aligning visual and linguistic representations, a persistent geometric anomaly, the Modality Gap, remains: embeddings of distinct modalities expressing identical semantics occupy systematically offset regions. Prior approaches to bridge this gap are largely limited by oversimplified isotropic assumptions, hindering their application in large-scale scenarios. In this paper, we address these limitations by precisely characterizing the geometric shape of the modality gap and leveraging it for efficient model scaling. First, we propose the Fixed-frame Modality Gap Theory, which decomposes the modality gap within a frozen reference frame into stable biases and anisotropic residuals. Guided by this precise modeling, we introduce ReAlign, a training-free modality alignment strategy. Utilizing statistics from massive unpaired data, ReAlign aligns text representation into the image representation distribution via a three-step process comprising Anchor, Trace, and Centroid Alignment, thereby explicitly rectifying geometric misalignment. Building on ReAlign, we propose ReVision, a scalable training paradigm for Multimodal Large Language Models~(MLLMs). ReVision integrates ReAlign into the pretraining stage, enabling the model to learn the distribution of visual representations from unpaired text before visual instruction tuning, without the need for large-scale, high-quality image-text pairs. Our framework demonstrates that statistically aligned unpaired data can effectively substitute for expensive image-text pairs, offering a robust path for the efficient scaling of MLLMs.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-02T13:59:39Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xiaomin Yu</name>
+    </author>
+    <author>
+      <name>Yi Xin</name>
+    </author>
+    <author>
+      <name>Yuhui Zhang</name>
+    </author>
+    <author>
+      <name>Wenjie Zhang</name>
+    </author>
+    <author>
+      <name>Chonghan Liu</name>
+    </author>
+    <author>
+      <name>Hanzhen Zhao</name>
+    </author>
+    <author>
+      <name>Chen Liu</name>
+    </author>
+    <author>
+      <name>Xiaoxing Hu</name>
+    </author>
+    <author>
+      <name>Ziyue Qiao</name>
+    </author>
+    <author>
+      <name>Hao Tang</name>
+    </author>
+    <author>
+      <name>Xiaobin Hu</name>
+    </author>
+    <author>
+      <name>Chengwei Qin</name>
+    </author>
+    <author>
+      <name>Hui Xiong</name>
+    </author>
+    <author>
+      <name>Yu Qiao</name>
+    </author>
+    <author>
+      <name>Shuicheng Yan</name>
+    </author>
+  </entry>
+</feed>
