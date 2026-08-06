@@ -248,3 +248,6 @@ checkpoint-only prediction test；不训练。
 - root `43201` paired pilot 已在物理 GPU 5 启动，持久 session `92257` 固定顺序
   current → projector，condition 间不评分。current 启动后进程存在、GPU 约 1.8 GiB
   且有算力占用；进入 10–20 分钟低频检查。
+- current full training 已完成且保持未评分；同一 session 已自动进入
+  projector-dominant，进程/GPU 正常。待第二条件完成后才统一核查 paired training
+  invariants。
