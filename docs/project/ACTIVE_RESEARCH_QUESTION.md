@@ -17,8 +17,8 @@ Mission Question 不得由 Agent 自行改变。
 
 当前 active question 是：
 
-> 在相同训练数据、预算和 seed 下，较短的共享结构若真实性能更差，是否是因为它
-> 更弱地保留了对象关系与词序所定义的跨模态组合绑定？
+> 是否存在一个具有正式理论桥、可由冻结 autoregressive LVLM 表示唯一计算的
+> 跨模态对应结构保持量，能够在不依赖生成语言偏好的前提下预测真实性能差异？
 
 这一问题是当前子问题，不是永久冻结的唯一主线。Agent 可以依据可靠实验、
 反例或权威文献自主切换 Active Research Question。
@@ -128,4 +128,20 @@ Agent 可以自主改变：
   primary evidence。
 - **Mission relation**: 它直接测试 VLM 相比 LLM 新增的跨模态关系绑定，能被外部
   benchmark 否定，并有 composition-aware training 的自然出口。
+- **Status**: REJECTED_AS_ACTIVE；完整外部 prediction test 仅 5/9 sign concordance、
+  1/9 预测方向 CI 不跨 0，触发预注册否定。
+
+### 2026-08-07｜XMC-01 model-retention bridge active question
+
+- **Question**: 是否存在一个具有正式理论桥、可由冻结 autoregressive LVLM 表示
+  唯一计算的跨模态对应结构保持量，能够预测未见数据真实性能差异？
+- **Why the old question was insufficient**: `COMP-01` 的生成式 caption NLL
+  relation margin 跨 budget 不稳定，且 95.4%–99.8% pair 的两图偏好同一 caption；
+  继续围绕生成 likelihood 会重复已经失败的 language-bias bridge。
+- **Evidence / literature origin**: `XMC-01_round1` 已排除 6/9 pair 的纯训练数据图
+  差异；Zhang et al. 2023 提供 MMCL→共现谱→linear-probe 的正式起点，但尚未证明
+  适用于 generative LVLM。
+- **Mission relation**: 先审计理论能否连接“联合数据结构→模型表示保持→真实风险”，
+  可避免继续制造无桥 proxy；支持时有 representation-preserving training 的算法
+  出口，否定时可低成本转向视觉条件利用机制。
 - **Status**: ACTIVE。
