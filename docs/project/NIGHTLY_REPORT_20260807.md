@@ -78,3 +78,19 @@ checkpoint-only prediction test；不训练。
   已确认推送至 `1c3678c`；本报告在 finalization 后再次同步。
 - hard stop：`false`。
 
+## 10. 持续日志：COMP-01 panel gate
+
+- Winoground 冻结 revision 仅做 access check，结果 `blocked_by_access`，没有运行模型；
+  按 immutable plan 转入固定 fallback：What’sUp controlled panel。
+- 已核查 Kamath et al.（EMNLP 2023）正文、官方仓库 commit
+  `7c1f2550eace32e7b8c77de5a792347c402960d1`、MIT license、annotation/archive
+  SHA；完整 panel 为 820 张 annotation 引用图片、205 个四图对象组、410 个对立关系
+  pair。archive 中 9 张未引用图片被明确忽略。
+- 项目 v2 历史 53,071 张与 adapter train 10,000 draws 均无 exact SHA overlap。
+  第一遍保守 pHash screen 发现 5 个半径命中并阻止评分；在任何模型 inference 前，
+  仅检查来源为 `train` 的对应项，确认分别是吉他线描、红头巾人物、卡通水果篮和
+  帆板，与外部 dog/table、cap/cup、cup/remote、plate/cup 图像均为不同场景。
+  256-bit pHash 距离 98–116、dHash 距离 21–37，故记录为 64-bit pHash 粗布局
+  false positive。
+- 未读取 validation/final confirmation，未运行 COMP-01 模型输出；panel 已通过
+  collision adjudication，下一状态为单模型 deterministic smoke。
