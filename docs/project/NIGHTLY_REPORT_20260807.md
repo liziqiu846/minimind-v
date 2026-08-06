@@ -201,3 +201,7 @@ checkpoint-only prediction test；不训练。
 - 按 pilot rule 不补 `43102/43103`，不换 task/ratio/prompt/proxy。全部 raw
   scores、coordinates、receipts、paired differences 与 logs 已归档；ACTIVE 转为
   `LITMAP-03` low-dimensional visual trainability literature/theory gate。
+- `LITMAP-03_round1` immutable plan 已冻结：围绕 frozen-encoder identifiability、
+  trainable-subspace/module allocation 与 objective competition 三个 competing
+  explanations 检索；只接受至少两篇 direct autoregressive-LVLM sources、一个
+  matched mechanism control 且能由单一最小干预区分两个解释的候选。本轮不训练。
