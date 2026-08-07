@@ -1,0 +1,804 @@
+{
+  "audited_excluded_families": [
+    {
+      "aggregate_path": "/home/lizhaohui/lzq/stage3-ps-formal-20260726-1825/development_evaluation/aggregate_results.json",
+      "aggregate_sha256": "16b90d7a140515fedf3c09778afc47f27c18857fe9df5a5cdb332d25de3e59ea",
+      "aggregate_status": "complete",
+      "analysis_scope": "development_only_exploratory_not_a_formal_certificate",
+      "candidate_count": 18,
+      "eligible": false,
+      "exclusion_reason": "no existing formal raw full compression bound; the frozen development aggregate explicitly declares itself exploratory",
+      "family_id": "phase3-private-vs-shared-budget-v1",
+      "final_confirmation_accessed": false,
+      "protocol_path": "/tmp/minimind-boundselect.qfrXIE/experiments/phase3_private_vs_shared_v1/protocol.json",
+      "protocol_sha256": "5425fd6ab1fb6673d381e0fbf650ff42ed174398da9fe90e933ccf591f275a4d"
+    }
+  ],
+  "authority": {
+    "candidate_family_rule": "complete preregistered Stage 2 v2 formal family with exact retained checkpoints frozen by Phase 3 v6",
+    "historical_stage2_final_report_role": "completion evidence only; its retained numerical rows bind a different execution whose checkpoints were removed",
+    "phase3_v6_protocol_path": "/tmp/minimind-boundselect.qfrXIE/experiments/phase3_v6/scoring/protocol.json",
+    "phase3_v6_protocol_sha256": "3cbf89287ef5c75657bf0df6ed1170f0ab1c916ac5aacc0c009fb80c3bbf9195",
+    "source_git_commit": "0cadc25ca62438e8e8c5dfed3158a0da799d9de1",
+    "stage2_final_report_path": "/tmp/minimind-boundselect.qfrXIE/experiments/runs/stage2_v2_fast/final/stage2_final_report.json",
+    "stage2_final_report_sha256": "f872bd5925fa10302393f253acf6efef2f468e7ab0e456bcb0a912ee8df5cb84",
+    "stage2_protocol_path": "/tmp/minimind-boundselect.qfrXIE/experiments/stage2_protocol_v2.json",
+    "stage2_protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3"
+  },
+  "baseline": {
+    "authority": "stage2_protocol_v2.json model.groups.M1.description",
+    "candidate_id": "M1-root-none",
+    "frozen_before_heldout_risk": true
+  },
+  "candidate_count": 10,
+  "candidates": [
+    {
+      "actual_bits_source": {
+        "field": "complexity_bits",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/01_M0_root-43101_seed-2026_lr-0p050/decode/adapter_summary.json",
+        "sha256": "b054b9c627a0d4e158b69fac941e9a2e2933357062cfe1618209fd1f3d4c5499"
+      },
+      "actual_encoded_bits": 6560,
+      "baseline": false,
+      "baseline_reason": null,
+      "budget": {
+        "allocation": {
+          "language": 4096
+        },
+        "mapping_root": 43101,
+        "total_coordinate_budget": 4096
+      },
+      "candidate_id": "M0-root-43101",
+      "checkpoint": {
+        "exists": true,
+        "frozen_registry": "phase3_v6/scoring/protocol.json",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/01_M0_root-43101_seed-2026_lr-0p050/encode/adapter.mms2",
+        "sha256": "7ac08152d6487b582a6cae16c6d932ef507823b67302a77e7260ccf87dd12220",
+        "sha256_verified": true
+      },
+      "eligibility": {
+        "actual_encoded_bits_formal": true,
+        "checkpoint_exists_and_hash_matches": true,
+        "eligible": true,
+        "final_confirmation_leakage": false,
+        "heldout_validation_artifact_exists_and_hash_matches": true,
+        "partial_or_failed": false,
+        "raw_full_compression_bound_formal": true,
+        "same_codec": true,
+        "same_frozen_protocol": true,
+        "same_prediction_smoothing": true
+      },
+      "encoded_model": {
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/01_M0_root-43101_seed-2026_lr-0p050/encode/adapter.mms2",
+        "sha256": "7ac08152d6487b582a6cae16c6d932ef507823b67302a77e7260ccf87dd12220"
+      },
+      "heldout_evaluation": {
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/01_M0_root-43101_seed-2026_lr-0p050/risk_decoded_validation_correct.json",
+        "role": "decoded_quantized_validation_correct",
+        "sample_count": 2000,
+        "sha256": "8aefcbec587f35d0297c197cfbdcdd241948212185b98955ab3d976b865e6ab4",
+        "value_in_registry": false
+      },
+      "provenance": {
+        "codec": "zlib-9",
+        "formal": true,
+        "formal_run_directory": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/01_M0_root-43101_seed-2026_lr-0p050",
+        "prediction_smoothing": "(1-alpha)*p+alpha/V",
+        "primary_bound_is_raw_unclipped": true,
+        "protocol_id": "minimind-v-stage2-joint-compression-v2",
+        "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3",
+        "training_sample_count": 10000
+      },
+      "raw_bound_source": {
+        "field": "bound.raw_compression_upper_bound_bits",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/01_M0_root-43101_seed-2026_lr-0p050/bound.json",
+        "sha256": "ae23feb9a1af128ca29dd9424996afe31e53f11a2dbc3c9e7af33a79ed7d12e6"
+      },
+      "raw_full_compression_bound": 11.076199214850384,
+      "structure": "M0",
+      "structure_description": "language-only model",
+      "training_checkpoint": {
+        "exists": true,
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/01_M0_root-43101_seed-2026_lr-0p050/train/training_checkpoint.pt",
+        "sha256": "5b45f9f1a117878fae427bff00777261c2ee73197b5e3e6c5ea60d90ed04af0b",
+        "sha256_verified": true
+      }
+    },
+    {
+      "actual_bits_source": {
+        "field": "complexity_bits",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/02_M0_root-43102_seed-2026_lr-0p050/decode/adapter_summary.json",
+        "sha256": "d0a14f2d9ff3e164ef57b8c9201a3ea36fab90409882b9bc76393f868e5b4f96"
+      },
+      "actual_encoded_bits": 6624,
+      "baseline": false,
+      "baseline_reason": null,
+      "budget": {
+        "allocation": {
+          "language": 4096
+        },
+        "mapping_root": 43102,
+        "total_coordinate_budget": 4096
+      },
+      "candidate_id": "M0-root-43102",
+      "checkpoint": {
+        "exists": true,
+        "frozen_registry": "phase3_v6/scoring/protocol.json",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/02_M0_root-43102_seed-2026_lr-0p050/encode/adapter.mms2",
+        "sha256": "a77491ab4729bd2e99e9062b77611f59550931c2ed508725c56523ffb3ce66cf",
+        "sha256_verified": true
+      },
+      "eligibility": {
+        "actual_encoded_bits_formal": true,
+        "checkpoint_exists_and_hash_matches": true,
+        "eligible": true,
+        "final_confirmation_leakage": false,
+        "heldout_validation_artifact_exists_and_hash_matches": true,
+        "partial_or_failed": false,
+        "raw_full_compression_bound_formal": true,
+        "same_codec": true,
+        "same_frozen_protocol": true,
+        "same_prediction_smoothing": true
+      },
+      "encoded_model": {
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/02_M0_root-43102_seed-2026_lr-0p050/encode/adapter.mms2",
+        "sha256": "a77491ab4729bd2e99e9062b77611f59550931c2ed508725c56523ffb3ce66cf"
+      },
+      "heldout_evaluation": {
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/02_M0_root-43102_seed-2026_lr-0p050/risk_decoded_validation_correct.json",
+        "role": "decoded_quantized_validation_correct",
+        "sample_count": 2000,
+        "sha256": "da39a3a973ce91bdc5ed618709bb5b35b7eceb046ba114549af59d2342ed35c4",
+        "value_in_registry": false
+      },
+      "provenance": {
+        "codec": "zlib-9",
+        "formal": true,
+        "formal_run_directory": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/02_M0_root-43102_seed-2026_lr-0p050",
+        "prediction_smoothing": "(1-alpha)*p+alpha/V",
+        "primary_bound_is_raw_unclipped": true,
+        "protocol_id": "minimind-v-stage2-joint-compression-v2",
+        "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3",
+        "training_sample_count": 10000
+      },
+      "raw_bound_source": {
+        "field": "bound.raw_compression_upper_bound_bits",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/02_M0_root-43102_seed-2026_lr-0p050/bound.json",
+        "sha256": "6aaaf1347bbfbb7e562bdafdfe3086059398127692f1a3ef1b462dcc318f9746"
+      },
+      "raw_full_compression_bound": 11.128927267202808,
+      "structure": "M0",
+      "structure_description": "language-only model",
+      "training_checkpoint": {
+        "exists": true,
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/02_M0_root-43102_seed-2026_lr-0p050/train/training_checkpoint.pt",
+        "sha256": "bafcf8d6d96018f4a450dd273f7bc563b787c2a76e5cfe07044b5aa36a23fc32",
+        "sha256_verified": true
+      }
+    },
+    {
+      "actual_bits_source": {
+        "field": "complexity_bits",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/03_M0_root-43103_seed-2026_lr-0p050/decode/adapter_summary.json",
+        "sha256": "eb27e2201a0573871b6d54c758567c692ab50e1af7a9a58065d66c7360570827"
+      },
+      "actual_encoded_bits": 7784,
+      "baseline": false,
+      "baseline_reason": null,
+      "budget": {
+        "allocation": {
+          "language": 4096
+        },
+        "mapping_root": 43103,
+        "total_coordinate_budget": 4096
+      },
+      "candidate_id": "M0-root-43103",
+      "checkpoint": {
+        "exists": true,
+        "frozen_registry": "phase3_v6/scoring/protocol.json",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/03_M0_root-43103_seed-2026_lr-0p050/encode/adapter.mms2",
+        "sha256": "c0349a686885bc36d130e83b4a4d696e3b59aeb43e936ccc7631a0483a22ab96",
+        "sha256_verified": true
+      },
+      "eligibility": {
+        "actual_encoded_bits_formal": true,
+        "checkpoint_exists_and_hash_matches": true,
+        "eligible": true,
+        "final_confirmation_leakage": false,
+        "heldout_validation_artifact_exists_and_hash_matches": true,
+        "partial_or_failed": false,
+        "raw_full_compression_bound_formal": true,
+        "same_codec": true,
+        "same_frozen_protocol": true,
+        "same_prediction_smoothing": true
+      },
+      "encoded_model": {
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/03_M0_root-43103_seed-2026_lr-0p050/encode/adapter.mms2",
+        "sha256": "c0349a686885bc36d130e83b4a4d696e3b59aeb43e936ccc7631a0483a22ab96"
+      },
+      "heldout_evaluation": {
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/03_M0_root-43103_seed-2026_lr-0p050/risk_decoded_validation_correct.json",
+        "role": "decoded_quantized_validation_correct",
+        "sample_count": 2000,
+        "sha256": "57baaae13277624adcf42d7952b6cde9f69bf886179b9b2135ea2a56ae3e1933",
+        "value_in_registry": false
+      },
+      "provenance": {
+        "codec": "zlib-9",
+        "formal": true,
+        "formal_run_directory": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/03_M0_root-43103_seed-2026_lr-0p050",
+        "prediction_smoothing": "(1-alpha)*p+alpha/V",
+        "primary_bound_is_raw_unclipped": true,
+        "protocol_id": "minimind-v-stage2-joint-compression-v2",
+        "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3",
+        "training_sample_count": 10000
+      },
+      "raw_bound_source": {
+        "field": "bound.raw_compression_upper_bound_bits",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/03_M0_root-43103_seed-2026_lr-0p050/bound.json",
+        "sha256": "475724504a5db0d551715b3f5e3b1528d8a2316264ae1d80dd4496328f0bce37"
+      },
+      "raw_full_compression_bound": 11.606192120745732,
+      "structure": "M0",
+      "structure_description": "language-only model",
+      "training_checkpoint": {
+        "exists": true,
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/03_M0_root-43103_seed-2026_lr-0p050/train/training_checkpoint.pt",
+        "sha256": "e00360dd6f1989d0cc50ecbf258a176711765d5265828b5d48e1b23894676319",
+        "sha256_verified": true
+      }
+    },
+    {
+      "actual_bits_source": {
+        "field": "complexity_bits",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/04_M1_root-none_seed-2026_lr-0p015/decode/adapter_summary.json",
+        "sha256": "ffcdd4992fa0b9e0374ac91e3bb25208852ab4a96d514c26f168a40065f6b9fb"
+      },
+      "actual_encoded_bits": 10488,
+      "baseline": true,
+      "baseline_reason": "frozen protocol description: historical fixed hashed projector baseline",
+      "budget": {
+        "allocation": {
+          "projector_layer_1": 2048,
+          "projector_layer_2": 2048
+        },
+        "mapping_root": null,
+        "total_coordinate_budget": 4096
+      },
+      "candidate_id": "M1-root-none",
+      "checkpoint": {
+        "exists": true,
+        "frozen_registry": "phase3_v6/scoring/protocol.json",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/04_M1_root-none_seed-2026_lr-0p015/encode/adapter.mms2",
+        "sha256": "e30206f2063217e36f992a4c622f99a15db38f7d071aea67e0c79b8df9dd7674",
+        "sha256_verified": true
+      },
+      "eligibility": {
+        "actual_encoded_bits_formal": true,
+        "checkpoint_exists_and_hash_matches": true,
+        "eligible": true,
+        "final_confirmation_leakage": false,
+        "heldout_validation_artifact_exists_and_hash_matches": true,
+        "partial_or_failed": false,
+        "raw_full_compression_bound_formal": true,
+        "same_codec": true,
+        "same_frozen_protocol": true,
+        "same_prediction_smoothing": true
+      },
+      "encoded_model": {
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/04_M1_root-none_seed-2026_lr-0p015/encode/adapter.mms2",
+        "sha256": "e30206f2063217e36f992a4c622f99a15db38f7d071aea67e0c79b8df9dd7674"
+      },
+      "heldout_evaluation": {
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/04_M1_root-none_seed-2026_lr-0p015/risk_decoded_validation_correct.json",
+        "role": "decoded_quantized_validation_correct",
+        "sample_count": 2000,
+        "sha256": "ce81e672c0768fbf182d74e6a6c8ca15d3189427762b62477cfbd1eaac6578ba",
+        "value_in_registry": false
+      },
+      "provenance": {
+        "codec": "zlib-9",
+        "formal": true,
+        "formal_run_directory": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/04_M1_root-none_seed-2026_lr-0p015",
+        "prediction_smoothing": "(1-alpha)*p+alpha/V",
+        "primary_bound_is_raw_unclipped": true,
+        "protocol_id": "minimind-v-stage2-joint-compression-v2",
+        "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3",
+        "training_sample_count": 10000
+      },
+      "raw_bound_source": {
+        "field": "bound.raw_compression_upper_bound_bits",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/04_M1_root-none_seed-2026_lr-0p015/bound.json",
+        "sha256": "ccfa7313c726824ca9d7f468c19b1765a94ec243b56a027cfb564d0b7598faa5"
+      },
+      "raw_full_compression_bound": 12.516978640541838,
+      "structure": "M1",
+      "structure_description": "historical fixed hashed projector baseline",
+      "training_checkpoint": {
+        "exists": true,
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/04_M1_root-none_seed-2026_lr-0p015/train/training_checkpoint.pt",
+        "sha256": "ff6b82a833b5472e9ccc40103bc6170d2689a3ab957bf82d7bca9d54e1f73efb",
+        "sha256_verified": true
+      }
+    },
+    {
+      "actual_bits_source": {
+        "field": "complexity_bits",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/05_M2_root-43101_seed-2026_lr-0p050/decode/adapter_summary.json",
+        "sha256": "252588dd0d68393969e4a6abe9300a5f48b61fb5e12b05030c6ec798022a453f"
+      },
+      "actual_encoded_bits": 9200,
+      "baseline": false,
+      "baseline_reason": null,
+      "budget": {
+        "allocation": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 582
+        },
+        "mapping_root": 43101,
+        "total_coordinate_budget": 4096
+      },
+      "candidate_id": "M2-root-43101",
+      "checkpoint": {
+        "exists": true,
+        "frozen_registry": "phase3_v6/scoring/protocol.json",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/05_M2_root-43101_seed-2026_lr-0p050/encode/adapter.mms2",
+        "sha256": "29234c2a2709fee8256779a6cacd8ace75de34a73791f4f07031b6383688e8ad",
+        "sha256_verified": true
+      },
+      "eligibility": {
+        "actual_encoded_bits_formal": true,
+        "checkpoint_exists_and_hash_matches": true,
+        "eligible": true,
+        "final_confirmation_leakage": false,
+        "heldout_validation_artifact_exists_and_hash_matches": true,
+        "partial_or_failed": false,
+        "raw_full_compression_bound_formal": true,
+        "same_codec": true,
+        "same_frozen_protocol": true,
+        "same_prediction_smoothing": true
+      },
+      "encoded_model": {
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/05_M2_root-43101_seed-2026_lr-0p050/encode/adapter.mms2",
+        "sha256": "29234c2a2709fee8256779a6cacd8ace75de34a73791f4f07031b6383688e8ad"
+      },
+      "heldout_evaluation": {
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/05_M2_root-43101_seed-2026_lr-0p050/risk_decoded_validation_correct.json",
+        "role": "decoded_quantized_validation_correct",
+        "sample_count": 2000,
+        "sha256": "5e3d584b496561570b45fac524a4a5e358936ce6019a37a253213f29f767453c",
+        "value_in_registry": false
+      },
+      "provenance": {
+        "codec": "zlib-9",
+        "formal": true,
+        "formal_run_directory": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/05_M2_root-43101_seed-2026_lr-0p050",
+        "prediction_smoothing": "(1-alpha)*p+alpha/V",
+        "primary_bound_is_raw_unclipped": true,
+        "protocol_id": "minimind-v-stage2-joint-compression-v2",
+        "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3",
+        "training_sample_count": 10000
+      },
+      "raw_bound_source": {
+        "field": "bound.raw_compression_upper_bound_bits",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/05_M2_root-43101_seed-2026_lr-0p050/bound.json",
+        "sha256": "8c25d10d2429567b4f2595f3bd09a2149e4c9daa3ef3750523fd8f57f2040766"
+      },
+      "raw_full_compression_bound": 12.043802944744414,
+      "structure": "M2",
+      "structure_description": "independent vision, projector, and language coordinates",
+      "training_checkpoint": {
+        "exists": true,
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/05_M2_root-43101_seed-2026_lr-0p050/train/training_checkpoint.pt",
+        "sha256": "f64f4c81de8a7d3bb3a19bca3ddbfaec753ed3bc32a00f33e451cd6fefa8f552",
+        "sha256_verified": true
+      }
+    },
+    {
+      "actual_bits_source": {
+        "field": "complexity_bits",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/06_M2_root-43102_seed-2026_lr-0p050/decode/adapter_summary.json",
+        "sha256": "ba17059c910b27f530eef7587f683f3836fa0fa9ecff369b40156b6b46f5ba40"
+      },
+      "actual_encoded_bits": 10368,
+      "baseline": false,
+      "baseline_reason": null,
+      "budget": {
+        "allocation": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 582
+        },
+        "mapping_root": 43102,
+        "total_coordinate_budget": 4096
+      },
+      "candidate_id": "M2-root-43102",
+      "checkpoint": {
+        "exists": true,
+        "frozen_registry": "phase3_v6/scoring/protocol.json",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/06_M2_root-43102_seed-2026_lr-0p050/encode/adapter.mms2",
+        "sha256": "6c99254997772d99155969dd6c6d5867bb8f2b16f619fb330cdfa6747252cd00",
+        "sha256_verified": true
+      },
+      "eligibility": {
+        "actual_encoded_bits_formal": true,
+        "checkpoint_exists_and_hash_matches": true,
+        "eligible": true,
+        "final_confirmation_leakage": false,
+        "heldout_validation_artifact_exists_and_hash_matches": true,
+        "partial_or_failed": false,
+        "raw_full_compression_bound_formal": true,
+        "same_codec": true,
+        "same_frozen_protocol": true,
+        "same_prediction_smoothing": true
+      },
+      "encoded_model": {
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/06_M2_root-43102_seed-2026_lr-0p050/encode/adapter.mms2",
+        "sha256": "6c99254997772d99155969dd6c6d5867bb8f2b16f619fb330cdfa6747252cd00"
+      },
+      "heldout_evaluation": {
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/06_M2_root-43102_seed-2026_lr-0p050/risk_decoded_validation_correct.json",
+        "role": "decoded_quantized_validation_correct",
+        "sample_count": 2000,
+        "sha256": "3b160dfd8e19ec2647a1fa83fef62d7731e3cc0f0c0b7ba5eed0e53ad02f0c29",
+        "value_in_registry": false
+      },
+      "provenance": {
+        "codec": "zlib-9",
+        "formal": true,
+        "formal_run_directory": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/06_M2_root-43102_seed-2026_lr-0p050",
+        "prediction_smoothing": "(1-alpha)*p+alpha/V",
+        "primary_bound_is_raw_unclipped": true,
+        "protocol_id": "minimind-v-stage2-joint-compression-v2",
+        "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3",
+        "training_sample_count": 10000
+      },
+      "raw_bound_source": {
+        "field": "bound.raw_compression_upper_bound_bits",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/06_M2_root-43102_seed-2026_lr-0p050/bound.json",
+        "sha256": "817b0451f20b1b5f73b1f1af0ea6d57981dacdb4a40f37c0f92514753b8b3b05"
+      },
+      "raw_full_compression_bound": 12.483904209573172,
+      "structure": "M2",
+      "structure_description": "independent vision, projector, and language coordinates",
+      "training_checkpoint": {
+        "exists": true,
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/06_M2_root-43102_seed-2026_lr-0p050/train/training_checkpoint.pt",
+        "sha256": "9bcbfcafc2ebf75b52f5e75d2b4a000fc109111ef78dab5054e537ed998f1185",
+        "sha256_verified": true
+      }
+    },
+    {
+      "actual_bits_source": {
+        "field": "complexity_bits",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/07_M2_root-43103_seed-2026_lr-0p050/decode/adapter_summary.json",
+        "sha256": "48f55d07dce2ea0ff88fb320b75c161f9af2194c081ccc890256c21393b5653d"
+      },
+      "actual_encoded_bits": 10416,
+      "baseline": false,
+      "baseline_reason": null,
+      "budget": {
+        "allocation": {
+          "language": 1187,
+          "projector": 2327,
+          "vision": 582
+        },
+        "mapping_root": 43103,
+        "total_coordinate_budget": 4096
+      },
+      "candidate_id": "M2-root-43103",
+      "checkpoint": {
+        "exists": true,
+        "frozen_registry": "phase3_v6/scoring/protocol.json",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/07_M2_root-43103_seed-2026_lr-0p050/encode/adapter.mms2",
+        "sha256": "5f39f9f70341051683fb0f17d58373cbe60f50749767fda74b48b4ddb95db2bf",
+        "sha256_verified": true
+      },
+      "eligibility": {
+        "actual_encoded_bits_formal": true,
+        "checkpoint_exists_and_hash_matches": true,
+        "eligible": true,
+        "final_confirmation_leakage": false,
+        "heldout_validation_artifact_exists_and_hash_matches": true,
+        "partial_or_failed": false,
+        "raw_full_compression_bound_formal": true,
+        "same_codec": true,
+        "same_frozen_protocol": true,
+        "same_prediction_smoothing": true
+      },
+      "encoded_model": {
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/07_M2_root-43103_seed-2026_lr-0p050/encode/adapter.mms2",
+        "sha256": "5f39f9f70341051683fb0f17d58373cbe60f50749767fda74b48b4ddb95db2bf"
+      },
+      "heldout_evaluation": {
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/07_M2_root-43103_seed-2026_lr-0p050/risk_decoded_validation_correct.json",
+        "role": "decoded_quantized_validation_correct",
+        "sample_count": 2000,
+        "sha256": "4aeea5ba8080407f1577b5ad0eec0496ec2ebb7dfd98673855c75673763350e7",
+        "value_in_registry": false
+      },
+      "provenance": {
+        "codec": "zlib-9",
+        "formal": true,
+        "formal_run_directory": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/07_M2_root-43103_seed-2026_lr-0p050",
+        "prediction_smoothing": "(1-alpha)*p+alpha/V",
+        "primary_bound_is_raw_unclipped": true,
+        "protocol_id": "minimind-v-stage2-joint-compression-v2",
+        "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3",
+        "training_sample_count": 10000
+      },
+      "raw_bound_source": {
+        "field": "bound.raw_compression_upper_bound_bits",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/07_M2_root-43103_seed-2026_lr-0p050/bound.json",
+        "sha256": "21eb6b3e152b7a721e085f647145a0faae7338abd00be24938239ba3a6a59748"
+      },
+      "raw_full_compression_bound": 12.495993256345052,
+      "structure": "M2",
+      "structure_description": "independent vision, projector, and language coordinates",
+      "training_checkpoint": {
+        "exists": true,
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/07_M2_root-43103_seed-2026_lr-0p050/train/training_checkpoint.pt",
+        "sha256": "6a3cc5617f4dd7fa6f41b6fc8e826b0d6dd30d38deadcddc47d76d382fd7f481",
+        "sha256_verified": true
+      }
+    },
+    {
+      "actual_bits_source": {
+        "field": "complexity_bits",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/08_M3_root-43101_seed-2026_lr-0p050/decode/adapter_summary.json",
+        "sha256": "458e22a236f801e1f06e747085e3a4698d719a15dc72851b9e8ab7d85c25f733"
+      },
+      "actual_encoded_bits": 6432,
+      "baseline": false,
+      "baseline_reason": null,
+      "budget": {
+        "allocation": {
+          "shared": 4096
+        },
+        "mapping_root": 43101,
+        "total_coordinate_budget": 4096
+      },
+      "candidate_id": "M3-root-43101",
+      "checkpoint": {
+        "exists": true,
+        "frozen_registry": "phase3_v6/scoring/protocol.json",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/08_M3_root-43101_seed-2026_lr-0p050/encode/adapter.mms2",
+        "sha256": "732d9af5c6ddb7d21f78bc3a942473a71393a7d3452be3b095b4b166bdd6b405",
+        "sha256_verified": true
+      },
+      "eligibility": {
+        "actual_encoded_bits_formal": true,
+        "checkpoint_exists_and_hash_matches": true,
+        "eligible": true,
+        "final_confirmation_leakage": false,
+        "heldout_validation_artifact_exists_and_hash_matches": true,
+        "partial_or_failed": false,
+        "raw_full_compression_bound_formal": true,
+        "same_codec": true,
+        "same_frozen_protocol": true,
+        "same_prediction_smoothing": true
+      },
+      "encoded_model": {
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/08_M3_root-43101_seed-2026_lr-0p050/encode/adapter.mms2",
+        "sha256": "732d9af5c6ddb7d21f78bc3a942473a71393a7d3452be3b095b4b166bdd6b405"
+      },
+      "heldout_evaluation": {
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/08_M3_root-43101_seed-2026_lr-0p050/risk_decoded_validation_correct.json",
+        "role": "decoded_quantized_validation_correct",
+        "sample_count": 2000,
+        "sha256": "932d95b8ff5cead16af2336fe77aab923ed9cafb39a5b489637e4c36ea36bbf5",
+        "value_in_registry": false
+      },
+      "provenance": {
+        "codec": "zlib-9",
+        "formal": true,
+        "formal_run_directory": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/08_M3_root-43101_seed-2026_lr-0p050",
+        "prediction_smoothing": "(1-alpha)*p+alpha/V",
+        "primary_bound_is_raw_unclipped": true,
+        "protocol_id": "minimind-v-stage2-joint-compression-v2",
+        "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3",
+        "training_sample_count": 10000
+      },
+      "raw_bound_source": {
+        "field": "bound.raw_compression_upper_bound_bits",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/08_M3_root-43101_seed-2026_lr-0p050/bound.json",
+        "sha256": "886a635ebb10cd221d33f7ee4cc73cfeb40130e692dd976247f8ce9e73163951"
+      },
+      "raw_full_compression_bound": 10.986846402513791,
+      "structure": "M3",
+      "structure_description": "one globally shared coordinate vector",
+      "training_checkpoint": {
+        "exists": true,
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/08_M3_root-43101_seed-2026_lr-0p050/train/training_checkpoint.pt",
+        "sha256": "58b132700a315b1f70ae904ca284ca3dfc009b5fadb682a2de018c3ac983d549",
+        "sha256_verified": true
+      }
+    },
+    {
+      "actual_bits_source": {
+        "field": "complexity_bits",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/09_M3_root-43102_seed-2026_lr-0p050/decode/adapter_summary.json",
+        "sha256": "5864d76d391dd3a01572641812a6ffade90614808a5104963679f808de7b7e77"
+      },
+      "actual_encoded_bits": 7824,
+      "baseline": false,
+      "baseline_reason": null,
+      "budget": {
+        "allocation": {
+          "shared": 4096
+        },
+        "mapping_root": 43102,
+        "total_coordinate_budget": 4096
+      },
+      "candidate_id": "M3-root-43102",
+      "checkpoint": {
+        "exists": true,
+        "frozen_registry": "phase3_v6/scoring/protocol.json",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/09_M3_root-43102_seed-2026_lr-0p050/encode/adapter.mms2",
+        "sha256": "78ba0766be1adf79aa11579dee02d394ddcfc990559a97f87d11a50fb86f4977",
+        "sha256_verified": true
+      },
+      "eligibility": {
+        "actual_encoded_bits_formal": true,
+        "checkpoint_exists_and_hash_matches": true,
+        "eligible": true,
+        "final_confirmation_leakage": false,
+        "heldout_validation_artifact_exists_and_hash_matches": true,
+        "partial_or_failed": false,
+        "raw_full_compression_bound_formal": true,
+        "same_codec": true,
+        "same_frozen_protocol": true,
+        "same_prediction_smoothing": true
+      },
+      "encoded_model": {
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/09_M3_root-43102_seed-2026_lr-0p050/encode/adapter.mms2",
+        "sha256": "78ba0766be1adf79aa11579dee02d394ddcfc990559a97f87d11a50fb86f4977"
+      },
+      "heldout_evaluation": {
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/09_M3_root-43102_seed-2026_lr-0p050/risk_decoded_validation_correct.json",
+        "role": "decoded_quantized_validation_correct",
+        "sample_count": 2000,
+        "sha256": "95b5eae17b8760995c067f83bd961bfc572fdaa4d2b70190aa9bd64261254057",
+        "value_in_registry": false
+      },
+      "provenance": {
+        "codec": "zlib-9",
+        "formal": true,
+        "formal_run_directory": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/09_M3_root-43102_seed-2026_lr-0p050",
+        "prediction_smoothing": "(1-alpha)*p+alpha/V",
+        "primary_bound_is_raw_unclipped": true,
+        "protocol_id": "minimind-v-stage2-joint-compression-v2",
+        "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3",
+        "training_sample_count": 10000
+      },
+      "raw_bound_source": {
+        "field": "bound.raw_compression_upper_bound_bits",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/09_M3_root-43102_seed-2026_lr-0p050/bound.json",
+        "sha256": "612e252eef2833858b8082ae9f0b89b2616d951c7a4935c5cf7d04ea33e14666"
+      },
+      "raw_full_compression_bound": 11.565755014401503,
+      "structure": "M3",
+      "structure_description": "one globally shared coordinate vector",
+      "training_checkpoint": {
+        "exists": true,
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/09_M3_root-43102_seed-2026_lr-0p050/train/training_checkpoint.pt",
+        "sha256": "040dbb4b4388e89a38f75fb3fdd2203a3c7bc9867cff822cf6ebbe64c1caddf1",
+        "sha256_verified": true
+      }
+    },
+    {
+      "actual_bits_source": {
+        "field": "complexity_bits",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/10_M3_root-43103_seed-2026_lr-0p050/decode/adapter_summary.json",
+        "sha256": "cc84badfbd68da2d505051079d8d565d4dea4f1cd1a5fd98978d2ce2142b478b"
+      },
+      "actual_encoded_bits": 6384,
+      "baseline": false,
+      "baseline_reason": null,
+      "budget": {
+        "allocation": {
+          "shared": 4096
+        },
+        "mapping_root": 43103,
+        "total_coordinate_budget": 4096
+      },
+      "candidate_id": "M3-root-43103",
+      "checkpoint": {
+        "exists": true,
+        "frozen_registry": "phase3_v6/scoring/protocol.json",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/10_M3_root-43103_seed-2026_lr-0p050/encode/adapter.mms2",
+        "sha256": "8950c943a030ea9571b0fb191a0ac9cb20aeec9ea1e87b6a11cd80c89a1d7b83",
+        "sha256_verified": true
+      },
+      "eligibility": {
+        "actual_encoded_bits_formal": true,
+        "checkpoint_exists_and_hash_matches": true,
+        "eligible": true,
+        "final_confirmation_leakage": false,
+        "heldout_validation_artifact_exists_and_hash_matches": true,
+        "partial_or_failed": false,
+        "raw_full_compression_bound_formal": true,
+        "same_codec": true,
+        "same_frozen_protocol": true,
+        "same_prediction_smoothing": true
+      },
+      "encoded_model": {
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/10_M3_root-43103_seed-2026_lr-0p050/encode/adapter.mms2",
+        "sha256": "8950c943a030ea9571b0fb191a0ac9cb20aeec9ea1e87b6a11cd80c89a1d7b83"
+      },
+      "heldout_evaluation": {
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/10_M3_root-43103_seed-2026_lr-0p050/risk_decoded_validation_correct.json",
+        "role": "decoded_quantized_validation_correct",
+        "sample_count": 2000,
+        "sha256": "a7df51643e35fc0011d745be6a4f6da70f6e7555a75234c40548bda2425d1bbf",
+        "value_in_registry": false
+      },
+      "provenance": {
+        "codec": "zlib-9",
+        "formal": true,
+        "formal_run_directory": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/10_M3_root-43103_seed-2026_lr-0p050",
+        "prediction_smoothing": "(1-alpha)*p+alpha/V",
+        "primary_bound_is_raw_unclipped": true,
+        "protocol_id": "minimind-v-stage2-joint-compression-v2",
+        "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3",
+        "training_sample_count": 10000
+      },
+      "raw_bound_source": {
+        "field": "bound.raw_compression_upper_bound_bits",
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/10_M3_root-43103_seed-2026_lr-0p050/bound.json",
+        "sha256": "c375d48d9f2f06bff8b5661ced64cc11a8b21aa72f1dad8f64ea3303f9d135e3"
+      },
+      "raw_full_compression_bound": 10.97098526042128,
+      "structure": "M3",
+      "structure_description": "one globally shared coordinate vector",
+      "training_checkpoint": {
+        "exists": true,
+        "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/10_M3_root-43103_seed-2026_lr-0p050/train/training_checkpoint.pt",
+        "sha256": "f15844727ce58fe3bf910186a0d0832e9488a945c04ecc614f18139de08f036b",
+        "sha256_verified": true
+      }
+    }
+  ],
+  "leakage_control": {
+    "heldout_evaluation_value_read_stage": "only after selection_receipt exists",
+    "registry_contains_heldout_risk_values": false,
+    "selector_allowed_candidate_fields": [
+      "candidate_id",
+      "structure",
+      "structure_description",
+      "budget",
+      "actual_encoded_bits",
+      "raw_full_compression_bound",
+      "provenance",
+      "checkpoint",
+      "training_checkpoint",
+      "encoded_model",
+      "raw_bound_source",
+      "actual_bits_source",
+      "heldout_evaluation",
+      "baseline",
+      "baseline_reason",
+      "eligibility"
+    ]
+  },
+  "protocol_id": "route1-boundselect-v1",
+  "schema_version": 1,
+  "selection_cost": {
+    "ceil_log2_k_bits": 4,
+    "checkpoint_reencoding_bits": 0,
+    "existing_finite_family_union_bound": {
+      "familywise_delta": 0.05,
+      "formal_model_count": 10,
+      "per_model_delta": 0.005,
+      "relation": "per_model_delta=familywise_delta/K"
+    },
+    "raw_bound_definition_changed": false
+  },
+  "selection_rule": {
+    "objective": "minimize raw_full_compression_bound",
+    "strict": true,
+    "tie_policy": "fail_without_existing_tie_break"
+  },
+  "status": "frozen_before_selection"
+}
