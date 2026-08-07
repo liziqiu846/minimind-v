@@ -147,6 +147,114 @@ test，以及符合最小训练规则的 `PROVISIONAL_ALGORITHM_TEST`；这些�
 
 ---
 
+## 4.5 Scientific Mechanism 与 Research Tool 分层
+
+Autonomous research 的主循环必须以真正的 `SCIENTIFIC_MECHANISM` 为中心：
+
+> VLM 相比 LLM 新增了什么影响未见数据泛化的机制，它为什么发生，能产生什么
+> 可证伪预测，并可能导出什么训练原则？
+
+`IDEA_REGISTRY.md` 中的条目必须显式标注以下主要角色之一：
+
+1. `SCIENTIFIC_MECHANISM`：可以成为 Active Research Question 与论文核心问题；
+2. `THEORY_TOOL`：PAC-Bayes、compression、CMI、stability、spectral theory、
+   information bottleneck 等分析工具；
+3. `EXPERIMENT_TOOL`：forced-choice NLL、CKA / CCA、counterfactual panel、
+   crossed-factorial dataset、gradient diagnostic、frozen-feature readout 等；
+4. `ENGINEERING_INTERVENTION`：projector allocation、auxiliary loss、sampling
+   scheme、hard negative、module freezing 等实现手段；
+5. `LITERATURE_SCREEN`：用于寻找理论缺口、相邻证据或可执行性的文献筛选。
+
+只有 `SCIENTIFIC_MECHANISM` 可以占据 Active Research Question 的核心位置。其他
+角色只能服务于机制，不能因为工具更容易冻结、更严格或更容易执行而反过来取代
+科学问题。某个 proxy、bridge、benchmark、readout、intervention 或具体
+instantiation 失败，只能否定其证据实际覆盖的作用域，不自动否定上位机制。
+
+新的 `SCIENTIFIC_MECHANISM` 至少应登记：
+
+* Scientific question；
+* VLM-specific novelty；
+* Why existing LLM theory is insufficient；
+* Why existing multimodal theory is insufficient；
+* Mechanism；
+* Observable consequence；
+* Falsifiable prediction；
+* Possible theoretical object；
+* Possible algorithmic implication；
+* Why now?
+
+这些字段在 candidate 初创时允许是尚待解决的 `CONJECTURE`，但必须能看见潜在的：
+
+> science → theory → prediction → algorithm
+
+路径。不得把 metric、benchmark、audit、gate 或参数分配策略本身登记为新的上位
+科学机制。
+
+## 4.6 大胆提出假设，保守解释证据
+
+科学想法可以从 `CONJECTURE`、mechanism sketch、partial theory 或小规模 pilot
+开始，不要求一开始就拥有唯一 proxy、唯一 intervention、完整定理或完美无混杂
+实验。严格约束的是对证据的解释和结论升级，而不是提出假设的想象空间。
+
+理论与证据必须按实际强度标记，不得混用：
+
+* `PROVEN`：存在已核查且 assumptions 与当前对象一致的正式证明；
+* `PROOF_SKETCH`：关键证明链仍未补全；
+* `CONJECTURE`：可证伪但尚无足够证明或经验支持；
+* `EMPIRICAL_SUPPORT`：预声明、控制主要竞争解释的经验支持；
+* `EXPLORATORY_SIGNAL`：来自 imperfect proxy、有限 benchmark、已有 checkpoint
+  或带部分混杂的探索信号。
+
+探索性证据可以 `supports`、`weakly supports` 或 `fails to support` 某个假设，但
+不能写成 `mechanism established`、正式因果规律或已证明理论。
+
+## 4.7 Exploratory 与 Confirmatory evidence
+
+`Exploratory evidence` 可以使用不完美但与科学问题直接相关的操作性代理、已有
+checkpoint、小规模 pilot 或有限 benchmark，也允许保留已明确记录的部分混杂。
+其目的在于低成本发现方向和淘汰明显不支持的 instantiation。
+
+`Confirmatory evidence` 才要求 preregistered prediction、frozen metric、主要
+competing explanation control、多 seed 或尚未查看的独立条件。Candidate 从
+`CONJECTURE` 升至 `PROMISING`，至少还需要：
+
+1. 问题具有 VLM-specific novelty，且未被现有文献直接解决；
+2. 至少一个非平凡、事前方向明确的 prediction 得到支持；
+3. 至少一个简单 competing explanation 被排除；
+4. 已看出可能的理论对象或训练出口。
+
+没有 candidate 达到 `PROMISING` 时保持 `EXPLORATION MODE`，不得为了形成故事而
+降低升级门槛。
+
+## 4.8 Anti-gate-building 与问题驱动检索
+
+以下内容本身不是论文级科学贡献：
+
+* 更严格的 audit；
+* 更漂亮的 benchmark split；
+* 唯一 frozen readout；
+* 更复杂的数据资格规则；
+* 越来越多的实验准入 gate。
+
+如果连续两轮主要产出都是新 gate、audit 或 dataset qualification rule，而没有
+产生新的 scientific mechanism，必须触发 `RETURN_TO_SCIENTIFIC_QUESTION`。这是
+一个路线纠偏动作，不是第六种科研状态；Agent 应回到现有失败证据，提出明确的科学
+问题并执行 problem-driven targeted literature search。
+
+每次文献检索必须以一个明确机制问题开始，而不是随机 broad scan。对决定路线的
+论文除核查 theorem、assumptions、proof、experiment 与 limitation 外，还必须回答：
+
+1. 论文解释了什么；
+2. 没有解释什么；
+3. 为什么其假设不直接覆盖 autoregressive LVLM；
+4. 扩展到当前 setting 需要增加什么理论对象；
+5. 这个缺口是否值得本项目自行建立新理论。
+
+“文献中尚无完整 bridge”不等于方向应被否定。只有所需假设明显不合理、理论对象
+根本不对应，或已有反例表明 bridge 不可能时，才能据此放弃上位机制。
+
+---
+
 # 5. 科研执行循环
 
 每一轮必须执行以下流程。
@@ -206,6 +314,12 @@ Agent 不得自行改变 Mission Question 或其他冻结对象。需要改变�
 第一轮只运行 1 个 paired seed。它只用于核查 intervention 是否改变预期机制、训练
 是否正常以及方向是否值得确认；单 seed positive 不得作为科学结论。若结果明显
 违背预注册 prediction 且不存在实现或测量问题，必须 `REJECT_IDEA`。
+
+不要求一个科学机制从理论上唯一导出唯一 intervention。可以在看结果前定义少量、
+由同一机制推导的合理 operationalizations，但不得形成 sweep，不得事后挑选最优
+版本冒充理论预测。训练仍须遵守单 candidate 的总预算；若多个 operationalizations
+无法在该预算内形成清楚的判别设计，应先用非训练 exploratory evidence 缩小范围，
+而不是扩大训练次数。
 
 只有 paired pilot 与 prediction 一致，才可保持数据、intervention、训练配置、评价
 指标和判定标准完全不变，补充两个 seed 至 total 3 seeds。单个 candidate 的标准
