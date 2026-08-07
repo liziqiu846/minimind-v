@@ -20,6 +20,29 @@ Failed ideas must never be deleted.
 历史 result 中的 `REJECT_IDEA` 是 autonomous workflow disposition，不自动等价于
 `MECHANISM_REJECTED`。任何失败必须在下方 Failure-scope ledger 中写清科学作用域。
 
+## Canonical role reclassification（2026-08-07）
+
+本节是当前条目的 canonical role 索引。下方历史表保留原始 candidate wording、
+实验结果和状态；其中旧列名 `Candidate mechanism` / `Category` 不再决定条目的
+科学角色。
+
+| ID | Primary role | Parent / served scientific mechanism | Role-scoped disposition | Reclassification and failure scope |
+|---|---|---|---|---|
+| `XMC-01` | `SCIENTIFIC_MECHANISM` | 跨模态联合分布结构及其可迁移表示保持 | `CONJECTURE`; tested bridge rejected | 上位机制仍开放；失败的是 contrastive/co-occurrence theory 到 frozen autoregressive-LVLM unseen risk 的当前唯一-statistic bridge，不是共现或表示保持机制 |
+| `COMP-01` | `SCIENTIFIC_MECHANISM` | 跨模态组合绑定与可组合表示 | `CONJECTURE`; tested proxy rejected | 上位机制仍开放；失败的是 What’sUp caption+EOS NLL 四格 proxy，不是 relation / attribute / order composition 本身 |
+| `VISCOND-01` | `SCIENTIFIC_MECHANISM` | 可迁移视觉依赖与语言捷径 | `CONJECTURE`; tested proxy rejected | 上位机制仍开放；失败的是 MMStar answer-letter correct-image vs no-pixel margin，不是视觉条件信息或 shortcut mechanism |
+| `OBJ-01` | `SCIENTIFIC_MECHANISM` | 生成目标中的模态竞争与跨模态 credit assignment | `CONJECTURE` | 旧启动条件依赖已失败的 VISCOND proxy，且尚无本地 causal validation；不能因此视为机制失败 |
+| `COVER-01` | `SCIENTIFIC_MECHANISM` | 多模态联合支持覆盖与有效样本量 | `CONJECTURE`; tested bridge rejected | 上位 coverage mechanism 仍开放；失败的是 broad source/task labels 到本地唯一 single-factor generative contrast 的 bridge |
+| `CROSSFACT-01` | `EXPERIMENT_TOOL` | 主要服务 `COVER-01`，也可服务 `COMP-01` | schema-gate artifact; not a mechanism | crossed cells 是识别 coverage/composition 的实验设计工具；publisher-defined schema 是否存在不再占据 Active Research Question 核心 |
+| `VISSUP-01` | `ENGINEERING_INTERVENTION` | 服务 `OBJ-01` / `VISCOND-01` | exact instantiation rejected | visually-necessary rotation instruction 是一种 operationalization；其失败不否定视觉监督或目标竞争机制 |
+| `PROJALLOC-01` | `ENGINEERING_INTERVENTION` | 服务跨模态 credit routing / trainability | exact instantiation rejected | fixed-total projector allocation 是实现干预，不是 VLM 泛化理论；当前 `1/4094/1` 失败不得升格为 module-placement mechanism rejection |
+| `LITMAP-01` | `LITERATURE_SCREEN` | 初始机制发现 | completed evidence map | 产生候选问题，不构成 mechanism evidence |
+| `LITMAP-02` | `LITERATURE_SCREEN` | 训练时视觉监督机制筛选 | completed screen | 选择 VISSUP operationalization，不证明其上位机制 |
+| `LITMAP-03` | `LITERATURE_SCREEN` | 低维视觉 trainability 相邻证据筛选 | completed screen | 选择 PROJALLOC operationalization，不证明 projector allocation 是科学规律 |
+| `LITMAP-04` | `LITERATURE_SCREEN` | `OBJ-01` objective routing / absorption | local-intervention bridge rejected | 失败的是从已核查文献唯一导出 no-sweep 本地干预；objective competition、routing 与 task-specific absorption 仍开放 |
+| `LITMAP-05` | `LITERATURE_SCREEN` | frozen-feature signal 与 downstream absorption | readout bridge rejected | 失败的是 architecture/theory 唯一 readout 与 negative completeness；representation signal/absence 两种解释均未被裁决 |
+| `LITMAP-06` | `LITERATURE_SCREEN` | failure-informed scientific-mechanism reselection | planned | 只比较上位机制的 scientific expected value；不把唯一 proxy、intervention、schema 或 theory bridge 当准入门 |
+
 ## Dynamic backlog
 
 | Queue | Candidate | Why now? |
@@ -28,7 +51,7 @@ Failed ideas must never be deleted.
 | `NEXT` | 尚无可执行 training candidate | `CROSSFACT-01` 先做 immutable primary-source/schema gate；只有 exact crossed cells、source-factor orthogonality、frozen held-out cell 与 local feasibility 同时通过才允许登记一个训练 candidate |
 | `BACKLOG` | `OBJ-01` | 原 OBJ 启动依赖的 VISCOND positive gate 已失败；LITMAP-04 也未提供合法最小 objective bridge，不得无机制地启动训练 |
 
-| ID | Candidate mechanism | Category | VLM-specific novelty | Literature relation | Why it may explain code/performance decoupling | Falsifiable prediction | Cheapest valid test | Future algorithmic implication | Evidence | Status |
+| ID | Historical entry (original wording retained) | Legacy category | VLM-specific novelty | Literature relation | Why it may explain code/performance decoupling | Falsifiable prediction | Cheapest valid test | Future algorithmic implication | Evidence | Status |
 |---|---|---|---|---|---|---|---|---|---|---|
 | XMC-01 | 跨模态共现图/配对语义一致性，以及模型对主要跨模态谱方向的保持 | Data + representation | 图文联合分布和非对称共现图是单模态 LLM 不具有的对象 | Zhang et al. 2023 给出 spectral MMCL→共现矩阵分解→linear-probe bound；DataComp/DFN/BLIP 提供数据算法证据 | 码长不决定配对语义误差、图连接性或模型是否保留对应谱方向；压缩可降低复杂度同时增加表示近似误差 | 在预声明的关系保持/关系破坏图文对上，真实性能较差的同数据模型应有更小的正确配对 margin；若纯数据统计在同数据 P/S 间不变且无模型保持差异，则不能解释 P/S | 先审计现有 artifact 是否支持冻结 checkpoint 的 pair-margin / representation test；不对历史结果试多个 proxy | semantic-pair filtering、coverage-aware sampling、谱/低秩保持正则 | round1：6/9 P/S 实际数据/permutation 相同，3/9 缺 manifest；round2：完整核查 13 篇 primary theory，最强结果分别止于 contrastive linear probe/retrieval、Gaussian dual-encoder conditional 或机制性 UFM，均无唯一 autoregressive LVLM statistic→semantic-risk bridge；禁止 proxy/layer/rank sweep rescue | BRIDGE_REJECTED |
 | COMP-01 | 跨模态组合绑定相对 bag-of-words / language shortcut | Representation + data | 保持对象/词边际信息但丢失图文关系和顺序，是跨模态组合问题 | Winoground、ARO、SugarCrepe；ARO 提供 composition-aware hard-negative 证据 | 更短/更共享的模型可能维持普通 NLL，却在关系交换、属性绑定和词序反事实上退化 | 同词集合、只改变关系/顺序的预声明反事实对上，较差模型的正确-vs-反事实 margin 应更小 | 冻结 checkpoint 对标准外部双图双描述 panel 做 forced-choice NLL；交叉差分抵消加性文本偏好 | 组合感知 hard negatives、relation-balanced sampling | round1 完整 What’sUp 410 pairs：sign concordance `5/9`、预测方向 CI `1/9`、budget concordance low/current/high=`1/3,3/3,1/3`；95.37%–99.76% pairs 两图偏好同一 caption；触发预注册否定且禁止 rescue | PROXY_REJECTED |
