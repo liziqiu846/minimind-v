@@ -348,8 +348,8 @@ Agent 可以自主改变：
 - **What remains open from the previous question**: frozen representation 中
   signal 是否存在、downstream absorption/transfer、objective mismatch、encoder
   limitation 与 independently justified decodability family 全部开放。
-- **Status**: ACTIVE_DATA_INTERFACE_GATE；下一步创建并提交
-  `experiments/plans/COVER-01_round1.md`。plan commit 前不执行新的 source/data
-  analysis；本 gate 不访问 final confirmation，也不把 random cluster、embedding
-  neighborhood、事后 benchmark category 或 sample count 称为 controlled
-  coverage。
+- **Status**: ACTIVE_DATA_INTERFACE_GATE；`experiments/plans/COVER-01_round1.md`
+  已由当前 plan commit 冻结。Round 1 只执行 primary-source、official dataset、
+  data-lineage 与 local-interface audit，不运行 checkpoint 或 training，不访问
+  final confirmation，也不把 random cluster、embedding neighborhood、事后
+  benchmark category 或 sample count 称为 controlled coverage。

@@ -5,19 +5,19 @@ MODE: AUTONOMOUS_RESEARCH
 ACTIVE_RESEARCH_QUESTION: docs/project/ACTIVE_RESEARCH_QUESTION.md
 CURRENT_IDEA: COVER-01
 CURRENT_ROUND: 1
-CURRENT_STATE: COVER01_PLAN_PENDING
+CURRENT_STATE: COVER01_PLAN_FROZEN
 RUNNING_JOB: none
-LAST_PLAN: experiments/plans/LITMAP-05_round1.md
+LAST_PLAN: experiments/plans/COVER-01_round1.md
 LAST_RESULT: experiments/results/LITMAP-05_round1/RESULT.md
 GPU_HOURS_USED_THIS_CYCLE: 1.39
 ACTIVE_QUEUE: COVER-01
-NEXT_QUEUE: FREEZE_COVER01_AUTHORITATIVE_DATA_GATE
+NEXT_QUEUE: RUN_COVER01_SOURCE_AND_DATA_LINEAGE_GATE
 BACKLOG_QUEUE: OBJ-01
 WINOGROUND_ACCESS: blocked_by_access
 SEARCH_PROGRESS: LITMAP05_COMPLETE;553_raw_records;491_unique_titles;58_prior_search_duplicates;45_heuristic_score_ge_10;13_decisive_primary_sources;source_hashes_verified;deterministic_index_verified
 REJECTION_SCOPE: XMC01_BRIDGE;COMP01_PROXY;VISCOND01_PROXY;VISSUP01_INSTANTIATION;PROJALLOC01_INSTANTIATION;LITMAP04_BRIDGE;LITMAP05_BRIDGE;NO_MECHANISM_REJECTED
 CANONICAL_STATE: docs/project/CURRENT_STATE.md
-RESOURCE_NOTE: COVER01 plan must be committed before source/data-lineage analysis;no checkpoint inference/training yet;PROJALLOC roots43202/43203 forbidden;no running job;no final confirmation
+RESOURCE_NOTE: COVER01 literature/data-lineage plan frozen by current plan commit;round1 has zero GPU/checkpoint/training;PROJALLOC roots43202/43203 forbidden;no running job;no final confirmation
 HARD_STOP: false
 ```
 

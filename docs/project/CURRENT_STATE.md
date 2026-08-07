@@ -250,8 +250,9 @@ level 解读。当前没有证据达到 `MECHANISM_REJECTED`。
 
 ## 10. 当前动态 backlog
 
-- **ACTIVE**：`COVER-01` authoritative controlled-coverage gate。先建立并提交
-  immutable literature/data-interface plan；提交前不执行新 scientific analysis、
+- **ACTIVE**：`COVER-01` authoritative controlled-coverage gate。Immutable
+  literature/data-interface plan 已由当前 plan commit 冻结；round 1 只执行
+  primary-source、official dataset、data-lineage 与 local-interface audit，不运行
   checkpoint inference 或训练。
 - **NEXT**：尚未登记可执行 candidate。`COVER-01` 只有在 authoritative strata、
   single-factor contrast、held-out prediction 与 local feasibility 同时通过时才允许
@@ -261,7 +262,7 @@ level 解读。当前没有证据达到 `MECHANISM_REJECTED`。
   训练 candidate。
 
 `LITMAP-05` 已按 immutable gate 作出 `NO_CANDIDATE` /
-`BRIDGE_REJECTED`。下一步先提交 `COVER-01_round1` immutable plan，再核查
+`BRIDGE_REJECTED`。`COVER-01_round1` immutable plan 已冻结；下一步核查
 authoritative domain/mixture labels、现有数据 lineage 与唯一 controlled-coverage
 contrast；不得把数据量、随机 cluster 或事后 embedding 分组换名为 coverage。
 
@@ -306,7 +307,8 @@ contrast；不得把数据量、随机 cluster 或事后 embedding 分组换名�
 
 - 当前最新 scientific result：`experiments/results/LITMAP-05_round1/RESULT.md`
   （`NO_CANDIDATE` / `BRIDGE_REJECTED`，由本次 result commit 冻结）。
-- 下一 immutable plan：`experiments/plans/COVER-01_round1.md`，尚待创建并提交。
+- 当前 immutable plan：`experiments/plans/COVER-01_round1.md`（由当前 plan
+  commit 冻结）。
 - `RUNNING_JOB=none`，`HARD_STOP=false`。
 - 昨夜新增 plans、results、raw receipts、logs 和 SHA manifests 已在
   `EXPERIMENT_REGISTRY.md` 建立 canonical 索引；失败原始证据保留。
@@ -323,5 +325,5 @@ contrast；不得把数据量、随机 cluster 或事后 embedding 分组换名�
 > candidate 的失败粒度分别是 bridge/proxy/proxy/instantiation/instantiation，
 > 后续 `LITMAP-04` 与 `LITMAP-05` 均为 bridge rejection，没有上位 mechanism 被
 > 否定。当前 active question 是 `COVER-01` authoritative controlled-coverage
-> gate；先创建并提交 immutable plan，不重跑既有实验，不制造新 probe，不访问
-> final confirmation set。
+> gate；从已提交的 immutable plan 继续 source/data-lineage audit，不重跑既有
+> 实验，不制造新 proxy，不访问 final confirmation set。
