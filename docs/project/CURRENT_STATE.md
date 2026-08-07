@@ -254,8 +254,8 @@ level 解读。当前没有证据达到 `MECHANISM_REJECTED`。
 ## 10. 当前动态 backlog
 
 - **ACTIVE**：`CROSSFACT-01` authoritative crossed-cell gate。它只接受发布者在
-  outcome 前定义的同一 image/acquisition × 多 text/task cells；当前必须先提交
-  immutable literature/schema plan，plan commit 前不执行新科学分析。
+  outcome 前定义的同一 image/acquisition × 多 text/task cells；round 1 immutable
+  literature/schema plan 已冻结，禁止 checkpoint/GPU/training。
 - **NEXT**：尚无可执行 training candidate。只有 exact crossed-cell lineage、
   source-factor orthogonality、matched redundancy、frozen held-out cell、direct
   generative evidence 与 local feasibility 全部通过，才允许登记一个最小训练
@@ -265,7 +265,7 @@ level 解读。当前没有证据达到 `MECHANISM_REJECTED`。
   训练 candidate。
 
 `COVER-01` 已按 immutable gate 作出 `NO_CANDIDATE` /
-`BRIDGE_REJECTED`。下一步只允许冻结并执行 `CROSSFACT-01` 的 targeted
+`BRIDGE_REJECTED`。下一步只允许执行已冻结的 `CROSSFACT-01` targeted
 primary-source/schema gate；不得从 LAION/VFLAN、broad task categories、
 embedding/LLM clusters 中搜索 mixture 或 held-out target。
 
@@ -316,8 +316,8 @@ embedding/LLM clusters 中搜索 mixture 或 held-out target。
 - 当前最新 scientific result：`experiments/results/COVER-01_round1/RESULT.md`
   （`NO_CANDIDATE` / `BRIDGE_REJECTED`；只否定当前
   authoritative-broad-label-to-local-single-factor bridge）。
-- 最近完成的 immutable plan：`experiments/plans/COVER-01_round1.md`
-  （plan commit `cc88cd3`）；`CROSSFACT-01` 新分析必须等待其独立 plan commit。
+- 当前 immutable plan：`experiments/plans/CROSSFACT-01_round1.md`（由当前 plan
+  commit 冻结）；round 1 为 0 checkpoint/GPU/training 的 literature/schema gate。
 - `RUNNING_JOB=none`，`HARD_STOP=false`。
 - 新增 plans、results、raw receipts、logs 和 SHA manifests 已在
   `EXPERIMENT_REGISTRY.md` 建立 canonical 索引；失败原始证据保留。

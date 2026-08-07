@@ -381,6 +381,7 @@ Agent 可以自主改变：
 - **What remains open from the previous question**: broad domain/source coverage、
   task diversity、source-specific transfer、ALLaVA 全量 lineage 与 future formal
   generative coverage theorem 均开放。
-- **Status**: ACTIVE_PLAN_REQUIRED；在独立 immutable plan 提交前，不执行新的
-  primary-source search、schema selection、local cell construction、checkpoint
-  inference 或 training。
+- **Status**: ACTIVE_SCHEMA_GATE；`experiments/plans/CROSSFACT-01_round1.md`
+  已由当前 plan commit 冻结。Round 1 只执行 targeted primary-source、official
+  schema 与 local-lineage audit，不运行 checkpoint/GPU/training，不访问 final
+  confirmation。
