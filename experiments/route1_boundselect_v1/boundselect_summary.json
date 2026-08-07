@@ -1,0 +1,76 @@
+{
+  "baseline": {
+    "actual_encoded_bits": 10488,
+    "budget": {
+      "allocation": {
+        "projector_layer_1": 2048,
+        "projector_layer_2": 2048
+      },
+      "mapping_root": null,
+      "total_coordinate_budget": 4096
+    },
+    "candidate_id": "M1-root-none",
+    "heldout_risk_source": {
+      "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/04_M1_root-none_seed-2026_lr-0p015/risk_decoded_validation_correct.json",
+      "role": "decoded_quantized_validation_correct",
+      "sample_count": 2000,
+      "sha256": "ce81e672c0768fbf182d74e6a6c8ca15d3189427762b62477cfbd1eaac6578ba",
+      "value_in_registry": false
+    },
+    "heldout_validation_answer_risk": 4.868565459132195,
+    "raw_full_compression_bound": 12.516978640541838,
+    "structure": "M1"
+  },
+  "candidate_count": 10,
+  "decision": "FAIL",
+  "differences_selected_minus_baseline": {
+    "actual_encoded_bits": -4104,
+    "raw_full_compression_bound": -1.5459933801205583,
+    "risk": 0.1272967089414596
+  },
+  "existing_finite_family_union_bound": {
+    "familywise_delta": 0.05,
+    "formal_model_count": 10,
+    "per_model_delta": 0.005,
+    "relation": "per_model_delta=familywise_delta/K"
+  },
+  "interpretation_scope": "frozen finite-catalog Stage 2 v2 family; failure does not reject compression theory or all bound-guided algorithms",
+  "no_additional_experiments_authorized": true,
+  "pass_criteria": {
+    "selected_bound_strictly_lower_than_baseline": true,
+    "selected_risk_strictly_lower_than_baseline": false,
+    "selection_did_not_read_heldout_risk": true
+  },
+  "protocol_id": "route1-boundselect-v1",
+  "raw_bound_definition_changed": false,
+  "registry_path": "/tmp/minimind-boundselect.qfrXIE/experiments/route1_boundselect_v1/candidate_registry.json",
+  "registry_sha256": "2e792ea77330f0610649960dc79e145f3225eb5468ca23f57ff9ce5eed7769e3",
+  "schema_version": 1,
+  "selected": {
+    "actual_encoded_bits": 6384,
+    "budget": {
+      "allocation": {
+        "shared": 4096
+      },
+      "mapping_root": 43103,
+      "total_coordinate_budget": 4096
+    },
+    "candidate_id": "M3-root-43103",
+    "heldout_risk_source": {
+      "path": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/10_M3_root-43103_seed-2026_lr-0p050/risk_decoded_validation_correct.json",
+      "role": "decoded_quantized_validation_correct",
+      "sample_count": 2000,
+      "sha256": "a7df51643e35fc0011d745be6a4f6da70f6e7555a75234c40548bda2425d1bbf",
+      "value_in_registry": false
+    },
+    "heldout_validation_answer_risk": 4.995862168073654,
+    "raw_full_compression_bound": 10.97098526042128,
+    "structure": "M3"
+  },
+  "selection_cost_bits": 4,
+  "selection_cost_checkpoint_reencoding_bits": 0,
+  "selection_input_contains_heldout_risk_values": false,
+  "selection_receipt_path": "/tmp/minimind-boundselect.qfrXIE/experiments/route1_boundselect_v1/selection_receipt.json",
+  "selection_receipt_sha256": "a68fb93bb28a546c5acaf39a0fced5597a4989221320fa195107986a08a7541e",
+  "status": "complete"
+}
