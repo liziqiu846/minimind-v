@@ -345,3 +345,32 @@ competition / gradient routing。
 
 **后果**：nightly report 只作为过程日志；不得保存比 `CURRENT_STATE.md` 更新的
 隐藏科学状态。状态同步不删除失败证据，也不改变原始实验结果。
+
+---
+
+## 2026-08-07｜LITMAP-04 objective-routing 本地干预桥被否定
+
+**决定**：`LITMAP-04` 按 immutable gate 判为 `NO_CANDIDATE`，科学 failure
+level=`BRIDGE_REJECTED`；不从已核查路线中任挑 component 或超参数启动训练。
+
+**依据**：
+
+1. 五族搜索得到 555 raw records、523 unique titles，完整核查 14 篇决定性 primary
+   sources，source hashes 全部通过；
+2. direct autoregressive-LVLM mechanism、matched/component controls 与 external
+   evidence 数量门通过；
+3. 所有本地路线均依赖额外 teacher/tokenizer/head、multi-stage schedule、
+   seeing/blind proxy、loss/layer/rank/task/mixture 选择，或超出当前资源；
+4. 唯一原本简单的 V-GIFT 路线已经由 `VISSUP-01` 当前 instantiation 有效否定，
+   不能换名重试。
+
+**后果**：
+
+- 只否定当前 literature-to-local-minimal-intervention bridge；
+- objective competition、gradient routing、task-specific absorption 与
+  frozen-feature/objective mismatch 保持开放；
+- Active Research Question 切换到 `LITMAP-05` frozen-feature sufficiency /
+  identifiability gate；
+- 在 immutable plan 提交前不执行新 scientific search/readout；之后也不得 sweep
+  layer/rank/pooling/probe/metric。若无唯一 readout bridge，转入 controlled
+  coverage gate。

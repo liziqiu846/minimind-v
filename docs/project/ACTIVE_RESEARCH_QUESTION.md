@@ -17,11 +17,10 @@ Mission Question 不得由 Agent 自行改变。
 
 当前 active question 是：
 
-> 在 visual-necessary supervision 与 fixed-total projector allocation 都未改善
-> held-out mechanism 或外部任务后，哪一种有 direct autoregressive-LVLM primary
-> evidence 的训练动力学机制，能够区分“frozen features 不含可用信号”“模型只吸收
-> task-specific signal”与“autoregressive objective 对视觉梯度的路由/竞争不利”，
-> 并导出一个不重复已失败路线的最小可证伪干预？
+> 是否存在一个由 architecture 与正式理论共同唯一固定、无需 layer/rank/proxy
+> sweep 的 frozen-feature readout，能够先裁决当前视觉表示是否含有 held-out
+> rotation 所需信号，并区分“信号在 frozen representation 中缺失”与“信号存在但
+> 下游 autoregressive 模型未吸收/未迁移”？
 
 这一问题是当前子问题，不是永久冻结的唯一主线。Agent 可以依据可靠实验、
 反例或权威文献自主切换 Active Research Question。
@@ -293,7 +292,32 @@ Agent 可以自主改变：
   风险”，若成立可自然导出 objective routing、gradient balancing 或 representation
   matching 原则；若没有满足严格门的机制，则应转向新的数据/表示 candidate，而不是
   重复训练 rescue。
-- **Status**: ACTIVE_LITERATURE_GATE；下一步先冻结并提交
-  `experiments/plans/LITMAP-04_round1.md`。本 gate 不训练、不运行 checkpoint、不
-  访问 final confirmation，也不得改变 rotation ratio/task/prompt、搜索 allocation、
-  增加 seed 或制造新 checkpoint proxy。
+- **Status**: DEMOTED_AS_ACTIVE；failure level=`BRIDGE_REJECTED`。冻结计划后共
+  搜索 555 raw records、523 unique titles，完整核查 14 篇决定性 primary sources。
+  Direct mechanisms 与 matched controls 存在，但没有路线同时满足 unique、
+  single-factor、no-sweep 与本地资源门；结果是 `NO_CANDIDATE`。这只否定当前
+  literature-to-local-minimal-intervention bridge，不否定 objective competition、
+  gradient routing、task-specific absorption 或 frozen-feature/objective mismatch。
+
+### 2026-08-07｜LITMAP-05 frozen-feature sufficiency / identifiability gate
+
+- **Question**: 是否有 architecture-defined、theory-supported 且无需
+  layer/rank/pooling/proxy sweep 的 readout，能判断当前 frozen visual
+  representation 是否含有 held-out rotation 所需信号，并把 representation
+  insufficiency 与 downstream absorption/transfer failure 区分开？
+- **Why the old question was insufficient**: `LITMAP-04` 找到的 objective-routing
+  路线都需要多 component、额外 teacher/tokenizer/head、loss/layer/rank/ratio
+  选择、seeing/blind proxy 或超出本地资源，不能唯一裁决三个 competing
+  explanations；直接启动其中任一路线都会重开已禁止的 search。
+- **Evidence / literature origin**: `VISSUP-01` 与 `PROJALLOC-01` 两个不同
+  instantiation 均未使 held-out rotation 明显离开 chance，说明在继续改变 objective
+  前必须先裁决 frozen feature 中有没有可识别 signal；`LITMAP-04` 也明确把
+  frozen-feature/objective mismatch 保留为开放空间。
+- **Mission relation**: 该 gate 直接定位“视觉数据结构是否进入了模型表示”与“已进入
+  表示但未被生成目标吸收”之间的最小断点；若有唯一 readout，可产生无需新训练的
+  falsifier，并为 encoder-side 或 downstream-side 算法选择提供依据；若没有，则转向
+  controlled coverage 而不制造新 probe。
+- **Status**: ACTIVE_LITERATURE_GATE；下一步创建并提交
+  `experiments/plans/LITMAP-05_round1.md`。plan commit 前不执行新 scientific
+  search/readout；本 gate 不训练、不访问 final confirmation，也不得 sweep
+  layer/rank/pooling/probe/metric。

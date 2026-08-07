@@ -290,3 +290,19 @@ checkpoint-only prediction test；不训练。
   autoregressive-objective mismatch 与 matched auxiliary-objective 五族检索；只有
   ≥2 篇 direct autoregressive-LVLM sources、≥1 个 matched control、mechanism 与
   external 双证据及无需 sweep 的唯一干预同时满足时，才允许登记一个新 candidate。
+
+## 17. 持续日志：LITMAP-04 objective-routing gate 判定
+
+- 五族搜索保存 555 raw records、523 unique titles，标记 81 个 prior-search
+  duplicates 与 56 个 heuristic score≥10 records；完整核查 14 篇决定性 primary
+  sources，source hashes 全部通过。
+- Direct autoregressive-LVLM mechanism、matched/component controls 与 external
+  evidence 数量门通过，但 unique local intervention 门失败：候选均依赖额外
+  component、teacher/tokenizer/head、seeing/blind proxy、loss/layer/rank/ratio
+  选择、multi-stage schedule 或超出当前资源。
+- `LITMAP-04` 判为 `NO_CANDIDATE` / `BRIDGE_REJECTED`。这只否定当前文献到本地
+  single-factor no-sweep 干预的 bridge，不否定 objective competition、gradient
+  routing、task-specific absorption 或 frozen-feature/objective mismatch。
+- 本轮 0 GPU、0 checkpoint inference、0 training，未访问 final confirmation。
+  ACTIVE 转为 `LITMAP-05` frozen-feature sufficiency / identifiability gate；先提交
+  immutable plan，再开始新 scientific search/readout。

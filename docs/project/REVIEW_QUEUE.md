@@ -199,3 +199,25 @@
 - **Recommended human decision**: 无需立即决定；之后审查 paired allocation 是否
   隔离了预期 capacity 因素，并确认外推边界不被扩大成“frozen encoder 不可读”或
   “objective competition 已成立”。
+
+## 2026-08-07｜LITMAP-04：objective-routing 本地最小干预 bridge 被否定
+
+- **Date**: 2026-08-07
+- **Idea / issue**: direct autoregressive-LVLM objective-routing /
+  task-specific-absorption evidence 是否能唯一落到本地 single-factor、no-sweep
+  最小干预。
+- **Why human should review it**: 文献中存在多项 direct positive mechanisms，但其
+  原始设置同时改变 component、teacher/tokenizer/head、loss、layer/rank/ratio、
+  training stage 或计算资源；必须防止把“方法有效”误写成“可在本项目单因素验证”，
+  也不能反向把 bridge failure 写成上位机制失败。
+- **Current evidence**: 555 raw records、523 unique titles、14 篇决定性 primary
+  sources 全文/appendix 核查，source hashes 通过。Direct evidence 与 matched
+  control 门通过，unique local intervention 门失败；结果 commit `872657d`。
+- **What Agent has already frozen**: `LITMAP-04=BRIDGE_REJECTED`；只否定当前
+  literature-to-local-minimal-intervention bridge。不从已核查路线中任挑 component
+  或 sweep 超参数训练；objective competition、gradient routing、task-specific
+  absorption 与 frozen-feature/objective mismatch 仍开放。
+- **Whether autonomous work can continue**: 可以；转入 `LITMAP-05`
+  frozen-feature sufficiency / identifiability gate，先冻结 immutable plan。
+- **Recommended human decision**: 无需立即决定；之后可审查 14-paper applicability
+  matrix 与 no-sweep local-feasibility gate 的边界。
