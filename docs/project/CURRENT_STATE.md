@@ -1,7 +1,7 @@
 # 上海交通大学实习——当前研究状态
 
-**版本：v3**  
-**日期：2026-08-06**  
+**版本：v4**
+**日期：2026-08-07**
 **定位：项目当前工作状态的最高优先级入口。任何新对话、Codex 任务或阶段三研究决策开始前，先读本文。**
 
 ---
@@ -19,6 +19,10 @@
 9. `docs/project/NIGHT_POLICY.md`：预授权夜间自治规则。
 
 若聊天记忆与仓库最新文档冲突，以仓库为准。
+
+`NIGHTLY_REPORT_*.md` 只记录过程，不是 canonical state。每个 autonomous research
+cycle 结束或出现重要科学状态变化后，必须把可靠状态同步回本文及相应 registry /
+decision log，不能让 nightly report 成为更新的“隐藏真实状态”。
 
 ---
 
@@ -182,65 +186,124 @@ crossed checkpoint-only pilot 在解耦 model seed / probe seed、增加 shared 
 
 ---
 
-## 8. 当前下一步
+## 8. 2026-08-07 autonomous research 对账
 
-**先做大方向理论与文献筛选，不开新实验。**
+昨夜从文献地图生成 5 个初始 candidate，并依次完成低成本理论 gate、冻结 checkpoint
+prediction test 和两个符合阶段三规则的 paired training pilot。当前证据支持的状态是：
 
-下一步应围绕一个总问题：
+| Idea | 当前科学状态 | 已排除的精确范围 | 仍然开放 |
+|---|---|---|---|
+| `XMC-01` | `BRIDGE_REJECTED` | 当前 contrastive/co-occurrence theory 到冻结 autoregressive MiniMind-V semantic-risk statistic 的理论桥 | 跨模态共现结构、谱结构或表示保持机制本身；若未来出现新的生成式风险证明或新 artifact，可重新登记不同 bridge |
+| `COMP-01` | `PROXY_REJECTED` | What’sUp 上 caption+EOS NLL binding margin 作为组合绑定和总语义风险排序的 proxy | 跨模态组合绑定机制、其他预先理论化且非语言偏好主导的测量 |
+| `VISCOND-01` | `PROXY_REJECTED` | MMStar answer-letter correct-image vs no-pixel margin 作为任务相关视觉条件信息及总风险排序的 proxy | 视觉条件信息影响泛化的机制、其他有构念效度且非事后搜索的操作化 |
+| `VISSUP-01` | `INSTANTIATION_REJECTED` | 当前 9.16% rotation instruction、4,096-coordinate M2-current、frozen encoder/adapter 的具体 visual-necessary intervention | 其他有独立理论与反例支持的 objective design、不同合法机制或 richer visual targets |
+| `PROJALLOC-01` | `INSTANTIATION_REJECTED` | 当前 frozen-base / hashed-coordinate setting 的 exact `1/4094/1` fixed-total projector allocation | frozen-feature identifiability、其他预注册 module-placement regime、objective mismatch、gradient routing、task-specific absorption |
 
-\[
-\boxed{\text{VLM 相比 LLM，泛化问题到底“新”在哪里？}}
-\]
+这些状态不改动任何原始实验结果。历史 result 中的 `REJECT_IDEA` 是当时 autonomous
+workflow 的“停止该 candidate 并转向下一路线”判定；其科学外推必须按上表的 failure
+level 解读。当前没有证据达到 `MECHANISM_REJECTED`。
 
-具体任务：
+两个 paired pilot 的关键负结果：
 
-1. 以任务书和两篇核心论文为主干；
-2. 按需补充可靠的 VLM / CLIP 泛化理论、跨模态表示、模态失衡、数据结构与训练算法文献；
-3. 系统比较**数据侧、模型/表示侧、训练侧**三条大方向；
-4. 每条方向必须回答：
-   - 是否有真正 VLM 特有的新科学内容；
-   - 是否可能解释“码长—真实性能脱钩”；
-   - 是否能自然导出训练算法或训练决策；
-   - 是否能在 MiniMind-V 上低成本验证并具有一般 VLM 含义；
-5. 比较完成后，再冻结阶段三新的主攻科学问题。
-
-在此之前，不启动新的 Codex 实验。
+- `VISSUP-01` root `43101`：held-out rotation 差 `-0.69 pp`，CV-Bench-2D 差
+  `-0.14 pp`；不补 roots、不更换 task/ratio/proxy。
+- `PROJALLOC-01` root `43201`：rotation 差 `+1.29 pp`，95% CI
+  `[-2.08,+4.56] pp`；CV-Bench 差 `-1.39 pp`，margin 差 `-0.05817`；
+  六门仅工程配对门通过，不运行 `43202/43203`。
 
 ---
 
-## 9. 当前禁止事项
+## 9. 当前 Active Research Question
+
+> 在 visual-necessary supervision 与 fixed-total projector allocation 都未改善
+> held-out mechanism 或外部任务后，哪一种有 direct autoregressive-LVLM primary
+> evidence 的训练动力学机制，能够区分“frozen features 不含可用信号”“模型只吸收
+> task-specific signal”与“autoregressive objective 对视觉梯度的路由/竞争不利”，
+> 并导出一个不重复已失败路线的最小可证伪干预？
+
+### 本次研究重心切换
+
+- **Previous active question**：固定总 4,096 trainable coordinates 时，
+  projector-dominant `1/4094/1` 是否优于 current `582/2327/1187`。
+- **Why it was demoted**：`PROJALLOC-01` 的有效 paired pilot 未通过任何科学支持门；
+  小幅 rotation 正点估计低于阈值且 CI 跨 0，外部 CV-Bench accuracy/margin 反向。
+- **New active question**：`LITMAP-04` objective-routing / task-specific absorption /
+  frozen-feature–autoregressive-objective mismatch literature gate。
+- **Evidence motivating the switch**：`VISSUP-01` 与 `PROJALLOC-01` 两个不同的具体
+  instantiation 均未使 held-out mechanism 和外部任务改善；继续调整 task、比例、
+  allocation、seed 或 proxy 会重复已失败路线。
+- **What remains open from the previous question**：frozen feature 是否包含可识别
+  信号、其他合法 module-placement regime、task-specific absorption、objective
+  mismatch 与 gradient routing 均未被否定。
+
+更完整的 Mission Envelope 与 active-question 历史见
+`docs/project/ACTIVE_RESEARCH_QUESTION.md`。
+
+---
+
+## 10. 当前动态 backlog
+
+- **ACTIVE**：`LITMAP-04`。计划 commit `fe957d8` 已冻结；只做 primary-source
+  literature/theory gate，不运行 GPU、checkpoint inference 或训练。
+- **NEXT**：暂无已通过初筛的新 candidate。`NEXT<2` 已触发定向检索。
+- **BACKLOG**：`OBJ-01`、`COVER-01`。前者不能由已失败的 `VISCOND-01` positive
+  gate 启动；后者缺权威 domain/mixture 标签与本地最小判别设计。二者仍是开放上位
+  假设，不是 rejected。
+
+当前 `LITMAP-04` 搜索已建立索引；下一步是完成决定性 primary sources 的 problem
+setting、assumptions、mechanism、controls、limitations 与本地可执行性核查，并按
+immutable gate 只作出：
+
+1. `SELECT_ONE_CANDIDATE`：只有存在不复用失败 proxy/instantiation、无需 sweep、
+   能区分至少两个竞争解释的唯一最小干预时；
+2. `NO_CANDIDATE`：否则记录缺口，转向新的数据/表示 candidate 搜索。
+
+---
+
+## 11. 当前开放假设
+
+1. frozen visual features 可能缺少当前任务可识别信号；
+2. 信号可能被模型 task-specifically 吸收，但没有迁移到外部任务；
+3. autoregressive token objective 可能造成视觉/语言梯度路由或竞争失衡；
+4. objective 与 frozen representation 可能不匹配；
+5. 不同、预先固定且有 direct evidence 的 module placement 仍可能有效；
+6. 跨模态共现、组合绑定、视觉条件信息与数据覆盖等上位机制仍开放，只是当前
+   bridge/proxy/instantiation 不成立。
+
+---
+
+## 12. 当前禁止事项
 
 - 不继续挽救当前 \(D_I\)；
-- 不把 crossed pilot 写成“CMI 已失败”；
+- 不把当前 `BRIDGE_REJECTED`、`PROXY_REJECTED` 或
+  `INSTANTIATION_REJECTED` 写成上位 mechanism 已失败；
+- 不运行 `VISSUP-01` 的额外 roots，不换 rotation task/ratio/prompt/proxy；
+- 不运行 `PROJALLOC-01` 的 `43202/43203`，不搜索 allocation，不恢复旧 sweep；
 - 不回到只优化 checkpoint 码长；
-- 不因为已经研究过 CMI 就默认它必须继续成为唯一主线；
-- 不把“图像和文本都影响泛化”这种显然事实包装成主要创新；
-- 不先拍脑袋提出具体数据分配、正则项或 proxy，再反过来找理论；
+- 不制造新的无理论桥 checkpoint proxy；
 - 不访问 final confirmation set；
-- 不提前进入阶段四。
+- 不提前宣布进入阶段四。
 
 ---
 
-## 10. 仓库同步状态
+## 13. 仓库与执行状态
 
-Codex 曾报告 crossed pilot 本地产物：
-
-```text
-experiments/results/phase3_di_crossed_probe_pilot_v1/
-```
-
-本地 commit：
-
-```text
-b1205ae42bb2af2e0658d440d90799db3ed43ced
-```
-
-截至 v3 更新时，GitHub 远端仍未解析到该 commit，也未发现 crossed pilot 与上一轮 `infra_audit/` 目录。
-
-因此在**下一次正式 Codex 实验前**，仍需先完成这些证据的 push / freeze，并回填 `EXPERIMENT_REGISTRY.md`。
+- 当前 scientific result commit：`376f7de`（`PROJALLOC-01` negative result）。
+- 当前 immutable plan commit：`fe957d8`（`LITMAP-04`）。
+- `RUNNING_JOB=none`，`HARD_STOP=false`。
+- 昨夜新增 plans、results、raw receipts、logs 和 SHA manifests 已在
+  `EXPERIMENT_REGISTRY.md` 建立 canonical 索引；失败原始证据保留。
+- `LITMAP-04` 的检索中间文件仍属于在研 artifact，完成 gate 后另行冻结，不与本次
+  governance sync 混为一个 scientific result。
 
 ---
 
-## 11. 新对话启动模板
+## 14. 新对话启动模板
 
-> 继续上海交通大学实习——VLM 泛化理论项目。先读取 GitHub `docs/project/CURRENT_STATE.md`，仓库文档优先于聊天记忆。当前仍处于阶段三；gradient replacement `D_I` 路线已停止。现在不要先钻入某个具体 proxy 或实验，请以任务书和两篇核心论文为主干，按需补充最新可靠文献，系统比较 VLM 泛化的**数据侧、模型/表示侧、训练侧**三条大方向，先回答“VLM 相比 LLM，泛化问题到底新在哪里”，再决定新的主攻理论方向。
+> 继续上海交通大学实习——VLM 泛化理论项目。先读取
+> `docs/project/CURRENT_STATE.md` 和 `docs/theory/VLM泛化理论基线.md`，仓库
+> canonical state 优先于聊天与 nightly report。当前仍处于阶段三；五个已完成
+> candidate 的失败粒度分别是 bridge/proxy/proxy/instantiation/instantiation，
+> 没有上位 mechanism 被否定。当前 active question 是 `LITMAP-04`
+> objective-routing / task-specific absorption gate；从已冻结计划继续 primary-source
+> 核查，不重跑昨夜实验，不访问 final confirmation set。

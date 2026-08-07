@@ -3,7 +3,18 @@
 重要事项写入此队列并冻结相关结论。除非同时触发 `HARD_STOP`，队列中存在事项
 不得停止 Research Envelope 内其他已授权工作。
 
-## 2026-08-07｜XMC-01：纯数据机制已局部排除，模型保持桥待验证
+## 2026-08-07｜失败作用域对账
+
+- `XMC-01`：`BRIDGE_REJECTED`，不否定跨模态共现/表示保持机制。
+- `COMP-01`：`PROXY_REJECTED`，不否定组合绑定机制。
+- `VISCOND-01`：`PROXY_REJECTED`，不否定视觉条件信息机制。
+- `VISSUP-01`：`INSTANTIATION_REJECTED`，不否定 objective design 一般作用。
+- `PROJALLOC-01`：`INSTANTIATION_REJECTED`，不否定其他 module-placement regime。
+
+以下早先记录中的 workflow `REJECT_IDEA` 均按上述 failure level 解读；当前没有
+`MECHANISM_REJECTED`。
+
+## 2026-08-07｜XMC-01：纯数据解释已局部排除，模型保持桥待验证
 
 - **Date**: 2026-08-07
 - **Idea / issue**: 跨模态共现图/配对语义一致性是当前形式理论最强方向，但现有正式
@@ -26,13 +37,19 @@
 - **Date**: 2026-08-07
 - **Idea / issue**: objective balance 与 controlled domain/compositional coverage 均有
   算法证据，但现有同数据 checkpoint 不能给出因果判别。
-- **Why human should review it**: 真正验证需要重新训练，今晚授权明确禁止。
+- **Why human should review it**: 真正验证需要重新训练；现有 artifact 不能给出因果
+  判别，但当前两个 broad idea 都还没有满足 mechanism-intervention training 的
+  candidate-specific prediction 与唯一最小设计。
 - **Current evidence**: CoCa/MM1/Prismatic/SigLIP 及 Kempf/DataComp 的文献证据；
   尚无 MiniMind-V prediction test。
-- **What Agent has already frozen**: 两个方向均保持 `NEW`，不升格、不训练。
-- **Whether autonomous work can continue**: 可以继续其他 checkpoint-only candidate。
-- **Recommended human decision**: 仅在 checkpoint-only prediction test 形成稳定规律后，
-  再决定是否批准最小训练实验；正式算法主实验仍需 `HARD_STOP`。
+- **What Agent has already frozen**: 两个方向均保持 `NEW`，不以 broad 名称直接训练；
+  `OBJ-01` 原先依赖的 `VISCOND-01` positive proxy gate 已失败，`COVER-01` 缺合法
+  domain/mixture 标签。
+- **Whether autonomous work can continue**: 可以；若后续新 candidate 满足
+  AGENTS.md 的阶段三最小机制干预全部条件，可在预授权资源内执行，不需因训练本身
+  停机。
+- **Recommended human decision**: 无需立即决定；只有明显扩大服务器资源、改变冻结
+  统计关系或访问 final confirmation 时才按 `HARD_STOP` 请求决定。
 
 后续每条记录至少包含：
 
@@ -46,19 +63,21 @@
 - **Whether autonomous work can continue**:
 - **Recommended human decision**:
 
-## 2026-08-07｜COMP-01：外部组合 binding prediction 被否定
+## 2026-08-07｜COMP-01：caption-NLL binding proxy 被否定
 
 - **Date**: 2026-08-07
 - **Idea / issue**: 标准 What’sUp controlled panel 上，生成式 caption+EOS NLL
   binding margin 是否解释 M2/M3 development 风险排序。
 - **Why human should review it**: 这是首个真正未查看外部模型 prediction test；结果
-  否定当前 bridge，同时揭示生成 NLL 几乎被 pair 内同-caption 偏好支配。
+  否定当前 proxy，同时揭示生成 NLL 几乎被 pair 内同-caption 偏好支配，但不能
+  外推为组合绑定机制不存在。
 - **Current evidence**: 18/18 checkpoint、410 pairs、205-cluster bootstrap；
   sign concordance `5/9`，仅 `1/9` 预测方向 CI 不跨 0，low/current/high 分别
   `1/3,3/3,1/3`。触发 immutable plan 的 `≤5/9` 否定标准。
-- **What Agent has already frozen**: `COMP-01=REJECTED`；不得挑 current budget、
-  更换 panel/proxy、追加模型或训练来 rescue。保留 raw 四格 NLL、运行回执和
-  bootstrap 判定。
+- **What Agent has already frozen**: `COMP-01=PROXY_REJECTED`；只否定当前
+  What’sUp caption+EOS NLL binding margin。不得挑 current budget、更换
+  panel/proxy、追加模型或训练来 rescue；组合绑定机制仍开放。保留 raw 四格 NLL、
+  运行回执和 bootstrap 判定。
 - **Whether autonomous work can continue**: 可以；已转向 `XMC-01` model-retention
   bridge。
 - **Recommended human decision**: 无需立即决定；之后审查时重点确认 cluster
@@ -75,16 +94,16 @@
   限于 dual-encoder tilting 与 linear Gaussian conditionals；最强 risk calibration
   限于 contrastive retrieval AUC；最直接 low-rank LVLM theorem 自述为机制解释而非
   quantitative bound，且 downstream 联系只属关联。
-- **What Agent has already frozen**: `XMC-01=REJECTED`；不得 sweep
+- **What Agent has already frozen**: `XMC-01=BRIDGE_REJECTED`；不得 sweep
   layer/pooling/kernel/rank/proxy，不把 contrastive/linear-probe theorem 直接套到
-  autoregressive semantic risk。
+  autoregressive semantic risk。跨模态共现与表示保持机制本身未被否定。
 - **Whether autonomous work can continue**: 可以；已转向 `VISCOND-01`，不触发
   `HARD_STOP`。
 - **Recommended human decision**: 无需立即决定；之后可审查 theorem applicability
   matrix。若未来要恢复 XMC，必须提供新的生成式风险证明或真正新 artifact，而不是
   更换经验表示指标。
 
-## 2026-08-07｜VISCOND-01：MMStar correct-image vs no-pixel 构念门被否定
+## 2026-08-07｜VISCOND-01：MMStar correct-image vs no-pixel proxy 构念门被否定
 
 - **Date**: 2026-08-07
 - **Idea / issue**: 正确图像相对同一 VLM no-pixel 条件的答案判别增量，能否作为
@@ -96,16 +115,16 @@
   bits/token，95% CI `[-0.3067,-0.1348]`，仅 `2/18` 模型为正；预测方向 CI
   `4/9`，low/current/high 各 `2/3`。触发 immutable plan 的 pooled/positive-model
   否定项。
-- **What Agent has already frozen**: `VISCOND-01=REJECTED`；\(V\) 只称操作性条件
-  增量，不称互信息、正式视觉风险或因果中介。不得换 prompt、答案文本、subset、
-  proxy、benchmark 或新增 seed rescue，也不得基于该失败 gate 启动原 `OBJ-01`
-  训练。
+- **What Agent has already frozen**: `VISCOND-01=PROXY_REJECTED`；\(V\) 只称
+  操作性条件增量，不称互信息、正式视觉风险或因果中介。不得换 prompt、答案文本、
+  subset、proxy、benchmark 或新增 seed rescue，也不得基于该失败 gate 启动原
+  `OBJ-01` 训练；视觉条件信息机制仍开放。
 - **Whether autonomous work can continue**: 可以；已转入 `LITMAP-02`，以三条失败
   证据约束新的训练时跨模态监督/优化 mechanism 搜索，不触发 `HARD_STOP`。
 - **Recommended human decision**: 无需立即决定；之后审查时重点确认 negative
   pooled \(V\) 的构念边界和局部 `6/9` 不应升格的联合判定逻辑。
 
-## 2026-08-07｜VISSUP-01：visually necessary paired pilot 被机制门否定
+## 2026-08-07｜VISSUP-01：visually necessary 具体 instantiation 被否定
 
 - **Date**: 2026-08-07
 - **Idea / issue**: 相同 rotated pixels/labels/steps 下，9.16%
@@ -119,9 +138,11 @@
   `[-0.03770,0.02282]`；CV-Bench-2D=`0.35466/0.35327`，Δ=`-0.00139`、
   95% CI `[-0.04242,0.04033]`。CV margin Δ=`+0.00284 bits/token`，但不足以覆盖
   两项主 accuracy 失败。
-- **What Agent has already frozen**: `VISSUP-01=REJECTED`；不补
+- **What Agent has already frozen**: `VISSUP-01=INSTANTIATION_REJECTED`；只否定
+  当前 9.16% rotation、4,096-coordinate、frozen encoder/adapter setting。不补
   `43102/43103`，不换 rotation task、ratio、prompt、metric、subset 或 benchmark
-  rescue；raw scores、coordinates、training/scoring receipts 和 logs 全部保留。
+  rescue；objective design 一般作用仍开放；raw scores、coordinates、
+  training/scoring receipts 和 logs 全部保留。
 - **Whether autonomous work can continue**: 可以；转入 `LITMAP-03`，检索低维
   visual trainability / module allocation / objective routing 的真正不同机制。
 - **Recommended human decision**: 无需立即决定；后续审查时确认结论限制为当前
@@ -143,14 +164,15 @@
   coordinates、22 个 factor mappings、无 unused coordinates。
 - **What Agent has already frozen**: 只登记 `PROJALLOC-01`；pilot 比较 current
   `582/2327/1187` 与唯一正维极端 `1/4094/1`。不换成 vision-heavy、不搜索比例、
-  不运行旧 9-point/72-run sweep，也不以该结果翻转 `VISSUP-01=REJECTED`。
+  不运行旧 9-point/72-run sweep，也不以该结果翻转
+  `VISSUP-01=INSTANTIATION_REJECTED`。
 - **Whether autonomous work can continue**: 可以；另建 immutable plan 后以 fresh
   root `43201` 运行 paired pilot，阳性才补 `43202/43203`。
 - **Recommended human decision**: 无需立即决定；之后审查 fixed-total
   intervention 是否充分隔离 module allocation，以及结论是否严格限制在当前
   frozen-base / hashed-coordinate setting。
 
-## 2026-08-07｜PROJALLOC-01：fixed-total projector-capacity 解释被否定
+## 2026-08-07｜PROJALLOC-01：exact fixed-total projector instantiation 被否定
 
 - **Date**: 2026-08-07
 - **Idea / issue**: 在总 4,096 coordinates 固定时，把 allocation 从 current
@@ -166,10 +188,11 @@
   `0.35257/0.33866`，difference=`-0.01391`、95% CI
   `[-0.03964,0.01113]`，margin difference=`-0.05817 bits/token`。六项 pilot
   criteria 只有 paired invariants 通过。
-- **What Agent has already frozen**: `PROJALLOC-01=REJECTED`；不得运行
-  `43202/43203`、改变 allocation、追加 seed、换 metric/proxy、运行旧 9-point
-  sweep，也不得据此恢复 `VISSUP-01`。结论只适用于当前 frozen-base、
-  hashed-coordinate、visual-necessary setting。
+- **What Agent has already frozen**: `PROJALLOC-01=INSTANTIATION_REJECTED`；不得
+  运行 `43202/43203`、改变 allocation、追加 seed、换 metric/proxy、运行旧
+  9-point sweep，也不得据此恢复 `VISSUP-01`。结论只适用于当前 frozen-base、
+  hashed-coordinate、visual-necessary setting；其他 module-placement regime、
+  frozen-feature identifiability 与 objective mismatch 仍开放。
 - **Whether autonomous work can continue**: 可以；转入 `LITMAP-04`，检索
   objective competition / gradient routing、task-specific absorption 与
   frozen-feature/AR-objective mismatch 的真正不同机制。

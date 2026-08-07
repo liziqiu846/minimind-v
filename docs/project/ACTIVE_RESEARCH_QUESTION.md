@@ -131,8 +131,9 @@ Agent 可以自主改变：
   primary evidence。
 - **Mission relation**: 它直接测试 VLM 相比 LLM 新增的跨模态关系绑定，能被外部
   benchmark 否定，并有 composition-aware training 的自然出口。
-- **Status**: REJECTED_AS_ACTIVE；完整外部 prediction test 仅 5/9 sign concordance、
-  1/9 预测方向 CI 不跨 0，触发预注册否定。
+- **Status**: DEMOTED_AS_ACTIVE；failure level=`PROXY_REJECTED`。完整外部
+  prediction test 仅 5/9 sign concordance、1/9 预测方向 CI 不跨 0，否定当前
+  caption+EOS NLL binding proxy，不否定跨模态组合绑定机制。
 
 ### 2026-08-07｜XMC-01 model-retention bridge active question
 
@@ -147,10 +148,11 @@ Agent 可以自主改变：
 - **Mission relation**: 先审计理论能否连接“联合数据结构→模型表示保持→真实风险”，
   可避免继续制造无桥 proxy；支持时有 representation-preserving training 的算法
   出口，否定时可低成本转向视觉条件利用机制。
-- **Status**: REJECTED_AS_ACTIVE；13 篇 primary-source/appendix audit 未找到从冻结
-  autoregressive LVLM 表示到未见语义风险的唯一量。最强结果分别止于 contrastive
-  retrieval/linear probe、linear-Gaussian dual-encoder conditional 或机制性
-  UFM；继续需要 layer/kernel/rank/proxy 选择，触发预注册否定。
+- **Status**: DEMOTED_AS_ACTIVE；failure level=`BRIDGE_REJECTED`。13 篇
+  primary-source/appendix audit 未找到从冻结 autoregressive LVLM 表示到未见语义
+  风险的唯一量。最强结果分别止于 contrastive retrieval/linear probe、
+  linear-Gaussian dual-encoder conditional 或机制性 UFM；该结果只否定当前 bridge，
+  不否定跨模态共现或表示保持机制。
 
 ### 2026-08-07｜VISCOND-01 active question
 
@@ -165,11 +167,13 @@ Agent 可以自主改变：
 - **Mission relation**: correct-image 相对 counterfactual/no-image 的预测变化是
   生成式 LVLM 特有且可直接证伪的操作性代理；若稳定，可导向视觉保持辅助目标、
   vision-aware sampling 或 decoding/training intervention。
-- **Status**: REJECTED_AS_ACTIVE；官方 MMStar 1,496 eligible items、1,426 独立
-  image groups、18/18 checkpoint 的 pooled correct-image vs no-pixel \(V\) 为
+- **Status**: DEMOTED_AS_ACTIVE；failure level=`PROXY_REJECTED`。官方 MMStar
+  1,496 eligible items、1,426 独立 image groups、18/18 checkpoint 的 pooled
+  correct-image vs no-pixel \(V\) 为
   `-0.2212` bits/token，95% CI `[-0.3067,-0.1348]`，仅 `2/18` 模型为正。虽有
   `6/9` pair 方向一致和 `4/9` 预测方向 CI，但已触发预注册构念否定；不得换
-  prompt、答案形式、subset、proxy、benchmark 或 seed rescue。
+  prompt、答案形式、subset、proxy、benchmark 或 seed rescue。视觉条件信息机制
+  本身仍开放。
 
 ### 2026-08-07｜训练时跨模态监督/优化机制 active question
 
@@ -212,11 +216,13 @@ Agent 可以自主改变：
 - **Mission relation**: 这是“训练监督关系 → 模型吸收视觉结构 → 未见视觉任务”
   的直接因果候选；若成功可自然导出 visually necessary sampling/data construction，
   若失败则否定该机制在当前低维 MiniMind-V 下的可迁移性。
-- **Status**: REJECTED；round1 在模型运行前发现 CV-Bench 为 2–6 choices，按规则
-  使用唯一 schema rescue。round2 root `43101` paired pilot 中，visual 相对 control
-  的 held-out rotation accuracy 差为 `-0.00694`，95% CI
-  `[-0.03770,0.02282]`；CV-Bench-2D 差为 `-0.00139`。visual condition 连预声明
-  mechanism 都未改变，禁止补 roots、换 rotation task/ratio/prompt/proxy。
+- **Status**: DEMOTED_AS_ACTIVE；failure level=`INSTANTIATION_REJECTED`。round1
+  在模型运行前发现 CV-Bench 为 2–6 choices，按规则使用唯一 schema rescue。
+  round2 root `43101` paired pilot 中，visual 相对 control 的 held-out rotation
+  accuracy 差为 `-0.00694`，95% CI `[-0.03770,0.02282]`；CV-Bench-2D 差为
+  `-0.00139`。这只否定当前 9.16% rotation / 4,096-coordinate / frozen
+  encoder-adapter instantiation；禁止补 roots、换 rotation task/ratio/prompt/proxy，
+  但不否定 objective design 一般作用。
 
 ### 2026-08-07｜LITMAP-03 low-dimensional visual trainability gate
 
@@ -258,11 +264,14 @@ Agent 可以自主改变：
 - **Mission relation**: 该实验直接区分“frozen visual features 可读但 projector
   subspace 容量不足”与“增加 projector 容量仍无法吸收视觉 cue”，可解释为何相同
   参数复杂度对应不同跨模态泛化，并保留 module-aware PEFT 的算法出口。
-- **Status**: REJECTED_AS_ACTIVE；root `43201` 的全部 paired engineering invariants
-  通过，但 projector-dominant 的 rotation 差只有 `+1.29 pp`、95% CI
+- **Status**: DEMOTED_AS_ACTIVE；failure level=`INSTANTIATION_REJECTED`。root
+  `43201` 的全部 paired engineering invariants 通过，但 projector-dominant 的
+  rotation 差只有 `+1.29 pp`、95% CI
   `[-2.08,+4.56] pp`、absolute accuracy `0.26389`，CV-Bench-2D accuracy 与 margin
   分别反向 `-1.39 pp` 和 `-0.05817 bits/token`。预注册六门仅工程配对门通过，
-  禁止补 `43202/43203`、换 allocation/metric/proxy 或运行旧 sweep。
+  禁止补 `43202/43203`、换 allocation/metric/proxy 或运行旧 sweep。其他合法
+  module-placement regime、frozen-feature identifiability 与 objective mismatch
+  仍开放。
 
 ### 2026-08-07｜LITMAP-04 objective-routing / task-specific absorption gate
 

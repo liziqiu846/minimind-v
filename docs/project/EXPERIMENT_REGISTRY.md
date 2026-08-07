@@ -1,7 +1,7 @@
 # 上海交通大学实习——实验与审计登记表
 
-**版本：v2**  
-**日期：2026-08-06**  
+**版本：v3**
+**日期：2026-08-07**
 **规则：一项正式实验 / 审计一条记录。结果不删除，只更新状态。**
 
 ---
@@ -14,6 +14,14 @@
 - `AUDIT_PASS`：工程 / 协议审计通过。
 - `PROPOSED`：仅提出，尚未冻结或执行。
 - `SUPERSEDED`：被后续更严格实验或决策替代。
+- `PROXY_REJECTED`：实验有效，但只否定当前经验 proxy 的构念或预测效度。
+- `BRIDGE_REJECTED`：理论审计有效，但只否定当前 theory-to-LVLM bridge。
+- `INSTANTIATION_REJECTED`：实验有效，但只否定当前具体实现 / 干预 / 参数化。
+- `MECHANISM_REJECTED`：只有核心机制预测被直接检验且主要竞争解释受控时使用。
+
+历史 `REJECTED_ROUTE` 保留用于既有记录；新记录必须采用有科学作用域的 failure
+level。result 文件中的 `REJECT_IDEA` 是 workflow disposition，不自动等价于
+`MECHANISM_REJECTED`。
 
 ---
 
@@ -29,6 +37,16 @@
 | 2026-08-06 | D_I minimal rescue experiment | 在去除 probe 混杂后，当前 \(D_I\) 是否值得保留为结构解释指标 | 未进入正式训练 | 原计划：budget=2048；P/S × 3 model seeds；shared panels；更多 steps；raw checkpoint 主性能 | 正式 rescue 未执行；在冻结 K/T 前先由 crossed checkpoint-only pilot 检查测量稳定性，pilot 已触发停止当前 D_I proxy 的条件 | `SUPERSEDED` | 不再启动正式 rescue training，不再通过继续增加 panel/probe/step 挽救当前 \(D_I\)。 |
 | 2026-08-06 | Phase 3 D_I crossed checkpoint-only pilot v1 | 修复 probe identity 混杂后，当前 gradient replacement sensitivity 的测量是否稳定到足以支持正式 rescue | Codex 报告本地 commit `b1205ae42bb2af2e0658d440d90799db3ed43ced`；截至 v2 GitHub 远端未解析到该 commit | budget=2048；6 raw checkpoints；3 shared panels × 33 probes；594 diagnoses；model/probe seed 解耦 | identity audit PASS；增加 K/T 明显降低 CV 与贡献集中，但 T=33 ICC raw/log=0.084/0.160，最低 P/S bootstrap 符号保持率=0.497，seed 43101 跨 panel 发生 P/S 方向翻转；结论 `DI_MEASUREMENT_STILL_UNSTABLE` | `VALID` | 该 pilot 可用于停止“当前 D_I 作为 P/S/CMI 主代理”的路线，但不能解释为 CMI 理论失败。报告目录：`experiments/results/phase3_di_crossed_probe_pilot_v1/`，远端截至 v2 未发现。 |
 | 2026-08-07 | XMC-01 round1 P/S data-graph identity audit | 纯数据图文共现结构是否在同预算 P/S 间变化到足以解释性能排序 | plan commit `1624428`; result commit `1c3678c` | 历史 P/S 9 个预算/seed pair 的 config、training manifest、dataset/permutation receipt | 可完整审计的 6/9 pair 数据 SHA 与每 epoch permutation SHA 全相同；3 个 current-budget pair config 一致但缺 training manifest；结论 `DATA_GRAPH_IDENTITY_NOT_AUDITABLE` | `AUDIT_PASS` | 可用于冻结“纯数据 XMC 不能解释已审计 6 对 P/S”；不得外推到缺失的 3 对，也不证明模型保持机制。`experiments/results/XMC-01_round1/` |
+| 2026-08-07 | LITMAP-01 VLM mechanism evidence map | VLM 相比 LLM 新增的泛化因素中，哪些数据/表示/训练机制同时具有理论、实验与算法出口 | plan commit `ba55681`; map commit `c68b2d0`; close commit `ddfe8c5` | 4 组 scoping map；OpenAlex/arXiv/targeted primary sources | 形成 `XMC-01`、`COMP-01`、`VISCOND-01`、`OBJ-01`、`COVER-01` 五个初始 candidate；不构成任何 mechanism 结论 | `VALID` | `docs/project/literature/night_20260807/`; `docs/project/NIGHTLY_REPORT_20260807.md` 仅为过程日志 |
+| 2026-08-07 | COMP-01 round1 external binding prediction test | caption+EOS NLL 四格 margin 能否表示组合绑定并预测 M2/M3 总语义风险排序 | plan `ca9496e`; result `887778c` | 18 frozen checkpoints；完整 What’sUp 410 relation pairs；205-cluster bootstrap | sign concordance `5/9`，预测方向 CI `1/9`；95.37%–99.76% pairs 两图偏好同一 caption，proxy 被语言偏好主导 | `PROXY_REJECTED` | 只否定当前 caption-NLL binding proxy，不否定跨模态组合绑定机制。`experiments/results/COMP-01_round1/` |
+| 2026-08-07 | XMC-01 round2 autoregressive model-retention bridge audit | 是否存在可唯一固定 frozen autoregressive MiniMind-V statistic 并连接 unseen semantic risk 的正式 bridge | plan `7540cf7`; result `ab30fda` | 13 篇 primary paper 正文/appendix 与 theorem applicability matrix | 最强结果止于 contrastive retrieval/linear probe、linear-Gaussian dual encoder 或机制性 UFM；本地量仍需 layer/pooling/kernel/rank/proxy 选择 | `BRIDGE_REJECTED` | 只否定当前理论桥，不否定跨模态共现/表示保持机制。`experiments/results/XMC-01_round2/` |
+| 2026-08-07 | VISCOND-01 round1 MMStar visual-increment prediction test | correct-image vs no-pixel answer margin 能否作为视觉条件利用与总风险排序 proxy | plan `9b39317`; result `c67bde0`; logs `bdd330d` | 官方 MMStar 1,496 eligible items、1,426 image groups；18 frozen checkpoints | pooled \(V=-0.2212\) bits/token，95% CI `[-0.3067,-0.1348]`；仅 `2/18` 为正；pair concordance `6/9` | `PROXY_REJECTED` | 只否定当前 answer-letter visual-increment proxy；不否定视觉条件信息机制。`experiments/results/VISCOND-01_round1/` |
+| 2026-08-07 | LITMAP-02 failure-driven visual-supervision gate | 三条 checkpoint route 失败后，是否有 direct autoregressive-LVLM evidence 支持一个唯一最小训练 candidate | plan `d6e1646`; result `2423086` | 568 records / 532 unique titles；6 篇决定性 primary sources | 选择 `VISSUP-01`；其他多-head/loss/layer 方案因需要额外选择而未进入本地首测 | `VALID` | `experiments/results/LITMAP-02_round1/` |
+| 2026-08-07 | VISSUP-01 round1 external schema gate | 预注册 CV-Bench scorer 是否适配官方 variable-choice schema | plan `20a67bb`; result `267c8ec` | 官方 CV-Bench 2–6 choices schema；模型运行前 audit | 原固定四选项 scorer 不适配；0 training / inference；允许唯一 schema rescue，其他设计冻结 | `SUPERSEDED` | `experiments/results/VISSUP-01_round1/`; round2 只修正 per-row A–F scorer |
+| 2026-08-07 | VISSUP-01 round2 paired pilot | visual-necessary rotation instruction 能否优于 label-revealed control，学习 held-out rotation 并迁移 CV-Bench | plan `5045a4d`; preflight `fa6cafa`; smoke `69f7d9f`; result `d24ce25`; coordinates `499dfa1` | root `43101`；2 conditions × 2,064 steps；1,008 held-out rotation；1,438 CV-Bench images | rotation 差 `-0.69 pp`，95% CI `[-3.77,+2.28] pp`；CV-Bench 差 `-0.14 pp`；paired engineering gates 通过 | `INSTANTIATION_REJECTED` | 只否定当前 9.16% rotation / 4,096-coordinate / frozen encoder-adapter instantiation；不补 roots。`experiments/results/VISSUP-01_round2/` |
+| 2026-08-07 | LITMAP-03 low-dimensional visual-trainability gate | VISSUP 失败后，优先检验 frozen identifiability、module allocation 还是 objective routing | plan `c48135f`; result `3e85125` | 541 records / 480 unique titles；11 篇 primary sources；本地 4,096-coordinate feasibility audit | 文献方向冲突但支持 module trainability 是可干预对象；选择唯一 fixed-total `PROJALLOC-01`，不运行旧 sweep | `VALID` | `experiments/results/LITMAP-03_round1/` |
+| 2026-08-07 | PROJALLOC-01 round1 paired pilot | 固定总 4,096 coordinates 时，projector-dominant allocation 能否改善视觉吸收与外部泛化 | plan `2bfec22`; implementation `487c81a`; preflight `ac936dc`; smoke `6676b42`; result `376f7de` | root `43201`；current `582/2327/1187` vs exact `1/4094/1`；相同 data/steps/scorers | rotation 差 `+1.29 pp`、95% CI `[-2.08,+4.56] pp`；CV-Bench 差 `-1.39 pp`、margin 差 `-0.05817`；六门仅工程门通过 | `INSTANTIATION_REJECTED` | 只否定当前 frozen-base / hashed-coordinate exact allocation；禁止 `43202/43203` 与 allocation search。`experiments/results/PROJALLOC-01_round1/` |
+| 2026-08-07 | LITMAP-04 objective-routing / task-specific absorption gate | 是否有 direct autoregressive-LVLM primary evidence 支持一个不重复失败路线的唯一最小干预 | plan commit `fe957d8` | objective competition、gradient routing、task-specific absorption、frozen-feature/AR-objective mismatch | immutable literature plan 已冻结；搜索与全文核查进行中；无 GPU、checkpoint inference 或 training | `PROPOSED` | `experiments/plans/LITMAP-04_round1.md`; 完成后另行登记 evidence matrix/result |
 
 ---
 
@@ -133,21 +151,14 @@ T=33：
 
 ---
 
-## 待补录 / 远端同步事项
+## 既往远端同步事项：已核对
 
-截至 v2，通过 GitHub 远端接口尚未发现：
+2026-08-07 对账确认：
 
-```text
-experiments/results/phase3_image_group_dependence_sgd_v1/infra_audit/
-experiments/results/phase3_di_crossed_probe_pilot_v1/
-```
+- commit `b1205ae42bb2af2e0658d440d90799db3ed43ced` 是当前 `HEAD` 的 ancestor；
+- `origin/stage3-image-group-dependence-sgd-v1` 包含该 commit；
+- `experiments/results/phase3_image_group_dependence_sgd_v1/infra_audit/` 与
+  `experiments/results/phase3_di_crossed_probe_pilot_v1/` 均存在于当前仓库。
 
-Codex 报告 crossed pilot 本地 commit：
-
-```text
-b1205ae42bb2af2e0658d440d90799db3ed43ced
-```
-
-但该 SHA 截至 v2 未能由远端 GitHub 解析。
-
-**下一次正式实验前必须先完成上述必要证据的 push / freeze，并把真实远端 commit 回填本表。**
+因此 v2 的“下一次正式实验前待完成”事项已关闭。远端 default branch 是否已合并不
+改变当前本地 canonical evidence；如需发布到其他分支，属于独立仓库发布事项。

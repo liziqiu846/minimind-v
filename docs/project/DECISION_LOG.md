@@ -1,7 +1,7 @@
 # 上海交通大学实习——研究决策日志
 
-**版本：v3**  
-**日期：2026-08-06**  
+**版本：v4**
+**日期：2026-08-07**
 **规则：只追加，不删除历史。每条记录“决定 / 依据 / 后果”。**
 
 ---
@@ -261,3 +261,87 @@ P/S 结构排序的解释；后续必须研究冻结模型是否保留任务相�
 - 不对历史结果批量试新 proxy；
 - 下一合法 prediction test 应使用冻结 checkpoint、标准外部同词反事实图文对，
   检查模型保持/组合绑定，而不是重新训练。
+
+---
+
+## 2026-08-07｜失败必须按证据粒度分类
+
+**决定**：后续 candidate 失败必须区分
+`PROXY_REJECTED`、`BRIDGE_REJECTED`、`INSTANTIATION_REJECTED` 与
+`MECHANISM_REJECTED`。具体测试失败不能自动升级为上位机制失败。
+
+**依据**：昨夜多个有效负结果直接裁决的是操作性 proxy、理论适用桥或某个固定
+training instantiation，而不是完整机制空间。把 workflow `REJECT_IDEA` 直接写成
+mechanism rejection 会比证据实际支持的范围杀掉更多假设。
+
+**后果**：
+
+- `IDEA_REGISTRY.md` 对每个失败 idea 永久记录 failure level、精确排除范围、未排除
+  内容、证据、剩余假设空间与下一检索含义；
+- 历史 result 中 `REJECT_IDEA` 保持原样，作为当轮停止/转向判定；
+- 只有直接检验机制核心预测并控制主要竞争解释后，才允许
+  `MECHANISM_REJECTED`。
+
+---
+
+## 2026-08-07｜昨夜五个 candidate 的科学失败作用域
+
+**决定**：
+
+| Idea | Failure level | 精确决定 |
+|---|---|---|
+| `XMC-01` | `BRIDGE_REJECTED` | 当前 contrastive/co-occurrence theory 到 autoregressive LVLM unseen semantic risk 的桥不成立；不否定跨模态共现机制 |
+| `COMP-01` | `PROXY_REJECTED` | caption+EOS NLL binding margin 被语言偏好主导，不能可靠表示组合绑定；不否定组合绑定机制 |
+| `VISCOND-01` | `PROXY_REJECTED` | correct-image vs no-pixel answer-letter margin 构念门失败；不否定视觉条件信息机制 |
+| `VISSUP-01` | `INSTANTIATION_REJECTED` | 当前 9.16% rotation、4,096-coordinate、frozen encoder/adapter intervention 失败；不否定 objective design 一般作用 |
+| `PROJALLOC-01` | `INSTANTIATION_REJECTED` | 当前 exact `1/4094/1` fixed-total hashed-coordinate intervention 失败；不否定其他 module-placement regime |
+
+**依据**：`XMC-01_round2` 的 theorem applicability audit、`COMP-01_round1` 与
+`VISCOND-01_round1` 的 frozen-checkpoint prediction tests、`VISSUP-01_round2` 与
+`PROJALLOC-01_round1` 的有效 paired pilot 均有冻结判定标准、原始回执和结果归档。
+
+**后果**：当前没有 idea 达到 `MECHANISM_REJECTED`；后续文献搜索与候选生成必须
+保留各上位机制的 remaining hypothesis space，同时禁止用换 proxy、换比例、补 seed
+或近似变体营救已失败实例。
+
+---
+
+## 2026-08-07｜Active Question 转向 objective routing / task-specific absorption
+
+**决定**：将 fixed-total projector allocation 问题降级，新的 Active Research
+Question 进入 `LITMAP-04`：检索 direct autoregressive-LVLM primary evidence，区分
+frozen-feature identifiability、task-specific absorption 与 autoregressive objective
+competition / gradient routing。
+
+**依据**：
+
+1. `VISSUP-01` 的 visual-necessary instantiation 没有提高 held-out rotation 或
+   CV-Bench；
+2. `PROJALLOC-01` 在相同总 4,096 coordinates 下增加 projector share 后，rotation
+   小幅正点估计未达门且 CI 跨 0，CV-Bench accuracy/margin 反向；
+3. 两次失败仍未区分视觉信号未编码、只被 task-specifically 吸收或 objective 对视觉
+   梯度路由不利。
+
+**后果**：
+
+- 冻结 `experiments/plans/LITMAP-04_round1.md`；
+- 本 gate 不运行 GPU、checkpoint inference 或训练；
+- 只有满足 direct evidence、competing-explanation control、唯一最小干预和 no-sweep
+  条件时才登记一个新 candidate，否则记录 `NO_CANDIDATE` 并转向新的数据/表示搜索；
+- frozen-feature identifiability、其他合法 module-placement regime、objective
+  mismatch 与 task-specific absorption 保持开放。
+
+---
+
+## 2026-08-07｜Canonical state 必须同步 autonomous research
+
+**决定**：`CURRENT_STATE.md` 继续作为最高优先级状态入口。每个 autonomous cycle
+结束或重要科学状态变化后，必须检查并同步 `CURRENT_STATE.md`、本日志、
+`EXPERIMENT_REGISTRY.md`、`IDEA_REGISTRY.md`、`AUTONOMOUS_LOOP_STATE.md`，必要时
+同步 `REVIEW_QUEUE.md`。
+
+**依据**：昨夜 nightly report、active-question history 与结果 registry 已领先于
+8 月 6 日版本的 `CURRENT_STATE.md`，造成 canonical state 与真实研究状态分叉。
+
+**后果**：nightly report 只作为过程日志；不得保存比 `CURRENT_STATE.md` 更新的
+隐藏科学状态。状态同步不删除失败证据，也不改变原始实验结果。
