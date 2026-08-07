@@ -249,8 +249,9 @@ level 解读。当前没有证据达到 `MECHANISM_REJECTED`。
 
 ## 10. 当前动态 backlog
 
-- **ACTIVE**：`LITMAP-05`。先冻结 frozen-feature sufficiency / identifiability
-  literature-theory plan；在计划提交前不执行搜索、checkpoint readout 或训练。
+- **ACTIVE**：`LITMAP-05`。frozen-feature sufficiency / identifiability
+  literature-theory plan 由本次 plan commit 冻结；只执行 primary-source/theory 与
+  read-only interface gate，不运行 checkpoint readout 或训练。
 - **NEXT**：`COVER-01` 的 controlled coverage gate；仅在 `LITMAP-05` 没有唯一
   readout bridge 时进入，先核查 authoritative domain/mixture labels。
 - **BACKLOG**：`OBJ-01`。它不能由已失败的 `VISCOND-01` positive gate 启动；
@@ -297,7 +298,8 @@ layer、rank、pooling、probe family 或 metric sweep 制造 positive。
 
 - 当前 scientific result commit：`872657d`（`LITMAP-04` `NO_CANDIDATE` /
   `BRIDGE_REJECTED`）。
-- 下一 immutable plan：`experiments/plans/LITMAP-05_round1.md`，尚待创建并提交。
+- 当前 immutable plan：`experiments/plans/LITMAP-05_round1.md`（本次 plan
+  commit）。
 - `RUNNING_JOB=none`，`HARD_STOP=false`。
 - 昨夜新增 plans、results、raw receipts、logs 和 SHA manifests 已在
   `EXPERIMENT_REGISTRY.md` 建立 canonical 索引；失败原始证据保留。
