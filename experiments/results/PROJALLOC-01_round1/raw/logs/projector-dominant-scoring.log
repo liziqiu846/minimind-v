@@ -1,0 +1,107 @@
+condition=projector-dominant root=43201 scored_items=256/2446
+condition=projector-dominant root=43201 scored_items=512/2446
+condition=projector-dominant root=43201 scored_items=768/2446
+condition=projector-dominant root=43201 scored_items=1024/2446
+condition=projector-dominant root=43201 scored_items=1280/2446
+condition=projector-dominant root=43201 scored_items=1536/2446
+condition=projector-dominant root=43201 scored_items=1792/2446
+condition=projector-dominant root=43201 scored_items=2048/2446
+condition=projector-dominant root=43201 scored_items=2304/2446
+condition=projector-dominant root=43201 scored_items=2446/2446
+{
+  "schema_version": 1,
+  "status": "complete",
+  "candidate": "PROJALLOC-01",
+  "round": 1,
+  "mode": "full",
+  "condition": "projector-dominant",
+  "mapping_root": 43201,
+  "checkpoint": {
+    "training_manifest_path": "/home/lizhaohui/lzq/phase3_runtime/projalloc01/pilot/root-43201/projector-dominant/training/training_manifest.json",
+    "training_manifest_sha256": "70c2d50a434a302d2e5a26c62a071dce8f837547e8e88f46a8eeaed9dc7bdc16",
+    "coordinate_path": "/home/lizhaohui/lzq/phase3_runtime/projalloc01/pilot/root-43201/projector-dominant/training/coordinates.pt",
+    "coordinate_sha256": "784ea997089ed85ac5aa36f23415dcfcf8e9cfdcebbb4c2980232285b103eacd",
+    "training_runtime_seconds": 493.59484577178955
+  },
+  "prepared_inputs": {
+    "data_audit_sha256": "26999a4451bc094ce6e148bcb1481d44efc5f9da58d9c727609d3b67d7400bea",
+    "cvbench_audit_sha256": "33360a8d0e54ecf3b250e6c581af3b5ee51d790219aae94aa88b9b48d1f7b43a",
+    "rotation_manifest_sha256": "131be931c243b863b91121664b8e60db817d82a234d4fe3c26d206531f8311cf",
+    "cvbench_manifest_sha256": "32b9b6212e2e3578e447d9d73c33e08d8296ab7038f4b7c6e8be0e7c750f2949",
+    "cvbench_eligible_rows": 1438,
+    "final_confirmation_accessed": false
+  },
+  "scoring": {
+    "teacher_forced_target": "option_letter_plus_EOS",
+    "rotation_labels": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "cvbench_labels": "per-row contiguous A-through-F",
+    "item_batch_size": 8,
+    "items": 2446,
+    "raw_rows_sha256": "80e4724f7ac79a30cec2a6936bc56562c75d0eb5611498e081c08b90f0e4ea36",
+    "raw_values_persisted": true,
+    "scientific_aggregate_computed": false,
+    "deterministic_rerun_exact": false
+  },
+  "cache": {
+    "cache_mode": "model_local_cpu_memory_projected_features",
+    "feature_format_version": "phase3-v6-projected-vision-f32-cpu-v1",
+    "model_id": "PROJALLOC-01-projector-dominant-root-43201",
+    "checkpoint_sha256": "784ea997089ed85ac5aa36f23415dcfcf8e9cfdcebbb4c2980232285b103eacd",
+    "processor_config_sha256": "657b8cbd4d4ac0e2a8a9ac7a5f9a6841258ebf7401423681cd2c29ace4884843",
+    "unique_cached_image_count": 2446,
+    "encoded_image_count": 2446,
+    "encoder_forward_call_count": 77,
+    "hit_count": 8918,
+    "feature_total_bytes": 480903168,
+    "feature_shapes": [
+      [
+        64,
+        768
+      ]
+    ],
+    "feature_dtype": "float32",
+    "feature_storage_device": "cpu",
+    "cache_key_sha256": "cea0f21896d0e80a4874656252c01e68bbe05d530724180718fa8c796669e37d",
+    "feature_content_sha256": "9806c5b9dce8f42e24860e3a86695ac53397a31efde71d7134d9fa9ba80de9ba"
+  },
+  "environment": {
+    "python": "3.10.18",
+    "platform": "Linux-5.4.0-216-generic-x86_64-with-glibc2.31",
+    "device": "cuda:0",
+    "numpy": "1.26.4",
+    "Pillow": "11.3.0",
+    "scipy": "1.15.3",
+    "transformers": "4.57.6",
+    "torch": "2.6.0+cu124",
+    "cuda_available": true,
+    "cuda": "12.4",
+    "cudnn": 90100,
+    "model_dtype": "float32",
+    "autocast_enabled": false,
+    "cuda_matmul_allow_tf32": false,
+    "cudnn_allow_tf32": false,
+    "cudnn_deterministic": true,
+    "cudnn_benchmark": false,
+    "gpu": {
+      "index": 0,
+      "name": "NVIDIA A40",
+      "total_memory_bytes": 47709159424,
+      "compute_capability": [
+        8,
+        6
+      ]
+    }
+  },
+  "git": {
+    "commit": "8494aad30454711ca0de9aa9bfbf36d848b0e303",
+    "tracked_status": ""
+  },
+  "peak_cuda_memory_bytes": 2243736576,
+  "elapsed_seconds": 96.06510806083679,
+  "final_confirmation_accessed": false
+}

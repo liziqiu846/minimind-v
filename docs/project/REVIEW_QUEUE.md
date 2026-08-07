@@ -149,3 +149,30 @@
 - **Recommended human decision**: 无需立即决定；之后审查 fixed-total
   intervention 是否充分隔离 module allocation，以及结论是否严格限制在当前
   frozen-base / hashed-coordinate setting。
+
+## 2026-08-07｜PROJALLOC-01：fixed-total projector-capacity 解释被否定
+
+- **Date**: 2026-08-07
+- **Idea / issue**: 在总 4,096 coordinates 固定时，把 allocation 从 current
+  `582/2327/1187` 改为 projector-dominant `1/4094/1`，是否能使相同
+  visual-necessary signal 进入模型并外部迁移。
+- **Why human should review it**: rotation accuracy 有 `+1.29 pp` 小幅正点估计，
+  但远低于预注册 `+5 pp`、CI 跨 0、absolute accuracy 仍低于 0.30；同时完整
+  CV-Bench accuracy 与 margin 都反向。必须防止只报告 mechanism 点估计而忽略联合
+  support gate 和外部退化。
+- **Current evidence**: root `43201` 两条件各 `2,064/2,064` steps，所有 paired
+  engineering invariants 通过。rotation current/projector=`0.25099/0.26389`，
+  difference=`+0.01290`、95% CI `[-0.02083,0.04563]`；CV-Bench=
+  `0.35257/0.33866`，difference=`-0.01391`、95% CI
+  `[-0.03964,0.01113]`，margin difference=`-0.05817 bits/token`。六项 pilot
+  criteria 只有 paired invariants 通过。
+- **What Agent has already frozen**: `PROJALLOC-01=REJECTED`；不得运行
+  `43202/43203`、改变 allocation、追加 seed、换 metric/proxy、运行旧 9-point
+  sweep，也不得据此恢复 `VISSUP-01`。结论只适用于当前 frozen-base、
+  hashed-coordinate、visual-necessary setting。
+- **Whether autonomous work can continue**: 可以；转入 `LITMAP-04`，检索
+  objective competition / gradient routing、task-specific absorption 与
+  frozen-feature/AR-objective mismatch 的真正不同机制。
+- **Recommended human decision**: 无需立即决定；之后审查 paired allocation 是否
+  隔离了预期 capacity 因素，并确认外推边界不被扩大成“frozen encoder 不可读”或
+  “objective competition 已成立”。

@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "candidate": "PROJALLOC-01",
+  "round": 1,
+  "analysis_type": "paired_pilot",
+  "comparison": {
+    "control": "current-allocation",
+    "intervention": "projector-dominant",
+    "difference": "projector-dominant minus current-allocation"
+  },
+  "mapping_roots": [
+    43201
+  ],
+  "root_summaries": [
+    {
+      "mapping_root": 43201,
+      "training_pair_checks": {
+        "mapping_root_matches": true,
+        "current_dimensions_match_plan": true,
+        "projector_dimensions_match_plan": true,
+        "both_total_4096": true,
+        "target_names_match": true,
+        "mapping_factor_counts_match_plan": true,
+        "projection_preflight_current_pass": true,
+        "projection_preflight_projector_pass": true,
+        "initial_frozen_hash_matches": true,
+        "final_frozen_hash_matches": true,
+        "data_sha_matches": true,
+        "data_rows_match": true,
+        "data_condition_matches": true,
+        "training_configuration_matches": true,
+        "epoch_permutations_match": true,
+        "losses_finite": true,
+        "gradient_norms_finite": true,
+        "frozen_parameters_unchanged": true
+      },
+      "panels": {
+        "rotation": {
+          "rows": 1008,
+          "independent_image_groups": 1008,
+          "current_accuracy": 0.2509920634920635,
+          "projector_accuracy": 0.2638888888888889,
+          "accuracy_difference": 0.012896825396825396,
+          "current_margin_bits_per_token": 0.022002101340577517,
+          "projector_margin_bits_per_token": 0.02094741581468571,
+          "margin_difference_bits_per_token": -0.0010546855258918015,
+          "accuracy_difference_bootstrap": {
+            "replicates": 10000,
+            "seed": 20260817,
+            "unit_count": 1008,
+            "mean": 0.012896825396825396,
+            "ci95": [
+              -0.020833333333333332,
+              0.04563492063492063
+            ]
+          }
+        },
+        "cvbench": {
+          "rows": 1438,
+          "independent_image_groups": 1438,
+          "current_accuracy": 0.3525730180806676,
+          "projector_accuracy": 0.3386648122392211,
+          "accuracy_difference": -0.013908205841446454,
+          "current_margin_bits_per_token": 0.030833041256722832,
+          "projector_margin_bits_per_token": -0.027335725785274094,
+          "margin_difference_bits_per_token": -0.05816876704199693,
+          "accuracy_difference_bootstrap": {
+            "replicates": 10000,
+            "seed": 20260818,
+            "unit_count": 1438,
+            "mean": -0.013908205841446454,
+            "ci95": [
+              -0.039638386648122394,
+              0.011126564673157162
+            ]
+          },
+          "by_task": {
+            "Count": {
+              "rows": 788,
+              "independent_image_groups": 788,
+              "accuracy_difference": -0.025380710659898477,
+              "margin_difference_bits_per_token": -0.09190938611335221
+            },
+            "Relation": {
+              "rows": 650,
+              "independent_image_groups": 650,
+              "accuracy_difference": 0.0,
+              "margin_difference_bits_per_token": -0.017264754998569304
+            }
+          },
+          "by_source": {
+            "ADE20K": {
+              "rows": 633,
+              "independent_image_groups": 633,
+              "accuracy_difference": -0.017377567140600316,
+              "margin_difference_bits_per_token": -0.07611759224462236
+            },
+            "COCO": {
+              "rows": 805,
+              "independent_image_groups": 805,
+              "accuracy_difference": -0.011180124223602485,
+              "margin_difference_bits_per_token": -0.044054970329870345
+            }
+          }
+        }
+      }
+    }
+  ],
+  "judgment": {
+    "decision": "REJECT_IDEA",
+    "criteria": {
+      "paired_training_invariants_pass": true,
+      "rotation_difference_at_least_0p05": false,
+      "rotation_ci_lower_above_zero": false,
+      "projector_rotation_accuracy_at_least_0p30": false,
+      "cvbench_difference_at_least_0p01": false,
+      "cvbench_margin_difference_positive": false
+    },
+    "all_criteria_met": false,
+    "seed_escalation_authorized": false
+  },
+  "bootstrap": {
+    "replicates": 10000,
+    "base_seed": 20260807,
+    "unit": "independent normalized pixel group"
+  },
+  "inputs": {
+    "43201": {
+      "current-allocation": {
+        "training_manifest_sha256": "5f6ec5ce3d6586222cacbfaa48288886f3400b4fc8942f73e063f00367255f39",
+        "scoring_receipt_sha256": "aa6e8674f63a99fa7bd9e93c36645207b7423ee3f6d1366cd856ccbdec4122b3",
+        "item_scores_sha256": "20092b9e72cfb5329efbfd6aa48c22dac941619d01b344ce496ec1a87dc5d8cd"
+      },
+      "projector-dominant": {
+        "training_manifest_sha256": "70c2d50a434a302d2e5a26c62a071dce8f837547e8e88f46a8eeaed9dc7bdc16",
+        "scoring_receipt_sha256": "0eb8f796aa010121a085b04f0ea87d124ecfc5d5948187efee1845dc0dfe0f51",
+        "item_scores_sha256": "80e4724f7ac79a30cec2a6936bc56562c75d0eb5611498e081c08b90f0e4ea36"
+      }
+    }
+  },
+  "prepared_artifact_sha256": {
+    "data_audit.json": "26999a4451bc094ce6e148bcb1481d44efc5f9da58d9c727609d3b67d7400bea",
+    "cvbench_audit.json": "33360a8d0e54ecf3b250e6c581af3b5ee51d790219aae94aa88b9b48d1f7b43a",
+    "train_injection_manifest.json": "aca223f139f5e16c76a2a70b4fe71e8c85d6db44b3fa7eb883fd3b9aed1df8d7",
+    "heldout_rotation_manifest.json": "131be931c243b863b91121664b8e60db817d82a234d4fe3c26d206531f8311cf",
+    "cvbench_manifest.json": "32b9b6212e2e3578e447d9d73c33e08d8296ab7038f4b7c6e8be0e7c750f2949",
+    "train_visual_necessary.parquet": "52cd2672a60c1dcf834ad8795585412b8f0c96ac9f921d83bfd353e1e5628ee5"
+  },
+  "final_confirmation_accessed": false
+}

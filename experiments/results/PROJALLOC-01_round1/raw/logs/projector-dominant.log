@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "mode": "two_sample_non_scientific_smoke",
+  "condition": "projector-dominant",
+  "mapping_root": 43201,
+  "sample_indices": [
+    10000,
+    10001
+  ],
+  "loss": 1.1851907968521118,
+  "gradient_norm": 1.0460065603256226,
+  "loss_finite": true,
+  "gradient_norm_finite": true,
+  "scientific_result_computed": false,
+  "coordinates_persisted": false,
+  "candidate": "PROJALLOC-01",
+  "round": 1,
+  "coordinate_dimensions": {
+    "vision": 1,
+    "projector": 4094,
+    "language": 1
+  },
+  "data_path": "/home/lizhaohui/lzq/phase3_runtime/vissup01/prepared_round2/train_visual_necessary.parquet",
+  "data_sha256": "52cd2672a60c1dcf834ad8795585412b8f0c96ac9f921d83bfd353e1e5628ee5",
+  "data_condition": "visual-necessary",
+  "prepared_audit_sha256": "26999a4451bc094ce6e148bcb1481d44efc5f9da58d9c727609d3b67d7400bea",
+  "projection_preflight": {
+    "validated_projection_roots": [
+      43201
+    ],
+    "all_roots_reproducible": true,
+    "all_coordinates_used": true,
+    "roots": {
+      "43201": {
+        "mapping_sha256": "8fbcfbd2a1b78e53737fff058bad9af7f8d4acbdfc2791dba25833115f386d5f",
+        "repeated_mapping_sha256": "8fbcfbd2a1b78e53737fff058bad9af7f8d4acbdfc2791dba25833115f386d5f",
+        "reproducible": true,
+        "module_usage": {
+          "vision": {
+            "coordinate_dimension": 1,
+            "unused_coordinate_count": 0,
+            "minimum_uses_per_coordinate": 24576,
+            "maximum_uses_per_coordinate": 24576
+          },
+          "projector": {
+            "coordinate_dimension": 4094,
+            "unused_coordinate_count": 0,
+            "minimum_uses_per_coordinate": 8,
+            "maximum_uses_per_coordinate": 42
+          },
+          "language": {
+            "coordinate_dimension": 1,
+            "unused_coordinate_count": 0,
+            "minimum_uses_per_coordinate": 50176,
+            "maximum_uses_per_coordinate": 50176
+          }
+        }
+      }
+    },
+    "condition": "projector-dominant",
+    "coordinate_dimensions": {
+      "vision": 1,
+      "projector": 4094,
+      "language": 1
+    },
+    "total_coordinates": 4096,
+    "mapping_factor_count": 22
+  },
+  "initial_frozen_parameter_sha256": "8db8f60ea8d42011df035d6af59fbe64c9fbda96f18c2e1bc542fe53ef52945f",
+  "elapsed_seconds": 6.806581020355225,
+  "peak_cuda_memory_bytes": 1145345536
+}

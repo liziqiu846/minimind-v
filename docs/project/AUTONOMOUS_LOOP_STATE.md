@@ -3,18 +3,18 @@
 ```text
 MODE: AUTONOMOUS_RESEARCH
 ACTIVE_RESEARCH_QUESTION: docs/project/ACTIVE_RESEARCH_QUESTION.md
-CURRENT_IDEA: PROJALLOC-01
+CURRENT_IDEA: LITMAP-04
 CURRENT_ROUND: 1
-CURRENT_STATE: PROJALLOC01_RAW_SCORING_RUNNING
-RUNNING_JOB: session=62105;physical_gpu=5;root=43201;order=current_then_projector;raw_scores_only;no_aggregate_until_both_complete
+CURRENT_STATE: PROJALLOC01_REJECTED_LITMAP04_PLAN_PENDING
+RUNNING_JOB: none
 LAST_PLAN: experiments/plans/PROJALLOC-01_round1.md
-LAST_RESULT: experiments/results/PROJALLOC-01_round1/TRAINING_AUDIT.json
-GPU_HOURS_USED_THIS_CYCLE: 1.34
-ACTIVE_QUEUE: PROJALLOC-01
-NEXT_QUEUE: WAIT_BOTH_RAW_SCORES_THEN_RUN_SINGLE_PREREGISTERED_ANALYSIS
+LAST_RESULT: experiments/results/PROJALLOC-01_round1/RESULT.md
+GPU_HOURS_USED_THIS_CYCLE: 1.39
+ACTIVE_QUEUE: LITMAP-04
+NEXT_QUEUE: FREEZE_AND_COMMIT_LITMAP04_ROUND1
 BACKLOG_QUEUE: OBJ-01,COVER-01
 WINOGROUND_ACCESS: blocked_by_access
-RESOURCE_NOTE: paired_training_valid;current_raw_scoring_stable;projector_auto_follows;do_not_inspect_condition_performance_before_pair_complete;no_final_confirmation
+RESOURCE_NOTE: PROJALLOC-01 root43201 valid but all scientific support gates failed;roots43202/43203 forbidden;no running job;no final confirmation
 HARD_STOP: false
 ```
 

@@ -17,10 +17,11 @@ Mission Question 不得由 Agent 自行改变。
 
 当前 active question 是：
 
-> 在总计 4,096 个 trainable coordinates、冻结 base、训练数据、visual-necessary
-> supervision 和算力都相同时，把低维更新容量集中到跨模态 projector，能否比当前
-> vision/projector/language allocation 更有效地吸收视觉结构并改善未见
-> vision-centric task？
+> 在 visual-necessary supervision 与 fixed-total projector allocation 都未改善
+> held-out mechanism 或外部任务后，哪一种有 direct autoregressive-LVLM primary
+> evidence 的训练动力学机制，能够区分“frozen features 不含可用信号”“模型只吸收
+> task-specific signal”与“autoregressive objective 对视觉梯度的路由/竞争不利”，
+> 并导出一个不重复已失败路线的最小可证伪干预？
 
 这一问题是当前子问题，不是永久冻结的唯一主线。Agent 可以依据可靠实验、
 反例或权威文献自主切换 Active Research Question。
@@ -257,6 +258,33 @@ Agent 可以自主改变：
 - **Mission relation**: 该实验直接区分“frozen visual features 可读但 projector
   subspace 容量不足”与“增加 projector 容量仍无法吸收视觉 cue”，可解释为何相同
   参数复杂度对应不同跨模态泛化，并保留 module-aware PEFT 的算法出口。
-- **Status**: ACTIVE_PLAN_FROZEN；`experiments/plans/PROJALLOC-01_round1.md`
-  已冻结，下一步实现、测试和双条件 smoke。不得补 VISSUP roots `43102/43103`，
-  不得换成 vision-heavy、搜索比例或运行旧 9-point sweep。
+- **Status**: REJECTED_AS_ACTIVE；root `43201` 的全部 paired engineering invariants
+  通过，但 projector-dominant 的 rotation 差只有 `+1.29 pp`、95% CI
+  `[-2.08,+4.56] pp`、absolute accuracy `0.26389`，CV-Bench-2D accuracy 与 margin
+  分别反向 `-1.39 pp` 和 `-0.05817 bits/token`。预注册六门仅工程配对门通过，
+  禁止补 `43202/43203`、换 allocation/metric/proxy 或运行旧 sweep。
+
+### 2026-08-07｜LITMAP-04 objective-routing / task-specific absorption gate
+
+- **Question**: 在显式 visual-necessary supervision 与 projector-dominant allocation
+  都失败后，是否存在由 direct autoregressive-LVLM primary evidence 支持、可由单一
+  最小干预区分 frozen-feature identifiability、task-specific absorption 与
+  objective competition / gradient routing 的新机制？
+- **Why the old question was insufficient**: `PROJALLOC-01` 已直接否定当前
+  fixed-total setting 的 projector-capacity 解释；rotation 小幅正点估计未达到门且
+  CI 跨 0，外部 CV-Bench accuracy/margin 反向。继续搜索 allocation、追加 seed 或换
+  proxy 只能维护失败假设，不能判断信号未编码、仅被 task-specifically 吸收，还是
+  autoregressive objective 阻碍跨任务迁移。
+- **Evidence / literature origin**: `VISSUP-01` 在相同 pixels/labels/steps 下连
+  held-out rotation 都无改善；`PROJALLOC-01` 增加 projector coordinate share 后
+  rotation 仍近 chance 且外部任务退化。LITMAP-03 已证明 module placement 文献方向
+  冲突，尚未系统裁决 objective-level gradient conflict、视觉/语言 token loss
+  dominance 或 task-specific-to-external transfer mismatch。
+- **Mission relation**: 该 gate 直接追问“训练信号如何进入跨模态表示并决定未见任务
+  风险”，若成立可自然导出 objective routing、gradient balancing 或 representation
+  matching 原则；若没有满足严格门的机制，则应转向新的数据/表示 candidate，而不是
+  重复训练 rescue。
+- **Status**: ACTIVE_LITERATURE_GATE；下一步先冻结并提交
+  `experiments/plans/LITMAP-04_round1.md`。本 gate 不训练、不运行 checkpoint、不
+  访问 final confirmation，也不得改变 rotation ratio/task/prompt、搜索 allocation、
+  增加 seed 或制造新 checkpoint proxy。

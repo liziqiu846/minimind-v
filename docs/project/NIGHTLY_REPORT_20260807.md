@@ -257,3 +257,31 @@ checkpoint-only prediction test；不训练。
   loss/gradient 全 finite；此时仍无任何 scientific scoring。
 - 两模型 raw scoring 已在 GPU 5 顺序启动；只保存逐题 NLL/accuracy/margin，不在
   单条件完成后聚合或判定。两份 raw scores 完成后才运行一次预注册 paired analyzer。
+
+## 16. 持续日志：PROJALLOC-01 fixed-total allocation 判定
+
+- root `43201` 两条件 raw scoring 均完成后，只运行一次预注册 paired analyzer；
+  analysis status=`complete`、decision=`REJECT_IDEA`、seed escalation=`false`。
+- held-out rotation current/projector accuracy=`0.25099/0.26389`，difference
+  `+0.01290`（`+1.29 pp`）、paired-bootstrap 95% CI
+  `[-0.02083,0.04563]`；projector absolute accuracy `<0.30`，margin difference
+  `-0.00105 bits/token`。
+- CV-Bench-2D current/projector accuracy=`0.35257/0.33866`，difference
+  `-0.01391`（`-1.39 pp`）、95% CI `[-0.03964,0.01113]`；margin difference
+  `-0.05817 bits/token`。Count=`-0.02538`、Relation=`0`、ADE20K=`-0.01738`、
+  COCO=`-0.01118`，没有稳定外部支持方向。
+- 预注册六项 criteria 只有 paired training invariants 通过，其余五项全部失败。
+  因此不补 `43202/43203`，不搜索 allocation、追加 seed、换 metric/proxy 或运行旧
+  9-point sweep。
+- 两次训练合计约 `0.268 GPU-hour`，两次 full scoring 约 `0.049 GPU-hour`；本
+  cycle 累计约 `1.39 GPU-hour`。全部 raw scores、coordinates、training/scoring
+  receipts、paired differences、analysis 与 logs 已归档并建立 SHA-256 manifest；
+  未访问 final confirmation。
+- 结论严格限制为：fixed-total projector-dominant allocation 在当前 frozen-base、
+  hashed-coordinate、visual-necessary setting 下不能解释或修复视觉泛化失败。
+  不能推出 frozen encoder 一般不可读、objective competition 成立，或翻转
+  `VISSUP-01=REJECTED`。
+- ACTIVE 转为 `LITMAP-04` failure-driven literature gate；目标是从 objective
+  competition / gradient routing、task-specific signal absorption 与 frozen visual
+  representation 对 autoregressive objective 的匹配问题中，寻找不重复旧路线的唯一
+  最小可证伪 candidate。该 gate 本身不训练、不运行 checkpoint。

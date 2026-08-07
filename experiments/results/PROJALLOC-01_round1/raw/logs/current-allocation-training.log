@@ -1,0 +1,201 @@
+condition=current-allocation root=43201 epoch=1/3 optimizer_step=688/2064 mean_loss=2.72594499
+condition=current-allocation root=43201 epoch=2/3 optimizer_step=1376/2064 mean_loss=2.69357453
+condition=current-allocation root=43201 epoch=3/3 optimizer_step=2064/2064 mean_loss=2.68012456
+{
+  "schema_version": 1,
+  "status": "complete",
+  "candidate": "PROJALLOC-01",
+  "round": 1,
+  "formal_stage2_confirmation_run": false,
+  "condition": "current-allocation",
+  "mapping_root": 43201,
+  "data": {
+    "path": "/home/lizhaohui/lzq/phase3_runtime/vissup01/prepared_round2/train_visual_necessary.parquet",
+    "sha256": "52cd2672a60c1dcf834ad8795585412b8f0c96ac9f921d83bfd353e1e5628ee5",
+    "rows": 11008,
+    "condition": "visual-necessary",
+    "prepared_audit_path": "/home/lizhaohui/lzq/phase3_runtime/vissup01/prepared_round2/data_audit.json",
+    "prepared_audit_sha256": "26999a4451bc094ce6e148bcb1481d44efc5f9da58d9c727609d3b67d7400bea"
+  },
+  "training": {
+    "train_seed": 2026,
+    "learning_rate": 0.05,
+    "epochs": 3,
+    "micro_batch_size": 4,
+    "gradient_accumulation_steps": 4,
+    "effective_batch_size": 16,
+    "optimizer_steps_expected": 2064,
+    "optimizer_steps_observed": 2064,
+    "observed_micro_batches": 8256,
+    "mean_micro_batch_loss": 2.6998813613354002,
+    "epoch_receipts": [
+      {
+        "epoch_index": 0,
+        "epoch_seed": 2026,
+        "permutation_sha256": "360a32880a6987d4894721e4ec506c55f433ea515207753a094845790a1f7018",
+        "micro_batches": 2752,
+        "mean_micro_batch_loss": 2.725944992847914
+      },
+      {
+        "epoch_index": 1,
+        "epoch_seed": 2027,
+        "permutation_sha256": "31c606b19f0bde8887a88a24806ef9715a982b35421c6d465d05783b3563c496",
+        "micro_batches": 2752,
+        "mean_micro_batch_loss": 2.6935745266287827
+      },
+      {
+        "epoch_index": 2,
+        "epoch_seed": 2028,
+        "permutation_sha256": "15e98fcad88fc6ed51e71a7ba8486064f5de1275453a59ff74009410914bd20f",
+        "micro_batches": 2752,
+        "mean_micro_batch_loss": 2.680124564529505
+      }
+    ],
+    "all_losses_finite": true,
+    "all_gradient_norms_finite": true,
+    "automatic_hyperparameter_tuning": false,
+    "checkpoint_selection": "final_fixed_schedule_state_only"
+  },
+  "model": {
+    "initial_structure": {
+      "adapter": {
+        "model_group": "M2",
+        "structure": "P",
+        "mapping_root": 43201,
+        "base_construction_mapping_root": 43101,
+        "base_construction_root_affects_candidate_mapping": false,
+        "coordinate_dimensions": {
+          "vision": 582,
+          "projector": 2327,
+          "language": 1187
+        },
+        "wrapped_names": [
+          "lm_head",
+          "model.layers.0.self_attn.q_proj",
+          "model.layers.0.self_attn.v_proj",
+          "model.layers.7.self_attn.q_proj",
+          "model.layers.7.self_attn.v_proj",
+          "vision_encoder.vision_model.encoder.layers.10.self_attn.q_proj",
+          "vision_encoder.vision_model.encoder.layers.10.self_attn.v_proj",
+          "vision_encoder.vision_model.encoder.layers.11.self_attn.q_proj",
+          "vision_encoder.vision_model.encoder.layers.11.self_attn.v_proj",
+          "vision_proj.mlp.1",
+          "vision_proj.mlp.3"
+        ],
+        "mapping_factor_count": 22,
+        "initial_llm_sha256": "5b8c49f6c9d965092e651cafeeaeb8705558632b3fd4ac8ab319cbc5a3cbc4a0",
+        "initial_llm_load": {
+          "initial_state_key_count": 91,
+          "missing_key_count": 212,
+          "allowed_missing_prefixes": [
+            "vision_encoder.",
+            "vision_proj."
+          ],
+          "unexpected_keys": [],
+          "exact_initial_tensor_match": true
+        },
+        "protocol": {
+          "protocol_id": "minimind-v-stage2-joint-compression-v2",
+          "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3"
+        }
+      },
+      "coordinate_dimensions": {
+        "language": 1187,
+        "projector": 2327,
+        "vision": 582
+      },
+      "coordinate_state_sha256": "02d8e59fac1e75dab3d56b5e0c290736c57e7c93028175392afdf9b55506e6a0",
+      "trainable_parameter_names": [
+        "stage2_coordinates.coordinates.language",
+        "stage2_coordinates.coordinates.projector",
+        "stage2_coordinates.coordinates.vision"
+      ],
+      "trainable_parameter_count": 4096,
+      "projector_base": {
+        "tensor_sha256": {
+          "vision_proj.mlp.1.weight": "637808c850b6caa99b20d95d7ae2cd836848f31ebe8025e8179a485ea33128a3",
+          "vision_proj.mlp.1.bias": "b84dab01932d5844cbef737e892677d0bfa1c1b8c650e773292a1d8cd84477c5",
+          "vision_proj.mlp.3.weight": "31f5fc3242249bf75b38f602ce58135bb43fa5cc4f8f95390288197efecad17b",
+          "vision_proj.mlp.3.bias": "646898f2f2627dcefdfbcc0fe36d9b6113fb439f26eaf8b9f08c021f0541fa31"
+        },
+        "tensor_hash_protocol": "SHA256 of C-order little-endian float32 raw bytes",
+        "aggregate_tensor_sha256": "3712c79bd4859f543c9030e237a49797c3dfe064a457dcce21dd7cf6a227921a",
+        "configuration": {
+          "normalized_shape": [
+            768
+          ],
+          "eps": 1e-05,
+          "elementwise_affine": false
+        },
+        "configuration_serialization": "canonical JSON",
+        "configuration_sha256": "5b88036932ef590707662f2dc61d3d5c84de26de89f6188064a9b5d3d6d613b0"
+      }
+    },
+    "coordinate_dimensions": {
+      "language": 1187,
+      "projector": 2327,
+      "vision": 582
+    },
+    "initial_frozen_parameter_sha256": "8db8f60ea8d42011df035d6af59fbe64c9fbda96f18c2e1bc542fe53ef52945f",
+    "final_frozen_parameter_sha256": "8db8f60ea8d42011df035d6af59fbe64c9fbda96f18c2e1bc542fe53ef52945f",
+    "frozen_parameters_unchanged": true,
+    "final_coordinate_state_sha256": "e7fd036750b6b44d4938981c8e7b148a768243c1417754241a1a53e410329c7f",
+    "projection_preflight": {
+      "validated_projection_roots": [
+        43201
+      ],
+      "all_roots_reproducible": true,
+      "all_coordinates_used": true,
+      "roots": {
+        "43201": {
+          "mapping_sha256": "e88eb5ecc5821c8184590eb11e8201c669a9d4b576a046d80c158fa044e3d2c4",
+          "repeated_mapping_sha256": "e88eb5ecc5821c8184590eb11e8201c669a9d4b576a046d80c158fa044e3d2c4",
+          "reproducible": true,
+          "module_usage": {
+            "vision": {
+              "coordinate_dimension": 582,
+              "unused_coordinate_count": 0,
+              "minimum_uses_per_coordinate": 24,
+              "maximum_uses_per_coordinate": 60
+            },
+            "projector": {
+              "coordinate_dimension": 2327,
+              "unused_coordinate_count": 0,
+              "minimum_uses_per_coordinate": 22,
+              "maximum_uses_per_coordinate": 66
+            },
+            "language": {
+              "coordinate_dimension": 1187,
+              "unused_coordinate_count": 0,
+              "minimum_uses_per_coordinate": 20,
+              "maximum_uses_per_coordinate": 64
+            }
+          }
+        }
+      },
+      "condition": "current-allocation",
+      "coordinate_dimensions": {
+        "vision": 582,
+        "projector": 2327,
+        "language": 1187
+      },
+      "total_coordinates": 4096,
+      "mapping_factor_count": 22
+    }
+  },
+  "coordinates": {
+    "path": "/home/lizhaohui/lzq/phase3_runtime/projalloc01/pilot/root-43201/current-allocation/training/coordinates.pt",
+    "sha256": "7381e78ed8938f199fa8d18b3a68a3b2317ec947761b82037287861d3014d64d"
+  },
+  "runtime": {
+    "seconds": 472.84254217147827,
+    "python": "3.10.18",
+    "torch": "2.6.0+cu124",
+    "cuda_runtime": "12.4",
+    "cudnn": 90100,
+    "visible_device_count": 1,
+    "visible_device_name": "NVIDIA A40",
+    "peak_cuda_memory_bytes": 1467995648
+  },
+  "final_confirmation_accessed": false
+}
