@@ -330,16 +330,17 @@ level 解读。当前没有证据达到 `MECHANISM_REJECTED`。
 
 ## 13. 仓库与执行状态
 
-- 当前最新 scientific result：`experiments/results/XID-01_round3/RESULT.md`。
-  diagnostic-mass threshold 与 worst-case sharpness theorem 已 `PROVEN`；
-  180 parameter cases、2,700 admissible gaps 无 violation。`XID-01` 仅升为
-  theory `CONCLUSION_CANDIDATE`，真实 LVLM mechanism 未验证。
+- 当前最新 scientific result：`experiments/results/XID-01_round4/RESULT.md`。
+  root 43301 valid pilot 强反向：primary consistent−ambiguous=`-48.21 pp`，
+  mechanism diff=`+0.66 pp` 且两条件 full-rule success=0。当前 empirical
+  instantiation 已拒绝，roots 43302/43303 禁止；round1–3 finite theory 仍仅为
+  未获真实 LVLM 验证的 `CONCLUSION_CANDIDATE`。
 - Round4 immutable plan commit=`5cbe500`。data/token/pixel/model/resource
   preflight 全通过：两条件 train rows=`11,040`、steps=`2,070`、coordinates=`4,096`；
   pixel/target order、target spans/masks、marginals、per-key entropy 精确匹配，
   paired token records 只在预定 contextual key slot 变化。
-- 下一步：implementation/preflight commit 后，先运行二条件 non-scientific smoke；
-  smoke 通过才按 frozen order 运行 root `43301` paired pilot。
+- 下一步：冻结 LITMAP-07 failure-targeted search plan，区分 key-specific
+  factorization failure 与 representation/trainability ceiling；不直接训练变体。
 - `RUNNING_JOB=none`，`HARD_STOP=false`。
 - 新增 plans、results、raw receipts、logs 和 SHA manifests 已在
   `EXPERIMENT_REGISTRY.md` 建立 canonical 索引；失败原始证据保留。

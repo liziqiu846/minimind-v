@@ -1,0 +1,103 @@
+{
+  "analysis_type": "paired_pilot",
+  "bootstrap": {
+    "base_seed": 20260807,
+    "replicates": 10000,
+    "unit": "independent held-out base-image group"
+  },
+  "candidate": "XID-01",
+  "final_confirmation_accessed": false,
+  "inputs": {
+    "43301": {
+      "interaction-ambiguous": {
+        "item_scores_sha256": "3c62b93e1be833fdbbe34cf3733a9e247f5235ca32bf38bd955614763d10b8e1",
+        "scoring_receipt_sha256": "06fbd8dce1da6e1c645e8a02ac6916a9146bbffdd89f0580885d4dbf84667189",
+        "training_manifest_sha256": "dae2f249bd013292b3f284ec4bc9337768ffbbb3b2a5ad0c6f24c4d701696270"
+      },
+      "interaction-consistent": {
+        "item_scores_sha256": "83c5d3f42b0df5944c21230f1fc71ac92117064c68e9b1b75cc68e4d0d59dbef",
+        "scoring_receipt_sha256": "86aa5cfff488a5ea4c0ff0621c13710e44a2ccc285e689d6692ac88a3c8ccd8a",
+        "training_manifest_sha256": "e56eecccc54ebca10593199b90e51b769f78454a5f707d936563f5595b644947"
+      }
+    }
+  },
+  "judgment": {
+    "all_criteria_met": false,
+    "criteria": {
+      "consistent_mechanism_accuracy_at_least_0p75": false,
+      "consistent_target_accuracy_at_least_0p65": false,
+      "full_rule_success_difference_positive": false,
+      "mechanism_ci_lower_above_zero": true,
+      "mechanism_difference_at_least_0p05": false,
+      "paired_engineering_invariants_pass": true,
+      "target_ci_lower_above_zero": false,
+      "target_difference_at_least_0p10": false,
+      "target_gold_margin_difference_positive": false
+    },
+    "decision": "REJECT_IDEA",
+    "seed_escalation_authorized": false
+  },
+  "mapping_roots": [
+    43301
+  ],
+  "prepared_data_audit_sha256": "d9ba001abb0034181907a8e7734fcc82265ee70c9e4ce84e48ba063d4f265af1",
+  "root_summaries": [
+    {
+      "mapping_root": 43301,
+      "mechanism": {
+        "accuracy_difference": 0.006572420634920635,
+        "accuracy_difference_bootstrap": {
+          "ci95": [
+            0.0011160714285714285,
+            0.012152777777777778
+          ],
+          "mean": 0.006572420634920635,
+          "replicates": 10000,
+          "seed": 20260818,
+          "unit_count": 1008
+        },
+        "ambiguous_accuracy": 0.49813988095238093,
+        "ambiguous_full_rule_success": 0.0,
+        "consistent_accuracy": 0.5047123015873016,
+        "consistent_full_rule_success": 0.0,
+        "full_rule_success_difference": 0.0,
+        "independent_image_groups": 1008
+      },
+      "target": {
+        "accuracy_difference": -0.48214285714285715,
+        "accuracy_difference_bootstrap": {
+          "ci95": [
+            -0.5168650793650794,
+            -0.44841269841269843
+          ],
+          "mean": -0.48214285714285715,
+          "replicates": 10000,
+          "seed": 20260817,
+          "unit_count": 1008
+        },
+        "ambiguous_accuracy": 0.9246031746031746,
+        "ambiguous_gold_margin_bits_per_token": 0.15819358729225183,
+        "consistent_accuracy": 0.44246031746031744,
+        "consistent_gold_margin_bits_per_token": -0.012468382378020101,
+        "gold_margin_difference_bits_per_token": -0.17066196967027195,
+        "independent_image_groups": 1008
+      },
+      "training_pair_checks": {
+        "coordinate_dimensions_match": true,
+        "data_rows_match": true,
+        "epoch_permutations_match": true,
+        "exact_2070_steps": true,
+        "frozen_parameters_unchanged": true,
+        "gradient_norms_finite": true,
+        "initial_frozen_hash_matches": true,
+        "losses_finite": true,
+        "mapping_root_matches": true,
+        "prepared_audit_matches": true,
+        "training_configuration_matches": true
+      }
+    }
+  ],
+  "round": 4,
+  "schema_version": 1,
+  "status": "complete"
+}

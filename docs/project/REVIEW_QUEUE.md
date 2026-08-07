@@ -334,3 +334,23 @@
   interface并提交 immutable pilot plan，不访问 final confirmation。
 - **Recommended human decision**: 无需立即决定；后续审查 synthetic construction
   是否真正匹配 visual/language/target marginals 并只改变 joint diagnostic support。
+
+## 2026-08-07｜XID-01 round4：valid pilot 强反向，当前 instantiation 被拒绝
+
+- **Date**: 2026-08-07
+- **Idea / issue**: matched-support consistent condition 没有形成 intended
+  cross-key XOR rule，且 primary target 比 ambiguous 低 `48.21 pp`。
+- **Why human should review it**: 这是 theory-to-neural bridge 的关键反例；需要
+  避免把它过度写成 interaction-identifiability theory 失败，也不能因 mechanism
+  panel 有 `+0.66 pp` 的显著小差异而忽略预注册 effect/full-rule gates。
+- **Current evidence**: primary CI `[-51.69,-44.84] pp`；mechanism CI
+  `[+0.11,+1.22] pp` 但 effect 远低于门；consistent mechanism accuracy
+  `50.47%`、两条件 full-rule success 0；全部 engineering invariants 通过。
+- **What Agent has already frozen**: 当前 empirical instantiation
+  `INSTANTIATION_REJECTED`；roots `43302/43303` 与调参 rescue 禁止；finite theory
+  保留为未获真实 LVLM 验证的 `CONCLUSION_CANDIDATE`。
+- **Whether autonomous work can continue**: 可以；下一步只做 targeted literature
+  search，区分 key-specific/task-specific absorption 与 representation/trainability
+  ceiling，再选择新机制。
+- **Recommended human decision**: 无需立即决定；之后审查 inference scope 与
+  theory-to-neural bridge 的表述是否足够严格。

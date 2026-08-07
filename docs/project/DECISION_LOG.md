@@ -589,3 +589,33 @@ non-scientific smoke；smoke 通过后直接运行 root `43301` paired pilot。
 
 **边界**：preflight 只认证实现与配对设计，不支持 interaction-identifiability
 机制。pilot 任一科学 gate 失败即拒绝当前 empirical instantiation，不调参 rescue。
+
+---
+
+## 2026-08-07｜XID-01 round4 empirical instantiation 被拒绝
+
+**决定**：`XID-01` round4 判为 `INSTANTIATION_REJECTED`；不运行 roots
+`43302/43303`，不修改 marker、ratio、keys、LR、coordinates、prompt、panel 或
+metric rescue。Round1–3 theory `CONCLUSION_CANDIDATE` 保留，但不再把它写成已由
+真实 LVLM 支持。
+
+**依据**：
+
+1. primary consistent−ambiguous accuracy difference=`-0.48214`，95% CI
+   `[-0.51687,-0.44841]`，且 margin difference=`-0.17066` bits/token；
+2. mechanism accuracy difference 只有 `+0.00657`，即使 CI lower 略高于 0，
+   也远低于预注册 `+0.05` 门；
+3. consistent mechanism accuracy=`0.50471`，低于 `0.75` 门；两条件
+   full-rule success 均为 0；
+4. data、token、pixels、steps、permutations、frozen hashes、loss/gradients 与
+   scoring receipts 全部有效，不存在 rescue-eligible confound；
+5. ambiguous primary 的高 accuracy 不能解释为成功 rule learning，因为其完整
+   mechanism panel 约为 chance。
+
+**边界**：结果否定的是当前 neural implementation bridge，不是否定 finite
+population theorem。它暴露的新问题是 population identification 与 neural
+factorized-rule formation 之间缺少吸收/优化桥。
+
+**后果**：新 Active Research Question 转为 factorized-rule absorption versus
+representation/trainability ceiling；先进行 failure-targeted LITMAP-07，再选择新
+`SCIENTIFIC_MECHANISM`，不直接训练变体。

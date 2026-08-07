@@ -17,10 +17,11 @@ Mission Question 不得由 Agent 自行改变。
 
 当前 active question 是：
 
-> 在 autoregressive LVLM 中，当 observed training support 上 language shortcut
-> 与真实 image–text interaction rule 都能达到低 next-token NLL 时，哪些 support /
-> objective 条件能识别可迁移的 interaction rule，并控制其在 unseen multimodal
-> combinations 上的风险？
+> `XID-01` matched-support pilot 中，consistent diagnostic support 未形成完整
+> cross-key rule 且强烈损害 held-out target，这主要因为 autoregressive model
+> task-specifically 吸收每个 language key 的局部视觉条件、没有形成 shared
+> cross-modal factorization，还是因为 frozen visual representation /
+> low-dimensional trainability ceiling 使该规则不可实现？
 
 这一问题是当前子问题，不是永久冻结的唯一主线。Agent 可以依据可靠实验、
 反例或权威文献自主切换 Active Research Question。
@@ -416,3 +417,19 @@ Agent 可以自主改变：
   result 均 `PROVEN`。Round3 的 180 parameter / 2,700 gap cases 无 violation。
   真实 LVLM mechanism 仍未验证；round4 已冻结一个 matched-support、
   one-paired-seed mechanism pilot，阳性才可补至 total 3 seeds。
+
+### 2026-08-07｜XID-01 empirical instantiation rejection 后的 factorization question
+
+- **Question**: 当前 MiniMind-V 为什么没有把 population-identifying support
+  转化为 shared cross-key interaction rule：key-specific task absorption，还是
+  representation/trainability ceiling？
+- **Why the old question was insufficient**: round1–3 theory 说明 diagnostic
+  support 可排除 bad population minimizers，但没有保证 neural optimizer 会实现
+  factorized hypothesis。Round4 consistent target accuracy 反而低 `48.21 pp`，
+  两条件 mechanism accuracy 都约 `0.5`、full-rule success 都为 0。
+- **Evidence origin**: root `43301` 的全部 paired engineering gates 通过；
+  primary 反向 CI 完全低于 0，而 mechanism 小正差只有 `0.66 pp`，远低于门。
+- **Mission relation**: 该问题直接位于“数据结构 → 模型吸收什么表示 → unseen
+  composition risk”的缺失环节；若能区分，可导出 factorization-promoting
+  objective/architecture 或明确的 representation repair，而不是新造 proxy。
+- **Status**: ACTIVE_TARGETED_SEARCH_QUESTION；先做 LITMAP-07，不启动新训练。

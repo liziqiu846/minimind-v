@@ -1,0 +1,92 @@
+{
+  "cache": {
+    "cache_key_sha256": "a0eaeb0b7cbb9c88e78ee7fedbfcdca7fd38a5047991a3c5bd748bdc683a250e",
+    "cache_mode": "model_local_cpu_memory_projected_features",
+    "checkpoint_sha256": "b98399287fb76fe3dd5d24062407106086566cb255d0193e62dc1b9226ae7935",
+    "encoded_image_count": 2016,
+    "encoder_forward_call_count": 63,
+    "feature_content_sha256": "e726fe549dd244068a9e51649e8ecba2914f499ee9695365e5228ba160a4e407",
+    "feature_dtype": "float32",
+    "feature_format_version": "phase3-v6-projected-vision-f32-cpu-v1",
+    "feature_shapes": [
+      [
+        64,
+        768
+      ]
+    ],
+    "feature_storage_device": "cpu",
+    "feature_total_bytes": 396361728,
+    "hit_count": 18144,
+    "model_id": "XID-01-interaction-ambiguous-root-43301",
+    "processor_config_sha256": "657b8cbd4d4ac0e2a8a9ac7a5f9a6841258ebf7401423681cd2c29ace4884843",
+    "unique_cached_image_count": 2016
+  },
+  "candidate": "XID-01",
+  "checkpoint": {
+    "coordinate_path": "/home/lizhaohui/lzq/phase3_runtime/xid01/pilot/root-43301/interaction-ambiguous/training/coordinates.pt",
+    "coordinate_sha256": "b98399287fb76fe3dd5d24062407106086566cb255d0193e62dc1b9226ae7935",
+    "training_manifest_path": "/home/lizhaohui/lzq/phase3_runtime/xid01/pilot/root-43301/interaction-ambiguous/training/training_manifest.json",
+    "training_manifest_sha256": "dae2f249bd013292b3f284ec4bc9337768ffbbb3b2a5ad0c6f24c4d701696270",
+    "training_runtime_seconds": 547.884984254837
+  },
+  "condition": "interaction-ambiguous",
+  "elapsed_seconds": 189.85278964042664,
+  "environment": {
+    "Pillow": "11.3.0",
+    "autocast_enabled": false,
+    "cuda": "12.4",
+    "cuda_available": true,
+    "cuda_matmul_allow_tf32": false,
+    "cudnn": 90100,
+    "cudnn_allow_tf32": false,
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": true,
+    "device": "cuda:0",
+    "gpu": {
+      "compute_capability": [
+        8,
+        6
+      ],
+      "index": 0,
+      "name": "NVIDIA A40",
+      "total_memory_bytes": 47709159424
+    },
+    "model_dtype": "float32",
+    "numpy": "1.26.4",
+    "platform": "Linux-5.4.0-216-generic-x86_64-with-glibc2.31",
+    "python": "3.10.18",
+    "scipy": "1.15.3",
+    "torch": "2.6.0+cu124",
+    "transformers": "4.57.6"
+  },
+  "final_confirmation_accessed": false,
+  "git": {
+    "commit": "64ec628844597e5cd6d845d2990522af46293599",
+    "tracked_status": "M docs/project/AUTONOMOUS_LOOP_STATE.md"
+  },
+  "mapping_root": 43301,
+  "mode": "full",
+  "peak_cuda_memory_bytes": 1231912448,
+  "prepared_inputs": {
+    "data_audit_sha256": "d9ba001abb0034181907a8e7734fcc82265ee70c9e4ce84e48ba063d4f265af1",
+    "final_confirmation_accessed": false,
+    "heldout_groups": 1008,
+    "heldout_manifest_sha256": "739f1bdb294cd0ec3abc9ab71174414396c9d298ef4247bcba3db84e799307b8"
+  },
+  "round": 4,
+  "schema_version": 1,
+  "scoring": {
+    "deterministic_rerun_exact": false,
+    "item_batch_size": 8,
+    "items": 9072,
+    "legal_digits": [
+      "0",
+      "1"
+    ],
+    "raw_rows_sha256": "3c62b93e1be833fdbbe34cf3733a9e247f5235ca32bf38bd955614763d10b8e1",
+    "raw_values_persisted": true,
+    "scientific_aggregate_computed": false,
+    "teacher_forced_target": "singleton_digit_plus_EOS"
+  },
+  "status": "complete"
+}
