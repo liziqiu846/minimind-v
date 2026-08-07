@@ -17,11 +17,11 @@ Mission Question 不得由 Agent 自行改变。
 
 当前 active question 是：
 
-> `XID-01` matched-support pilot 中，consistent diagnostic support 未形成完整
-> cross-key rule 且强烈损害 held-out target，这主要因为 autoregressive model
-> task-specifically 吸收每个 language key 的局部视觉条件、没有形成 shared
-> cross-modal factorization，还是因为 frozen visual representation /
-> low-dimensional trainability ceiling 使该规则不可实现？
+> `VSTATE-01`：在最终 answer、pixels、support 与 trainable coordinates 固定时，
+> answer-only autoregressive supervision 是否因为 language-key-dependent residual
+> 使视觉更新相互抵消或局部化，而 key-invariant visual-state supervision 能提供
+> shared non-cancelling update、形成可迁移 cross-key rule？若不能，是否因为当前
+> representation / low-dimensional trainability class 根本无法实现该 visual state？
 
 这一问题是当前子问题，不是永久冻结的唯一主线。Agent 可以依据可靠实验、
 反例或权威文献自主切换 Active Research Question。
@@ -108,6 +108,26 @@ Agent 可以自主改变：
 
 阶段三内允许在非 final confirmation 数据上进行符合预注册和最小训练规则的
 机制干预与 `PROVISIONAL_ALGORITHM_TEST`。
+
+## 2026-08-07｜VSTATE-01 active question
+
+- **Question**: key-invariant visual-state target 是否能把视觉状态学习与
+  language-conditioned rule application 分解，并通过 non-cancelling shared update
+  改善 unseen image×key composition？
+- **Why the old question was insufficient**: XID-01 已给出 population
+  identification theorem，但 round4 valid pilot 显示该条件不足以让 MiniMind-V
+  optimizer 形成完整规则；继续改 support/marker/ratio 会成为失败路线 rescue。
+- **Evidence / literature origin**: LITMAP-07 核查 11 篇 primary sources。Park et
+  al. 的生成式 VLM 受控实验显示 explicit image-to-text supervision 改变
+  simple-to-hard visual transfer，并以 update alignment theorem 连接即时 held-out
+  loss；Words or Vision 独立支持训练 composition 改变 text-over-image bias。
+  Cambrian-1/Idefics2 同时要求保留 representation/trainability ceiling 为竞争解释。
+- **Mission relation**: 该问题直接补上“理论可识别规则 → neural optimizer 形成
+  shared visual representation → unseen composition risk”的缺口；支持时可导出
+  explicit/internalized visual-state supervision，否定时可缩小到 representation
+  ceiling，而不是制造新 proxy。
+- **Status**: ACTIVE_CONJECTURE；先做 theory-first gradient identity 与 exhaustive
+  verification，未预注册训练。
 
 ## Active Research Question 历史
 
@@ -412,11 +432,11 @@ Agent 可以自主改变：
   checkpoint proxy；`VISSUP-01`/`PROJALLOC-01` 失败的是具体 intervention。
   `XID-01` 的对象是低 observed-risk 条件预测器的等价类，不依赖 caption-NLL、
   no-pixel margin、rotation task 或 module allocation。
-- **Status**: ACTIVE_THEORY_CONCLUSION_CANDIDATE；round1 finite proposition、
+- **Status**: DEMOTED_AS_ACTIVE；theory 仍为 `CONCLUSION_CANDIDATE`。round1 finite proposition、
   round2 risk decomposition、round3 diagnostic-mass threshold 与 sharpness
   result 均 `PROVEN`。Round3 的 180 parameter / 2,700 gap cases 无 violation。
-  真实 LVLM mechanism 仍未验证；round4 已冻结一个 matched-support、
-  one-paired-seed mechanism pilot，阳性才可补至 total 3 seeds。
+  Round4 valid neural pilot 已拒绝当前 empirical instantiation；真实 LVLM
+  mechanism 仍未验证，roots `43302/43303` 禁止。
 
 ### 2026-08-07｜XID-01 empirical instantiation rejection 后的 factorization question
 
@@ -432,4 +452,5 @@ Agent 可以自主改变：
 - **Mission relation**: 该问题直接位于“数据结构 → 模型吸收什么表示 → unseen
   composition risk”的缺失环节；若能区分，可导出 factorization-promoting
   objective/architecture 或明确的 representation repair，而不是新造 proxy。
-- **Status**: ACTIVE_TARGETED_SEARCH_QUESTION；先做 LITMAP-07，不启动新训练。
+- **Status**: COMPLETED_AS_SEARCH_TRIGGER；LITMAP-07 已完成并选择
+  `VSTATE-01`。旧问题作为 competing-explanation origin 永久保留。

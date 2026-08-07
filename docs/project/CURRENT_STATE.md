@@ -1,6 +1,6 @@
 # 上海交通大学实习——当前研究状态
 
-**版本：v5**
+**版本：v6**
 **日期：2026-08-07**
 **定位：项目当前工作状态的最高优先级入口。任何新对话、Codex 任务或阶段三研究决策开始前，先读本文。**
 
@@ -74,18 +74,17 @@ MiniMind-V 只是低成本验证平台，不能反过来定义理论。
 
 ## 4. 当前大方向共识：先找 VLM 相比 LLM 真正新增的泛化因素
 
-当前唯一 Active Research Question 是 `XID-01`：
+当前唯一 Active Research Question 是 `VSTATE-01`：
 
-> autoregressive supervision 下，当 language shortcut 与真实 image–text
-> interaction rule 在 observed training support 上都能达到低 next-token NLL 时，
-> 哪些 support / objective 条件能够识别可迁移规则，并控制 unseen multimodal
-> combination risk？
+> answer-only autoregressive supervision 是否因 language-key-dependent residual
+> 使视觉更新抵消/局部化，而 key-invariant visual-state supervision 能否形成
+> shared non-cancelling update 与可迁移 cross-key rule？
 
-证据级别为 theory `CONCLUSION_CANDIDATE`；真实 LVLM mechanism 尚未验证。
-Round4 已冻结并通过 matched-support MiniMind-V pilot 的 data/model/resource
-preflight。pilot 只区分 interaction identifiability 与 visual necessity /
-conditional entropy explanation，不把新 metric、proxy、gate、audit 或 benchmark
-qualification 当成科学机制。
+证据级别为 `ACTIVE_CONJECTURE`；真实 LVLM mechanism 尚未验证。来源是
+`XID-01_round4` valid rejection 与 LITMAP-07 的 11 篇 primary-source audit。
+`XID-01` round1–3 finite theory 保留为 `CONCLUSION_CANDIDATE`，但其当前
+border/key/M2/4,096-coordinate neural instantiation 已被拒绝，禁止补 roots 或调参
+rescue。下一步先建立 gradient-mediation theory bridge，不立即训练。
 
 当前不再一头扎进某个单一 proxy 或局部公式。先在任务书大方向下系统比较 VLM 泛化的主要来源。
 
@@ -303,8 +302,11 @@ level 解读。当前没有证据达到 `MECHANISM_REJECTED`。
    lineage 与 generative held-out cell 保留为实验设计问题，不再决定科学机制准入。
 10. observed support 上多个低 NLL conditional predictors 可能对应不同的
     cross-modal interaction rules，并在 unseen cells 上产生不同风险；该
-    `XID-01` formulation 仍需证明其超出普通 distribution-shift no-free-lunch 的
-    VLM-specific 内容。
+    `XID-01` finite formulation 已给出 theory candidate，但 valid neural pilot
+    显示 population identification 不足以保证 shared-rule formation。
+11. `VSTATE-01` 是当前 optimization bridge：answer-only key-dependent residual
+    可能使视觉更新抵消/局部化；key-invariant state target 是否提供 shared update
+    必须先在最小模型中证明，并与 representation ceiling 明确区分。
 
 ---
 
@@ -321,8 +323,8 @@ level 解读。当前没有证据达到 `MECHANISM_REJECTED`。
   sample count 直接称为 controlled coverage；
 - 不把 LAION/VFLAN、broad dataset/task labels 或非唯一官方 ID 直接当作 factorial
   cell；不搜索 domain pair、mixture ratio、target cell 或 output format；
-- 不把 predictor-equivalence diameter 直接实现成 checkpoint proxy；本轮先证明
-  formal object 与 prediction；
+- 不把 predictor-equivalence diameter、gradient alignment 或 state decodability
+  直接实现成 checkpoint proxy；先证明 VSTATE formal object 与 prediction；
 - 不访问 final confirmation set；
 - 不提前宣布进入阶段四。
 
@@ -330,22 +332,19 @@ level 解读。当前没有证据达到 `MECHANISM_REJECTED`。
 
 ## 13. 仓库与执行状态
 
-- 当前最新 scientific result：`experiments/results/XID-01_round4/RESULT.md`。
-  root 43301 valid pilot 强反向：primary consistent−ambiguous=`-48.21 pp`，
-  mechanism diff=`+0.66 pp` 且两条件 full-rule success=0。当前 empirical
-  instantiation 已拒绝，roots 43302/43303 禁止；round1–3 finite theory 仍仅为
-  未获真实 LVLM 验证的 `CONCLUSION_CANDIDATE`。
-- Round4 immutable plan commit=`5cbe500`。data/token/pixel/model/resource
-  preflight 全通过：两条件 train rows=`11,040`、steps=`2,070`、coordinates=`4,096`；
-  pixel/target order、target spans/masks、marginals、per-key entropy 精确匹配，
-  paired token records 只在预定 contextual key slot 变化。
-- 下一步：冻结 LITMAP-07 failure-targeted search plan，区分 key-specific
-  factorization failure 与 representation/trainability ceiling；不直接训练变体。
+- 当前最新 scientific result：`experiments/results/LITMAP-07_round1/RESULT.md`。
+  2,455 raw records、1,242 unique titles、11 篇全文核查，选择 `VSTATE-01`
+  shared visual-state gradient mediation 为 `ACTIVE_CONJECTURE`。
+- XID root 43301 valid pilot 强反向证据保持不变；当前 empirical instantiation
+  已拒绝，roots 43302/43303 禁止，round1–3 finite theory 仅为未获真实 LVLM
+  验证的 `CONCLUSION_CANDIDATE`。
+- 下一步：提交 `VSTATE-01_round1` immutable theory plan，证明 answer-only
+  key-wise gradient cancellation 与 shared-state non-cancellation；不直接训练。
 - `RUNNING_JOB=none`，`HARD_STOP=false`。
 - 新增 plans、results、raw receipts、logs 和 SHA manifests 已在
   `EXPERIMENT_REGISTRY.md` 建立 canonical 索引；失败原始证据保留。
-- `LITMAP-06` 的 3,479 records、2,395 unique titles、10-source matrix、
-  deterministic search index、5/5 DOI verification 与 source hashes 已固化；
+- `LITMAP-07` 的 deterministic index、3/3 DOI verification、source hashes 与
+  exact API receipts 已固化；
   0 GPU/checkpoint/training，未访问 final confirmation。
 
 ---

@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/x91Z+2gtQaSdN0mc9xCHDwpek4Y</id>
+  <title>arXiv Query: search_query=&amp;id_list=2501.02669,2403.05262,2203.15332,2306.02050&amp;start=0&amp;max_results=10</title>
+  <updated>2026-08-07T11:34:24Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=&amp;start=0&amp;max_results=10&amp;id_list=2501.02669,2403.05262,2203.15332,2306.02050" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>10</opensearch:itemsPerPage>
+  <opensearch:totalResults>4</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2203.15332v1</id>
+    <title>Balanced Multimodal Learning via On-the-fly Gradient Modulation</title>
+    <updated>2022-03-29T08:26:38Z</updated>
+    <link href="https://arxiv.org/abs/2203.15332v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2203.15332v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal learning helps to comprehensively understand the world, by integrating different senses. Accordingly, multiple input modalities are expected to boost model performance, but we actually find that they are not fully exploited even when the multimodal model outperforms its uni-modal counterpart. Specifically, in this paper we point out that existing multimodal discriminative models, in which uniform objective is designed for all modalities, could remain under-optimized uni-modal representations, caused by another dominated modality in some scenarios, e.g., sound in blowing wind event, vision in drawing picture event, etc. To alleviate this optimization imbalance, we propose on-the-fly gradient modulation to adaptively control the optimization of each modality, via monitoring the discrepancy of their contribution towards the learning objective. Further, an extra Gaussian noise that changes dynamically is introduced to avoid possible generalization drop caused by gradient modulation. As a result, we achieve considerable improvement over common fusion methods on different multimodal tasks, and this simple strategy can also boost existing multimodal methods, which illustrates its efficacy and versatility. The source code is available at \url{https://github.com/GeWu-Lab/OGM-GE_CVPR2022}.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-03-29T08:26:38Z</published>
+    <arxiv:comment>Accepted by CVPR 2022 (ORAL)</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xiaokang Peng</name>
+    </author>
+    <author>
+      <name>Yake Wei</name>
+    </author>
+    <author>
+      <name>Andong Deng</name>
+    </author>
+    <author>
+      <name>Dong Wang</name>
+    </author>
+    <author>
+      <name>Di Hu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2306.02050v2</id>
+    <title>Provable Dynamic Fusion for Low-Quality Multimodal Data</title>
+    <updated>2023-06-06T13:46:22Z</updated>
+    <link href="https://arxiv.org/abs/2306.02050v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2306.02050v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The inherent challenge of multimodal fusion is to precisely capture the cross-modal correlation and flexibly conduct cross-modal interaction. To fully release the value of each modality and mitigate the influence of low-quality multimodal data, dynamic multimodal fusion emerges as a promising learning paradigm. Despite its widespread use, theoretical justifications in this field are still notably lacking. Can we design a provably robust multimodal fusion method? This paper provides theoretical understandings to answer this question under a most popular multimodal fusion framework from the generalization perspective. We proceed to reveal that several uncertainty estimation solutions are naturally available to achieve robust multimodal fusion. Then a novel multimodal fusion framework termed Quality-aware Multimodal Fusion (QMF) is proposed, which can improve the performance in terms of classification accuracy and model robustness. Extensive experimental results on multiple benchmarks can support our findings.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-06-03T08:32:35Z</published>
+    <arxiv:comment>Accepted by ICML 2023</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Qingyang Zhang</name>
+    </author>
+    <author>
+      <name>Haitao Wu</name>
+    </author>
+    <author>
+      <name>Changqing Zhang</name>
+    </author>
+    <author>
+      <name>Qinghua Hu</name>
+    </author>
+    <author>
+      <name>Huazhu Fu</name>
+    </author>
+    <author>
+      <name>Joey Tianyi Zhou</name>
+    </author>
+    <author>
+      <name>Xi Peng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.02669v2</id>
+    <title>Generalizing from SIMPLE to HARD Visual Reasoning: Can We Mitigate Modality Imbalance in VLMs?</title>
+    <updated>2025-06-02T16:48:29Z</updated>
+    <link href="https://arxiv.org/abs/2501.02669v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.02669v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision Language Models (VLMs) are impressive at visual question answering and image captioning. But they underperform on multi-step visual reasoning -- even compared to LLMs on the same tasks presented in text form -- giving rise to perceptions of modality imbalance or brittleness. Towards a systematic study of such issues, we introduce a synthetic framework for assessing the ability of VLMs to perform algorithmic visual reasoning, comprising three tasks: Table Readout, Grid Navigation, and Visual Analogy. Each has two levels of difficulty, SIMPLE and HARD, and even the SIMPLE versions are difficult for frontier VLMs. We propose strategies for training on the SIMPLE version of tasks that improve performance on the corresponding HARD task, i.e., simple-to-hard (S2H) generalization. This controlled setup, where each task also has an equivalent text-only version, allows a quantification of the modality imbalance and how it is impacted by training strategy. We show that 1) explicit image-to-text conversion is important in promoting S2H generalization on images, by transferring reasoning from text; 2) conversion can be internalized at test time. We also report results of mechanistic study of this phenomenon. We identify measures of gradient alignment that can identify training strategies that promote better S2H generalization. Ablations highlight the importance of chain-of-thought.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-01-05T21:36:38Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Simon Park</name>
+    </author>
+    <author>
+      <name>Abhishek Panigrahi</name>
+    </author>
+    <author>
+      <name>Yun Cheng</name>
+    </author>
+    <author>
+      <name>Dingli Yu</name>
+    </author>
+    <author>
+      <name>Anirudh Goyal</name>
+    </author>
+    <author>
+      <name>Sanjeev Arora</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.05262v3</id>
+    <title>Debiasing Multimodal Large Language Models via Penalization of Language Priors</title>
+    <updated>2025-08-14T12:30:25Z</updated>
+    <link href="https://arxiv.org/abs/2403.05262v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.05262v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In the realms of computer vision and natural language processing, Multimodal Large Language Models (MLLMs) have become indispensable tools, proficient in generating textual responses based on visual inputs. Despite their advancements, our investigation reveals a noteworthy bias: the generated content is often driven more by the inherent priors of the underlying Large Language Models (LLMs) than by the input image. Empirical experiments underscore the persistence of this bias, as MLLMs often provide confident answers even in the absence of relevant images or given incongruent visual inputs. To rectify these biases and redirect the model's focus toward visual information, we propose two simple, training-free strategies. First, for tasks such as classification or multi-choice question answering, we introduce a "Post-Hoc Debias" method using an affine calibration step to adjust the output distribution. This approach ensures uniform answer scores when the image is absent, acting as an effective regularization technique to alleviate the influence of LLM priors. For more intricate open-ended generation tasks, we extend this method to "Visual Debias Decoding", which mitigates bias by contrasting token log-probabilities conditioned on a correct image versus a meaningless one. Additionally, our investigation sheds light on the instability of MLLMs across various decoding configurations. Through systematic exploration of different settings, we achieve significant performance improvements--surpassing previously reported results--and raise concerns about the fairness of current evaluation practices. Comprehensive experiments substantiate the effectiveness of our proposed strategies in mitigating biases. These strategies not only prove beneficial in minimizing hallucinations but also contribute to the generation of more helpful and precise illustrations.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-08T12:35:07Z</published>
+    <arxiv:comment>10 pages, 12 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>YiFan Zhang</name>
+    </author>
+    <author>
+      <name>Yang Shi</name>
+    </author>
+    <author>
+      <name>Weichen Yu</name>
+    </author>
+    <author>
+      <name>Qingsong Wen</name>
+    </author>
+    <author>
+      <name>Xue Wang</name>
+    </author>
+    <author>
+      <name>Wenjing Yang</name>
+    </author>
+    <author>
+      <name>Zhang Zhang</name>
+    </author>
+    <author>
+      <name>Liang Wang</name>
+    </author>
+    <author>
+      <name>Rong Jin</name>
+    </author>
+  </entry>
+</feed>

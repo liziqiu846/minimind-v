@@ -1,0 +1,1496 @@
+[2501.02669] Untitled Document
+marginparsep has been altered.
+topmargin has been altered.
+marginparpush has been altered.
+The page layout violates the ICML style.
+Please do not change the page layout, or include packages like geometry,
+savetrees, or fullpage, which change it for you.
+We’re not able to reliably undo arbitrary changes to the style. Please remove
+the offending package(s), or layout-changing commands and try again.
+Generalizing from SIMPLE to HARD Visual Reasoning:
+Can We Mitigate Modality Imbalance in VLMs?
+\doparttoc\faketableofcontents
+Simon Park * 1
+Abhishek Panigrahi * 1
+Yun Cheng * 1
+Dingli Yu 1
+Anirudh Goyal 2
+Sanjeev Arora 1
+1Princeton Language and Intelligence, Princeton University 2Meta AI
+Correspondence to: {juhyunp, ap34, yc6206}@princeton.edu
+††footnotetext: *Equal contribution, Shuffled in random order
+Abstract
+While Vision Language Models (VLMs) are impressive in tasks such as visual question answering (VQA) and image captioning, their ability to apply multi-step reasoning to images has lagged, giving rise to perceptions of modality imbalance or brittleness.
+Towards systematic study of such issues, we introduce a synthetic framework for assessing the ability of VLMs to perform algorithmic visual reasoning (AVR), comprising three tasks: Table Readout, Grid Navigation, and Visual Analogy. Each has two levels of difficulty, simple and hard, and even the simple versions are difficult for frontier VLMs. We seek strategies for training on the simple version of tasks that improve performance on the corresponding hard task, i.e., S2H generalization. This synthetic framework, where each task also has a text-only version, allows a quantification of the modality imbalance and how it is impacted by training strategy. Ablations highlight the importance of explicit image-to-text conversion in promoting S2H generalization when using auto-regressive training. We also report results of mechanistic study of this phenomenon, including a measure of gradient alignment that seems to identify training strategies that promote better S2H generalization 111Code is available at VLM-S2H PLI codebase.
+1 Introduction
+Vision Language Models (VLMs) like LLaVA-series models (Liu et al., 2023b; a; 2024a) fuse an LLM with visual encoders which allows them to harness the impressive reasoning abilities of pre-trained LLMs towards solving visual reasoning tasks (Monajatipoor et al., 2023; Carbune et al., 2024; Zhang et al., 2024a). However, VLMs are usually felt to exhibit more brittle reasoning than the underlying LLM, and recent works have tried to understand this as a modality imbalance problem (Peng et al., 2022; Huang et al., 2022; Fan et al., 2023; Wei et al., 2024). For example, presenting the task in image form can lead to lower performance than when the same task is presented in text form (Zhang et al., 2023; 2024c; Wang et al., 2024b; Zhang et al., 2024d). Mitigating this modality imbalance is still an open problem.
+Refer to caption
+Figure 1: (Left) Example Data Point for Consecutive Table Readout. Input table can be provided as an image or LaTeX code. The task is to sequentially read numbers from a start cell to an end cell in row major order. (Right) Illustration of Key Concepts using examples from Consecutive Table Readout. We observe that current models can S2H generalize on text – when trained to read short sequences from small LaTeX-formatted tables, the models can read longer paths from larger tables, also provided in LaTeX code. However, they fail to length-generalize on images. To address the generalization gap and imbalanced learning of different modalities, our goal is to transfer the generalization behavior from text to image modality.
+Here, we introduce a concrete methodology to precisely study such issues. First, we design visual tasks where the image information relevant to the task can also be represented as text (e.g. LaTeX code). This allows a direct comparison of the effect of training strategies in individual modalities and combinations. Second, to allow a clear comparison of different training strategies, we measure the brittleness of learning with simple-to-hard (S2H) generalization, where models are trained on simple examples of a task and evaluated on hard examples.
+We create a set of synthetic tasks 222Creating such tasks was more nontrivial than expected, for reasons described in Section B.6. that involve algorithmic visual reasoning (Ghosal et al., 2024; Cherian et al., 2023; Zhang et al., 2024b): Table Readout (reading out table entries in an order specified visually), Grid Navigation (finding valid paths through grid-like structures while avoiding obstacles), and Visual Analogy (identifying logical patterns across sets of abstract visual examples and applying analogical reasoning). Each task requires many reasoning steps while dynamically shifting attention over a sequence of small regions in the image. simple and hard examples differ in the length and complexity of the necessary reasoning steps.
+The simple tasks are difficult for current frontier VLMs such as GPT-4o and Claude-3.5 Sonnet (Achiam et al., 2023; Anthropic, 2024) (Section G.1). Since we work with smaller open-parameter models,
+our methodology consists of using supervised training to precisely inject capability at a task in one modality and then study how variations in training affect the gap between modalities in S2H generalization. Since the tasks are difficult for frontier VLMs, we expect the takeaways from our study to be of broader interest.
+Illustrative example of Consecutive Table Readout:
+This is the simplest of our algorithmic visual reasoning tasks. Given a table of numbers and indices of two table cells (i,j) and (k,l) , it requires outputting every table entry between these two cells in row-major order (Figure 1). The input table can be provided as an image or as text (i.e., LaTeX code), allowing the kind of study sketched above. In the simple task, the length of the output sequence is 5 to 10 , whereas in the hard task, it is 25 to 30 . Therefore, S2H generalization here is a type of length generalization, a well-studied concept in LLMs (Zhou et al., 2024a). SFT on 8\times 10^{4} simple-text examples yields 80\% accuracy on hard-text examples. However, training on the simple-image examples results in only 20\% accuracy on the hard-image examples, irrespective of how long we train. The 60\% difference between the simple and hard setting is a measure of the modality gap
+or modality imbalance.
+1.1 Paper Overview
+We study training strategies that incorporate various types of supervision: text-based, image-based, and combinations of the two (Section 2.3). We find that the most reliable way to alleviate the gap is to teach the model image reasoning via text conversion, namely, learn to explicitly extract information from the image in text form and then generate the solution using CoT. Specifically, we find: (i) for tasks where the model exhibits S2H generalization in the text modality, training on image reasoning via text conversion greatly helps to mitigate the gap (Section 3); (ii) for tasks where the S2H generalization failed in both modalities, the same idea as (i) led to S2H generalization in the image modality after text-only supervision was used to inject reasoning capability on hard task in text modality (Section 4). The findings in (ii) should be interpreted as suggesting that simple image-to-text conversion could be a promising intervention to reduce modality imbalance in future VLMs whose base LLM does exhibit S2H generalization in the text modality.
+A surprising finding is that even though explicitly training on image-to-text conversion seems necessary for S2H generalization, the final trained model can generate the correct solution without explicitly extracting the image content as text: the image-to-text conversion skill gets internalized! (This also greatly reduces the inference-time cost.) Therefore, we try to understand the effectiveness of this key intervention at the level of training gradients. We find that gradients from simple-image reasoning examples can help reduce loss on hard-image inputs with the above intervention (Section 5); this gradient alignment merits further study.
+On tasks where we need to inject reasoning capability on the hard task, our findings about gradients inspired a more effective two-phase training (Section 4.2). The first phase teaches the model to do image reasoning via text conversion on a few simple examples. We find that inclusion of this phase substantially improves gradient alignment in the earlier phases of training, when gradients have larger norms, which allows for more effective S2H generalization on the image modality. This finding is in accord with previous empirical evidence that highlights the importance of visual-language alignment in VLM training (Fan et al., 2024a).
+2 General Setup
+2.1 Training Data
+Formally, we let f:\mathcal{X}\to\mathcal{Z} denote a reasoning task, where \mathcal{X} refers to a set of input data, further split into \mathcal{X}_{{\textsc{simple}}} and \mathcal{X}_{{\textsc{hard}}} , and \mathcal{Z} refers to a set of answers. Each input {\textbf{x}}\in\mathcal{X} can be presented in text format {\textbf{x}}^{(t)} or in image format {\textbf{x}}^{(i)} .
+For each pair of data x and solution f({\textbf{x}}) , we also create a chain-of-thought reasoning trace, which we denote by CoT({\textbf{x}}) . We also define a prompt P_{convert} that we optionally prepend at the start of chain-of-thought to signal explicit image-to-text conversion on image input333e.g., “Convert the provided image to text”. Hence, our training dataset is defined by input x (which can be given either as {\textbf{x}}^{(t)} or {\textbf{x}}^{(i)} ), chain-of-thought CoT({\textbf{x}}) , and the final answer f({\textbf{x}}) .
+2.2 Model
+In line with recent work that shows the benefit of VLMs that combine multiple image encoders, we trained Eagle-X2-Llama3-8B, a variation of Eagle-X5 (Shi et al., 2024) that uses Llama3-8B-Instruct (Dubey et al., 2024) as the LLM backbone and CLIP-448 (Radford et al., 2021) and ConvNeXt (Liu et al., 2022b) as visual encoders. Since the original paper found only minor benefit beyond the two encoders, we do not use all five visual encoders. See Appendix C for more details on the training.
+2.3 Types of Supervision
+Our controlled experiments study the effect of the following types of supervision on simple examples during training:
+(a)
+\mathsb{Text} supervision ( (T;S) ): given the text input {\textbf{x}}^{(t)} , we train on the gold output containing a chain-of-thought trace CoT({\textbf{x}}) and the final answer f({\textbf{x}}) .
+(b)
+\mathsb{Image} supervision ( (I;S) ): given the image input {\textbf{x}}^{(i)} , we train on the gold output containing a chain-of-thought trace CoT({\textbf{x}}) and the final answer f({\textbf{x}}) .
+(c)
+\mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} supervision ( (I;\#T,S) 444 \# indicates the additional conversion prompt P_{convert} ): given {\textbf{x}}^{(i)} , we train on the gold output containing the conversion prompt P_{convert} , converted text {\textbf{x}}^{(t)} , a chain-of-thought trace CoT({\textbf{x}}) , and the final answer f({\textbf{x}}) .
+(d)
+\mathsb{Text\text{+}\;\!\>\!\!Image} supervision: we train on an equal mix of \mathsb{Text} and \mathsb{Image} supervision.
+(e)
+\mathsb{Mix} supervision: we train on an equal mix of \mathsb{Text} , \mathsb{Image} , and \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} supervision.
+We train a model f_{\theta} on a mixture of the above supervision types with auto-regressive loss ( l ) that takes in the model’s logits on an input example and returns the average loss on a selected set of tokens. For example, for \mathsb{Image} supervision, we will represent the input example as \{{\textbf{x}}^{(i)},CoT({\textbf{x}}),f({\textbf{x}})\} , and compute the loss on \{CoT({\textbf{x}}),f({\textbf{x}})\} . During the evaluation, we test whether the model predicts f({\textbf{x}}) correctly for a given input.
+In Section 4, we will adapt some of the above supervision strategies to also include \mathsb{Text} supervision on hard examples. The adapted supervision strategies will have a + sign appended to represent this additional component (e.g. \mathsb{Mix}\textbf{+} adapted from \mathsb{Mix} supervision).
+Refer to caption
+Figure 2: S2H Generalization on text (left) and image (right) of different supervision for Consecutive Table Readout on hard ( 15 - 20 ) (top) and hard ( 25 - 30 ) (bottom). S2H generalization on text of \mathsb{Text} (green lines (left), grey dotted lines (right)) outperforms S2H generalization on image of \mathsb{Image} (blue lines (right)), highlighting modality imbalance. \mathsb{Mix} mitigates this imbalance.
+Refer to caption
+Figure 3: Effect of \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} on Consecutive Table Readout: S2H Generalization (left) and Generation Length (right) for hard (25-30). Number of training data is 16\times 10^{4} . \mathsb{Text\text{+}\;\!\>\!\!Image} underperforms \mathsb{Mix} and \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} supervision. \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} supervision improves performance slightly but at the cost of longer generation due to explicit image-to-text conversion at inference.
+3 Modality Imbalance in Consecutive Table Readout
+We use our illustrative example Consecutive Table Readout introduced in Section 1 to illustrate the S2H generalization gap between different modalities and training strategies needed to address it. We compare different types of supervision using simple examples by measuring the improvements on the exact match accuracy 555Correctness requires all generated numbers to be in the correct order; see Appendix D. on two different versions of hard tasks: (a) hard ( 15 – 20 ), reading 15 – 20 consecutive numbers and (b) hard ( 25 – 30 ), reading 25 – 30 consecutive numbers (more challenging).
+To demonstrate the modality imbalance, we compare \mathsb{Text} and \mathsb{Image} supervision. Figure 2 shows that the S2H generalization gap between the two is substantial. For hard ( 25 – 30 ), while \mathsb{Text} supervision achieves 80\% accuracy on hard-text examples, \mathsb{Image} supervision achieves only 20\% on hard-image examples.
+In order to reduce the gap, we consider training strategies that can leverage strong S2H generalization of \mathsb{Text} supervision to help S2H generalization of \mathsb{Image} supervision. Two candidates are \mathsb{Text\text{+}\;\!\>\!\!Image} supervision, which simply mixes in \mathsb{Text} and \mathsb{Image} supervision, and \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} supervision, which trains the model to first convert the image input to its text format and then output the solution. \mathsb{Text\text{+}\;\!\>\!\!Image} supervision induces the model to implicitly make the connection that the image and text formats are equivalent, while \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} supervision makes this connection explicit. We compare the two training strategies in Figure 3 and show that \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} supervision shows much better performance on hard-images.
+However, \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} supervision has a key drawback: trained models have significantly higher inference costs, since the conversion of image to text before generating the solution leads to 3\times longer outputs, which limits the real-world practicality. To address this, we propose \mathsb{Mix} supervision, which combines \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} and \mathsb{Text\text{+}\;\!\>\!\!Image} supervision. This teaches the model to align the modalities, while also teaching it to not always rely on the image-to-text conversion.
+\mathsb{Mix} supervision closes the modality imbalance gap by improving S2H generalization on images, while maintaining inference cost.
+As shown in Figure 3, \mathsb{Mix} supervision retains most of the S2H generalization performance of the \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} strategy while reducing generation length by directly solving reasoning tasks from images. In Figure 2 (top right), we show that it can almost completely match the S2H generalization performance of \mathsb{Text} supervision for hard ( 15 - 20 ) examples. On hard ( 25 - 30 ), even though it does not fully close the gap between text and image generalization (Figure 2, bottom right), the gap can be further reduced with a short text-only warm-up training. We discuss this further in Section 6.
+Modality imbalance in visual analogy:
+We additionally consider a simpler visual analogy task, called Pattern-Heldout Visual Analogy. We show that S2H generalization on hard-images under \mathsb{Image} supervision only reaches 36\% , while for hard-text examples under \mathsb{Text} supervision, it reaches 45.6\% . By leveraging S2H generalization in the text modality, \mathsb{Mix} supervision improves S2H generalization on hard-images to 41\% . We provide all details in Section E.2.
+Remark 3.1.
+In this work, we focus only on tasks where the model S2H-generalizes on text better than image input. Extending the results to tasks involving a wider range of modalities where the model can S2H-generalize better on one modality than the other is left as an important future work.
+Refer to caption
+Figure 4: Illustration of non S2H-generalizable settings: For Visual Analogy, we only include one in-context example for simplicity and provide annotations for clarity. In the first row, the first cell contains a rectangle, whereas the second and third cells contain a circle and a rectangle. Therefore, the in-context example is consistent with applying the OR relation along the shape type domain. The model then needs to identify the correct option that corresponds to applying the OR relation to the first two cells of the query along some (potentially different) domain. See Appendix B for non-annotated example images that are provided to the model.
+4 Full Study: Table Readout, Grid Navigation, Visual Analogy
+Setting
+Attribute
+simple
+hard
+Table Readout
+Mean Length
+12
+35
+# Turns
+1-4
+>4
+Pattern
+Spiral
+Composition of
+/ Sinusoidal
+Spiral / Sinusoidal
+Grid Navigation
+# DFS steps
+[10,25]
+[26,60]
+# Objects
+\{1,2\}
+\{2,3,4,5\}
+# Obstacle type
+\{1\}
+\{3,4,5\}
+Visual Analogy
+Example Patterns
+Same
+Different
+Query Pattern
+Seen
+Held-out
+Table 1: Summary of the simple and hard task setup for Table Readout, Grid Navigation, and Visual Analogy
+We now consider three non S2H-generalizable synthetic tasks, where our model struggles to generalize to hard instances in either modality after training on the corresponding simple examples: Table Readout, Grid Navigation, and Visual Analogy (Figure 4). We briefly describe the simple and hard setup of each task below (summarized in Table 1, fully detailed in Appendix B).
+•
+Table Readout:
+The model sequentially reads numbers along a highlighted path in a table (given in either image or its LaTeX code). simple examples consist of 1 – 4 linear segments in spiral or sinusoidal path patterns with an average length of 12 (Figure 32). hard examples consist of >4 linear segments, featuring longer and arbitrary compositions of spiral or sinusoidal path patterns with an average length of 35 (Figure 33).
+•
+Grid Navigation:
+The model navigates in a 2D grid (given in either image or its LaTeX code) from a designated start cell to an end cell while collecting all specified objects and avoiding obstacles. simple examples contain 1 – 2 objects and 1 type of obstacle (Figure 34). hard examples involve \geq 2 distinct objects and \geq 3 types of obstacles (Figure 35). The task can be solved by depth-first search (DFS). Recent works (Kim et al., 2024; Wu et al., 2024a; Wang et al., 2024b) explored similar synthetic tasks in LLM and VLM evaluation.
+•
+Visual Analogy:
+The model performs abstract reasoning on attributes and relations between geometric figures in a puzzle that resembles human IQ test (given in either image or its text description). It first reasons about two in-context examples, then applies an analogous reasoning to choose one option to complete the query. simple puzzles have in-context examples and query that vary along the same attribute following a common relation (Figure 36). hard puzzles have examples and query that vary along different attributes following a common relation. Furthermore, the combinations of attribute and relation used in the hard puzzles are held-out from training (Figure 37). This task is adapted from Barrett et al. (2018) and Hill et al. (2019).
+These tasks require the model to generalize to hard examples by composing reasoning patterns learned from simple training examples, which has been known to be difficult for LLMs Yu et al. (2023); Zhao et al. (2024); Wu et al. (2024b); Huang et al. (2023); Dziri et al. (2024). We observe that with only supervision from the simple examples, models with \mathsb{Text} , \mathsb{Image} , and \mathsb{Mix} supervision achieve \leq 25\% S2H generalization on both text and image after training on 24\times 10^{4} data in each setting. The failure to S2H-generalize in either input modality highlights the insufficient general reasoning capacity of existing models on these tasks. We then adapt \mathsb{Mix} supervision by including supervision from hard-text examples and measure whether the improved performance on hard-text can result in better S2H generalization in the image modality.
+Refer to caption
+Figure 5: Results on non S2H-generalizable tasks: We report the S2H Generalization on image on Table Readout (left), Grid Navigation (middle), and Visual Analogy (right). S2H generalization on text from \mathsb{Text} supervision serves as a reference (in gray dashed line). \mathsb{Text} , \mathsb{Image} , and \mathsb{Mix} supervisions fail to generalize, highlighting the gap between simple and hard examples. \mathsb{Mix}\textbf{+} improves performance, while \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} further enhances generalization with an initial alignment phase.
+4.1 Improved text performance with hard \mathsb{Text} supervision improves S2H generalization on image
+\mathsb{Mix}\textbf{+} supervision, adapted from \mathsb{Mix} from Section 3, trains the model with an equal mix of \mathsb{Text} supervision from hard examples and \mathsb{Mix} supervision from simple examples.
+\mathsb{Mix}\textbf{+} supervision shows significantly better image S2H generalization, demonstrating an effective transfer of generalization from text to image.
+By including hard \mathsb{Text} supervision, \mathsb{Mix}\textbf{+} improves the model’s text reasoning ability: the model can reach \geq 95\% accuracy on hard-text examples after training on 3\times 10^{4} data. Meanwhile, we also observe a significant improvement in image S2H generalization with \mathsb{Mix}\textbf{+} supervision, compared to \mathsb{Mix} supervision performance, in all settings: the model can achieve 64\% , 92\% and 35\% S2H accuracy on hard-image examples after training on 12\times 10^{4} data in Table Readout, Grid Navigation, and Visual Analogy respectively. We conclude that \mathsb{Mix}\textbf{+} supervision can effectively transfer the injected improvement in S2H performance from the text to the image modality.
+Can we further improve S2H generalization on image? Motivated by the observed benefit of \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} supervision from Section 3, we also measure the image S2H generalization of \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} + supervision. Here, the model is trained with an equal mix of hard \mathsb{Text} supervision and simple \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} supervision. In Table Readout and Visual Analogy, we observe that there is still a substantial ( 20 - 30\% ) gap in S2H performance between \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} + supervision and \mathsb{Mix}\textbf{+} supervision on hard-image examples (Figure 6).
+Refer to caption
+Figure 6: Effect of \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} on Table Readout and Visual Analogy: S2H Generalization on image (left) and Generation Length (right) with 12\times 10^{4} training examples. Similar to \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} , \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} + improves performance but at the cost of higher inference cost. \mathsb{Mix} can match the performance of \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} + by appending “Convert” to the prompt ( \mathsb{\text{+}Convert} ) or by adding an alignment phase ( \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} ).
+One naive way is to trade extra inference compute to close this gap via inference time prompt: during inference, we prompt \mathsb{Mix}\textbf{+} supervision models with an additional token, “Convert” (see the conversion prompt in Section 2.3), which appeared at the start of the \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} responses in our training data. We observe that the models respond with an accurate text conversion before generating the reasoning tokens. The observation shows a dual capability of \mathsb{Mix}\textbf{+} supervision models in reasoning with and without image-to-text conversion. This is in line with the findings in Su et al. (2024) of the dual learning capability of LLMs in short and long reasoning. Note that when explicitly prompting \mathsb{Mix}\textbf{+} models to perform image reasoning via text conversion, this still incurs a similar cost in generation length as \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} + (Figure 6). We discuss more in Section G.6.
+4.2 Benefits of two-phase training
+Given our previous observation that \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} supervision helps with S2H generalization, we add an initial training phase where the model trains with \mathsb{Text} and \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} supervision on simple examples. The hope here is that by first preconditioning the model (via simple \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} supervision) to align text and image reasoning on simple examples, it may later generalize this knowledge on hard examples when trained with \mathsb{Mix}\textbf{+} supervision. We call this two-phase approach \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} 666For the main experiments, we use 10^{4} training examples in the first phase. See Section G.3 for ablations on the number and composition of data used in the alignment phase..
+\mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} improves image S2H generalization, while maintaining inference cost.
+We find that additional alignment training can significantly boost image S2H generalization performance on all tasks: the models now achieve 76\% , 96\% , and 56\% on hard-image examples after training on 12\times 10^{4} data from Table Readout, Grid Navigation, and Visual Analogy respectively, while maintaining roughly the same inference costs as \mathsb{Mix}\textbf{+} supervision.
+5 A Study on Loss Dynamics and Gradient Alignment for S2H generalization
+Our findings show that S2H generalization can be transferred across modalities by simply mixing different types of supervision. This happens without any explicit matching of representations, which motivates us to explore training gradients to obtain insights into how each strategy contributes to S2H generalization. Here, we analyze the evaluation loss behavior on hard-image examples during training. Similar gradient studies have been proposed for measuring influence Koh & Liang (2017) of training data points on evaluation tasks (Park et al., 2023; Xia et al., 2024; Engstrom et al., 2024).
+5.1 Study on Consecutive Table Readout
+In Section 3, we showed that \mathsb{Mix} outperforms \mathsb{Text\text{+}\;\!\>\!\!Image} supervision in S2H generalization on images. The key factor driving this improvement was the inclusion of \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} supervision. Here, we show that in \mathsb{Mix} supervision, training gradients get more aligned to improve loss on hard \mathsb{Image} examples. To do so, we measure the alignment between gradients on simple \mathsb{Image} examples and the gradients on hard \mathsb{Image} examples.
+Let l_{(I;S)} denote the autoregressive loss on solution tokens for \mathsb{Image} supervision ( (I;S) ). For simplicity, we let l^{(H)}_{(I;S)} denote the average loss on hard \mathsb{Image} examples, i.e.
+l^{(H)}_{(I;S)}:=\mathbb{E}_{{\textbf{x}}\in\mathcal{X}_{{\textsc{hard}}}}l(f_{\theta}(\{{\textbf{x}}^{(i)},{\textbf{y}}\}),{\textbf{y}}),
+(1)
+where y contains both CoT({\textbf{x}}) and the answer f({\textbf{x}}) .
+If \mathbf{g}_{{\textsc{simple}}} and \mathbf{g}_{{\textsc{hard}}} denote average gradients on \mathcal{X}_{{\textsc{simple}}} and \mathcal{X}_{{\textsc{hard}}} (i.e. \mathbb{E}_{{\textbf{x}}\in\mathcal{X}_{{\textsc{simple}}}}\nabla l_{(I;S)}({\textbf{x}}) and \mathbb{E}_{{\textbf{x}}\in\mathcal{X}_{{\textsc{hard}}}}\nabla l_{(I;S)}({\textbf{x}}) respectively) 777We use random projection on gradients to 4096 dimension for efficient storage, following Park et al. (2023), then we define gradient alignment score as:
+\langle\mathbf{g}_{{\textsc{simple}}},\mathbf{g}_{{\textsc{hard}}}\rangle/\langle\mathbf{g}_{{\textsc{hard}}},\mathbf{g}_{{\textsc{hard}}}\rangle
+(2)
+Intuitively, the gradient alignment score measures how much the loss on hard \mathsb{Image} examples can be reduced by taking gradient updates from simple \mathsb{Image} training samples, relative to using gradients from hard \mathsb{Image} examples directly (see Theorem F.1 for a formal statement). We will plot this score against the gradient norms of simple \mathsb{Image} training samples. A stronger gradient alignment at larger values of gradient norm is preferred because the loss on hard \mathsb{Image} examples can be reduced more when the gradients are larger.
+•
+\mathsb{Mix} achieves a higher gradient alignment score than both \mathsb{Text\text{+}\;\!\>\!\!Image} and \mathsb{Image} supervision, especially when gradient norms are large. This suggests \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} supervision improves the alignment between simple and hard \mathsb{Image} gradients.
+•
+This improved alignment for \mathsb{Mix} is reflected in a significant initial drop in the loss on hard \mathsb{Image} examples, which then continues to improve throughout training.
+We give more nuanced alignment measures in Section F.3, which take Adam optimizer updates into account. Our takeaways remain the same.
+Refer to caption
+Figure 7: Analysis of gradients on Consecutive Table Readout: (Left) Average Gradient Norm on simple \mathsb{Image} examples (\mathbb{E}_{{\textbf{x}}\in\mathcal{X}_{{\textsc{simple}}}}\|\nabla l_{(I;S)}({\textbf{x}})\|_{2}) vs. Gradient Alignment Score (Equation 2) for different training checkpoints; (Right) Average Loss on hard \mathsb{Image} examples ( l^{(H)}_{(I;S)} ) during training. Larger gradients for \mathsb{Mix} have higher alignment score compared to \mathsb{Text\text{+}\;\!\>\!\!Image} and \mathsb{Image} , showing the importance of \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} supervision for generalization.
+5.2 Study on Table Readout
+Refer to caption
+Figure 8: Analysis of evaluation losses on hard examples on Table Readout: (Left) image-to-text conversion loss ( l^{(H)}_{(I\#;T)} (Eq.3)); (Middle) loss on solution given image and text ( l^{(H)}_{(I,\#T;S)} (Eq.4)); (Right) loss on hard \mathsb{Image} examples ( l^{(H)}_{(I;S)} (Eq.1)). \mathsb{Mix} matches \mathsb{Mix}\textbf{+} in l^{(H)}_{(I\#;T)} , showing that training on simple \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} examples is sufficient for hard image-to-text conversion. \mathsb{Mix} performs worse in l^{(H)}_{(I,\#T;S)} , showing the need for hard \mathsb{Text} examples for generalization. \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} starts with initial smaller l^{(H)}_{(I\#;T)} and l^{(H)}_{(I,\#T;S)} losses, which helps the model achieve lower l^{(H)}_{(I,\#T;S)} loss than even \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} +, that reflects in lower l^{(H)}_{(I;S)} loss.
+In Section 4, we showed that \mathsb{Mix}\textbf{+} improves S2H generalization over \mathsb{Mix} , while \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} can further improve over \mathsb{Mix}\textbf{+} with an additional alignment training. Here, we study how each included component helps S2H generalization across the training strategies.
+Insights from evaluation loss dynamics:
+We use the following additional notations to report the average loss on specific tokens in a hard \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} example.
+•
+Image-to-text conversion: Average loss on converted text tokens given the image and the conversion prompt:
+l^{(H)}_{(I\#;T)}:=\mathbb{E}_{{\textbf{x}}\in\mathcal{X}_{{\textsc{hard}}}}l(f_{\theta}(\{{\textbf{x}}^{(i)},P_{convert},{\textbf{x}}^{(t)}\}),{\textbf{x}}^{(t)}).
+(3)
+•
+Solution given image and text: Average loss on solution tokens given the image, the conversion prompt, and the converted text:
+l^{(H)}_{(I,\#T;S)}:=\mathbb{E}_{{\textbf{x}}\in\mathcal{X}_{{\textsc{hard}}}}l(f_{\theta}(\{{\textbf{x}}^{(i)},P_{convert},{\textbf{x}}^{(t)},{\textbf{y}}\}),{\textbf{y}}),
+(4)
+where y contains both CoT({\textbf{x}}) and the answer f({\textbf{x}}) .
+In Figure 8, we report the above losses for \mathsb{Mix} , \mathsb{Mix}\textbf{+} , and \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} . Since the model does not see hard-image examples during training, these losses evaluate S2H generalization on hard-image inputs. We observe:
+1.
+Image-to-text conversion loss (Equation 3) of \mathsb{Mix} matches \mathsb{Mix}\textbf{+} , showing that training on simple \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} examples suffices to generalize the conversion subtask to hard-images.
+2.
+There is a significant gap in the loss on solution given image and text (Equation 4) between \mathsb{Mix} and \mathsb{Mix}\textbf{+} . This implies that including hard \mathsb{Text} is necessary to fully generalize reasoning to hard-images.
+As an ablation, we took an intermediate \mathsb{Mix} checkpoint and completed the training with \mathsb{Mix}\textbf{+} supervision888We preserved the optimizer states and learning rate schedule.. This transition resulted in negligible changes to image-to-text conversion loss (Equation 3), while loss on solution given image and text (Equation 4) and loss on hard \mathsb{Image} examples (Equation 1) decreased significantly, approaching the values for \mathsb{Mix}\textbf{+} .
+3.
+Losses on hard \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} examples start significantly lower for \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} after the alignment phase. This shows that training on simple \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} examples can return a favorable starting point, even if they aren’t sufficient for generalization. It then achieves better loss on solution given image and text (Equation 4) in the end, which also translates to improved loss on hard \mathsb{Image} examples (Equation 1).
+Insights from gradient alignment score:
+We can further quantify the differences in training strategies with gradient alignment score (Equation 2) between simple and hard \mathsb{Image} examples (Figure 9). Intuitively, a higher gradient alignment at each step should accumulate to better generalization on hard-images after training. We observe:
+•
+\mathsb{Mix} exhibits lower gradient alignment compared to \mathsb{Mix}\textbf{+} . Training solely on simple examples fails to provide gradients aligned to hard images. Including hard \mathsb{Text} examples significantly improves gradient alignment.
+•
+On the other hand, \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} has higher gradient alignment than \mathsb{Mix}\textbf{+} in earlier training steps, when training gradient norms are large. We give detailed behavior of gradient alignment score in Figure 17 in Appendix F.
+Refer to caption
+Figure 9: Analysis of gradients on Table Readout: Average Gradient Norm on simple \mathsb{Image} examples (\mathbb{E}_{{\textbf{x}}\in\mathcal{X}_{{\textsc{simple}}}}\|\nabla l_{(I;S)}({\textbf{x}})\|_{2}) vs. Gradient Alignment Score for different training checkpoints. Larger gradients for \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} have higher gradient alignment scores. \mathsb{Mix}\textbf{+} has better gradient alignment scores than \mathsb{Mix} .
+6 Further Ablations
+We perform the following ablation studies to identify critical training components that underlie the success of our method. We push all the details and discussions to the appendix.
+Importance of chain-of-thought:
+In all of our experiments, we train the model to output chain-of-thought (CoT) before the final answer. This seems necessary for the model to transfer its generalization behaviors from text reasoning to image reasoning. Approaches to completely remove CoT, including progressive internalization (Deng et al., 2024), fails to facilitate S2H generalization on images. More details are in Section G.7.
+Task interactions in multi-task training:
+We compare \mathsb{Mix} , \mathsb{Mix}\textbf{+} , and \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} when we train on an equal mixture of our 3 non S2H-generalizable tasks. We observe that multi-task training significantly boosts performance on Table Readout and Grid Navigation, but hurts the performance on Visual Analogy. This suggests S2H generalization transfer of reasoning capabilities can depend on the interactions between tasks. More details are in Section G.8.
+Transferring reasoning from image to text:
+We presented results where we include hard \mathsb{Text} examples in training and evaluated performance on hard-image input. On the other hand, we also experiment with the setting where we include hard \mathsb{Image} examples in training and evaluated performance on hard-text input. We observe the generalization transfer to be much stronger (Table 5 in Section E.4). This suggests that flow of learning is bidirectional between the two modalities. Showing such transfer can happen between other modalities is left for future work.
+Effect of text warm-up pretraining:
+A natural question is how the stronger capability of future LLM backbones will affect this cross-modal transfer of reasoning from text to image input. To simulate this, we train the LLM backbone with text warm-up pretraining \mathsb{(TW)} before training the VLM on multimodal inputs. On Consecutive Table Readout, we observe that \mathsb{(TW)} can completely close the gap between text and image inputs. On Visual Analogy, \mathsb{(TW)} can further boost performance of \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} . See Section E.5.
+7 Related Works
+Benchmarks and evaluations for VLMs
+VLMs are evaluated on benchmarks such as visual question answering (VQA) (Antol et al., 2015), image captioning (Chen et al., 2015), zero-shot image classification (Deng et al., 2009), and compositional reasoning (Thrush et al., 2022; Yuksekgonul et al., 2023; Hsieh et al., 2024). However, these benchmarks often suffer from language bias, allowing solutions to use shortcuts with minimal visual information (Agrawal et al., 2016; Goyal et al., 2017; Zhang et al., 2024c). Although recent work (Rahmanzadehgervi et al., 2024; Wang et al., 2024b; Kil et al., 2024) proposed new benchmarks that aim to evaluate the spatial understanding and reasoning of VLM, most evaluation tasks are in the form of VQA questions that only require “single-hop” reasoning or relatively fewer reasoning steps. To create a controlled setting with well-defined simple and hard tasks, we focus on algorithmic visual reasoning tasks. These tasks allow us to precisely control the number of steps in the step-by-step reasoning process and the level of dynamic interaction between textual and visual inputs. Closely related works have explored graph-based algorithmic reasoning in LLMs (Taylor et al., 2024; McLeish et al., 2024; Zhang et al., 2024f; Wang et al., 2024a; Sanford et al., 2024) but such studies remain limited for VLMs.
+Modality imbalance
+Studies have shown that models exhibit different learning capabilities and learning speed on multimodal inputs (Wang et al., 2020; Nguyen et al., 2024). The imbalanced contribution of individual modality to the final prediction can result in overreliance on a few dominant, optimized modalities, while underutilizing signals of the weak ones. Peng et al. (2022) and Lin et al. (2024) attempt to rebalance the convergence speed of all modalities by modulating the learning rate or gradients. Fan et al. (2023) propose a representative embedding to guide the slow-learning modality and regularize the fast-learning one. Zhang et al. (2024e) propose an alternating unimodal training to minimize interference between modalities. Despite their success in traditional multimodal joint training, it remains challenging to repeat the same for adapter-based VLMs due to significant differences in architecture and training pipeline. Our work aims to address this issue specifically for VLMs from the perspective of transferring the strong learning behaviors from the dominant modality (text) to the weak one (image).
+Generalization transfer between input modes
+Given the high cost of training VLMs from scratch, recent research on adapter-based VLMs has been driven primarily by the idea of leveraging pretrained LLM backbones. The success of this approach is built on the idea of cross-modal generalization, which enables the model to harness information from the auxiliary modality (e.g. text) to improve unimodal task on the primary modality (e.g. image classification). This knowledge transference has been exploited for both small-scale multimodal models (Socher et al., 2013; Liang et al., 2021; Tan & Bansal, 2020) and more recent VLMs (Monajatipoor et al., 2023; Carbune et al., 2024; Zhang et al., 2024a). However, existing works often require explicit alignment of the modality, such as learning unified representation using contrastive learning (Xia et al., 2023), for models to transfer knowledge across modalities. The cost of curating a large, perfectly aligned multimodal dataset to learn the modality alignment becomes expensive as the model size increases. In our work, we find that transfer of generalization across input modes naturally emerges from auto-regressive training.
+S2H generalization
+Recent studies have explored simple-to-hard generalization in LLMs, with a focus on length generalization in transformers. These works evaluate models on tasks requiring longer computations than those seen during training, using synthetic datasets like parity, Dyck-1 languages, decimal addition, structural recursion, and finite state automata (Anil et al., 2022; Lee et al., 2023; Jelassi et al., 2023; Li & McClelland, 2023; Kazemnejad et al., 2024; Liu et al., 2022a; Abbe et al., 2024; Bhattamishra et al., 2020; Zhou et al., 2024b; Fan et al., 2024b).
+Zhou et al. (2024a) connect length generalization to the RASP programming language (Weiss et al., 2021), offering a unified perspective. Sun et al. (2024) recently propose easy-to-hard generalization to measure generalizable verification for math and code datasets. OOD generalization beyond human supervision remains an important open question for the advancement of current AI models (Burns et al., 2023).
+8 Discussion, Limitations and Future work
+In this work, we explore the modality imbalance in VLMs by measuring S2H generalization. We show that on tasks where VLMs can reliably show generalization on text input after fine-tuning, \mathsb{Mix} supervision can induce a similar level of generalization on image input. We then propose 3 algorithmic tasks, where models trained on simple examples fail to generalize to hard examples in either modality. Mixing hard-text examples in training can help the model generalize on hard-image input, revealing S2H generalization transfer capabilities of these models.
+Limitations and possible future directions:
+We believe \mathsb{Mix} or \mathsb{Mix}\textbf{+} may not be the optimal approach to improve image generalization on tasks where the model exhibits S2H generalization in the text modality. Curriculum-based strategies Xie et al. (2024); Mindermann et al. (2022) that dynamically adjust the data mixture could yield better results. However, our goal is to emphasize the hard generalization gap between text and image inputs, which can be bridged by transferring learning from the dominant modality (text) to the weaker one (image). Therefore, we focus on the effectiveness of our training strategies in transferring knowledge learned on text input to image input.
+In the interest of crispness, we restricted the scope of our study with a small set of prompts and a limited (and synthetic) image distribution. But doing so allowed a clearer and quantitative look at modality imbalance and how it can be bridged.
+Our results highlight that chain-of-thought (CoT) reasoning can play an important role. However, even minor modifications to CoT significantly affected the transferred S2H generalization results on image inputs, and mitigating this brittleness through robust training strategies beyond \mathsb{Mix}\textbf{+} is crucial. Future work could focus on mechanistic insights into our trained models to design more generalizable strategies targeting specific model components.
+Utility to real-world benchmarks:
+Extending our findings to real-world scenarios is also left for future work. It will require real-world scenarios with precise gradation of simple and hard examples with respect to underlying abstract concepts. A tantalizing suggestion from our work is that VLM brittleness could be mitigated by training them to create very detailed descriptions of the scene (and this capability could be internalized for faster inference).
+We note that training even on our synthetically created datasets seems useful for improving the performance of VLMs in real-world settings. Specifically, including our synthetic datasets during pretraining of VLMs yielded significant improvements across different benchmarks (Table 6 in Section E.6). For example, including simple and hard \mathsb{Image} supervision examples from all synthetic datasets can improve performance on MMMU (Yue et al., 2024) by at least 3\% p. Similarly, on a chart dataset (Wang et al., 2024c), including our synthetic datasets can improve performance by 5.1\% p on descriptive questions. Therefore, our synthetic datasets involve useful skills that can also help improve VLMs on real-world benchmarks.
+Acknowledgements
+SP, AP, CY, and SA acknowledge funding from NSF, PLI, DARPA, ONR, OpenAI. We thank Xingyu Zhu, Bingbin Liu, Nikunj Saunshi, Sadhika Malladi, Samy Jelassi, Misha Khodak, Zirui Wang, Mengzhou Xia, Yihe Dong, and Haoyu Zhao for discussions, suggestions, and proof-reading at various stages of the paper.
+References
+Abbe et al. (2024)
+Abbe, E., Bengio, S., Lotfi, A., and Rizk, K.
+Generalization on the unseen, logic reasoning and degree curriculum.
+Journal of Machine Learning Research, 25(331):1–58, 2024.
+Achiam et al. (2023)
+Achiam, J., Adler, S., Agarwal, S., Ahmad, L., Akkaya, I., Aleman, F. L., Almeida, D., Altenschmidt, J., Altman, S., Anadkat, S., et al.
+Gpt-4 technical report.
+arXiv preprint arXiv:2303.08774, 2023.
+Agrawal et al. (2016)
+Agrawal, A., Batra, D., and Parikh, D.
+Analyzing the behavior of visual question answering models.
+arXiv preprint arXiv:1606.07356, 2016.
+Agrawal et al. (2024)
+Agrawal, P., Antoniak, S., Hanna, E. B., Bout, B., Chaplot, D., Chudnovsky, J., Costa, D., De Monicault, B., Garg, S., Gervet, T., et al.
+Pixtral 12b.
+arXiv preprint arXiv:2410.07073, 2024.
+Anil et al. (2022)
+Anil, C., Wu, Y., Andreassen, A., Lewkowycz, A., Misra, V., Ramasesh, V., Slone, A., Gur-Ari, G., Dyer, E., and Neyshabur, B.
+Exploring length generalization in large language models.
+Advances in Neural Information Processing Systems, 35:38546–38556, 2022.
+Anthropic (2024)
+Anthropic.
+Claude 3.5 sonnet, June 2024.
+URL https://www.anthropic.com/claude/sonnet.
+Artificial intelligence model.
+Antol et al. (2015)
+Antol, S., Agrawal, A., Lu, J., Mitchell, M., Batra, D., Zitnick, C. L., and Parikh, D.
+Vqa: Visual question answering.
+In Proceedings of the IEEE international conference on computer vision, pp. 2425–2433, 2015.
+Barrett et al. (2018)
+Barrett, D., Hill, F., Santoro, A., Morcos, A., and Lillicrap, T.
+Measuring abstract reasoning in neural networks.
+In Proceedings of the 35th International Conference on Machine Learning, pp. 511–520. PMLR, 2018.
+Bhattamishra et al. (2020)
+Bhattamishra, S., Ahuja, K., and Goyal, N.
+On the ability and limitations of transformers to recognize formal languages.
+arXiv preprint arXiv:2009.11264, 2020.
+Burns et al. (2023)
+Burns, C., Izmailov, P., Kirchner, J. H., Baker, B., Gao, L., Aschenbrenner, L., Chen, Y., Ecoffet, A., Joglekar, M., Leike, J., et al.
+Weak-to-strong generalization: Eliciting strong capabilities with weak supervision.
+arXiv preprint arXiv:2312.09390, 2023.
+Carbune et al. (2024)
+Carbune, V., Mansoor, H., Liu, F., Aralikatte, R., Baechler, G., Chen, J., and Sharma, A.
+Chart-based reasoning: Transferring capabilities from llms to vlms.
+arXiv preprint arXiv:2403.12596, 2024.
+Chen et al. (2015)
+Chen, X., Fang, H., Lin, T.-Y., Vedantam, R., Gupta, S., Dollár, P., and Zitnick, C. L.
+Microsoft coco captions: Data collection and evaluation server.
+arXiv preprint arXiv:1504.00325, 2015.
+Cherian et al. (2023)
+Cherian, A., Peng, K.-C., Lohit, S., Smith, K. A., and Tenenbaum, J. B.
+Are deep neural networks smarter than second graders?
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 10834–10844, 2023.
+Deng et al. (2009)
+Deng, J., Dong, W., Socher, R., Li, L.-J., Li, K., and Fei-Fei, L.
+Imagenet: A large-scale hierarchical image database.
+In 2009 IEEE Conference on Computer Vision and Pattern Recognition, pp. 248–255, 2009.
+doi: 10.1109/CVPR.2009.5206848.
+Deng et al. (2024)
+Deng, Y., Choi, Y., and Shieber, S.
+From explicit cot to implicit cot: Learning to internalize cot step by step.
+arXiv preprint arXiv:2405.14838, 2024.
+Duan et al. (2024)
+Duan, H., Yang, J., Qiao, Y., Fang, X., Chen, L., Liu, Y., Dong, X., Zang, Y., Zhang, P., Wang, J., Lin, D., and Chen, K.
+Vlmevalkit: An open-source toolkit for evaluating large multi-modality models, 2024.
+Dubey et al. (2024)
+Dubey, A., Jauhri, A., Pandey, A., Kadian, A., Al-Dahle, A., Letman, A., Mathur, A., Schelten, A., Yang, A., Fan, A., et al.
+The llama 3 herd of models.
+arXiv preprint arXiv:2407.21783, 2024.
+Dziri et al. (2024)
+Dziri, N., Lu, X., Sclar, M., Li, X. L., Jiang, L., Lin, B. Y., Welleck, S., West, P., Bhagavatula, C., Le Bras, R., et al.
+Faith and fate: Limits of transformers on compositionality.
+Advances in Neural Information Processing Systems, 36, 2024.
+Engstrom et al. (2024)
+Engstrom, L., Feldmann, A., and Madry, A.
+Dsdm: Model-aware dataset selection with datamodels.
+arXiv preprint arXiv:2401.12926, 2024.
+Fan et al. (2024a)
+Fan, W.-C., Chen, Y.-C., Liu, M., Yuan, L., and Sigal, L.
+On pre-training of multimodal language models customized for chart understanding.
+arXiv preprint arXiv:2407.14506, 2024a.
+Fan et al. (2023)
+Fan, Y., Xu, W., Wang, H., Wang, J., and Guo, S.
+Pmr: Prototypical modal rebalance for multimodal learning.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), pp. 20029–20038, June 2023.
+Fan et al. (2024b)
+Fan, Y., Du, Y., Ramchandran, K., and Lee, K.
+Looped transformers for length generalization.
+arXiv preprint arXiv:2409.15647, 2024b.
+Fu et al. (2023)
+Fu, C., Chen, P., Shen, Y., Qin, Y., Zhang, M., Lin, X., Qiu, Z., Lin, W., Yang, J., Zheng, X., Li, K., Sun, X., and Ji, R.
+Mme: A comprehensive evaluation benchmark for multimodal large language models.
+arXiv preprint arXiv:2306.13394, June 2023.
+URL https://arxiv.org/abs/2306.13394.
+Gao et al. (2024)
+Gao, T., Wettig, A., Yen, H., and Chen, D.
+How to train long-context language models (effectively).
+arXiv preprint arXiv:2410.02660, 2024.
+Ghosal et al. (2024)
+Ghosal, D., Han, V. T. Y., Ken, C. Y., and Poria, S.
+Are language models puzzle prodigies? algorithmic puzzles unveil serious challenges in multimodal reasoning.
+arXiv preprint arXiv:2403.03864, 2024.
+Goyal et al. (2017)
+Goyal, Y., Khot, T., Summers-Stay, D., Batra, D., and Parikh, D.
+Making the v in vqa matter: Elevating the role of image understanding in visual question answering.
+In Proceedings of the IEEE conference on computer vision and pattern recognition, pp. 6904–6913, 2017.
+Hill et al. (2019)
+Hill, F., Santoro, A., Barrett, D., Morcos, A., and Lillicrap, T.
+Learning to make analogies by contrasting abstract relational structure.
+In International Conference on Learning Representations, 2019.
+Hsieh et al. (2024)
+Hsieh, C.-Y., Zhang, J., Ma, Z., Kembhavi, A., and Krishna, R.
+Sugarcrepe: Fixing hackable benchmarks for vision-language compositionality.
+Advances in neural information processing systems, 36, 2024.
+Huang et al. (2023)
+Huang, K., Sun, K., Xie, E., Li, Z., and Liu, X.
+T2i-compbench: A comprehensive benchmark for open-world compositional text-to-image generation.
+Advances in Neural Information Processing Systems, 36:78723–78747, 2023.
+Huang et al. (2022)
+Huang, Y., Lin, J., Zhou, C., Yang, H., and Huang, L.
+Modality competition: What makes joint training of multi-modal network fail in deep learning? (Provably).
+In Chaudhuri, K., Jegelka, S., Song, L., Szepesvari, C., Niu, G., and Sabato, S. (eds.), Proceedings of the 39th International Conference on Machine Learning, volume 162 of Proceedings of Machine Learning Research, pp. 9226–9259. PMLR, 17–23 Jul 2022.
+Jelassi et al. (2023)
+Jelassi, S., d’Ascoli, S., Domingo-Enrich, C., Wu, Y., Li, Y., and Charton, F.
+Length generalization in arithmetic transformers.
+arXiv preprint arXiv:2306.15400, 2023.
+Kazemnejad et al. (2024)
+Kazemnejad, A., Padhi, I., Natesan Ramamurthy, K., Das, P., and Reddy, S.
+The impact of positional encoding on length generalization in transformers.
+Advances in Neural Information Processing Systems, 36, 2024.
+Kil et al. (2024)
+Kil, J., Tavazoee, F., Kang, D., and Kim, J.-K.
+Ii-mmr: Identifying and improving multi-modal multi-hop reasoning in visual question answering.
+arXiv preprint arXiv:2402.11058, 2024.
+Kim et al. (2024)
+Kim, D., Lee, J., Park, J., and Seo, M.
+How language models extrapolate outside the training data: A case study in textualized gridworld.
+arXiv preprint arXiv:2406.15275, 2024.
+Kingma & Ba (2017)
+Kingma, D. P. and Ba, J.
+Adam: A method for stochastic optimization, 2017.
+URL https://arxiv.org/abs/1412.6980.
+Koh & Liang (2017)
+Koh, P. W. and Liang, P.
+Understanding black-box predictions via influence functions.
+In International conference on machine learning, pp. 1885–1894. PMLR, 2017.
+Lee et al. (2023)
+Lee, N., Sreenivasan, K., Lee, J. D., Lee, K., and Papailiopoulos, D.
+Teaching arithmetic to small transformers.
+arXiv preprint arXiv:2307.03381, 2023.
+Li & McClelland (2023)
+Li, Y. and McClelland, J.
+Representations and computations in transformers that support generalization on structured tasks.
+Transactions on Machine Learning Research, 2023.
+Li et al. (2023)
+Li, Y., Du, Y., Zhou, K., Wang, J., Zhao, X. Z., and Wen, J.-R.
+Evaluating object hallucination in large vision-language models.
+In The 2023 Conference on Empirical Methods in Natural Language Processing, 2023.
+Liang et al. (2021)
+Liang, P. P., Wu, P., Ziyin, L., Morency, L.-P., and Salakhutdinov, R.
+Cross-modal generalization: Learning in low resource modalities via meta-alignment.
+In Proceedings of the 29th ACM International Conference on Multimedia, pp. 2680–2689, 2021.
+Lin et al. (2024)
+Lin, X., Wang, S., Cai, R., Liu, Y., Fu, Y., Tang, W., Yu, Z., and Kot, A.
+Suppress and rebalance: Towards generalized multi-modal face anti-spoofing.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 211–221, 2024.
+Liu et al. (2022a)
+Liu, B., Ash, J. T., Goel, S., Krishnamurthy, A., and Zhang, C.
+Transformers learn shortcuts to automata.
+arXiv preprint arXiv:2210.10749, 2022a.
+Liu et al. (2023a)
+Liu, H., Li, C., Li, Y., and Lee, Y. J.
+Improved baselines with visual instruction tuning.
+In NeurIPS 2023 Workshop on Instruction Tuning and Instruction Following, 2023a.
+Liu et al. (2023b)
+Liu, H., Li, C., Wu, Q., and Lee, Y. J.
+Visual instruction tuning.
+In Thirty-seventh Conference on Neural Information Processing Systems, 2023b.
+Liu et al. (2024a)
+Liu, H., Li, C., Li, Y., Li, B., Zhang, Y., Shen, S., and Lee, Y. J.
+Llava-next: Improved reasoning, ocr, and world knowledge, January 2024a.
+Liu et al. (2024b)
+Liu, Y., Li, Z., Huang, M., Yang, B., Yu, W., Li, C., Yin, X., lin Liu, C., Jin, L., and Bai, X.
+Ocrbench: On the hidden mystery of ocr in large multimodal models, 2024b.
+Liu et al. (2025)
+Liu, Y., Duan, H., Zhang, Y., Li, B., Zhang, S., Zhao, W., Yuan, Y., Wang, J., He, C., Liu, Z., et al.
+Mmbench: Is your multi-modal model an all-around player?
+In European Conference on Computer Vision, pp. 216–233. Springer, 2025.
+Liu et al. (2022b)
+Liu, Z., Mao, H., Wu, C.-Y., Feichtenhofer, C., Darrell, T., and Xie, S.
+A convnet for the 2020s.
+In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition, pp. 11976–11986, 2022b.
+McLeish et al. (2024)
+McLeish, S., Schwarzschild, A., and Goldstein, T.
+Benchmarking chatgpt on algorithmic reasoning.
+arXiv preprint arXiv:2404.03441, 2024.
+Mindermann et al. (2022)
+Mindermann, S., Brauner, J. M., Razzak, M. T., Sharma, M., Kirsch, A., Xu, W., Höltgen, B., Gomez, A. N., Morisot, A., Farquhar, S., et al.
+Prioritized training on points that are learnable, worth learning, and not yet learnt.
+In International Conference on Machine Learning, pp. 15630–15649. PMLR, 2022.
+Monajatipoor et al. (2023)
+Monajatipoor, M., Li, L. H., Rouhsedaghat, M., Yang, L., and Chang, K.-W.
+MetaVL: Transferring in-context learning ability from language models to vision-language models.
+In Rogers, A., Boyd-Graber, J., and Okazaki, N. (eds.), Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 2: Short Papers), pp. 495–508, Toronto, Canada, July 2023. Association for Computational Linguistics.
+doi: 10.18653/v1/2023.acl-short.43.
+Nesterov (2018)
+Nesterov, Y.
+Lectures on convex optimization.
+Springer Optimization and Its Applications, 137, 2018.
+Nguyen et al. (2024)
+Nguyen, C.-V. T., Le, T.-S., Mai, A.-T., and Le, D.-T.
+Ada2i: Enhancing modality balance for multimodal conversational emotion recognition.
+In Proceedings of the 32nd ACM International Conference on Multimedia, pp. 9330–9339, 2024.
+Park et al. (2023)
+Park, S. M., Georgiev, K., Ilyas, A., Leclerc, G., and Madry, A.
+Trak: Attributing model behavior at scale.
+arXiv preprint arXiv:2303.14186, 2023.
+Peng et al. (2022)
+Peng, X., Wei, Y., Deng, A., Wang, D., and Hu, D.
+Balanced multimodal learning via on-the-fly gradient modulation.
+In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition, pp. 8238–8247, 2022.
+Radford et al. (2021)
+Radford, A., Kim, J. W., Hallacy, C., Ramesh, A., Goh, G., Agarwal, S., Sastry, G., Askell, A., Mishkin, P., Clark, J., et al.
+Learning transferable visual models from natural language supervision.
+In International conference on machine learning, pp. 8748–8763. PMLR, 2021.
+Rahmanzadehgervi et al. (2024)
+Rahmanzadehgervi, P., Bolton, L., Taesiri, M. R., and Nguyen, A. T.
+Vision language models are blind.
+In Proceedings of the Asian Conference on Computer Vision, pp. 18–34, 2024.
+Rasley et al. (2020)
+Rasley, J., Rajbhandari, S., Ruwase, O., and He, Y.
+Deepspeed: System optimizations enable training deep learning models with over 100 billion parameters.
+In Proceedings of the 26th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining, KDD ’20, pp. 3505–3506, New York, NY, USA, 2020. Association for Computing Machinery.
+ISBN 9781450379984.
+doi: 10.1145/3394486.3406703.
+URL https://doi.org/10.1145/3394486.3406703.
+Sanford et al. (2024)
+Sanford, C., Fatemi, B., Hall, E., Tsitsulin, A., Kazemi, M., Halcrow, J., Perozzi, B., and Mirrokni, V.
+Understanding transformer reasoning capabilities via graph algorithms.
+arXiv preprint arXiv:2405.18512, 2024.
+Shi et al. (2024)
+Shi, M., Liu, F., Wang, S., Liao, S., Radhakrishnan, S., Huang, D.-A., Yin, H., Sapra, K., Yacoob, Y., Shi, H., Catanzaro, B., Tao, A., Kautz, J., Yu, Z., and Liu, G.
+Eagle: Exploring the design space for multimodal llms with mixture of encoders, 2024.
+Singh et al. (2019)
+Singh, A., Natarajan, V., Shah, M., Jiang, Y., Chen, X., Batra, D., Parikh, D., and Rohrbach, M.
+Towards vqa models that can read.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, June 2019.
+Socher et al. (2013)
+Socher, R., Ganjoo, M., Manning, C. D., and Ng, A.
+Zero-shot learning through cross-modal transfer.
+Advances in neural information processing systems, 26, 2013.
+Su et al. (2024)
+Su, D., Sukhbaatar, S., Rabbat, M., Tian, Y., and Zheng, Q.
+Dualformer: Controllable fast and slow thinking by learning with randomized reasoning traces.
+arXiv preprint arXiv:2410.09918, 2024.
+Sun et al. (2024)
+Sun, Z., Yu, L., Shen, Y., Liu, W., Yang, Y., Welleck, S., and Gan, C.
+Easy-to-hard generalization: Scalable alignment beyond human supervision.
+arXiv preprint arXiv:2403.09472, 2024.
+Tan & Bansal (2020)
+Tan, H. and Bansal, M.
+Vokenization: Improving language understanding with contextualized, visual-grounded supervision.
+arXiv preprint arXiv:2010.06775, 2020.
+Taylor et al. (2024)
+Taylor, A. K., Cuturrufo, A., Yathish, V., Ma, M. D., and Wang, W.
+Are large-language models graph algorithmic reasoners?
+arXiv preprint arXiv:2410.22597, 2024.
+Thrush et al. (2022)
+Thrush, T., Jiang, R., Bartolo, M., Singh, A., Williams, A., Kiela, D., and Ross, C.
+Winoground: Probing vision and language models for visio-linguistic compositionality.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 5238–5248, 2022.
+Tong et al. (2024)
+Tong, S., Brown, E., Wu, P., Woo, S., Middepogu, M., Akula, S. C., Yang, J., Yang, S., Iyer, A., Pan, X., Wang, A., Fergus, R., LeCun, Y., and Xie, S.
+Cambrian-1: A fully open, vision-centric exploration of multimodal llms, 2024.
+Wang et al. (2024a)
+Wang, H., Feng, S., He, T., Tan, Z., Han, X., and Tsvetkov, Y.
+Can language models solve graph problems in natural language?
+Advances in Neural Information Processing Systems, 36, 2024a.
+Wang et al. (2024b)
+Wang, J., Ming, Y., Shi, Z., Vineet, V., Wang, X., Li, Y., and Joshi, N.
+Is a picture worth a thousand words? delving into spatial reasoning for vision language models.
+arXiv preprint arXiv:2406.14852, 2024b.
+Wang et al. (2020)
+Wang, W., Tran, D., and Feiszli, M.
+What makes training multi-modal classification networks hard?
+In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition, pp. 12695–12705, 2020.
+Wang et al. (2024c)
+Wang, Z., Xia, M., He, L., Chen, H., Liu, Y., Zhu, R., Liang, K., Wu, X., Liu, H., Malladi, S., et al.
+Charxiv: Charting gaps in realistic chart understanding in multimodal llms.
+arXiv preprint arXiv:2406.18521, 2024c.
+Wei et al. (2024)
+Wei, Y., Feng, R., Wang, Z., and Hu, D.
+Enhancing multimodal cooperation via sample-level modality valuation.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), pp. 27338–27347, June 2024.
+Weiss et al. (2021)
+Weiss, G., Goldberg, Y., and Yahav, E.
+Thinking like transformers.
+In International Conference on Machine Learning, pp. 11080–11090. PMLR, 2021.
+Wu et al. (2024a)
+Wu, Q., Zhao, H., Saxon, M., Bui, T., Wang, W. Y., Zhang, Y., and Chang, S.
+Vsp: Assessing the dual challenges of perception and reasoning in spatial planning tasks for vlms.
+arXiv preprint arXiv:2407.01863, 2024a.
+Wu et al. (2024b)
+Wu, X., Yu, D., Huang, Y., Russakovsky, O., and Arora, S.
+Conceptmix: A compositional image generation benchmark with controllable difficulty.
+arXiv preprint arXiv:2408.14339, 2024b.
+Xia et al. (2024)
+Xia, M., Malladi, S., Gururangan, S., Arora, S., and Chen, D.
+Less: Selecting influential data for targeted instruction tuning.
+arXiv preprint arXiv:2402.04333, 2024.
+Xia et al. (2023)
+Xia, Y., Huang, H., Zhu, J., and Zhao, Z.
+Achieving cross modal generalization with multimodal unified representation.
+In Thirty-seventh Conference on Neural Information Processing Systems, 2023.
+Xie et al. (2024)
+Xie, S. M., Pham, H., Dong, X., Du, N., Liu, H., Lu, Y., Liang, P. S., Le, Q. V., Ma, T., and Yu, A. W.
+Doremi: Optimizing data mixtures speeds up language model pretraining.
+Advances in Neural Information Processing Systems, 36, 2024.
+Yu et al. (2023)
+Yu, D., Kaur, S., Gupta, A., Brown-Cohen, J., Goyal, A., and Arora, S.
+Skill-mix: A flexible and expandable family of evaluations for ai models.
+arXiv preprint arXiv:2310.17567, 2023.
+Yue et al. (2024)
+Yue, X., Ni, Y., Zhang, K., Zheng, T., Liu, R., Zhang, G., Stevens, S., Jiang, D., Ren, W., Sun, Y., et al.
+Mmmu: A massive multi-discipline multimodal understanding and reasoning benchmark for expert agi.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 9556–9567, 2024.
+Yuksekgonul et al. (2023)
+Yuksekgonul, M., Bianchi, F., Kalluri, P., Jurafsky, D., and Zou, J.
+When and why vision-language models behave like bags-of-words, and what to do about it?
+In The Eleventh International Conference on Learning Representations, 2023.
+Zhang et al. (2024a)
+Zhang, J., Huang, J., Jin, S., and Lu, S.
+Vision-language models for vision tasks: A survey.
+IEEE Transactions on Pattern Analysis and Machine Intelligence, 2024a.
+Zhang et al. (2024b)
+Zhang, L., Zhai, X., Zhao, Z., Zong, Y., Wen, X., and Zhao, B.
+What if the tv was off? examining counterfactual reasoning abilities of multi-modal language models.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 21853–21862, 2024b.
+Zhang et al. (2024c)
+Zhang, R., Jiang, D., Zhang, Y., Lin, H., Guo, Z., Qiu, P., Zhou, A., Lu, P., Chang, K.-W., Gao, P., et al.
+Mathverse: Does your multi-modal llm truly see the diagrams in visual math problems?
+arXiv preprint arXiv:2403.14624, 2024c.
+Zhang et al. (2023)
+Zhang, X., Li, S., Wu, Z., and Shi, N.
+Lost in translation: When gpt-4v (ision) can’t see eye to eye with text. a vision-language-consistency analysis of vllms and beyond.
+arXiv preprint arXiv:2310.12520, 2023.
+Zhang et al. (2024d)
+Zhang, X., Li, S., Shi, N., Hauer, B., Wu, Z., Kondrak, G., Abdul-Mageed, M., and Lakshmanan, L. V.
+Cross-modal consistency in multimodal large language models.
+arXiv preprint arXiv:2411.09273, 2024d.
+Zhang et al. (2024e)
+Zhang, X., Yoon, J., Bansal, M., and Yao, H.
+Multimodal representation learning by alternating unimodal adaptation.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), pp. 27456–27466, June 2024e.
+Zhang et al. (2024f)
+Zhang, Z., Wang, X., Zhang, Z., Li, H., Qin, Y., and Zhu, W.
+Llm4dyg: can large language models solve spatial-temporal problems on dynamic graphs?
+In Proceedings of the 30th ACM SIGKDD Conference on Knowledge Discovery and Data Mining, pp. 4350–4361, 2024f.
+Zhao et al. (2024)
+Zhao, H., Kaur, S., Yu, D., Goyal, A., and Arora, S.
+Can models learn skill composition from examples?
+arXiv preprint arXiv:2409.19808, 2024.
+Zhou et al. (2024a)
+Zhou, H., Bradley, A., Littwin, E., Razin, N., Saremi, O., Susskind, J. M., Bengio, S., and Nakkiran, P.
+What algorithms can transformers learn? a study in length generalization.
+In The Twelfth International Conference on Learning Representations, 2024a.
+Zhou et al. (2024b)
+Zhou, Y., Alon, U., Chen, X., Wang, X., Agarwal, R., and Zhou, D.
+Transformers can achieve length generalization but not robustly.
+arXiv preprint arXiv:2402.09371, 2024b.
+Appendix
+\parttoc
+Appendix A Appendix Structure
+The appendix provides omitted experimental details, additional empirical explorations, and theoretical statements, which we outline below.
+Experimental details:
+We provide all details of our synthetic data generation in Appendix B. We present our data generation algorithm for creating training data in Section B.1, details on Consecutive Table Readout, Table Readout, Visual Analogy, and Grid Navigation in Sections B.2, B.3, B.5 and B.4 respectively. We show examples from our training data for each synthetic setting in Figures 32, 33, 36, 37, 34 and 35. We present details on training and evaluation in Appendices C and D respectively.
+Continued discussion from main paper:
+We continue discussion from the main paper in Appendix E. We present results on Consecutive Table Readout after normalizing the number of unique samples used across training strategies (Section E.1), present results on Pattern-Heldout Visual Analogy — a S2H-generalizable version of Visual Analogy (Section E.2), compare training strategies on non S2H-generalizable tasks by normalizing the total number of training data used (Section E.3), discuss further on transferring reasoning from image to text modality (Section E.4), discuss further on text warm-up pretraining (Section E.5), and report the utility of our created synthetic datasets for real-world benchmarks (Section E.6).
+Continued discussion on gradients:
+We continue our discussion on gradient alignment in Appendix F. We first show that the gradient alignment score connects to the expected drop in evaluation loss with SGD on training gradients (Theorem F.1). We then propose results on additional measures — gradient cosine similarity and Adam update alignment score (Section F.3) — that better capture the Adam gradient updates used for optimization.
+Ablation studies:
+We conduct extensive ablation studies to measure the effect of each experimental design decision in our training strategies on non S2H-generalizable tasks and report the results in Appendix G. We report the performance on other multimodal models on our synthetic data (Section G.1). We study design choices in \mathsb{Mix}\textbf{+} (Section G.2), design choices in \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} (Section G.3), design choices in text warm-up pretraining (Section G.4), the effect of the choice of a text representation (Section G.5), the effect of text conversion (Section G.6), the role of chain-of-thought (Section G.7), the effect of multi-task training (Section G.8), and the effect of repeated training examples (Section G.9).
+Interpretability experiments:
+We further conduct interpretability experiments on our trained models. We use gradient attribution to track the focus of the model on different image pixels during chain-of-thought generation (Appendix H). We also report failure modes of models trained on our synthetic data when evaluated on hard examples (Appendix I).
+Appendix B Details on Synthetic Tasks
+B.1 Formal description of data generation
+Algorithm 1 Data generation pipeline for main experiments
+0: Task f:\mathcal{X}\to\mathcal{Z} , Dataset \mathcal{X}=\mathcal{X}_{{\textsc{simple}}{}}\cup\mathcal{X}_{{\textsc{hard}}{}} , Number of data to generate N , Type of supervision s .
+if s\in\{ \mathsb{Text} , \mathsb{Image} \} then
+Initialize the number of data per difficulty N_{{\textsc{simple}}{}}=N , N_{{\textsc{hard}}{}}=0 and the number of unique examples N_{{\textsc{simple}}}^{u}=N_{{\textsc{simple}}{}}
+else if s\in\{ \mathsb{Text\text{+}\;\!\>\!\!Image} , \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} , \mathsb{Mix} \} then
+Initialize the number of data per difficulty N_{{\textsc{simple}}{}}=N , N_{{\textsc{hard}}{}}=0 and the number of unique examples N_{{\textsc{simple}}}^{u}=\frac{N_{{\textsc{simple}}{}}}{3}
+else if s\in\{ \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} +, \mathsb{Mix}\textbf{+} \} then
+Initialize the number of data per difficulty N_{{\textsc{simple}}{}}=\frac{N}{2} , N_{{\textsc{hard}}{}}=\frac{N}{2} and the number of unique examples N_{{\textsc{simple}}}^{u}=\frac{N_{{\textsc{simple}}{}}}{3}
+else if s\in\{ \mathsb{Align}\>\!\text{-}\;\!\! \} then
+Initialize the number of data per difficulty N_{{\textsc{simple}}{}}=N , N_{{\textsc{hard}}{}}=0 and the number of unique examples N_{{\textsc{simple}}}^{u}=\frac{N_{{\textsc{simple}}{}}}{2}
+else if s\in\{ \mathsb{(TW)} \} then
+Initialize the number of data per difficulty N_{{\textsc{simple}}{}}=\frac{N}{2} , N_{{\textsc{hard}}{}}=\frac{N}{2} and the number of unique examples N_{{\textsc{simple}}}^{u}=N_{{\textsc{simple}}{}}
+end if
+Initialize \mathcal{S}=\Phi .
+for t=1\to N_{{\textsc{simple}}}^{u} do
+Sample {\textbf{x}}\sim\mathcal{X}_{{\textsc{simple}}} .
+If s\in\{ \mathsb{Text} , \mathsb{Text\text{+}\;\!\>\!\!Image} , \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} , \mathsb{Mix} , \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} +, \mathsb{Mix}\textbf{+} , \mathsb{Align}\>\!\text{-}\;\!\! , \mathsb{(TW)} \} , then \mathcal{S}\leftarrow\mathcal{S}\cup(\{{\textbf{x}}^{(t)},CoT({\textbf{x}}),f({\textbf{x}})\}) .
+If s\in\{ \mathsb{Image} , \mathsb{Text\text{+}\;\!\>\!\!Image} , \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} , \mathsb{Mix} , \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} +, \mathsb{Mix}\textbf{+} \} , then \mathcal{S}\leftarrow\mathcal{S}\cup(\{{\textbf{x}}^{(i)},CoT({\textbf{x}}),f({\textbf{x}})\}) .
+If s\in\{ \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} , \mathsb{Mix} , \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} +, \mathsb{Mix}\textbf{+} , \mathsb{Align}\>\!\text{-}\;\!\! \} , then \mathcal{S}\leftarrow\mathcal{S}\cup(\{{\textbf{x}}^{(i)},P_{convert},{\textbf{x}}^{(t)},CoT({\textbf{x}}),f({\textbf{x}})\}) .
+end for
+Determine number of epochs to repeat e=\frac{N_{{\textsc{simple}}{}}}{\left|{\mathcal{S}}\right|}
+Randomly shuffle \mathcal{S} and repeat it e times (i.e., take the first e\cdot\left|\mathcal{S}\right| elements from repeated copies of \mathcal{S} )
+for t=1\to N_{{\textsc{hard}}} do
+Sample {\textbf{x}}\sim\mathcal{X}_{{\textsc{hard}}} .
+\mathcal{S}\leftarrow\mathcal{S}\cup(\{{\textbf{x}}^{(t)},CoT({\textbf{x}}),f({\textbf{x}})\}) .
+end for
+Randomly shuffle \mathcal{S} and return \mathcal{S} .
+Figure 10: Pseudo-code for generating data mixture: For ablation studies, the algorithm might be slightly modified.
+In Algorithm 1, we provide the pseudo-code for generating the training data mixture for the main experiments. Below we provide more details in the setup.
+B.1.1 When training only on simple examples
+For Consecutive Table Readout and for any type of supervision among \mathsb{Text} , \mathsb{Image} , \mathsb{Text\text{+}\;\!\>\!\!Image} , \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} , and \mathsb{Mix} :
+•
+For each unique data {\textbf{x}}\in\mathcal{X} and for each type of supervision — \mathsb{Text} , \mathsb{Image} , and \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} , we choose whether to include it in the training data, depending on whether these types of supervision are used for training (Section 2.3). We denote the number of unique data x used from \mathcal{X}_{{\textsc{simple}}} as N_{{\textsc{simple}}}^{u} .
+•
+We compare all training strategies with the total number of training data used, given by:
+\displaystyle N_{{\textsc{simple}}{}}=\text{Number of epochs}\times N_{{\textsc{simple}}}^{u}\times\text{Number of types of supervision per input}
+For a fair comparison, we keep the number of unique data N_{{\textsc{simple}}}^{u} fixed across \mathsb{Text\text{+}\;\!\>\!\!Image} , \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} , and \mathsb{Mix} . Then to match N_{{\textsc{simple}}{}} , we set the number of epochs to 1.5 for \mathsb{Text\text{+}\;\!\>\!\!Image} ( 50\% samples are repeated 2\times ), 3 for \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} , and 1 for \mathsb{Mix} .
+Note on \mathsb{Text} and \mathsb{Image} for Consecutive Table Readout: Since our result depends heavily on the success of \mathsb{Text} and the failure of \mathsb{Image} in Consecutive Table Readout, we carefully tune the number of training epochs to achieve optimal performance. We conduct ablations where instead of setting N_{{\textsc{simple}}{}}^{u}=N_{{\textsc{simple}}{}} , we also try setting N_{{\textsc{simple}}{}}^{u} equal to \frac{N_{{\textsc{simple}}{}}}{2} or \frac{N_{{\textsc{simple}}{}}}{3} (respectively, the number of epochs is set at 2,3 ). The results presented in Figure 2 corresponds to N_{{\textsc{simple}}{}}^{u}=\frac{N_{{\textsc{simple}}{}}}{2} for \mathsb{Text} and N_{{\textsc{simple}}{}}^{u}=\frac{N_{{\textsc{simple}}{}}}{3} for \mathsb{Image} . We discuss further in Section E.1.
+B.1.2 When also training on hard examples
+For \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} + or \mathsb{Mix}\textbf{+} on non S2H-generalizable tasks:
+•
+We set N_{{\textsc{hard}}} , the number of data from the hard task, equal to N_{{\textsc{simple}}} , the number of data from the simple task.
+•
+We generate a mixture of N_{{\textsc{simple}}} examples under \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} or \mathsb{Mix} . We include N_{{\textsc{hard}}} instances of hard \mathsb{Text} .
+B.1.3 Reasoning alignment ( \mathsb{Align}\>\!\text{-}\;\!\! ) or text warm-up pretraining ( \mathsb{(TW)} )
+When generating data for the reasoning alignment phase ( \mathsb{Align}\>\!\text{-}\;\!\! ):
+•
+We set N=10^{4} and include an equal number of simple \mathsb{Text} and simple \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} examples.
+When generating data for the text warm-up pretraining phase ( \mathsb{(TW)} ):
+•
+We set N=10^{4} and include an equal number of simple \mathsb{Text} and hard \mathsb{Text} examples.
+After training on \mathsb{(TW)} and/or \mathsb{Align}\>\!\text{-}\;\!\! , we continue with the main phase of supervision (e.g., \mathsb{Mix}\textbf{+} for \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} ).
+B.2 Consecutive Table Readout
+Given a table with n_{r} rows and n_{c} columns, a start cell (r_{s},c_{s}) and an end cell (r_{e},c_{e}) , the model is tasked to read all numbers between the start cell and end cell following the given rules.
+•
+If r_{s}<r_{e} , move left-to-right within each row:
+(r_{s},c_{s}),(r_{s},c_{s}+1),\cdots,(r_{s},n_{c}),(r_{s}+1,1),(r_{s}+1,2),\cdots,(r_{e},1),(r_{e},2),\cdots,(r_{e},c_{e})
+•
+If r_{s}>r_{e} , move right-to-left within each row:
+(r_{s},c_{s}),(r_{s},c_{s}-1),\cdots,(r_{s},1),(r_{s}-1,n_{c}),(r_{s}-1,n_{c}-1),\cdots,(r_{e},n_{c}),(r_{e},n_{c}-1),\cdots,(r_{e},c_{e})
+•
+If r_{s}=r_{e} , move from (r_{s},c_{s}) to (r_{e},c_{e}) .
+See example images in Figure 1.
+B.3 Table Readout
+Given a table with n_{r} rows and n_{c} columns (where n_{r},n_{c}\in[8,12] ), a start cell (r_{s},c_{s}) , an end cell (r_{e},c_{e}) , and a path of cells P connecting the two cells (without any loops), the task is to read the numbers on the path starting from the start cell and ending at the end cell. Each path is continuous and is a concatenation of linear segments, where consecutive segments are separated by 90 degree turns. On the simple task, each path contains 1-4 linear segments, following a spiral or sinusoidal pattern, and has an average length of 12 . On the hard task, each path contains >4 linear segments, following a compositional spiral or sinusoidal pattern, and has an average length of 35 . See example images in Figures 32 and 33 and an example pseudo-code to create the spiral or sinusoidal patterns in Algorithms 2 and 3.
+Algorithm 2 Spiral Path Generation that changes directions as right \to down \to left \to up \to right \to\cdots
+0: Table with n_{r} rows and n_{c} columns, start cell, k linear segments
+• Initial n_{seg}=0
+• Initialize current-cell coordinates as start cell coordinates
+• Initialize current-direction to “right”
+• Initialize Path =\Phi .
+• Direction-Change =\{\text{``right''}:\text{``down''},\text{``down''}:\text{``left''},\text{``left''}:\text{``up''},\text{``up''}:\text{``right''}\}
+• Coordinate-Update =\{\text{``right''}:(0,1),\text{``down''}:(1,0),\text{``left''}:(0,-1),\text{``up''}:(-1,0)\}
+while n_{seg}\neq k do
+• Add current cell to Path.
+• Compute temporary-cell by adding coordinate update vector for current-direction from Coordinate-Update to current-cell.
+• If temporary-cell is out of bounds, update current-direction using Direction-Change and increment n_{seg} .
+• Update current-cell by adding coordinate update vector for current-direction from Coordinate-Update to current-cell.
+end while
+Return Path
+Algorithm 3 Sinusoidal Path Generation that changes directions as right \to down \to left \to up \to right \to\cdots , where down and up movements contain only 2 cells
+0: Table with n_{r} rows and n_{c} columns, start cell, k linear segments
+• Initial n_{seg}=0
+• Initialize current-cell coordinates as start cell coordinates
+• Initialize current-direction to “right”
+• Initialize Path =\Phi .
+• Direction-Change =\{\text{``right''}:\text{``left''},\text{``left''}:\text{``right''}\}
+• Coordinate-Update =\{\text{``right''}:(0,1),\text{``left''}:(0,-1)\}
+while n_{seg}\neq k do
+• Add current cell to Path.
+• Compute temporary-cell by adding coordinate update vector for current-direction from Coordinate-Update to current-cell.
+if temporary-cell is out of bounds then
+• If n_{seg}=k-1 , break
+Loop twice
+• Increment column coordinate by 1 in current-cell
+• Add current-cell to Path.
+• Update current-direction using Direction-Change
+• Increment n_{seg} by 2 .
+end if
+• Update current-cell by adding coordinate update vector for current-direction from Coordinate-Update to current-cell.
+end while
+• Return Path
+Figure 11: Pseudo-code for generating spiral and sinusoidal paths on Table Readout: For simplicity, we present a single variant of each pattern. By permuting the Direction-Change map, the presented variants can be modified to include other direction patterns.
+B.4 Grid Navigation
+Given a grid with n_{r} rows and n_{c} columns (where n_{r},n_{c}\in[8,12] ), a start cell (r_{s},c_{s}) , an end cell (r_{e},c_{e}) , and a set of objects and obstacles placed at various positions within the grid, the task is to find a path from the start cell to the end cell that collects all specified objects while avoiding all obstacles.
+For each generated grid, we randomly select several objects from a set of 30 possibilities: heart, crown, flag, star, flower, umbrella, plane, phone, spark, diamond, queen, hammer, club, gear, arrow, sun, bishop, note, coffee, anchor, cloud, pawn, castle, horse, infinity, moon, null, approx, integral, product, and sum. Each chosen object is represented as an Unicode character, as shown in Figure 12. Obstacles are chosen from the following five symbols: dot, cross, square, triangle, and plus. The names and representations of all these symbols—both objects and obstacles—have been verified using GPT-4o.
+Refer to caption
+Figure 12: Details on Grid Navigation: Unicode characters used for specifying each object.
+The simple task requires the model to collect k\in[1,2] objects spread across the grid, while avoiding a single kind of obstacle. The hard task requires the model to collect k\in[2,5] objects spread across the grid, while avoiding a composition of o\in[3,5] obstacles. The simple task requires t\in[10,25] DFS steps, while the hard task requires t\in[25,60] DFS steps.
+See example images in Figures 34 and 35.
+B.5 Visual Analogy
+We create a multimodal visual analogy dataset based on the Procedurally Generated Matrices (PGM) data proposed in Barrett et al. (2018) and Hill et al. (2019). Each instance consists of 2 examples of three images, a query of two images, and four answer options. Each instance has a latent logical relation r\in\{\texttt{XOR},\texttt{OR},\texttt{AND},\texttt{Progression}\} that will be applied to both the examples and the query. There are also three latent domains d_{1},d_{2},d_{\text{query}} (for each example and the query, respectively), chosen from \{\texttt{line\_type} , line_color, shape type, shape_color, shape_size, shape_quantity, \texttt{shape\_position}\} . For each example i , the value of the domain d_{i} in the third image follows from applying the relation r to the values in the first two images. The task is to choose one of the four options so that there exists a domain d_{\text{query}} where applying the relation r along d_{\text{query}} in the first two images of the query leads to the chosen option.
+Note that following Hill et al. (2019), we exclude all spurious correlations of the examples and query such that they follow exactly one pattern (d,r) . Furthermore, we create three nontrivial confounding options such that each of them, when combined with the query images, is consistent with exactly one pattern (d_{\text{option${}_{i}$}},r_{\text{option${}_{i}$}}) where r_{\text{option${}_{i}$}}\neq r_{\text{query}} .
+We also reserve a held-out set of combinations \mathcal{S}=\{(d,r)\} that does not appear in the training images. On the simple task, d_{1}=d_{2}=d_{\text{query}} and the query pattern (d_{\text{query}},r_{\text{query}}) is never chosen from the held-out set. On the hard task, d_{1},d_{2},d_{\text{query}} are distinct and both (d_{i},r_{i}) and (d_{\text{query}},r_{\text{query}}) are always chosen from the held-out set \mathcal{S} .
+See example images in Figures 36 and 37 and the complete list of all possible attribute values in Table 2.
+B.6 Issues during synthetic data creation
+Here, we outline the primary issues that we faced while creating the synthetic datasets, which might be of value to the general community.
+B.6.1 Consecutive Table Readout, Table Readout
+The primary issue that we faced during creation of these datasets were as follows:
+•
+Resolution issues: For images, we found that representing numbers as their English names (e.g. 9 represented as NINE) improved the OCR performance substantially. When represented as numerics, the model often confused between pairs (7, 9), and (0, 8). These issues were largely mitigated by replacing numerics with English names.
+•
+Color: The model’s S2H generalization can vary drastically depending on the color used to highlight the cells. On hard (15-20) images, the performance of the model trained with \mathsb{Image} supervision can vary from 30\% to 70\% depending on which color (e.g. purple or yellow) was used.
+•
+CoT Trace: Our original CoT Trace simply outlined the numbers on the path, without any mention of the row number, column number, row name, and column name of the cells in the highlighted path. This resulted in poor performance of the model when trained with images. We then switched to a more verbose CoT, where the model was provided with the above details at each step of traversing the highlighted path, and the model’s performance substantially improved.
+For Consecutive Table Readout, we find that the verbose CoT trace shows S2H generalization, and not the final solution that the model reports. Hence, we report our evaluation performance for Consecutive Table Readout on the CoT trace.
+B.6.2 Grid Navigation
+The major issue that we faced in Grid Navigation was the design of chain-of-thought reasoning steps to represent the Depth First Search trace. At multiple points, we found that current VLMs are fragile to read image inputs, and our CoT trace needed to be very explicit to train the model effectively on simple examples.
+An initial version of Grid Navigation:
+In our first version, we designed an extremely simple dataset, where the grids only had a source cell, a destination cell, and a few cells marked by red color that represented obstacles.
+•
+Models failed to train on image-input without verbose details in CoT: Our initial CoT would only provide the following at each DFS step: ”[current cell]: [proposed next action]” without iterating through all invalid actions considered before proposing this action. e.g., a 3-step DFS step would look as follows:
+–
+(1, 1): right
+–
+(1, 2): down
+–
+(2, 2): backtrack
+where we don’t explain why we need to ”backtrack” at (2, 2). This made the model learn the following:
+1.
+answer formatting
+2.
+knowing how to retrieve the current location (row, col index) and the destination location
+3.
+knowing which action is preferred (the one that minimizes the distance towards destination)
+but the model never picked up on why we sometimes backtrack or sometimes take an action that is not the most preferred. At generation, it would ignore all obstacles and try to take the most preferred action.
+On the other hand, we observed that the model could still recognize the reasoning for “backtracking” on text input and could get 100\% accuracy on simple text for \mathsb{Text} supervision, and also 100\% accuracy on simple images for \mathsb{Mix} supervision. Thus, for cases where the model couldn’t train with image-input but could train with text input, \mathsb{Mix} was useful to train the model even for improving accuracy on in-domain examples. However, this setting was slightly different from our S2H generalization view, and so we decided to make the CoT more verbose.
+•
+In later attempts, we switched to a more verbose CoT: We iterate through all possible actions at each state, giving reasons why that action is valid / invalid. e.g. a 3-step DFS trace that starts from cell (1, 1) will look as follows
+–
+Current cell: (1, 1): right would lead to (1, 2) which is available and not visited yet, so we can move right.
+–
+Current cell: (1, 2): down would lead to (2, 2) which is available and not visited yet, so we can move down
+–
+Current cell: (2, 2): right would lead to (2, 3) but it has an obstacle; down would lead to (3, 2) but it has an obstacle; left would lead to (2, 1) but it has an obstacle; we have no more action left, so backtrack
+The model now gets almost perfect S2H generalization on both text / image no matter which supervision we give. So we couldn’t really compare the performance of different types of supervision. This was because once the model learns how to iterate through different actions and determine its validity, length generalization was trivial.
+Thus, we switched to our current version of Grid Navigation, where the task additionally involved spatial reasoning of different combinations of objects and obstacles spread across the grid.
+B.6.3 Visual Analogy
+Here, the main challenge is to recreate the Procedurally Generated Matrices (PGM) dataset first introduced in Hill et al. (2019) and Barrett et al. (2018), as the data generation code is not publicly available. Therefore, we try our best to recreate the data set with slight adaptations. Specifically, we have 10 variations in the attribute values for line_type, shape_quantity, and shape_position as in the original paper. For the rest of attributes line_color, shape_type, and shape_size, we only include \leq 5 variations of attribute values. Meanwhile, as the original papers do not list all the attribute values used in the original data generation, nor was the source code publicly available, we decide upon the list of possible attribute values based on the consideration that they are clearly differentiable from a human perspective.
+The original papers claim that solving PGM puzzles is a challenging vision task. While we acknowledge that our recreated version of the data reduces the complexity compared to the original version, we note that our adaptations do not qualitatively change the challenging nature of this task. As mentioned in Barrett et al. (2018), the challenge of effective knowledge composition comes mainly from the necessity to represent abstract logical rules in discrete symbolic explanations. They show that training with auxiliary information of meta-targets vectors that encode the relation, object, and attribute types as a binary string significantly helps abstract reasoning performance, and in particular, in terms of compositional generalization. Our text representations are inspired by the construction of the meta-targets vectors with many tweaks to fit into the context length of the model. We observe that by including the discrete representation of knowledge in the form of \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} supervision, \mathsb{Mix} and \mathsb{Mix}\textbf{+} show a much better S2H generalization on image input, which aligns with previous observations in Barrett et al. (2018).
+line type
+\{\text{falling diagonal line, rising diagonal line, horizontal line, vertical line,}
+diamond lines, circular line, V-shape facing up, V-shape facing left
+\text{V-shape facing down, V-shape facing right}\}
+line color
+\{0~\text{(black)},90~\text{(dark grey)},135~\text{(grey)},189~\text{(light grey)}\}
+shape type
+\{\text{circle, rectangle, triangle, pentagon, hexagon}\}
+shape color
+\{0~\text{(black)},90~\text{(dark grey)},135~\text{(grey)},189~\text{(light grey)},255~\text{(white)}\}
+shape size
+\{20,27,34,41\}
+shape quantity
+\{0,1,2,3,4,5,6,7,8,9\}
+shape position
+\{(0,0),(0,1),(0,2),(1,0),(1,1),(1,2),(2,0),(2,1),(2,2)\}
+Table 2: List of all possible attribute values for each domain in Visual Analogy:, We reproduce Hill et al. (2019) with slight modifications. The diverse combination of the attribute values results in high complexity of this task, testing various both OOD and compositional generalizability of the model to a great extent.
+Appendix C Training Details
+We first prepare Eagle-X2-Llama3-8B, a variation of Eagle-X5-8B (Shi et al., 2024). We choose Llama3-8B-Instruct (Dubey et al., 2024) as the LLM backbone for its good reasoning capability. We choose CLIP-448 (Radford et al., 2021) and ConvNeXt (Liu et al., 2022b) as the visual encoders because previous works show that combining the two leads to a significant improvement, whereas any additional visual encoder leads to marginal improvement (Shi et al., 2024).
+At the beginning of the project, the codebase released by Shi et al. (2024) was incomplete. To incorporate the Llama3-8B model architecture and the tokenizer, we adapt the codebase from Tong et al. (2024).
+We use the same 595k pretraining data from Liu et al. (2023a) and 1.8M finetuning (visual instruction tuning) data from Shi et al. (2024). We use Deepspeed ZeRO Stage 2 (Rasley et al., 2020) for a Distributed Data Parallel (DDP) training on 8 GPUs on a HPC Cluster. We use the AdamW optimizer with no weight decay (i.e., equivalent to Adam), a learning rate schedule with a linear warmup of 0.03 and cosine decay to zero. We truncate the trail of any text that exceeds the maximum number of text tokens (2048). During pretraining, only the adapter is trained, whereas in all other stages of training, all weights in the model are unfrozen.
+With this Eagle-X2-Llama3-8B as the base model, we then continuously finetune it on different data mixtures across our synthetic tasks. In Table 3, we report some key hyperparameters.
+Batch Size
+LR
+Epochs
+Total # Data
+Max # Text Tokens
+Pretraining
+256
+1e-3
+1
+595k
+2048
+Finetuning
+128
+2e-5
+1
+1,809k
+2048
+Finetuning on Task
+128
+2e-5
+experiment-specific
+2048
+Table 3: Hyperparameter settings: For all values not reported here, we use the same values as in Shi et al. (2024).
+Appendix D Evaluation Details
+We extend the VLMEvalKit (Duan et al., 2024) to evaluate the finetuned Eagle-X2-Llama3-8B on held-out data. For generation, we apply greedy decoding and generate up to 2048 tokens.
+D.1 Evaluation on Consecutive Table Readout and Table Readout
+CoT({\textbf{x}}) visits each cell sequentially on the path, by giving the row and column index, row and column names, and the value in the cell (see Figures 32 and 33). The final answer f({\textbf{x}}) gives the list of numbers again, and also sum of the numbers. We evaluate by simply checking whether the list of numbers are correct. Furthermore, because this list of numbers can be extracted from both the final answer and also the CoT, we report the best performance out of the two. On Consecutive Table Readout, we find that we get the best performance on hard examples by extracting the numbers from CoT. On the other hand, for Table Readout, there isn’t much difference between extracting numbers from CoT and extracting them from the final answer.
+D.2 Evaluation on Grid Navigation
+CoT({\textbf{x}}) records the sequence of visited cells during a depth-first search (DFS) from the start to the end cell. At each visited cell, the trace includes a full description of neighboring cells and whether they are available for the next step. The DFS algorithm always prefers directions that minimize the distance towards the nearest uncollected object, or the destination (if all objects are collected). If no directions are possible, we backtrack to the most previously visited cell. The final answer f({\textbf{x}}) is a simplified sequence of directions (left, right, up, down) that connect the start and destination cells, where all backtrack movements are removed from the stack (see Figures 34 and 35). We evaluate by simulating the movements in the sequence returned by the model and checking if we arrive at the destination after collecting all objects and avoiding obstacles.
+D.3 Evaluation on Visual Analogy
+CoT({\textbf{x}}) enumerates all the values of the tasks-relevant attributes for each panel with the conclusion of whether there exists a logical pattern among those values for each attribute domain in the examples. The trace includes a summary sentence of what (domain, relation) pattern the two examples demonstrate. After that, the trace performs the same enumeration process for the query panels. It then looks at the options and checks whether it is consistent with the desired relation given the attribute values in the query panels. The final answer f({\textbf{x}}) identifies the pattern in the form of (domain, relation) (e.g. (line type, XOR)) for all examples and the query combined with each option, as well as the final answer of the correct option. The evaluation checks whether the identified patterns and the final answer are correct.
+Appendix E Continued Discussion From Main Paper
+E.1 Comparisons at equal unique samples for Consecutive Table Readout
+In Figure 2, we compare \mathsb{Text} , \mathsb{Image} , and \mathsb{Mix} under the same N_{{\textsc{simple}}} , the total number of training data. Note that \mathsb{Mix} is trained for only a single epoch, while the reported results for \mathsb{Text} and \mathsb{Image} are based on 2 and 3 epochs of training, respectively. We make these choices because, for \mathsb{Text} , the S2H generalization performance peaks at 2 epochs and then declines sharply, whereas for \mathsb{Image} , the S2H generalization performance sees a slight improvement between 2 and 3 epochs. As an illustrative example, Figure 13 shows the performance of \mathsb{Text} and \mathsb{Image} when N_{{\textsc{simple}}}^{u} , the number of unique samples, is fixed at 4\times 10^{4} . Consequently, in Figure 14, we revisit the results of Figure 2, this time explicitly indicating the number of unique samples N_{{\textsc{simple}}}^{u} used.
+Refer to caption
+Figure 13: Ablation on the number of epochs on Consecutive Table Readout: We measure the S2H generalization performance of \mathsb{Text} on hard-text and \mathsb{Image} on hard-image with multi-epoch training, when N_{{\textsc{simple}}}^{u} is fixed as 4\times 10^{4} . We observe that the generalization performance of \mathsb{Text} supervision peaks at 2 epoch training, after which it drastically drops, while the generalization performance of \mathsb{Image} supervision increases slightly between 2 and 3 epochs of training.
+Refer to caption
+Figure 14: Results on Consecutive Table Readout based on the number of unique samples N_{{\textsc{simple}}}^{u} : Our observations from Section 3 hold true even when different types of supervision are compared at the same value N_{{\textsc{simple}}}^{u} , instead of N_{{\textsc{simple}}} .
+E.2 Additional setting for an S2H-generalizable task
+Here, we consider Pattern-Heldout Visual Analogy — a S2H-generalizable version of Visual Analogy — by defining an alternative version of hard examples. We keep the definition of simple examples from Sections 4 and B.5, but modify hard instances to only measure analogical reasoning on held-out reasoning patterns, without requiring the domain to be different across the in-context examples.
+That is, let d_{1},d_{2},d_{\text{query}} denote the latent domains of the examples and the query, r denote the latent logical relation to be applied on the latent domains, and \mathcal{S} denote a held-out set of combinations (d,r) . The simple task contains puzzles where d_{1}=d_{2}=d_{\text{query}} and (d_{\text{query}},r_{\text{query}})\not\in\mathcal{S} , whereas the hard task contains puzzles where d_{1}=d_{2}=d_{\text{query}} and (d_{\text{query}},r_{\text{query}})\in\mathcal{S} . Note that in Visual Analogy, we had additionally required d_{1},d_{2},d_{\text{query}} to be distinct for hard puzzles.
+In Table 4, we compare the S2H generalization performance of \mathsb{Text} , \mathsb{Image} , and \mathsb{Mix} supervision on Pattern-Heldout Visual Analogy. The model learns the task more easily on text than on image: while the image S2H generalization for \mathsb{Image} supervision is bounded by 32\% , the text S2H generalization for \mathsb{Text} supervision can reach 49\% when trained on 24\times 10^{4} data.
+On the other hand, \mathsb{Mix} supervision can transfer the S2H generalization from text to image and improve the performance on hard-image ( 41\% with 12\times 10^{4} training data).
+S2H accuracy on hard-text
+S2H accuracy on hard-image
+Number of training data
+Number of training data
+Supervision
+30 k
+60 k
+120 k
+240 k
+30 k
+60 k
+120 k
+240 k
+\mathsb{Text}
+-
+37.2
+32.6
+45.6
+0.0
+0.0
+0.0
+0.0
+\mathsb{Image}
+0.0
+0.0
+0.0
+0.0
+-
+27.0
+35.6
+34.0
+\mathsb{Mix}
+31.2
+42.4
+49.0
+39.8
+24.6
+35.0
+41.0
+39.6
+Table 4: Results on Pattern-Heldout Visual Analogy: S2H generalization for \mathsb{Text} , \mathsb{Image} , and \mathsb{Mix} supervision are reported on hard-image and hard-text examples after varying the number of training data in each strategy. S2H generalization on hard-images under \mathsb{Image} supervision is capped at 36\% , while for hard-text examples under \mathsb{Text} supervision, it reaches 45.6\% after 24\times 10^{4} training examples. Leveraging the better performance on hard-text, \mathsb{Mix} supervision improves S2H generalization on hard-images to 41\% with 12\times 10^{4} examples.
+E.3 Comparison at equal FLOPs for non S2H-generalizable tasks
+\mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} uses an additional phase over \mathsb{Mix}\textbf{+} , where training sequences from simple split are utilized. In Figure 5, however, we compare \mathsb{Mix}\textbf{+} and \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} only in terms of the amount of training data used in the final phase. This raises a potential concern that \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} might only appear stronger because it involves more total training FLOPs. To address this, Figure 15 presents a revised comparison, plotting \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} against \mathsb{Mix}\textbf{+} in terms of the total training data employed across all stages. Under these conditions, \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} still consistently outperforms \mathsb{Mix}\textbf{+} .
+Refer to caption
+Figure 15: Results on non S2H-generalizable tasks based on the total number of training data: \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} still outperforms \mathsb{Mix}\textbf{+} when compared at the same amount of total training data (including alignment stage).
+E.4 Transferring reasoning from image to text
+In the main experiments, we tested whether S2H generalization can transfer from text inputs to image inputs. In Table 5, we observe that the transfer can happen in the opposite direction as well. After 24\times 10^{4} training samples that now includes training data from hard-image instead of hard-text, a modified version of \mathsb{Mix}\textbf{+} achieves S2H generalization accuracy of 86.0\% on hard-text input on Table Readout and 85.6\% on hard-text input on Visual Analogy. As a comparison, when trained with the same number of data, \mathsb{Mix}\textbf{+} shows S2H generalization accuracy of 73.2\% on hard-image input on Table Readout and 35.4\% on hard-image input on Visual Analogy.
+Table Readout
+Visual Analogy
+Number of
+hard-image
+hard-text
+hard-image
+hard-text
+training examples
+(Included in training)
+(Excluded in training)
+(Included in training)
+(Excluded in training)
+3\times 10^{4}
+72.0
+34.0
+86.8
+81.4
+6\times 10^{4}
+98.2
+70.4
+97.8
+80.0
+12\times 10^{4}
+99.4
+76.4
+94.6
+86.4
+24\times 10^{4}
+99.8
+86.0
+99.6
+85.6
+Table 5: Ablation on transferring reasoning from image to text: We modify \mathsb{Mix}\textbf{+} to include hard \mathsb{Image} examples in training, instead of hard \mathsb{Text} examples, while keeping the same simple \mathsb{Mix} supervision. Evaluation is now performed on hard-text input. We observe that improving generalization performance on hard-image input strongly transfers to hard-text input.
+Refer to caption
+Figure 16: Effect of text warm-up pretraining: Text warm-up enhances image S2H generalization across tasks. \mathsb{(TW)} \mathsb{Mix} closes the text-image generalization gap on the hard (25-30) task for Consecutive Table Readout, while \mathsb{(TW)} \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} outperforms \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} for Visual Analogy.
+E.5 Text warm-up pretraining
+In Section 4, we observe that \mathsb{Mix} fails to improve image generalization when the LLM backbone does not show strong generalization on text modality. Furthermore, models trained with \mathsb{Mix}\textbf{+} show significantly better image generalization when the text reasoning capability of the LLM backbone is strengthened by fine-tuning on hard-text examples. Hence, one may expect that the reasoning capability of the LLM backbone on hard examples is a crucial factor for the reasoning capability to transfer to the image inputs. In this section, we investigate the effect of text generalization of the LLM backbone. Specifically, we simulate different levels of text reasoning ability by including a pretraining stage of the model on simple and hard-text examples. We call this text-only training (during which only the LLM backbone is updated) before full finetuning of the VLM model text warm-up pretraining \mathsb{(TW)} . This stage of training only uses a small set of 10^{4} text examples (equal mix of simple and hard for non S2H-generalizable tasks, just simple examples for Consecutive Table Readout). Our results are shown in Figure 16.
+We observe that the additional TW training further boosts the image generalization. In particular, \mathsb{(TW)} \mathsb{Mix} closes the modality imbalance, reflected by the image-text generalization gap on the hard (25-30) task for Consecutive Table Readout. On Visual Analogy, \mathsb{(TW)} \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} outperforms \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} by 15\% p with 12\times 10^{4} training data. These results suggest that future stronger LLM backbone can further close the generalization gap between text and image modalities using our proposed strategy.
+E.6 Utility of our synthetic datasets for existing evaluation benchmarks
+Existing evaluation benchmarks test the ability of VLMs to perform OCR, chart interpretation, image reasoning, and caption generation. However, they primarily test the ability to generate short answers on a given question. On the other hand, our created tasks evaluate long form reasoning generation from models. As such, our fine-tuned models quickly forget to return short responses during training and struggle on existing benchmarks.
+Nonetheless, we assess the utility of our synthetic datasets to existing benchmarks by including them during visual instruction tuning. That is, we prepare two different versions of an alternate base model Eagle+Image-X2-Llama-8B: 1) where 30 / 60 / 120k of our \mathsb{Image} training mixture (equal mix of simple and hard) has been mixed in with the 1.8M finetuning data; or where 240k of our \mathsb{Mix}\textbf{+} training mixture (80k for each synthetic task) has been mixed in with the 1.8M finetuning data.
+Results in Table 6 demonstrate consistent improvements across tasks such as OCR, chart interpretation, and multimodal understanding. However, a decline in performance is also observed on binary classification (yes/no response) benchmarks, such as MME. These findings indicate that the proposed synthetic datasets can be valuable for future research. Further investigation is necessary to determine how long reasoning datasets like our proposed tasks can be best leveraged to enhance general reasoning capabilities (e.g. Gao et al. (2024)).
+Visual Instruction Tuning Dataset
+Evaluation
+Benchmark
+Eagle-1.8M
+Eagle-1.8M
+Eagle-1.8M
++ simple (I;S) and hard (I;S)
++ \mathsb{Mix}\textbf{+} mixture
+(30k)
+(60k)
+(120k)
+(240k)
+MMMU \dagger
+35.4
+38.2
+38.8
+38.7
+36.3
+MME*
+1529
+1242
+1377
+1376
+1364
+MMBench
+67.6
+69.2
+68.4
+67.5
+69.2
+POPE*
+86.6
+88.7
+88.9
+87.6
+87.5
+TextVQA**
+66.8
+66.5
+66.9
+66.8
+65.8
+OCR(Bench)
+47.3
+50.9
+50.4
+47.0
+48.2
+ChartQA
+69.6
+71.6
+69.8
+70.5
+69.4
+CharXiv-Reasoning \dagger
+16.8
+16.4
+16.5
+17.0
+17.2
+CharXiv-Descriptive \dagger
+30.7
+28.3
+35.8
+31.1
+34.4
+Table 6: Utility of our synthetic data: We compare the benchmark results of Eagle-X2-Llama-8B, solely instruction tuned on Eagle-1.8M dataset, and Eagle+Synthetic-X2-Llama-8B, instruction tuned on a mixture of Eagle-1.8M and our synthetic data mixture. Including our data can improve model’s performance on OCR and chart reasoning benchmarks, but may hurt performance on benchmarks where models need to output a yes/no answer (marked with *) or a short phrase (marked with **). \dagger : performance reported on validation set.
+Reported benchmarks: Here is a summary of the reported evaluation benchmarks.
+•
+MMMU (Yue et al., 2024): Evaluates on multi-discipline tasks measuring college-level subject knowledge and reasoning.
+•
+MME (Fu et al., 2023): Evaluates both perception and cognition abilities across 14 subtasks with yes/no answers.
+•
+MMBench (Liu et al., 2025): Evaluates on VQA, that includes both multiple-choice and free-form answers, with robust evaluation strategies.
+•
+POPE (Li et al., 2023): Evaluates object hallucination with yes/no answers.
+•
+TextVQA (Singh et al., 2019): Evaluates understanding and reading text within images with short-phrase answers.
+•
+OCR(Bench) (Liu et al., 2024b): Evaluates on Character Recognition (OCR) capabilities across 29 datasets covering text recognition, scene text VQA, document VQA, key information extraction, and handwritten mathematical expression recognition.
+•
+CharXiv (Wang et al., 2024c): Evaluates on chart understanding based on 2323 charts from arXiv papers, paired with descriptive and reasoning questions, covering 8 major academic subjects.
+Appendix F Continued Discussion on Gradient Alignment
+Augmentation in notation: Suppose the current model parameters are given by \theta . We will slightly augment our notation to include the model’s current parameters. At model parameter \theta , we will use l_{(I;S)}({\textbf{x}};\theta) to denote the loss on \mathsb{Image} example for data x and loss l^{(H)}_{(I;S)}(\theta)=\mathbb{E}_{{\textbf{x}}\in\mathcal{X}_{{\textsc{hard}}}}l_{(I;S)}({\textbf{x}};\theta) . Then, \mathbf{g}_{{\textsc{simple}}}(\theta) and \mathbf{g}_{{\textsc{hard}}}(\theta) denote average gradients on \mathcal{X}_{{\textsc{simple}}} and \mathcal{X}_{{\textsc{hard}}} , i.e.
+\mathbf{g}_{{\textsc{simple}}}(\theta)=\mathbb{E}_{{\textbf{x}}\in\mathcal{X}_{{\textsc{simple}}}}\nabla l_{(I;S)}({\textbf{x}};\theta),\quad\mathbf{g}_{{\textsc{hard}}}(\theta)=\mathbb{E}_{{\textbf{x}}\in\mathcal{X}_{{\textsc{hard}}}}\nabla l_{(I;S)}({\textbf{x}};\theta)
+Recall that the gradient alignment score from Equation 2 is given by
+\langle\mathbf{g}_{{\textsc{simple}}}(\theta),\mathbf{g}_{{\textsc{hard}}}(\theta)\rangle/\langle\mathbf{g}_{{\textsc{hard}}}(\theta),\mathbf{g}_{{\textsc{hard}}}(\theta)\rangle.
+(5)
+In the following theorem, we show that the gradient alignment score quantifies the amount of loss that we can decrease in expectation on hard-image examples by taking gradients on simple-image examples, relative to taking gradients on hard-image examples.
+Theorem F.1.
+Suppose for a model f_{\theta} with parameter \theta , loss l_{(I;S)} is Lipschitz and has bounded gradient norm on \mathcal{X} around parameters \theta , with \|\mathbf{g}_{{\textsc{hard}}}(\theta)\|_{2}\neq 0 .
+The following holds true for expected drop in l^{(H)}_{(I;S)} with SGD when using a random training sample from the simple task, compared to using a random training sample from the hard task:
+\displaystyle\lim_{\eta\to 0}\frac{\mathbb{E}_{\begin{subarray}{c}{\textbf{x}}\in\mathcal{X}_{{\textsc{simple}}}\\
+\mathbf{g}:=\nabla l_{(I;S)}({\textbf{x}};\theta)\end{subarray}}\left[l^{(H)}_{(I;S)}(\theta-\eta\mathbf{g})-l^{(H)}_{(I;S)}(\theta)\right]}{\mathbb{E}_{\begin{subarray}{c}{\textbf{x}}\in\mathcal{X}_{{\textsc{hard}}}\\
+\tilde{\mathbf{g}}:=\nabla l_{(I;S)}({\textbf{x}};\theta)\end{subarray}}\left[l^{(H)}_{(I;S)}(\theta-\eta\tilde{\mathbf{g}})-l^{(H)}_{(I;S)}(\theta)\right]}=\langle\mathbf{g}_{{\textsc{hard}}}(\theta),\mathbf{g}_{{\textsc{simple}}}(\theta)\rangle/\langle\mathbf{g}_{{\textsc{hard}}}(\theta),\mathbf{g}_{{\textsc{hard}}}(\theta)\rangle.
+The proof follows from standard convergence analysis of gradient descent algorithm (Nesterov, 2018).
+F.1 Proof of Theorem F.1
+Proof.
+Say \mathbf{g}=\nabla l_{(I;S)}({\textbf{x}};\theta) . By Taylor’s theorem, we have the following for a small enough learning rate \eta ,
+l^{(H)}_{(I;S)}(\theta-\eta\mathbf{g})-l^{(H)}_{(I;S)}(\theta)=-\eta\langle\nabla l^{(H)}_{(I;S)}(\theta),\mathbf{g}\rangle+\eta^{2}\mathbf{g}^{\intercal}\left(\nabla^{2}l^{(H)}_{(I;S)}(\theta-\eta_{0}\mathbf{g})\right)\mathbf{g}
+for some \eta_{0}\in[0,\eta] . We first note that \nabla l^{(H)}_{(I;S)}(\theta)=\mathbf{g_{{\textsc{hard}}}}(\theta) . Next, since the loss is assumed to be Lipschitz,
+\left|\mathbf{g}^{\intercal}\left(\nabla^{2}l^{(H)}_{(I;S)}(\theta-\eta_{0}\mathbf{g})\right)\mathbf{g}\right|\leq L\|\mathbf{g}\|_{2}^{2}
+where L is the Lipschitz constant for the loss. Since the gradient norms are also assumed to be bounded, we have
+l^{(H)}_{(I;S)}(\theta-\eta\mathbf{g})-l^{(H)}_{(I;S)}(\theta)=-\eta\langle\mathbf{g_{{\textsc{hard}}}}(\theta),\mathbf{g}\rangle+\mathcal{O}(\eta^{2}),
+First assume {\textbf{x}}\in\mathcal{X}_{{\textsc{simple}}} . By taking expectation over x,
+\displaystyle\mathbb{E}_{\begin{subarray}{c}{\textbf{x}}\in\mathcal{X}_{{\textsc{simple}}}\\
+\mathbf{g}:=\nabla l_{(I;S)}({\textbf{x}};\theta)\end{subarray}}\left[l^{(H)}_{(I;S)}(\theta-\eta\mathbf{g})-l^{(H)}_{(I;S)}(\theta)\right]
+\displaystyle=-\eta\left\langle\mathbf{g_{{\textsc{hard}}}}(\theta),\mathbb{E}_{{\textbf{x}}\in\mathcal{X}_{{\textsc{simple}}}}\nabla l_{(I;S)}({\textbf{x}};\theta)\right\rangle+\mathcal{O}(\eta^{2})
+\displaystyle=-\eta\left\langle\mathbf{g_{{\textsc{hard}}}}(\theta),\mathbf{g_{{\textsc{simple}}}}(\theta)\right\rangle+\mathcal{O}(\eta^{2})
+Similarly, assume \tilde{\mathbf{g}}=\nabla l_{(I;S)}({\textbf{x}};\theta) where {\textbf{x}}\in\mathcal{X}_{{\textsc{hard}}} . By taking expectation over x,
+\displaystyle\mathbb{E}_{\begin{subarray}{c}{\textbf{x}}\in\mathcal{X}_{{\textsc{hard}}}\\
+\tilde{\mathbf{g}}:=\nabla l_{(I;S)}({\textbf{x}};\theta)\end{subarray}}\left[l^{(H)}_{(I;S)}(\theta-\eta\tilde{\mathbf{g}})-l^{(H)}_{(I;S)}(\theta)\right]
+\displaystyle=-\eta\left\langle\mathbf{g_{{\textsc{hard}}}}(\theta),\mathbb{E}_{{\textbf{x}}\in\mathcal{X}_{{\textsc{hard}}}}\nabla l_{(I;S)}({\textbf{x}};\theta)\right\rangle+\mathcal{O}(\eta^{2})
+\displaystyle=-\eta\left\langle\mathbf{g_{{\textsc{hard}}}}(\theta),\mathbf{g_{{\textsc{hard}}}}(\theta)\right\rangle+\mathcal{O}(\eta^{2})
+Therefore, we have
+\frac{\mathbb{E}_{\begin{subarray}{c}{\textbf{x}}\in\mathcal{X}_{{\textsc{simple}}}\\
+\mathbf{g}:=\nabla l_{(I;S)}({\textbf{x}};\theta)\end{subarray}}\left[l^{(H)}_{(I;S)}(\theta-\eta\mathbf{g})-l^{(H)}_{(I;S)}(\theta)\right]}{\mathbb{E}_{\begin{subarray}{c}{\textbf{x}}\in\mathcal{X}_{{\textsc{hard}}}\\
+\tilde{\mathbf{g}}:=\nabla l_{(I;S)}({\textbf{x}};\theta)\end{subarray}}\left[l^{(H)}_{(I;S)}(\theta-\eta\tilde{\mathbf{g}})-l^{(H)}_{(I;S)}(\theta)\right]}=\frac{-\eta\left\langle\mathbf{g_{{\textsc{hard}}}}(\theta),\mathbf{g_{{\textsc{simple}}}}(\theta)\right\rangle+\mathcal{O}(\eta^{2})}{-\eta\left\langle\mathbf{g_{{\textsc{hard}}}}(\theta),\mathbf{g_{{\textsc{hard}}}}(\theta)\right\rangle+\mathcal{O}(\eta^{2})}=\frac{\left\langle\mathbf{g_{{\textsc{hard}}}}(\theta),\mathbf{g_{{\textsc{simple}}}}(\theta)\right\rangle+\mathcal{O}(\eta)}{\left\langle\mathbf{g_{{\textsc{hard}}}}(\theta),\mathbf{g_{{\textsc{hard}}}}(\theta)\right\rangle+\mathcal{O}(\eta)}
+Note that \mathbf{g_{{\textsc{hard}}}}(\theta) and \mathbf{g_{{\textsc{simple}}}}(\theta) do not depend on the value of \eta . Furthermore, by assumption, \|\mathbf{g_{{\textsc{hard}}}}(\theta)\|_{2}\neq 0 . We conclude by taking \eta\rightarrow 0 on both sides of the equation above.
+∎
+F.2 Additional measure 1: gradient cosine similarity
+We additionally define the gradient cosine similarity score as the cosine similarity of gradients from \mathcal{X}_{{\textsc{simple}}} and \mathcal{X}_{{\textsc{hard}}} :
+\text{Gradient Cosine Similarity:}\quad\quad\frac{\langle\mathbf{g}_{{\textsc{simple}}}(\theta),\mathbf{g}_{{\textsc{hard}}}(\theta)\rangle}{\sqrt{\langle\mathbf{g}_{{\textsc{hard}}}(\theta),\mathbf{g}_{{\textsc{hard}}}(\theta)\rangle\cdot\langle\mathbf{g}_{{\textsc{simple}}}(\theta),\mathbf{g}_{{\textsc{simple}}}(\theta)\rangle}}
+(6)
+Note that this measure ignores the norm of the gradients on \mathcal{X}_{{\textsc{simple}}} that the model uses during training. Hence, this measure is not an entirely faithful measure on the alignment of the training updates to the loss on hard (I;S) examples. Figure 18 shows the gradient cosine similarity score across training strategies for Table Readout, which follows a similar pattern as the gradient alignment score in Figure 17.
+Refer to caption
+Figure 17: Analysis of gradients on Table Readout (additional plots for Figure 9): (Left) Gradient Alignment Score (Equation 2); (Right) Average Gradient Norm on simple \mathsb{Image} examples \mathbb{E}_{{\textbf{x}}\in\mathcal{X}_{{\textsc{simple}}}}\|\nabla{l_{(I;S)}}({\textbf{x}})\|_{2} . \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} has higher gradient alignment score in the initial phases of training, where it also has higher gradient norm. \mathsb{Mix}\textbf{+} shows higher gradient alignment score than \mathsb{Mix} during the course of training.
+Refer to caption
+Figure 18: Analysis of gradients on Table Readout (replacing gradient alignment score from Figures 9 and 17 with gradient cosine similarity): (Left) Average Gradient Norm on simple \mathsb{Image} examples (\mathbb{E}_{{\textbf{x}}\in\mathcal{X}_{{\textsc{simple}}}}\|\nabla l_{(I;S)}({\textbf{x}})\|_{2}) vs. Gradient Cosine Similarity (Equation 6) for different training checkpoints; (Middle) Gradient Cosine Similarity; (Right) Average Gradient Norm. Similar results hold.
+F.3 Additional measure 2: Adam update alignment
+The gradient alignment score we defined earlier does not account for the fact that we use Adam optimizer (Kingma & Ba, 2017) during our experiments.
+Brief definition of Adam: The Adam optimizer maintains two additional states, each representing the running average of the gradients and their squares during training. If \mathbf{m}_{t} and \mathbf{v}_{t} denote the two states, then the update rule at training step t with a gradient \mathbf{g}_{t} and learning rate \eta is given by
+\displaystyle\theta\leftarrow\theta-\eta h(\mathbf{g}_{t}),\quad\quad\text{ where }h(\mathbf{g}_{t})=\frac{(1-\beta_{1})\mathbf{g}_{t}+\beta_{1}\mathbf{m}_{t-1}}{\sqrt{(1-\beta_{2})\mathbf{g}_{t}\odot\mathbf{g}_{t}+\beta_{2}\mathbf{v}_{t-1}}+\epsilon}
+\displaystyle\mathbf{m}_{t}\leftarrow(1-\beta_{1})\mathbf{g}_{t}+\beta_{1}\mathbf{m}_{t-1},\quad\quad\mathbf{v}_{t}\leftarrow(1-\beta_{2})\mathbf{g}_{t}\odot\mathbf{g}_{t}+\beta_{2}\mathbf{v}_{t-1}
+Here, (\beta_{1},\beta_{2},\epsilon) are hyperparameters for the Adam optimizer and are set at (0.9,0.999,10^{-8}) .
+Adam Update Alignment: A true measure of alignment between simple and hard training would be to compare h(\cdot) , the update vector under the Adam optimizer. However, that requires saving the Adam optimizer states throughout training. For storage efficiency purposes,999Remark: retrieving the actual Adam optimizer states requires an additional storage of 138GB per checkpoint. we propose an alternate approximate measure called the Adam update alignment score. We compute the following two quantities for model f_{\theta} with parameters \theta :
+\displaystyle\mathbf{m}(\theta)
+\displaystyle:=\mathbb{E}_{{\textbf{x}}\in\mathcal{X}_{{\textsc{simple}}}}\left[\nabla l_{(I;S)}({\textbf{x}};\theta)\right]
+\displaystyle\mathbf{v}(\theta)
+\displaystyle:=\mathbb{E}_{{\textbf{x}}\in\mathcal{X}_{{\textsc{simple}}}}\left[\nabla l_{(I;S)}({\textbf{x}};\theta)\odot\nabla l_{(I;S)}({\textbf{x}};\theta)\right]
+\mathbf{m} and \mathbf{v} are proxy measures for the Adam optimizer states. Then, we measure the alignment between gradients for \mathcal{X}_{{\textsc{hard}}} and \mathcal{X}_{{\textsc{simple}}} as
+Adam Update Alignment Score:
+\displaystyle\frac{\mathbb{E}_{\begin{subarray}{c}{\textbf{x}}\in\mathcal{X}_{{\textsc{simple}}}\\
+\mathbf{g}:=\nabla l_{(I;S)}({\textbf{x}};\theta)\end{subarray}}\langle h(\mathbf{g}),\mathbf{g}_{{\textsc{hard}}}(\theta)\rangle}{\mathbb{E}_{\begin{subarray}{c}{\textbf{x}}\in\mathcal{X}_{{\textsc{hard}}}\\
+\tilde{\mathbf{g}}:=\nabla l_{(I;S)}({\textbf{x}};\theta)\end{subarray}}\langle h(\tilde{\mathbf{g}}),\mathbf{g}_{{\textsc{hard}}}(\theta)\rangle}
+(7)
+\displaystyle\text{where }h(\mathbf{g})=\frac{(1-\beta_{1})\mathbf{g}+\beta_{1}\mathbf{m}(\theta)}{\sqrt{(1-\beta_{2})\mathbf{g}\odot\mathbf{g}+\beta_{2}\mathbf{v}(\theta)}+\epsilon}\text{ for any vector }\mathbf{g}
+Intuitively, this measures how much the loss l^{(H)}_{(I;S)} can be reduced in expectation by taking a gradient update step with Adam using simple \mathsb{Image} examples, compared to taking a gradient update step with hard \mathsb{Image} examples, while maintaining the current Adam optimizer states. This can be formalized in the following theorem.
+Theorem F.2.
+Suppose for a model f_{\theta} with parameter \theta , loss l_{(I;S)} is Lipschitz and has bounded gradient norm on \mathcal{X} around parameters \theta , with \|\mathbf{g}_{{\textsc{hard}}}(\theta)\|_{2}\neq 0 . Consider a modified Adam update with learning rate \eta with an arbitrary gradient \mathbf{g} , as follows:
+\displaystyle\theta
+\displaystyle\leftarrow\theta-\eta h(\mathbf{g})
+\displaystyle\text{where }h(\mathbf{g})=\frac{(1-\beta_{1})\mathbf{g}+\beta_{1}\mathbf{m}(\theta)}{\sqrt{(1-\beta_{2})\mathbf{g}\odot\mathbf{g}+\beta_{2}\mathbf{v}(\theta)}+\epsilon}.
+The following holds true for expected drop in l^{(H)}_{(I;S)} with modified Adam update when using a random training sample from the simple task, compared to using a random training sample from the hard task:
+\displaystyle\lim_{\eta\to 0}\frac{\mathbb{E}_{\begin{subarray}{c}{\textbf{x}}\in\mathcal{X}_{{\textsc{simple}}}\\
+\mathbf{g}:=\nabla l_{(I;S)}({\textbf{x}};\theta)\end{subarray}}\left[l^{(H)}_{(I;S)}(\theta-\eta h(\mathbf{g}))-l^{(H)}_{(I;S)}(\theta)\right]}{\mathbb{E}_{\begin{subarray}{c}{\textbf{x}}\in\mathcal{X}_{{\textsc{hard}}}\\
+\tilde{\mathbf{g}}:=\nabla l_{(I;S)}({\textbf{x}};\theta)\end{subarray}}\left[l^{(H)}_{(I;S)}(\theta-\eta h(\tilde{\mathbf{g}}))-l^{(H)}_{(I;S)}(\theta)\right]}=\frac{\mathbb{E}_{\begin{subarray}{c}{\textbf{x}}\in\mathcal{X}_{{\textsc{simple}}}\\
+\mathbf{g}:=\nabla l_{(I;S)}({\textbf{x}};\theta)\end{subarray}}\langle h(\mathbf{g}),\mathbf{g}_{{\textsc{hard}}}(\theta)\rangle}{\mathbb{E}_{\begin{subarray}{c}{\textbf{x}}\in\mathcal{X}_{{\textsc{hard}}}\\
+\tilde{\mathbf{g}}:=\nabla l_{(I;S)}({\textbf{x}};\theta)\end{subarray}}\langle h(\tilde{\mathbf{g}}),\mathbf{g}_{{\textsc{hard}}}(\theta)\rangle}
+The proof is similar to that of Theorem F.1.
+F.4 Experimental results
+In Figure 19, we present the analysis of gradients for different types of supervision on Consecutive Table Readout. Similar to the behavior of gradient alignment score in Figure 7, we observe that when measured against norm of gradients on simple examples, \mathsb{Mix} achieves a higher Adam update alignment score than both \mathsb{Text\text{+}\;\!\>\!\!Image} and \mathsb{Text} . This shows that \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} supervision improves the alignment between simple and hard \mathsb{Image} gradients, when taking Adam gradient updates into account.
+Similarly, for Table Readout in Figure 20, \mathsb{Mix}\textbf{+} has a larger Adam update alignment during training. \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} further improves the Adam update alignment score when gradient norms are large during training.
+Refer to caption
+Figure 19: Analysis of gradients on Consecutive Table Readout (replacing gradient alignment score from Figure 7 with Adam update alignment score): (Left) Average Gradient Norm on simple \mathsb{Image} examples (\mathbb{E}_{{\textbf{x}}\in\mathcal{X}_{{\textsc{simple}}}}\|\nabla l_{(I;S)}({\textbf{x}})\|_{2}) vs. Adam Update Alignment Score (Equation 7) for different training checkpoints; (Right) Average Loss on hard \mathsb{Image} examples ( l^{(H)}_{(I;S)} ) during training. Similar results hold.
+Refer to caption
+Figure 20: Analysis of gradients on Table Readout (replacing gradient alignment score from Figures 9 and 17 with Adam update alignment score ): (Left) Average Gradient Norm on simple \mathsb{Image} examples (\mathbb{E}_{{\textbf{x}}\in\mathcal{X}_{{\textsc{simple}}}}\|\nabla l_{(I;S)}({\textbf{x}})\|_{2}) vs. Adam Update Alignment Score (Equation 7) for different training checkpoints; (Middle) Adam Update Alignment Score; (Right) Average Gradient Norm. Similar results hold.
+Refer to caption
+Figure 21: Analysis of evaluation losses (repeating Figure 8 for Visual Analogy): (Left) image-to-text conversion loss ( l^{(H)}_{(I\#;T)} (Eq.3)); (Middle) loss on solution given image and text ( l^{(H)}_{(I,\#T;S)} (Eq.4)); (Right) loss on hard \mathsb{Image} examples ( l^{(H)}_{(I;S)} (Eq.1)). Similar results hold.
+Appendix G Additional Ablations
+G.1 Performance of other multimodal models
+In Table 7, we present the performance of three closed source and two open source multimodal models on our three non S2H-generalizable tasks. Since we do not train these models, the format of the outputs is more flexible. For convenience, we propose alternative metrics to extract and evaluate on the models’ predictions. For Table Readout, we instead evaluate with the final answer (sum of the sequence of numbers) 101010The closed source models have access to tool-use, so in theory, this should be an equivalent, if not more lenient, metric.. For Grid Navigation, we evaluate with the same metric as in the main part of the paper — whether the proposed path can move from the start cell to the end without running into obstacles. For Visual Analogy, we evaluate with just the final option, which is a more lenient metric than the one suggested in the main part of the paper. Note that a random choice baseline should get 25%.
+Table Readout
+Grid Navigation
+Visual Analogy
+Models
+simple
+hard
+simple
+hard
+simple
+hard
+Claude-3.5 Sonnet
+30.0
+0.0
+0.0
+0.0
+35.0
+29.8
+GPT-4o
+19.0
+0.0
+0.0
+0.0
+19.8
+18.4
+OpenAI o1
+29.0
+-
+0.0
+-
+30.6
+-
+Llama3.2-11B-Vision-Instruct
+4.0
+0.0
+0.0
+0.0
+16.2
+17.8
+Pixtral-12B (Agrawal et al., 2024)
+9.0
+0.2
+0.0
+0.0
+24.6
+21.2
+Table 7: Performance of other multimodal models: For convenience, we evaluate the models on a slightly different metric.
+G.2 Ablation of the \mathsb{Mix}\textbf{+} supervision
+The dataset composition of the \mathsb{Mix}\textbf{+} supervision consists of three types of supervision in the simple task: \mathsb{Text} , \mathsb{Image} , and \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} . In this section, we ablate on the importance of each component of the data mixture in the training of \mathsb{Mix}\textbf{+} , \mathsb{(TW)} \mathsb{Mix}\textbf{+} , and \mathsb{(TW)} \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} . In Figure 22, we report the S2H generalization performance on image when the simple \mathsb{Mix} supervision is replaced with a varying data composition.
+In single-stage training (no text warm-up or alignment), \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} is the key component of success, as evidenced by the strong performance of \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} + supervision. As noted in Section 4, \mathsb{Mix}\textbf{+} can match the performance by explicitly prompting the resulting model to convert the image first, which comes at a cost of around 1.7 x generated tokens at inference time.
+In multi-stage training (either \mathsb{(TW)} or \mathsb{(TW)} \mathsb{Align}\>\!\text{-}\;\!\! ), the benefits of \mathsb{Mix}\textbf{+} are more significant. Specifically, among all other types of supervision with text warm-up, \mathsb{(TW)} \mathsb{Mix}\textbf{+} is able to outperform the others by at least 1.7 x, while retaining efficient inference costs, unlike \mathsb{(TW)} \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} +. Among all types of supervision with text warm-up and alignment, \mathsb{(TW)} \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} achieves the highest performance.
+Refer to caption
+Figure 22: Ablation on the simple data composition of \mathsb{Mix}\textbf{+} on Visual Analogy: Instead of \mathsb{Mix} , we use different types of simple supervision in (Left) \mathsb{Mix}\textbf{+} ; (Middle) \mathsb{(TW)} \mathsb{Mix}\textbf{+} ; (Right) \mathsb{(TW)} \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} . The main phase ( \mathsb{Mix}\textbf{+} ) uses 12\times 10^{4} training data.
+G.3 Ablation of the reasoning alignment phase ( \mathsb{Align}\>\!\text{-}\;\!\! )
+We perform two ablations for the first phase of the \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} supervision. In Figure 23, we report the S2H generalization generalization performance on image of models trained with a varying amount of data in the first phase of \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} , with the amount of \mathsb{Mix}\textbf{+} data fixed in the second phase. We don’t observe a monotonic improvement in performance when increasing the amount of data in the first phase. In Table 8, we report the S2H generalization generalization performance on image of models trained with a varying data composition in the first phase of \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} . Our choice of \mathsb{Text} and \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} from the main section gives the best performance on average on Table Readout and Visual Analogy.
+Refer to caption
+Figure 23: Ablation on the amount of data for the alignment phase of \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} on Table Readout: Second phase ( \mathsb{Mix}\textbf{+} ) uses 12\times 10^{4} training data. We don’t observe a monotonic improvement in generalization performance with increasing number of training samples in the first phase.
+Corresponding Name
+simple data composition
+Accuracy
+in phase 1 ( \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} )
+(after phase 2)
+Table Readout
+\mathsb{Align}\>\!\text{-}\;\!\!
+\mathsb{Text} , \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text}
+0.76
+\mathsb{Text\text{+}\;\!\>\!\!Image}
+\mathsb{Text} , \mathsb{Image}
+0.52
+\mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text}
+\mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text}
+0.77
+\mathsb{Mix}
+\mathsb{Text} , \mathsb{Image} , \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text}
+0.74
+Visual Analogy
+\mathsb{Align}\>\!\text{-}\;\!\!
+\mathsb{Text} , \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text}
+0.66
+\mathsb{Text\text{+}\;\!\>\!\!Image}
+\mathsb{Text} , \mathsb{Image}
+0.19
+\mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text}
+\mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text}
+0.51
+\mathsb{Mix}
+\mathsb{Text} , \mathsb{Image} , \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text}
+0.46
+Table 8: Ablation on the simple data composition for the alignment phase of \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} : Amount of data for the alignment phase is fixed at 10^{4} . Second phase ( \mathsb{Mix}\textbf{+} ) uses 12\times 10^{4} training data. Performance is reported on a validation set with 100 hard-image examples. Our composition of \mathsb{Text} and \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} on the simple task performs best on average on Table Readout and Visual Analogy.
+G.4 Ablation of the text warm-up pretraining phase \mathsb{(TW)} :
+We ablate on the effect of the training data size during the text warm-up. In particular, we are interested in whether models with better reasoning capability on text can achieve better image generalization. To do so, we vary the number of training data used for text warm-up between \{1,2,3\}\times 10^{4} and plot the performance of the warmed-up LLM on hard-text examples against the performance of the final trained model on hard-image examples. We report the performance on Visual Analogy in Figure 24. We observe that model’s text performance improves with more training data being used for the text warm-up as expected. However, there is no clear linear correlation between the text capability of the model checkpoint after the warm-up training stage and image S2H generalization of the final model. Specifically, a model with 3\times 10^{4} warm-up performs the best for the \mathsb{(TW)} \mathsb{Mix}\textbf{+} supervision, while a 10^{4} warm-up works the best with the \mathsb{(TW)} \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} supervision. Meanwhile, we observe that \mathsb{(TW)} \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} supervision can universally achieve better S2H generalization on image than the \mathsb{(TW)} \mathsb{Mix}\textbf{+} across all data scales. We conclude that an improved text capability by itself is insufficient to guarantee good transfer to image modality. We expect future VLMs with both stronger LLM backbone and better modality alignment can further leverage the text performance and transfer it to images.
+Refer to caption
+Figure 24: Ablation on the amount of data for the text warm-up phase on Visual Analogy: Second phase ( \mathsb{Mix}\textbf{+} ) uses 12\times 10^{4} training data. Using more data for the warm-up stage results in a stronger LLM backbone with better hard-text performance (gray dashed line), but does not necessarily lead to better image S2H generalization of the final model trained with our proposed strategy. This suggests that a stronger text capability is not the only factor that induces S2H generalization on image.
+G.5 Requirement of text representation
+One potential limitation of our proposed training strategies is the requirement of a text representation corresponding to the image. In Consecutive Table Readout, Table Readout, and Grid Navigation, we use the LaTeX code of the table or grid, which is considered to be perfectly aligned with the image. In reality, it may be challenging to find an exactly equivalent text description or representation of a real-world image, as many minute visual features cannot be captured by language. We show that our proposed training strategy does not require perfect alignment between the text and the image representation to work. For Visual Analogy experiments, the text description of the puzzle in the image is lossy: it only enumerates unique values of all task-relevant attributes without encoding the object to which each corresponds, so one cannot recover the original image given the description (see examples in Figures 36 and 37). Models trained with our proposed training strategies ( \mathsb{Mix}\textbf{+} , \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} , \mathsb{(TW)} \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} ) all demonstrate significant improvements in image generalization (Figure 6), testifying that our methods work with lossy text representation.
+Lossless text representation for Visual Analogy:
+We additionally conduct experiments where the text representation of the puzzle in the image is a lossless representation. We represent the panels in the puzzle as a code defining each object as a set of attributes. Each geometric object is represented by the values its 5 attributes: \{\texttt{shape type} , shape_color, shape_size, shape_quantity, \texttt{shape\_position}\} , while lines are defined by their 2 attributes: \{\texttt{line\_type} , \texttt{line\_color}\} . In order to fit to the context length of the VLM, we describe each object in shorthand notations. For example, for a panel in the puxxle that contains a circle and 2 rectangles, with attribute values \{45\text{ (gray-scale)},42\text{ (pixels)},1,\text{ top-left}\} and \{\{0,90\},\{21,21\},2,\text{ top-right, bottom-left}\} , we will represent the panel as
+CIR-45-42-TL;RECT-0-21-TR;RECT-90-21-BL
+We give all details on how to parse the shorthand codes in the prompt. On the other hand, for the same example, the (Lossy) text representation would have been
+type: circle, rectangle
+color: 0,90
+size: 21,42
+quantity: 1,2
+position: top-left, top-right, bottom-left
+This substantially reduces the context length on average on our training dataset, and further removes the necessity of parsing a code. However, this isn’t an exact representation of the image of the puzzle.
+Performance on lossy and lossless Visual Analogy tasks:
+In Figure 25, we compare \mathsb{Mix}\textbf{+} , \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} , and \mathsb{(TW)} \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} for lossless and lossy Visual Analogy tasks at 12\times 10^{4} training examples in the final phase ( \mathsb{Mix}\textbf{+} ). Our observations reveal that a lossless text representation enhances S2H generalization performance on images for \mathsb{Mix}\textbf{+} . However, for \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} and \mathsb{(TW)} \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} , the lossy text representation leads to better S2H generalization performance on images. This discrepancy could be attributed to the complexity of the shorthand code in the lossless text representation, which requires additional parsing. We did not investigate this phenomenon further.
+Refer to caption
+Figure 25: Ablation on lossy vs. lossless Visual Analogy: We measure the image S2H generalization of different types of supervision for two different versions of text representation for Visual Analogy. Models can perform better on Lossless Visual Analogy with \mathsb{Mix}\textbf{+} . However, the trend can change with \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} and \mathsb{(TW)} \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} .
+G.6 Explicit and implicit text conversion
+In Section G.2, we find that explicit text conversion ( \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} ) is the key component in the data composition of the \mathsb{Mix}\textbf{+} supervision. At inference time, however, models trained with \mathsb{Mix}\textbf{+} reason directly on hard images, without explicit text conversion. In Table 9, we observe that the trained models can still perform reasoning with explicit text conversion and that the conversion ability helps it reason.
+\mathsb{Mix}\textbf{+} models can convert image to text when prompted.
+If only an image input {\textbf{x}}^{(i)} is provided, \mathsb{Mix}\textbf{+} models will always directly predict CoT({\textbf{x}}) and f({\textbf{x}}) , never converting image to text (under greedy decoding). However, since the prompts used in the \mathsb{Image} and \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} examples are the same, we can induce explicit text conversion in the final trained model by additionally providing the first word “Convert” of P_{convert} . We find that all trained model are always able to continue with explicit text conversion — they will generate the rest of P_{convert} and an attempted conversion {\textbf{x}}^{(t)} before CoT({\textbf{x}}) . The conversion accuracy is around 50\% on Visual Analogy and is almost 100\% on Table Readout.
+Explicit text conversion generally helps the model to reason on image data.
+Noticeably, the \mathsb{Mix}\textbf{+} ( 240 k) model improves S2H generalization accuracy from 73.2\% to 96.6\% with almost perfect text conversion accuracy of 99.2\% on Table Readout. On Visual Analogy, the \mathsb{Mix}\textbf{+} ( 120 k) model improves S2H generalization accuracy from 35.4\% to 51.8\% with a text conversion accuracy of 47\% . The benefit of explicit text conversion gradually diminishes with multi-stage training strategies.
+We also observe a slight drop in performance with prompted text conversion for models trained with \mathsb{(TW)} \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} on Visual Analogy, which corresponds to a minor decline in reasoning performance with explicit text conversion. This suggests that the text warm-up training and alignment phase enable the model to close the gap between direct reasoning and reasoning with explicit text conversion, where the model learns to rely more equally on both text and image modalities, and doesn’t require explicit text conversion for improved generalization performance.
+Models are robust against potential errors in the prompted text conversion.
+For models that are prompted to perform text conversion, we examine any negative side effects of this step. When the model does not correctly convert the image to its text format, we investigate whether to what extent the model’s reasoning can be affected by the additional noises introduced by the text conversion step. Interestingly, we find that our final trained models are generally robust to such noises. On Visual Analogy, we find that the models trained with \mathsb{Mix}\textbf{+} , \mathsb{(TW)} \mathsb{Mix}\textbf{+} , and \mathsb{(TW)} \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} are still able to arrive at the correct reasoning solutions with accuracy 44.3\% , 35.4\% , and 63.1\% respectively on evaluation examples where the trained models make a mistake in text conversion.
+Task
+Supervision (Number of Training Data)
+Direct
+Prompted
+Conversion acc
+Table Readout
+\mathsb{Mix}\textbf{+} ( 240 k)
+73.2
+96.6
+99.2
+\mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} ( 240 k)
+87.6
+98.0
+100.0
+\mathsb{(TW)} \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} ( 240 k)
+86.2
+97.8
+99.4
+Visual Analogy
+\mathsb{Mix}\textbf{+} ( 120 k)
+35.4
+51.8
+47.0
+\mathsb{(TW)} \mathsb{Mix}\textbf{+} ( 120 k)
+55.2
+62.8
+49.0
+\mathsb{(TW)} \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} ( 120 k)
+73.6
+70.2
+49.6
+Table 9: Ablation on explicitly prompting for text conversion: When models are additionally prompted with “Convert,” they exhibit the retained ability of text conversion. The conversion accuracy is near perfect on Table Readout. The S2H generalization performance with an additional prompt “Convert” (Prompted) improves from direct inference (Direct). The improvement margin diminishes with stronger Direct performance. All evaluations are on 500 hard-image examples.
+G.7 Explicit and implicit CoT
+We use chain-of-thought (CoT) as a technique to boost the model’s reasoning ability in all our experiments. In this section, we explore the role of CoT in our proposed strategies, as well as the possibility of transferring the reasoning capability from text to image modality without CoT. In Table 10, we report our observations on Visual Analogy. We note that similar observations hold for Consecutive Table Readout and Table Readout.
+G.7.1 Removing CoT completely
+We first consider completely removing CoT from \mathsb{Mix}\textbf{+} and observe the drop in performance measured by image S2H generalization. We experiment with \mathsb{Mix}\textbf{+} , \mathsb{(TW)} \mathsb{Mix}\textbf{+} , and \mathsb{(TW)} \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} supervision, in which we completely remove CoT from the last phase of training which has the \mathsb{Mix}\textbf{+} supervision, while preserving the full CoT in the text warm-up \mathsb{(TW)} and/or reasoning alignment ( \mathsb{Align}\>\!\text{-}\;\!\! ) phases.
+Model does not learn when CoT is completely removed:
+When CoT is completely removed from \mathsb{Mix}\textbf{+} , performance drops to almost 0\% for all three types of supervision. We manually inspect the model’s output and find that the generated reasoning on hard-image inputs is identical to the expected behavior for simple instances, which indicates that the reasoning capability on hard instances failed completely to transfer from the text to image modality.
+G.7.2 Progressively internalizing CoT throughout training
+The failure above can be expected: for \mathsb{Mix}\textbf{+} supervision, CoT may serve as a crucial technique to elicit good reasoning behaviors while for \mathsb{(TW)} \mathsb{Mix}\textbf{+} and \mathsb{(TW)} \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} , the transition from training with full CoT to training without CoT can be too drastic for the model to adapt. Therefore, we consider a milder approach that trains the model to internalize reasoning by progressively removing CoT from the training (Deng et al., 2024). We train on the first 30\% of 12\times 10^{4} \mathsb{Mix}\textbf{+} examples with full CoT, the next 40\% of examples with progressively less CoT 111111split into 101 subsets of equal length, each training with 100\%,99\%,\cdots,0\% of total characters in the CoT., and the last 30\% of examples with no CoT.
+Internalizing CoT during the \mathsb{Mix}\textbf{+} phase also fails:
+In this scenario, we also observe that the model completely fails on image S2H generalization, getting almost 0\% S2H generalization on hard-image examples for all three types of supervision strategies.
+G.7.3 Internalizing CoT during text warm-up before removing CoT completely
+We also try a variant for the multi-phase approaches, where we internalize the CoT on the text input during a text warm-up ( \mathsb{(TW)} ) stage and continue with \mathsb{Mix}\textbf{+} with CoT completely removed.
+CoT can be internalized on text inputs:
+We internalize the CoT on the text input during a slightly modified text warm-up phase of \mathsb{(TW)} \mathsb{Mix}\textbf{+} . Specifically, with 10^{4} training data that consists of an equal mix of simple \mathsb{Text} , hard \mathsb{Text} supervision, and Eagle instruction tuning data (randomly sampled from 1.8M examples (Shi et al., 2024)), we train on the first 30\% examples with full CoT, the next 40\% examples with progressively less CoT, and the last 30\% examples without CoT as in previous experiments. After the warm-up phase of training, the model can achieve 97.8\% accuracy on hard-text examples, which shows the model’s ability to internalize reasoning on text inputs.
+Explicit CoT is “necessary” for the internalized reasoning to transfer to image:
+We then continue with the \mathsb{Mix}\textbf{+} supervision with all CoT removed. The final trained model completely fails with 0\% accuracy on the hard-image examples. Similarly, examining model outputs reveals that the reasoning capability on hard instances failed completely to transfer from the text to the image modality. Therefore, we conclude that CoT is “necessary” for the cross-modal transfer of knowledge to happen in our setting.
+All results testify to our claim that CoT is important in our proposed training strategies. As the techniques used to internalize or remove the CoT dependency in our experiments are very preliminary, we are not eliminating the possibility of internalizing CoT in our setting. We note that to do so may require more careful, post hoc approaches, which we leave to future work.
+Type of supervision
+Type of CoT
+S2H accuracy (%)
+\mathsb{(TW)} ( 10 k)
+\mathsb{Align}\>\!\text{-}\;\!\! ( 10 k)
+\mathsb{Mix}\textbf{+} ( 120 k)
+\mathsb{Mix}\textbf{+}
+-
+-
+none
+0.6
+\mathsb{(TW)} \mathsb{Mix}\textbf{+}
+full
+-
+none
+0.0
+\mathsb{(TW)} \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+}
+full
+full
+none
+3.6
+\mathsb{Mix}\textbf{+}
+-
+-
+internalizing
+0.0
+\mathsb{(TW)} \mathsb{Mix}\textbf{+}
+full
+-
+internalizing
+0.0
+\mathsb{(TW)} \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+}
+full
+full
+internalizing
+3.4
+\mathsb{(TW)} \mathsb{Mix}\textbf{+}
+internalizing
+-
+-
+97.8 (hard-text)
+\mathsb{(TW)} \mathsb{Mix}\textbf{+}
+internalizing
+-
+none
+0.0
+Table 10: Ablation on removing or internalizing CoT on Visual Analogy: Preliminary attempts to completely or progressively remove CoT during the \mathsb{Mix}\textbf{+} phase fails to generalize to hard images, which shows the importance of CoT in our proposed strategies. full, none, internalizing CoT refer to including full CoT, completely removing CoT, and progressively removing CoT respectively. ‘-’ means the corresponding phase was not included during training. Unless specified, all evaluations are reported on hard-image examples.
+G.8 Multi-task training: jointly training on all three non S2H-generalizable tasks
+In the main experiments, we have trained on each non S2H-generalizable task separately. In this section, we explore the ablation where we combine and randomly shuffle the training data for Table Readout, Grid Navigation, and Visual Analogy. In Figure 26, we compare the image S2H generalization performance when jointly training on all 3 tasks against training on each task separately.
+Similar to training on each task individually, the average S2H generalization on image across all 3 tasks is strongest for \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} +, followed by \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} and \mathsb{Mix}\textbf{+} . When analyzing the effect of multi-task training on each task, we observe that it benefits the model’s performance on Table Readout and Grid Navigation but hurts performance on Visual Analogy. This is likely because Table Readout and Grid Navigation are similar in nature. They are both represented by LaTeX code in the text modality, require the model to identify the current location in a table / grid, and reason about neighboring cells. On the other hand, the skills required for Visual Analogy are quite distinct. This suggests that the interactions between tasks during a multi-task training can also affect how much reasoning can transfer across modalities.
+Refer to caption
+Figure 26: Ablation on jointly training on all three non S2H-generalizable tasks: (Left) Average S2H Generalization on image; (Middle, Right) Comparison of Trained Jointly vs. Individually. Similar to training on each task individually, \mathsb{Mix}\textbf{+} and \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} + outperform \mathsb{Image} , and \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} matches the performance of \mathsb{Image\>\!\text{-}via\>\!\text{-}\!Text} +. Multi-task SFT boosts image S2H generalization for Table Readout and Grid Navigation, while Visual Analogy performance remains unchanged or slightly declines, indicating task interactions drive the cross-modal transfer of reasoning capabilities in multi-task training.
+G.9 Ablation on repeated hard examples
+Refer to caption
+Figure 27: Ablation on the number of repetitions of unique hard examples, while maintaining the total amount of hard training data, on Table Readout and Visual Analogy: Image S2H generalization degrades with more repetitions of hard \mathsb{Text} examples, with the effect on \mathsb{Mix}\textbf{+} being more drastic. Here, the amount of training data is fixed at 12\times 10^{4} , with 6\times 10^{4} examples sampled from the hard task. Interestingly, performance of \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} peaks at 3\times repetitions, implying the number of unique hard \mathsb{Text} examples can be reduced by 3\times for \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} .
+In the experiments reported in the main paper (summarized in Figure 5), we kept all hard \mathsb{Text} examples unique. In Figure 27, we present the ablation where we repeat each hard \mathsb{Text} example during training, while keeping the total number of training data fixed. Our primary observations are:
+•
+Repeating hard \mathsb{Text} examples harms the performance of \mathsb{Mix}\textbf{+} . Halving the number of unique hard \mathsb{Text} examples and repeating each example 2 times can drop the performance on hard-image by at least 10\% p on Table Readout.
+•
+On the other hand, \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} is quite robust to repetitions on Table Readout. The number of unique hard \mathsb{Text} examples can be reduced by 10\times (and repeating each example 10\times ) with the performance on hard-image dropping by no more than 1 - 2\% p.
+•
+On Visual Analogy, while the performance of \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} drops with large number of repetitions, the drop in performance is within 1 - 2\% p if the number of repetitions is up to 3 .
+•
+Interestingly, the image S2H generalization performance reaches its peak at exactly 3 repetitions for \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} on both Table Readout and Visual Analogy. This suggests that we may only require 3\times less unique hard \mathsb{Text} examples than reported in Figure 5.
+Appendix H Interpretability Experiments
+We use gradient attribution to identify which pixel in the image is important when generating each token in the CoT. For a given data {\textbf{x}}\in\mathcal{X} and its corresponding image format {\textbf{x}}^{(i)} , we label the set of pixels in the image as \{{\textbf{x}}^{(i)}_{j}\} . For a given gold output {\textbf{y}}=\{CoT({\textbf{x}}),f({\textbf{x}})\} , we label the sequence of CoT tokens as \{y_{k}\} , where {\textbf{y}}_{:k} refers to the subsequence of the CoT tokens, up to the k -th token.
+For each pixel {\textbf{x}}^{(i)}_{j}\in{\textbf{x}}^{(i)} and each CoT token y_{k} , we compute the attribution score as:
+\displaystyle\text{Pixel Attribute Score:}\quad\quad\left\langle\nabla_{{\textbf{x}}^{(i)}_{j}}l(f_{\theta}(\{{\textbf{x}}^{(i)},{\textbf{y}}_{:k}\}),y_{k}),\quad{\textbf{x}}^{(i)}_{j}\right\rangle
+Informally, on \mathsb{Image} examples, we take the gradient of the loss of the model’s output (up to the k -th CoT token) with respect to each pixel, and project on the pixel values. Pixels that show positive alignment with the gradients are marked important for the model’s prediction for the token y_{k} .
+In Figure 28, we plot the pixel attribute values, averaged across tokens that correspond to different segments of a highlighted path of an example image from Table Readout. We observe that \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} improves over \mathsb{Mix}\textbf{+} models by having more focused and concise pixel attributes around the path of highlighted cells and their corresponding row/column names. In Figure 29, we also show pixel attribute scores on Visual Analogy, where the pixel attributes are more aligned with objects of interest scattered around the grid.
+Refer to caption
+Refer to caption
+Refer to caption
+Refer to caption
+Refer to caption
+Refer to caption
+Figure 28: Visualization of pixel attribute scores on Table Readout: (Top) \mathsb{Mix}\textbf{+} ; (Bottom) \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} . Models are trained with 24\times 10^{4} training data. Pixel attribute scores are averaged across CoT tokens that belong to the first 5 pixels roughly in the 10 th column (left), the next 6 cells in the 8 th column (middle), and the last 6 cells in the 6 -th column (right). We show the top- 1\% pixels with the highest pixel attribution scores (marked as red). \mathsb{Mix}\textbf{+} has more diffused pixel attributions in the image, while \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} focuses more on the path of cells (and their corresponding row/column names).
+Refer to caption
+Refer to caption
+Refer to caption
+Figure 29: Visualization of pixel attribute scores on Visual Analogy: The model is trained with 12\times 10^{4} training data of \mathsb{(TW)} \mathsb{Align}\>\!\text{-}\;\!\!\mathsb{Mix}\textbf{+} . Pixel attribute scores are averaged across CoT tokens that belong to Example 1 (left), Example 2 (middle), and the query (right) respectively. We show the top- 1\% pixels with the highest pixel attribution scores (marked as red). The pixel attributes are focused on relevant objects across the grid. Interestingly, when reading relevant object attributes in Example 2, the model still attends to objects from Example 1.
+Appendix I Analysis of Failure Modes
+In this section, we briefly discuss the common failure modes of models trained on our synthetic data, when evaluated on examples from the hard split.
+I.1 Table Readout
+We analyze the outputs of \mathsb{Text} on hard-text, \mathsb{Image} on hard-image, and \mathsb{Mix}\textbf{+} on both hard-text and hard-image, where all models have been trained on 24\times 10^{4} examples.
+Since the models perform almost perfectly on the simple examples, where the total length of the sequence is around 12 , one may expect the models to read off the first 12 numbers from tables of the hard split equivalently well but start making errors after the sequence length it was trained on. We find that this is not the case by analyzing the index of the first error; i.e., how many numbers the model reads off correctly before making the first mistake. Although the average index of the first error is around 14.7 , about 56\% of incorrect generations (equivalently, 26\% of total generations) contain a mistake before the 12 th number in the sequence.
+Refer to caption
+Refer to caption
+Figure 30: Analysis of failure modes on Table Readout: (Left) Precision and Recall; (Right) Example of a common mistake. Models are trained on 24\times 10^{4} examples of \mathsb{Text} , \mathsb{Image} and \mathsb{Mix}\textbf{+} supervision and evaluated on corresponding inputs from hard. Models often hallucinate a “shortcut.” In this case, precision would be 12/13 and recall would be 12/29 .
+To further analyze the behavior of the model when it makes a mistake, we extend the definition of precision and recall:
+\text{Precision }=\frac{\text{Total \# correctly listed}}{\text{Total \# listed}}\quad\quad\text{Recall }=\frac{\text{Total \# correctly listed}}{\text{Total \# highlighted}}
+where we take the sum in the numerator and denominator across all test examples and mark a cell as correctly listed only if the model generation contains it, regardless of the exact position in the sequence. See left of Figure 30 for the evaluation results. Note that for \mathsb{Text} and \mathsb{Image} , precision is significantly higher than recall, meaning that it rarely hallucinates that a cell is highlighted (when it is not), but it fails to list off many of the numbers that were highlighted. We find that this is mainly because once the model derails from the highlighted path, it just moves directly towards the destination cell, until it rejoins the path, unintentionally creating a “shortcut” that skips around 15 cells on the original path on average. See right of Figure 30 for a visualization. However, the recall improves significantly on both hard-text and hard-image when trained with \mathsb{Mix}\textbf{+} .
+I.2 Grid Navigation
+In Figure 31, we analyze the outputs of \mathsb{Text} supervision on hard-text, \mathsb{Image} supervision on hard-image, and \mathsb{Mix}\textbf{+} supervision on hard-image, where all models have been trained on a varying number of examples.
+A successful evaluation on Grid Navigation requires completing multiple intermediate subtasks. The model first needs to correctly identify the source and destination cells from the grid and parse the row/column indices. We observe that the models can easily learn this subtask. Under any of the three types of supervision, the model can get at least 98\% accuracy on parsing the location of the source and destination cells with only 1.5\times 10^{4} examples. With 6\times 10^{4} or more examples, the accuracy is always 100\% .
+Next, we analyze whether the model returns a sequence of actions that leads from the source to the destination (ignoring any object or obstacle). We observe that there is some “phase transition” at 3\times 10^{4} examples, where the model’s accuracy on this subtask increases sharply. However, whereas \mathsb{Mix}\textbf{+} continues to improve accuracy on this subtask, exceeding 90\% at 6\times 10^{4} examples, \mathsb{Text} and \mathsb{Image} supervision fail to achieve 90\% even with 24\times 10^{4} examples.
+We then analyze the average fraction of objects collected while navigating the grid. The evaluation on this subtask also follows a similar “phase transition” at 3\times 10^{4} examples. However, whereas \mathsb{Mix}\textbf{+} immediately achieves 90\% at 3\times 10^{4} examples and continues to improve to 96\% at 24\times 10^{4} examples, \mathsb{Text} and \mathsb{Image} supervision fail to improve beyond 50 - 70\% . This subtask becomes a strong bottleneck for \mathsb{Text} and \mathsb{Image} supervision which prevents them from improving S2H generalization performance.
+Finally, we analyze the average number of obstacles that the model passes through. Across any of the three types of supervision, the metric improves with more training data. However, this metric drops as low as 0.12 for \mathsb{Mix}\textbf{+} at 24\times 10^{4} examples, whereas \mathsb{Text} supervision only achieves 0.78 and \mathsb{Image} supervision achieves 0.67.
+Refer to caption
+Figure 31: Analysis of failure modes on Grid Navigation: (Left) Whether model generates a sequence of actions that leads to the destination; (Middle) Average fraction of objects collected; (Right) Average number of obstacles passed through. Models trained with \mathsb{Text} and \mathsb{Image} fail to improve beyond a certain threshold for all three subtasks.
+I.3 Visual Analogy
+We analyze the outputs of \mathsb{Text} on hard-text, \mathsb{Image} on hard-image, and \mathsb{Mix}\textbf{+} on both hard-text and hard-image, where all models have been trained on 12\times 10^{4} examples. Specifically, we analyze the CoT trace, focusing on the following structural steps as introduced in Section D.3 earlier:
+•
+To reason about examples:
+1.
+given an attribute (e.g. shape_type), the model first needs to correctly enumerate the attribute values (e.g. circle) for each image in the examples;
+2.
+the model then needs to decide whether the values in all three images of that example are consistent with a logical relation (e.g. XOR);
+3.
+after repeating the process for both in-context examples, the model summarizes the two relational patterns (d_{1},r_{1}) and (d_{2},r_{2}) for the examples;
+4.
+finally, the model needs to identify the target relation r_{1}=r_{2}=r_{\text{query}} from the examples.
+•
+To reason about the query: the model needs to correctly enumerate the attribute values for each image in the query similarly.
+•
+To reason about the options:
+1.
+assuming the query when combined with each option follows a relational pattern (domain d , relation r ) (e.g. (line type, XOR), the model needs to identify the correct values of the attribute domain d for each option image and the correct relation r ;
+2.
+the model also needs to reason whether the identified relation r is the desired target relation r_{\text{query}} .
+\mathsb{Mix}\textbf{+} supervision enables significant improvement on reasoning steps that require compositional generalization where \mathsb{Text} and \mathsb{Image} supervision fail:
+As shown in Table 11, we observe that models trained with \mathsb{Text} and \mathsb{Image} struggle primarily to identify the correct held-out relational pattern (d_{i},r_{i}) for in-context examples, and in particular to recognize d_{1}\neq d_{2} , that is, the two examples vary along different attributes, with both error rates \geq 80\% . These two sources of error correspond exactly to the differences between the simple and hard split of Visual Analogy, which requires the model to generalize in a compositional manner. With \mathsb{Mix}\textbf{+} supervision, the model significantly improves on these steps with a much smaller error rate of 42.2\% in identifying the held-out (d_{i},r_{i}) and 23.8\% in recognizing d_{1}\neq d_{2} .
+Visual Analogy focuses more on abstract relational reasoning rather than object detection:
+We observe that even with a consistently higher error rate in identifying attribute values, models with \mathsb{Mix}\textbf{+} supervision can achieve a lower error rate in both CoT and exact match compared to their counterparts with \mathsb{Text} and \mathsb{Image} supervision. This makes sense since reasoning depends more on identifying the correct logical relation than on identifying the correct attribute values. Although achieving the latter can be an important reasoning step, it is not a necessary condition to arrive at the correct solution.
+We also note that the error rate of CoT can be higher than the error rate in exact match. This indicates that in some cases the model can still arrive at the correct solution even though it makes slight mistakes in the reasoning trace: for example, it can still conclude with the correct relational pattern without identifying all the attribute values correctly.
+Even with \mathsb{Mix}\textbf{+} supervision, the model still exhibits sensitivity to CoT templates and hallucinations:
+Interestingly, we find that the error rate in identifying values of size, quantity, and position consistently similar. Upon manual inspection of the model output, we find that models fail to switch between different reasoning templates about shape and line objects: while the general templates for the two object types are similar, the model needs to reason about five attributes for shapes and only type and color for lines. With \mathsb{Mix}\textbf{+} supervision, models can still be sensitive to this small difference in CoT templates and hallucinate about undefined size, quantity, and position attributes of the line objects. This highlights that models with \mathsb{Mix}\textbf{+} supervision are still brittle.
+Types of failures
+Error rate ( \% )
+\mathsb{Text} (text)
+\mathsb{Image} (image)
+\mathsb{Mix}\textbf{+} (text∗ / image)
+Reasoning about examples
+type values
+0.0
+0.0
+0.0 / 0.0
+color values
+0.0
+0.0
+0.0 / 0.0
+size values
+29.6
+26.6
+0.0 / 39
+quantity values
+29.6
+26.2
+0.0 / 37.4
+position values
+29.6
+26.2
+0.0 / 37.4
+held-out (d_{i},r_{i})
+\mathbf{86.8}
+\mathbf{81.0}
+0.0 / 42.2
+d_{1}\neq d_{2}
+\mathbf{86.8}
+\mathbf{80.8}
+0.0 / 23.8
+relation
+35.2
+34.4
+0.0 / 0.8
+Reasoning about query
+type values
+0.0
+0.0
+0.0 / 0.0
+color values
+0.0
+0.0
+0.0 / 0.0
+size values
+0.4
+7.6
+0.0 / 16.8
+quantity values
+0.4
+7.6
+0.0 / 16.2
+position values
+0.4
+7.6
+0.0 / 16.2
+Reasoning about options
+attribute domain
+79.8
+65.2
+0.4 / 44.2
+attribute values
+8.4
+32.0
+0.0 / \mathbf{65.0}
+relation
+71.4
+\mathbf{82.4}
+0.2 / 45.0
+identify solution
+45.2
+51.8
+0.2 / 21.0
+CoT
+100.0
+100.0
+0.4 / 79.8
+Exact match
+100.0
+100.0
+0.4 / 64.6
+Table 11: Analysis of failure modes on Visual Analogy: Models are trained on 12\times 10^{4} examples of \mathsb{Text} , \mathsb{Image} , and \mathsb{Mix}\textbf{+} supervision and evaluated on corresponding hard inputs. ∗ means the evaluation is considered in-domain, as \mathsb{Mix}\textbf{+} supervision contains hard-text examples in training. To evaluate the entire CoT (second to last row), we check if the generated output contains all the correct values in reasoning steps about the examples, query, and options. The main sources of errors for each type of supervision are highlighted.
+Refer to caption
+Figure 32: A simple example from Table Readout.
+Refer to caption
+Figure 33: A hard example from Table Readout.
+Refer to caption
+Figure 34: A simple example from Grid Navigation.
+Refer to caption
+Figure 35: A hard example from Grid Navigation.
+Refer to caption
+Figure 36: A simple example from Visual Analogy: The common relation is r=\texttt{AND} and the domains are d_{1}=d_{2}=d_{\text{query}}=\texttt{shape quantity} , and the combinations (d,r) are not in the held-out set \mathcal{S}=\{(\texttt{line type},\texttt{XOR}), (\texttt{line color},\texttt{OR}), (\texttt{shape type},\texttt{AND}), (\texttt{shape size},\texttt{XOR}),
+(\texttt{shape color},\texttt{Progression}), (\texttt{shape position},\texttt{OR}), (\texttt{line type},\texttt{AND}), (\texttt{line color},\texttt{Progression})\} .
+Refer to caption
+Figure 37: A hard example from Visual Analogy:
+The common relation is r=\texttt{AND} and the domains are distinct: d_{1}=\texttt{line color} , d_{2}=\texttt{shape position} , d_{\text{query}}=\texttt{line color} , and the combinations (d,r) are in the held-out set \mathcal{S}=\{(\texttt{line type},\texttt{XOR}), (\texttt{line color},\texttt{OR}), (\texttt{shape type},\texttt{AND}), (\texttt{shape size},\texttt{XOR}),
+(\texttt{shape color},\texttt{Progression}), (\texttt{shape position},\texttt{OR}), (\texttt{line type},\texttt{AND}), (\texttt{line color},\texttt{Progression})\} . Note that the pattern for the confounding options may not be in \mathcal{S} .
+◄
+ar5iv homepage
+Feeling
+lucky?
+Conversion
+report
+Report
+an issue
+View original
+on arXiv►
+Copyright
+Privacy Policy
+Generated on Wed Feb 5 14:28:02 2025 by LaTeXML Mascot Sammy

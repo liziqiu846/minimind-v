@@ -354,3 +354,23 @@
   ceiling，再选择新机制。
 - **Recommended human decision**: 无需立即决定；之后审查 inference scope 与
   theory-to-neural bridge 的表述是否足够严格。
+
+## 2026-08-07｜LITMAP-07：选择 VSTATE-01 theory-first mechanism
+
+- **Date**: 2026-08-07
+- **Idea / issue**: answer-only AR loss 是否产生 key-specific/cancelling visual
+  updates，而 shared visual-state target 是否形成可复用 factorization。
+- **Why human should review it**: 它可能成为从 VLM-specific optimization law 到
+  训练算法的论文主线，但必须避免把 intermediate text 或 gradient score 本身当作
+  机制，并防止用新辅助目标救 XID 原 task。
+- **Current evidence**: 2,455 raw / 1,242 unique、11 篇全文；Park et al. direct
+  generative-VLM intervention + gradient theorem，Words or Vision matched mixture，
+  OGM/PMR modality optimization，Cambrian/Idefics2 trainability counterevidence。
+- **What Agent has already frozen**: `VSTATE-01=ACTIVE_CONJECTURE`；下一步只做
+  theory bridge。XID roots 43302/43303、marker/ratio/LR/support rescue 继续禁止；
+  final confirmation 未访问。
+- **Whether autonomous work can continue**: 可以；提交 `VSTATE-01_round1`
+  immutable plan 后执行解析证明与 exhaustive verification。
+- **Recommended human decision**: 无需立即决定；之后重点审查 theory 是否真正
+  区分 gradient mediation 与 representation ceiling，以及后续 matched control
+  是否避免目标长度/熵混杂。

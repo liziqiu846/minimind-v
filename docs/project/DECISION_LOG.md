@@ -619,3 +619,31 @@ factorized-rule formation 之间缺少吸收/优化桥。
 **后果**：新 Active Research Question 转为 factorized-rule absorption versus
 representation/trainability ceiling；先进行 failure-targeted LITMAP-07，再选择新
 `SCIENTIFIC_MECHANISM`，不直接训练变体。
+
+---
+
+## 2026-08-07｜LITMAP-07 选择 VSTATE-01
+
+**决定**：选择 `VSTATE-01`（shared visual-state mediation of autoregressive
+gradients）为新的 `ACTIVE_CONJECTURE`；先做 theory-first gradient bridge，不立即
+训练。
+
+**依据**：
+
+1. 2,455 raw records、1,242 unique titles、11 篇决定性 primary sources；
+2. Park et al. 在生成式 VLM 中以 controlled text/image tasks 显示 explicit
+   image-to-text supervision 改善 simple-to-hard image transfer，并给出
+   update-alignment 与 infinitesimal held-out loss change 的形式关系；
+3. Words or Vision、OGM-GE、PMR 独立支持 language/modality credit imbalance；
+4. Cambrian-1 与 Idefics2 的受控结果说明 representation/trainability ceiling 仍是
+   必须保留的竞争解释；
+5. 现有 identifiability theorem 假设 global optimum，未回答 XID 暴露的
+   identification–optimization gap。
+
+**边界**：XID target reversal 不是 VSTATE 的支持证据。Gradient alignment
+measurement 不是新 proxy；任何后续训练必须固定 pixels/support/coordinates/final
+answer，并同时检验 explicit state、完整 rule panel 与 unseen composition。
+
+**后果**：下一轮只证明 answer-only key-wise visual gradient cancellation 与
+key-invariant state-target non-cancellation 的最小命题和 verifier。Theory 失败则
+拒绝该 bridge；theory 通过后才可决定是否有合法 matched intervention。
