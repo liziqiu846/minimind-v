@@ -1,0 +1,75 @@
+{
+  "baseline": {
+    "actual_encoded_bits": 10488,
+    "budget": {
+      "allocation": {
+        "projector_layer_1": 2048,
+        "projector_layer_2": 2048
+      },
+      "mapping_root": null,
+      "total_coordinate_budget": 4096
+    },
+    "candidate_id": "M1-root-none",
+    "provenance": {
+      "codec": "zlib-9",
+      "formal": true,
+      "formal_run_directory": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/04_M1_root-none_seed-2026_lr-0p015",
+      "prediction_smoothing": "(1-alpha)*p+alpha/V",
+      "primary_bound_is_raw_unclipped": true,
+      "protocol_id": "minimind-v-stage2-joint-compression-v2",
+      "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3",
+      "training_sample_count": 10000
+    },
+    "raw_full_compression_bound": 12.516978640541838,
+    "structure": "M1"
+  },
+  "bound_difference_selected_minus_baseline": -1.545993380120558,
+  "candidate_count": 10,
+  "protocol_id": "route1-boundselect-v1",
+  "registry_path": "/tmp/minimind-boundselect.qfrXIE/experiments/route1_boundselect_v1/candidate_registry.json",
+  "registry_sha256": "2e792ea77330f0610649960dc79e145f3225eb5468ca23f57ff9ce5eed7769e3",
+  "schema_version": 1,
+  "selected": {
+    "actual_encoded_bits": 6384,
+    "budget": {
+      "allocation": {
+        "shared": 4096
+      },
+      "mapping_root": 43103,
+      "total_coordinate_budget": 4096
+    },
+    "candidate_id": "M3-root-43103",
+    "provenance": {
+      "codec": "zlib-9",
+      "formal": true,
+      "formal_run_directory": "/home/lizhaohui/lzq/minimind-v-stage2-rerun-20260721/experiments/runs/stage2_v2_fast/formal/10_M3_root-43103_seed-2026_lr-0p050",
+      "prediction_smoothing": "(1-alpha)*p+alpha/V",
+      "primary_bound_is_raw_unclipped": true,
+      "protocol_id": "minimind-v-stage2-joint-compression-v2",
+      "protocol_sha256": "4a15ae6697081098973998f7340702368403fa81f39d6c8ed43172b74a55b5b3",
+      "training_sample_count": 10000
+    },
+    "raw_full_compression_bound": 10.97098526042128,
+    "structure": "M3"
+  },
+  "selection_cost": {
+    "ceil_log2_k_bits": 4,
+    "checkpoint_reencoding_bits": 0,
+    "existing_finite_family_union_bound": {
+      "familywise_delta": 0.05,
+      "formal_model_count": 10,
+      "per_model_delta": 0.005,
+      "relation": "per_model_delta=familywise_delta/K"
+    },
+    "raw_bound_definition_changed": false
+  },
+  "selection_input_contains_heldout_risk_values": false,
+  "selection_rule": {
+    "objective": "minimize raw_full_compression_bound",
+    "strict": true,
+    "tie_policy": "fail_without_existing_tie_break"
+  },
+  "selector_source_path": "/tmp/minimind-boundselect.qfrXIE/experiments/route1_boundselect_v1/selector.py",
+  "selector_source_sha256": "254fd23db5a17ff34611bea08561299ac35e98a46e654bf0251a479dea069052",
+  "status": "selected_before_heldout_risk_read"
+}
