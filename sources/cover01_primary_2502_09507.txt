@@ -1,0 +1,980 @@
+[2502.09507] When and How Does CLIP Enable Domain and Compositional Generalization?
+When and How Does CLIP Enable Domain and Compositional Generalization?
+Elias Kempf
+Simon Schrodi
+Max Argus
+Thomas Brox
+Abstract
+The remarkable generalization performance of contrastive vision-language models like CLIP is often attributed to the diversity of their training distributions. However, key questions remain unanswered: Can CLIP generalize to an entirely unseen domain when trained on a diverse mixture of domains (domain generalization)? Can it generalize to unseen classes within partially seen domains (compositional generalization)? What factors affect such generalization? To answer these questions, we trained CLIP models on systematically constructed training distributions with controlled domain diversity and object class exposure. Our experiments show that domain diversity is essential for both domain and compositional generalization, yet compositional generalization can be surprisingly weaker than domain generalization when the training distribution contains a suboptimal subset of the test domain. Through data-centric and mechanistic analyses, we find that successful generalization requires learning of shared representations already in intermediate layers and shared circuitry.
+CLIP, Domain Generalization, Compositional Generalization, Mechanistic Similarity
+1 Introduction
+Foundation models are considered a decisive step towards more generic AI models (Bommasani et al., 2021). For example, CLIP scaled the alignment of image-text pairs via a contrastive loss to millions of samples (Radford et al., 2021; Jia et al., 2021; Zhai et al., 2023).
+Unlike traditional classifiers from the ImageNet era, which often experience substantial performance drops under distribution shifts, CLIP demonstrates unprecedented generalization to “Out-of-Distribution (OOD)” data (Radford et al., 2021). However, what drives this improved OOD generalization?
+Recent work has converged on the conclusion that CLIP’s diverse training distribution is the primary factor driving its unprecedented generalization performance. For example, Fang et al. (2022) found that other factors such as language supervision, training data size, or the contrastive loss play only a minor role, while Nguyen et al. (2022) showed that data quality is more important than quantity. More recently, Mayilvahanan et al. (2024b) demonstrated that CLIP’s “generalization performance […] drops to levels similar to what has been observed for ImageNet-trained models” (Mayilvahanan et al., 2024b, p. 10) by limiting the diversity of (visual) domains111We refer to a domain as a group of images sharing a common style, such as natural images, sketches, paintings, etc. to a minimum, i.e., by removing all non-natural samples. This shows that the mixture of various (non-natural) domains plays an important role for CLIP’s generalization, yet the underlying mechanisms remain unexplored. This brings us to our core research question:
+How does the mixture of diverse (visual) domains in the training data affect CLIP’s generalization performance?
+In particular, we investigate under which circumstances CLIP can learn the object class invariances across the training domains with the aim to generalize to entirely unseen domains–a fundamental question about its domain generalization capability (Blanchard et al., 2011; Muandet et al., 2013; Gulrajani & Lopez-Paz, 2021).
+We also study questions about CLIP’s compositional generalization (Hupkes et al., 2020; Wiedemer et al., 2023), which is believed to be an important factor of its generalization performance (Mayilvahanan et al., 2024a; Udandarao et al., 2024) and a long-standing challenge of machine learning research. Adapting Szabó’s (2012) classical example, we ask pictorially: Can CLIP, trained on natural images of cats and dogs along with sketches of cats, generalize to sketches of dogs?
+To answer such questions, we construct fully controllable experimental conditions that allow precise and systematic manipulation of the domain mixtures and exposure to object classes in the training data (see Figure 1), while keeping all other variables, such as the CLIP model type, training process, and class distribution constant. Specifically, we augmented a base dataset consisting primarily of natural images, such as ImageNet-Captions (Fang et al., 2022), with non-natural samples from DomainNet (Peng et al., 2019), including the domains Clipart, Infograph, Painting, Quickdraw, and Sketch. By systematically including subsets of these domains and their classes, we study questions about CLIP’s domain generalization and compositional generalization capabilities. We complement these experiments with in-depth data-centric and mechanistic analyses to understand what changes in the CLIP model led to the improved generalization or failure thereof. Our experiments uncovered the following key findings:
+•
+Domain diversity improves generalization: We reaffirm the intuition that diversity of domains in the training distribution is critical for both domain and compositional generalization. However, CLIP only weakly generalizes, as there remains a performance gap to a model that has seen similar samples during training.
+•
+Compositional generalization is challenging: Surprisingly, including a domain in the training data does not always improve generalization to unseen classes within that domain. However, ensuring sufficient class diversity within the test domain–ideally with no overlap with the queried classes in evaluation–along with high domain diversity, can significantly reduce the aforementioned performance gap.
+•
+Generalization requires sufficient feature and circuit sharing: When CLIP generalizes well compositionally, it shares more embeddings and intermediate features between different domains. However, CLIP sometimes fails to generalize to certain domains. We provide a twofold explanation: (1) the inputs from these domains lack shared features and, as a result, (2) the model has limited shared intermediate features and circuitry between domains, constraining its ability to generalize effectively. We support this hypothesis through representational similarity analysis and introduce a related concept for circuits222Interconnected internal model mechanisms/components for performing a specific computation or task (Olah et al., 2020).: mechanistic similarity, which measures similarity between circuits.
+This work presents a comprehensive study for systematically investigating CLIP’s domain generalization and compositional generalization capabilities. This enables us to unveil the capabilities and limitations of CLIP. Our code will be published together with the conference paper.
+2 Related Work
+OOD generalization of CLIP
+CLIP’s remarkable OOD generalization has sparked research in identifying the factors driving it.
+Fang et al. (2022) showed that CLIP’s training distribution–rather than its dataset size, language supervision, or contrastive loss–is the primary factor of its OOD generalization. Similarly, Nguyen et al. (2022) found that dataset quality outweighs quantity. However, the precise characteristics of the training distribution contributing to CLIP’s generlization performance remained unclear.
+While high train-test similarity was initially believed to be a key factor, Mayilvahanan et al. (2024a) found its impact to be smaller than expected. Instead, other factors, such as the class distribution, were shown to have a more important role (Wen et al., 2024).
+Moreover, caption richness has been found to enhance CLIP’s robustness (Xue et al., 2024; Wen et al., 2024), and CLIP’s loss fosters the learning of disentangled representations, facilitating the generalization to unseen attribute-object combinations (Abbasi et al., 2024).
+At the same time, other work revealed that CLIP exhibits behaviors resembling those of supervised classifiers. For example, CLIP fails to generalize when all non-natural images are removed from its training data (Mayilvahanan et al., 2024b), and CLIP can be vulnerable to spurious correlations (Wang et al., 2024).
+While these works have significantly advanced our understanding of CLIP’s OOD generalization, key questions remain. For example, “Can CLIP generalize to an entirely unseen domain?” (domain generalization), “Can CLIP generalize to unseen class-domain combinations?” (compositional generalization), and which factors contribute to such generalization?
+OOD generalization beyond CLIP
+The study of OOD generalization has been a focal point in the recent machine learning literature, covering various learning setups (refer to Table 2 of Gulrajani & Lopez-Paz (2021) for a comprehensive overview). In this work, we focus on two specific setups: domain generalization and compositional generalization.
+In domain generalization, models are trained on multiple domains and evaluated on an entirely unseen domain (Blanchard et al., 2011; Muandet et al., 2013; Gulrajani & Lopez-Paz, 2021). This is known as “learning from multiple environments” in the causality literature (Peters et al., 2016; Arjovsky et al., 2019; Arjovsky, 2019; Richens & Everitt, 2024).
+Compositional generalization, on the other hand, examines whether models generalize to unseen combinations of factors which were seen separately in training.
+Compositional generalization was recently studied for, e.g., (causal) generative models (Atzmon et al., 2020; Okawa et al., 2023; Wiedemer et al., 2023), object-centric models (Wiedemer et al., 2024), disentangled (Xu et al., 2022), and (general) visual representation learning (Misra et al., 2017; Schott et al., 2022; Saranrittichai et al., 2022).
+3 Problem Setup
+Refer to caption
+Figure 1: Training data setups and CLIP’s performance in these setups.
+A: We systematically varied the domain mixture and object class exposure of CLIP’s training data across four scenarios while controlling for other factors like dataset size and model choice. Specifically, we trained CLIP models on (1) mostly natural images (“Natural-only”) to obtain a lower performance bound, (2) a diverse set of domains excluding the test domain (“Leave-out-domain”) to assess its domain generalization, (3) natural images with a subset of test domain classes (“CG low-diversity”) to evaluate its compositional generalization, and (4) a combination of diverse domains plus a subset of test domain classes (“CG high-diversity”) for a more diverse compositional generalization setting.
+B: CLIP trained on diverse domains demonstrates stronger OOD generalization compared to training on only natural images or fewer domains. Remarkably, CLIP can perform as well or better even without exposure to some part (i.e., object classes) of the test domain during training.
+Recent work highlighted that CLIP is trained on a substantial amount of non-natural images (Mayilvahanan et al., 2024b, Table 2), but the role of these non-natural images in enabling CLIP’s OOD generalization remains unclear. In this work, we aim to address this question by systematically analyzing the effect of different domain mixtures in CLIP’s training data (see Figure 1), allowing us to study CLIP’s ability to generalize to entirely unseen domains (domain generalization) and to novel combinations of known domains and classes (compositional generalization).
+Notations
+Let D_{0} denote the base domain mostly consisting of natural images with image-text pairs (I^{0}_{i},T^{0}_{i}) (red in Figure 1). Further, we consider m non-natural domains D_{r} for r\in\{1,\dots,m\} with image-text pairs (I^{r}_{i},T^{r}_{i}) (blue, green, orange).
+Lastly, we consider the object classes C=\{c_{1},\dots,c_{n}\} for the images I which we divide into two disjoint subsets C_{1}=\{c_{1},\dots,c_{k}\} (squares) and C_{2}=\{c_{k+1},\dots,c_{n}\} (circles). We denote the subset of D_{r} that contains only classes from C^{\prime} as D_{r}^{C^{\prime}} .
+Training data setups
+Below, we specify the four training data setups; see Figure 1 for a visual overview.
+•
+Natural-only (lower bound): We train only on our base image domain D_{0} (e.g., ImageNet-Captions (Fang et al., 2022), see Section 4 for further details), consisting (almost) exclusively of natural images of all classes C . This condition serves as our lower bound and mirrors the training distributions considered in Fang et al. (2022); Mayilvahanan et al. (2024b).
+•
+Leave-out-domain (domain generalization): We train on a diversity of domains \bigcup_{j\neq i}D_{j}\cup D_{0} but hold out the test domain D_{i} , following the classical domain generalization learning setup (Blanchard et al., 2011; Muandet et al., 2013; Gulrajani & Lopez-Paz, 2021). Note we could also interpret this as extrapolation in certain cases, i.e., does CLIP generalize to data outside the domain coverage seen during training?
+Definition 3.1.
+A model compositionally generalizes if it can accurately classify any new combinations of seen factors (here, classes and domains) not seen together during training.
+Following this definition, we construct the training data setups for Compositional Generalization (CG)as follows:
+•
+CG low-diversity: We train on the base domain D_{0} and a subset of classes C_{1} of the test domain D_{i}^{C_{1}} : D_{0}\cup D_{i}^{C_{1}} .
+•
+CG high-diversity: We train on the base domain D_{0} , a subset of classes C_{1} of the test domain D_{i}^{C_{1}} , and a diverse set of other domains \mathbf{D}_{j\neq i}:=\bigcup_{j\neq i}D_{j} containing all classes C : D_{0}\cup D_{i}^{C_{1}}\cup\mathbf{D}_{j\neq i} .
+Test data
+Our test data for all training data setups consists of the same novel combinations of the classes C_{2} of the test domain D_{i} : D_{i}^{C_{2}} .
+By keeping the test set fixed throughout all conditions, we ensure comparability across these setups.
+4 Experimental Setup
+Datasets
+We used either ImageNet-Captions (Fang et al., 2022), CC3M (Sharma et al., 2018), or CC12M (Changpinyo et al., 2021) as our base image-text datasets D_{0} (red in Figure 1).
+Captions in ImageNet-Captions are constructed using the title, tag, and description (if provided) to yield maximal descriptiveness. To mitigate the influence of class distribution shift, we augmented the base datasets with natural samples from DomainNet-Real (Peng et al., 2019).
+For the domain-specific image-text pairs D_{r} (blue, green, orange in Figure 1), we used DomainNet’s non-natural domains: Clipart, Infograph, Painting, Quickdraw, and Sketch (Peng et al., 2019). Since DomainNet provides no captions, we created captions by using domain-invariant templates (e.g., an image of a {class}) or domain-specific templates (e.g., a {domain} of a {class}); see Section A.2 for further details.
+We used comparable final training dataset sizes across our different training conditions; refer to Section A.3 for details.
+Finally, the class choices for C_{1} and C_{2} are provided in Section A.4.
+Evaluation of CLIP models
+We evaluated CLIP models in the classical zero-shot classification setting across all DomainNet classes C using the standard OpenAI templates (Radford et al., 2021), extended with templates for the missing domains of DomainNet; see Section A.5 for further details. To mitigate the effect of class imbalance, we calculated the balanced top-1 accuracy, which we will hereon refer to as top-1 accuracy for brevity.
+5 When Does CLIP Exhibit Domain and Compositional Generalization?
+In this section, we trained CLIP models on our systematically constructed training data setups (refer to Section A.6 for training details), as described in the previous sections and illustrated in Figure 1, to investigate when CLIP can achieve domain and compositional generalization. Figure 2 summarizes the results for CLIP models with ResNet-50 vision encoder and trained on ImageNet-Captions as base dataset. We discuss the results and key findings below.
+To ensure the validity of our results and findings, we validated them across several alternative choices: (1) base datasets (CC3M, CC12M), (2) vision encoders (ViT-S-32, Swin-T), and (3) contrastive loss choices (SigLIP (Zhai et al., 2023)). These additional results, which are consistent with those in Figure 2, are provided in Section B.1.
+The role of domain diversity
+Refer to caption
+Refer to caption
+Refer to caption
+Refer to caption
+Refer to caption
+Refer to caption
+Figure 2: High diversity domain mixtures exhibit improved effective robustness. Each point represents the average performance over three consecutive training epochs and three seeds, with higher opacity indicating later training epochs. High diversity domain mixtures, such as Leave-out-domain (red) and CG high diversity (purple), have consistently higher generalization performance than their low diversity counterparts. These gains are especially pronounced in the clipart and sketch domains. However, for the quickdraw domain, generalization fails even in the high diversity settings–a limitation we will further investigate in Section 6.2.
+By constructing domain mixtures and controlling for all other factors, such as dataset size or model choice, we are able to isolate the impact of domain diversity in Figure 2. In particular, Figure 2 reaffirms the hypothesis that domain diversity is a key factor in enhancing CLIP’s generalization: CLIP achieves both significantly better domain and compositional generalization in settings with high domain diversity (Leave-out-domain, CG high-diversity) compared to settings with low domain diversity (Natural-only, CG low-diversity).
+While these results demonstrate that domain diversity is critical for the (compositional) generalization of CLIP, they do not provide insights into the importance of each domain individually, since all domains are added at once. Thus, we successively added domains to CG low-diversity until arriving at CG high-diversity to assess their importance.
+Refer to caption
+Figure 3: Certain domains contribute more strongly to generalization performance than others. When domains are added successively from CG low-diversity (left) to CG high-diversity (right), some domains significantly improve generalization, while others provide only small gains or even slightly degrade performance.
+Figure 3 shows that certain domains contribute more strongly than others, while other domains can even slightly decrease performance on the test domain. These observations suggest that while domain diversity is generally beneficial, the relationship between the added domain(s) and the test domain is a critical factor in facilitating generalization.
+Finding 1:
+Domain diversity enhances domain generalization and compositional generalization. However, the overlap between domains matters, too.
+How close is CLIP to the maximally achievable performance?
+In our previous experiments, we observed that CLIP generalizes well given sufficient domain diversity. However, how close is CLIP to the maximally achievable performance if it had been trained on class-specific samples from the test domain?
+Table 1 shows that, even in high diversity settings with better generalization, a gap to the upper bound performance remains. We analyzed the number of test class samples required to close this gap in Section B.3. We found that the number of required samples tends to scale linearly.
+Table 1: There is a performance gap when CLIP has seen close class samples of the test domain. With sufficient domain diversity, CLIP generalizes well to unseen classes C_{2} of the clipart and sketch test domains D_{i} . However, even in these cases, there remains a gap compared to models also trained on domain-specific samples of the classes, i.e., D^{C_{2}}_{i} . Section B.3 provides the results of the other domains.
+Training data setup (Figure 1)
+Clipart
+Sketch
+Leave-out-domain
+27.4
+30.1
+CG high-diversity
+27.6
+28.1
+w/ classes C_{2} (upper bound)
+36.6 (+9.0)
+44.3 (+16.2)
+Achieving good compositional generalization is challenging
+While high diversity improves generalization, one may expect CLIP to generalize better to unseen classes within a test domain if it has seen some other classes of that domain during training. However, Figure 2 surprisingly reveals the opposite: CLIP models trained on a subset of classes from the test domain (CG low-/high-diversity) are often slightly outperformed by models that have not seen the test domain at all (Natural-only, Leave-out-domain).
+Finding 2:
+Compositional generalization can be weaker than domain generalization.
+This finding is surprising, since the test domain is entirely unseen and domain generalization can require extrapolation. In contrast, compositional generalization is expected to perform better as it has partial exposure to that domain. However, our results suggest that this intuition may not always hold.
+To better understand this, we investigated the role of the test domain’s chosen classes for training and the ones that are queried during evaluation. For example, CLIP may learn the shortcut that all sketches belong to the subset of seen classes, which becomes wrong for the unseen classes queried in evaluation.
+To test this hypothesis, we replaced DomainNet’s sketches of the classes C_{1} in our previous CG settings with sketches of the classes C^{\prime}_{1} that are not queried in evaluation. For this, we used ImageNet-Sketch (Wang et al., 2019) and excluded all ImageNet classes that overlap with the classes from DomainNet; refer to Section A.7 for details on the class overlap.
+Table 2: Seeing a subset of classes of the test domain can worsen compositional generalization. Including a subset of sketches from DomainNet (CG low/high-diversity) slightly decreases performance on the unseen sketch classes C_{2} compared to not seeing that domain at all (Leave-out-domain). However, adding sketches of classes that do not overlap with DomainNet’s classes, instead improves compositional generalization performance, suggesting that compositional generalization can be limited by (only) partial, suboptimal inclusion of the test domain.
+Training data setup (Figure 1)
+Sketch
+Natural-only
+19.5
+Leave-out-domain
+30.1
+CG low-diversity
+19.2
+w/ sketches of non-queried classes only
+27.1 (+7.9)
+CG high-diversity
+28.1
+w/ sketches of non-queried classes only
+36.9 (+8.8)
+Table 2 confirms that including sketches of non-queried classes improves compositional generalization. However, it also highlights a failure mode: while compositional generalization can work for CLIP (to some extent, c.f., Table 1), partial exposure to classes of the test domain that overlap with the classes queried in evaluation significantly worsens compositional generalization. We further analyzed the severity of this overlap on compositional generalization performance in Section B.2.
+The role of language supervision
+To investigate the influence of language supervision, we replicated our previous experiments with a supervised classifier. Specifically, we trained the classifier on the combined class distribution of ImageNet and DomainNet. Refer to Section A.7 for further (training) details.
+Refer to caption
+Figure 4: Effective robustness of CLIP vs. supervised classifiers. Similar to CLIP, the robustness of supervised classifiers also increases with the domain diversity of the training data. However, CLIP consistently shows superior performance. Refer to Section B.4 for the results on the remaining domains.
+Figure 4 shows that generalization performance of supervised classifiers increases with domain diversity, similar to CLIP. However, CLIP consistently exhibits higher performance compared to the classifiers, which can be attributable to caption richness (Xue et al., 2024; Wen et al., 2024).
+6 Why Does CLIP (Not) Generalize?
+In this section, we investigate which changes in the CLIP model led to domain and compositional generalization, or lack thereof, observed in the previous section.
+6.1 The Role of Visual Embeddings
+Table 3: Domain diversity increases feature sharing in the embeddings.
+We report the percentage point increase in top-k shared SAE features, averaged over c\in C_{2} and k\in\{5,10,15,20\} , when comparing low diversity (Natural-only) to high diversity (Leave-out-domain, CG high-diversity). Note that we used the CLIP models using CC12M as base dataset, since we found that SAEs extracted poor features for the ImageNet-Captions models.
+Clipart
+Sketch
+Natural-only \rightarrow Leave-out-domain
++7.1
++4.1
+Natural-only \rightarrow CG high-diversity
++6.9
++3.4
+Intuitively, we would expect CLIP to share more features in its visual embeddings across domains as generalization improves.
+To test this hypothesis, we applied an unsupervised dictionary learning technique, i.e., Sparse Autoencoders (SAEs)(Bricken et al., 2023; Huben et al., 2024), to extract interpretable features from CLIP’s visual embeddings \mathbf{a}\in\mathbb{R}^{p} :
+\text{SAE}(\mathbf{a}):=(g\circ\phi\circ f)(\mathbf{a}),
+(1)
+where \phi is a ReLU non-linearity, and f and g are the linear encoder with weights \mathbf{W}_{f}\in\mathbb{R}^{p\times h} and decoder with weights \mathbf{W}_{g}\in\mathbb{R}^{h\times p} , respectively. We trained the SAE with an L_{2} reconstruction loss and L_{1} sparsity regularization. Refer to Section C.1 for further technical details.
+After extracting interpretable features, we computed the percentage overlap of the k most important features between pairs of domains per class.
+Table 3 confirms that a CLIP model that generalizes better shares indeed more features in its visual embeddings.
+Finding 3:
+CLIP shares more features in its embeddings as generalization improves.
+6.2 Why Does CLIP Sometimes Fail To Generalize?
+Table 4: Domain-specific captions do not explain CLIP’s poor generalization performance to unseen quickdraw classes in the CG high-diversity setting.
+As we replace all domain-specific captions (second row), we find that visual embeddings are more aligned (Figure 5(b)) but this does not lead to improved generalization performance.
+Captions
+Classes
+domain-specific
+domain-invariant
+seen
+unseen
+50%
+50%
+50.7
+1.7
+0%
+100%
+46.2
+0.7
+Figure 2 shows that CLIP typically generalizes well compositionally with high domain diversity, except for quickdraw. It is tempting to attribute this solely to the unique characteristics of quickdraw images (Section A.1). However, the first row of Table 4 highlights that CLIP can correctly classify the quickdraw images of seen classes, indicating that is has learned something useful for the quickdraw domain, yet CLIP performs poorly on images of unseen classes.
+Are domain-specific captions the cause?
+We initially hypothesized that using domain-specific captions–our training included both domain-invariant and domain-specific captions (Section 4)–might have inadvertently led CLIP to prioritize uniformity over alignment in its loss function. We suspect this occurs due to the stark visual differences between quickdraw images and those from other domains, making alignment challenging. In order to minimize the total loss in spite of this, CLIP may adopt a shortcut: prioritizing uniformity, aligning quickdraw image embeddings with the text embeddings of the domain-specific captions, while sacrificing alignment with domain-invariant captions. Consequently, we would expect a clear separation between quickdraw image embeddings and those from other domains–and indeed, we observe this (Figure 5(a)). However, this separation may come at a cost, limiting CLIP’s ability to generalize across the quickdraw domain, particularly to unseen classes.
+Refer to caption
+(a) Domain-invariant and specific captions.
+Refer to caption
+(b) Only domain-invariant captions.
+Figure 5: The separation of the visual embeddings between quickdraw and the images of other domains is due to domain information in captions. However, the better alignment of the visual embeddings does not improve compositional generalization (Table 4).
+As a remedy, we trained CLIP using only domain-invariant captions. Although the visual embeddings are now better aligned (Figure 5(b)), generalization performance remains poor (second row of Table 4). Thus, the domain invariance or specificity of captions cannot solely explain CLIP’s poor performance on quickdraw images of unseen classes.
+The role of shared intermediate features and circuitry
+While visual embeddings appear aligned in Figure 5(b), it does not necessarily imply that the computations leading up to these embeddings are also aligned. Thus, we hypothesize that insufficient sharing of intermediate representations and circuits (Hohman et al., 2019; Olah et al., 2020) within CLIP’s vision encoder may explain its poor generalization to the unseen classes. For example, if CLIP learns a separate circuit for quickdraw images instead of sharing sufficient functionality across the domains, such a circuit may work for seen classes but will fail on unseen classes, since the unseen classes of the test domain can only be inferred with the help of the other domains.
+Analysis tools
+To test our hypothesis, we used tools from representational similarity analysis to evaluate intermediate representations. Additionally, we introduce a novel, related concept for circuits: mechanistic similarity, which measures the similarity between circuits.
+For the representational analysis, we measured the representational similarity of classes across domains. Specifically, we used center kernel alignment (CKA) (Kornblith et al., 2019) with the unbiased Hilbert-Schmidt Independence Criterion (HSIC) estimator (Song et al., 2012); refer to Section C.2 for technical details.
+For the mechanistic analysis, we identified the circuit for each class of each domain in the first step. Specifically, we identified the k most important model components–i.e., axis-aligned neurons–by computing their indirect effect (Pearl, 2001) on the model’s predictions, following recent work (Vig et al., 2020; Schrodi et al., 2022; Meng et al., 2022; Marks et al., 2024). Intuitively, the indirect effect quantifies how much a neuron contributes to the model’s prediction. These identified neurons serve as the nodes of the graph representing the circuit. Next, we determined the k^{\prime} most influential predecessors of each neuron, forming the edges of the circuits, that intuitively represent the information flow. To do this, we computed the indirect effects of the predecessors on each neuron. Refer to Section C.3 for further details on this procedure.
+In the second step, we measured circuit similarity using graph similarity measures. Specifically, we measured the similarity of the circuits of each class across different domains, e.g., the circuit for quickdraw dog images vs. those for clipart, infograph, etc. We computed the layer-wise Jaccard index of the k most important neurons, i.e., the nodes of the circuit. Beyond this simple node overlap measure, we used the normalized Weisfeiler-Lehman subtree graph kernel (Shervashidze et al., 2011) to capture more complex structural and hierarchical similarities. Refer to Section C.3 for details on these similarity measures.
+Result
+Refer to caption
+(a) Representational similarity.
+Refer to caption
+(b) Amount of shared neurons.
+Quickdraw
+Other
+Weisfeiler-Lehman similarity ( \uparrow )
+0.218
+0.268
+(c) Circuit similarity.
+Figure 6: CLIP separates quickdraw images from other domains in its intermediate representations and circuitry, even though final visual embeddings can be aligned. We used the CLIP model trained on only domain-invariant captions from Figures 5(b) and 4 (second row).
+Scores are averaged over classes and higher scores mean higher representational similarity (6(a)), more shared neurons (6(b)), or more similar circuitry (6(c)).
+Figure 6 confirms that the quickdraw domain noticeably differs from the other domains, both in terms of representational and mechanistic similarity, supporting our hypothesis that (compositional) generalization requires sufficient sharing of intermediate features and circuitry.
+Finding 4:
+Sufficient sharing of intermediate features and circuitry is crucial for generalization to succeed.
+7 Discussion
+Compositional generalization
+Our results indicate that CLIP has a (weak) ability for compositional generalization, which is influenced by the composition of its training data. Specifically, CLIP’s compositional generalization performance worsens when a subset of classes of the test domain, that is queried during evaluation, is seen during training (Table 2).
+However, by including only classes that do not overlap with the queried classes in the training data, CLIP’s compositional generalization significantly narrows the gap to the maximally achievable performance.
+In particular, performance on unseen sketch classes significantly improved from 19.5% (Natural-only) to 36.9% (CG high-diversity w/ non-queried classes only, Table 2), approaching the maximally achievable performance of 44.3% (Table 1). This result supports the hypothesis that compositional generalization could be indeed a driver behind CLIP’s generalization.
+Our results also allow us to reinterpret the main experiment from Mayilvahanan et al. (2024a, Table 1). In their experiment, the maximally achievable performance corresponds to the unaltered LAION-200M dataset, while the pruned versions of LAION-200M–where, e.g., (near) duplicates of all ImageNet-Sketch classes were removed–can be interpreted analogous to the curated compositional generalization setting with high diversity from above. They observed only a slight deterioration in performance despite these exclusions. Our result suggests that compositional generalization could be the key contributor of the sustained performance observed here, though further analysis is required to exclude other (unknown) factors.
+Rethinking CLIP’s OOD generalization
+Recent works have concluded that CLIP’s OOD generalization is largely driven by its vast and diverse training distribution (Fang et al., 2022; Mayilvahanan et al., 2024b). Our experiments reaffirm that while CLIP can weakly generalize (Figure 2), a gap persists when compared to a model that has been exposed to class-specific samples of the test domain(s) (Table 1). We believe it is worth studying how narrow this gap can become and if this gap can ever be closed without access to (near) duplicate samples during training.
+Mechanistic similarity analysis
+Mechanistic similarity analysis (Section 6.2) is a general framework that first discovers circuits and then measures their similarity. In future work, we plan to apply this framework to other problems, e.g., to investigate whether multi-lingual LLMs process different languages in similar or very different ways.
+Larger dataset sizes
+At the time of writing, to the best of our knowledge, no large-scale domain datasets comparable to DomainNet currently exists. To address this, future work could filter a diverse dataset, such as LAION (Schuhmann et al., 2021), by domains. For example, the data filtering approach of Mayilvahanan et al. (2024b), which filters images into natural and non-natural, could be extended to various visual domains. The existing filtered natural-only subset of LAION-200M from Mayilvahanan et al. could be directly adopted as our base dataset D_{0} .
+Although, this would help overcome the scarcity of domain-specific data, we lack the computational resources to conduct such large-scale experiments. However, we are confident that our findings remain robust across dataset sizes, as demonstrated by consistent results in all three base datasets, with sizes ranging from approximately 0.5 M to 10 M samples, in Section B.1.
+Carbon emission estimate
+We conducted our experiments mainly on NVIDIA RTX 2080 GPUs and estimated the total GPU hours to be approximately 25\,000 . With a carbon efficiency of 0.482 kgCO2eq/kWh333Estimated carbon efficiency of the global power grid in 2023. Numbers for 2024 were not released at time of writing., total emissions are estimated to be about 2\,600 kgCO2eq, using the Machine Learning Impact calculator (Lacoste et al., 2019).
+8 Conclusion
+In this work, we analyzed when CLIP generalizes to unseen domains and domain-class pairs using systematically created training data setups (see Figure 1), identifying domain diversity as a prerequisite for both domain and compositional generalization. We showed that compositional generalization can fail in certain scenarios, i.e., even perform worse than domain generalization. We supported these findings with in-depth experiments and mechanistic analyses, offering insights into the internal workings that make generalization succeed or fail.
+Impact Statement
+This paper presents work whose goal is to advance the field of Machine Learning. There are many potential societal consequences of our work, none which we feel must be specifically highlighted here.
+Acknowledgements
+This research was funded by the the German Research Foundation (DFG) under grant numbers 417962828, 539134284, and 499552394 (SFB 1597).
+Simon would like to thank Evgenia Rusak for an insightful discussion that sparked this project.
+References
+Abbasi et al. (2024)
+Abbasi, R., Rohban, M. H., and Baghshah, M. S.
+Deciphering the role of representation disentanglement: Investigating compositional generalization in clip models.
+In ECCV, 2024.
+Arjovsky (2019)
+Arjovsky, M.
+Out of Distribution Generalization in Machine Learning.
+Phd thesis, New York University, 2019.
+Available at https://arxiv.org/abs/2103.02667.
+Arjovsky et al. (2019)
+Arjovsky, M., Bottou, L., Gulrajani, I., and Lopez-Paz, D.
+Invariant risk minimization.
+arXiv, 2019.
+Atzmon et al. (2020)
+Atzmon, Y., Kreuk, F., Shalit, U., and Chechik, G.
+A causal view of compositional zero-shot recognition.
+NeurIPS, 2020.
+Barthel et al. (2023)
+Barthel, K. U., Hezel, N., Schall, K., and Jung, K.
+navigu. net: Navigation in visual image graphs gets user-friendly.
+In Proceedings of the 2023 ACM International Conference on Multimedia Retrieval, 2023.
+Blanchard et al. (2011)
+Blanchard, G., Lee, G., and Scott, C.
+Generalizing from several related classification tasks to a new unlabeled sample.
+NeurIPS, 2011.
+Bommasani et al. (2021)
+Bommasani, R., Hudson, D. A., Adeli, E., Altman, R., Arora, S., von Arx, S., Bernstein, M. S., Bohg, J., Bosselut, A., Brunskill, E., et al.
+On the opportunities and risks of foundation models.
+arXiv, 2021.
+Bricken et al. (2023)
+Bricken, T., Templeton, A., Batson, J., Chen, B., Jermyn, A., Conerly, T., Turner, N., Anil, C., Denison, C., Askell, A., Lasenby, R., Wu, Y., Kravec, S., Schiefer, N., Maxwell, T., Joseph, N., Hatfield-Dodds, Z., Tamkin, A., Nguyen, K., McLean, B., Burke, J. E., Hume, T., Carter, S., Henighan, T., and Olah, C.
+Towards monosemanticity: Decomposing language models with dictionary learning.
+Transformer Circuits Thread, 2023.
+https://transformer-circuits.pub/2023/monosemantic-features/index.html.
+Changpinyo et al. (2021)
+Changpinyo, S., Sharma, P., Ding, N., and Soricut, R.
+Conceptual 12m: Pushing web-scale image-text pre-training to recognize long-tail visual concepts.
+In CVPR, 2021.
+Cherti et al. (2023)
+Cherti, M., Beaumont, R., Wightman, R., Wortsman, M., Ilharco, G., Gordon, C., Schuhmann, C., Schmidt, L., and Jitsev, J.
+Reproducible scaling laws for contrastive language-image learning.
+In CVPR, 2023.
+Fang et al. (2022)
+Fang, A., Ilharco, G., Wortsman, M., Wan, Y., Shankar, V., Dave, A., and Schmidt, L.
+Data determines distributional robustness in contrastive language image pre-training (clip).
+In ICML, 2022.
+Gulrajani & Lopez-Paz (2021)
+Gulrajani, I. and Lopez-Paz, D.
+In search of lost domain generalization.
+In ICLR, 2021.
+He et al. (2016)
+He, K., Zhang, X., Ren, S., and Sun, J.
+Deep residual learning for image recognition.
+In CVPR, 2016.
+Hohman et al. (2019)
+Hohman, F., Park, H., Robinson, C., and Chau, D. H. P.
+Summit: Scaling deep learning interpretability by visualizing activation and attribution summarizations.
+IEEE transactions on visualization and computer graphics, 2019.
+Huben et al. (2024)
+Huben, R., Cunningham, H., Smith, L. R., Ewart, A., and Sharkey, L.
+Sparse autoencoders find highly interpretable features in language models.
+In ICLR, 2024.
+Hupkes et al. (2020)
+Hupkes, D., Dankers, V., Mul, M., and Bruni, E.
+Compositionality decomposed: How do neural networks generalise?
+JAIR, 2020.
+Jia et al. (2021)
+Jia, C., Yang, Y., Xia, Y., Chen, Y.-T., Parekh, Z., Pham, H., Le, Q., Sung, Y.-H., Li, Z., and Duerig, T.
+Scaling up visual and vision-language representation learning with noisy text supervision.
+In ICML, 2021.
+Kornblith et al. (2019)
+Kornblith, S., Norouzi, M., Lee, H., and Hinton, G.
+Similarity of neural network representations revisited.
+In ICML, 2019.
+Lacoste et al. (2019)
+Lacoste, A., Luccioni, A., Schmidt, V., and Dandres, T.
+Quantifying the carbon emissions of machine learning.
+arXiv, 2019.
+Liu et al. (2021)
+Liu, Z., Lin, Y., Cao, Y., Hu, H., Wei, Y., Zhang, Z., Lin, S., and Guo, B.
+Swin transformer: Hierarchical vision transformer using shifted windows.
+In ICCV, 2021.
+Marks et al. (2024)
+Marks, S., Rager, C., Michaud, E. J., Belinkov, Y., Bau, D., and Mueller, A.
+Sparse feature circuits: Discovering and editing interpretable causal graphs in language models.
+arXiv, 2024.
+Mayilvahanan et al. (2024a)
+Mayilvahanan, P., Wiedemer, T., Rusak, E., Bethge, M., and Brendel, W.
+Does CLIP’s generalization performance mainly stem from high train-test similarity?
+In ICLR, 2024a.
+Mayilvahanan et al. (2024b)
+Mayilvahanan, P., Zimmermann, R. S., Wiedemer, T., Rusak, E., Juhos, A., Bethge, M., and Brendel, W.
+In search of forgotten domain generalization.
+arXiv, 2024b.
+Meng et al. (2022)
+Meng, K., Bau, D., Andonian, A., and Belinkov, Y.
+Locating and editing factual associations in gpt.
+NeurIPS, 2022.
+Miller (1995)
+Miller, G. A.
+Wordnet: a lexical database for english.
+Communications of the ACM, 38(11):39–41, 1995.
+Misra et al. (2017)
+Misra, I., Gupta, A., and Hebert, M.
+From red wine to red tomato: Composition with context.
+In CVPR, 2017.
+Muandet et al. (2013)
+Muandet, K., Balduzzi, D., and Schölkopf, B.
+Domain generalization via invariant feature representation.
+In ICML, 2013.
+Mueller et al. (2024)
+Mueller, A., Brinkmann, J., Li, M., Marks, S., Pal, K., Prakash, N., Rager, C., Sankaranarayanan, A., Sharma, A. S., Sun, J., et al.
+The quest for the right mediator: A history, survey, and theoretical grounding of causal interpretability.
+arXiv, 2024.
+Nguyen et al. (2021)
+Nguyen, T., Raghu, M., and Kornblith, S.
+Do wide and deep networks learn the same things? uncovering how neural network representations vary with width and depth.
+In ICLR, 2021.
+Nguyen et al. (2022)
+Nguyen, T., Ilharco, G., Wortsman, M., Oh, S., and Schmidt, L.
+Quality not quantity: On the interaction between dataset design and robustness of CLIP.
+In NeurIPS, 2022.
+Okawa et al. (2023)
+Okawa, M., Lubana, E. S., Dick, R., and Tanaka, H.
+Compositional abilities emerge multiplicatively: Exploring diffusion models on a synthetic task.
+NeurIPS, 2023.
+Olah et al. (2020)
+Olah, C., Cammarata, N., Schubert, L., Goh, G., Petrov, M., and Carter, S.
+Zoom in: An introduction to circuits.
+Distill, 2020.
+Pearl (2001)
+Pearl, J.
+Direct and indirect effects.
+In UAI, 2001.
+Pearl (2009)
+Pearl, J.
+Causality.
+Cambridge university press, 2009.
+Peng et al. (2019)
+Peng, X., Bai, Q., Xia, X., Huang, Z., Saenko, K., and Wang, B.
+Moment matching for multi-source domain adaptation.
+In ICCV, 2019.
+Peters et al. (2016)
+Peters, J., Bühlmann, P., and Meinshausen, N.
+Causal inference by using invariant prediction: identification and confidence intervals.
+Journal of the Royal Statistical Society Series B: Statistical Methodology, 2016.
+Radford et al. (2021)
+Radford, A., Kim, J. W., Hallacy, C., Ramesh, A., Goh, G., Agarwal, S., Sastry, G., Askell, A., Mishkin, P., Clark, J., et al.
+Learning transferable visual models from natural language supervision.
+In ICML, 2021.
+Rao et al. (2024)
+Rao, S., Mahajan, S., Böhle, M., and Schiele, B.
+Discover-then-name: Task-agnostic concept bottlenecks via automated concept discovery.
+In ECCV, 2024.
+Richens & Everitt (2024)
+Richens, J. and Everitt, T.
+Robust agents learn causal world models.
+In ICLR, 2024.
+Saranrittichai et al. (2022)
+Saranrittichai, P., Mummadi, C. K., Blaiotta, C., Munoz, M., and Fischer, V.
+Overcoming shortcut learning in a target domain by generalizing basic visual factors from a source domain.
+In ECCV, 2022.
+Schott et al. (2022)
+Schott, L., Kügelgen, J. V., Träuble, F., Gehler, P. V., Russell, C., Bethge, M., Schölkopf, B., Locatello, F., and Brendel, W.
+Visual representation learning does not generalize strongly within the same domain.
+In ICLR, 2022.
+Schrodi et al. (2022)
+Schrodi, S., Saikia, T., and Brox, T.
+Towards understanding adversarial robustness of optical flow networks.
+In CVPR, 2022.
+Schuhmann et al. (2021)
+Schuhmann, C., Vencu, R., Beaumont, R., Kaczmarczyk, R., Mullis, C., Katta, A., Coombes, T., Jitsev, J., and Komatsuzaki, A.
+Laion-400m: Open dataset of clip-filtered 400 million image-text pairs.
+Workshop@NeurIPS, 2021.
+Sharma et al. (2018)
+Sharma, P., Ding, N., Goodman, S., and Soricut, R.
+Conceptual captions: A cleaned, hypernymed, image alt-text dataset for automatic image captioning.
+In ACL, 2018.
+Shervashidze et al. (2011)
+Shervashidze, N., Schweitzer, P., Van Leeuwen, E. J., Mehlhorn, K., and Borgwardt, K. M.
+Weisfeiler-lehman graph kernels.
+JMLR, 2011.
+Song et al. (2012)
+Song, L., Smola, A., Gretton, A., Bedo, J., and Borgwardt, K.
+Feature selection via dependence maximization.
+JMLR, 2012.
+Sundararajan et al. (2017)
+Sundararajan, M., Taly, A., and Yan, Q.
+Axiomatic attribution for deep networks.
+In ICML, 2017.
+Szabó (2012)
+Szabó, Z. G.
+The case for compositionality.
+The Oxford handbook of compositionality, 2012.
+Touvron et al. (2021)
+Touvron, H., Cord, M., Douze, M., Massa, F., Sablayrolles, A., and Jégou, H.
+Training data-efficient image transformers & distillation through attention.
+In ICML, 2021.
+Udandarao et al. (2024)
+Udandarao, V., Prabhu, A., Ghosh, A., Sharma, Y., Torr, P., Bibi, A., Albanie, S., and Bethge, M.
+No ”zero-shot” without exponential data: Pretraining concept frequency determines multimodal model performance.
+In NeurIPS, 2024.
+Vaswani et al. (2017)
+Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, L. u., and Polosukhin, I.
+Attention is all you need.
+In NeurIPS, 2017.
+Vig et al. (2020)
+Vig, J., Gehrmann, S., Belinkov, Y., Qian, S., Nevo, D., Singer, Y., and Shieber, S.
+Investigating gender bias in language models using causal mediation analysis.
+NeurIPS, 2020.
+Wang et al. (2019)
+Wang, H., Ge, S., Lipton, Z., and Xing, E. P.
+Learning robust global representations by penalizing local predictive power.
+NeurIPS, 2019.
+Wang et al. (2024)
+Wang, Q., Lin, Y., Chen, Y., Schmidt, L., Han, B., and Zhang, T.
+A sober look at the robustness of clips to spurious features.
+In NeurIPS, 2024.
+Wen et al. (2024)
+Wen, X., Zhao, B., Chen, Y., Pang, J., and Qi, X.
+What makes clip more robust to long-tailed pre-training data? a controlled study for transferable insights.
+In NeurIPS, 2024.
+Wiedemer et al. (2023)
+Wiedemer, T., Mayilvahanan, P., Bethge, M., and Brendel, W.
+Compositional generalization from first principles.
+NeurIPS, 2023.
+Wiedemer et al. (2024)
+Wiedemer, T., Brady, J., Panfilov, A., Juhos, A., Bethge, M., and Brendel, W.
+Provable compositional generalization for object-centric learning.
+In ICLR, 2024.
+Xu et al. (2022)
+Xu, Z., Niethammer, M., and Raffel, C. A.
+Compositional generalization in unsupervised compositional representation learning: A study on disentanglement and emergent language.
+NeurIPS, 2022.
+Xue et al. (2024)
+Xue, Y., Joshi, S., Nguyen, D., and Mirzasoleiman, B.
+Understanding the robustness of multi-modal contrastive learning to distribution shift.
+In ICLR, 2024.
+Zhai et al. (2023)
+Zhai, X., Mustafa, B., Kolesnikov, A., and Beyer, L.
+Sigmoid loss for language image pre-training.
+In ICCV, 2023.
+Appendix A Further Details for Section 4
+A.1 DomainNet Examples
+Figure 7 visualizes four examples from all six image domains (clipart, infograph, painting, quickdraw, real, sketch) from DomainNet (Peng et al., 2019). Some domains are more visually similar than others. For example, sketches and quickdraw are typically gray images, while paintings often contain a similar level of image detail as real (natural) images.
+Refer to caption
+Figure 7: Random examples across the six domains of DomainNet.
+A.2 DomainNet Training Captions
+The DomainNet dataset (Peng et al., 2019) does not include captions. Therefore, we created captions using the class names to train CLIP models on DomainNet data. For this, we used prompt templates similar to Radford et al. (2021). Specifically, we used the following templates:
+•
+“a {domain} of a {class}.”,
+•
+“a {class} {domain}.”,
+•
+“a {domain} depicting a {class}.”,
+•
+“a {class} depicted in a {domain}.”,
+•
+“a {domain} showing a {class}.”,
+•
+“a {class} is visible in a {domain}.”.
+For each DomainNet image sample, we randomly sampled one of the templates and inserted the corresponding class name for the placeholder {class}. For the {domain} placeholder, we randomly chose with equal probability a generic, domain-invariant term, such as image or picture, or a domain-specific term, such as clipart or painting. The terms are provided in Table 5.
+Table 5: Generic, domain-invariant and domain-specific terms. Generic, domain-invariant terms are shared across domains, while domain-specific terms can be either its domain name or a synonym.
+Domain
+Terms
+Generic
+image, picture
+Clipart
+clipart, illustration
+Infograph
+infograph, informational chart
+Painting
+painting, art
+Quickdraw
+quickdraw, doodle
+Real
+photo, snapshot
+Sketch
+sketch, drawing
+A.3 Further Details on the Training Data Construction
+Dataset Construction
+We created our training datasets based on a base dataset D_{0} (i.e., ImageNet-Captions, CC3M, or CC12M) which provides a large collection of (mostly) natural images along with corresponding language descriptions.
+To address issues related to class shifts, we then augmented the base dataset with samples from DomainNet-Real, which consists of natural images. Finally, we created different domain mixtures (Figure 1) by incorporating subsets of samples from various non-natural domains of DomainNet D_{r} with r\in\{\text{Clipart},\;\text{Infograph},\;\text{Painting},\;\text{Quickdraw},\;\text{Sketch}\} into the training data, as outlined in Section 3.
+Subsampling
+To ensure fair performance comparisons between the different domain mixtures (Figure 1), we applied subsampling to maintain comparable final dataset sizes when adding additional domains to the training data. We designed our subsampling method to preserve the original data distribution as much as possible. Specifically, if domain D_{i} contained twice as many samples as domain D_{j} before subsampling, this ratio remained approximately constant afterward. Likewise, the class distribution within each domain was preserved as much as possible.
+Note that the non-natural domains in DomainNet vary significantly in size, e.g., quickdraw has more than three times as many samples as clipart. Thus, we chose to only keep dataset sizes fixed within the same test domain. That is, for a given test domain, CG low-diversity and CG high-diversity datasets have the same size. However, dataset sizes may differ across test domains (i.e., CG low-diversity settings for different test domains are not necessarily of equal size). Since the Natural-only lower bound is independent of the choice of the test domain, it contains slightly fewer samples than the other mixtures.
+A.4 Choice of Classes C_{2}
+We carefully chose the subset C_{2} in a way that the classes are diverse and not biased towards any spurious features (e.g., color). We considered the 147 classes, with a one-to-one match in ImageNet (see Section A.7), as the possible candidates for C_{2} . We selected about 10% of these candidates, i.e., 15 classes. For the selection process, we randomly sampled from the set of candidates. To ensure that we adequately covered the different super-categories of DomainNet (e.g., furniture, mammal, tool, etc.), we kept only the first random sample for each category, rejecting further samples from the same category. We also manually rejected some samples if we considered them to be too similar to our existing selection. Our final selection of classes is
+\begin{split}C_{2}=\{&\text{aircraft carrier},\ \text{axe},\ \text{banana},\ \text{barn},\ \text{bed},\ \text{candle},\ \text{lion},\ \text{mountain},\\
+&\text{necklace},\ \text{penguin},\ \text{pizza},\ \text{saxophone},\ \text{television},\ \text{tractor},\ \text{traffic light}\}.\end{split}
+(2)
+and C_{1} are all other 330 classes of DomainNet.
+A.5 DomainNet Evaluation Prompts
+We evaluated the zero-shot performance of our CLIP models using the OpenAI templates from Radford et al. (2021). Since painting and sketch templates are already contained, we added the templates for the missing domain names:
+•
+“a clipart of the {class}.”,
+•
+“a clipart of a {class}.”,
+•
+“an infograph of the {class}.”,
+•
+“an infograph of a {class}.”,
+•
+“a quickdraw of the {class}.”,
+•
+“a quickdraw of a {class}.”.
+Following Radford et al. (2021), we created zero-shot weights for all 345 DomainNet Classes from these templates by taking the class-wise average over the text embeddings of all templates (marginalization to obtain the “true” object embedding) and normalizing afterwards. Formally, let c\in\{c_{1},\dots,c_{n}\} be a class, T be the set of templates, t_{c} a template with the name of class c inserted, and g be the text encoder of our CLIP model. Assuming that g produces L_{2} -normalized embeddings, we computed the zero-shot weights of c as:
+\mathbf{w}_{c}=\frac{\frac{1}{|T|}\sum_{t\in T}g(t_{c})}{\left\|\frac{1}{|T|}\sum_{t\in T}g(t_{c})\right\|_{2}}.
+(3)
+A.6 CLIP Training Details
+Following Fang et al. (2022), we trained CLIP models with an embedding size of 1024 with ResNet-50 (He et al., 2016) and a transformer text encoder (Vaswani et al., 2017) (12 layers with a width of 512, 8 attention heads, and context length of 77).
+We trained the models for 32 epochs with a batch size of 1024 with AdamW (learning rate of 0.001, \beta_{1}=\text{0.9} , \beta_{2}=\text{0.999} , \epsilon=\text{1e-8} , weight decay of 0.2) and cosine annealing learning rate scheduling with 500 warmup steps. We used the default data augmentations of OpenCLIP. We used the code from OpenCLIP (Cherti et al., 2023) (https://github.com/mlfoundations/open_clip, License: custom) for our training implementation.
+A.7 Supervised Classifier Details
+Training Details
+Similar to Fang et al. (2022), we trained the supervised ResNet-50 classifiers (He et al., 2016) for 90 epochs with a batch size of 256 using SGD with Nesterov momentum, weight decay of 1e-4, momentum of 0.9, initial learning rate of 0.01 (they used 0.1) with step-wise decay by 0.1 at epochs 30, 50, and 70. We used the same image augmentations as for our CLIP models.
+Joining the Class Distributions of ImageNet and DomainNet
+Both ImageNet-Captions and DomainNet provide class labels for training supervised classifiers. However, their class distributions differ significantly in diversity and granularity. ImageNet has nearly three times as many classes as DomainNet and is more fine-grained. For example, ImageNet distinguishes over 100 different dog breeds, whereas DomainNet has only a single dog class.
+To address this, we created a mapping from ImageNet classes to DomainNet classes. Each ImageNet class was either mapped to a single DomainNet class or left unmatched, and multiple ImageNet classes could be mapped to the same DomainNet class. We constructed this mapping manually based on class names, the WordNet hierarchy (Miller, 1995), and the NAVIGU image explorer (https://navigu.net/#imagenet, Barthel et al. (2023)), ensuring that only semantically valid mappings were retained.
+Our final mapping assigned 450 ImageNet classes to DomainNet, including 147 one-to-one mappings. Using this mapping, we merged the class distributions of ImageNet and DomainNet. Specifically, we relabeled the 450 mapped ImageNet classes with their corresponding DomainNet labels. The remaining 550 unmatched ImageNet classes were combined with the 345 DomainNet classes, resulting in a total of 895 classes. We then trained our supervised classifiers on these 895 classes.
+Appendix B Additional Results For Section 5
+In Figure 2, we compared the effective robustness trends of our different training setup across different domains. Table 6 shows the final test performances (averaged over three runs) of our CLIP models with ImageNet-Captions as the base dataset and ResNet-50 as the vision encoder.
+Table 6: CLIP robustness results for the considered experimental conditions (Figure 1). We repeated CLIP trainings three times and evaluated the models on the unseen classes of the test domain. CLIP generalizes better with higher domain diversity. Intriguingly, CLIP achieves superior performance when not seeing the domain at all vs. seeing a subset of it. However, while diversity substantially improves CLIP’s generalization performance, there remains a performance gap to a model that has seen similar samples to the classes C_{2} .
+Figure 2 shows the respective effective robustness plots.
+Data composition (Figure 1)
+Clipart
+Infograph
+Painting
+Quickdraw
+Sketch
+Natural-only
+20.3\pm 0.7
+11.8\pm 0.2
+34.1\pm 1.4
+0.8\pm 0.1
+19.5\pm 0.7
+Leave-out-domain
+27.4\pm 1.2
+13.6\pm 0.6
+33.8\pm 0.5
+4.8\pm 1.1
+30.1\pm 1.4
+CG low-diversity
+17.1\pm 1.2
+10.8\pm 1.0
+31.4\pm 0.1
+2.0\pm 0.9
+19.2\pm 2.0
+w/ classes C_{2} (upper bound)
+37.2\pm 0.8
+21.5\pm 1.8
+45.5\pm 0.8
+56.0\pm 0.6
+50.3\pm 1.2
+CG high-diversity
+27.6\pm 1.5
+12.7\pm 2.0
+34.6\pm 1.2
+1.7\pm 0.7
+28.1\pm 0.8
+w/ classes C_{2} (upper bound)
+36.6\pm 1.0
+18.8\pm 0.3
+41.8\pm 1.4
+51.5\pm 1.9
+44.3\pm 0.8
+Figure 3 shows which domains are the most helpful to include for generalizing to sketch images, and reveals that clipart and painting contribute strongly, while infograph and quickdraw have little benefit or even slightly decrease performance. We also conducted the same experiment with clipart as the test domain. Figure 8 shows that sketches are also the most helpful domain to include for generalizing to clipart, suggesting that both domains might leverage similar visual features. The inclusion order of the remaining domains remained the same as in the sketch experiment with the added difference that after including painting, both infograph and quickdraw slightly decreased generalization performance.
+Refer to caption
+Figure 8: Domain-wise robustness gains for clipart. Figure 3 shows that clipart is the most helpful domain to include for generalizing to sketches. Similarly, sketches are also the most helpful for generalizing to clipart.
+B.1 Validity of the Results across Architecture, Dataset, and Loss Choices
+We conducted the experiments from the main text (Figures 2 and 6) using ImageNet-Captions as the base dataset and a ResNet-50 vision encoder. To ensure the consistency of our findings across different base datasets, vision encoder architectures, and contrastive loss functions, we performed additional experiments by systematically varying each of these components. Due to computational resource constraints, we repeated these experiments only for the clipart and sketch domains, where increasing domain diversity yielded the most significant robustness gains.
+Architecture
+For the architecture experiments, we trained two CLIP configurations with different image encoder architectures. The first configuration used a Swin-T (Liu et al., 2021), the same text encoder as in our ResNet-50 experiments, and an embedding dimension of 512. The second configuration used a ViT-S-32 (Touvron et al., 2021), a slightly smaller text encoder with a width of 384, only six attention heads, and also a smaller embedding dimension of 384. In addition, for ViT-S-32, we used slightly adjusted AdamW hyperparameters, i.e., \beta_{2}=0.98 and \epsilon=10^{-6} . All other hyperparameters were consistent with the ResNet-50-based experiments (see Section A.6).
+Tables 7 and 9 confirm that for transformer-based vision encoders, robustness also improves with increasing domain diversity, as expected. Similarly, compositional generalization performs worse than domain generalization.
+Table 7: Results when varying CLIP’s vision encoder. We find similar trends across these vision encoder choices.
+Vision encoder
+Training data setup
+Clipart
+Sketch
+ResNet-50
+Natural-only
+19.4
+19.6
+Leave-out-domain
+27.1
+31.8
+CG low-diversity
+18.7
+16.4
+CG high-diversity
+28.6
+28.6
+ViT-S-32
+Natural-only
+12.0
+5.9
+Leave-out-domain
+15.1
+8.2
+CG low-diversity
+12.7
+5.8
+CG high-diversity
+13.8
+8.3
+Swin-T
+Natural-only
+17.1
+11.3
+Leave-out-domain
+20.3
+15.2
+CG low-diversity
+17.4
+10.4
+CG high-diversity
+22.3
+14.0
+Refer to caption
+(a) Clipart with ViT-S-32.
+Refer to caption
+(b) Sketch with ViT-S-32.
+Refer to caption
+(c) Clipart with Swin-T.
+Refer to caption
+(d) Sketch with Swin-T.
+Figure 9: Effective robustness plots for different vision encoders. Refer to Figure 2 for the effective robustness plots for the ResNet-50 vision encoder.
+Base Dataset
+For the base dataset experiments, we trained our ResNet-50 CLIP configuration using CC3M and CC12M as the base datasets. Following Radford et al. (2021), we used a maximum learning rate of 5e-4. We further adjusted the number of warmup steps to 2000 and the batch size to 2048. All other hyperparameters were consistent with the ResNet-50-based experiments (Section A.6).
+Tables 8 and 10 show that both CC3M and CC12M exhibit the same robustness trends as our ImageNet-Captions models. However, the robustness gains are smaller compared to ImageNet-Captions. This is most likely due to the reduced relative weighting of the DomainNet images with larger base dataset sizes, as well as the higher inherent diversity of CC3M and CC12M. For example, both CC3M and CC12M include some non-natural images, which may diminish the effect of further increasing domain diversity. Note that compositional generalization seems to be slightly better than domain generalization for the larger datasets, which we attribute to domain contamination (see Section B.2 why this may benefit compositional generalization). We leave further investigation into the effect of scale and diversity of the base dataset for future work.
+Table 8: Results when varying the base dataset D_{0} . We observe similar trends as for CC3M and CC12M as for ImageNet-Captions. The only exception is that compositional generalization now tends to always work better than domain generalization for CC12M. We attribute this to a domain contamination of CC12M, i.e., CC12M contains a lot of sketch and clipart images.
+Base dataset D_{0}
+Training data setup
+Clipart
+Sketch
+ImageNet-Captions
+Natural-only
+19.4
+19.6
+Leave-out-domain
+27.1
+31.8
+CG low-diversity
+18.7
+16.4
+CG high-diversity
+28.6
+28.6
+CC3M
+Natural-only
+32.2
+31.5
+Leave-out-domain
+31.6
+35.1
+CG low-diversity
+28.4
+30.5
+CG high-diversity
+35.5
+33.6
+CC12M
+Natural-only
+39.6
+48.3
+Leave-out-domain
+46.1
+51.2
+CG low-diversity
+38.5
+41.7
+CG high-diversity
+48.7
+51.7
+Refer to caption
+(a) Clipart with CC3M.
+Refer to caption
+(b) Sketch with CC3M.
+Refer to caption
+(c) Clipart with CC12M.
+Refer to caption
+(d) Sketch with CC12M.
+Figure 10: Effective robustness plots for the different base datasets. Refer to Figure 2 for the effective robustness plots for the ImageNet-Captions dataset.
+Contrastive Loss
+For the loss experiments, we trained our ResNet-50 CLIP configuration but replaced the standard CLIP loss with the SigLIP loss (Zhai et al., 2023).
+Tables 9 and 11 show that our SigLIP models are consistent with our observations from the experiments in the main text.
+Table 9: Results when using a different loss function (SigLIP (Zhai et al., 2023)). The choice of loss function does not change the trends observed for CLIP’s original contrastive loss.
+Loss function
+Training data setup
+Clipart
+Sketch
+CLIP
+Natural-only
+19.4
+19.6
+Leave-out-domain
+27.1
+31.8
+CG low-diversity
+18.7
+16.4
+CG high-diversity
+28.6
+28.6
+SigLIP
+Natural-only
+20.4
+19.7
+Leave-out-domain
+28.1
+26.1
+CG low-diversity
+19.2
+16.4
+CG high-diversity
+25.7
+27.5
+Refer to caption
+Refer to caption
+Figure 11: Effective robustness plots for SigLIP. Refer to Figure 2 for effective robustness plots when using CLIP’s original contrastive loss.
+B.2 Challenges of Compositional Generalization
+In Section 5, we found that compositional generalization settings can suffer from an exposure to a subset of classes during training that are later queried in evaluation. This can make compositional generalization fail but can be alleviated by using domain samples from classes that do not overlap with the class distribution which is queried during evaluation. Table 2 shows that replacing all DomainNet sketches with sketches that do not overlap with DomainNet’s classes (see Section A.7), using ImageNet-Sketch, improves compositional generalization performance from 28.1% to 36.9%.
+In practice, however, enforcing little to no class overlap may not always be feasible; particularly in zero-shot settings where CLIP is applied to data and/or tasks that are unknown at training time. Therefore, we investigated the severity of this in greater detail. To do this, we partitioned the set of classes C=C_{1}\cup C_{2}\cup C_{3} in our test domain D_{i} into three disjoint subsets (Figure 12(a)):
+•
+C_{1} : Classes that are seen during training and are queried during evaluation.
+•
+C_{2} : Classes that are not seen during training and are queried during evaluation. Note that only classes from C_{2} are contained in the test set D_{i}^{C_{2}} .
+•
+C_{3} : Classes that are seen during training and are not queried during evaluation.
+This partitioning allowed us to systematically assess the impact of class overlap on compositional generalization by constructing training sets with varying mixtures of classes from C_{1} and C_{3} .
+For this experiment, we selected the sketch domain as our test domain.444We chose the sketch domain due to the availability of a large class distribution from ImageNet-Sketch. The subsets C_{1} and C_{2} were defined as described in Section 3, meaning that C_{1}\cup C_{2} represents the class distribution queried during evaluation (i.e., all DomainNet classes). For C_{3} , we used classes from ImageNet-Sketch (Wang et al., 2019) that do not overlap with the classes from DomainNet (see Section A.7 for more details). Note that throughout all these experiments, the class distribution in the other domains D_{j\neq i} remained unchanged–that is, classes from C_{1} and C_{2} were included in training, while no classes from C_{3} were introduced.
+As shown in Tables 2 and 12(b) (rightmost bar), training exclusively on samples from C_{3} significantly improves compositional generalization performance compared to not seeing any test domain samples from D_{i} (zero line) or only seeing samples from classes C_{1} of D_{i} (leftmost bar). To further investigate this, we trained CLIP models using samples from C_{1}\cup C_{3} of the test domain D_{i} and gradually reduced the number of classes from C_{1} , while keeping all other factors fixed. Figure 12(b) shows that reducing class overlap (moving from left to right)–i.e., decreasing the number of C_{1} classes seen during training–consistently improves compositional generalization performance. This reaffirms the detrimental effect of class overlap, as demonstrated in Table 2, but also highlights that increasing class diversity can help mitigate its impact on compositional generalization performance.
+Refer to caption
+(a) Classes from the test domain.
+Refer to caption
+(b) Effect of different mixtures of the test domain’s classes C_{1}\cup C_{3} seen during training.
+Figure 12: Severity of class overlap on compositional generalization.
+12(a): We partitioned the classes C in the test domain D_{i} into three disjoint subsets: C=C_{1}\cup C_{2}\cup C_{3} . During evaluation, both C_{1} and C_{2} are included in the query set, allowing the model to predict any class from these subsets. However, the actual test set, D_{i}^{C_{2}} , only contains samples from C_{2} . In contrast, the classes in C_{3} are excluded from both the query and test sets. This partitioning allows us to investigate the severity of class overlap for compositional generalization performance. In particular, we found that including classes of C_{1} led to a significant drop in compositional generalization–even performing worse than domain generalization (Figure 2). On the other hand, replacing the class samples from C_{1} with the ones of C_{3} (which are not part of the query set) resulted in a significant improvement in compositional generalization (Table 2).
+12(b):
+To investigate the severity, we varied the mixture of classes from C_{1} and C_{3} . We find that reducing classes from C_{1} (moving from left to right), while keeping all other factors fixed, steadily improves compositional generalization performance (with the exceptions for the class mixtures 25% C_{1} + 100% C_{3} and 1 class C_{1} + 100% C_{3} ).
+Supervised classifiers
+We also investigated to what extent supervised classifiers are vulnerable to this bias. Table 10 confirms that supervised classifiers are also susceptible to it.
+Table 10: Supervised classifiers are also susceptible to the seen class bias. Supervised classifiers’ compositional generalization also deteriorates due to a partial test domain overlap and replacing them with samples from non-overlapping classes significantly improves compositional generalization.
+Training data setup (Figure 1)
+Sketch
+Leave-out-domain
+27.4
+CG high-diversity
+22.2
+w/ sketches of non-queried classes only
+30.1 (+7.9)
+B.3 Closing The Generalization Gap
+Table 6 clearly shows that there is a significant performance gap between the CG high-diversity with and without including domain-specific samples of our test classes C_{2} , even for domains like clipart and sketch where generalization seems to work reasonably well. We conducted an interpolation experiment between the two settings with and without such samples to better understand how many of these samples are actually required to close this “generalization gap”. To further investigate how the generalization capability of a model impacts the required number of samples, we also performed the same experiment for the CG low-diversity setting.
+For a given test domain D_{i} , we considered the number of samples of our test set D_{i}^{C_{2}} to be 100% and then trained additional CLIP models in which we successively added 5%, 10%, 15%, 20%, 40%, 60%, and 80% of these samples to the training data. Note that we ensured that the overall dataset size remained unchanged.
+Figure 13 shows that performance on the classes seems to follow a roughly linear relationship with the number of samples allowed for all domains, except for the quickdraw domain. For quickdraw, the relationship seems to be log-linear instead, which may be due to the fact that CLIP does not generalize at all for quickdraw. This observation also relates to the findings of Udandarao et al. (2024), who predict that a linear increase in samples leads only to a log-linear increase in zero-shot performance. Across all domains and settings, we observed that to achieve the maximally possible performance, 100% of the samples from D_{i}^{C_{2}} are required.
+Refer to caption
+(a) Clipart.
+Refer to caption
+(b) Infograph.
+Refer to caption
+(c) Painting.
+Refer to caption
+(d) Quickdraw.
+Refer to caption
+(e) Sketch.
+Figure 13: Interpolation between CG settings with and without domain-specific samples of the test classes C_{2} . For each interpolation, we fitted both a linear and a log-linear regression model and visualized the fit with a lower mean squared error (MSE). Performance on the test classes appears to follow a roughly linear relationship with the number of test samples included, except for quickdraw, which shows a strong log-linear relationship.
+B.4 Role of Language Supervision
+Previous studies comparing the robustness of CLIP models and supervised classifiers either examined models trained on different datasets or focused on low-diversity datasets consisting mostly of natural images, such as ImageNet-Captions (Fang et al., 2022). Since both ImageNet-Captions and DomainNet provide class labels, we investigated how our domain mixtures affect the robustness of supervised classifiers and compared the results to CLIP models.
+Tables 11 and 14 show the results of our experiments on supervised classifiers. We found that CLIP models consistently exhibit slightly higher robustness than their supervised counterparts, which may be due to the richness of captions (Xue et al., 2024; Wen et al., 2024). Interestingly, CLIP’s advantages are more pronounced in compositional generalization settings (CG low/high-diversity). However, in the domain generalization setting (Leave-out-domain), supervised classifiers can sometimes achieve generalization comparable to CLIP.
+Table 11: Performance comparison across supervised experiments.
+The robustness of supervised models also increases with domain diversity. However, supervised classifiers generalize slightly worse than CLIP models (Figures 4 and 14).
+Clipart
+Infograph
+Painting
+Quickdraw
+Sketch
+Natural-only
+17.6\pm 1.6
+10.9\pm 0.8
+32.6\pm 1.6
+0.7\pm 0.1
+15.0\pm 1.1
+Leave-out-domain
+30.8\pm 2.1
+14.5\pm 1.2
+35.7\pm 1.2
+10.1\pm 0.5
+27.4\pm 2.1
+CG low-diversity
+13.2\pm 0.6
+9.7\pm 0.5
+25.1\pm 0.9
+0.0\pm 0.0
+12.0\pm 1.1
+CG high-diversity
+25.0\pm 1.6
+12.2\pm 0.7
+28.6\pm 0.4
+0.7\pm 0.4
+22.2\pm 0.7
+Refer to caption
+(a) Clipart.
+Refer to caption
+(b) Infograph.
+Refer to caption
+(c) Painting.
+Refer to caption
+(d) Quickdraw.
+Refer to caption
+(e) Sketch.
+Figure 14: Effective robustness plots for CLIP vs. supervised classifiers. While the general trends are very similar between CLIP models and supervised classifiers, CLIP models typically generalizes better than the supervised classifiers.
+Appendix C Additional Technical Details and Results for Section 6
+C.1 Technical Details on Sparse Autoencoders and Additional Results
+Following (Bricken et al., 2023; Huben et al., 2024), we used a Sparse Autoencoder (SAE)to extract interpretable features from CLIP’s visual embeddings \mathbf{a}\in\mathbb{R}^{p} . The SAE is defined as follows:
+\text{SAE}(\mathbf{a}):=(g\circ\phi\circ f)(\mathbf{a}),
+(4)
+where \phi is a ReLU non-linearity, and f and g are linear encoder with weights \mathbf{W}_{f}\in\mathbb{R}^{p\times h} or decoder with weights \mathbf{W}_{g}\in\mathbb{R}^{h\times p} , respectively. We trained the SAE with an L_{2} reconstruction loss and L_{1} sparsity regularization:
+\mathcal{L}(\mathbf{a})=\|\mathbf{a}-(g\circ\phi\circ f)(\mathbf{a})\|_{2}^{2}+\lambda\|(\phi\circ f)(\mathbf{a})\|_{1},
+(5)
+where \lambda governs the sparsity regularization strength.
+We trained SAE’s on the activations of our CC12M CLIP models555We also tried the CLIP models that were trained with ImageNet-Captions as base dataset but found that the SAE extracted poorly interpretable features. (see Section B.1). We used CC12M and the complete DomainNet training set to train the SAE’s to identify interpretable features. The hidden dimension h was set to 4096, i.e., 4x the embedding dimension of the CLIP model’s output dimensionality. We trained the SAE for 200 epochs using a batch size of 4096. The regularization strength hyperparameter \lambda was set to 1e-4. To alleviate the dying neuron problem, dead neurons were resampled every 500,000 training steps. Our implementation is based on the code published by Rao et al. (2024) (https://github.com/neuroexplicit-saar/discover-then-name, License: MIT).
+C.2 Technical Details on Center Kernel Alignment and Additional Results
+Let \mathbf{X}^{d_{1}}\in\mathbb{R}^{C\times p} and \mathbf{Y}^{d_{2}}\in\mathbb{R}^{C\times p} contain the C mean visual embeddings of each class for the domains d_{1} or d_{2} , respectively. Then, we compute the Gram matrices/kernels \mathbf{K}=\mathbf{X}^{d_{1}}(\mathbf{X}^{d_{1}})^{T} and \mathbf{L}=\mathbf{Y}^{d_{2}}(\mathbf{Y}^{d_{2}})^{T} that contain the pairwise similarities of each pair of mean class embeddings. Note that we used a linear kernel here, as commonly done in the representational similarity literature. Alternatively, we also tried a non-linear kernel (i.e., RBF kernel) with similar results (see Figure 16).
+Center kernel alignment is defined by Kornblith et al. (2019) as follows:
+\text{CKA}(\mathbf{K},\mathbf{L})=\frac{\text{HSIC}(\mathbf{K},\mathbf{L})}{\sqrt{\text{HSIC}(\mathbf{K},\mathbf{K})\text{HSIC}(\mathbf{L},\mathbf{L})}},
+(6)
+where we used the used the unbiased Hilbert-Schmidt Independence Criterion (HSIC) estimator (Song et al., 2012) following Nguyen et al. (2021), defined as follows:
+\text{HSIC}(\mathbf{K},\mathbf{L})=\frac{1}{C(C-3)}\Bigl{(}tr(\tilde{\mathbf{K}}\tilde{\mathbf{L}})+\frac{\mathbf{1}^{T}\tilde{\mathbf{K}}\mathbf{1}\mathbf{1}^{T}\tilde{\mathbf{L}}\mathbf{1}}{(C-1)(C-2)}-\frac{2}{C-2}\mathbf{1}^{T}\tilde{\mathbf{K}}\tilde{\mathbf{L}}\mathbf{1}\Bigr{)},
+(7)
+where we set the diagonal elements of \mathbf{K} and \mathbf{L} to zero in
+\tilde{\mathbf{K}} or \tilde{\mathbf{L}} , respectively.
+We computed center kernel alignment between all pairs of domains for each class. Thereby, we can assess the representational similarity for each class across the domains. For visualization, we averaged over all classes to obtain a representational similarity estimate for each domain. In the main text, we further averaged together the non-quickdraw domains (all domains are shown in Figures 15 and 16).
+Additional results
+Figures 15 and 16 show results for all classes C , the classes seen during training C_{1} , and the unseen classes C_{2} . Interestingly, we find that the representational gap widens for the unseen classes C_{2} .
+Refer to caption
+(a) All classes.
+Refer to caption
+(b) Seen classes only.
+Refer to caption
+(c) Unseen classes only.
+Refer to caption
+(d) All classes.
+Refer to caption
+(e) Seen classes only.
+Refer to caption
+(f) Unseen classes only.
+Figure 15: Linear center kernel alignment (CKA) similarity. Quickdraw has the lowest representational similarity across domains. This particularly emphasized for the unseen classes C_{2} (15(c), 15(f)).
+Refer to caption
+(a) All classes.
+Refer to caption
+(b) Seen classes only.
+Refer to caption
+(c) Unseen classes only.
+Refer to caption
+(d) All classes.
+Refer to caption
+(e) Seen classes only.
+Refer to caption
+(f) Unseen classes only.
+Figure 16: Non-linear center kernel alignment (CKA) similarity. The results follow the same pattern as the linear CKA (Figures 6(a) and 15): Quickdraw is the most representational dissimilar domain.
+C.3 Technical Details on the Circuit Similarity Analysis and Additional Results
+Attributing the causal effects of model components is a key goal of (mechanistic) interpretability research (Meng et al., 2022; Marks et al., 2024; Mueller et al., 2024). We drew inspiration from them to analyze the level of sharing of the most important CLIP’s model components, i.e., the axis-aligned neurons in its vision encoder, across domains. To do this, we first must attribute their importance via the indirect effect (Pearl, 2001).
+Let m_{:l}(I^{d}_{\text{clean}})=\mathbf{a}^{l,n}_{\text{clean}}\in\mathbf{p} be a p -dimensional neuron n in the l -th layer of model m for input image I_{\text{clean}} . Further, we define \mathbf{a}^{l,n}_{\text{patch}}\in\mathbf{p} as a corrupted baseline. The computation of the indirect effect is defined as follows:
+\text{IE}=m_{L,c}(I^{d}_{\text{clean}}|\text{do}(\mathbf{a}^{l}=\mathbf{a}^{l,n}_{\text{patch}}))-m_{L,c}(\mathbf{a}^{l,n}_{\text{clean}}),
+(8)
+where m_{L,c} is the output logit for class c of the last layer L (note that we can obtain this logit through the dynamic zero-shot weights that can be generated by CLIP’s text encoder, see Section A.5) and \text{do}(\mathbf{a}^{l}=\mathbf{a}^{l,n}_{\text{patch}}) denotes the do-operator (Pearl, 2009) that intervenes on the computation of the CLIP model by setting the activations \mathbf{a}^{l} to \mathbf{a}^{l,n}_{\text{patch}} .
+Since there are lot of neurons in CLIP’s vision encoder, we sped up the computation through a linear approximation using integrated gradients (Sundararajan et al., 2017), following Marks et al. (2024):
+\hat{\text{IE}}_{\text{ig}}=\left(\sum\limits_{\alpha}\nabla_{\mathbf{a}^{l,n}}m_{l:}(\alpha\mathbf{a}^{l,n}_{\text{clean}}+(1-\alpha)\mathbf{a}^{l,n}_{\text{patch}})\right)(\mathbf{a}^{l,n}_{\text{patch}}-\mathbf{a}^{l,n}_{\text{clean}}),
+(9)
+where \alpha\in\{0,\frac{1}{N},\cdots,\frac{N-1}{N}\} ) and we set \mathbf{a}^{l,n}_{\text{patch}} to \mathbf{0} .
+We adapted the codebase from Marks et al. (2024) (https://github.com/saprmarks/feature-circuits, License: MIT) for our implementation.
+Discovery of circuits
+We use above computation for the indirect effect to find the k most important neurons and k^{\prime} most important preceding neurons of each of those neurons for each class of each domain. This approach is outlined below in more detail:
+1.
+Identify the k most important neurons: We directly apply Equation 9. We used N=10 steps for the linear approximation and only retained the 10% most important neurons per layer. Note that these neurons represent the nodes of the graph representing the circuit.
+2.
+Identify the k^{\prime} most important preceding neurons of each neuron: We adapted Equation 9 to measure the effect of preceding neurons n of layer l<l^{\prime} on the activations of neuron n^{\prime} in layer l^{\prime} . Specifically, we replaced m_{L,c} by m_{l^{\prime},n^{\prime}} and measured the L_{2} change caused by the clean activations \mathbf{a}^{l,n}_{\text{clean}} and intervened activations \alpha\mathbf{a}^{l,n}_{\text{clean}}+(1-\alpha)\mathbf{a}^{l,n}_{\text{patch}} . We also set N to 10. Note that this will yield us edges for the graph representing the circuit. After computing the indirect effects of all preceding neurons, we only retained the k^{\prime}=3 most important edges.
+Measuring circuit similarity
+We compared the circuit similarity of pairs of graphs resorting to graph similarity measures. For example, we computed the Jaccard index for the nodes N_{C_{\text{domain}~d_{1}\text{, class c}}},\;N_{C_{\text{domain}~d_{2}\text{, class c}}} , as follows:
+\frac{|N_{C_{\text{domain}~d_{1}\text{, class c}}}\cap N_{C_{\text{domain}~d_{2}\text{, class c}}}|}{|N_{C_{\text{domain}~d_{1}\text{, class c}}}\cup N_{C_{\text{domain}~d_{2}\text{, class c}}}|}\quad.
+(10)
+However, the simple node overlap cannot capture more complex structural and hierarchical similarities between circuits. Thus, we used the normalized Weisfeiler-Lehman subtree graph kernel (Shervashidze et al., 2011). The Weisfeiler-Lehman graph kernel is popular graph kernel choice since (1) it can handle labeled, directed graphs of different sizes, (2) it is expressive, and (3) scales well to large graphs. The main idea of the Weisfeiler-Lehman kernel is the following procedure, given two labeled graphs, G_{1} and G_{2} :
+1.
+Multiset labeling and sorting: For each node n\in G_{1} , create a multiset (unordered set with duplicates allowed) consisting of the node’s n current label and the sorted labels of its neighbors. Repeat this step for each node n^{\prime}\in G_{2} .
+2.
+Label compression: Assign a unique new label to each of these multisets using a hash function.
+3.
+Counting occurences: Count the occurrences of each compressed label to obtain the feature vectors \phi_{h}(G_{1}),\;\phi_{h}(G_{2}) .
+4.
+Relabeling: Replace the current node labels with the newly compressed labels.
+We can repeat this procedure for h iterations and compute the similarity of graphs via:
+K(G_{1},G_{2})=\langle\phi(G_{1}),\;\phi(G_{2})\rangle=\sum_{h}\phi_{h}(G_{1})\cdot\phi_{h}(G_{2})\quad.
+(11)
+Finally, we normalize the kernel to obtain a similarity score between 0 and 1:
+\tilde{K}(G_{1},G_{2})=\frac{K(G_{1},G_{2})}{\sqrt{K(G_{1},G_{1})\cdot K(G_{2},G_{2})}}\quad.
+(12)
+For our analysis, we used h=3 iterations. Our implementation is based on the publicly available code from https://github.com/emanuele/jstsp2015, License MIT.
+Additional results
+Figures 17 and 12 shows results for all classes C , the classes seen during training C_{1} , and the unseen classes C_{2} . Interestingly, we find that, similar as for the representational similarities in Figures 15 and 16, nodes are less shared and circuits are slightly less similar for the unseen classes.
+Refer to caption
+(a) All classes.
+Refer to caption
+(b) Seen classes only.
+Refer to caption
+(c) Unseen classes only.
+Refer to caption
+(d) All classes.
+Refer to caption
+(e) Seen classes only.
+Refer to caption
+(f) Unseen classes only.
+Figure 17: Amount of shared neurons. The quickdraw domains shares the least neurons. This is especially apparent for the unseen classes C_{2} (17(c), 17(f)).
+Clipart
+Infograph
+Painting
+Quickdraw
+Real
+Sketch
+All classes
+0.281
+0.246
+0.266
+0.218
+0.273
+0.273
+Seen classes only
+0.281
+0.246
+0.265
+0.218
+0.273
+0.273
+Unseen classes only
+0.278
+0.258
+0.274
+0.211
+0.272
+0.275
+Table 12: Weisfeiler-Lehman similarities. Higher similarities mean higher circuit (graph) similarity.
+The quickdraw domain exhibits the least degree of similarity, supporting our hypothesis that sharing of the circuitry is critical for generalization.
+◄
+ar5iv homepage
+Feeling
+lucky?
+Conversion
+report
+Report
+an issue
+View original
+on arXiv►
+Copyright
+Privacy Policy
+Generated on Wed Mar 5 13:42:32 2025 by LaTeXML Mascot Sammy

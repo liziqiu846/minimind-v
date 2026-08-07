@@ -1,0 +1,1801 @@
+[2402.11690] Vision-Flan: Scaling Human-Labeled Tasks in Visual Instruction Tuning
+Vision-Flan: Scaling Human-Labeled Tasks in Visual Instruction Tuning
+Zhiyang Xu♠ Chao Feng♣ Rulin Shao♡ Trevor Ashby♠ Ying Shen♠
+Di Jin♢ Yu Cheng {}^{\vardiamondsuit} Qifan Wang♢ Lifu Huang♠
+♠Virginia Tech ♡University of Washington ♣University of Michigan
+♢Amazon Inc. {}^{\vardiamondsuit} Microsoft ♢Meta AI
+{zhiyangx,lifuh}@vt.edu
+Abstract
+Despite vision-language models’ (VLMs) remarkable capabilities as versatile visual assistants, two substantial challenges persist within the existing VLM frameworks: (1) lacking task diversity in pretraining and visual instruction tuning, and (2) annotation error and bias in GPT-4 synthesized instruction tuning data. Both challenges lead to issues such as poor generalizability, hallucination, and catastrophic forgetting.
+To address these challenges, we construct Vision-Flan, the most diverse publicly available visual instruction tuning dataset to date, comprising 187 diverse tasks and 1,664,261 instances sourced from academic datasets, and each task is accompanied by an expert-written instruction.
+In addition, we propose a two-stage instruction tuning framework, in which VLMs are firstly finetuned on Vision-Flan and further tuned on GPT-4 synthesized data. We find this two-stage tuning framework significantly outperforms the traditional single-stage visual instruction tuning framework and achieves the state-of-the-art performance across a wide range of multi-modal evaluation benchmarks.
+Finally, we conduct in-depth analyses to understand visual instruction tuning and our findings reveal that:
+(1) GPT-4 synthesized data does not substantially enhance VLMs’ capabilities but rather modulates the model’s responses to human-preferred formats;
+(2) A minimal quantity (e.g., 1,000) of GPT-4 synthesized data can effectively align VLM responses with human-preference;
+(3) Visual instruction tuning mainly helps large-language models (LLMs) to understand visual features.
+Vision-Flan: Scaling Human-Labeled Tasks in Visual Instruction Tuning
+Zhiyang Xu♠ Chao Feng♣ Rulin Shao♡ Trevor Ashby♠ Ying Shen♠
+Di Jin♢ Yu Cheng {}^{\vardiamondsuit} Qifan Wang♢ Lifu Huang♠
+♠Virginia Tech ♡University of Washington ♣University of Michigan
+♢Amazon Inc. {}^{\vardiamondsuit} Microsoft ♢Meta AI
+{zhiyangx,lifuh}@vt.edu
+1 Introduction
+Recent vision-language models (VLMs) Liu et al. (2023e); Li et al. (2023d); Dai et al. (2023), built upon pre-trained large-language models (LLMs) Chiang et al. (2023); Gao et al. (2023) and pretrained image encoders Sun et al. (2023), have shown impressive capabilities as general visual assistants. Besides the unimodal encoders, the main ingredients of these VLM frameworks encompass: (1) a bridging module, such as the MLP layers in the LLaVA model Liu et al. (2023e); Li et al. (2023d), that establishes connections between the pretrained image encoders and LLMs, (2) large-scale text-image pairs Schuhmann et al. (2022) used for pre-training the bridging module, and (3) GPT-4 synthesized visual instruction tuning datasets Liu et al. (2023e); Li et al. (2023b) to align the responses of VLMs with human preferences (i.e., following users’ instruction to generate detailed and helpful responses). Despite their notable successes, we identify two remaining challenges that merit further investigation.
+Firstly, the data used in the pre-training stage is dominated by the image captioning task, which lacks diversity, resulting in limited generalizability of VLMs Chen et al. (2023c); Zhang et al. (2023). For instance,
+the LLaVA model Liu et al. (2023e) performs poorly on the optical character recognition (OCR) task due to the absence of instances related to text detection during pre-training Zhang et al. (2023). Several recent studies address this problem by further fine-tuning VLMs on instruction tuning datasets covering more tasks Zhang et al. (2023); Hu et al. (2023); Liu et al. (2023d) such as visual question answering and OCR but the coverage of the tasks is still limited.
+Refer to caption
+Figure 1: Sample tasks in Vision-Flan. Instruction denotes a task instruction crafted by annotators. Input means text input in the given task, and Target is the target response based on the instruction.
+Secondly, most of the existing visual instruction tuning datasets Liu et al. (2023e); Li et al. (2023b); Yin et al. (2023) are synthetically generated via GPT-4 by repurposing text annotations such as captions or dense captions from existing computer-vision datasets to generate new tasks, such as visual dialogue, Complex VQA and detail captions.
+While they enable VLMs to generate fluent and detailed responses aligned with human preferences, the lack of task diversity, spurious co-occurring patterns between objects, and long-form outputs may cause severe hallucination Liu et al. (2023c); Li et al. (2023g); Liu et al. (2023a); Zhou et al. (2023), and catastrophic forgetting – VLMs fail to maintain a similar classification performance on basic detection tasks, such as MNIST LeCun (1998) and CIFAR-10 Krizhevsky et al. (2009), compared to the zero-shot performance of their vision encoders Zhai et al. (2023).
+To address both challenges, we introduce Vision-Flan, the most diverse public-available visual instruction tuning dataset consisting of 187 tasks drawn from academic datasets, covering perception tasks such as object detection and OCR, domain-specific tasks such as image-quality classification and image-style classification, complex reasoning tasks such as graph understanding and geometric question answering, and many more.
+Each task in Vision-Flan is accompanied by an expert-written instruction. We show some sample tasks from Vision-Flan in Figure 1 and provide the full list of tasks in Appendix J.
+In addition, we introduce a two-stage instruction tuning framework. In the first stage, we utilize the pre-trained LLaVA model Liu et al. (2023e)
+as our initial model, and finetune it on Vision-Flan to gain diverse capabilities, resulting in the Vision-Flan Base model. However, due to the concise nature of target outputs in academic datasets, the responses generated by Vision-Flan Base tend to be brief and not aligned with human preferences. Therefore, in the second stage, we further finetune Vision-Flan Base using a minimal amount of GPT-4 synthesized data. This step aims to adjust the model’s outputs to be more in line with human preferences, resulting in the Vision-Flan Chat model.
+Our experimental results demonstrate that high-quality human annotations from Vision-Flan significantly enhance the capabilities of both Vision-Flan Base and Vision-Flan Chat while reducing the risk of hallucination and catastrophic forgetting. The two-stage instruction tuning framework enables Vision-Flan Chat to achieve better human preference alignment using much less GPT-4 synthesized data compared to the state-of-the-art VLMs.
+Finally, we perform extensive analysis to understand visual instruction tuning including the roles of human-labeled and GPT-4 synthesized data, and the impacts of various training strategies.
+Our investigation yields several key insights:
+•
+Increasing the number of human-labeled tasks in visual instruction tuning can substantially enhance VLMs’ capabilities across extensive evaluation benchmarks.
+•
+GPT-4 synthesized data does not substantially enhance VLMs capabilities and
+yields marginal improvements in the VLMs’ performance on comprehensive evaluation benchmarks, such as MME Fu et al. (2023) and MM-Bench Liu et al. (2023f).
+•
+A minimal quantity (1,000) of GPT-4 synthesized data is sufficient to align VLMs’ responses with human preferences. Notably, increasing GPT-4 synthesized data does not correspond to a proportional enhancement in alignment and introduces hallucination and bias into the VLMs.
+•
+Visual instruction tuning mainly enhances the ability of large-language models (LLMs) to process and understand visual features. The training of the bridging module, which maps visual features to the embedding space of LLMs, is predominantly achieved during the pre-training phase.
+2 Vision-Flan
+Refer to caption
+Figure 2: Comparison of task diversity between Vision-Flan and previous visual instruction tuning datasets. LLaVA and SVIT report very coarse-grained categories of tasks. Each circle represents a task category and the radius is proportional to the number of tasks in that category. The radius of circles for different datasets are comparable.
+2.1 Collection Pipeline
+We carefully design an annotator selection process to identify qualified annotators, which involves 2 iterations of training and testing. More details of the selection process and compensation can be found in Appendix A.1. In the end, we hire 7 out of 21 candidates as our annotators and all of them are graduate students in computer science.
+To ensure the diversity and quality of the tasks in Vision-Flan, we design a rigorous annotation pipeline with four major steps:
+Existing dataset collection and pre-processing:
+Two expert researchers (i.e., senior Ph.D. students in the fields of natural language processing and computer vision) search online and identify high-quality vision-language datasets. The datasets are then equally distributed to 7 annotators to download and preprocess the datasets. Each processed instance consists of an image, an instruction (the task definition from the original dataset with minor modifications), a text input if applicable, and a target output.
+Creating new tasks:
+The two expert researchers and annotators also discuss potential new tasks that could be derived from the existing annotations. We derive new tasks by combining the annotations of two or more existing tasks on a dataset.
+For example, in the Concadia dataset Kreiss et al. (2022), each instance consists of an image caption and a knowledge snippet related to the image. We propose a new task to predict both the caption and the background knowledge given an image, which is a free-form generation task. The new target output is formed by concatenating the caption with the knowledge snippet. We also develop new tasks by creating more basic versions of the original tasks. For example, given the object detection annotations in MSCOCO Lin et al. (2014), we propose an object selection task in which we provide a list of objects and ask the model to select the object that appears in the image (the negative options are created by sampling objects that appear in other images but not in the given image).
+The expert researchers and annotators manually solve 20 instances for each newly developed task.
+If the human predictions match the target outputs, this new task is considered valid.
+Iteratively refining the task instructions and output templates:
+For existing tasks, we ask annotators to write instructions based on the original task definitions with minor modifications. For newly developed tasks, the annotators write instructions by discussing with the expert researchers.
+Once an annotator finishes writing a new instruction, one of the two expert researchers is randomly assigned to examine the instances and provide feedback for revising the instruction. This step iterates repeatedly until the instruction meets our requirements. We require the instruction to be clear, easy to understand, and can be correctly executed by a human.
+Each task together with its associated dataset and instruction is then added to the pool of candidate tasks for Vision-Flan.
+Verifying the quality of each task:
+From the candidate task pool, two expert researchers, including a native English speaker, work together to select the high-quality tasks where the instruction is fluent and effectively conveys the intended task and the task does not overlap with other tasks.
+Based on these four steps, we finally collect 187 high-quality tasks, and for each task, we randomly sample 10,000 instances from its corresponding dataset. If a dataset contains less than 10,000 instances, we include all of them. We name the dataset as Vision-Flan, consisting of 1,664,261 instances for 187 tasks in total. We include references to all the datasets used in Vision-Flan in Appendix H and show an instance for each task in Appendix J.
+2.2 Comparison with Existing Datasets
+Dataset
+Instances #
+Tasks #
+Source
+LLaVA (Liu et al., 2023e)
+150K
+3
+Synthetic
+LAMM (Yin et al., 2023)
+196K
+8
+Synthetic
+VL-Qwen (Bai et al., 2023a)
+350K
+Unknown
+Private
+M3IT (Li et al., 2023e)
+2.4M
+40
+Synthetic
+mPlug-Owl Ye et al. (2023)
+150K
+3
+Synthetic
+Shikra (Chen et al., 2023a)
+156K
+4
+Synthetic
+SVIT (Zhao et al., 2023)
+4.2M
+4
+Synthetic
+MultiInstruct Xu et al. (2023)
+510K
+62
+Public
+Vision-Flan (Ours)
+1.6M
+196
+Public
+Table 1: Comparison between Vision-Flan and existing visual instruction tuning datasets.
+Table 1 presents a comparison between existing visual instruction tuning datasets and Vision-Flan. For existing visual instruction tuning datasets, we directly adopt the numbers of tasks and instances reported in their original papers. The majority of these datasets are generated using proprietary language models, such as ChatGPT111https://openai.com/blog/chatgpt and GPT-4222https://openai.com/research/gpt-4, and exhibit a narrow range of task diversity. VL-Qwen Bai et al. (2023a) is a recently introduced large-scale dataset annotated by humans but remains inaccessible to the public. Although MultiInstruct Xu et al. (2023) is based on publicly available datasets, it mainly focuses on visual grounding tasks and only contains 29 tasks that do not involve region-specific information. In contrast, Vision-Flan encompasses a significantly more diverse array of tasks, offering a three-times increase compared to the number of tasks in MultiInstruct.
+In Figure 2, we compare the task categories covered by Vision-Flan and other datasets.
+Tasks within Vision-Flan are first categorized into three primary groups: Question Answering, Classification, and Generation, and each of these primary groups is further divided into specific, fine-grained categories. For instance, within the Classification group, the General Object category involves classifying objects in images into various concepts, such as “fish”, “car”, and “dog”. Contrastingly, the Vehicle Model category demands the models to accurately identify specific car brands or models, like “Toyota” and “Camry”. The visualization in Figure 2 clearly demonstrates the superior diversity and volume of tasks in Vision-Flan compared to existing datasets. We list tasks in each category in Appendix I.
+3 Vision-Flan Finetuning
+Model Architecture
+We adopt the same VLM architecture as LLaVA Liu et al. (2023d) and denote it as LLaVA-Architecture. As shown in Figure 3, it consists of a pre-trained vision encoder, a pre-trained large language model, and two layers of MLPs to connect them. In the vision-language pre-training phase of the LLaVA-Architecture, both the pre-trained vision encoder and large language model remain frozen, and only the MLP layers are trained on a large-scale image captioning dataset Schuhmann et al. (2022). We leverage this pre-trained LLaVA model
+, without any visual instruction tuning, as our initial model and finetune it on Vision-Flan. During visual instruction tuning, we finetune both the MLP layers and the language model while keeping the vision encoder frozen.
+Refer to caption
+Figure 3: The left of the figure shows the LLaVA-Architecture and the right of the figure shows the two-stage visual instruction tuning pipeline.
+Two-stage Visual Instruction Tuning
+Contrary to prior approaches Liu et al. (2023d); Dai et al. (2023) that mix human-labeled data with GPT-4 synthesized data for visual instruction tuning, our study introduces a two-stage instruction tuning pipeline. As shown in Figure 3, in the first stage, we finetune the VLM on all 187 tasks of Vision-Flan to acquire diverse capabilities and name the resulting model as Vision-Flan Base. However, due to the brevity of target outputs presented in academic datasets, the responses from Vision-Flan Base are not in human-preferred formats. Hence, we further finetune Vision-Flan Base on GPT-4 synthesized data to align the model’s outputs with human preference. We denote the yielded model as Vision-Flan Chat. This training framework requires minimal GPT-4 synthesized data while providing deep insights into the distinct contributions of human-labeled and GPT-4 synthesized data in visual instruction tuning.
+Implementation Details
+We leverage LLaVA-Architecture with Vicuna-13B v1.5 Chiang et al. (2023), CLIP-ViT-L-336px Radford et al. (2021) and two layers of MLP as our VLM. For the first-stage instruction tuning, we finetune the MLP layers and the language model on Vision-Flan for 1 epoch with a learning rate 2e-5 and per device batch size 16 on 8 A100 GPUs. For the second-stage instruction tuning, we further finetune the MLP layers and the language model on 1,000 instances randomly sampled from the LLaVA dataset Liu et al. (2023e) with learning rate 1e-5 and per device batch size 8 on 8 GPUs for 128 steps. In the following sections, we use LLaVA dataset and GPT-4 synthesized data interchangeably.
+4 Experiment Setup
+Evaluation Datasets
+We evaluate the models on several widely adopted multimodal evaluation benchmark datasets including multiple-choice benchmarks: MMbench Liu et al. (2023f), MME Fu et al. (2023), and MMMU; free-form generation benchmarks: MM-Vet Yu et al. (2023) and LLaVA-Bench; the hallucination benchmark: POPE Li et al. (2023g), and catastrophic forgetting benchmarks: CIFAR-10 and CIFAR-100 Krizhevsky et al. (2009), MNIST LeCun (1998), and miniImageNet Vinyals et al. (2016). More details of the evaluation datasets can be found in Appendix B.
+Evaluation Protocols
+For MMbench, MME, MM-Vet, LLaVA-Bench, POPE and MMMU, we strictly follow their official implementations of evaluation code to evaluate the performance of each model.
+For datasets that do not have official evaluation codes including CIFAR-10, CIFAR-100, MNIST, and miniImageNet, we leverage the state-of-the-art open-source LLM, Vicuna 1.5 13B, to perform the evaluation and report the averaged performance on these four datasets in the CF column in Table 2. More details of evaluation protocols can be found in Appendix C.
+Baselines
+We compare our models with several recent state-of-the-art vision-language models, including BLIP-2 Li et al. (2023d), InstructBLIP Dai et al. (2023),
+Shikra Chen et al. (2023a), LLaVA Liu et al. (2023e), Qwen-VL, Qwen-VL-Chat Bai et al. (2023b), and LLaVA-1.5 Liu et al. (2023d). The LLMs and image encoders used in all baselines are shown in Table 2. Details of baselines can be found in Appendix D.
+5 Results and Analysis
+Model
+LLM
+Image Encoder
+MM-Bench
+MME
+MMMU
+LLaVA-Bench
+MM-Vet
+Pope
+CF
+BLIP-2
+FlanT5-XXL
+ViT-g/14
+-
+1293.8
+34.0
+-
+22.4
+85.3
+-
+InstructBlip
+Vicuna-13B
+ViT-g/14
+36.0
+1212.8
+33.8
+58.2
+25.6
+78.9
+-
+Mini-GPT4
+Vicuna-13B
+ViT-g/14
+24.3
+581.67
+27.6
+-
+-
+-
+-
+Shikra
+Vicuna-13B
+ViT-L/14
+58.8
+-
+-
+-
+-
+-
+-
+LLaVA
+Vicuna-13B v1.5
+CLIP-ViT-L-336px
+38.7
+1151.6
+-
+70.8
+33.4
+75.3
+-
+Qwen-VL
+Qwen-7B
+ViT-bigG
+38.2
+-
+-
+-
+-
+-
+-
+Qwen-VL-Chat
+Qwen-7B
+ViT-bigG
+60.6
+1487.5
+32.9
+73.6
+-
+-
+72.1
+LLaVA 1.5
+Vicuna-13B v1.5
+CLIP-ViT-L-336px
+66.7
+1531.3
+33.6
+70.7
+35.4
+83.6
+73.3
+Vision-Flan Base
+Vicuna-13B v1.5
+CLIP-ViT-L-336px
+69.8
+1537.8
+34.4
+38.5
+33.4
+85.9
+87.2
+Second-Stage Tuning with 1,000 GPT-4 Synthesized Instances
+Vision-Flan Chat
+Vicuna-13B v1.5
+CLIP-ViT-L-336px
+67.6
+1490.6
+34.3
+78.3
+38.0
+86.1
+84.0
+Table 2: Comprehensive evaluation of VLMs on widely adopted benchmark datasets.
+CF denotes the averaged performance of VLMs on four catastrophic forgetting benchmarks.
+5.1 Main Results
+As demonstrated in Table 2, Vision-Flan Base achieves state-of-the-art performance on comprehensive evaluation benchmarks including MME, MM-Bench and MMMU, while reducing hallucination and catastrophic forgetting. However, we observe that Vision-Flan Base scores significantly lower on the LLaVA-Bench dataset in comparison to VLMs trained using GPT-4 synthesized data. We attribute this discrepancy to the conciseness and brevity of target outputs within academic datasets. As shown in Figure 1, VQA tasks frequently yield outputs comprising a single or a few words. Even outputs of many generation tasks are typically confined to one or two succinct sentences. Training on these tasks leads Vision-Flan Base to generate brief responses, which are not aligned with human preferences.
+Conversely, through the second-stage tuning on a mere 1,000 GPT-4 synthesized data instances, Vision-Flan Chat achieves
+significant performance improvement on LLaVA-Bench, a benchmark measuring human-preference alignment,
+while maintaining a relatively lower rate of hallucination and catastrophic forgetting. To better understand why Vision-Flan models are better than current VLMs, we conduct two case studies focusing on OCR and Entity Recognition and analyze both quantitative and qualitative results in Appendix E.2.
+Another finding in Table 2 is that compared to Vision-Flan Base, Vision-Flan Chat achieves slightly inferior performance on comprehensive evaluation benchmarks demonstrating the bias and hallucination inevitably introduced by the GPT-4 synthesized data, which is discussed in detail in Section 5.2.
+5.2 Effect of Human-Labeled and GPT-4 Synthesized Datasets
+Refer to caption
+Figure 4: Performance on four comprehensive benchmarks versus the number of training tasks.
+Effect of Task Diversity in Vision-Flan
+Figure 4 illustrates the relationship between the number of tasks from Vision-Flan employed during visual instruction tuning and the performance of Vision-Flan Base across four comprehensive evaluation benchmarks. It’s apparent that as the number of tasks increases, the performance of Vision-Flan Base on all datasets is improved. To evaluate the impact of varying numbers of instances from different tasks, we fix the total amount of instances used for visual instruction tuning and experiment with different numbers of tasks. As demonstrated in Table 3, when the number of training instances is constant, augmenting the number of tasks significantly enhances model performance.
+These findings substantiate our hypothesis that the diverse array of human-labeled tasks within Vision-Flan is essential for improving the capabilities of VLMs.
+# of Tasks
+# of Instances per Task
+MMB
+MME
+Pope
+MMMU
+Training with 100,000 Instances
+10
+10,000
+58.3
+723.9
+81.0
+32.6
+187
+500
+58.8
+1314.3
+83.3
+33.3
+Training with 200,000 Instances
+20
+10,000
+58.8
+897.3
+83.4
+31.8
+187
+1,000
+63.5
+1373.5
+83.6
+33.7
+Table 3: Comparison of Vision-Flan Base trained with a fixed total amount of data instances.
+Effect of GPT-4 Synthesized Data on Comprehensive Evaluation Benchmarks
+Furthermore, we analyze if GPT-4 synthesized data can improve the model’s performance on comprehensive evaluation benchmarks and show the results in Figure 5. Further tuning Vision-Flan Base on GPT-4 synthesized data instances does not lead to performance improvement. Tuning pretrained LLaVA model on a small amount of GPT-4 synthesized data (100) can improve its performance on MME but further increasing the number of training instances does not lead to any improvement. We also observe a similar trend on the MM-Bench dataset and report the result in Appendix E.1. These observations are in line with recent findings in LLMs:
+GPT-4 synthesized data does not improve model’s capability but rather modulates the responses towards human-preferred formats Jain et al. (2023); Gudibande et al. (2023).
+Refer to caption
+Figure 5: Effect of the number of GPT-4 synthesized training instances on MME. The dashed gray line indicates the performance of LLaVA 1.5.
+Effect of GPT-4 Synthesized Data on Human-Preference Alignment
+When utilizing our proposed two-stage tuning framework,
+we find that by performing a second-stage finetuning on a mere 1,000 GPT-4 synthesized instances from the LLaVA dataset, Vision-Flan Chat achieves significantly better performance (78.5 v.s. 38.5) on the LLaVA-Bench dataset. This observation leads us to raise the question: Is extensive finetuning on large-scale GPT-4 synthesized datasets necessary for aligning VLMs with human preferences? To answer it, we finetune both Vision-Flan Base and pretrained LLaVA model on different numbers of GPT-4 synthesized instances ranging from 100 to 158,000, and show the results in Figure 6. As we can see, with 1,000 instances, Vision-Flan Base achieves a score of 78.3 and further increasing the number of training instances leads to a performance drop. A similar trend can also be seen for the pretrained LLaVA model.
+Refer to caption
+Figure 6: Effect of the number of GPT-4 synthesized instances on human preference alignment. The dashed gray line indicates the performance of LLaVA 1.5.
+Refer to caption
+Figure 7: Effect of the number of GPT-4 synthesized training instances on the hallucination benchmark and the ratio of “Yes”. The dashed lines indicate the performance of the state-of-the-art LLaVA 1.5 model.
+GPT-4 Synthesized Data Causes Hallucination and Bias
+Concurrent work Liu et al. (2023c) identifies that hallucination in current VLMs can be caused by their bias toward positive answers (i.e., “Yes”). In Figure 7, we explicitly show the relationship between hallucination, the ratio of “Yes”, and the number of training instances from GPT-4 synthesized dataset. As the number of GPT-4 synthesized instances increases, the model’s responses are biased towards the answer “Yes” even if the objects are not in the images, causing the model to hallucinate. This observation suggests that a small amount of GPT-4 synthesized training instances is preferred to avoid hallucination and bias in VLMs.
+5.3 Single-stage Tuning on Mixed Data Vs. Two-stage Tuning
+In this section, we compare the performance of two training strategies based on the same pretrained LLaVA model: (1) finetuning it on the mix of Vision-Flan and the LLaVA dataset; (2) finetuning it utilizing Vision-Flan and 1,000 instances from the LLaVA dataset with our two-stage tuning method. As illustrated in Table 4, the performance of VLMs finetuned on the mix of Vision-Flan and GPT-4 synthesized data is notably inferior compared to Vision-Flan Chat trained through our two-stage tuning framework.
+Method
+# of LLaVA
+MME
+LLaVA-Bench
+MM-Vet
+Mixed Data
+1,000
+1364.0
+52.7
+36.6
+Mixed Data
+158,000
+1317.9
+63.9
+36.8
+Two-stage
+1,000
+1490.6
+78.3
+38.0
+Table 4:
+Comparison between single-stage finetuning on mixed data and two-stage finetuning.
+5.4 What is Essentially Improved in VLMs during Visual Instruction Tuning
+LLM
+MLPs
+MM-Bench
+MME
+LLaVA-Bench
+Pope
+✗
+✗
+45.0
+936.3
+32.4
+51.9
+✗
+✓
+52.4
+1107.3
+39.1
+83.3
+✓
+✗
+69.2
+1495.5
+39.3
+85.6
+✓
+✓
+69.8
+1537.8
+38.5
+85.9
+Table 5: Effect of tuning different modules in Vision-Flan Base. ✓ denotes the module is tuned and ✗ denotes the module is frozen during visual instruction tuning.
+In LLaVA-Architecture, the MLP layers map the visual features from a vision encoder into the embedding space of LLMs. The LLMs then interpret the visual features and follow text instructions to generate responses. In Table 5, we show the results of training different modules during visual instruction tuning and observe that solely tuning MLPs causes a significant performance drop compared to tuning both MLPs and LLMs during visual instruction tuning. However, tuning LLMs with frozen MLPs results in similar performance as tuning both modules, demonstrating that visual instruction tuning mainly enables LLMs to better understand visual features while MLPs have been sufficiently learned during pretraning. To further support this claim, we replace the instruction-tuned MLPs in Vision-Flan Base and Vision-Flan Chat with the pretrained MLPs from the pre-trained LLaVA model, and show that with the pretrained MLPs, both models can retain more than 90% of performance on most tasks as shown in Table 6. We also compute the Pearson Correlation Coefficient between the parameters of pretrained MLPs and instruction-tuned MLPs, and find that their correlation coefficient is higher than 0.99.
+Model
+MMB
+MME
+LLaVA-Bench
+Pope
+Vision-Flan Base
+69.8
+1537.8
+38.5
+85.9
++ Pretrained MLP
+68.0
+1403.1
+36.4
+84.0
+Vision-Flan Chat
+67.6
+1490.6
+78.3
+86.1
++ Pretrained MLP
+65.7
+1332.2
+73.8
+85.4
+Table 6: Results of replacing visual instruction tuned MLPs with pretrained MLPs. Gray rows show the performance of the original models and yellow rows show the performance after replacing instruction-tuned MLPs with pretrained MLPs.
+6 Related Work
+Instruction tuning Wei et al. (2022) is first introduced in NLP and has been adapted to the visual-language domain.
+MultiInstruct Xu et al. (2023) propose the first human-label multi-modal instruction tuning dataset for improving the zero-shot performance of pre-trained VLMs. LLaVA Liu et al. (2023e) leverage GPT-4 to repurpose text annotations such as captions or dense captions from existing computer-vision datasets to generate visual dialogues, Complex VQA and detail captions for visual instruction tuning. Following LLaVA, mPLUG-Owl Ye et al. (2023), LAMM Yin et al. (2023), MIMIC-IT Li et al. (2023a) and Macaw-LLM Lyu et al. (2023) leverage proprietary LLMs such as GPT-4 and ChatGPT to further extend the instruction tuning tasks into 3D-domain, multiple-images and videos, and increase the amount of training instances. MiniGPT-4 Zhu et al. (2023) utilizes ChatGPT to refine output from the pre-trained VLM itself. InstructBLIP Dai et al. (2023) and LLaVA-1.5 Liu et al. (2023d) mix the human-annotated and GPT4 synthesized datasets to enhance visual instruction tuning.
+Several recent work explores different strategies to improve visual instruction tuning. StableLLaVA Li et al. (2023f) and VPG-C Li et al. (2023c) generate both images and texts using Stable Diffusion Rombach et al. (2022) or Blended Diffusion Avrahami et al. (2022) to alleviate domain bias and encourage VLMs attend to visual details. Liu et al. (2023b) demonstrate the bias introduced by positive instructions and introduce negative instruction examples for improving robustness. Shikra Chen et al. (2023a) incorporate visual grounding tasks in visual instruction tuning to improve the VLM’s referential capability. LLaVAR Zhang et al. (2023) and BLIVA Hu et al. (2023) leverage OCR tools and GPT-4 to generate tasks helping VLMs to understand text in images. Lu et al. (2023) and SVIT Zhao et al. (2023) empirically study the effect of scaling the size of VLMs and the size of GPT-4 synthesized dataset. Two concurrent works Wang et al. (2023a); Chen et al. (2023b) directly prompt GPT-4V with images as input to generate visual instruction tuning data and achieve superior performance. Additional related work can be found in Appendix G.
+Unlike all prior work, our work mainly focuses on scaling human-labeled tasks in visual instruction tuning to improve VLMs’ capabilities. Additionally, we perform extensive analysis to understand the characteristics of human-labeled and GPT-4 synthesized data and draw meaningful conclusions.
+7 Conclusion
+We construct Vision-Flan, the most diverse public-available visual instruction tuning dataset, consisting of 187 diverse tasks and 1,664,261 instances collected from academic datasets, and each task is accompanied by an expert-written instruction. We demonstrate that VLMs trained on Vision-Flan with proposed two-stage tuning framework achieve state-of-the-art performance on comprehensive evaluation benchmarks. Additionally, we perform extensive analysis and reveal the distinct contributions of human-labeled and GPT-4 synthesized data in visual instruction tuning.
+8 Limitations
+All the tasks included in Vision-Flan are in English, which confines the usage of our dataset and models to English speaking populations. Future work should extend Vision-Flan with multi-lingual tasks. In addition, all the tasks in Vision-Flan only consists of a single image. Many real-world vision-language tasks require the model to take multiple images as inputs. Thus, future work should explore vision-language tasks that involve multiple images or videos.
+Our analysis mainly focuses on the GPT-4 synthesized visual instruction tuning dataset. Recently, as the GPT-4V 333https://openai.com/research/gpt-4v-system-card becomes publicly available, there are some concurrent works Wang et al. (2023a); Chen et al. (2023b) prompting GPT-4V with images as inputs to generate visual instruction tuning data. Future work can analyze the effect of tuning VLMs on such datasets and identify the advantages and disadvantages.
+In our experiments, we mainly focus on the LLaVA-Architecture Liu et al. (2023e) due to its strong performance and high efficiency. However, there are other foundation architectures such as Q-former in BLIP2 Li et al. (2023d) and Perceiver Resampler in Flamingo Alayrac et al. (2022). More diverse VLM architectures can be explored in the future to draw more general conclusions.
+References
+Agrawal et al. (2019)
+Harsh Agrawal, Peter Anderson, Karan Desai, Yufei Wang, Xinlei Chen, Rishabh Jain, Mark Johnson, Dhruv Batra, Devi Parikh, and Stefan Lee. 2019.
+nocaps: novel object captioning at scale.
+In 2019 IEEE/CVF International Conference on Computer Vision, ICCV 2019, Seoul, Korea (South), October 27 - November 2, 2019, pages 8947–8956. IEEE.
+Alayrac et al. (2022)
+Jean-Baptiste Alayrac, Jeff Donahue, Pauline Luc, Antoine Miech, Iain Barr, Yana Hasson, Karel Lenc, Arthur Mensch, Katherine Millican, Malcolm Reynolds, Roman Ring, Eliza Rutherford, Serkan Cabi, Tengda Han, Zhitao Gong, Sina Samangooei, Marianne Monteiro, Jacob L. Menick, Sebastian Borgeaud, Andy Brock, Aida Nematzadeh, Sahand Sharifzadeh, Mikolaj Binkowski, Ricardo Barreira, Oriol Vinyals, Andrew Zisserman, and Karén Simonyan. 2022.
+Flamingo: a visual language model for few-shot learning.
+Antol et al. (2015)
+Stanislaw Antol, Aishwarya Agrawal, Jiasen Lu, Margaret Mitchell, Dhruv Batra, C Lawrence Zitnick, and Devi Parikh. 2015.
+Vqa: Visual question answering.
+In Proceedings of the IEEE international conference on computer vision, pages 2425–2433.
+Avrahami et al. (2022)
+Omri Avrahami, Dani Lischinski, and Ohad Fried. 2022.
+Blended diffusion for text-driven editing of natural images.
+In IEEE/CVF Conference on Computer Vision and Pattern Recognition, CVPR 2022, New Orleans, LA, USA, June 18-24, 2022, pages 18187–18197. IEEE.
+Bai et al. (2023a)
+Jinze Bai, Shuai Bai, Yunfei Chu, Zeyu Cui, Kai Dang, Xiaodong Deng, Yang Fan, Wenbin Ge, Yu Han, Fei Huang, Binyuan Hui, Luo Ji, Mei Li, Junyang Lin, Runji Lin, Dayiheng Liu, Gao Liu, Chengqiang Lu, Keming Lu, Jianxin Ma, Rui Men, Xingzhang Ren, Xuancheng Ren, Chuanqi Tan, Sinan Tan, Jianhong Tu, Peng Wang, Shijie Wang, Wei Wang, Shengguang Wu, Benfeng Xu, Jin Xu, An Yang, Hao Yang, Jian Yang, Shusheng Yang, Yang Yao, Bowen Yu, Hongyi Yuan, Zheng Yuan, Jianwei Zhang, Xingxuan Zhang, Yichang Zhang, Zhenru Zhang, Chang Zhou, Jingren Zhou, Xiaohuan Zhou, and Tianhang Zhu. 2023a.
+Qwen technical report.
+CoRR, abs/2309.16609.
+Bai et al. (2023b)
+Jinze Bai, Shuai Bai, Shusheng Yang, Shijie Wang, Sinan Tan, Peng Wang, Junyang Lin, Chang Zhou, and Jingren Zhou. 2023b.
+Qwen-vl: A versatile vision-language model for understanding, localization, text reading, and beyond.
+Barbu et al. (2019)
+Andrei Barbu, David Mayo, Julian Alverio, William Luo, Christopher Wang, Dan Gutfreund, Josh Tenenbaum, and Boris Katz. 2019.
+Objectnet: A large-scale bias-controlled dataset for pushing the limits of object recognition models.
+In Hanna M. Wallach, Hugo Larochelle, Alina Beygelzimer, Florence d’Alché-Buc, Emily B. Fox, and Roman Garnett, editors, Advances in Neural Information Processing Systems 32: Annual Conference on Neural Information Processing Systems 2019, NeurIPS 2019, December 8-14, 2019, Vancouver, BC, Canada, pages 9448–9458.
+Bergmann et al. (2021)
+Paul Bergmann, Kilian Batzner, Michael Fauser, David Sattlegger, and Carsten Steger. 2021.
+The mvtec anomaly detection dataset: A comprehensive real-world dataset for unsupervised anomaly detection.
+volume 129, pages 1038–1059.
+Bevilacqua et al. (2012)
+Marco Bevilacqua, Aline Roumy, Christine Guillemot, and Marie-Line Alberi-Morel. 2012.
+Low-complexity single-image super-resolution based on nonnegative neighbor embedding.
+pages 1–10.
+Biten et al. (2019)
+Ali Furkan Biten, Rubèn Tito, Andrés Mafla, Lluís Gómez i Bigorda, Marçal Rusiñol, C. V. Jawahar, Ernest Valveny, and Dimosthenis Karatzas. 2019.
+Scene text visual question answering.
+Chao et al. (2015)
+Yu-Wei Chao, Zhan Wang, Yugeng He, Jiaxuan Wang, and Jia Deng. 2015.
+HICO: A benchmark for recognizing human-object interactions in images.
+In Proceedings of the IEEE International Conference on Computer Vision.
+Chen et al. (2023a)
+Keqin Chen, Zhao Zhang, Weili Zeng, Richong Zhang, Feng Zhu, and Rui Zhao. 2023a.
+Shikra: Unleashing multimodal llm’s referential dialogue magic.
+CoRR, abs/2306.15195.
+Chen et al. (2023b)
+Lin Chen, Jinsong Li, Xiaoyi Dong, Pan Zhang, Conghui He, Jiaqi Wang, Feng Zhao, and Dahua Lin. 2023b.
+Sharegpt4v: Improving large multi-modal models with better captions.
+CoRR, abs/2311.12793.
+Chen et al. (2023c)
+Yang Chen, Hexiang Hu, Yi Luan, Haitian Sun, Soravit Changpinyo, Alan Ritter, and Ming-Wei Chang. 2023c.
+Can pre-trained vision and language models answer visual information-seeking questions?
+pages 14948–14968.
+Chen et al. (2020)
+Yen-Chun Chen, Linjie Li, Licheng Yu, Ahmed El Kholy, Faisal Ahmed, Zhe Gan, Yu Cheng, and Jingjing Liu. 2020.
+Uniter: Universal image-text representation learning.
+In European conference on computer vision, pages 104–120. Springer.
+Chiang et al. (2023)
+Wei-Lin Chiang, Zhuohan Li, Zi Lin, Ying Sheng, Zhanghao Wu, Hao Zhang, Lianmin Zheng, Siyuan Zhuang, Yonghao Zhuang, Joseph E. Gonzalez, Ion Stoica, and Eric P. Xing. 2023.
+Vicuna: An open-source chatbot impressing gpt-4 with 90%* chatgpt quality.
+Chng et al. (2020)
+Chee-Kheng Chng, Chee Seng Chan, and Cheng-Lin Liu. 2020.
+Total-text: toward orientation robustness in scene text detection.
+Int. J. Document Anal. Recognit., 23(1):31–52.
+Chua et al. (2009)
+Tat-Seng Chua, Jinhui Tang, Richang Hong, Haojie Li, Zhiping Luo, and Yantao Zheng. 2009.
+NUS-WIDE: a real-world web image database from national university of singapore.
+In Proceedings of the 8th ACM International Conference on Image and Video Retrieval, CIVR 2009, Santorini Island, Greece, July 8-10, 2009. ACM.
+Cimpoi et al. (2014)
+M. Cimpoi, S. Maji, I. Kokkinos, S. Mohamed, , and A. Vedaldi. 2014.
+Describing textures in the wild.
+In Proceedings of the IEEE Conf. on Computer Vision and Pattern Recognition (CVPR).
+Coates et al. (2011)
+Adam Coates, Andrew Y. Ng, and Honglak Lee. 2011.
+An analysis of single-layer networks in unsupervised feature learning.
+In Proceedings of the Fourteenth International Conference on Artificial Intelligence and Statistics, AISTATS 2011, Fort Lauderdale, USA, April 11-13, 2011, volume 15 of JMLR Proceedings, pages 215–223. JMLR.org.
+Dai et al. (2023)
+Wenliang Dai, Junnan Li, Dongxu Li, Anthony Meng Huat Tiong, Junqi Zhao, Weisheng Wang, Boyang Li, Pascale Fung, and Steven C. H. Hoi. 2023.
+Instructblip: Towards general-purpose vision-language models with instruction tuning.
+CoRR, abs/2305.06500.
+Darlow et al. (2018)
+Luke Nicholas Darlow, Elliot J. Crowley, Antreas Antoniou, and Amos J. Storkey. 2018.
+CINIC-10 is not imagenet or CIFAR-10.
+CoRR, abs/1810.03505.
+Das et al. (2019)
+Abhishek Das, Satwik Kottur, Khushi Gupta, Avi Singh, Deshraj Yadav, Stefan Lee, José M. F. Moura, Devi Parikh, and Dhruv Batra. 2019.
+Visual dialog.
+volume 41, pages 1242–1256.
+Devlin et al. (2019)
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. 2019.
+BERT: pre-training of deep bidirectional transformers for language understanding.
+In Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, NAACL-HLT 2019, Minneapolis, MN, USA, June 2-7, 2019, Volume 1 (Long and Short Papers), pages 4171–4186. Association for Computational Linguistics.
+Eitz et al. (2012)
+Mathias Eitz, James Hays, and Marc Alexa. 2012.
+How do humans sketch objects?
+ACM Trans. Graph. (Proc. SIGGRAPH), 31(4):44:1–44:10.
+Everingham et al. (2010)
+Mark Everingham, Luc Van Gool, Christopher K. I. Williams, John M. Winn, and Andrew Zisserman. 2010.
+The pascal visual object classes (VOC) challenge.
+Farhadi et al. (2009)
+Ali Farhadi, Ian Endres, Derek Hoiem, and David A. Forsyth. 2009.
+Describing objects by their attributes.
+In 2009 IEEE Computer Society Conference on Computer Vision and Pattern Recognition (CVPR 2009), 20-25 June 2009, Miami, Florida, USA, pages 1778–1785. IEEE Computer Society.
+Fei-Fei et al. (2004)
+Li Fei-Fei, Rob Fergus, and Pietro Perona. 2004.
+Learning generative visual models from few training examples: An incremental bayesian approach tested on 101 object categories.
+page 178.
+Fu et al. (2023)
+Chaoyou Fu, Peixian Chen, Yunhang Shen, Yulei Qin, Mengdan Zhang, Xu Lin, Zhenyu Qiu, Wei Lin, Jinrui Yang, Xiawu Zheng, Ke Li, Xing Sun, and Rongrong Ji. 2023.
+MME: A comprehensive evaluation benchmark for multimodal large language models.
+CoRR, abs/2306.13394.
+Ganin et al. (2017)
+Yaroslav Ganin, Evgeniya Ustinova, Hana Ajakan, Pascal Germain, Hugo Larochelle, François Laviolette, Mario Marchand, and Victor S. Lempitsky. 2017.
+Domain-adversarial training of neural networks.
+In Gabriela Csurka, editor, Domain Adaptation in Computer Vision Applications, Advances in Computer Vision and Pattern Recognition, pages 189–209. Springer.
+Gao et al. (2023)
+Peng Gao, Jiaming Han, Renrui Zhang, Ziyi Lin, Shijie Geng, Aojun Zhou, Wei Zhang, Pan Lu, Conghui He, Xiangyu Yue, Hongsheng Li, and Yu Qiao. 2023.
+Llama-adapter V2: parameter-efficient visual instruction model.
+CoRR, abs/2304.15010.
+Garcia and Vogiatzis (2018)
+Noa Garcia and George Vogiatzis. 2018.
+How to read paintings: Semantic art understanding with multi-modal retrieval.
+In Computer Vision - ECCV 2018 Workshops - Munich, Germany, September 8-14, 2018, Proceedings, Part II, volume 11130 of Lecture Notes in Computer Science, pages 676–691. Springer.
+Geirhos et al. (2019)
+Robert Geirhos, Patricia Rubisch, Claudio Michaelis, Matthias Bethge, Felix A. Wichmann, and Wieland Brendel. 2019.
+Imagenet-trained cnns are biased towards texture; increasing shape bias improves accuracy and robustness.
+In 7th International Conference on Learning Representations, ICLR 2019, New Orleans, LA, USA, May 6-9, 2019. OpenReview.net.
+Goyal et al. (2017)
+Yash Goyal, Tejas Khot, Douglas Summers-Stay, Dhruv Batra, and Devi Parikh. 2017.
+Making the v in vqa matter: Elevating the role of image understanding in visual question answering.
+In Proceedings of the IEEE conference on computer vision and pattern recognition, pages 6904–6913.
+Griffin et al. (2007)
+Gregory Griffin, Alex Holub, and Pietro Perona. 2007.
+Caltech-256 object category dataset.
+Gudibande et al. (2023)
+Arnav Gudibande, Eric Wallace, Charlie Snell, Xinyang Geng, Hao Liu, Pieter Abbeel, Sergey Levine, and Dawn Song. 2023.
+The false promise of imitating proprietary llms.
+CoRR, abs/2305.15717.
+Guillaume Jaume (2019)
+Jean-Philippe Thiran Guillaume Jaume, Hazim Kemal Ekenel. 2019.
+Funsd: A dataset for form understanding in noisy scanned documents.
+In Accepted to ICDAR-OST.
+Gurari et al. (2020)
+Danna Gurari, Yinan Zhao, Meng Zhang, and Nilavra Bhattacharya. 2020.
+Captioning images taken by people who are blind.
+In Computer Vision - ECCV 2020 - 16th European Conference, Glasgow, UK, August 23-28, 2020, Proceedings, Part XVII, volume 12362 of Lecture Notes in Computer Science, pages 417–434. Springer.
+Hendrycks et al. (2021a)
+Dan Hendrycks, Steven Basart, Norman Mu, Saurav Kadavath, Frank Wang, Evan Dorundo, Rahul Desai, Tyler Zhu, Samyak Parajuli, Mike Guo, Dawn Song, Jacob Steinhardt, and Justin Gilmer. 2021a.
+The many faces of robustness: A critical analysis of out-of-distribution generalization.
+pages 8320–8329.
+Hendrycks and Dietterich (2019)
+Dan Hendrycks and Thomas G. Dietterich. 2019.
+Benchmarking neural network robustness to common corruptions and perturbations.
+Hendrycks et al. (2021b)
+Dan Hendrycks, Kevin Zhao, Steven Basart, Jacob Steinhardt, and Dawn Song. 2021b.
+Natural adversarial examples.
+pages 15262–15271.
+Horn et al. (2018)
+Grant Van Horn, Oisin Mac Aodha, Yang Song, Yin Cui, Chen Sun, Alexander Shepard, Hartwig Adam, Pietro Perona, and Serge J. Belongie. 2018.
+The inaturalist species classification and detection dataset.
+Horn et al. (2015)
+Grant Van Horn, Steve Branson, Ryan Farrell, Scott Haber, Jessie Barry, Panos Ipeirotis, Pietro Perona, and Serge J. Belongie. 2015.
+Building a bird recognition app and large scale dataset with citizen scientists: The fine print in fine-grained dataset collection.
+In IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2015, Boston, MA, USA, June 7-12, 2015, pages 595–604. IEEE Computer Society.
+Hou et al. (2021)
+Qiang Hou, Weiqing Min, Jing Wang, Sujuan Hou, Yuanjie Zheng, and Shuqiang Jiang. 2021.
+Foodlogodet-1500: A dataset for large-scale food logo detection via multi-scale feature decoupling network.
+In Proceedings of the 29th ACM International Conference on Multimedia, pages 4670–4679.
+Hsu et al. (2021)
+Ting-Yao Hsu, C. Lee Giles, and Ting-Hao Kenneth Huang. 2021.
+Scicap: Generating captions for scientific figures.
+pages 3258–3264.
+Hu et al. (2023)
+Wenbo Hu, Yifan Xu, Yi Li, Weiyue Li, Zeyuan Chen, and Zhuowen Tu. 2023.
+BLIVA: A simple multimodal LLM for better handling of text-rich visual questions.
+CoRR, abs/2308.09936.
+Huang et al. (2007)
+Gary B. Huang, Manu Ramesh, Tamara Berg, and Erik Learned-Miller. 2007.
+Labeled faces in the wild: A database for studying face recognition in unconstrained environments.
+Technical Report 07-49, University of Massachusetts, Amherst.
+Hudson and Manning (2019)
+Drew A Hudson and Christopher D Manning. 2019.
+Gqa: A new dataset for real-world visual reasoning and compositional question answering.
+In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition, pages 6700–6709.
+Hwang and Shwartz (2023)
+EunJeong Hwang and Vered Shwartz. 2023.
+MemeCap: A dataset for captioning and interpreting memes.
+Jain et al. (2023)
+Samyak Jain, Robert Kirk, Ekdeep Singh Lubana, Robert P. Dick, Hidenori Tanaka, Edward Grefenstette, Tim Rocktäschel, and David Scott Krueger. 2023.
+Mechanistically analyzing the effects of fine-tuning on procedurally defined tasks.
+Johnson et al. (2017)
+Justin Johnson, Bharath Hariharan, Laurens van der Maaten, Li Fei-Fei, C. Lawrence Zitnick, and Ross B. Girshick. 2017.
+CLEVR: A diagnostic dataset for compositional language and elementary visual reasoning.
+In 2017 IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2017, Honolulu, HI, USA, July 21-26, 2017, pages 1988–1997. IEEE Computer Society.
+Kafle et al. (2018)
+Kushal Kafle, Brian Price, Scott Cohen, and Christopher Kanan. 2018.
+Dvqa: Understanding data visualizations via question answering.
+In Proceedings of the IEEE conference on computer vision and pattern recognition, pages 5648–5656.
+Kalantidis et al. (2011)
+Yannis Kalantidis, Lluis Garcia Pueyo, Michele Trevisiol, Roelof van Zwol, and Yannis Avrithis. 2011.
+Scalable triangulation-based logo recognition.
+In Proceedings of the 1st International Conference on Multimedia Retrieval, ICMR 2011, Trento, Italy, April 18 - 20, 2011, page 20. ACM.
+Kärkkäinen and Joo (2021)
+Kimmo Kärkkäinen and Jungseock Joo. 2021.
+Fairface: Face attribute dataset for balanced race, gender, and age for bias measurement and mitigation.
+In IEEE Winter Conference on Applications of Computer Vision, WACV 2021, Waikoloa, HI, USA, January 3-8, 2021, pages 1547–1557. IEEE.
+Kembhavi et al. (2016)
+Aniruddha Kembhavi, Mike Salvato, Eric Kolve, Min Joon Seo, Hannaneh Hajishirzi, and Ali Farhadi. 2016.
+A diagram is worth a dozen images.
+In Computer Vision - ECCV 2016 - 14th European Conference, Amsterdam, The Netherlands, October 11-14, 2016, Proceedings, Part IV, volume 9908 of Lecture Notes in Computer Science, pages 235–251. Springer.
+Khosla et al. (2011)
+Aditya Khosla, Nityananda Jayadevaprakash, Bangpeng Yao, and Li Fei-Fei. 2011.
+Novel dataset for fine-grained image categorization.
+In First Workshop on Fine-Grained Visual Categorization, IEEE Conference on Computer Vision and Pattern Recognition, Colorado Springs, CO.
+Kirstain et al. (2023)
+Yuval Kirstain, Adam Polyak, Uriel Singer, Shahbuland Matiana, Joe Penna, and Omer Levy. 2023.
+Pick-a-pic: An open dataset of user preferences for text-to-image generation.
+volume abs/2305.01569.
+Krause et al. (2013)
+Jonathan Krause, Michael Stark, Jia Deng, and Li Fei-Fei. 2013.
+3d object representations for fine-grained categorization.
+In 2013 IEEE International Conference on Computer Vision Workshops, ICCV Workshops 2013, Sydney, Australia, December 1-8, 2013, pages 554–561. IEEE Computer Society.
+Kreiss et al. (2022)
+Elisa Kreiss, Fei Fang, Noah D. Goodman, and Christopher Potts. 2022.
+Concadia: Towards image-based text generation with a purpose.
+Krishna et al. (2017)
+Ranjay Krishna, Yuke Zhu, Oliver Groth, Justin Johnson, Kenji Hata, Joshua Kravitz, Stephanie Chen, Yannis Kalantidis, Li-Jia Li, David A Shamma, et al. 2017.
+Visual genome: Connecting language and vision using crowdsourced dense image annotations.
+International journal of computer vision, 123:32–73.
+Krizhevsky et al. (2009)
+Alex Krizhevsky, Geoffrey Hinton, et al. 2009.
+Learning multiple layers of features from tiny images.
+Kumar et al. (2022)
+Anurendra Kumar, Keval Morabia, William Wang, Kevin Chang, and Alex Schwing. 2022.
+CoVA: Context-aware visual attention for webpage information extraction.
+In Proceedings of the Fifth Workshop on e-Commerce and NLP (ECNLP 5), pages 80–90, Dublin, Ireland. Association for Computational Linguistics.
+Lau et al. (2019)
+Jason J Lau, Soumya Gayen, Dina Demner, and Asma Ben Abacha. 2019.
+Visual question answering in radiology (vqa-rad).
+LeCun (1998)
+Yann LeCun. 1998.
+The mnist database of handwritten digits.
+http://yann. lecun. com/exdb/mnist/.
+Lerner et al. (2022)
+Paul Lerner, Olivier Ferret, Camille Guinaudeau, Hervé Le Borgne, Romaric Besançon, José G. Moreno, and Jesús Lovón-Melgarejo. 2022.
+Viquae, a dataset for knowledge-based visual question answering about named entities.
+In SIGIR ’22: The 45th International ACM SIGIR Conference on Research and Development in Information Retrieval, Madrid, Spain, July 11 - 15, 2022, pages 3108–3120. ACM.
+Li et al. (2023a)
+Bo Li, Yuanhan Zhang, Liangyu Chen, Jinghao Wang, Fanyi Pu, Jingkang Yang, Chunyuan Li, and Ziwei Liu. 2023a.
+MIMIC-IT: multi-modal in-context instruction tuning.
+CoRR, abs/2306.05425.
+Li et al. (2023b)
+Bo Li, Yuanhan Zhang, Liangyu Chen, Jinghao Wang, Jingkang Yang, and Ziwei Liu. 2023b.
+Otter: A multi-modal model with in-context instruction tuning.
+CoRR, abs/2305.03726.
+Li et al. (2017)
+Da Li, Yongxin Yang, Yi-Zhe Song, and Timothy M. Hospedales. 2017.
+Deeper, broader and artier domain generalization.
+In IEEE International Conference on Computer Vision, ICCV 2017, Venice, Italy, October 22-29, 2017, pages 5543–5551. IEEE Computer Society.
+Li et al. (2023c)
+Juncheng Li, Kaihang Pan, Zhiqi Ge, Minghe Gao, Hanwang Zhang, Wei Ji, Wenqiao Zhang, Tat-Seng Chua, Siliang Tang, and Yueting Zhuang. 2023c.
+Fine-tuning multimodal llms to follow zero-shot demonstrative instructions.
+Li et al. (2023d)
+Junnan Li, Dongxu Li, Silvio Savarese, and Steven C. H. Hoi. 2023d.
+BLIP-2: bootstrapping language-image pre-training with frozen image encoders and large language models.
+202:19730–19742.
+Li et al. (2023e)
+Lei Li, Yuwei Yin, Shicheng Li, Liang Chen, Peiyi Wang, Shuhuai Ren, Mukai Li, Yazheng Yang, Jingjing Xu, Xu Sun, Lingpeng Kong, and Qi Liu. 2023e.
+M {}^{\mbox{3}} it: A large-scale dataset towards multi-modal multilingual instruction tuning.
+CoRR, abs/2306.04387.
+Li et al. (2019)
+Liunian Harold Li, Mark Yatskar, Da Yin, Cho-Jui Hsieh, and Kai-Wei Chang. 2019.
+Visualbert: A simple and performant baseline for vision and language.
+CoRR, abs/1908.03557.
+Li et al. (2018)
+Qing Li, Qingyi Tao, Shafiq R. Joty, Jianfei Cai, and Jiebo Luo. 2018.
+VQA-E: explaining, elaborating, and enhancing your answers for visual questions.
+11211:570–586.
+Li and Deng (2019)
+Shan Li and Weihong Deng. 2019.
+Reliable crowdsourcing and deep locality-preserving learning for unconstrained facial expression recognition.
+IEEE Transactions on Image Processing, 28(1):356–370.
+Li et al. (2023f)
+Yanda Li, Chi Zhang, Gang Yu, Zhibin Wang, Bin Fu, Guosheng Lin, Chunhua Shen, Ling Chen, and Yunchao Wei. 2023f.
+Stablellava: Enhanced visual instruction tuning with synthesized image-dialogue data.
+CoRR, abs/2308.10253.
+Li et al. (2023g)
+Yifan Li, Yifan Du, Kun Zhou, Jinpeng Wang, Wayne Xin Zhao, and Ji-Rong Wen. 2023g.
+Evaluating object hallucination in large vision-language models.
+pages 292–305.
+Lin et al. (2014)
+Tsung-Yi Lin, Michael Maire, Serge J. Belongie, James Hays, Pietro Perona, Deva Ramanan, Piotr Dollár, and C. Lawrence Zitnick. 2014.
+Microsoft COCO: common objects in context.
+In Computer Vision - ECCV 2014 - 13th European Conference, Zurich, Switzerland, September 6-12, 2014, Proceedings, Part V, volume 8693 of Lecture Notes in Computer Science, pages 740–755. Springer.
+Lin et al. (2023)
+Zhiqiu Lin, Xinyue Chen, Deepak Pathak, Pengchuan Zhang, and Deva Ramanan. 2023.
+Revisiting the role of language priors in vision-language models.
+Lis et al. (2019)
+Krzysztof Lis, Krishna Kanth Nakka, Pascal Fua, and Mathieu Salzmann. 2019.
+Detecting the unexpected via image resynthesis.
+In 2019 IEEE/CVF International Conference on Computer Vision, ICCV 2019, Seoul, Korea (South), October 27 - November 2, 2019, pages 2152–2161. IEEE.
+Liu et al. (2023a)
+Fuxiao Liu, Tianrui Guan, Zongxia Li, Lichang Chen, Yaser Yacoob, Dinesh Manocha, and Tianyi Zhou. 2023a.
+Hallusionbench: You see what you think? or you think what you see? an image-context reasoning benchmark challenging for gpt-4v(ision), llava-1.5, and other multi-modality models.
+CoRR, abs/2310.14566.
+Liu et al. (2023b)
+Fuxiao Liu, Kevin Lin, Linjie Li, Jianfeng Wang, Yaser Yacoob, and Lijuan Wang. 2023b.
+Aligning large multi-modal model with robust instruction tuning.
+CoRR, abs/2306.14565.
+Liu et al. (2023c)
+Fuxiao Liu, Kevin Lin, Linjie Li, Jianfeng Wang, Yaser Yacoob, and Lijuan Wang. 2023c.
+Mitigating hallucination in large multi-modal models via robust instruction tuning.
+Liu et al. (2023d)
+Haotian Liu, Chunyuan Li, Yuheng Li, and Yong Jae Lee. 2023d.
+Improved baselines with visual instruction tuning.
+CoRR, abs/2310.03744.
+Liu et al. (2023e)
+Haotian Liu, Chunyuan Li, Qingyang Wu, and Yong Jae Lee. 2023e.
+Visual instruction tuning.
+Liu et al. (2023f)
+Yuan Liu, Haodong Duan, Yuanhan Zhang, Bo Li, Songyang Zhang, Wangbo Zhao, Yike Yuan, Jiaqi Wang, Conghui He, Ziwei Liu, Kai Chen, and Dahua Lin. 2023f.
+Mmbench: Is your multi-modal model an all-around player?
+CoRR, abs/2307.06281.
+Liu et al. (2017)
+Yuliang Liu, Lianwen Jin, Shuaitao Zhang, and Sheng Zhang. 2017.
+Detecting curve text in the wild: New dataset and new solution.
+CoRR, abs/1712.02170.
+Liu et al. (2016)
+Ziwei Liu, Ping Luo, Shi Qiu, Xiaogang Wang, and Xiaoou Tang. 2016.
+Deepfashion: Powering robust clothes recognition and retrieval with rich annotations.
+In 2016 IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2016, Las Vegas, NV, USA, June 27-30, 2016, pages 1096–1104. IEEE Computer Society.
+Loh and Chan (2019)
+Yuen Peng Loh and Chee Seng Chan. 2019.
+Getting to know low-light images with the exclusively dark dataset.
+Comput. Vis. Image Underst., 178:30–42.
+Lomonaco and Maltoni (2017)
+Vincenzo Lomonaco and Davide Maltoni. 2017.
+Core50: a new dataset and benchmark for continuous object recognition.
+In 1st Annual Conference on Robot Learning, CoRL 2017, Mountain View, California, USA, November 13-15, 2017, Proceedings, volume 78 of Proceedings of Machine Learning Research, pages 17–26. PMLR.
+Lu et al. (2021a)
+Pan Lu, Ran Gong, Shibiao Jiang, Liang Qiu, Siyuan Huang, Xiaodan Liang, and Song-Chun Zhu. 2021a.
+Inter-gps: Interpretable geometry problem solving with formal language and symbolic reasoning.
+In The 59th Annual Meeting of the Association for Computational Linguistics (ACL).
+Lu et al. (2022)
+Pan Lu, Swaroop Mishra, Tony Xia, Liang Qiu, Kai-Wei Chang, Song-Chun Zhu, Oyvind Tafjord, Peter Clark, and Ashwin Kalyan. 2022.
+Learn to explain: Multimodal reasoning via thought chains for science question answering.
+In The 36th Conference on Neural Information Processing Systems (NeurIPS).
+Lu et al. (2021b)
+Pan Lu, Liang Qiu, Jiaqi Chen, Tanglin Xia, Yizhou Zhao, Wei Zhang, Zhou Yu, Xiaodan Liang, and Song-Chun Zhu. 2021b.
+Iconqa: A new benchmark for abstract diagram understanding and visual language reasoning.
+In Proceedings of the Neural Information Processing Systems Track on Datasets and Benchmarks 1, NeurIPS Datasets and Benchmarks 2021, December 2021, virtual.
+Lu et al. (2023)
+Yadong Lu, Chunyuan Li, Haotian Liu, Jianwei Yang, Jianfeng Gao, and Yelong Shen. 2023.
+An empirical study of scaling instruct-tuned large multimodal models.
+arXiv preprint arXiv:2309.09958.
+Lyu et al. (2023)
+Chenyang Lyu, Minghao Wu, Longyue Wang, Xinting Huang, Bingshuai Liu, Zefeng Du, Shuming Shi, and Zhaopeng Tu. 2023.
+Macaw-llm: Multi-modal language modeling with image, audio, video, and text integration.
+CoRR, abs/2306.09093.
+Maji et al. (2013)
+Subhransu Maji, Esa Rahtu, Juho Kannala, Matthew B. Blaschko, and Andrea Vedaldi. 2013.
+Fine-grained visual classification of aircraft.
+Technical report.
+Malinowski and Fritz (2014)
+Mateusz Malinowski and Mario Fritz. 2014.
+A multi-world approach to question answering about real-world scenes based on uncertain input.
+In Advances in Neural Information Processing Systems 27, pages 1682–1690. Curran Associates, Inc.
+Marino et al. (2019)
+Kenneth Marino, Mohammad Rastegari, Ali Farhadi, and Roozbeh Mottaghi. 2019.
+Ok-vqa: A visual question answering benchmark requiring external knowledge.
+In Proceedings of the IEEE/cvf conference on computer vision and pattern recognition, pages 3195–3204.
+Mathew et al. (2022)
+Minesh Mathew, Viraj Bagal, Rubèn Tito, Dimosthenis Karatzas, Ernest Valveny, and C. V. Jawahar. 2022.
+Infographicvqa.
+In IEEE/CVF Winter Conference on Applications of Computer Vision, WACV 2022, Waikoloa, HI, USA, January 3-8, 2022, pages 2582–2591. IEEE.
+Mathew et al. (2020)
+Minesh Mathew, Dimosthenis Karatzas, R. Manmatha, and C. V. Jawahar. 2020.
+Docvqa: A dataset for VQA on document images.
+CoRR, abs/2007.00398.
+Mathews et al. (2016)
+Alexander Patrick Mathews, Lexing Xie, and Xuming He. 2016.
+Senticap: Generating image descriptions with sentiments.
+In Proceedings of the Thirtieth AAAI Conference on Artificial Intelligence, February 12-17, 2016, Phoenix, Arizona, USA, pages 3574–3580. AAAI Press.
+Methani et al. (2020)
+Nitesh Methani, Pritha Ganguly, Mitesh M. Khapra, and Pratyush Kumar. 2020.
+Plotqa: Reasoning over scientific plots.
+In IEEE Winter Conference on Applications of Computer Vision, WACV 2020, Snowmass Village, CO, USA, March 1-5, 2020, pages 1516–1525. IEEE.
+Mishra et al. (2019)
+Anand Mishra, Shashank Shekhar, Ajeet Kumar Singh, and Anirban Chakraborty. 2019.
+Ocr-vqa: Visual question answering by reading text in images.
+In ICDAR.
+Mostafazadeh et al. (2016)
+Nasrin Mostafazadeh, Ishan Misra, Jacob Devlin, Margaret Mitchell, Xiaodong He, and Lucy Vanderwende. 2016.
+Generating natural questions about an image.
+Olsen et al. (2018)
+Alex Olsen, Dmitry A. Konovalov, Bronson Philippa, Peter Ridd, Jake C. Wood, Jamie Johns, Wesley Banks, Benjamin Girgenti, Owen Kenny, James Whinney, Brendan Calvert, Mostafa Rahimi Azghadi, and Ronald D. White. 2018.
+Deepweeds: A multiclass weed species image dataset for deep learning.
+CoRR, abs/1810.05726.
+Peng et al. (2019)
+Xingchao Peng, Qinxun Bai, Xide Xia, Zijun Huang, Kate Saenko, and Bo Wang. 2019.
+Moment matching for multi-source domain adaptation.
+In Proceedings of the IEEE International Conference on Computer Vision, pages 1406–1415.
+Peng et al. (2017)
+Xingchao Peng, Ben Usman, Neela Kaushik, Judy Hoffman, Dequan Wang, and Kate Saenko. 2017.
+Visda: The visual domain adaptation challenge.
+CoRR, abs/1710.06924.
+Plummer et al. (2017)
+Bryan A. Plummer, Liwei Wang, Christopher M. Cervantes, Juan C. Caicedo, Julia Hockenmaier, and Svetlana Lazebnik. 2017.
+Flickr30k entities: Collecting region-to-phrase correspondences for richer image-to-sentence models.
+IJCV, 123(1):74–93.
+Pont-Tuset et al. (2020)
+Jordi Pont-Tuset, Jasper Uijlings, Soravit Changpinyo, Radu Soricut, and Vittorio Ferrari. 2020.
+Connecting vision and language with localized narratives.
+In ECCV.
+Radford et al. (2021)
+Alec Radford, Jong Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh, Sandhini Agarwal, Girish Sastry, Amanda Askell, Pamela Mishkin, Jack Clark, et al. 2021.
+Learning transferable visual models from natural language supervision.
+In International conference on machine learning, pages 8748–8763. PMLR.
+Rombach et al. (2022)
+Robin Rombach, Andreas Blattmann, Dominik Lorenz, Patrick Esser, and Björn Ommer. 2022.
+High-resolution image synthesis with latent diffusion models.
+In IEEE/CVF Conference on Computer Vision and Pattern Recognition, CVPR 2022, New Orleans, LA, USA, June 18-24, 2022, pages 10674–10685. IEEE.
+Saenko et al. (2010)
+Kate Saenko, Brian Kulis, Mario Fritz, and Trevor Darrell. 2010.
+Adapting visual category models to new domains.
+In Computer Vision - ECCV 2010, 11th European Conference on Computer Vision, Heraklion, Crete, Greece, September 5-11, 2010, Proceedings, Part IV, volume 6314 of Lecture Notes in Computer Science, pages 213–226. Springer.
+Sagonas et al. (2016)
+Christos Sagonas, Epameinondas Antonakos, Georgios Tzimiropoulos, Stefanos Zafeiriou, and Maja Pantic. 2016.
+300 faces in-the-wild challenge: database and results.
+Image Vis. Comput., 47:3–18.
+Sakaridis et al. (2019)
+Christos Sakaridis, Dengxin Dai, and Luc Van Gool. 2019.
+Guided curriculum model adaptation and uncertainty-aware evaluation for semantic nighttime image segmentation.
+In Proceedings of the IEEE/CVF International Conference on Computer Vision, pages 7374–7383.
+Schuhmann et al. (2022)
+Christoph Schuhmann, Romain Beaumont, Richard Vencu, Cade Gordon, Ross Wightman, Mehdi Cherti, Theo Coombes, Aarush Katta, Clayton Mullis, Mitchell Wortsman, Patrick Schramowski, Srivatsa Kundurthy, Katherine Crowson, Ludwig Schmidt, Robert Kaczmarczyk, and Jenia Jitsev. 2022.
+LAION-5B: an open large-scale dataset for training next generation image-text models.
+In Advances in Neural Information Processing Systems 35: Annual Conference on Neural Information Processing Systems 2022, NeurIPS 2022, New Orleans, LA, USA, November 28 - December 9, 2022.
+Schwenk et al. (2022)
+Dustin Schwenk, Apoorv Khandelwal, Christopher Clark, Kenneth Marino, and Roozbeh Mottaghi. 2022.
+A-OKVQA: A benchmark for visual question answering using world knowledge.
+In Computer Vision - ECCV 2022 - 17th European Conference, Tel Aviv, Israel, October 23-27, 2022, Proceedings, Part VIII, volume 13668 of Lecture Notes in Computer Science, pages 146–162. Springer.
+Shah et al. (2019)
+Sanket Shah, Anand Mishra, Naganand Yadati, and Partha Pratim Talukdar. 2019.
+KVQA: knowledge-aware visual question answering.
+In The Thirty-Third AAAI Conference on Artificial Intelligence, AAAI 2019, The Thirty-First Innovative Applications of Artificial Intelligence Conference, IAAI 2019, The Ninth AAAI Symposium on Educational Advances in Artificial Intelligence, EAAI 2019, Honolulu, Hawaii, USA, January 27 - February 1, 2019, pages 8876–8884. AAAI Press.
+Sharma et al. (2018)
+Piyush Sharma, Nan Ding, Sebastian Goodman, and Radu Soricut. 2018.
+Conceptual captions: A cleaned, hypernymed, image alt-text dataset for automatic image captioning.
+In Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), pages 2556–2565, Melbourne, Australia. Association for Computational Linguistics.
+Sidorov et al. (2020)
+Oleksii Sidorov, Ronghang Hu, Marcus Rohrbach, and Amanpreet Singh. 2020.
+Textcaps: A dataset for image captioning with reading comprehension.
+In Computer Vision - ECCV 2020 - 16th European Conference, Glasgow, UK, August 23-28, 2020, Proceedings, Part II, volume 12347 of Lecture Notes in Computer Science, pages 742–758. Springer.
+Sindagi et al. (2019)
+Vishwanath Sindagi, Rajeev Yasarla, and Vishal M. Patel. 2019.
+Pushing the frontiers of unconstrained crowd counting: New dataset and benchmark method.
+In 2019 IEEE/CVF International Conference on Computer Vision, ICCV 2019, Seoul, Korea (South), October 27 - November 2, 2019, pages 1221–1231. IEEE.
+Singh et al. (2021)
+Amanpreet Singh, Guan Pang, Mandy Toh, Jing Huang, Wojciech Galuba, and Tal Hassner. 2021.
+Textocr: Towards large-scale end-to-end reasoning for arbitrary-shaped scene text.
+In IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2021, virtual, June 19-25, 2021, pages 8802–8812. Computer Vision Foundation / IEEE.
+Srinivasan et al. (2021)
+Krishna Srinivasan, Karthik Raman, Jiecao Chen, Michael Bendersky, and Marc Najork. 2021.
+WIT: wikipedia-based image text dataset for multimodal multilingual machine learning.
+In SIGIR ’21: The 44th International ACM SIGIR Conference on Research and Development in Information Retrieval, Virtual Event, Canada, July 11-15, 2021, pages 2443–2449. ACM.
+Su et al. (2020)
+Weijie Su, Xizhou Zhu, Yue Cao, Bin Li, Lewei Lu, Furu Wei, and Jifeng Dai. 2020.
+VL-BERT: pre-training of generic visual-linguistic representations.
+Sun et al. (2023)
+Quan Sun, Yuxin Fang, Ledell Wu, Xinlong Wang, and Yue Cao. 2023.
+EVA-CLIP: improved training techniques for CLIP at scale.
+CoRR, abs/2303.15389.
+Tan and Bansal (2019)
+Hao Tan and Mohit Bansal. 2019.
+LXMERT: Learning cross-modality encoder representations from transformers.
+pages 5100–5111.
+Tan et al. (2019)
+Wei Ren Tan, Chee Seng Chan, Hernán E. Aguirre, and Kiyoshi Tanaka. 2019.
+Improved artgan for conditional synthesis of natural image and artwork.
+IEEE Trans. Image Process., 28(1):394–409.
+Thrush et al. (2022)
+Tristan Thrush, Ryan Jiang, Max Bartolo, Amanpreet Singh, Adina Williams, Douwe Kiela, and Candace Ross. 2022.
+Winoground: Probing vision and language models for visio-linguistic compositionality.
+In IEEE/CVF Conference on Computer Vision and Pattern Recognition, CVPR 2022, New Orleans, LA, USA, June 18-24, 2022, pages 5228–5238. IEEE.
+Venkateswara et al. (2017)
+Hemanth Venkateswara, Jose Eusebio, Shayok Chakraborty, and Sethuraman Panchanathan. 2017.
+Deep hashing network for unsupervised domain adaptation.
+In 2017 IEEE Conference on Computer Vision and Pattern Recognition, CVPR 2017, Honolulu, HI, USA, July 21-26, 2017, pages 5385–5394. IEEE Computer Society.
+Verma et al. (2020)
+Manisha Verma, Sudhakar Kumawat, Yuta Nakashima, and Shanmuganathan Raman. 2020.
+Yoga-82: A new dataset for fine-grained classification of human poses.
+In 2020 IEEE/CVF Conference on Computer Vision and Pattern Recognition, CVPR Workshops 2020, Seattle, WA, USA, June 14-19, 2020, pages 4472–4479. Computer Vision Foundation / IEEE.
+Vinyals et al. (2016)
+Oriol Vinyals, Charles Blundell, Timothy P. Lillicrap, Koray Kavukcuoglu, and Daan Wierstra. 2016.
+Matching networks for one shot learning.
+CoRR, abs/1606.04080.
+Wah et al. (2011)
+C. Wah, S. Branson, P. Welinder, P. Perona, and S. Belongie. 2011.
+Ucsd birds.
+Technical Report CNS-TR-2011-001, California Institute of Technology.
+Wang et al. (2019)
+Haohan Wang, Songwei Ge, Zachary C. Lipton, and Eric P. Xing. 2019.
+Learning robust global representations by penalizing local predictive power.
+In Advances in Neural Information Processing Systems 32: Annual Conference on Neural Information Processing Systems 2019, NeurIPS 2019, December 8-14, 2019, Vancouver, BC, Canada, pages 10506–10518.
+Wang et al. (2023a)
+Junke Wang, Lingchen Meng, Zejia Weng, Bo He, Zuxuan Wu, and Yu-Gang Jiang. 2023a.
+To see is to believe: Prompting GPT-4V for better visual instruction tuning.
+CoRR, abs/2311.07574.
+Wang et al. (2022)
+Peng Wang, An Yang, Rui Men, Junyang Lin, Shuai Bai, Zhikang Li, Jianxin Ma, Chang Zhou, Jingren Zhou, and Hongxia Yang. 2022.
+OFA: unifying architectures, tasks, and modalities through a simple sequence-to-sequence learning framework.
+In International Conference on Machine Learning, ICML 2022, 17-23 July 2022, Baltimore, Maryland, USA, volume 162 of Proceedings of Machine Learning Research, pages 23318–23340. PMLR.
+Wang et al. (2023b)
+Wenhui Wang, Hangbo Bao, Li Dong, Johan Bjorck, Zhiliang Peng, Qiang Liu, Kriti Aggarwal, Owais Khan Mohammed, Saksham Singhal, Subhojit Som, and Furu Wei. 2023b.
+Image as a foreign language: BEIT pretraining for vision and vision-language tasks.
+pages 19175–19186.
+Wei et al. (2022)
+Jason Wei, Maarten Bosma, Vincent Y. Zhao, Kelvin Guu, Adams Wei Yu, Brian Lester, Nan Du, Andrew M. Dai, and Quoc V. Le. 2022.
+Finetuned language models are zero-shot learners.
+Xia et al. (2017)
+Gui-Song Xia, Jingwen Hu, Fan Hu, Baoguang Shi, Xiang Bai, Yanfei Zhong, Liangpei Zhang, and Xiaoqiang Lu. 2017.
+AID: A benchmark data set for performance evaluation of aerial scene classification.
+IEEE Trans. Geosci. Remote. Sens., 55(7):3965–3981.
+Xu et al. (2023)
+Zhiyang Xu, Ying Shen, and Lifu Huang. 2023.
+MultiInstruct: Improving multi-modal zero-shot learning via instruction tuning.
+In Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), pages 11445–11465, Toronto, Canada. Association for Computational Linguistics.
+Yang et al. (2021)
+Yue Yang, Artemis Panagopoulou, Qing Lyu, Li Zhang, Mark Yatskar, and Chris Callison-Burch. 2021.
+Visual goal-step inference using wikihow.
+pages 2167–2179.
+Yao et al. (2023)
+Barry Menglong Yao, Aditya Shah, Lichao Sun, Jin-Hee Cho, and Lifu Huang. 2023.
+End-to-end multimodal fact-checking and explanation generation: A challenging dataset and models.
+In Proceedings of the 46th International ACM SIGIR Conference on Research and Development in Information Retrieval, SIGIR 2023, Taipei, Taiwan, July 23-27, 2023, pages 2733–2743. ACM.
+Ye et al. (2023)
+Qinghao Ye, Haiyang Xu, Guohai Xu, Jiabo Ye, Ming Yan, Yiyang Zhou, Junyang Wang, Anwen Hu, Pengcheng Shi, Yaya Shi, Chenliang Li, Yuanhong Xu, Hehong Chen, Junfeng Tian, Qian Qi, Ji Zhang, and Fei Huang. 2023.
+mplug-owl: Modularization empowers large language models with multimodality.
+CoRR, abs/2304.14178.
+Yin et al. (2023)
+Zhenfei Yin, Jiong Wang, Jianjian Cao, Zhelun Shi, Dingning Liu, Mukai Li, Lu Sheng, Lei Bai, Xiaoshui Huang, Zhiyong Wang, Jing Shao, and Wanli Ouyang. 2023.
+LAMM: language-assisted multi-modal instruction-tuning dataset, framework, and benchmark.
+CoRR, abs/2306.06687.
+Yu et al. (2015)
+Fisher Yu, Yinda Zhang, Shuran Song, Ari Seff, and Jianxiong Xiao. 2015.
+LSUN: construction of a large-scale image dataset using deep learning with humans in the loop.
+CoRR, abs/1506.03365.
+Yu et al. (2023)
+Weihao Yu, Zhengyuan Yang, Linjie Li, Jianfeng Wang, Kevin Lin, Zicheng Liu, Xinchao Wang, and Lijuan Wang. 2023.
+Mm-vet: Evaluating large multimodal models for integrated capabilities.
+CoRR, abs/2308.02490.
+Yue et al. (2023)
+Xiang Yue, Yuansheng Ni, Kai Zhang, Tianyu Zheng, Ruoqi Liu, Ge Zhang, Samuel Stevens, Dongfu Jiang, Weiming Ren, Yuxuan Sun, Cong Wei, Botao Yu, Ruibin Yuan, Renliang Sun, Ming Yin, Boyuan Zheng, Zhenzhu Yang, Yibo Liu, Wenhao Huang, Huan Sun, Yu Su, and Wenhu Chen. 2023.
+MMMU: A massive multi-discipline multimodal understanding and reasoning benchmark for expert AGI.
+Zhai et al. (2023)
+Yuexiang Zhai, Shengbang Tong, Xiao Li, Mu Cai, Qing Qu, Yong Jae Lee, and Yi Ma. 2023.
+Investigating the catastrophic forgetting in multimodal large language models.
+CoRR, abs/2309.10313.
+Zhang et al. (2019)
+Chi Zhang, Feng Gao, Baoxiong Jia, Yixin Zhu, and Song-Chun Zhu. 2019.
+Raven: A dataset for relational and analogical visual reasoning.
+In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR).
+Zhang et al. (2023)
+Yanzhe Zhang, Ruiyi Zhang, Jiuxiang Gu, Yufan Zhou, Nedim Lipka, Diyi Yang, and Tong Sun. 2023.
+Llavar: Enhanced visual instruction tuning for text-rich image understanding.
+CoRR, abs/2306.17107.
+Zhao et al. (2019)
+Bo Zhao, Yanwei Fu, Rui Liang, Jiahong Wu, Yonggang Wang, and Yizhou Wang. 2019.
+A large-scale attribute dataset for zero-shot learning.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops, pages 0–0.
+Zhao et al. (2023)
+Bo Zhao, Boya Wu, and Tiejun Huang. 2023.
+SVIT: scaling up visual instruction tuning.
+CoRR, abs/2307.04087.
+Zhou et al. (2018)
+Bolei Zhou, Àgata Lapedriza, Aditya Khosla, Aude Oliva, and Antonio Torralba. 2018.
+Places: A 10 million image database for scene recognition.
+IEEE Trans. Pattern Anal. Mach. Intell., 40(6):1452–1464.
+Zhou et al. (2014)
+Bolei Zhou, Àgata Lapedriza, Jianxiong Xiao, Antonio Torralba, and Aude Oliva. 2014.
+Learning deep features for scene recognition using places database.
+pages 487–495.
+Zhou et al. (2023)
+Yiyang Zhou, Chenhang Cui, Jaehong Yoon, Linjun Zhang, Zhun Deng, Chelsea Finn, Mohit Bansal, and Huaxiu Yao. 2023.
+Analyzing and mitigating object hallucination in large vision-language models.
+Zhou and Shimada (2021)
+Yutong Zhou and Nobutaka Shimada. 2021.
+Generative adversarial network for text-to-face synthesis and manipulation with pretrained BERT model.
+In 16th IEEE International Conference on Automatic Face and Gesture Recognition, FG 2021, Jodhpur, India, December 15-18, 2021, pages 1–8. IEEE.
+Zhu et al. (2023)
+Deyao Zhu, Jun Chen, Xiaoqian Shen, Xiang Li, and Mohamed Elhoseiny. 2023.
+Minigpt-4: Enhancing vision-language understanding with advanced large language models.
+CoRR, abs/2304.10592.
+Zhu et al. (2016)
+Yuke Zhu, Oliver Groth, Michael Bernstein, and Li Fei-Fei. 2016.
+Visual7w: Grounded question answering in images.
+In Proceedings of the IEEE conference on computer vision and pattern recognition, pages 4995–5004.
+Appendix A More Details on the Annotation Process of Vision-Flan
+A.1 Annotator Selection
+Due to the complexity of the annotation task, we carefully design a selection process to select qualified annotators. Specifically, at beginning, the authors send out emails looking for graduate students in computer science who are interested in NLP and multi-modal learning. A group of 21 graduate computer science students signed up for a tutorial section. In the tutorial section, two PhD students in NLP explain the requirements for writing instructions, downloading the dataset and processing raw datasets into a unified format. After the tutorial, each candidate is assigned with three datasets and they have totally three days to process the raw datasets and write instructions. In the end, each candidate submits their annotations and two PhD students provide feedback to each candidate. The candidates then have two days to modify their instructions or formats based on the feedback. After two days, the candidates submit their final version of annotations and two PhD students discuss the quality of the annotations case by case. In the end, 7 out of 21 students were selected as qualified annotators. The compensation is 15$ per hour.
+Appendix B Evaluation Datasets
+We evaluate our models on several widely used multimodal evaluation benchmark datasets: (1) MMbench Liu et al. (2023f) is a comprehensive evaluation benchmark measuring VLM’s capabilities from 20 dimensions. (2)MME Fu et al. (2023) measures VLM’s perception and cognition capabilities based on 14 diverse tasks. (3) MM-Vet Yu et al. (2023) focuses on measuring the integration of various capabilities of VLMs, including OCR, recognition, knowledge, spatial awareness, math, and language generation. (4) LLaVA-Bench Liu et al. (2023e) evaluates the instruction following and chat ability of VLMs in diverse daily-life visual tasks. (5) POPE Li et al. (2023g) is an evaluation benchmark that probes object hallucination in VLMs. (6) MMMU Yue et al. (2023) evaluates VLMs on multi-discipline tasks that require college-level subject knowledge and deliberate reasoning.
+We also evaluate the newly proposed catastrophic forgetting problem Zhai et al. (2023) of VLMs on 4 datasets: CIFAR-10 and CIFAR-100 Krizhevsky et al. (2009), MNIST LeCun (1998), and miniImageNet Vinyals et al. (2016). We report the averaged performance of VLMs on the four benchmarks in the CF column of Table 2.
+Appendix C Evaluation Protocols
+For MM-Bench, MME, MM-Vet, LLaVA-Bench, POPE and MMMU, we use their official implementations of evaluation code444https://github.com/BradyFU/Awesome-Multimodal-Large-Language-Models/tree/Evaluation
+https://mmbench.opencompass.org.cn/leaderboard
+https://github.com/yuweihao/MM-Vet
+https://github.com/haotian-liu/LLaVA/blob/main/docs/LLaVA_Bench.md
+https://github.com/RUCAIBox/POPE
+https://github.com/MMMU-Benchmark/MMMU to evaluate the performance. Specifically, the evaluation scripts of MM-bench and MM-Vet call GPT-4 API to evaluate the correctness of a prediction given the target output and produce a binary score (0 or 1). Similarly, the evaluation of LLaVA-Bench also leverages GPT-4, and in addition to the target outputs, the evaluation method considers detail descriptions of images. The evaluation results are scores indicating not only the correctness but the human-preference of the predictions. MME and POPE are binary classification tasks and their evaluation is based on string matching between the predictions and target labels.
+Appendix D Baselines
+We compare our method with recent vision-language models. All the baselines listed below have similar architectures which consist of a pretrained LLM, a pretrained image encoder, and a bridging module that connects them.
+BLIP-2 Li et al. (2023d) utilizes the Q-Former to bridge a pretrained image encoder with a pretrained LLM, and achieves strong zero-shot capabilities.
+InstructBLIP Dai et al. (2023) is a visual-instruction-tuned BLIP-2 Li et al. (2023d) model. The instruction tuning dataset is a mixture of 13 academic datasets and the LLaVA Liu et al. (2023e) dataset.
+Shikra Chen et al. (2023a) focuses more on the object grounding capability and is instruction tuned on referential dialogue dataset and LLaVA dataset Liu et al. (2023e), both of which are synthetically generated via GPT-4.
+LLaVA Liu et al. (2023e) is the first VLM finetuned on GPT-4 synthesized visual instruction tuning dataset and achieves remarkable performance as a general-purpose visual chatbot.
+Qwen-VL and Qwen-VL-Chat Bai et al. (2023b) are recently proposed VLMs based on Qwen Bai et al. (2023a) language model and are trained on a large-scale (50 million instances) private visual instruction tuning dataset.
+LLaVA-1.5 Liu et al. (2023d) is a LLaVA model trained on a mixture of shareGPT 555https://sharegpt.com/, LLaVA Liu et al. (2023e) and 8 academic image-text datasets.
+Appendix E Additional Results
+E.1 Effect of GPT-4 synthesized data on comprehensive evaluation benchmarks
+Refer to caption
+Figure 8: Effect of increasing the number of GPT-4 synthesized training instances on the comprehensive evaluation benchmark, namely MM-Bench. The dashed gray line indicates the performance of the-state-of-the-art LLaVA 1.5 model.
+E.2 Why VLMs Trained on Vision-Flan are Better than State-of-the-Art VLMs?
+In this section, we perform two case studies to explain why models trained on Vision-Flan can perform better compared to state-of-the-art VLMs.
+E.2.1 Case Study on OCR
+Refer to caption
+Figure 9: Performance of various VLMs on TextOCR. The gray bars shows the averaged number of tokens per prediction and the orange line show the recall of predictions.
+When we manually check the predictions of Vision-Flan Chat and compare them to other VLMs, the first trend we observe is that Vision-Flan Chat can better perform OCR as shown in Figure 10. To quantify this observation, we evaluate LLaVA, LLaVA 1.5 and our models on the challenging TextOCR dataset Singh et al. (2021).
+We ask the VLMs to predict all the text on each image and check the overlap between the target list of text pieces and the predictions. As shown in Figure 9, the recall of Vision-Flan Base and Vision-Flan Chat is much higher compared to LLaVA 1.5 while the averaged numbers of predicted tokens per response are similar.
+Refer to caption
+Figure 10: An example from TextCap to show that Vision-Flan allows VLMs to better recognize text.
+E.2.2 Case Study on Entity Recognition
+We also spot that models trained on Vision-Flan can better identify entities in an image while LLaVA 1.5 simply captions the appearance of entities in an image. A qualitative example is shown in Figure 11.
+Refer to caption
+Figure 11: An example from MM-Vet to show that Vision-Flan allows VLMs to better recognize entities.
+To compute quantitative results, we randomly sample 1,000 images with their captions from the WIT dataset Srinivasan et al. (2021), in which the images are from Wikipedia pages and the captions commonly contain entities appearing in the images. We prompt VLMs to introduce the entities in the image with some background knowledge. We leverage the EntityRecognizer from spaCy 666https://spacy.io/api/entityrecognizer to recognize the entities in both predictions and ground truth captions and compute the percentage of target entities appearing in the predictions. As shown in Figure 12, it is clear that Vision-Flan Base and Vision-Flan Chat predict more entities in their responses (gray bars) and have higher coverage of entities (orange line) compared to LLaVA 1.5.
+Refer to caption
+Figure 12: Performance of various VLMs on Entity Recognition. The gray bars show the average number of entities per response and the orange line shows the percentage of entities in the target response that appears in the prediction.
+Appendix F Additional Analysis
+F.1 The Bridging Module Can Be Shared Across LLMs with Same Architecture
+Model
+MM-Bench
+MME
+LLaVA-Bench
+Pope
+Pretrained LLaVA-Architecture
+45.0
+936.3
+32.4
+51.9
++ LLaMA 2 Chat
+45.3 (100.6)
+557.0 (59.5)
+59.2 (182.7)
+66.9 (128.9)
+Vision-Flan Base w/ frozen LLM
+52.4
+1107.3
+41.6
+83.3
++ LLaMA 2 Chat
+46.6 (88.9)
+1095.8 (99.0)
+56.4 (135.6)
+80.9 (97.1)
+Vision-Flan Base
+69.8
+1537.8
+38.5
+85.9
++ LLaMA 2 Chat
+47.2 (67.6)
+852.6 (55.4)
+69.9 (181.6)
+66.1 (76.9)
+Vision-Flan Chat
+67.6
+1490.6
+78.3
+86.1
++ LLaMA 2 Chat
+47.0 (69.5)
+869.6 (59.3)
+74.6 (95.3)
+65.8 (76.4)
+Table 7: Results of replacing Vicuna 1.5 with LLaMA 2 Chat in four VLMs. The gray rows denote the performance of original models and blue rows denote the performance of the VLMs after replacing the LLMs. The number in each bracket denotes the percentage of VLMs’ performance after integration of LLaMA 2 Chat, compared to their original performance.
+Recent studies Jain et al. (2023) in aligning and finetuning LLMs suggest that alignment happens very localized with pruning of a few weights or neurons to alter the style and format of outputs from LLMs, and does not substantially change the parameter space of LLMs. Following this finding, we hypothesize that the MLP layers that map visual features into LLMs’ embedding space can be shared across LLMs with identical architecture but are tuned on different text alignment datasets. As shown in Table 7, we take four different models including Vision-Flan Base w/ frozen LLM which is finetuned on Vision-Flan but with LLMs kept frozen as a case study, and directly replace their LLMs (Vicuna v1.5) with off-the-shelf LLaMA 2 Chat model.
+During inference, we use the official prompting template of LLaMA 2 chat instead of Vicuna v1.5. The results demonstrate that MLPs can be shared between LLMs with the same architecture but trained on different alignment datasets. An interesting observation is that there is a significant performance boost on LLaVA-Bench after we swap in LLaMA 2 Chat. If we finetune both the MLPs and the LLMs in Vision-Flan Base and Vision-Flan Chat, we observe a remarkable performance drop when we swap in LLaMA 2 chat. This is understandable because the LLaMA 2 chat can not effectively interpret visual features compared to the visual-instruction-tuned Vicuna v1.5.
+F.2 Discrepancy Between Evaluation Benchmarks
+In Table 2 and 7, we identify large performance discrepancy between multiple-choice benchmarks (e.g., MME and MM-Bench) and LLaVA-Bench on several models.
+Specifically, in Table 2, LLaVA achieves a score of 70.8 on LLaVA-Bench, comparable to the performance level of LLaVA 1.5. In contrast, LLaVA’s performance on MME and MM-Bench is markedly lower, with scores of 1151.6 and 38.7, respectively, compared to LLaVA 1.5, which scores 1531.3 and 66.7. Furthermore, this trend is also evident in Table 7. Upon substituting the LLMs in Vision-Flan Base and Vision-Flan Chat with off-the-shelf LLaMA 2 Chat, both models exhibit a notable decline in performance on MME and MM-Bench, while maintaining comparable performance on LLaVA-Bench. Our hypothesis posits that LLaVA-Bench does not require LLM’s strong understanding of the visual features, but rather relies on the language-prior of LLMs Lin et al. (2023). Furthermore, the data synthesized by GPT-4 facilitates the model’s ability to generate long-form responses, aligning with the preferences of the evaluation metric, namely, GPT-4 itself.
+Appendix G Additional Related Work
+Vision-Language Models.
+Previous works Li et al. (2019); Chen et al. (2020); Tan and Bansal (2019); Su et al. (2020); Wang et al. (2023b) mainly pretrain vision-language models (VLMs) from scratch with a unified masked-language modeling (MLM) objective Devlin et al. (2019), which can impose significant training cost and inferior performance.
+Recently, a line of works proposes to build VLMs from the off-the-shelf visual encoders and LLMs by introducing a small amount of bridging parameters that maps visual features into the embedding space of LLMs. Flamingo Alayrac et al. (2022) presents a VLM that is capable of processing interleaved image-text inputs and generating responses based on the visual content. It proposes Perceiver Resampler as the bridging module to connect the frozen LLM and visual encoder.
+OFA Wang et al. (2022) proposes a sequence-to-sequence learning framework that maps images to discrete visual tokens and feeds the discrete visual tokens into LLMs.
+BLIP-2 Li et al. (2023d) introduces Q-Former to bridge pre-trained and frozen vision and language models, based on which, MiniGPT-4 Zhu et al. (2023) further adds a linear projector to bridge the gap between the visual encoder and language model encoder.
+LLaVA Liu et al. (2023e) introduces a projector to fuse visual information into a large language model and unfreezes language model during visual instruction tuning.
+Appendix H Datasets Used in Vision-Flan
+Dataset & Reference
+Tasks
+CINIC-10 Darlow et al. (2018)
+1. animal recognition in low resolution image
+2. shipping method recognition in low resolution image
+3. transportation option recognition in low resolution image
+4. animal presence classification in low resolution image
+5. object shipping object presence in low resolution image
+MSCOCO Lin et al. (2014)
+1. multiple choice VQA
+2. short image captioning
+3. appliance recognition
+4. furniture recognition
+5. kitchen object recognition
+6. vehicle recognition
+7. animal recognition
+8. sports object recognition
+9. image text matching
+10. image text selection
+FairFace Kärkkäinen and Joo (2021)
+1. human age classification
+2. human gender classification
+3. human race classification
+IconQA Lu et al. (2021b)
+1. abstract diagram understanding
+2. fill in blank in abstract diagram understanding
+ImageNet-A Hendrycks et al. (2021b)
+1. object recognition of natural adversarial examples
+ImageNet-C Hendrycks and Dietterich (2019)
+1. blur type classification
+2. coarse-grained image corruption classification
+3. weather type classification
+4. fine-grained image corruption classification
+InfographicVQA Mathew et al. (2022)
+1. VQA
+2. document level VQA
+SemArt Garcia and Vogiatzis (2018)
+1. painting time frame recognition
+2. painting type recognition
+3. painting school recognition
+4. painting technique recognition
+5. detailed image description
+Set5
+Bevilacqua et al. (2012)
+1. object recognition in low resolution image
+TextCaps Sidorov et al. (2020)
+1. image captioning with reading comprehension
+VisDial Das et al. (2019)
+1. visual dialogue with short context
+2. visual dialogue with medium context
+3. visual dialogue with long context
+4. visual dialogue with very long context
+STL-10 Coates et al. (2011)
+1. object recognition
+Places365 Zhou et al. (2018)
+1. scene classification
+Office-31 Saenko et al. (2010)
+1. image domain and office object classification
+2. office object recognition
+Dataset & Reference
+Tasks
+LSUN Yu et al. (2015)
+1. scene classification
+FGVC-Aircraft Maji et al. (2013)
+1. aircraft family classification
+2. aircraft manufacturer classification
+3. aircraft variant classification
+4. aircraft model classification
+DeepFashion Liu et al. (2016)
+1. cloth texture classification
+CUB-200-2011 Wah et al. (2011)
+1. bird species recognition
+CLEVR Johnson et al. (2017)
+1. VQA in 3D rendered images
+2. question answer matching
+3. visual dialogue in 3D rendered images
+4. VQA in 3D rendered images with multiple questions
+CLEVR-CoGenT Johnson et al. (2017)
+1. VQA in 3D rendered images
+2. question answer matching
+3. VQA in 3D rendered images with multiple questions
+A-OKVQA Schwenk et al. (2022)
+1. rationales generation
+2. answer rationale generation
+3. outside knowledge VQA
+AI2D Kembhavi et al. (2016)
+1. diagram VQA
+AID Xia et al. (2017)
+1. aerial scene classification
+Caltech-256 Griffin et al. (2007)
+1. object recognition
+CoVA Kumar et al. (2022)
+1. webpage recognition
+DeepWeeds Olsen et al. (2018)
+1. weed species recognition
+ExDark Loh and Chan (2019)
+1. object recognition in low light environments
+FFHQ-Text Zhou and Shimada (2021)
+1. facial attribute textual descriptions generation
+FlickrLogos-27 Kalantidis et al. (2011)
+1. logo recognition
+FoodLogoDet-1500 Hou et al. (2021)
+1. food logo recognition
+ImageNet-R Hendrycks et al. (2021a)
+1. object recognition in diverse image domain
+2. image style classification
+ImageNet-Sketch Wang et al. (2019)
+1. object recognition in sketch
+JHU-CROWD++ Sindagi et al. (2019)
+1. scene classification
+MNIST-M Ganin et al. (2017)
+1. number recognition
+MVTecAD Bergmann et al. (2021)
+1. object anomaly detection
+2. industrial item recognition
+Dataset & Reference
+Tasks
+NABirds Horn et al. (2015)
+1. bird species recognition in north America
+2. bird body parts detection
+Road-Anomaly Lis et al. (2019)
+1. road anomaly detection
+SCUT-CTW1500 Liu et al. (2017)
+1. curve text detection in the wild
+Total-Text Chng et al. (2020)
+1. scene text detection and recognition
+VisDA-2017 Peng et al. (2017)
+1. object recognition in 3D rendered image
+2. multiple choice object recognition in 3D rendered image
+Yoga-82 Verma et al. (2020)
+1. yoga pose recognition
+Caltech101 Fei-Fei et al. (2004)
+1. object recognition
+2. living organism classification
+Cars Krause et al. (2013)
+1. car brand maker and year classification
+2. car brand classification
+Core50 Lomonaco and Maltoni (2017)
+1. object recognition
+NUS-WIDE Chua et al. (2009)
+1. animal presence classification
+ObjectNet Barbu et al. (2019)
+1. object recognition
+Places205 Zhou et al. (2014)
+1. indoor outdoor classification
+300w Sagonas et al. (2016)
+1. indoor outdoor classification
+Yahoo Farhadi et al. (2009)
+1. object recognition
+LFW Huang et al. (2007)
+1. celebrity recognition
+model-vs-human Geirhos et al. (2019)
+1. image-style classification
+Office-Home Venkateswara et al. (2017)
+1. object recognition
+Winoground Thrush et al. (2022)
+1. image caption matching
+ConceptualCaptions Sharma et al. (2018)
+1. conceptual image captioning
+KVQA+image question answer Shah et al. (2019)
+1. knowledge-aware VQA
+2. visual entity recognition
+MemeCap Hwang and Shwartz (2023)
+1. meme understanding
+PlotQA Methani et al. (2020)
+1. VQA over scientific plots
+SentiCap Mathews et al. (2016)
+1. image captioning conditioned on sentiment
+VQA-E Li et al. (2018)
+1. VQA
+2. short image captioning
+VQG Mostafazadeh et al. (2016)
+1. visual question generation
+2. short image captioning
+Dataset & Reference
+Tasks
+WIT Srinivasan et al. (2021)
+1. background knowledge extraction
+WikiArt Tan et al. (2019)
+1. artist genre style recognition
+VQA-RAD Lau et al. (2019)
+1. VQA in radiology
+VOC2007 Everingham et al. (2010)
+1. multiple object recognition
+VizWiz Gurari et al. (2020)
+1. answering visual questions from blind people
+2. captioning image taken by blind people
+3. quality issue classification of image taken by blind people
+ViQuAE Lerner et al. (2022)
+1. knowledge based VQA about entities
+ST-VQA Biten et al. (2019)
+1. scene text VQA
+Stanford Dogs Khosla et al. (2011)
+1. dog species classification
+Sketch Eitz et al. (2012)
+1. living organism classification in sketch
+2. object recongnition in sketch
+RAVEN Zhang et al. (2019)
+1. relational and analogical visual reasoning
+PICKAPIC Kirstain et al. (2023)
+1. image prompt generation
+PACS Li et al. (2017)
+1. object recognition in art painting
+2. object recognition in cartoon
+3. object recognition in photograph
+4. dog image style classification
+5. elephant image style classification
+6. giraffe image style classification
+7. guitar image style classification
+8. horse image style classification
+9. house image style classification
+10. person image style classification
+NOCAPS Agrawal et al. (2019)
+1. multiple short captions generation
+Localized Narratives Pont-Tuset et al. (2020)
+1. COCO detailed image captioning
+2. flickr30k detailed image captioning
+3. open images detailed image captioning
+4. ade20k detailed image captioning
+INATURALIST Horn et al. (2018)
+1. class classification
+2. family classification
+3. genus classification
+4. Latin English name classification
+5. order classification
+6. phylum classification
+7. supercategory classification
+HICO Chao et al. (2015)
+1. human activity detection
+GEOMETRY3K Lu et al. (2021a)
+1. geometry question answering
+FUNSD Guillaume Jaume (2019)
+1. text detection in noisy scanned documents
+FLICKR30K Plummer et al. (2017)
+1. multiple captions generation
+DVQA Kafle et al. (2018)
+1. chart question answering
+DTD Cimpoi et al. (2014)
+1. coarse grained texture classification
+2. multiple texture detection
+Dataset & Reference
+Tasks
+DOMAIN NET Peng et al. (2019)
+1. object recognition in clip art
+2. object recognition in infograph
+3. object recognition in painting
+4. object recognition in quickdraw
+5. object recognition in real image
+6. image style classification
+DOCVQA Mathew et al. (2020)
+1. document level VQA
+DAQUAR Malinowski and Fritz (2014)
+1. VQA
+CONCADIA Kreiss et al. (2022)
+1. caption with background knowledge
+2. short image captioning
+Visual7W Zhu et al. (2016)
+1. VQA object attribute
+VQAv2 Goyal et al. (2017)
+1. general VQA
+2. question image matching
+Visual GenomeKrishna et al. (2017)
+1. spatial relationship question answering
+OK-VQAMarino et al. (2019)
+1. outside knowledge VQA
+ScienceQA Lu et al. (2022)
+1. VQA
+2. explanation generation
+OCR-VQA Mishra et al. (2019)
+1. VQA by reading text in image
+wikiHow-image Yang et al. (2021)
+1. next step generation
+2. image text step ordering
+3. immediate next step selection
+4. text image step ordering
+SciCap Hsu et al. (2021)
+1. figure captioning
+LAD Zhao et al. (2019)
+1. detailed object description generation
+Dark Zurich Sakaridis et al. (2019)
+1. time of the day classification
+RAF-DB Li and Deng (2019)
+1. human emotion detection
+GQA Hudson and Manning (2019)
+1. spatial relationship question answering
+VQA Antol et al. (2015)
+1. color
+2. activity recognition
+3. counting
+4. object presence
+5. object recognition
+6. positional reasoning
+7. scene recognition
+8. sentiment understanding
+9. sport recognition
+10. utility affordance
+Multimodal Factual Checking Yao et al. (2023)
+1. multimodal factual checking
+Appendix I Task Categories in Vision-Flan
+Category
+Tasks
+Perception
+1. CLEVR-CoGenT VQA in 3D rendered images
+2. CLEVR-CoGenT question answer matching
+3. CLEVR-CoGenT VQA in 3D rendered images with multiple
+questions
+4. CLEVR VQA in 3D rendered images with multiple
+questions
+5. GQA spatial relationship question answering
+6. VQA color
+7. VQA activity recognition
+8. VQA counting
+9. VQA object presence
+10. VQA object recognition
+11. VQA positional reasoning
+12. VQA scene recognition
+13. VQA sentiment understanding
+14. VQA sport recognition
+15. VQA utility affordance
+16. VQA-E VQA
+17. VQAv2 general VQA
+18. Visual Genome spatial relationship question answering
+19. CLEVR question answer matching
+20. VizWiz answering visual questions from blind people
+21. DAQUAR VQA
+22. MSCOCO multiple choice VQA
+23. Visual7W VQA object attribute
+24. CLEVR VQA in 3D rendered images
+Outside Knowledge
+1. KVQA knowledge aware VQA
+2. VIQUAE knowledge based VQA about entities
+3. VQARAD VQA in radiology
+4. OK-VQA outside knowledge VQA
+5. A-OKVQA outside knowledge VQA
+Reasoning
+1. GEOMETRY3K geometry question answering
+2. IconQA abstract diagram understanding
+3. IconQA fill in blank in abstract diagram understanding
+4. InfographicVQA VQA
+5. InfographicVQA document level VQA
+6. ScienceQA VQA
+7. AI2D diagram VQA
+OCR
+1. DOCVQA document level VQA
+2. DVQA chart question answering
+3. PlotQA VQA over scientific plots
+4. OCR-VQA VQA by reading text in image
+5. ST-VQA scene text VQA
+Category
+Tasks
+Document-Level OCR
+1. FUNSD text detection in noisy scanned documents
+2. SCUT-CTW1500 curve text detection in the wild
+3. Total-Text scene text detection and recognition
+Phrase-Level OCR
+1. CoVA webpage recognition
+2. FlickrLogos-27 logo recognition
+3. FoodLogoDet-1500 food logo recognition
+Knowledge Extraction
+1. CONCADIA caption with background knowledge
+2. KVQA visual entity recognition
+3. WIT background knowledge extraction
+Semantic Art Understanding
+1. Semart painting time frame recognition
+2. Semart painting type recognition
+3. Semart painting school recognition
+4. Semart painting technique recognition
+5. Semart detailed image description
+6. WikiArt artist genre style recognition
+Visual Dialogue
+1. CLEVR visual dialogue in 3D rendered images
+2. Visdial visual dialogue with short context
+3. Visdial visual dialogue with medium context
+4. Visdial visual dialogue with long context
+5. Visdial visual dialogue with very long context
+Rational and Script Generation
+1. ScienceQA explanation generation
+2. A-OKVQA rationales generation
+3. A-OKVQA answer rationale generation
+4. MemeCap meme understanding
+5. wikiHow-image next step generation
+6. VQG visual question generation
+Coarse-grained Captioning
+1. ConceptualCaptions conceptual image captioning
+2. FLICKR30K multiple captions generation
+3. NOCAPS multiple short captions generation
+4. PICKAPIC image prompt generation
+5. VizWiz captioning image taken by blind people
+6. VQA-E short image captioning
+7.
+VQG short image captioning
+8. MSCOCO short image captioning
+9. CONCADIA short image captioning
+Category
+Tasks
+Fine-grained Captioning
+1. LAD detailed object description generation
+2. FFHQ-Text facial attribute textual descriptions generation
+3. Localized Narratives COCO detailed image captioning
+4. Localized Narratives flickr30k detailed image captioning
+5. Localized Narratives open images detailed image captioning
+6. Localized Narratives ade20k detailed image captioning
+7. SciCap figure captioning
+8. SentiCap image captioning conditioned on sentiment
+9. TextCaps image captioning with reading comprehension
+Scene Classification
+1. 300w indoor outdoor classification
+2. AID aerial scene classification
+3. Dark-Zurich time of the day classification
+4. JHU-CROWD scene classification
+5. LSUN scene classification
+6. Places205 indoor outdoor classification
+7. places365 scene classification
+Animal Classification
+1. CUB-200-2011 bird species recognition
+2. DeepWeeds weed species recognition
+3. INATURALIST class classification
+4. INATURALIST family classification
+5. INATURALIST genus classification
+6. INATURALIST Latin English name classification
+7. INATURALIST order classification
+8. INATURALIST phylum classification
+9. INATURALIST supercategory classification
+10. NABirds bird species recognition in north America
+11. NUS-WIDE animal presence classification
+12. STANFORD DOGS dog species classification
+13. NABirds bird body parts detection
+Category
+Tasks
+Vehicle Classification
+1. Cars car brand maker and year classification
+2. Cars car brand classification
+3. FGVC-Aircraft aircraft family classification
+4. FGVC-Aircraft aircraft manufacturer classification
+5. FGVC-Aircraft aircraft variant classification
+6. FGVC-Aircraft aircraft model classification
+Human Activity
+1. HICO human activity detection
+2. RAF-DB human emotion detection
+3. Yoga-82 yoga pose recognition
+Facial Recognition
+1. LFW celebrity recognition
+2. Fairface human age classification
+3. Fairface human gender classification
+4. Fairface human race classification
+Anomaly Detection
+1. Road-Anomaly road anomaly detection
+2. MVTecAD object anomaly detection
+General Object
+1. Caltech-256 object recognition
+2. Caltech101 object recognition
+3. Caltech101 living organism classification
+4. Core50 object recognition
+5. ImageNet-A object recognition of natural adversarial examples
+6. MNIST-M number recognition
+7. MVTecAD industrial item recognition
+8. ObjectNet object recognition
+9. Office-Home object recognition
+10. Office-31 image domain and office object classification
+11. Office-31 office object recognition
+12. STL-10 object recognition
+13. Set5 object recognition in low resolution image
+14. VOC2007 multiple object recognition
+15. MSCOCO appliance recognition
+16. MSCOCO furniture recognition
+17. MSCOCO kitchen object recognition
+18. MSCOCO vehicle recognition
+19. MSCOCO animal recognition
+20. MSCOCO sports object recognition
+21. Yahoo object recognition
+Category
+Tasks
+Complex Reasoning
+1. RAVEN relational and analogical visual reasoning
+2. Multimodal Factual Checking multimodal factual checking
+3. wikiHow-image image text step ordering
+4. wikiHow-image immediate next step selection
+5. wikiHow-image text image step ordering
+Image Text Matching
+1. MSCOCO image text matching
+2. Winoground image caption matching
+3. MSCOCO image text selection
+4. MSCOCO question image matching
+General Object Classification in Special Image Domain
+1. DOMAIN NET object recognition in clip art
+2. DOMAIN NET object recognition in infograph
+3. DOMAIN NET object recognition in painting
+4. DOMAIN NET object recognition in quickdraw
+5. DOMAIN NET object recognition in real image
+6. ExDark object recognition in low light environments
+7. ImageNet-R object recognition in diverse image domain
+8. ImageNet-Sketch object recognition in sketch
+9. PACS object recognition in art painting
+10. PACS object recognition in cartoon
+11. PACS object recognition in photograph
+12. SKETCH living organism classification in sketch
+13. SKETCH object recognition in sketch
+14. Cinic-10 animal recognition in low resolution image
+15. Cinic-10 shipping method
+recognition in low resolution image
+16. Cinic-10 transportation option recognition in low resolution image
+17. Cinic-10 animal presence classification in low resolution image
+18. Cinic-10 object shipping object presence in low resolution image
+19. VisDA-2017 object recognition in 3D rendered image
+20. VisDA-2017 multiple choice object recognition in 3D rendered image
+Category
+Tasks
+Image-Style Classification
+1.
+DOMAIN-NET image style classification
+2. ImageNet-R image style classification
+3. PACS dog image style classification
+4. PACS elephant image style classification
+5. PACS giraffe image style classification
+6. PACS guitar image style classification
+7. PACS horse image style classification
+8. PACS house image style classification
+9. PACS person image style classification
+10. Model-vs-human image style classification
+Image Quality Classification
+1. ImageNet-C blur type classification
+2. ImageNet-C coarse-grained image corruption classification
+3. ImageNet-C weather type classification
+4. ImageNet-C fine-grained image corruption classification
+5. VizWiz quality issue classification of image taken by blind people
+Texture Classification
+1. DTD coarse grained texture classification
+2. DTD multiple texture detection
+3. DeepFashion cloth texture classification
+Appendix J Vision-Flan Tasks
+J.1 Generation Tasks
+Refer to caption
+Figure 13:
+Refer to caption
+Figure 14:
+Refer to caption
+Figure 15:
+Refer to caption
+Figure 16:
+Refer to caption
+Figure 17:
+Refer to caption
+Figure 18:
+Refer to caption
+Figure 19:
+Refer to caption
+Figure 20:
+Refer to caption
+Figure 21:
+Refer to caption
+Figure 22:
+Refer to caption
+Figure 23:
+Refer to caption
+Figure 24:
+Refer to caption
+Figure 25:
+Refer to caption
+Figure 26:
+Refer to caption
+Figure 27:
+Refer to caption
+Figure 28:
+Refer to caption
+Figure 29:
+Refer to caption
+Figure 30:
+Refer to caption
+Figure 31:
+Refer to caption
+Figure 32:
+J.2 Classification Tasks
+Refer to caption
+Figure 33:
+Refer to caption
+Figure 34:
+Refer to caption
+Figure 35:
+Refer to caption
+Figure 36:
+Refer to caption
+Figure 37:
+Refer to caption
+Figure 38:
+Refer to caption
+Figure 39:
+Refer to caption
+Figure 40:
+Refer to caption
+Figure 41:
+Refer to caption
+Figure 42:
+Refer to caption
+Figure 43:
+Refer to caption
+Figure 44:
+Refer to caption
+Figure 45:
+Refer to caption
+Figure 46:
+Refer to caption
+Figure 47:
+Refer to caption
+Figure 48:
+Refer to caption
+Figure 49:
+Refer to caption
+Figure 50:
+Refer to caption
+Figure 51:
+Refer to caption
+Figure 52:
+Refer to caption
+Figure 53:
+Refer to caption
+Figure 54:
+Refer to caption
+Figure 55:
+Refer to caption
+Figure 56:
+Refer to caption
+Figure 57:
+Refer to caption
+Figure 58:
+Refer to caption
+Figure 59:
+Refer to caption
+Figure 60:
+Refer to caption
+Figure 61:
+Refer to caption
+Figure 62:
+Refer to caption
+Figure 63:
+Refer to caption
+Figure 64:
+Refer to caption
+Figure 65:
+Refer to caption
+Figure 66:
+Refer to caption
+Figure 67:
+Refer to caption
+Figure 68:
+Refer to caption
+Figure 69:
+Refer to caption
+Figure 70:
+Refer to caption
+Figure 71:
+Refer to caption
+Figure 72:
+Refer to caption
+Figure 73:
+Refer to caption
+Figure 74:
+Refer to caption
+Figure 75:
+J.3 VQA Tasks
+Refer to caption
+Figure 76:
+Refer to caption
+Figure 77:
+Refer to caption
+Figure 78:
+Refer to caption
+Figure 79:
+Refer to caption
+Figure 80:
+Refer to caption
+Figure 81:
+Refer to caption
+Figure 82:
+Refer to caption
+Figure 83:
+Refer to caption
+Figure 84:
+Refer to caption
+Figure 85:
+Refer to caption
+Figure 86:
+Refer to caption
+Figure 87:
+Refer to caption
+Figure 88:
+Refer to caption
+Figure 89:
+Refer to caption
+Figure 90:
+Refer to caption
+Figure 91:
+◄
+ar5iv homepage
+Feeling
+lucky?
+Conversion
+report
+Report
+an issue
+View original
+on arXiv►
+Copyright
+Privacy Policy
+Generated on Tue Mar 5 15:15:21 2024 by LaTeXML Mascot Sammy

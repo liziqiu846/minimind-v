@@ -1,0 +1,1545 @@
+[2602.04937] Linear Model Merging Unlocks Simple and Scalable Multimodal Data Mixture Optimization
+Linear Model Merging Unlocks Simple and Scalable
+Multimodal Data Mixture Optimization
+Davide Berasi1 Matteo Farina1 Massimiliano Mancini1 Elisa Ricci1,2
+1University of Trento 2Fondazione Bruno Kessler
+Abstract
+Selecting the best data mixture is critical for successful Supervised Fine-Tuning (SFT) of Multimodal Large Language Models.
+However, determining the optimal mixture weights across multiple domain-specific datasets remains a significant bottleneck due to the combinatorial search space and the high cost associated with even a single training run.
+This is the so-called Data Mixture Optimization (DMO) problem.
+On the other hand, model merging unifies domain-specific experts through parameter interpolation.
+This strategy is efficient, as it only requires a single training run per domain, yet oftentimes leads to suboptimal models.
+In this work, we take the best of both worlds, studying model merging as an efficient strategy for estimating the performance of different data mixtures.
+We train domain-specific multimodal experts and evaluate their weighted parameter-space combinations to estimate the efficacy of corresponding data mixtures.
+We conduct extensive experiments on 14 multimodal benchmarks, and empirically demonstrate that the merged proxy models exhibit a high rank correlation with models trained on actual data mixtures.
+This decouples the search for optimal mixtures from the resource-intensive training process, thereby
+providing a scalable and efficient strategy for navigating the complex landscape of mixture weights.
+Code is publicly available at https://github.com/BerasiDavide/mLLMs_merging_4_DMO.
+1 Introduction
+Supervised fine-tuning (SFT) liu2023llava; dai2023instructblip is a post-training strategy to instill instruction-following abilities into Multimodal Large Language Models (MLLMs) and improve their performance on downstream tasks. SFT finetunes the pretrained model on a diverse mixture of high-quality instruction-tuning datasets covering various visual tasks, such as visual question answering, optical character recognition, and counting tong2024cambrian; chen2025taskgalaxy.
+The proportions of data allocated to each task, i.e., the mixture weights, have a critical impact on the resulting model albalak2023efficient; liu2024regmix; xie2023doremi.
+As a consequence, most state-of-the-art MLLMs put strong emphasis on optimizing the data mixture, a problem called Data Mixture Optimization (DMO).
+This problem is challenging as evaluating a set of mixture weights requires the computationally expensive fine-tuning on the corresponding data mixture.
+Thus, most models rely on balanced sampling or trial-and-error approaches li2024llava-ov; tong2024cambrian; deitke2025molmo, and even advanced strategies, such as fitting scaling laws li2025data; shukor2025scaling or supervised regression liu2024regmix, cannot avoid several, costly fine-tuning runs.
+As opposed to SFT on a mixture of multiple domains, model merging represents another viable strategy to achieve the same goal of consolidating knowledge from various sources wortsman2022model; ilharco2022editing.
+Merging acts at the parameter level, combining the weights of multiple expert models finetuned on separate domain-specific data. Thus, it requires as many fine-tuning runs as there are domains, being naturally much less expensive than even the cheapest approaches for DMO.
+However, it inevitably depends on a variety of design choices concerning how to merge models, which often lead to merged models that underperform those fully fine-tuned on unified, multi-domain mixtures yadav2023ties; jin2022dataless.
+In this work, we seek to bridge these two paradigms by investigating whether the efficiency of model merging can be leveraged for Data Mixture Optimization (DMO).
+Our central hypothesis is that, for any set of mixture weights, a linear combination of domain-specific experts can serve as an effective surrogate for a model fully fine-tuned on data mixed with the same weights.
+To test this hypothesis, we first train expert models for individual domains, then merge them according to candidate domain ratios, and treat the resulting merged models as proxies for the corresponding mixture-trained models.
+We use the performance of these proxies to estimate downstream accuracy, rank candidate mixtures, and ultimately select the optimal one.
+This approach enables exploring the grid of combinations only at evaluation, as opposed to exploring the grid at training time.
+We conduct an extensive empirical evaluation to compare merged proxies and mixture-trained models along numerous axes of exploration: model family (Qwen2-VL wang2024qwen2 and Intern3.5-VL wang2025internvl3), model size (2B and 8B parameters variants), fine-tuning strategy (LoRA hu2022lora and full fine-tuning), number of domains to mix (2, 3, 4 domains), and data budget (10k, 50k, 100k samples).
+We additionally assess that merged proxies can serve for both specialist scenarios (i.e., optimizing for a specific downstream task of interest) and for generalist scenarios, where the aim is to pick the mixture leading to the best average performance on a broad spectrum of tasks.
+In general, merged proxies correlate well with mixture-trained models, and consequently enable cheap selection of near-optimal mixtures.
+Additionally, we provide a theoretical intuition for why linearly merged models are well-behaved surrogates.
+This intuition builds on a second-order Taylor approximation of the loss on a given mixture under local convexity assumptions, which we empirically validate. Overall, these findings establish model merging as an effective surrogate for data mixture evaluation, opening future avenues for efficient DMO in MLLMs.
+2 Related Works
+Data Mixture Optimization (DMO) refers to the problem of selecting optimal mixture weights to sample different data sources during training.
+Despite its straightforward formulation, DMO represents a challenging and expensive problem in practice, as naive solutions would require end-to-end training to evaluate each candidate mixture, as done in tong2024cambrian.
+Older approaches focus on optimizing the worst-case domain loss xie2023doremi, while some of the most prominent modern strategies try to alleviate the cost of DMO by fitting supervised models to regress mixture weights into reference performance targets after sampling a population of training runs.
+Such supervised models can take the form of power laws shukor2025scaling; ye2024data, as well as simple linear or tree regression liu2024regmix.
+However, while surely less expensive than naive grid search, these approaches still require tens or even hundreds of training runs wettigorganize.
+In this work, we demonstrate that model merging offers a simple yet effective strategy for efficiently tackling DMO, despite requiring as many training runs as there are domains.
+Model Merging aims to unify the parameters of multiple fine-tuned models with a shared architecture into a single model wortsman2022model.
+This principle has been applied to many downstream tasks where models are trained on different sets of data, such as federated learning mcmahan2017communication; singh2020model; wang2020federated, OOD generalization izmailov2022averaging; guptastochastic; cha2021swad, continual learning wortsman2022robust; liu2023tangent; dziadzio2025merge, and, more recently, to combine the capabilities of multiple multimodal language models chenbring; qu2025uq; du2025adamms.
+By definition, merging techniques vary depending on how different parameter sets are combined into one.
+For instance, matena2022merging proposes a Fisher-informed linear combination.
+yadav2023ties proposes a three-stage approach, modeling interference between parameters of different models. yu2024language performs model merging via sparsification and parameter scaling. gargiulo2025task uses singular value decomposition of task matrices ilharco2022editing to model task interference.
+In contrast, we do not introduce a new merging technique.
+Instead, we show that model merging is an effective strategy for data mixture optimization, avoiding costly per-mixture training.
+Close to our work, tao2025merge shows that merging is indicative of whether a data source shall be added or removed from the training set of a model,
+which is a special case of the broader generalization we present in Sec.˜3.
+3 Data Mixture Optimization via Model Merging
+In this section, we formalize the problem of Data Mixture Optimization for Multimodal LLMs, and we describe how model merging can be used as a proxy to estimate the effect of different mixture weights.
+3.1 Data Mixture Optimization
+Setting.
+We consider MLLMs with the standard architecture ViT \rightarrow Adapter \rightarrow LLM, where an adapter module aligns the visual features from a pretrained encoder dosovitskiy2021an to the input space of a Large Language Model.
+The training pipeline of a general-purpose MLLM typically consists of (i) a pre-training stage, where the adapter’s weights are optimized to align the two modalities, followed by (ii) a supervised fine-tuning (SFT) stage on instruction data spanning diverse domains.
+Let \{\mathcal{D}_{1},\dots,\mathcal{D}_{K}\} denote K domain-specific SFT datasets and let N be a fixed training budget (i.e., number of data points). A data mixture
+\mathcal{D}_{(}/N)=\bigcup_{i=1}^{K}w_{i}\mathcal{D}_{i},
+(1)
+with mixing weights =/(w_{1},\dots,w_{K}) in the probability simplex \Delta^{K-1} , is a collection of N samples,
+where each sample is drawn from domain \mathcal{D}_{i} , after sampling the domain index i with probability w_{i} .
+Since large collections of SFT data are publicly available tong2024cambrian; wiedmann2025finevision; guo2025mammoth, we assume that each original dataset has |\mathcal{D}_{i}|\geq N samples.
+Consequently, the mixture \mathcal{D}_{(}/N) approximately contains w_{i}N distinct samples from domain \mathcal{D}_{i} .
+Since the data budget N is fixed, we will omit it from the notation in the following.
+Supervised fine-tuning a base model \bm{\theta}_{0} on mixing ratios /leads to the model
+\bm{\theta}^{*}_{=}/\operatorname*{argmin}_{\bm{\theta}}\mathcal{L}(\bm{\theta},\mathcal{D}_{)}/,
+(2)
+where \mathcal{L}(\bm{\theta},\mathcal{D}_{)}/ is the empirical training loss.
+Optimization objective.
+Let f:\bm{\theta}\mapsto\mathbb{R} be a performance measure.
+We are interested in the dependence of performance on the data mixture:
+f()/:\mapsto/f(\bm{\theta}^{*}_{)}/\in\mathbb{R}.
+(3)
+In particular, Data Mixture Optimization (DMO) consists of finding the optimal mixing weights:
+\max_{f}/()/.
+(4)
+In practice, there are diverse meaningful choices for the performance measure.
+In this work, we will focus on both task-specific and general-purpose objectives.
+For the former, we measure performance against a benchmark of interest (i.e., the “task”).
+For the latter, we measure the average performance on a wide collection of downstream tasks.
+Computational challenge.
+Evaluating the performance f()/ of a certain mixing ratio requires fine-tuning the base model on the corresponding data mixture.
+This is computationally expensive, making the DMO problem challenging in practice.
+Even a coarse grid over mixture ratios leads to a number of training runs that grows exponentially with the number of domains.
+Our goal is therefore to estimate relative performance without retraining a model for each /.
+3.2 Model Merging for Efficient DMO
+Model merging combines the parameters of multiple fine-tuned models to obtain a single model with aggregated capabilities.
+Existing work typically studies merging as a way to directly obtain a high-performing multitask model yadav2023ties; yu2024language; matena2022merging; gargiulo2025task.
+Here, we instead use merging as a performance proxy for DMO.
+We first obtain K experts \bm{\theta}_{i}=\bm{\theta}^{*}(\mathcal{D}_{i}) , i=1,\dots,K , by fine-tuning the base model \bm{\theta}_{0} on a single domain \mathcal{D}_{i} .
+Then, for a candidate mixture /, we approximate the mixture-trained model \bm{\theta}^{*} /with a merged model
+\bm{\theta}^{M}_{=}/w_{1}\bm{\theta}_{1}+\dots+w_{K}\bm{\theta}_{K}.
+(5)
+We then use f()/\approx f(\bm{\theta}^{M}_{)}/ as a surrogate for the true performance under mixture /.
+This reduces the cost of evaluating any mixture from a full training run to a single evaluation, after the K expert models have been trained.
+Importantly, the merged model \bm{\theta}^{M} /is not expected to match \bm{\theta}^{*} /in parameter space or absolute performance. For DMO, we only require that the surrogate preserves the ordering of mixtures, i.e., that performance under merging is monotonically related to the true performance:
+f(\bm{\theta}^{M}_{{}_{/}1})\leq f(\bm{\theta}^{M}_{{}_{/}2})\mbox{ whenever }f(\bm{\theta}^{*}_{{}_{/}1})\leq f(\bm{\theta}^{*}_{{}_{/}2}).
+(6)
+Thus, merging is used as a ranking proxy rather than as a method for constructing the final model.
+For this reason, we refer to merged models as merged proxies.
+Given a set of candidate mixture weights \mathcal{W}\subset\Delta^{K-1} we then estimate the optimal mixture as \operatorname*{arg\,max}_{\in/\mathcal{W}}f(\bm{\theta}^{M}_{)}/ .
+Algorithm 1 (Appendix) provides a summary of this simple procedure.
+Note that, in principle, any merging technique could be applied within this framework.
+While several methods have been proposed to maximize the performance of merged models, our objective is different: we seek a stable and informative proxy for mixture evaluation.
+In Sec. 4, we empirically show that simple linear weight averaging is sufficient to obtain strong rank correlation with true mixture performance.
+Additionally, in Sec. 5, we provide a theoretical analysis supporting the experimental observation.
+Table 1: SFT data collection comprising 23 datasets belonging to 4 categories: General Multimodal Understanding, Optical Character Recognition, Visual Perception & Counting, and Charts Understanding.
+General Multimodal Understanding (General)
+ALLaVA-Instruct (LAION) chen2024allava, VQAv2 goyal2017making, lnQA PontTuset_eccv2020, LVIS-Instruct-4v wang2023see, Q-Align wu2024q, GQA hudson2019gqa, VizWiz gurari2018vizwiz, Visual7W zhu2016visual7w
+Optical Character Recognition (OCR)
+SynthDog Modified kim2022ocr, OCR-VQA mishra2019ocr, DocVQA mathew2021docvqa, TextVQA singh2019towards, TextCaps sidorov2020textcaps, LLaVAr zhang2023llavar, ST-VQA biten2019scene, Rendered-Text renderedText, InfoVQA mathew2022infographicvqa
+Visual Perception & Counting (Vis. Perc.)
+Clevr johnson2017clevr, TallyQA acharya2019tallyqa
+Charts Understanding (Charts)
+dVQA kafle2018dvqa, ChartQA masry2022chartqa, Chart2Text kantharaj2022chart, VisText tang2023vistext
+4 Experimental Evaluation
+In this section, we conduct experiments to quantify the effectiveness of using merged proxies to rank data mixtures.
+We first highlight which models we fine-tune, the data collection for SFT, and the selected suite of benchmarks. Then, we show that merged proxies successfully select near-optimal mixtures regardless of (i) number of domains (Sec. 4.1) and (ii) model size (Sec. 4.2).
+We also observe that merging experts fine-tuned at a fraction of the target data budget is sufficient to obtain strong proxies (Sec. 4.3).
+Finally, we provide a comparison to regression-based approaches liu2024regmix, the de facto standard for DMO, highlighting their inefficiency w.r.t. merged proxies (Sec. 4.4).
+Base Models. We conduct all experiments starting from base models from both the Qwen2-VL wang2024qwen2 and Intern3.5-VL wang2025internvl3 families.
+We deliberately choose to use a recent model (Intern3.5-VL) alongside a less recent one (Qwen2-VL), as this allows us to study both (i) models from different families and (ii) different pre-training recipes.
+This is because the pre-training mixture of Intern3.5-VL largely contains instruction tuning data, while the pre-training mixture of Qwen2-VL does not.
+Data for Supervised Fine-Tuning. We collect a corpus of 23 datasets for SFT, categorized under 4 different domain tags: General Multimodal Understanding, Optical Character Recognition (OCR), Visual Perception & Counting, and Charts Understanding.
+Tab. 1 lists all the different data sources, grouped by category.
+For each category, we construct a domain-specific dataset of 100k samples by uniformly sampling the corresponding data sources.
+For all datasets with multiple splits, we employ the train split to avoid contamination with target benchmarks.
+Target Benchmarks. We select 14 benchmarks to measure the agreement between merged proxies and mixture-trained models. These benchmarks cover the four categories represented in the training mixtures, and overall provide a measurement of the general performance of a model.
+We validate against GQA hudson2019gqa, OK-VQA marino2019ok, VQAv2 goyal2017making, VizWiz gurari2018vizwiz, DocVQA mathew2021docvqa, InfoVQA mathew2022infographicvqa, TextVQA singh2019towards, OCR-Bench liu2024ocrbench, CV-Bench-2D (Counting subtask) tong2024cambrian, POPE li2023evaluating, ChartQA masry2022chartqa, MME fu2025mme, VMC-Bench zhang2025automated, and MMStar chen2024we.
+Implementation Details. Models are trained with the AdamW optimizer loshchilov2017decoupled with a peak learning rate of 2\times 10^{-5} , linearly warmed up during the initial 10\% of steps and decayed with a cosine schedule.
+We fix the batch size to 128.
+Unless otherwise specified, we train medium-sized 2B models with a fixed data budget of 100k samples, and apply low-rank adaptation hu2022lora to all linear projections of the LLM with a rank of 16.
+In Sec. C.2 we report additional results where we fully fine-tune both models.
+Training runs are performed with llama-factory zheng2024llamafactory and evaluations with lmms-eval zhang2024lmmsevalrealitycheckevaluation.
+Refer to caption
+(a)
+Refer to caption
+(b)
+Figure 1: Correlation plots between downstream accuracies of mixture-trained models and our proposed merged proxy. Results are shown for Qwen2-VL-2B and Intern3.5-VL-2B models, fine-tuned on 2,3,4 -domains data mixtures. Each plot reports the Spearman’s rank correlation coefficient (R) of the average performance.
+4.1 Merged models are effective proxies
+We begin our experiments by evaluating the performance of merged proxies as the optimization landscape becomes more complex, i.e., by gradually increasing the number of domains from 2 to 4. For each setting, we consider the following domains for the data mixture:
+1.
+For K{=}2 domains, we consider General + OCR datasets, as they are naturally more abundant.
+In this setup, we consider the grid of all valid mixtures with a step size of 1/8 , which results in a total of 7 mixtures.
+2.
+For K{=}3 domains, we add Visual Perception.
+As for 2-domain mixtures, we consider a grid with a step size of 1/8 , which contains 21 valid mixtures.
+3.
+For K{=}4 domains, we further add Charts to the mix.
+Here, we sample 20 mixtures from a multinomial Dirichlet distribution with uniform weights, thereby sampling all possible mixtures with equal probability.
+We then train all models and evaluate on the aforementioned suite of 14 benchmarks.
+For merged proxies, we just need to fine-tune the K expert models on the individual sources.
+Results for this experiment are in Fig. 1, showing that the performance of merged models correlates well with that of their corresponding fine-tuned versions, with coefficients ranging from 0.57 to 0.78.
+Importantly, high rank correlation values hold regardless of the overall number of domains or of the model family (e.g., 0.74, 0.77 with 4 domains).
+How good are the selected mixtures?
+Table 2:
+Downstream accuracies of mixture-trained models. We compare the performance of the mixture selected by the merged proxy (Selected) against the Uniform mixture, Median performance among candidate mixtures, and the Best mixtures (the upper bound obtained via grid search).
+The Average Performance row corresponds to generalist scenarios, where the goal is to select a mixture that performs well overall.
+Other rows correspond to specialist cases, where the mixture is optimized for a downstream task.
+K=2 domains
+K=3 domains
+K=4 domains
+Target Benchmarks
+Uniform
+Median
+Selected
+Best
+Uniform
+Median
+Selected
+Best
+Uniform
+Median
+Selected
+Best
+Qwen2-VL-2B
+GQA
+57.8
+57.8
+58.8
+58.8
+57.8
+57.5
+58.7
+58.7
+56.9
+57.4
+58.4
+58.4
+OK-VQA
+40.7
+40.1
+37.8
+41.6
+42.5
+40.3
+38.1
+42.2
+35.8
+34.5
+39.0
+40.7
+VQAv2
+71.4
+71.4
+72.2
+72.2
+71.8
+71.0
+72.1
+72.1
+70.5
+70.4
+70.9
+71.6
+VizWiz
+61.0
+61.0
+59.5
+61.8
+62.9
+61.1
+62.5
+63.1
+62.0
+61.0
+58.5
+63.0
+DocVQA
+85.5
+85.5
+86.9
+86.9
+85.5
+85.4
+86.4
+86.4
+85.1
+84.1
+86.6
+86.6
+InfoVQA
+55.0
+55.0
+58.2
+58.2
+55.1
+55.7
+56.5
+57.7
+54.1
+54.6
+56.1
+58.4
+TextVQA
+76.1
+76.1
+77.9
+77.9
+76.4
+76.2
+77.0
+77.2
+76.6
+75.8
+76.4
+77.5
+OCRBench
+74.3
+74.4
+75.3
+75.3
+74.8
+74.4
+75.5
+75.5
+75.2
+74.8
+75.4
+76.0
+CVBench2D-Count
+49.2
+54.9
+58.4
+58.4
+58.0
+57.2
+52.7
+59.9
+57.9
+56.8
+56.5
+61.3
+Pope
+88.0
+88.0
+88.2
+88.2
+88.3
+88.4
+88.2
+88.7
+88.3
+88.2
+88.5
+88.6
+ChartQA
+57.8
+57.8
+59.9
+59.9
+57.7
+57.8
+58.6
+60.9
+70.3
+70.1
+71.6
+71.7
+MME
+67.3
+67.3
+67.3
+67.6
+66.8
+67.3
+68.4
+68.4
+67.7
+66.9
+66.9
+67.8
+VMCBench
+71.8
+71.8
+71.9
+72.1
+71.1
+71.6
+71.5
+72.2
+70.9
+71.5
+70.8
+72.6
+MMStar
+42.2
+41.0
+42.2
+42.7
+41.2
+40.8
+41.3
+42.6
+41.4
+41.2
+41.7
+42.7
+Average Performance
+64.1
+64.4
+64.6
+64.8
+65.0
+64.4
+64.7
+65.1
+65.2
+64.8
+65.3
+65.5
+Intern3.5-VL-2B
+GQA
+56.8
+56.6
+57.2
+57.2
+56.5
+56.3
+57.0
+57.0
+56.2
+56.4
+56.9
+56.9
+OK-VQA
+32.5
+30.3
+28.2
+33.2
+30.6
+31.0
+31.2
+32.9
+25.2
+26.3
+32.2
+32.2
+VQAv2
+72.6
+72.7
+74.1
+74.1
+73.0
+73.0
+74.1
+74.3
+73.6
+73.2
+73.9
+74.5
+VizWiz
+59.7
+59.7
+62.8
+62.8
+57.9
+57.0
+62.0
+62.0
+58.9
+61.0
+62.6
+63.0
+DocVQA
+84.0
+83.9
+83.7
+84.1
+84.0
+83.9
+83.9
+84.0
+84.3
+83.8
+84.2
+84.4
+InfoVQA
+57.4
+57.5
+57.3
+57.8
+57.7
+57.5
+57.6
+58.3
+56.3
+56.3
+56.8
+57.9
+TextVQA
+74.5
+74.5
+74.4
+74.8
+74.4
+74.4
+74.1
+74.8
+74.3
+73.9
+74.7
+74.7
+OCRBench
+75.5
+75.5
+76.8
+76.8
+75.6
+75.3
+76.5
+77.2
+75.0
+74.0
+75.2
+76.6
+CVBench2D-Count
+59.0
+59.0
+62.2
+62.2
+61.8
+61.2
+64.2
+64.2
+60.5
+61.2
+62.6
+64.8
+Pope
+89.1
+89.1
+89.5
+89.5
+88.8
+89.4
+88.9
+89.9
+89.3
+89.6
+89.8
+89.9
+ChartQA
+78.1
+78.1
+78.1
+78.4
+77.8
+78.0
+78.1
+78.3
+78.2
+77.9
+78.0
+78.4
+MME
+68.9
+69.0
+69.6
+69.6
+67.1
+66.7
+69.6
+69.6
+66.9
+66.3
+68.5
+69.1
+VMCBench
+71.2
+71.3
+71.4
+71.5
+71.0
+71.2
+71.1
+71.9
+71.3
+71.2
+71.5
+72.2
+MMStar
+48.0
+47.6
+48.2
+48.2
+48.0
+47.7
+48.1
+48.7
+47.7
+47.4
+47.3
+48.7
+Average Performance
+66.2
+66.1
+66.1
+66.2
+66.0
+65.8
+66.2
+66.4
+65.5
+65.5
+66.0
+66.0
+While rank correlation provides a metric to assess the agreement between mixture-trained models and merged proxies, it remains insufficient to quantify how well using the latter works in practice.
+Specifically, we are interested in measuring the performance difference between the mixture obtained by exact grid search, which is the upper bound, and the one selected through the merging proxies.
+We also report a uniform mixture and the median performance among candidate mixtures.
+For this experiment, we consider two complementary scenarios: (i) a specialist scenario and (ii) a generalist one.
+In the specialist case, we simulate scenarios where the data mixture is explicitly optimized for a downstream task of interest.
+To do so, we pick the best mixture for each of the 14 benchmarks and compare it with the mixture selected by merging proxies based on the accuracy on the same benchmark.
+In the generalist objective, we compare the mixture with the best average performance with the one selected by the merged proxies based on average performance across all benchmarks.
+This simulates a scenario where merging proxies are used to select a strong mixture overall.
+The results for these comparisons are reported in Tab. 2 for both models and for K=\{2,3,4\} domains, where Average Performance rows correspond to generalist scenarios and other rows to specialist ones.
+Major observations are:
+Observation #1: Merged proxies can optimize for specialists.
+When explicitly optimizing against a target task, merged proxies perform well in either selecting the optimal data mixture or providing a candidate mixture that performs very similarly to the optimal one.
+For example, in the most complex landscape with 4 domains, they select mixtures with less than -1\% drop w.r.t. exact search in 8/14 cases and 10/14 cases for Qwen2-VL and Intern3.5-VL, respectively.
+With 3 domains, these become 9/14 and 12/14 cases.
+Importantly, while some failure cases exist, successful results emerge not only for datasets whose (part of) their training sets were in the mixture, but also for different tasks such as OCR-Bench, MMStar, or MME.
+Observation #2: Merged proxies can optimize for generalists, as they are capable of selecting a mixture leading to high average performance across benchmarks.
+Here, the mixtures proposed by the merged proxies closely match those obtained by exact grid search.
+Qwen2-VL with 3 domains represents the worst case, although it only displays an absolute drop of -0.4\% on average performance.
+The best case, instead, is represented by Intern3.5-VL with 4 domains, where exactly the best mixture is chosen.
+However, we observe that in this setting, the choice of mixture is considerably less important than in the specialist case, as the gaps in average performance between median and best mixtures are smaller.
+We hypothesize that this is because the target benchmarks fall within the same domains as the training sources, implying that many different mixtures already provide sufficient task coverage.
+Hence, in this case, we speculate that automated data clustering techniques, which do not rely on human intuition, could be a beneficial step before optimizing mixture weights diaonemotron.
+More broadly, this result may also indicate that DMO becomes less critical when jointly optimizing across a large and diverse set of tasks.
+This observation is consistent with recent work showing that data curation methods tend to be more effective when the target distribution is narrower mizrahi2025language; ghosh2025concept.
+Observation #3: Merged proxies are scalable.
+We do not observe significant performance variations when increasing the number of domains, i.e., merged proxies work well at all K=\{2,3,4\} domains.
+This suggests that merged proxies are a scalable solution, despite only requiring as many training runs as there are domains.
+Table 3: Downstream accuracy of different mixtures for larger models (Qwen2-VL-7B and Intern3.5-VL-8B).
+Naming follows Tab. 2.
+Target Benchmarks
+Model
+Metric
+GQA
+OK-VQA
+VQAv2
+VizWiz
+DocVQA
+InfoVQA
+TextVQA
+OCRBench
+CVB-Count
+Pope
+ChartQA
+MME
+VMCBench
+MMStar
+Average
+Performance
+Qwen2-VL-7B
+Uniform
+60.9
+51.2
+76.5
+63.8
+93.3
+72.1
+81.6
+79.8
+61.7
+88.0
+81.3
+79.8
+78.3
+52.0
+72.9
+Median
+61.0
+46.9
+77.2
+67.2
+93.1
+72.0
+81.0
+79.6
+60.6
+88.1
+81.3
+79.2
+77.8
+52.3
+72.6
+Selected
+62.0
+46.6
+77.8
+68.5
+93.6
+72.2
+81.9
+80.0
+58.6
+88.2
+81.9
+79.7
+77.5
+52.3
+73.2
+Best
+62.0
+51.9
+78.0
+69.5
+93.6
+73.2
+82.5
+81.0
+64.0
+88.6
+82.0
+80.5
+78.5
+53.7
+73.2
+Intern3.5-VL-8B
+Uniform
+60.5
+36.5
+76.2
+64.5
+91.6
+71.3
+78.7
+78.5
+67.0
+89.2
+84.7
+81.8
+79.0
+58.8
+72.7
+Median
+60.5
+36.8
+75.9
+65.0
+91.5
+71.2
+78.5
+78.2
+67.4
+89.3
+84.8
+81.3
+79.2
+58.8
+72.7
+Selected
+61.3
+37.5
+76.4
+65.2
+91.6
+72.5
+78.8
+78.5
+66.6
+89.2
+84.8
+80.7
+78.9
+58.3
+72.8
+Best
+61.3
+42.9
+76.4
+66.1
+91.9
+72.5
+79.1
+78.6
+69.4
+89.6
+85.5
+83.1
+79.8
+59.5
+73.0
+4.2 Larger model size
+We now assess the performance of merged proxies with larger models.
+To do so, we perform the most realistic (and complex) experiment with K=4 domains, and use the merged proxies to select mixtures for Qwen2-VL-7B and Intern3.5-VL-8B.
+Results are reported in Tab. 3, showing similar findings to those observed with 2B models.
+Merged proxies rank above median mixture performance in 11/14 and 9/14 specialist cases for Qwen2-VL-7B and Intern3.5-VL-8B, and yield mixtures within -1\% gap from exact grid search in 11/14 and 10/14 cases, respectively.
+Yet again, we observe less sensitivity to mixture selection for both models when maximizing average performance.
+This is more pronounced in Intern3.5-VL-8B,
+hence we hypothesize this stems from the large fraction of instruction-tuning data already present in the Intern3.5-VL model family, which yields base models with broad knowledge and good instruction-following abilities already.
+4.3 Cross Budget Correlation
+Refer to caption
+(a)
+Refer to caption
+(b)
+Figure 2: Cross-data budget correlation plots. Results are shown for Qwen2-VL-2B and Intern3.5-VL-2B models for 4-domains mixtures.
+We investigate whether merged proxies constructed from experts trained with a smaller data budget can still reliably rank mixtures defined at a larger target budget. Let the target budget be N_{\text{target}}=100k samples. Rather than training experts on the full budget, we build proxy models by merging experts trained with reduced budgets N_{\text{proxy}}=10k,50k .
+We then measure how well proxy-based scores correlate with the true performance of models fine-tuned at N_{\text{target}} across the grid of 4-domain mixtures.
+Fig. 2 reports the correlation between proxy scores and target accuracies for Qwen2-VL-2B and Intern3.5-VL-2B.
+Proxies derived from the smallest budget ( N_{\text{proxy}}=10k ) exhibit weak correlation with target performance, suggesting that experts trained with very limited data fail to capture sufficiently reliable domain-specific signals. In contrast, proxies constructed from half-budget experts ( N_{\text{proxy}}=50k ) achieve strong correlation with the target scores for both models.
+Overall, these results indicate that merged proxies do not require experts trained at the full optimization budget. Instead, training experts on a fraction of the data can already provide a faithful ranking signal over mixtures, enabling a further reduction in the total computational cost of the merging-based DMO framework. Furthermore, this finding opens the possibility of leveraging merged proxy predictions in scaling laws fitted on smaller data budgets, which presents an interesting direction for future research.
+4.4 Merged Proxies vs Regression-based DMO
+Refer to caption
+(a)
+Refer to caption
+(b)
+Figure 3: Spearman’s R correlation coefficient of accuracies predicted from a regressor fitted on an increasing number of data points. Each data point comes from a finetuned model, while the merged proxy requires only the K expert models.
+Established approaches for DMO resort to various forms of regression.
+For example, shukor2025scaling fit power laws to regress a validation loss from domain weights \mathbf{w} , parameter count, and training tokens, while RegMix liu2024regmix fits a linear regression model to predict a validation loss from domain weights \mathbf{w} only.
+Naturally, both approaches require sampling an initial population of training runs, and the more runs, the better.
+Due to their popularity, we compare regression-based approaches to the simple merged proxies in the context of multimodal SFT.
+Setup. We fit supervised regression models to predict the average accuracy on the 14 benchmarks given a population of T training runs and evaluate how well they can rank mixtures in a held-out evaluation set with n elements.
+Please find details about the regressor in Sec. C.4.
+We re-utilize the populations of training runs introduced above for both K{=}\{3,4\} domains, to which we add expert models for a total of 21+3=24 and 20+4=24 mixtures, respectively.
+We fix the evaluation set size to n{=}8 mixtures, and fit regression models on an increasing number of training runs T=2,...,24-n .
+Once fit, we use regression models to rank the mixtures in the evaluation set. We randomize this procedure for 100 trials, reporting the expected values in Fig. 3.
+Recall that merged proxies only require K training runs (one per domain).
+Observation #1: Merged Proxies are significantly more efficient than Regressors. For Qwen2-VL-2B, both with 3-domains and 4-domains mixtures, the estimates provided by the regressor lag far behind those of the merged proxies, up until either 15 or 16 training runs have been collected.
+This means that merged proxies are approximately 5\times and 4\times more efficient than regressors, as they require only a fraction of training runs to provide identical reliability.
+Observation #2: Regressors may never reach the performance of Merged Proxies.
+For Intern3.5-VL-2B, we observe that (i) with 4-domains, regressors plateau at a similar rank correlation to the merged proxies, despite having utilized 4\times more compute; (ii) with 3-domains, regressors show signs of saturation while still lagging far behind merged proxies.
+This suggests that regressors may be more sensitive to the shape of the optimization landscape than merged proxies, and, importantly, they are not guaranteed to match or surpass them by collecting more training runs.
+While these observations might not be fully conclusive due to the modest population size, we hope that these results encourage the community to dig deeper into this matter.
+5 Analysis and Intuitions
+In this section, we aim to provide intuitions for why merged proxies serve as effective surrogates for finetuned models.
+First, we provide a theoretical intuition showing that fine-tuned models themselves are linear combinations of expert weights under local convexity assumptions in the loss landscape.
+Then, we successfully verify such assumptions empirically on our SFT data.
+Finally, we show that mixture-trained models are aligned to merged proxies in parameter space, supporting the use of simple linear merging.
+5.1 II order approximations lead to linear merging
+We now formally justify why a linear combination of experts \sum w_{i}\bm{\theta}_{i} serves as a valid proxy for the mixture-trained model \bm{\theta}^{*} /by
+looking at the geometry of the loss landscape.
+In general, the loss function on a mixture \mathcal{D} /for any \bm{\theta} is
+\mathcal{L}(\bm{\theta},\mathcal{D}_{)}/=\sum_{i=1}^{K}w_{i}\mathcal{L}(\bm{\theta},\mathcal{D}_{i}).
+(7)
+When fine-tuning steps are small and stay within a locally convex region (the “linear mode connectivity” regime frankle2020linear), we can approximate the loss on each domain \mathcal{D}_{i} using a second-order Taylor expansion in the corresponding expert \bm{\theta}_{i} , which reads
+\mathcal{L}(\bm{\theta},\mathcal{D}_{i})\approx l_{i}+\frac{1}{2}(\bm{\theta}-\bm{\theta}_{i})^{\top}\mathcal{H}_{i}(\bm{\theta}-\bm{\theta}_{i}),
+(8)
+where l_{i}=\mathcal{L}(\bm{\theta}_{i},\mathcal{D}_{i}) and \mathcal{H}_{i} is the Hessian of the loss computed in \bm{\theta}_{i} .
+Note that the first-order term is absent, since the expert \bm{\theta}_{i} is the minimum of \mathcal{L}(\bm{\theta},\mathcal{D}_{i}) , i.e., the loss gradient is zero in this point.
+Consequently, we can write (7), the loss on the mixture \mathcal{D} /, by substituting (8) as
+\mathcal{L}(\bm{\theta},\mathcal{D}_{)}/\approx\sum_{i}w_{i}[l_{i}+\frac{1}{2}(\bm{\theta}-\bm{\theta}_{i})^{\top}\mathcal{H}_{i}(\bm{\theta}-\bm{\theta}_{i})].
+(9)
+This quadratic form has a closed-form solution
+\bm{\theta}^{*}/=\left(\sum_{j}w_{j}\mathcal{H}_{j}\right)^{-1}{\sum_{i}w_{i}\mathcal{H}_{i}\bm{\theta}_{i}},
+(10)
+which means that, under local convexity assumptions around experts, the optimal fine-tuned weights \bm{\theta}^{*}/ are themselves a linear combination of the expert models \bm{\theta}_{i} with matrix coefficients.
+Refer to caption
+Figure 4: Loss functions in the neighbourhood of expert models, along 5 random directions. In a neighbourhood of their minimum, the loss functions remain convex.
+In practice, computing the Hessians \mathcal{H}_{i}\in\mathbb{R}^{|\bm{\theta}_{i}|\times|\bm{\theta}_{i}|} is not computationally feasible, and surrogate solutions for the Hessian, such as the Fisher matrix, also present non-trivial design choices and computational challenges for (Multimodal) Language Models due to the sheer vocabulary size.
+However, in the special case of uniform Hessians, i.e. \mathcal{H}_{i}\approx\mathcal{H},\ \forall i , Eq. 10 simplifies to the linear combination of the experts \bm{\theta}^{*}_{=}/\sum_{i}w_{i}\bm{\theta}_{i} .
+Given that the best parameter-space approximation is unnecessary for DMO, but only a well-correlated surrogate is sufficient, we opt for the simple solution of scalar coefficients and leave the exploration of alternatives for future work.
+5.2 Visualizing the loss function
+We visualize the loss function in the neighbourhood of the two expert models \bm{\theta}_{\text{{\color[rgb]{0.28125,0.46875,0.81640625}\definecolor[named]{pgfstrokecolor}{rgb}{0.28125,0.46875,0.81640625}general}}} , \bm{\theta}_{\text{{\color[rgb]{1,0.625,0.25}\definecolor[named]{pgfstrokecolor}{rgb}{1,0.625,0.25}ocr}}} to empirically verify the approximation in Eq. 8.
+Precisely, for a given domain-expert model, we compute the loss values along five random directions \bm{\delta}_{j} sampled from a normal distribution.
+To set a meaningful scale, we rescale the sampled directions to the distance between the two experts: \bm{\delta}\leftarrow\frac{\bm{\delta}}{||\bm{\delta}||}||\bm{\theta}_{1}-\bm{\theta}_{2}|| as in li2018visualizing.
+We then evaluate the loss \mathcal{L}(\mathcal{D}_{i}) in \bm{\theta}_{i}+\alpha\bm{\delta} for evenly spaced alphas in [-2,2] .
+Figure 4 visualizes the loss for General and OCR, which appears to satisfy the convexity assumption in its neighbourhood.
+5.3 Parameter-space arrangement
+Refer to caption
+Figure 5: Projections onto the plane of the expert models. Projections of models finetuned on 2-domains mixtures are aligned to the line connecting the two experts, suggesting they can be approximated by linearly merging the experts’ parameters.
+To build intuition on how the finetuned models \bm{\theta}^{*}/ are arranged along the expert models \bm{\theta}_{i} in the parameters’ space, we project models fine-tuned on General + OCR data onto an orthonormal base centered in the base model and spanning the plane containing the two expert models \bm{\theta}_{\text{{\color[rgb]{0.28125,0.46875,0.81640625}\definecolor[named]{pgfstrokecolor}{rgb}{0.28125,0.46875,0.81640625}general}}} and \bm{\theta}_{\text{{\color[rgb]{1,0.625,0.25}\definecolor[named]{pgfstrokecolor}{rgb}{1,0.625,0.25}ocr}}} (we restrict to 2 domains for the sake of easier visualization).
+The projection is depicted in Fig. 5 for the grid of 7 mixtures. We can notice how the finetuned models are close to being organized along the straight line connecting the two specialized models, supporting the use of linear merging.
+6 Conclusion
+We investigate linear model merging as a practical surrogate for Data Mixture Optimization in supervised fine-tuning of multimodal large language models. By training one expert per domain and linearly merging their parameters, we obtain proxy models whose rankings are consistent with fully fine-tuned models. Although failure cases exist, these merged proxies are largely independent of the optimization target (specialist vs. generalist) and remain robust as the number of domains increases.
+We also provide theoretical intuitions and empirical evidence explaining why linear combinations of experts are suitable surrogates for DMO, and show that merged proxies are far more sample-efficient than regression-based baselines.
+Overall, linear merging enables exploration of candidate mixtures using only one training run per domain, substantially reducing DMO cost.
+Impact Statement
+The primary goal of our work is to render the expensive problem of Data Mixture Optimization more computationally accessible by using surrogates based on model merging.
+This implies that, when successful, such proxies could reduce both the environmental impact and the economic cost associated with optimizing Machine Learning models.
+As a by-product, our work also indirectly aims at selecting the “best” data for Machine Learning models, implying that the broader impact and risks associated with this work are shared with those of general advancements in the field.
+There are many such related risks, to which the public is increasingly more aware, and we believe they do not necessitate an in-depth discussion in this manuscript.
+Acknowledgements.
+The authors acknowledge the CINECA award under the ISCRA initiative for the availability of high-performance computing resources and support.
+This work was supported by the EU Horizon ELIAS (No. 101120237) and ELLIOT (No. 101214398) projects.
+References
+Linear Model Merging Unlocks Simple and Scalable
+Multimodal Data Mixture Optimization
+Supplementary Material
+Appendix A Limitations and Future Works
+In this work, we showed that a simple technique based on linear model merging can serve as a proxy for efficient DMO. We summarize our procedure in Algorithm 1.
+While the focus of our work is to demonstrate the viability and efficacy of this strategy, there are multiple future avenues of research.
+For instance, while we focused on linear model merging as it is an extremely simple (yet effective) proxy, more complex model merging could better approximate the theoretical assumptions in Section 5. An example is exploiting second-order signals, such as the Fisher information matrix matena2022merging.
+While model merging allows a cheap estimation of the proxy score for a set of candidate mixture weights, we still treat the combinatorial search space as a finite set (i.e., a grid) rather than a continuous space, as we deem it beyond the scope of this work to do so.
+Future work could explore hybrid strategies.
+An example is fitting a regressor to predict the performance of a merged model.
+Contrary to classical DMO, model merging allows for a much cheaper collection of data points for training the regressor (i.e., evaluating merged models vs training on data mixtures).
+Another interesting approach could be to directly optimize the weights used to merge models, e.g., via gradient descent if the performance measure f is differentiable, or through genetic algorithms.
+Note that, even in this case, the cheap proxy computation allows for a much deeper search than the classical paradigm on training on mixtures.
+Finally, for the sake of wide and controllable analyses, we focused on 2 type of models at 2 different scales, and a fixed data budget.
+However, it would be interesting to fit scaling laws varying the training data budget.
+This could show whether the proxy generalizes to different scales and regimes, with potential benefits at extremely large scales, where training models entails even much higher computational challenges.
+Algorithm 1 Python-style DMO via Model Merging
+⬇
+# Functions:
+# train(model, D) = returns model trained on dataset D
+# score(model, target) = returns scalar performance of model on target
+# merge(models, mixture_weights) = returns linearly merged model according to mixture weights
+def dmo_via_merging(base_model, datasets, mixture_candidates, target):
+# Arguments:
+# base_model = Base Model for Supervised Fine-Tuning
+# datasets = list of [D_1, ..., D_K]
+# mixture_candidates = list[tuple] of candidate mixtures
+# target = performance target to maximize
+# step 1: train experts
+experts = [train(base_model, dataset) for dataset in datasets]
+# step 2: evaluate merged proxies
+scores = [
+score(merge(experts, mixture_weights), target)
+for mixture_weights in mixture_candidates
+]
+# select mixture according to best merged proxy
+return mixture_candidates[scores.index(max(scores))]
+Appendix B SFT Data & Benchmarks
+In this section, we provide additional details about the training data and evaluation benchmarks used in our experiments.
+SFT data.
+In our experiments, we train models on data mixtures combining samples from up to four domain-specific datasets: General Multimodal Understanding, Optical Character Recognition (OCR), Visual Perception & Counting, and, finally, Charts Understanding.
+For each category, we construct a dataset of N=102400 (multiple of batch size =128 ) data points sampled, uniformly and without repetitions, from a collection of data sources as described in Tab. 1.
+Figure 6 reports the distribution over the data sources within each domain.
+Downstream tasks.
+We evaluate our models on a suite of 14 benchmarks, evaluating a wide range of downstream tasks. For each of these, we now provide the split we tested on, the number of samples, and a brief description of their content and evaluated capabilities.
+Refer to caption
+Figure 6: Composition of the domain-specific datasets used in our experiments.
+•
+GQA hudson2019gqa (testdev split, 12578 samples)
+A large-scale Visual Question Answering benchmark focused on real-world scene understanding with compositional reasoning. Questions are grounded in scene graphs, enabling the evaluation of relational, spatial, and logical reasoning.
+•
+OK-VQA marino2019ok (validation split, 5046 samples)
+An open-ended VQA dataset that requires external knowledge not directly observable in the image. It evaluates a model’s ability to combine visual perception with commonsense and factual world knowledge.
+•
+VQAv2 goyal2017making (lite split, 500 samples)
+A widely used VQA benchmark containing balanced question–answer pairs to reduce language priors. It measures general visual understanding, object recognition, attributes, counting, and commonsense reasoning.
+•
+VizWiz gurari2018vizwiz (validation split, 4319 samples)
+A VQA dataset collected from blind or low-vision users. Images are often of poor quality (blurred, poorly framed), making it a benchmark for robustness to real-world noise.
+•
+DocVQA mathew2021docvqa (validation split, 5349 samples)
+A document visual question answering benchmark requiring understanding of scanned documents such as forms and reports. It evaluates document layout comprehension, text localization, and reading-based reasoning.
+•
+InfoVQA mathew2022infographicvqa (validation split, 2801 samples)
+This benchmark focuses on question answering over infographics that combine text, charts, and visual elements. It requires multimodal reasoning across layout structure, textual content, and graphical components.
+•
+TextVQA singh2019towards (validation split, 5000 samples)
+A VQA benchmark emphasizing text understanding in real-world scenes. Many questions require reading text in natural images and, at the same time, integrating OCR outputs with visual context.
+•
+OCR-Bench liu2024ocrbench (test split, 1000 samples)
+A comprehensive evaluation suite for OCR-centric multimodal models, covering text recognition, grounding, and reasoning across diverse real-world scenarios and document types.
+•
+CV-Bench-2D (Counting) tong2024cambrian (test split, 788 samples)
+We use the Counting subtask, which evaluates fine-grained object counting in complex scenes. It requires precise object localization and reasoning on the numerosity of objects.
+•
+POPE li2023evaluating (test split, 9000 samples)
+A benchmark for evaluating object hallucination in vision–language models. We consider it a visual perception benchmark, since it measures whether models incorrectly assert the presence of objects not supported by the image.
+•
+ChartQA masry2022chartqa (test split, 2500 samples)
+A benchmark for question answering over charts and plots. It tests numerical reasoning and the ability to extract structured data from visualized statistics.
+•
+MME fu2025mme (test split, 2374 samples)
+A comprehensive multimodal evaluation benchmark designed to evaluate perception, reasoning, and knowledge capabilities of multimodal foundation models across diverse task categories.
+•
+VMC-Bench zhang2025automated (dev split, 1000 samples)
+This benchmark evaluates a model’s competence across multiple cognitive dimensions, such as perception, reasoning, and cross-modal consistency.
+•
+MMStar chen2024we (validation split, 1500 samples)
+This is a comprehensive benchmark designed to assess structured, step-by-step reasoning ability in vision–language models.
+Table 4:
+Downstream accuracies of models fine-tuned on 4-domains data mixtures. We compare the performance of the mixture selected by our merged proxy (Selected) against the Uniform, Median and Best mixtures on an increasing number of data samples allocated to SFT ( N= 10k, 50k, 100k samples). Naming and formatting follow Tab. 2.
+N=10k samples
+N=50k samples
+N=100k samples
+Target Benchmarks
+Uniform
+Median
+Selected
+Best
+Uniform
+Median
+Selected
+Best
+Uniform
+Median
+Selected
+Best
+Qwen2-VL-2B
+GQA
+53.0
+53.1
+53.8
+54.1
+55.7
+55.6
+56.9
+56.9
+56.9
+57.5
+58.4
+58.4
+OK-VQA
+33.0
+31.0
+35.7
+35.7
+33.7
+27.1
+38.7
+38.7
+35.8
+34.6
+39.0
+40.7
+VQAv2
+68.6
+68.2
+69.2
+69.9
+69.7
+69.5
+69.4
+70.7
+70.5
+70.5
+70.9
+71.6
+VizWiz
+49.9
+51.6
+55.3
+55.3
+59.0
+58.8
+57.6
+62.6
+62.0
+61.0
+58.5
+63.0
+DocVQA
+78.8
+76.7
+80.4
+80.5
+83.1
+81.9
+84.6
+85.2
+85.1
+84.1
+86.6
+86.6
+InfoVQA
+48.0
+47.3
+50.4
+50.4
+54.0
+53.7
+54.6
+55.8
+54.1
+54.6
+56.1
+58.4
+TextVQA
+73.0
+71.8
+74.1
+74.1
+75.5
+74.5
+76.2
+77.4
+76.6
+75.7
+76.4
+77.5
+OCRBench
+70.3
+70.2
+71.5
+72.0
+74.0
+73.5
+74.6
+75.1
+75.2
+74.7
+75.4
+75.6
+CVBench2D-Count
+52.0
+52.2
+54.9
+54.9
+57.1
+57.4
+58.6
+60.2
+57.9
+56.6
+56.5
+61.3
+Pope
+86.8
+86.6
+87.0
+87.1
+87.8
+87.3
+87.4
+87.9
+88.3
+88.2
+88.5
+88.6
+ChartQA
+52.0
+53.1
+58.0
+58.0
+69.0
+68.0
+70.4
+70.4
+70.3
+70.0
+71.6
+71.7
+MME
+62.3
+62.8
+62.8
+64.4
+66.2
+65.9
+66.5
+67.2
+67.7
+67.0
+66.9
+67.8
+VMCBench
+64.2
+64.5
+69.6
+69.6
+70.8
+70.4
+70.7
+71.3
+70.9
+71.7
+70.8
+72.6
+MMStar
+39.0
+38.3
+39.2
+39.2
+40.6
+40.2
+40.0
+42.0
+41.4
+41.3
+41.7
+42.7
+Average Performance
+59.4
+59.1
+60.0
+60.0
+64.0
+63.1
+63.8
+63.9
+65.2
+64.8
+65.3
+65.5
+Intern3.5-VL-2B
+GQA
+54.4
+54.5
+54.6
+54.8
+55.4
+55.3
+56.2
+56.2
+56.2
+56.4
+56.9
+56.9
+OK-VQA
+28.5
+28.3
+33.3
+33.4
+24.5
+22.0
+33.0
+33.0
+25.2
+26.3
+32.2
+32.2
+VQAv2
+70.4
+70.6
+71.9
+71.9
+72.8
+72.5
+73.3
+73.3
+73.6
+73.2
+73.9
+74.5
+VizWiz
+51.6
+52.5
+52.9
+53.0
+57.0
+60.2
+62.0
+62.0
+58.9
+61.2
+62.6
+63.0
+DocVQA
+84.7
+84.9
+85.0
+85.0
+84.3
+84.1
+84.4
+84.4
+84.3
+83.8
+84.2
+84.4
+InfoVQA
+58.5
+58.3
+59.0
+59.0
+56.9
+56.5
+57.2
+57.5
+56.3
+56.4
+56.8
+57.9
+TextVQA
+74.0
+73.8
+73.7
+74.2
+74.2
+74.2
+74.4
+74.6
+74.3
+74.0
+74.7
+74.7
+OCRBench
+75.6
+75.3
+76.0
+76.2
+74.6
+74.4
+75.6
+75.7
+75.0
+73.9
+75.2
+76.6
+CVBench2D-Count
+58.6
+58.8
+58.1
+59.4
+60.7
+59.9
+60.9
+62.4
+60.5
+61.2
+62.6
+64.8
+Pope
+89.8
+89.4
+89.4
+89.6
+89.7
+89.6
+89.6
+90.1
+89.3
+89.5
+89.8
+89.9
+ChartQA
+78.6
+78.7
+78.6
+78.9
+78.4
+78.2
+78.2
+78.8
+78.2
+77.9
+78.0
+78.4
+MME
+66.2
+66.6
+68.5
+68.5
+64.4
+65.7
+66.1
+68.8
+66.9
+66.4
+68.5
+69.1
+VMCBench
+70.6
+70.4
+71.1
+71.4
+70.8
+70.8
+70.6
+71.4
+71.3
+71.2
+71.5
+72.2
+MMStar
+46.7
+46.9
+48.5
+48.6
+46.5
+47.0
+47.3
+47.7
+47.7
+47.4
+47.3
+48.5
+Average Performance
+64.9
+64.9
+65.1
+65.1
+65.0
+64.9
+65.5
+65.5
+65.5
+65.5
+66.0
+66.0
+Appendix C Additional Experiments
+In this section, we report additional experimental results that complement and extend those in the main document. We first analyze the optimal mixtures under diverse target objectives, and we compare them with those selected by our merged proxy (Sec. C.1). Then, we evaluate our proposed merged proxy at different data budgets (Sec. C.2), and on full-finetuning (Sec. C.3).
+Finally, we report additional details about the regression-based comparison (Sec. C.4).
+C.1 Optimal mixtures
+In Fig. 7, we report, for each of the 14 benchmarks and in the setting of 4-domain mixtures, both the best-performing mixture found via exact grid search and the mixture selected by the merged proxies. A notable observation is that the resulting optimal compositions often diverge from what one might expect based on human intuition about dataset–task alignment.
+For instance, for both Qwen2-VL and Intern3.5-VL, performance on OK-VQA is maximized by mixtures that allocate a substantial fraction of OCR and Visual Perception data. Importantly, these allocations are consistently identified both by the merged proxies and by exhaustive search. This outcome is somewhat counterintuitive, as OK-VQA would typically be categorized as a General benchmark, and one might therefore expect mixtures dominated by general-purpose data.
+A related phenomenon is observed for VQAv2, another benchmark commonly regarded as General.
+In this case, Qwen2-VL benefits most from mixtures emphasizing OCR and Charts data, whereas Intern3.5-VL does not exhibit the same preference.
+These discrepancies indicate that the optimal supervised fine-tuning (SFT) mixture is strongly influenced by the prior knowledge and inductive biases of the underlying base model.
+Consequently, mixture compositions that are optimal for one architecture cannot be assumed to transfer to another, even when targeting the same downstream task. Although intuitive, this result highlights that mixture optimization for SFT is inherently model-dependent.
+Another illustrative case is TextVQA, whose training set is included in the OCR training domain. A natural hypothesis would be that maximizing in-distribution OCR data, potentially approaching a 100\% allocation, should yield the best performance.
+However, for both models, we instead observe configurations where incorporating data from additional domains leads to improved results.
+These instances of positive cross-domain transfer are effectively captured by the merged proxies.
+Overall, these findings demonstrate that optimal data mixtures can be unintuitive, and highlight the fact that automated mixture optimization rather than reliance on heuristic or human-designed compositions is to be preferred.
+Refer to caption
+(a)
+Refer to caption
+(b)
+Figure 7: Comparison of optimal data mixtures and data mixtures selected by the merged proxy.
+Table 5: Downstream accuracy of different 4-domains mixtures for Qwen2-VL-2B and Intern3.5-VL-2B trained with full fine-tuning.
+Target Benchmarks
+Model
+Metric
+GQA
+OK-VQA
+VQAv2
+VizWiz
+DocVQA
+InfoVQA
+TextVQA
+OCRBench
+CVB-Count
+Pope
+ChartQA
+MME
+VMCBench
+MMStar
+Average
+Performance
+Qwen2-VL-2B
+Full Fine-tuning
+Uniform
+60.39
+42.14
+69.78
+52.40
+87.22
+56.65
+76.11
+73.10
+54.19
+86.74
+73.00
+64.19
+70.20
+42.16
+64.88
+Median
+61.18
+42.60
+69.53
+53.28
+85.94
+55.43
+75.34
+71.85
+58.25
+87.02
+73.14
+66.21
+70.60
+42.84
+65.09
+Selected
+61.86
+42.07
+71.10
+55.97
+87.26
+57.70
+77.73
+72.90
+54.57
+86.73
+74.88
+69.23
+70.40
+40.59
+65.61
+Best
+62.41
+46.02
+71.62
+59.22
+88.47
+58.83
+78.82
+73.80
+66.50
+88.46
+74.88
+69.87
+72.70
+46.37
+66.67
+Intern3.5-VL-2B
+Full Fine-tuning
+Uniform
+58.18
+41.37
+72.24
+40.39
+83.19
+54.39
+71.33
+71.80
+60.53
+88.99
+74.64
+64.51
+70.30
+48.26
+64.29
+Median
+58.27
+41.75
+70.06
+41.44
+81.96
+53.05
+71.02
+72.00
+63.13
+89.11
+75.72
+67.66
+71.35
+48.47
+64.48
+Selected
+60.14
+41.74
+72.22
+44.16
+83.71
+54.53
+71.82
+73.90
+61.42
+88.99
+76.56
+61.49
+71.20
+49.06
+65.01
+Best
+60.14
+43.75
+72.22
+47.27
+84.11
+56.36
+73.98
+75.00
+68.15
+90.08
+76.88
+71.61
+72.70
+49.70
+66.01
+C.2 Different Data Budgets
+We investigate the behavior of merged proxies under different data budgets. To this end, we repeat the main experiment from Section 4.1 by sampling from the 4-domain mixture space with progressively larger budgets: N=10240,51200,102400 .
+Tab. 4 reports results for both Qwen2-VL-2B and Intern3.5-VL-2B.
+We find that merged proxies remain effective even at lower data budgets, consistently selecting strong mixtures.
+In contrast, the same trend does not hold for the Uniform mixture.
+While its broad task coverage yields reasonably good performance at the largest budget (100k), it becomes a much weaker choice when the available data is limited, particularly for Qwen2-VL-2B.
+For instance, at a budget of 10k examples, the Uniform mixture underperforms the best mixture (and the one selected by merged proxies) by -6\% on ChartQA, -5.4\% on VizWiz, and -5.4\% on VMC-Bench.
+These results indicate that, especially in low-budget regimes, careful mixture selection is important, and merged proxies provide a reliable mechanism to achieve this.
+C.3 Full finetuning
+In Tab. 5, we report the performance of merged proxies compared to the Uniform, Median, and Best baselines for 4-domain mixtures, using full fine-tuning on Qwen2-VL-2B and Intern3.5-VL-2B. In this setting, we do not tune hyperparameters specifically for full fine-tuning; instead, we reuse exactly the same hyperparameters described in Sec. 4. The only change with respect to previous experiments is that, rather than applying low-rank adaptation, we fine-tune all weights of the language decoder and multimodal adapter.
+Despite this change in training regime, we continue to observe strong results. In particular, for both models, merged proxies consistently select near-optimal mixtures in the generalist setting (see the Average Performance column), outperforming both Uniform and Median baselines and closely approaching the performance achieved by exact grid search.
+We also observe slightly larger gaps between the best mixture found by grid search and the mixture selected by merged proxies, in both specialist and generalist scenarios. We hypothesize that this behavior is largely attributable to suboptimal hyperparameter choices for full fine-tuning. For example, a learning rate that is too high when updating all weights may increase the distances between experts, which in turn can reduce the effectiveness of model merging and slightly degrade proxy reliability.
+C.4 Additional Details about Regression-based DMO
+Refer to caption
+Refer to caption
+Figure 8: Spearman’s R correlation coefficient of accuracies predicted by a linear ridge regressor (top) and a LightGBM regressor (bottom), fitted on an increasing number of data points. Each data point comes from a finetuned model, while the merged proxy requires only the K expert models.
+In Sec. 4, we presented experiments comparing regression-based alternatives to the merged proxies. For the main body of the paper, we focused on a quadratic Ridge regressor, as it achieved higher correlation with ground-truth performance than both a linear Ridge regressor and a LightGBM regressor ke2017lightgbm.
+For completeness, the rank correlation results of these latter two approaches, in the 4-domain mixture setting, are reported in Fig. 8.
+Despite their need for several additional training runs, both regression-based baselines substantially underperform the merged proxies.
+These results provide additional evidence for the claim made in Sec. 4 that regressors exhibit varying capacities to model mixture-performance relationships,
+and they further support that increasing the number of observed runs alone does not guarantee that a regressor will approach the effectiveness of merged proxies.
+In contrast, merged proxies appear better suited in low-data regimes, proving a better alternative for mixture selection under a limited compute budget.
+◄
+ar5iv homepage
+Feeling
+lucky?
+Conversion
+report
+Report
+an issue
+View original
+on arXiv►
+Copyright
+Privacy Policy
+Generated on Thu Mar 5 17:57:56 2026 by LaTeXML Mascot Sammy

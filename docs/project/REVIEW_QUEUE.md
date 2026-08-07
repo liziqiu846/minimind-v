@@ -246,3 +246,28 @@
 - **Recommended human decision**: 无需立即决定；之后审查 asymmetric negative
   inference boundary 是否足够保守，以及 13-paper matrix 是否遗漏真正的
   completeness theorem。
+
+## 2026-08-07｜COVER-01：broad-label controlled-coverage bridge 被否定
+
+- **Date**: 2026-08-07
+- **Idea / issue**: authoritative broad source/domain/task labels 与 current
+  MiniMind/ALLaVA lineage 是否能唯一构造 complementary coverage versus
+  same-domain redundancy，并冻结一个 generative held-out target。
+- **Why human should review it**: 保存的 169 个 official ALLaVA captions 全部能映射
+  到 local parquet，推翻了“schema 无 ID 即 lineage 完全不可恢复”的过强说法；
+  但 sample 又暴露 3 个 duplicated VFLAN IDs。必须同时避免低估可恢复性和把 sample
+  reconstruction 外推成 full exact lineage。
+- **Current evidence**: 442 raw records、380 unique titles、14 篇决定性 primary
+  sources；fresh-temp deterministic index byte-identical。Direct generative studies
+  依赖 ratio/category/target search 或复合 curation；DomainNet 的 clean control
+  仅认证 CLIP。Local parquet 与官方 revision/tree 的 size/hash 完全一致，
+  169/169 official assistant texts exact-match，full/translated lineage 未证明。
+- **What Agent has already frozen**: `COVER-01=BRIDGE_REJECTED`；只否定当前
+  broad-label-to-local-single-factor bridge。不否定 coverage/diversity、
+  Vision-Flan task diversity、source transfer 或未来 factorial experiment；不把
+  结果写成 `MECHANISM_REJECTED`。
+- **Whether autonomous work can continue**: 可以；转入 `CROSSFACT-01`，
+  只核查同一 image/acquisition unit 上 publisher-defined crossed text/task cells，
+  plan commit 前不执行新分析。
+- **Recommended human decision**: 无需立即决定；之后审查 official duplicate-ID
+  handling、license boundary 与 broad-label confounding scope 是否表述准确。

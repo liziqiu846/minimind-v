@@ -1,0 +1,2320 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/3Dd93a9DcmmaC0tPRlEANk8BZNs</id>
+  <title>arXiv Query: search_query=(all:"vision language" OR all:multimodal) AND (all:"data diversity" OR all:"data coverage" OR all:"concept coverage") AND (all:training OR all:pretraining OR all:generalization)&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-08-07T06:59:16Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=(all:%22vision+language%22+OR+all:multimodal)+AND+((all:%22data+diversity%22+OR+(all:%22data+coverage%22+OR+all:%22concept+coverage%22))+AND+(all:training+OR+(all:pretraining+OR+all:generalization)))&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>61</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2312.03025v1</id>
+    <title>Training on Synthetic Data Beats Real Data in Multimodal Relation Extraction</title>
+    <updated>2023-12-05T08:11:34Z</updated>
+    <link href="https://arxiv.org/abs/2312.03025v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2312.03025v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The task of multimodal relation extraction has attracted significant research attention, but progress is constrained by the scarcity of available training data. One natural thought is to extend existing datasets with cross-modal generative models. In this paper, we consider a novel problem setting, where only unimodal data, either text or image, are available during training. We aim to train a multimodal classifier from synthetic data that perform well on real multimodal test data. However, training with synthetic data suffers from two obstacles: lack of data diversity and label information loss. To alleviate the issues, we propose Mutual Information-aware Multimodal Iterated Relational dAta GEneration (MI2RAGE), which applies Chained Cross-modal Generation (CCG) to promote diversity in the generated data and exploits a teacher network to select valuable training samples with high mutual information with the ground-truth labels. Comparing our method to direct training on synthetic data, we observed a significant improvement of 24.06% F1 with synthetic text and 26.42% F1 with synthetic images. Notably, our best model trained on completely synthetic images outperforms prior state-of-the-art models trained on real multimodal data by a margin of 3.76% in F1. Our codebase will be made available upon acceptance.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-12-05T08:11:34Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Zilin Du</name>
+    </author>
+    <author>
+      <name>Haoxin Li</name>
+    </author>
+    <author>
+      <name>Xu Guo</name>
+    </author>
+    <author>
+      <name>Boyang Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.19688v1</id>
+    <title>DataProphet: Demystifying Supervision Data Generalization in Multimodal LLMs</title>
+    <updated>2026-03-20T06:42:26Z</updated>
+    <link href="https://arxiv.org/abs/2603.19688v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.19688v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Conventional wisdom for selecting supervision data for multimodal large language models (MLLMs) is to prioritize datasets that appear similar to the target benchmark, such as text-intensive or vision-centric tasks. However, it remains unclear whether such intuitive similarity reliably predicts downstream performance gains. In this work, we take a first step toward answering a practical question: can we estimate the influence of a training dataset on a target benchmark before any training is performed? To investigate this question, we conduct an in-depth analysis of transfer across 14 vision-language datasets spanning 7 diverse tasks. Our results show that intuitive task similarity is an unreliable predictor of transferability, and that generalization depends more on the specific dataset than on its broad task category. Motivated by this finding, we propose DATAPROPHET, a simple and effective training-free metric that combines multimodal perplexity, similarity, and data diversity. Experiments show that DATAPROPHET produces supervision-data rankings that strongly correlate with rankings based on actual post-training performance gains, achieving a Kendall's tau of 86.0%. Moreover, DATAPROPHET enables better supervision-data selection, yielding up to 6.9% improvement over uniform selection, 1.4% over a state-of-the-art training-based baseline, and 0.2% above oracle selection based on experimental performance. Our code and data will be released.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-20T06:42:26Z</published>
+    <arxiv:comment>14 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Xuan Qi</name>
+    </author>
+    <author>
+      <name>Luxi He</name>
+    </author>
+    <author>
+      <name>Dan Roth</name>
+    </author>
+    <author>
+      <name>Xingyu Fu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.05524v1</id>
+    <title>Universal Adversarial Perturbations for Vision-Language Pre-trained Models</title>
+    <updated>2024-05-09T03:27:28Z</updated>
+    <link href="https://arxiv.org/abs/2405.05524v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.05524v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-language pre-trained (VLP) models have been the foundation of numerous vision-language tasks. Given their prevalence, it becomes imperative to assess their adversarial robustness, especially when deploying them in security-crucial real-world applications. Traditionally, adversarial perturbations generated for this assessment target specific VLP models, datasets, and/or downstream tasks. This practice suffers from low transferability and additional computation costs when transitioning to new scenarios.
+  In this work, we thoroughly investigate whether VLP models are commonly sensitive to imperceptible perturbations of a specific pattern for the image modality. To this end, we propose a novel black-box method to generate Universal Adversarial Perturbations (UAPs), which is so called the Effective and T ransferable Universal Adversarial Attack (ETU), aiming to mislead a variety of existing VLP models in a range of downstream tasks. The ETU comprehensively takes into account the characteristics of UAPs and the intrinsic cross-modal interactions to generate effective UAPs. Under this regime, the ETU encourages both global and local utilities of UAPs. This benefits the overall utility while reducing interactions between UAP units, improving the transferability. To further enhance the effectiveness and transferability of UAPs, we also design a novel data augmentation method named ScMix. ScMix consists of self-mix and cross-mix data transformations, which can effectively increase the multi-modal data diversity while preserving the semantics of the original data. Through comprehensive experiments on various downstream tasks, VLP models, and datasets, we demonstrate that the proposed method is able to achieve effective and transferrable universal adversarial attacks.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-09T03:27:28Z</published>
+    <arxiv:comment>9 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Peng-Fei Zhang</name>
+    </author>
+    <author>
+      <name>Zi Huang</name>
+    </author>
+    <author>
+      <name>Guangdong Bai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.27932v2</id>
+    <title>Dynamic Cluster Data Sampling for Efficient and Long-Tail-Aware Vision-Language Pre-training</title>
+    <updated>2026-07-06T18:35:13Z</updated>
+    <link href="https://arxiv.org/abs/2604.27932v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.27932v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The computational cost of training a vision-language model (VLM) can be reduced by sampling the training data. Previous work on efficient VLM pre-training has pointed to the importance of semantic data balance, adjusting the distribution of topics in the data to improve VLM accuracy. However, existing efficient pre-training approaches may disproportionately remove rare concepts from the training corpus. As a result, long-tail concepts remain insufficiently represented in the training data and are not effectively captured during training. In this work, we introduce a dynamic cluster-based sampling approach (DynamiCS) that downsamples large clusters of data and upsamples small ones. We first demonstrate the advantage of our cluster-scaling approach, which maintains the relative order of semantic clusters in the data and emphasizes the long-tail. This approach contrasts with current work, which focuses only on flattening the semantic distribution of the data. Then, we show the importance of dynamic sampling, which applies sampling at each epoch to improve cross-epoch data diversity and make upsampling practical. Our experiments show that DynamiCS reduces the computational cost of VLM training and provides a performance advantage for long-tail concepts. Code available at https://github.com/MingliangLiang3/DynamiCS.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-30T14:33:23Z</published>
+    <arxiv:comment>Accepted by ECCV 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Mingliang Liang</name>
+    </author>
+    <author>
+      <name>Zhuoran Liu</name>
+    </author>
+    <author>
+      <name>Arjen P. de Vries</name>
+    </author>
+    <author>
+      <name>Martha Larson</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.14266v2</id>
+    <title>EmotionCarrier: A Multimodality 'Mindfulness-Training' Tool for Positive Emotional Value</title>
+    <updated>2025-03-28T06:55:19Z</updated>
+    <link href="https://arxiv.org/abs/2503.14266v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.14266v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This study introduced a Multimodal Mindfulness-Training System. Our installation, 'EmotionCarrier', correlates traditional calligraphy interactions with real-time physiological data from an Apple Watch. We aim to enhance mindfulness training effectiveness, aiding in achieving physiological calmness through calligraphy practice. Our experiments with varied participant groups focused on data diversity, usability, and stability. We adopted methods like using EmotionCarrier for Heart Sutra transcription and adjusting installation placement for optimal user experience. Our primary finding was a correlation between calligraphy performance data and emotional responses during the transcription of the Heart Sutra.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-18T13:59:32Z</published>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Yi Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.11225v1</id>
+    <title>Sign Language Recognition in the Age of LLMs</title>
+    <updated>2026-04-13T09:26:16Z</updated>
+    <link href="https://arxiv.org/abs/2604.11225v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.11225v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent Vision Language Models (VLMs) have demonstrated strong performance across a wide range of multimodal reasoning tasks. This raises the question of whether such general-purpose models can also address specialized visual recognition problems such as isolated sign language recognition (ISLR) without task-specific training. In this work, we investigate the capability of modern VLMs to perform ISLR in a zero-shot setting. We evaluate several open-source and proprietary VLMs on the WLASL300 benchmark. Our experiments show that, under prompt-only zero-shot inference, current open-source VLMs remain far behind classic supervised ISLR classifiers by a wide margin. However, follow-up experiments reveal that these models capture partial visual-semantic alignment between signs and text descriptions. Larger proprietary models achieve substantially higher accuracy, highlighting the importance of model scale and training data diversity. All our code is publicly available on GitHub.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-13T09:26:16Z</published>
+    <arxiv:comment>Accepted at the CVPR 2026 Workshop on Multimodal Sign Language Research (MSLR), 8 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <arxiv:journal_ref>Proc. IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW), 2026, pp. 10511-10519</arxiv:journal_ref>
+    <author>
+      <name>Vaclav Javorek</name>
+    </author>
+    <author>
+      <name>Jakub Honzik</name>
+    </author>
+    <author>
+      <name>Ivan Gruber</name>
+    </author>
+    <author>
+      <name>Tomas Zelezny</name>
+    </author>
+    <author>
+      <name>Marek Hruz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2206.08919v1</id>
+    <title>VLMixer: Unpaired Vision-Language Pre-training via Cross-Modal CutMix</title>
+    <updated>2022-06-17T17:56:47Z</updated>
+    <link href="https://arxiv.org/abs/2206.08919v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2206.08919v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Existing vision-language pre-training (VLP) methods primarily rely on paired image-text datasets, which are either annotated by enormous human labors, or crawled from the internet followed by elaborate data cleaning techniques. To reduce the dependency on well-aligned image-text pairs, it is promising to directly leverage the large-scale text-only and image-only corpora. This paper proposes a data augmentation method, namely cross-modal CutMix (CMC), for implicit cross-modal alignment learning in unpaired VLP. Specifically, CMC transforms natural sentences from the textual view into a multi-modal view, where visually-grounded words in a sentence are randomly replaced by diverse image patches with similar semantics. There are several appealing proprieties of the proposed CMC. First, it enhances the data diversity while keeping the semantic meaning intact for tackling problems where the aligned data are scarce; Second, by attaching cross-modal noise on uni-modal data, it guides models to learn token-level interactions across modalities for better denoising. Furthermore, we present a new unpaired VLP method, dubbed as VLMixer, that integrates CMC with contrastive learning to pull together the uni-modal and multi-modal views for better instance-level alignments among different modalities. Extensive experiments on five downstream tasks show that VLMixer could surpass previous state-of-the-art unpaired VLP methods.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-06-17T17:56:47Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Teng Wang</name>
+    </author>
+    <author>
+      <name>Wenhao Jiang</name>
+    </author>
+    <author>
+      <name>Zhichao Lu</name>
+    </author>
+    <author>
+      <name>Feng Zheng</name>
+    </author>
+    <author>
+      <name>Ran Cheng</name>
+    </author>
+    <author>
+      <name>Chengguo Yin</name>
+    </author>
+    <author>
+      <name>Ping Luo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.09246v3</id>
+    <title>OpenVLA: An Open-Source Vision-Language-Action Model</title>
+    <updated>2024-09-05T19:46:34Z</updated>
+    <link href="https://arxiv.org/abs/2406.09246v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.09246v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large policies pretrained on a combination of Internet-scale vision-language data and diverse robot demonstrations have the potential to change how we teach robots new skills: rather than training new behaviors from scratch, we can fine-tune such vision-language-action (VLA) models to obtain robust, generalizable policies for visuomotor control. Yet, widespread adoption of VLAs for robotics has been challenging as 1) existing VLAs are largely closed and inaccessible to the public, and 2) prior work fails to explore methods for efficiently fine-tuning VLAs for new tasks, a key component for adoption. Addressing these challenges, we introduce OpenVLA, a 7B-parameter open-source VLA trained on a diverse collection of 970k real-world robot demonstrations. OpenVLA builds on a Llama 2 language model combined with a visual encoder that fuses pretrained features from DINOv2 and SigLIP. As a product of the added data diversity and new model components, OpenVLA demonstrates strong results for generalist manipulation, outperforming closed models such as RT-2-X (55B) by 16.5% in absolute task success rate across 29 tasks and multiple robot embodiments, with 7x fewer parameters. We further show that we can effectively fine-tune OpenVLA for new settings, with especially strong generalization results in multi-task environments involving multiple objects and strong language grounding abilities, and outperform expressive from-scratch imitation learning methods such as Diffusion Policy by 20.4%. We also explore compute efficiency; as a separate contribution, we show that OpenVLA can be fine-tuned on consumer GPUs via modern low-rank adaptation methods and served efficiently via quantization without a hit to downstream success rate. Finally, we release model checkpoints, fine-tuning notebooks, and our PyTorch codebase with built-in support for training VLAs at scale on Open X-Embodiment datasets.</summary>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-13T15:46:55Z</published>
+    <arxiv:comment>Website: https://openvla.github.io/</arxiv:comment>
+    <arxiv:primary_category term="cs.RO"/>
+    <author>
+      <name>Moo Jin Kim</name>
+    </author>
+    <author>
+      <name>Karl Pertsch</name>
+    </author>
+    <author>
+      <name>Siddharth Karamcheti</name>
+    </author>
+    <author>
+      <name>Ted Xiao</name>
+    </author>
+    <author>
+      <name>Ashwin Balakrishna</name>
+    </author>
+    <author>
+      <name>Suraj Nair</name>
+    </author>
+    <author>
+      <name>Rafael Rafailov</name>
+    </author>
+    <author>
+      <name>Ethan Foster</name>
+    </author>
+    <author>
+      <name>Grace Lam</name>
+    </author>
+    <author>
+      <name>Pannag Sanketi</name>
+    </author>
+    <author>
+      <name>Quan Vuong</name>
+    </author>
+    <author>
+      <name>Thomas Kollar</name>
+    </author>
+    <author>
+      <name>Benjamin Burchfiel</name>
+    </author>
+    <author>
+      <name>Russ Tedrake</name>
+    </author>
+    <author>
+      <name>Dorsa Sadigh</name>
+    </author>
+    <author>
+      <name>Sergey Levine</name>
+    </author>
+    <author>
+      <name>Percy Liang</name>
+    </author>
+    <author>
+      <name>Chelsea Finn</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.11963v1</id>
+    <title>CtrlSynth: Controllable Image Text Synthesis for Data-Efficient Multimodal Learning</title>
+    <updated>2024-10-15T18:06:41Z</updated>
+    <link href="https://arxiv.org/abs/2410.11963v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.11963v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Pretraining robust vision or multimodal foundation models (e.g., CLIP) relies on large-scale datasets that may be noisy, potentially misaligned, and have long-tail distributions. Previous works have shown promising results in augmenting datasets by generating synthetic samples. However, they only support domain-specific ad hoc use cases (e.g., either image or text only, but not both), and are limited in data diversity due to a lack of fine-grained control over the synthesis process. In this paper, we design a \emph{controllable} image-text synthesis pipeline, CtrlSynth, for data-efficient and robust multimodal learning. The key idea is to decompose the visual semantics of an image into basic elements, apply user-specified control policies (e.g., remove, add, or replace operations), and recompose them to synthesize images or texts. The decompose and recompose feature in CtrlSynth allows users to control data synthesis in a fine-grained manner by defining customized control policies to manipulate the basic elements. CtrlSynth leverages the capabilities of pretrained foundation models such as large language models or diffusion models to reason and recompose basic elements such that synthetic samples are natural and composed in diverse ways. CtrlSynth is a closed-loop, training-free, and modular framework, making it easy to support different pretrained models. With extensive experiments on 31 datasets spanning different vision and vision-language tasks, we show that CtrlSynth substantially improves zero-shot classification, image-text retrieval, and compositional reasoning performance of CLIP models.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-15T18:06:41Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Qingqing Cao</name>
+    </author>
+    <author>
+      <name>Mahyar Najibi</name>
+    </author>
+    <author>
+      <name>Sachin Mehta</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.15486v1</id>
+    <title>VLMine: Long-Tail Data Mining with Vision Language Models</title>
+    <updated>2024-09-23T19:13:51Z</updated>
+    <link href="https://arxiv.org/abs/2409.15486v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.15486v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Ensuring robust performance on long-tail examples is an important problem for many real-world applications of machine learning, such as autonomous driving. This work focuses on the problem of identifying rare examples within a corpus of unlabeled data. We propose a simple and scalable data mining approach that leverages the knowledge contained within a large vision language model (VLM). Our approach utilizes a VLM to summarize the content of an image into a set of keywords, and we identify rare examples based on keyword frequency. We find that the VLM offers a distinct signal for identifying long-tail examples when compared to conventional methods based on model uncertainty. Therefore, we propose a simple and general approach for integrating signals from multiple mining algorithms. We evaluate the proposed method on two diverse tasks: 2D image classification, in which inter-class variation is the primary source of data diversity, and on 3D object detection, where intra-class variation is the main concern. Furthermore, through the detection task, we demonstrate that the knowledge extracted from 2D images is transferable to the 3D domain. Our experiments consistently show large improvements (between 10\% and 50\%) over the baseline techniques on several representative benchmarks: ImageNet-LT, Places-LT, and the Waymo Open Dataset.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-23T19:13:51Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Mao Ye</name>
+    </author>
+    <author>
+      <name>Gregory P. Meyer</name>
+    </author>
+    <author>
+      <name>Zaiwei Zhang</name>
+    </author>
+    <author>
+      <name>Dennis Park</name>
+    </author>
+    <author>
+      <name>Siva Karthik Mustikovela</name>
+    </author>
+    <author>
+      <name>Yuning Chai</name>
+    </author>
+    <author>
+      <name>Eric M Wolff</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.17353v3</id>
+    <title>RoadBench: A Vision-Language Foundation Model and Benchmark for Road Damage Understanding</title>
+    <updated>2025-12-09T21:28:18Z</updated>
+    <link href="https://arxiv.org/abs/2507.17353v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.17353v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Accurate road damage detection is crucial for timely infrastructure maintenance and public safety, but existing vision-only datasets and models lack the rich contextual understanding that textual information can provide. To address this limitation, we introduce RoadBench, the first multimodal benchmark for comprehensive road damage understanding. This dataset pairs high resolution images of road damages with detailed textual descriptions, providing a richer context for model training. We also present RoadCLIP, a novel vision language model that builds upon CLIP by integrating domain specific enhancements. It includes a disease aware positional encoding that captures spatial patterns of road defects and a mechanism for injecting road-condition priors to refine the model's understanding of road damages. We further employ a GPT driven data generation pipeline to expand the image to text pairs in RoadBench, greatly increasing data diversity without exhaustive manual annotation. Experiments demonstrate that RoadCLIP achieves state of the art performance on road damage recognition tasks, significantly outperforming existing vision-only models by 19.2%. These results highlight the advantages of integrating visual and textual information for enhanced road condition analysis, setting new benchmarks for the field and paving the way for more effective infrastructure monitoring through multimodal learning.</summary>
+    <category term="cs.CE" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-23T09:34:35Z</published>
+    <arxiv:comment>Accepted by WACV 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CE"/>
+    <author>
+      <name>Xi Xiao</name>
+    </author>
+    <author>
+      <name>Yunbei Zhang</name>
+    </author>
+    <author>
+      <name>Janet Wang</name>
+    </author>
+    <author>
+      <name>Lin Zhao</name>
+    </author>
+    <author>
+      <name>Yuxiang Wei</name>
+    </author>
+    <author>
+      <name>Hengjia Li</name>
+    </author>
+    <author>
+      <name>Yanshu Li</name>
+    </author>
+    <author>
+      <name>Xinyuan Song</name>
+    </author>
+    <author>
+      <name>Xiao Wang</name>
+    </author>
+    <author>
+      <name>Swalpa Kumar Roy</name>
+    </author>
+    <author>
+      <name>Hao Xu</name>
+    </author>
+    <author>
+      <name>Tianyang Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.27365v2</id>
+    <title>LocateAnything: Fast and High-Quality Vision-Language Grounding with Parallel Box Decoding</title>
+    <updated>2026-05-27T02:30:49Z</updated>
+    <link href="https://arxiv.org/abs/2605.27365v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.27365v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-language models (VLMs) commonly formulate visual grounding and detection as a coordinate-token generation problem, serializing each 2D box into multiple 1D tokens that are learned and decoded largely independently. This token-by-token decoding mismatches the coupled structure of box geometry and creates a practical inference bottleneck due to strictly sequential generation. We introduce LocateAnything, a unified generative grounding and detection framework based on Parallel Box Decoding (PBD). By decoding geometric elements such as bounding boxes and points as atomic units in a single step, LocateAnything preserves intra-box geometric coherence and unlocks substantial parallelism. We show that PBD improves both decoding throughput and localization accuracy. We further develop a scalable data engine and curate LocateAnything-Data, a large-scale dataset with more than 138 million training samples, substantially increasing data diversity for high-precision localization. Extensive evaluations show that LocateAnything advances the speed-accuracy frontier, achieving significantly higher decoding throughput while improving high-IoU localization quality across diverse benchmarks. The results highlight the complementary benefits of Parallel Box Decoding and large-scale training data in enabling efficient and precise unified visual grounding and detection.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-26T17:59:12Z</published>
+    <arxiv:comment>fix github link</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Shihao Wang</name>
+    </author>
+    <author>
+      <name>Shilong Liu</name>
+    </author>
+    <author>
+      <name>Yuanguo Kuang</name>
+    </author>
+    <author>
+      <name>Xinyu Wei</name>
+    </author>
+    <author>
+      <name>Yangzhou Liu</name>
+    </author>
+    <author>
+      <name>Zhiqi Li</name>
+    </author>
+    <author>
+      <name>Yunze Man</name>
+    </author>
+    <author>
+      <name>Guo Chen</name>
+    </author>
+    <author>
+      <name>Andrew Tao</name>
+    </author>
+    <author>
+      <name>Guilin Liu</name>
+    </author>
+    <author>
+      <name>Jan Kautz</name>
+    </author>
+    <author>
+      <name>Lei Zhang</name>
+    </author>
+    <author>
+      <name>Zhiding Yu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.16742v1</id>
+    <title>DeepVision-103K: A Visually Diverse, Broad-Coverage, and Verifiable Mathematical Dataset for Multimodal Reasoning</title>
+    <updated>2026-02-18T01:51:21Z</updated>
+    <link href="https://arxiv.org/abs/2602.16742v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.16742v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Reinforcement Learning with Verifiable Rewards (RLVR) has been shown effective in enhancing the visual reflection and reasoning capabilities of Large Multimodal Models (LMMs). However, existing datasets are predominantly derived from either small-scale manual construction or recombination of prior resources, which limits data diversity and coverage, thereby constraining further gains in model performance. To this end, we introduce \textbf{DeepVision-103K}, a comprehensive dataset for RLVR training that covers diverse K12 mathematical topics, extensive knowledge points, and rich visual elements. Models trained on DeepVision achieve strong performance on multimodal mathematical benchmarks, and generalize effectively to general multimodal reasoning tasks. Further analysis reveals enhanced visual perception, reflection and reasoning capabilities in trained models, validating DeepVision's effectiveness for advancing multimodal reasoning. Data: \href{https://huggingface.co/datasets/skylenage/DeepVision-103K}{this url}.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-18T01:51:21Z</published>
+    <arxiv:comment>Under review</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Haoxiang Sun</name>
+    </author>
+    <author>
+      <name>Lizhen Xu</name>
+    </author>
+    <author>
+      <name>Bing Zhao</name>
+    </author>
+    <author>
+      <name>Wotao Yin</name>
+    </author>
+    <author>
+      <name>Wei Wang</name>
+    </author>
+    <author>
+      <name>Boyu Yang</name>
+    </author>
+    <author>
+      <name>Rui Wang</name>
+    </author>
+    <author>
+      <name>Hu Wei</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.05840v5</id>
+    <title>MMEvol: Empowering Multimodal Large Language Models with Evol-Instruct</title>
+    <updated>2024-12-31T14:46:47Z</updated>
+    <link href="https://arxiv.org/abs/2409.05840v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.05840v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The development of Multimodal Large Language Models (MLLMs) has seen significant advancements with increasing demands in various fields (e.g., multimodal agents, embodied intelligence). While model-driven approaches attempt to enhance MLLMs capabilities through diverse architectures, the gains have become increasingly marginal. Conversely, data-driven methods, which scale up image-text instruction data, are more effective but face limited data diversity and complexity challenges. The absence of high-quality data constitutes a significant development barrier for MLLMs. To address the data quality bottleneck, we propose MMEvol, a novel multimodal instruction data evolution framework. This framework iteratively improve data quality through a refined combination of fine-grained perception, cognitive reasoning, and interaction evolution, generating a more complex and diverse image-text instruction dataset that empowers MLLMs with enhanced capabilities. Beginning with an initial set of instructions, SEED-163K, we utilize MMEvol to systematically broaden the diversity of instruction types, extend visual reasoning steps to improve cognitive reasoning abilities, and thoroughly explore fine-grained information within images to enhance visual understanding and robustness. To comprehensively evaluate the effectiveness of our approach, we conduct extensive qualitative analysis and quantitative experiments across 13 vision-language tasks. Compared to baseline models trained with the initial seed data, the results demonstrate that our method achieves an average accuracy improvement of 3.1 percentage points. Furthermore, our approach reaches state-of-the-art (SOTA) performance in nine tasks using significantly less data compared to state-of-the-art models.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-09T17:44:00Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Run Luo</name>
+    </author>
+    <author>
+      <name>Haonan Zhang</name>
+    </author>
+    <author>
+      <name>Longze Chen</name>
+    </author>
+    <author>
+      <name>Ting-En Lin</name>
+    </author>
+    <author>
+      <name>Xiong Liu</name>
+    </author>
+    <author>
+      <name>Yuchuan Wu</name>
+    </author>
+    <author>
+      <name>Min Yang</name>
+    </author>
+    <author>
+      <name>Minzheng Wang</name>
+    </author>
+    <author>
+      <name>Pengpeng Zeng</name>
+    </author>
+    <author>
+      <name>Lianli Gao</name>
+    </author>
+    <author>
+      <name>Heng Tao Shen</name>
+    </author>
+    <author>
+      <name>Yunshui Li</name>
+    </author>
+    <author>
+      <name>Xiaobo Xia</name>
+    </author>
+    <author>
+      <name>Fei Huang</name>
+    </author>
+    <author>
+      <name>Jingkuan Song</name>
+    </author>
+    <author>
+      <name>Yongbin Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2307.10350v2</id>
+    <title>Improving Multimodal Datasets with Image Captioning</title>
+    <updated>2023-10-26T03:41:06Z</updated>
+    <link href="https://arxiv.org/abs/2307.10350v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2307.10350v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Massive web datasets play a key role in the success of large vision-language models like CLIP and Flamingo. However, the raw web data is noisy, and existing filtering methods to reduce noise often come at the expense of data diversity. Our work focuses on caption quality as one major source of noise, and studies how generated captions can increase the utility of web-scraped datapoints with nondescript text. Through exploring different mixing strategies for raw and generated captions, we outperform the best filtering method proposed by the DataComp benchmark by 2% on ImageNet and 4% on average across 38 tasks, given a candidate pool of 128M image-text pairs. Our best approach is also 2x better at Flickr and MS-COCO retrieval. We then analyze what makes synthetic captions an effective source of text supervision. In experimenting with different image captioning models, we also demonstrate that the performance of a model on standard image captioning benchmarks (e.g., NoCaps CIDEr) is not a reliable indicator of the utility of the captions it generates for multimodal training. Finally, our experiments with using generated captions at DataComp's large scale (1.28B image-text pairs) offer insights into the limitations of synthetic text, as well as the importance of image curation with increasing training data quantity. The synthetic captions used in our experiments are now available on HuggingFace.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-07-19T17:47:12Z</published>
+    <arxiv:comment>Accepted at NeurIPS 2023 Datasets &amp; Benchmarks</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Thao Nguyen</name>
+    </author>
+    <author>
+      <name>Samir Yitzhak Gadre</name>
+    </author>
+    <author>
+      <name>Gabriel Ilharco</name>
+    </author>
+    <author>
+      <name>Sewoong Oh</name>
+    </author>
+    <author>
+      <name>Ludwig Schmidt</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.23491v3</id>
+    <title>ZonUI-3B: A Lightweight Vision-Language Model for Cross-Resolution GUI Grounding</title>
+    <updated>2025-07-18T06:03:26Z</updated>
+    <link href="https://arxiv.org/abs/2506.23491v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.23491v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we present ZonUI-3B, a lightweight Vision-Language Model (VLM) that can be fully trained on a single consumer-grade GPU (RTX 4090) while delivering performance comparable to significantly larger models on GUI grounding tasks. The model incorporates several key innovations: (i) combine cross-platform, multi-resolution dataset of 24K examples from diverse sources including mobile, desktop, and web GUI screenshots to effectively address data scarcity in high-resolution desktop environments; (ii) a two-stage fine-tuning strategy, where initial cross-platform training establishes robust GUI understanding, followed by specialized fine-tuning on high-resolution data to significantly enhance model adaptability; and (iii) data curation and redundancy reduction strategies, demonstrating that randomly sampling a smaller subset with reduced redundancy achieves performance comparable to larger datasets, emphasizing data diversity over sheer volume. Empirical evaluation on standard GUI grounding benchmarks, including ScreenSpot, ScreenSpot-v2, and the challenging ScreenSpot-Pro, highlights ZonUI-3B's exceptional accuracy, achieving 84.9% on ScreenSpot and 86.4% on ScreenSpot-v2, surpassing prior models under 4B parameters. Ablation studies validate the critical role of balanced sampling and two-stage fine-tuning in enhancing robustness, particularly in high-resolution desktop scenarios. The ZonUI-3B is available at: https://github.com/Han1018/ZonUI-3B</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-30T03:33:02Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>ZongHan Hsieh</name>
+    </author>
+    <author>
+      <name>Tzer-Jen Wei</name>
+    </author>
+    <author>
+      <name>ShengJing Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.16281v2</id>
+    <title>Do What You Say: Steering Vision-Language-Action Models via Runtime Reasoning-Action Alignment Verification</title>
+    <updated>2026-01-14T05:03:39Z</updated>
+    <link href="https://arxiv.org/abs/2510.16281v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.16281v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Reasoning Vision Language Action (VLA) models improve robotic instruction-following by generating step-by-step textual plans before low-level actions, an approach inspired by Chain-of-Thought (CoT) reasoning in language models. Yet even with a correct textual plan, the generated actions can still miss the intended outcomes in the plan, especially in out-of-distribution (OOD) scenarios. We formalize this phenomenon as a lack of embodied CoT faithfulness, and introduce a training-free, runtime policy steering method for reasoning-action alignment. Given a reasoning VLA's intermediate textual plan, our framework samples multiple candidate action sequences from the same model, predicts their outcomes via simulation, and uses a pre-trained Vision-Language Model (VLM) to select the sequence whose outcome best aligns with the VLA's own textual plan. Only executing action sequences that align with the textual reasoning turns our base VLA's natural action diversity from a source of error into a strength, boosting robustness to semantic and visual OOD perturbations and enabling novel behavior composition without costly re-training. We also contribute a reasoning-annotated extension of LIBERO-100, environment variations tailored for OOD evaluation, and demonstrate up to 15% performance gain over prior work on behavior composition tasks and scales with compute and data diversity. Project Website at: https://yilin-wu98.github.io/steering-reasoning-vla/</summary>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-18T00:38:45Z</published>
+    <arxiv:primary_category term="cs.RO"/>
+    <author>
+      <name>Yilin Wu</name>
+    </author>
+    <author>
+      <name>Anqi Li</name>
+    </author>
+    <author>
+      <name>Tucker Hermans</name>
+    </author>
+    <author>
+      <name>Fabio Ramos</name>
+    </author>
+    <author>
+      <name>Andrea Bajcsy</name>
+    </author>
+    <author>
+      <name>Claudia Pérez-D'Arpino</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.02948v3</id>
+    <title>DriveMRP: Enhancing Vision-Language Models with Synthetic Motion Data for Motion Risk Prediction</title>
+    <updated>2025-07-13T15:16:06Z</updated>
+    <link href="https://arxiv.org/abs/2507.02948v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.02948v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Autonomous driving has seen significant progress, driven by extensive real-world data. However, in long-tail scenarios, accurately predicting the safety of the ego vehicle's future motion remains a major challenge due to uncertainties in dynamic environments and limitations in data coverage. In this work, we aim to explore whether it is possible to enhance the motion risk prediction capabilities of Vision-Language Models (VLM) by synthesizing high-risk motion data. Specifically, we introduce a Bird's-Eye View (BEV) based motion simulation method to model risks from three aspects: the ego-vehicle, other vehicles, and the environment. This allows us to synthesize plug-and-play, high-risk motion data suitable for VLM training, which we call DriveMRP-10K. Furthermore, we design a VLM-agnostic motion risk estimation framework, named DriveMRP-Agent. This framework incorporates a novel information injection strategy for global context, ego-vehicle perspective, and trajectory projection, enabling VLMs to effectively reason about the spatial relationships between motion waypoints and the environment. Extensive experiments demonstrate that by fine-tuning with DriveMRP-10K, our DriveMRP-Agent framework can significantly improve the motion risk prediction performance of multiple VLM baselines, with the accident recognition accuracy soaring from 27.13% to 88.03%. Moreover, when tested via zero-shot evaluation on an in-house real-world high-risk motion dataset, DriveMRP-Agent achieves a significant performance leap, boosting the accuracy from base_model's 29.42% to 68.50%, which showcases the strong generalization capabilities of our method in real-world scenarios.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-28T21:28:01Z</published>
+    <arxiv:comment>12 pages, 4 figures. Code available at https://github.com/hzy138/DriveMRP</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhiyi Hou</name>
+    </author>
+    <author>
+      <name>Enhui Ma</name>
+    </author>
+    <author>
+      <name>Fang Li</name>
+    </author>
+    <author>
+      <name>Zhiyi Lai</name>
+    </author>
+    <author>
+      <name>Kalok Ho</name>
+    </author>
+    <author>
+      <name>Zhanqian Wu</name>
+    </author>
+    <author>
+      <name>Lijun Zhou</name>
+    </author>
+    <author>
+      <name>Long Chen</name>
+    </author>
+    <author>
+      <name>Chitian Sun</name>
+    </author>
+    <author>
+      <name>Haiyang Sun</name>
+    </author>
+    <author>
+      <name>Bing Wang</name>
+    </author>
+    <author>
+      <name>Guang Chen</name>
+    </author>
+    <author>
+      <name>Hangjun Ye</name>
+    </author>
+    <author>
+      <name>Kaicheng Yu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.07905v1</id>
+    <title>WeThink: Toward General-purpose Vision-Language Reasoning via Reinforcement Learning</title>
+    <updated>2025-06-09T16:20:54Z</updated>
+    <link href="https://arxiv.org/abs/2506.07905v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.07905v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Building on the success of text-based reasoning models like DeepSeek-R1, extending these capabilities to multimodal reasoning holds great promise. While recent works have attempted to adapt DeepSeek-R1-style reinforcement learning (RL) training paradigms to multimodal large language models (MLLM), focusing on domain-specific tasks like math and visual perception, a critical question remains: How can we achieve the general-purpose visual-language reasoning through RL? To address this challenge, we make three key efforts: (1) A novel Scalable Multimodal QA Synthesis pipeline that autonomously generates context-aware, reasoning-centric question-answer (QA) pairs directly from the given images. (2) The open-source WeThink dataset containing over 120K multimodal QA pairs with annotated reasoning paths, curated from 18 diverse dataset sources and covering various question domains. (3) A comprehensive exploration of RL on our dataset, incorporating a hybrid reward mechanism that combines rule-based verification with model-based assessment to optimize RL training efficiency across various task domains. Across 14 diverse MLLM benchmarks, we demonstrate that our WeThink dataset significantly enhances performance, from mathematical reasoning to diverse general multimodal tasks. Moreover, we show that our automated data pipeline can continuously increase data diversity to further improve model performance.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-09T16:20:54Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jie Yang</name>
+    </author>
+    <author>
+      <name>Feipeng Ma</name>
+    </author>
+    <author>
+      <name>Zitian Wang</name>
+    </author>
+    <author>
+      <name>Dacheng Yin</name>
+    </author>
+    <author>
+      <name>Kang Rong</name>
+    </author>
+    <author>
+      <name>Fengyun Rao</name>
+    </author>
+    <author>
+      <name>Ruimao Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.24373v1</id>
+    <title>PP-OCRv5: A Specialized 5M-Parameter Model Rivaling Billion-Parameter Vision-Language Models on OCR Tasks</title>
+    <updated>2026-03-25T14:54:40Z</updated>
+    <link href="https://arxiv.org/abs/2603.24373v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.24373v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The advent of "OCR 2.0" and large-scale vision-language models (VLMs) has set new benchmarks in text recognition. However, these unified architectures often come with significant computational demands, challenges in precise text localization within complex layouts, and a propensity for textual hallucinations. Revisiting the prevailing notion that model scale is the sole path to high accuracy, this paper introduces PP-OCRv5, a meticulously optimized, lightweight OCR system with merely 5 million parameters. We demonstrate that PP-OCRv5 achieves performance competitive with many billion-parameter VLMs on standard OCR benchmarks, while offering superior localization precision and reduced hallucinations. The cornerstone of our success lies not in architectural expansion but in a data-centric investigation. We systematically dissect the role of training data by quantifying three critical dimensions: data difficulty, data accuracy, and data diversity. Our extensive experiments reveal that with a sufficient volume of high-quality, accurately labeled, and diverse data, the performance ceiling for traditional, efficient two-stage OCR pipelines is far higher than commonly assumed. This work provides compelling evidence for the viability of lightweight, specialized models in the large-model era and offers practical insights into data curation for OCR. The source code and models are publicly available at https://github.com/PaddlePaddle/PaddleOCR.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-25T14:54:40Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Cheng Cui</name>
+    </author>
+    <author>
+      <name>Yubo Zhang</name>
+    </author>
+    <author>
+      <name>Ting Sun</name>
+    </author>
+    <author>
+      <name>Xueqing Wang</name>
+    </author>
+    <author>
+      <name>Hongen Liu</name>
+    </author>
+    <author>
+      <name>Manhui Lin</name>
+    </author>
+    <author>
+      <name>Yue Zhang</name>
+    </author>
+    <author>
+      <name>Tingquan Gao</name>
+    </author>
+    <author>
+      <name>Changda Zhou</name>
+    </author>
+    <author>
+      <name>Jiaxuan Liu</name>
+    </author>
+    <author>
+      <name>Zelun Zhang</name>
+    </author>
+    <author>
+      <name>Jing Zhang</name>
+    </author>
+    <author>
+      <name>Jun Zhang</name>
+    </author>
+    <author>
+      <name>Yi Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.17477v1</id>
+    <title>Enhancing Quranic Learning: A Multimodal Deep Learning Approach for Arabic Phoneme Recognition</title>
+    <updated>2025-11-21T18:25:46Z</updated>
+    <link href="https://arxiv.org/abs/2511.17477v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.17477v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent advances in multimodal deep learning have greatly enhanced the capability of systems for speech analysis and pronunciation assessment. Accurate pronunciation detection remains a key challenge in Arabic, particularly in the context of Quranic recitation, where subtle phonetic differences can alter meaning. Addressing this challenge, the present study proposes a transformer-based multimodal framework for Arabic phoneme mispronunciation detection that combines acoustic and textual representations to achieve higher precision and robustness. The framework integrates UniSpeech-derived acoustic embeddings with BERT-based textual embeddings extracted from Whisper transcriptions, creating a unified representation that captures both phonetic detail and linguistic context. To determine the most effective integration strategy, early, intermediate, and late fusion methods were implemented and evaluated on two datasets containing 29 Arabic phonemes, including eight hafiz sounds, articulated by 11 native speakers. Additional speech samples collected from publicly available YouTube recordings were incorporated to enhance data diversity and generalization. Model performance was assessed using standard evaluation metrics: accuracy, precision, recall, and F1-score, allowing a detailed comparison of the fusion strategies. Experimental findings show that the UniSpeech-BERT multimodal configuration provides strong results and that fusion-based transformer architectures are effective for phoneme-level mispronunciation detection. The study contributes to the development of intelligent, speaker-independent, and multimodal Computer-Aided Language Learning (CALL) systems, offering a practical step toward technology-supported Quranic pronunciation training and broader speech-based educational applications.</summary>
+    <category term="cs.SD" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-21T18:25:46Z</published>
+    <arxiv:comment>11 pages, 2 figures, 3 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.SD"/>
+    <author>
+      <name>Ayhan Kucukmanisa</name>
+    </author>
+    <author>
+      <name>Derya Gelmez</name>
+    </author>
+    <author>
+      <name>Sukru Selim Calik</name>
+    </author>
+    <author>
+      <name>Zeynep Hilal Kilimci</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.05261v1</id>
+    <title>TextHawk2: A Large Vision-Language Model Excels in Bilingual OCR and Grounding with 16x Fewer Tokens</title>
+    <updated>2024-10-07T17:58:35Z</updated>
+    <link href="https://arxiv.org/abs/2410.05261v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.05261v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Reading dense text and locating objects within images are fundamental abilities for Large Vision-Language Models (LVLMs) tasked with advanced jobs. Previous LVLMs, including superior proprietary models like GPT-4o, have struggled to excel in both tasks simultaneously. Moreover, previous LVLMs with fine-grained perception cost thousands of tokens per image, making them resource-intensive. We present TextHawk2, a bilingual LVLM featuring efficient fine-grained perception and demonstrating cutting-edge performance across general-purpose, OCR, and grounding tasks with 16 times fewer image tokens. Critical improvements include: (1) Token Compression: Building on the efficient architecture of its predecessor, TextHawk2 significantly reduces the number of tokens per image by 16 times, facilitating training and deployment of the TextHawk series with minimal resources. (2) Visual Encoder Reinforcement: We enhance the visual encoder through LVLM co-training, unlocking its potential for previously unseen tasks like Chinese OCR and grounding. (3) Data Diversity: We maintain a comparable scale of 100 million samples while diversifying the sources of pre-training data. We assess TextHawk2 across multiple benchmarks, where it consistently delivers superior performance and outperforms closed-source models of similar scale, such as achieving 78.4% accuracy on OCRBench, 81.4% accuracy on ChartQA, 89.6% ANLS on DocVQA, and 88.1% accuracy@0.5 on RefCOCOg-test.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-07T17:58:35Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Ya-Qi Yu</name>
+    </author>
+    <author>
+      <name>Minghui Liao</name>
+    </author>
+    <author>
+      <name>Jiwen Zhang</name>
+    </author>
+    <author>
+      <name>Jihao Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.10734v5</id>
+    <title>OmniHD-Scenes: A Next-Generation Multimodal Dataset for Autonomous Driving</title>
+    <updated>2026-02-09T07:06:54Z</updated>
+    <link href="https://arxiv.org/abs/2412.10734v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.10734v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The rapid advancement of deep learning has intensified the need for comprehensive data for use by autonomous driving algorithms. High-quality datasets are crucial for the development of effective data-driven autonomous driving solutions. Next-generation autonomous driving datasets must be multimodal, incorporating data from advanced sensors that feature extensive data coverage, detailed annotations, and diverse scene representation. To address this need, we present OmniHD-Scenes, a large-scale multimodal dataset that provides comprehensive omnidirectional high-definition data. The OmniHD-Scenes dataset combines data from 128-beam LiDAR, six cameras, and six 4D imaging radar systems to achieve full environmental perception. The dataset comprises 1501 clips, each approximately 30-s long, totaling more than 450K synchronized frames and more than 5.85 million synchronized sensor data points. We also propose a novel 4D annotation pipeline. To date, we have annotated 200 clips with more than 514K precise 3D bounding boxes. These clips also include semantic segmentation annotations for static scene elements. Additionally, we introduce a novel automated pipeline for generation of the dense occupancy ground truth, which effectively leverages information from non-key frames. Alongside the proposed dataset, we establish comprehensive evaluation metrics, baseline models, and benchmarks for 3D detection and semantic occupancy prediction. These benchmarks utilize surround-view cameras and 4D imaging radar to explore cost-effective sensor solutions for autonomous driving applications. Extensive experiments demonstrate the effectiveness of our low-cost sensor configuration and its robustness under adverse conditions. Data will be released at https://www.2077ai.com/OmniHD-Scenes.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-14T08:08:40Z</published>
+    <arxiv:comment>Accepted by IEEE TPAMI</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Lianqing Zheng</name>
+    </author>
+    <author>
+      <name>Long Yang</name>
+    </author>
+    <author>
+      <name>Qunshu Lin</name>
+    </author>
+    <author>
+      <name>Wenjin Ai</name>
+    </author>
+    <author>
+      <name>Minghao Liu</name>
+    </author>
+    <author>
+      <name>Shouyi Lu</name>
+    </author>
+    <author>
+      <name>Jianan Liu</name>
+    </author>
+    <author>
+      <name>Hongze Ren</name>
+    </author>
+    <author>
+      <name>Jingyue Mo</name>
+    </author>
+    <author>
+      <name>Xiaokai Bai</name>
+    </author>
+    <author>
+      <name>Jie Bai</name>
+    </author>
+    <author>
+      <name>Zhixiong Ma</name>
+    </author>
+    <author>
+      <name>Xichan Zhu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.01067v1</id>
+    <title>A Systematic Study of Data Modalities and Strategies for Co-training Large Behavior Models for Robot Manipulation</title>
+    <updated>2026-02-01T07:22:55Z</updated>
+    <link href="https://arxiv.org/abs/2602.01067v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.01067v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large behavior models have shown strong dexterous manipulation capabilities by extending imitation learning to large-scale training on multi-task robot data, yet their generalization remains limited by the insufficient robot data coverage. To expand this coverage without costly additional data collection, recent work relies on co-training: jointly learning from target robot data and heterogeneous data modalities. However, how different co-training data modalities and strategies affect policy performance remains poorly understood. We present a large-scale empirical study examining five co-training data modalities: standard vision-language data, dense language annotations for robot trajectories, cross-embodiment robot data, human videos, and discrete robot action tokens across single- and multi-phase training strategies. Our study leverages 4,000 hours of robot and human manipulation data and 50M vision-language samples to train vision-language-action policies. We evaluate 89 policies over 58,000 simulation rollouts and 2,835 real-world rollouts. Our results show that co-training with forms of vision-language and cross-embodiment robot data substantially improves generalization to distribution shifts, unseen tasks, and language following, while discrete action token variants yield no significant benefits. Combining effective modalities produces cumulative gains and enables rapid adaptation to unseen long-horizon dexterous tasks via fine-tuning. Training exclusively on robot data degrades the visiolinguistic understanding of the vision-language model backbone, while co-training with effective modalities restores these capabilities. Explicitly conditioning action generation on chain-of-thought traces learned from co-training data does not improve performance in our simulation benchmark. Together, these results provide practical guidance for building scalable generalist robot policies.</summary>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-01T07:22:55Z</published>
+    <arxiv:primary_category term="cs.RO"/>
+    <author>
+      <name>Fanqi Lin</name>
+    </author>
+    <author>
+      <name>Kushal Arora</name>
+    </author>
+    <author>
+      <name>Jean Mercat</name>
+    </author>
+    <author>
+      <name>Haruki Nishimura</name>
+    </author>
+    <author>
+      <name>Paarth Shah</name>
+    </author>
+    <author>
+      <name>Chen Xu</name>
+    </author>
+    <author>
+      <name>Mengchao Zhang</name>
+    </author>
+    <author>
+      <name>Mark Zolotas</name>
+    </author>
+    <author>
+      <name>Maya Angeles</name>
+    </author>
+    <author>
+      <name>Owen Pfannenstiehl</name>
+    </author>
+    <author>
+      <name>Andrew Beaulieu</name>
+    </author>
+    <author>
+      <name>Jose Barreiros</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.16979v1</id>
+    <title>DOSE: Data Selection for Multi-Modal LLMs via Off-the-Shelf Models</title>
+    <updated>2026-04-18T12:41:06Z</updated>
+    <link href="https://arxiv.org/abs/2604.16979v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.16979v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>High-quality and diverse multimodal data are essential for improving vision-language models (VLMs), yet existing datasets often contain noisy, redundant, and poorly aligned samples. To address these problems, data filtering is commonly used to enhance the efficiency and performance of multimodal learning, but it introduces extra computational cost because filtering models are usually trained on the same data they are meant to screen. To reduce this cost, we study DOSE, which explores whether off-the-shelf pretrained models that have never seen the target data can be used to select training samples for larger and stronger multimodal models without any task-specific training. Even without fine-tuning, these models can effectively assess text quality and image-text alignment to guide data selection. Based on this, we build a joint quality-alignment distribution and apply adaptive weighted sampling to select informative samples while maintaining long-tail diversity. This approach enhances data diversity, enabling models trained on DOSE-filtered data to match or surpass those trained on the full dataset on standard VQA and math benchmarks. Extensive experiments demonstrate its effectiveness, efficiency, and scalability.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-18T12:41:06Z</published>
+    <arxiv:comment>10 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Biao Wu</name>
+    </author>
+    <author>
+      <name>Yiwu Zhong</name>
+    </author>
+    <author>
+      <name>Meng Fang</name>
+    </author>
+    <author>
+      <name>Ling Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.16512v5</id>
+    <title>Beyond Face Swapping: A Diffusion-Based Digital Human Benchmark for Multimodal Deepfake Detection</title>
+    <updated>2026-01-28T09:33:55Z</updated>
+    <link href="https://arxiv.org/abs/2505.16512v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.16512v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In recent years, the explosive advancement of deepfake technology has posed a critical and escalating threat to public security: diffusion-based digital human generation. Unlike traditional face manipulation methods, such models can generate highly realistic videos with consistency via multimodal control signals. Their flexibility and covertness pose severe challenges to existing detection strategies. To bridge this gap, we introduce DigiFakeAV, the new large-scale multimodal digital human forgery dataset based on diffusion models. Leveraging five of the latest digital human generation methods and a voice cloning method, we systematically construct a dataset comprising 60,000 videos (8.4 million frames), covering multiple nationalities, skin tones, genders, and real-world scenarios, significantly enhancing data diversity and realism. User studies demonstrate that the misrecognition rate by participants for DigiFakeAV reaches as high as 68%. Moreover, the substantial performance degradation of existing detection models on our dataset further highlights its challenges. To address this problem, we propose DigiShield, an effective detection baseline based on spatiotemporal and cross-modal fusion. By jointly modeling the 3D spatiotemporal features of videos and the semantic-acoustic features of audio, DigiShield achieves state-of-the-art (SOTA) performance on the DigiFakeAV and shows strong generalization on other datasets.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-22T10:46:37Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jiaxin Liu</name>
+    </author>
+    <author>
+      <name>Jia Wang</name>
+    </author>
+    <author>
+      <name>Saihui Hou</name>
+    </author>
+    <author>
+      <name>Min Ren</name>
+    </author>
+    <author>
+      <name>Huijia Wu</name>
+    </author>
+    <author>
+      <name>Long Ma</name>
+    </author>
+    <author>
+      <name>Renwang Pei</name>
+    </author>
+    <author>
+      <name>Zhaofeng He</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2312.17495v2</id>
+    <title>Integrating Chemical Language and Molecular Graph in Multimodal Fused Deep Learning for Drug Property Prediction</title>
+    <updated>2024-09-13T01:05:46Z</updated>
+    <link href="https://arxiv.org/abs/2312.17495v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2312.17495v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Accurately predicting molecular properties is a challenging but essential task in drug discovery. Recently, many mono-modal deep learning methods have been successfully applied to molecular property prediction. However, the inherent limitation of mono-modal learning arises from relying solely on one modality of molecular representation, which restricts a comprehensive understanding of drug molecules and hampers their resilience against data noise. To overcome the limitations, we construct multimodal deep learning models to cover different molecular representations. We convert drug molecules into three molecular representations, SMILES-encoded vectors, ECFP fingerprints, and molecular graphs. To process the modal information, Transformer-Encoder, bi-directional gated recurrent units (BiGRU), and graph convolutional network (GCN) are utilized for feature learning respectively, which can enhance the model capability to acquire complementary and naturally occurring bioinformatics information. We evaluated our triple-modal model on six molecule datasets. Different from bi-modal learning models, we adopt five fusion methods to capture the specific features and leverage the contribution of each modal information better. Compared with mono-modal models, our multimodal fused deep learning (MMFDL) models outperform single models in accuracy, reliability, and resistance capability against noise. Moreover, we demonstrate its generalization ability in the prediction of binding constants for protein-ligand complex molecules in the refined set of PDBbind. The advantage of the multimodal model lies in its ability to process diverse sources of data using proper models and suitable fusion methods, which would enhance the noise resistance of the model while obtaining data diversity.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.bio-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="q-bio.BM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-12-29T07:19:42Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Xiaohua Lu</name>
+    </author>
+    <author>
+      <name>Liangxu Xie</name>
+    </author>
+    <author>
+      <name>Lei Xu</name>
+    </author>
+    <author>
+      <name>Rongzhi Mao</name>
+    </author>
+    <author>
+      <name>Shan Chang</name>
+    </author>
+    <author>
+      <name>Xiaojun Xu</name>
+    </author>
+    <arxiv:doi>10.1016/j.csbj.2024.04.030</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.csbj.2024.04.030" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.08172v1</id>
+    <title>On the Evaluation of Generative Robotic Simulations</title>
+    <updated>2024-10-10T17:49:25Z</updated>
+    <link href="https://arxiv.org/abs/2410.08172v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.08172v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Due to the difficulty of acquiring extensive real-world data, robot simulation has become crucial for parallel training and sim-to-real transfer, highlighting the importance of scalable simulated robotic tasks. Foundation models have demonstrated impressive capacities in autonomously generating feasible robotic tasks. However, this new paradigm underscores the challenge of adequately evaluating these autonomously generated tasks. To address this, we propose a comprehensive evaluation framework tailored to generative simulations. Our framework segments evaluation into three core aspects: quality, diversity, and generalization. For single-task quality, we evaluate the realism of the generated task and the completeness of the generated trajectories using large language models and vision-language models. In terms of diversity, we measure both task and data diversity through text similarity of task descriptions and world model loss trained on collected task trajectories. For task-level generalization, we assess the zero-shot generalization ability on unseen tasks of a policy trained with multiple generated tasks. Experiments conducted on three representative task generation pipelines demonstrate that the results from our framework are highly consistent with human evaluations, confirming the feasibility and validity of our approach. The findings reveal that while metrics of quality and diversity can be achieved through certain methods, no single approach excels across all metrics, suggesting a need for greater focus on balancing these different metrics. Additionally, our analysis further highlights the common challenge of low generalization capability faced by current works. Our anonymous website: https://sites.google.com/view/evaltasks.</summary>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-10T17:49:25Z</published>
+    <arxiv:comment>Project website: https://sites.google.com/view/evaltasks</arxiv:comment>
+    <arxiv:primary_category term="cs.RO"/>
+    <author>
+      <name>Feng Chen</name>
+    </author>
+    <author>
+      <name>Botian Xu</name>
+    </author>
+    <author>
+      <name>Pu Hua</name>
+    </author>
+    <author>
+      <name>Peiqi Duan</name>
+    </author>
+    <author>
+      <name>Yanchao Yang</name>
+    </author>
+    <author>
+      <name>Yi Ma</name>
+    </author>
+    <author>
+      <name>Huazhe Xu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2310.07699v3</id>
+    <title>VeCLIP: Improving CLIP Training via Visual-enriched Captions</title>
+    <updated>2024-03-13T22:27:08Z</updated>
+    <link href="https://arxiv.org/abs/2310.07699v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2310.07699v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large-scale web-crawled datasets are fundamental for the success of pre-training vision-language models, such as CLIP. However, the inherent noise and potential irrelevance of web-crawled AltTexts pose challenges in achieving precise image-text alignment. Existing methods utilizing large language models (LLMs) for caption rewriting have shown promise on small, curated datasets like CC3M and CC12M. This study introduces a scalable pipeline for noisy caption rewriting. Unlike recent LLM rewriting techniques, we emphasize the incorporation of visual concepts into captions, termed as Visual-enriched Captions (VeCap). To ensure data diversity, we propose a novel mixed training scheme that optimizes the utilization of AltTexts alongside newly generated VeCap. We showcase the adaptation of this method for training CLIP on large-scale web-crawled datasets, termed VeCLIP. Employing this cost-effective pipeline, we effortlessly scale our dataset up to 300 million samples named VeCap dataset. Our results show significant advantages in image-text alignment and overall model performance. For example, VeCLIP achieves up to +25.2% gain in COCO and Flickr30k retrieval tasks under the 12M setting. For data efficiency, VeCLIP achieves +3% gain while only using 14% of the data employed in the vanilla CLIP and 11% in ALIGN. We also note the VeCap data is complementary with other well curated datasets good for zero-shot classification tasks. When combining VeCap and DFN, our model can achieve strong performance on both of image-text retrieval and zero-shot classification tasks, e.g. 83.1% accuracy@1 on ImageNet zero-shot for a H/14 model. We release the pre-trained models at https://github.com/apple/ml-veclip.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-10-11T17:49:13Z</published>
+    <arxiv:comment>CV/ML</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhengfeng Lai</name>
+    </author>
+    <author>
+      <name>Haotian Zhang</name>
+    </author>
+    <author>
+      <name>Bowen Zhang</name>
+    </author>
+    <author>
+      <name>Wentao Wu</name>
+    </author>
+    <author>
+      <name>Haoping Bai</name>
+    </author>
+    <author>
+      <name>Aleksei Timofeev</name>
+    </author>
+    <author>
+      <name>Xianzhi Du</name>
+    </author>
+    <author>
+      <name>Zhe Gan</name>
+    </author>
+    <author>
+      <name>Jiulong Shan</name>
+    </author>
+    <author>
+      <name>Chen-Nee Chuah</name>
+    </author>
+    <author>
+      <name>Yinfei Yang</name>
+    </author>
+    <author>
+      <name>Meng Cao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.00818v2</id>
+    <title>Med-CMR: A Fine-Grained Benchmark Integrating Visual Evidence and Clinical Logic for Medical Complex Multimodal Reasoning</title>
+    <updated>2026-03-31T07:19:49Z</updated>
+    <link href="https://arxiv.org/abs/2512.00818v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.00818v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>MLLMs MLLMs are beginning to appear in clinical workflows, but their ability to perform complex medical reasoning remains unclear. We present Med-CMR, a fine-grained Medical Complex Multimodal Reasoning benchmark. Med-CMR distinguishes from existing counterparts by three core features: 1) Systematic capability decomposition, splitting medical multimodal reasoning into fine-grained visual understanding and multi-step reasoning to enable targeted evaluation; 2) Challenging task design, with visual understanding across three key dimensions (small-object detection, fine-detail discrimination, spatial understanding) and reasoning covering four clinically relevant scenarios (temporal prediction, causal reasoning, long-tail generalization, multi-source integration); 3) Broad, high-quality data coverage, comprising 20,653 Visual Question Answering (VQA) pairs spanning 11 organ systems and 12 imaging modalities, validated via a rigorous two-stage (human expert + model-assisted) review to ensure clinical authenticity. We evaluate 18 state-of-the-art MLLMs with Med-CMR, revealing GPT-5 as the top-performing commercial model: 57.81 accuracy on multiple-choice questions (MCQs) and a 48.70 open-ended score, outperforming Gemini 2.5 Pro (49.87 MCQ accuracy, 45.98 open-ended score) and leading open-source model Qwen3-VL-235B-A22B (49.34 MCQ accuracy, 42.62 open-ended score). However, specialized medical MLLMs do not reliably outperform strong general models, and long-tail generalization emerges as the dominant failure mode. Med-CMR thus provides a stress test for visual-reasoning integration and rare-case robustness in medical MLLMs, and a rigorous yardstick for future clinical systems.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-30T09:56:50Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Haozhen Gong</name>
+    </author>
+    <author>
+      <name>Xiaozhong Ji</name>
+    </author>
+    <author>
+      <name>Yuansen Liu</name>
+    </author>
+    <author>
+      <name>Wenbin Wu</name>
+    </author>
+    <author>
+      <name>Xiaoxiao Yan</name>
+    </author>
+    <author>
+      <name>Jingjing Liu</name>
+    </author>
+    <author>
+      <name>Kai Wu</name>
+    </author>
+    <author>
+      <name>Jiazhen Pan</name>
+    </author>
+    <author>
+      <name>Bailiang Jian</name>
+    </author>
+    <author>
+      <name>Jiangning Zhang</name>
+    </author>
+    <author>
+      <name>Xiaobin Hu</name>
+    </author>
+    <author>
+      <name>Hongwei Bran Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.14245v2</id>
+    <title>Curriculum-guided multimodal representation learning enables generalizable prediction of nanomaterial-protein interactions</title>
+    <updated>2026-04-28T07:13:24Z</updated>
+    <link href="https://arxiv.org/abs/2507.14245v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.14245v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Nanomaterial-protein interactions (NPI) are pivotal to realizing the therapeutic and diagnostic potential of nanomaterials. Although AI promises to accelerate mechanistic understanding and enable rational nanomaterial design, robust generalization to unseen nanomaterials or proteins remains unresolved. Here, we present CuMMI (curriculum-guided multimodal interaction model), a generalizable, explainable, and transferable model designed to infer NPI across complex biological settings. CuMMI leverages a self-constructed million-scale NPI dataset and adopts a multi-stage curriculum centered on human plasma, with progressively broader biofluid exposure to enhance data coverage and generalizability. By integrating protein sequence, structure, and a text-encoded experimental context of 37 features, CuMMI captures complementary material-specific, biochemical, and environmental information. Sample-level quality weights are assigned to ensure full utilization of available data while mitigating low-confidence and sparsely recorded entries. Ablation studies highlight the most influential tabular features, clarifying their contribution to the prediction. Through rigorous external validation across independence-preserving temporal, nanomaterial-held-out, and protein-held-out evaluations, our framework consistently achieves good performance (mean of five classification metrics exceeding 0.75), highlighting its robustness and generalizability to unseen data. Furthermore, fine-tuning on independent gold-nanoparticle data and a held-out protein subset further delivers better performance than training from scratch with substantially fewer samples. Together, our approach enables generalizable and transferable NPI prediction and may accelerate in vitro research and applications of nanomaterials.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cond-mat.mtrl-sci" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CE" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="q-bio.BM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-18T00:00:52Z</published>
+    <arxiv:comment>36 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Hengjie Yu</name>
+    </author>
+    <author>
+      <name>Kenneth A. Dawson</name>
+    </author>
+    <author>
+      <name>Haiyun Yang</name>
+    </author>
+    <author>
+      <name>Shuya Liu</name>
+    </author>
+    <author>
+      <name>Yan Yan</name>
+    </author>
+    <author>
+      <name>Yaochu Jin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2312.04913v1</id>
+    <title>SA-Attack: Improving Adversarial Transferability of Vision-Language Pre-training Models via Self-Augmentation</title>
+    <updated>2023-12-08T09:08:50Z</updated>
+    <link href="https://arxiv.org/abs/2312.04913v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2312.04913v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Current Visual-Language Pre-training (VLP) models are vulnerable to adversarial examples. These adversarial examples present substantial security risks to VLP models, as they can leverage inherent weaknesses in the models, resulting in incorrect predictions. In contrast to white-box adversarial attacks, transfer attacks (where the adversary crafts adversarial examples on a white-box model to fool another black-box model) are more reflective of real-world scenarios, thus making them more meaningful for research. By summarizing and analyzing existing research, we identified two factors that can influence the efficacy of transfer attacks on VLP models: inter-modal interaction and data diversity. Based on these insights, we propose a self-augment-based transfer attack method, termed SA-Attack. Specifically, during the generation of adversarial images and adversarial texts, we apply different data augmentation methods to the image modality and text modality, respectively, with the aim of improving the adversarial transferability of the generated adversarial images and texts. Experiments conducted on the FLickr30K and COCO datasets have validated the effectiveness of our method. Our code will be available after this paper is accepted.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-12-08T09:08:50Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Bangyan He</name>
+    </author>
+    <author>
+      <name>Xiaojun Jia</name>
+    </author>
+    <author>
+      <name>Siyuan Liang</name>
+    </author>
+    <author>
+      <name>Tianrui Lou</name>
+    </author>
+    <author>
+      <name>Yang Liu</name>
+    </author>
+    <author>
+      <name>Xiaochun Cao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.04365v1</id>
+    <title>EXaMCaP: Subset Selection with Entropy Gain Maximization for Probing Capability Gains of Large Chart Understanding Training Sets</title>
+    <updated>2026-02-04T09:41:03Z</updated>
+    <link href="https://arxiv.org/abs/2602.04365v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.04365v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent works focus on synthesizing Chart Understanding (ChartU) training sets to inject advanced chart knowledge into Multimodal Large Language Models (MLLMs), where the sufficiency of the knowledge is typically verified by quantifying capability gains via the fine-tune-then-evaluate paradigm. However, full-set fine-tuning MLLMs to assess such gains incurs significant time costs, hindering the iterative refinement cycles of the ChartU dataset. Reviewing the ChartU dataset synthesis and data selection domains, we find that subsets can potentially probe the MLLMs' capability gains from full-set fine-tuning. Given that data diversity is vital for boosting MLLMs' performance and entropy reflects this feature, we propose EXaMCaP, which uses entropy gain maximization to select a subset. To obtain a high-diversity subset, EXaMCaP chooses the maximum-entropy subset from the large ChartU dataset. As enumerating all possible subsets is impractical, EXaMCaP iteratively selects samples to maximize the gain in set entropy relative to the current set, approximating the maximum-entropy subset of the full dataset. Experiments show that EXaMCaP outperforms baselines in probing the capability gains of the ChartU training set, along with its strong effectiveness across diverse subset sizes and compatibility with various MLLM architectures.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-04T09:41:03Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Jiapeng Liu</name>
+    </author>
+    <author>
+      <name>Liang Li</name>
+    </author>
+    <author>
+      <name>Bing Li</name>
+    </author>
+    <author>
+      <name>Peng Fu</name>
+    </author>
+    <author>
+      <name>Xiyan Gao</name>
+    </author>
+    <author>
+      <name>Chengyang Fang</name>
+    </author>
+    <author>
+      <name>Xiaoshuai Hao</name>
+    </author>
+    <author>
+      <name>Can Ma</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.19516v2</id>
+    <title>Boosting Robotic Manipulation Generalization with Minimal Costly Data</title>
+    <updated>2025-08-03T10:19:15Z</updated>
+    <link href="https://arxiv.org/abs/2503.19516v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.19516v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The growing adoption of Vision-Language-Action (VLA) models in embodied AI intensifies the demand for diverse manipulation demonstrations. However, high costs associated with data collection often result in insufficient data coverage across all scenarios, which limits the performance of the models. It is observed that the spatial reasoning phase (SRP) in large workspace dominates the failure cases. Fortunately, this data can be collected with low cost, underscoring the potential of leveraging inexpensive data to improve model performance. In this paper, we introduce the RoboTron-Craft, a stage-divided and cost-effective pipeline for realistic manipulation generation. Base on this, the RoboTron-Platter method is introduced, a framework that decouples training trajectories into distinct task stages and leverages abundant easily collectible SRP data to enhance VLA model's generalization. Through analysis we demonstrate that sub-task-specific training with additional SRP data with proper proportion can act as a performance catalyst for robot manipulation, maximizing the utilization of costly physical interaction phase (PIP) data. Experiments show that through introducing large proportion of cost-effective SRP trajectories into a limited set of PIP data, we can achieve a maximum improvement of 41\% on success rate in zero-shot scenes, while with the ability to transfer manipulation skill to novel targets. Project available at https://github.com/ notFoundThisPerson/RoboTron-Craft.</summary>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-25T10:11:06Z</published>
+    <arxiv:primary_category term="cs.RO"/>
+    <author>
+      <name>Liming Zheng</name>
+    </author>
+    <author>
+      <name>Feng Yan</name>
+    </author>
+    <author>
+      <name>Fanfan Liu</name>
+    </author>
+    <author>
+      <name>Chengjian Feng</name>
+    </author>
+    <author>
+      <name>Yufeng Zhong</name>
+    </author>
+    <author>
+      <name>Lin Ma</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2310.07931v1</id>
+    <title>D2 Pruning: Message Passing for Balancing Diversity and Difficulty in Data Pruning</title>
+    <updated>2023-10-11T23:01:29Z</updated>
+    <link href="https://arxiv.org/abs/2310.07931v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2310.07931v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Analytical theories suggest that higher-quality data can lead to lower test errors in models trained on a fixed data budget. Moreover, a model can be trained on a lower compute budget without compromising performance if a dataset can be stripped of its redundancies. Coreset selection (or data pruning) seeks to select a subset of the training data so as to maximize the performance of models trained on this subset, also referred to as coreset. There are two dominant approaches: (1) geometry-based data selection for maximizing data diversity in the coreset, and (2) functions that assign difficulty scores to samples based on training dynamics. Optimizing for data diversity leads to a coreset that is biased towards easier samples, whereas, selection by difficulty ranking omits easy samples that are necessary for the training of deep learning models. This demonstrates that data diversity and importance scores are two complementary factors that need to be jointly considered during coreset selection. We represent a dataset as an undirected graph and propose a novel pruning algorithm, D2 Pruning, that uses forward and reverse message passing over this dataset graph for coreset selection. D2 Pruning updates the difficulty scores of each example by incorporating the difficulty of its neighboring examples in the dataset graph. Then, these updated difficulty scores direct a graph-based sampling method to select a coreset that encapsulates both diverse and difficult regions of the dataset space. We evaluate supervised and self-supervised versions of our method on various vision and language datasets. Results show that D2 Pruning improves coreset selection over previous state-of-the-art methods for up to 70% pruning rates. Additionally, we find that using D2 Pruning for filtering large multimodal datasets leads to increased diversity in the dataset and improved generalization of pretrained models.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-10-11T23:01:29Z</published>
+    <arxiv:comment>17 pages (Our code is available at https://github.com/adymaharana/d2pruning)</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Adyasha Maharana</name>
+    </author>
+    <author>
+      <name>Prateek Yadav</name>
+    </author>
+    <author>
+      <name>Mohit Bansal</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.20100v2</id>
+    <title>JoyAI-RA 0.1: A Foundation Model for Robotic Autonomy</title>
+    <updated>2026-04-23T04:10:40Z</updated>
+    <link href="https://arxiv.org/abs/2604.20100v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.20100v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Robotic autonomy in open-world environments is fundamentally limited by insufficient data diversity and poor cross-embodiment generalization. Existing robotic datasets are often limited in scale and task coverage, while relatively large differences across robot embodiments impede effective behavior knowledge transfer. To address these challenges, we propose JoyAI-RA, a vision-language-action (VLA) embodied foundation model tailored for generalizable robotic manipulation. JoyAI-RA presents a multi-source multi-level pretraining framework that integrates web data, large-scale egocentric human manipulation videos, simulation-generated trajectories, and real-robot data. Through training on heterogeneous multi-source data with explicit action-space unification, JoyAI-RA effectively bridges embodiment gaps, particularly between human manipulation and robotic control, thereby enhancing cross-embodiment behavior learning. JoyAI-RA outperforms state-of-the-art methods in both simulation and real-world benchmarks, especially on diverse tasks with generalization demands.</summary>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-22T01:51:48Z</published>
+    <arxiv:primary_category term="cs.RO"/>
+    <author>
+      <name>Tianle Zhang</name>
+    </author>
+    <author>
+      <name>Zhihao Yuan</name>
+    </author>
+    <author>
+      <name>Dafeng Chi</name>
+    </author>
+    <author>
+      <name>Peidong Liu</name>
+    </author>
+    <author>
+      <name>Dongwei Li</name>
+    </author>
+    <author>
+      <name>Kejun Hu</name>
+    </author>
+    <author>
+      <name>Likui Zhang</name>
+    </author>
+    <author>
+      <name>Junnan Nie</name>
+    </author>
+    <author>
+      <name>Ziming Wei</name>
+    </author>
+    <author>
+      <name>Zengjue Chen</name>
+    </author>
+    <author>
+      <name>Yili Tang</name>
+    </author>
+    <author>
+      <name>Jiayi Li</name>
+    </author>
+    <author>
+      <name>Zhiyuan Xiang</name>
+    </author>
+    <author>
+      <name>Mingyang Li</name>
+    </author>
+    <author>
+      <name>Tianci Luo</name>
+    </author>
+    <author>
+      <name>Hanwen Wan</name>
+    </author>
+    <author>
+      <name>Ao Li</name>
+    </author>
+    <author>
+      <name>Linbo Zhai</name>
+    </author>
+    <author>
+      <name>Zhihao Zhan</name>
+    </author>
+    <author>
+      <name>Xiaodong Bai</name>
+    </author>
+    <author>
+      <name>Jiakun Cai</name>
+    </author>
+    <author>
+      <name>Peng Cao</name>
+    </author>
+    <author>
+      <name>Kangliang Chen</name>
+    </author>
+    <author>
+      <name>Siang Chen</name>
+    </author>
+    <author>
+      <name>Yixiang Dai</name>
+    </author>
+    <author>
+      <name>Shuai Di</name>
+    </author>
+    <author>
+      <name>Yicheng Gong</name>
+    </author>
+    <author>
+      <name>Chenguang Gui</name>
+    </author>
+    <author>
+      <name>Yucheng Guo</name>
+    </author>
+    <author>
+      <name>Peng Hao</name>
+    </author>
+    <author>
+      <name>Qingrong He</name>
+    </author>
+    <author>
+      <name>Haoyang Huang</name>
+    </author>
+    <author>
+      <name>Kunrui Huang</name>
+    </author>
+    <author>
+      <name>Zhixuan Huang</name>
+    </author>
+    <author>
+      <name>Shibo Jin</name>
+    </author>
+    <author>
+      <name>Yixiang Jin</name>
+    </author>
+    <author>
+      <name>Anson Li</name>
+    </author>
+    <author>
+      <name>Dongjiang Li</name>
+    </author>
+    <author>
+      <name>Jiawei Li</name>
+    </author>
+    <author>
+      <name>Ruodai Li</name>
+    </author>
+    <author>
+      <name>Yihang Li</name>
+    </author>
+    <author>
+      <name>Yuzhen Li</name>
+    </author>
+    <author>
+      <name>Jiaming Liang</name>
+    </author>
+    <author>
+      <name>Fangsheng Liu</name>
+    </author>
+    <author>
+      <name>Jing Long</name>
+    </author>
+    <author>
+      <name>Mingxi Luo</name>
+    </author>
+    <author>
+      <name>Xing Pan</name>
+    </author>
+    <author>
+      <name>Hui Shen</name>
+    </author>
+    <author>
+      <name>Xiaomeng Tian</name>
+    </author>
+    <author>
+      <name>Daming Wang</name>
+    </author>
+    <author>
+      <name>Song Wang</name>
+    </author>
+    <author>
+      <name>Junwu Xiong</name>
+    </author>
+    <author>
+      <name>Hang Xu</name>
+    </author>
+    <author>
+      <name>Wanting Xu</name>
+    </author>
+    <author>
+      <name>Zhengcheng Yu</name>
+    </author>
+    <author>
+      <name>He Zhang</name>
+    </author>
+    <author>
+      <name>Jiyao Zhang</name>
+    </author>
+    <author>
+      <name>Lin Zhao</name>
+    </author>
+    <author>
+      <name>Chen Zhou</name>
+    </author>
+    <author>
+      <name>Nan Duan</name>
+    </author>
+    <author>
+      <name>Yuzheng Zhuang</name>
+    </author>
+    <author>
+      <name>Liang Lin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.09625v2</id>
+    <title>Grounding Synthetic Data Generation With Vision and Language Models</title>
+    <updated>2026-05-02T13:56:02Z</updated>
+    <link href="https://arxiv.org/abs/2603.09625v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.09625v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Deep learning models benefit from increasing data diversity and volume, motivating synthetic data augmentation to improve existing datasets. However, existing evaluation metrics for synthetic data typically calculate latent feature similarity, which is difficult to interpret and does not always correlate with the contribution to downstream tasks.
+  We propose a vision-language grounded framework for interpretable synthetic data augmentation and evaluation in remote sensing. Our approach combines generative models, semantic segmentation and image captioning with vision and language models. Based on this framework, we introduce ARAS400k: A large-scale Remote sensing dataset Augmented with Synthetic data for segmentation and captioning, containing 100k real images and 300k synthetic images, each paired with segmentation maps and descriptions.
+  ARAS400k enables the automated evaluation of synthetic data by analyzing semantic composition, minimizing caption redundancy, and verifying cross-modal consistency between visual structures and language descriptions. Experimental results indicate that while models trained exclusively on synthetic data reach competitive performance levels, those trained with augmented data (a combination of real and synthetic images) consistently outperform real-data baselines. Consequently, this work establishes a scalable benchmark for remote sensing tasks, specifically in semantic segmentation and image captioning. The dataset is available at zenodo.org/records/18890661 and the code base at github.com/caglarmert/ARAS400k.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-10T13:03:53Z</published>
+    <arxiv:comment>Accepted for presentation at IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), Synthetic Data for Computer Vision Workshop (SynData4CV) 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Ümit Mert Çağlar</name>
+    </author>
+    <author>
+      <name>Alptekin Temizel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.04097v2</id>
+    <title>WebRenderBench: Enhancing Web Interface Generation through Layout-Style Consistency and Reinforcement Learning</title>
+    <updated>2025-10-09T03:04:27Z</updated>
+    <link href="https://arxiv.org/abs/2510.04097v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.04097v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Automating the conversion of UI images into web code is a critical task for front-end development and rapid prototyping. Advances in multimodal large language models (MLLMs) have made WebUI-to-Code increasingly feasible, yet existing benchmarks remain limited in data diversity and evaluation reliability. To address these issues, we present WebRenderBench, a large-scale benchmark of 45.1k webpages collected from real-world portal sites, offering greater diversity, complexity, and realism than prior benchmarks. We further propose a novel evaluation metric that measures layout and style consistency from the final rendered pages. Unlike vision-based methods that rely on costly LLM reasoning or structure-based comparisons vulnerable to noise and asymmetry, our approach enables more efficient, objective, and reliable UI quality assessment. Finally, we introduce the Automated Layout and Style Inspection Agent (ALISA), which integrates this metric into reinforcement learning as a reward signal to enhance training on crawled asymmetric webpages. Experiments show that ALISA significantly boosts generation performance, achieving state-of-the-art results across multiple metrics.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-05T08:47:39Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Peichao Lai</name>
+    </author>
+    <author>
+      <name>Jinhui Zhuang</name>
+    </author>
+    <author>
+      <name>Kexuan Zhang</name>
+    </author>
+    <author>
+      <name>Ningchang Xiong</name>
+    </author>
+    <author>
+      <name>Shengjie Wang</name>
+    </author>
+    <author>
+      <name>Yanwei Xu</name>
+    </author>
+    <author>
+      <name>Chong Chen</name>
+    </author>
+    <author>
+      <name>Yilei Wang</name>
+    </author>
+    <author>
+      <name>Bin Cui</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.17608v2</id>
+    <title>ChartMaster: Advancing Chart-to-Code Generation with Real-World Charts and Chart Similarity Reinforcement Learning</title>
+    <updated>2025-09-28T06:18:42Z</updated>
+    <link href="https://arxiv.org/abs/2508.17608v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.17608v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The chart-to-code generation task requires MLLMs to convert chart images into executable code. This task faces two main challenges: limited data diversity and the difficulty of maintaining visual consistency between generated charts and the original ones. Existing datasets mainly rely on synthetic seed data to prompt GPT models for code generation, resulting in homogeneous samples that limit model generalization to real-world chart styles. To address this, we propose ReChartPrompt, leveraging real-world, human-designed charts extracted from arXiv papers as prompts. By harnessing the rich content and diverse visual styles of arXiv charts, we construct ReChartPrompt-240K, a large-scale and highly diverse dataset that better reflects realistic chart variations. For the second challenge, although SFT improves code understanding by optimizing next-token prediction, it does not provide direct supervision on visual features. As a result, it often fails to guarantee that the generated charts visually match the original ones. To address this, we propose ChartSimRL, a GRPO-based reinforcement learning algorithm guided by a novel chart similarity reward. This reward consists of two components: attribute similarity, which measures the overlap of chart attributes like layout and color between the generated and original charts, and visual similarity, which evaluates overall visual features, including texture, using convolutional neural networks. Unlike traditional text-based rewards, our reward accounts for the multimodal nature of the chart-to-code generation task, significantly enhancing the model's ability to accurately reproduce charts. Integrating ReChartPrompt and ChartSimRL, we develop the ChartMaster model, achieving SOTA results among 7B-parameter models and rivaling GPT-4o on various chart-to-code benchmarks. All resources are available at https://github.com/WentaoTan/ChartMaster.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-25T02:32:56Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Wentao Tan</name>
+    </author>
+    <author>
+      <name>Qiong Cao</name>
+    </author>
+    <author>
+      <name>Chao Xue</name>
+    </author>
+    <author>
+      <name>Yibing Zhan</name>
+    </author>
+    <author>
+      <name>Changxing Ding</name>
+    </author>
+    <author>
+      <name>Xiaodong He</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.03809v1</id>
+    <title>When Dynamic Data Selection Meets Data Augmentation</title>
+    <updated>2025-05-02T11:38:48Z</updated>
+    <link href="https://arxiv.org/abs/2505.03809v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.03809v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Dynamic data selection aims to accelerate training with lossless performance. However, reducing training data inherently limits data diversity, potentially hindering generalization. While data augmentation is widely used to enhance diversity, it is typically not optimized in conjunction with selection. As a result, directly combining these techniques fails to fully exploit their synergies. To tackle the challenge, we propose a novel online data training framework that, for the first time, unifies dynamic data selection and augmentation, achieving both training efficiency and enhanced performance. Our method estimates each sample's joint distribution of local density and multimodal semantic consistency, allowing for the targeted selection of augmentation-suitable samples while suppressing the inclusion of noisy or ambiguous data. This enables a more significant reduction in dataset size without sacrificing model generalization. Experimental results demonstrate that our method outperforms existing state-of-the-art approaches on various benchmark datasets and architectures, e.g., reducing 50\% training costs on ImageNet-1k with lossless performance. Furthermore, our approach enhances noise resistance and improves model robustness, reinforcing its practical utility in real-world scenarios.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-02T11:38:48Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>ICML 2025</arxiv:journal_ref>
+    <author>
+      <name>Suorong Yang</name>
+    </author>
+    <author>
+      <name>Peng Ye</name>
+    </author>
+    <author>
+      <name>Furao Shen</name>
+    </author>
+    <author>
+      <name>Dongzhan Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.15942v1</id>
+    <title>More with Less: a Large Scale Remote Sensing VLM with a Simple Recipe</title>
+    <updated>2026-07-17T13:25:44Z</updated>
+    <link href="https://arxiv.org/abs/2607.15942v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.15942v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Remote sensing vision-language models are increasingly expected to support open-ended reasoning over Earth Observation data and a variety of tasks. Most recent progress in this area has been driven by remote-sensing-specific architectural designs, often introducing new encoders, alignment modules, or task-specific fusion mechanisms. In this work, we challenge the necessity of such architectural specialization. We show that a generally capable vision-language model can achieve competitive or state-of-the-art performance at challenging remote sensing benchmarks, provided that it is trained at sufficient scale across diverse data and tasks. Our model uses a single language policy that can either answer directly in text or invoke a localization tool for segmentation and grounding. To train this heterogeneous behaviour, we employ a multi-task reinforcement learning framework with adaptive task rewards covering multiple-choice VQA, free-form VQA, captioning, detection, and segmentation across a large variety of input types. Our approach achieves competitive results across a broad set of benchmarks, including high-resolution, multi-temporal, multi-modal and multi-view tasks. Further, as training data scales, our experiments show consistent improvements across most tasks both in and out of distribution, which correlate with per-task data diversity. These findings suggest that, for remote sensing VLMs, data scale is more important than architectural novelty.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-17T13:25:44Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Stefan Maria Ailuro</name>
+      <arxiv:affiliation>INSAIT, Sofia University "St. Kliment Ohridski"</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Mario Markov</name>
+      <arxiv:affiliation>INSAIT, Sofia University "St. Kliment Ohridski"</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Mohammad Mahdi</name>
+      <arxiv:affiliation>INSAIT, Sofia University "St. Kliment Ohridski"</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Luc Van Gool</name>
+      <arxiv:affiliation>INSAIT, Sofia University "St. Kliment Ohridski"</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Danda Pani Paudel</name>
+      <arxiv:affiliation>INSAIT, Sofia University "St. Kliment Ohridski"</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.06784v1</id>
+    <title>Open Challenges and Opportunities in Federated Foundation Models Towards Biomedical Healthcare</title>
+    <updated>2024-05-10T19:22:24Z</updated>
+    <link href="https://arxiv.org/abs/2405.06784v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.06784v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This survey explores the transformative impact of foundation models (FMs) in artificial intelligence, focusing on their integration with federated learning (FL) for advancing biomedical research. Foundation models such as ChatGPT, LLaMa, and CLIP, which are trained on vast datasets through methods including unsupervised pretraining, self-supervised learning, instructed fine-tuning, and reinforcement learning from human feedback, represent significant advancements in machine learning. These models, with their ability to generate coherent text and realistic images, are crucial for biomedical applications that require processing diverse data forms such as clinical reports, diagnostic images, and multimodal patient interactions.
+  The incorporation of FL with these sophisticated models presents a promising strategy to harness their analytical power while safeguarding the privacy of sensitive medical data. This approach not only enhances the capabilities of FMs in medical diagnostics and personalized treatment but also addresses critical concerns about data privacy and security in healthcare. This survey reviews the current applications of FMs in federated settings, underscores the challenges, and identifies future research directions including scaling FMs, managing data diversity, and enhancing communication efficiency within FL frameworks. The objective is to encourage further research into the combined potential of FMs and FL, laying the groundwork for groundbreaking healthcare innovations.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-10T19:22:24Z</published>
+    <arxiv:comment>42 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Xingyu Li</name>
+    </author>
+    <author>
+      <name>Lu Peng</name>
+    </author>
+    <author>
+      <name>Yuping Wang</name>
+    </author>
+    <author>
+      <name>Weihua Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.09480v2</id>
+    <title>Prune Redundancy, Preserve Essence: Vision Token Compression in VLMs via Synergistic Importance-Diversity</title>
+    <updated>2026-03-11T17:27:13Z</updated>
+    <link href="https://arxiv.org/abs/2603.09480v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.09480v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-language models (VLMs) face significant computational inefficiencies caused by excessive generation of visual tokens. While prior work shows that a large fraction of visual tokens are redundant, existing compression methods struggle to balance importance preservation and information diversity. To address this, we propose PruneSID, a training-free Synergistic Importance-Diversity approach featuring a two-stage pipeline: (1) Principal Semantic Components Analysis (PSCA) for clustering tokens into semantically coherent groups, ensuring comprehensive concept coverage, and (2) Intra-group Non-Maximum Suppression (NMS) for pruning redundant tokens while preserving key representative tokens within each group. Additionally, PruneSID incorporates an information-aware dynamic compression ratio mechanism that optimizes token compression rates based on image complexity, enabling more effective average information preservation across diverse scenes. Extensive experiments demonstrate state-of-the-art performance, achieving 96.3% accuracy on LLaVA-1.5 with only 11.1% token retention, and 92.8% accuracy at extreme compression rates (5.6%) on LLaVA-NeXT, outperforming prior methods by 2.5% with 7.8 $\times$ faster prefilling speed compared to the original model. Our framework generalizes across diverse VLMs and both image and video modalities, showcasing strong cross-modal versatility. Code is available at https://github.com/ZhengyaoFang/PruneSID.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-10T10:31:58Z</published>
+    <arxiv:comment>accepted by ICLR2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhengyao Fang</name>
+    </author>
+    <author>
+      <name>Pengyuan Lyu</name>
+    </author>
+    <author>
+      <name>Chengquan Zhang</name>
+    </author>
+    <author>
+      <name>Guangming Lu</name>
+    </author>
+    <author>
+      <name>Jun Yu</name>
+    </author>
+    <author>
+      <name>Wenjie Pei</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.31503v1</id>
+    <title>How can embedding models bind concepts?</title>
+    <updated>2026-05-29T16:23:41Z</updated>
+    <link href="https://arxiv.org/abs/2605.31503v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.31503v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Humans easily determine which color belongs to which shape in multi-object scenes, an ability known as concept binding. Vision-language embedding models such as CLIP struggle with binding: they recognize individual concepts but fail to represent which concepts form which objects. Although CLIP behaves like a bag-of-concepts model in cross-modal retrieval, object information is recoverable from its image and text embeddings separately. We study this tension through the binding function, which maps concepts to scene embeddings. We find that scene embeddings decompose additively into object representations, explaining why uni-modal probes can recover object information. However, CLIP's binding function is high-complexity, which likely prevents the image and text encoders from learning a shared binding mechanism that generalizes to unseen concept combinations. We then ask whether this limitation is fundamental. We show that it is not. In controlled transformer models trained from scratch, binding generalization emerges with sufficient data coverage. These models learn low-complexity binding functions characterized by multiplicative interactions between concepts, enabling systematic generalization. Code is publicly available at https://github.com/oshapio/binding-concepts-complexity.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-29T16:23:41Z</published>
+    <arxiv:comment>ICML 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Arnas Uselis</name>
+    </author>
+    <author>
+      <name>Darina Koishigarina</name>
+    </author>
+    <author>
+      <name>Seong Joon Oh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.18088v2</id>
+    <title>RoboTwin 2.0: A Scalable Data Generator and Benchmark with Strong Domain Randomization for Robust Bimanual Robotic Manipulation</title>
+    <updated>2025-08-27T17:52:42Z</updated>
+    <link href="https://arxiv.org/abs/2506.18088v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.18088v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Simulation-based data synthesis has emerged as a powerful paradigm for advancing real-world robotic manipulation. Yet existing datasets remain insufficient for robust bimanual manipulation due to (1) the lack of scalable task generation methods and (2) oversimplified simulation environments. We present RoboTwin 2.0, a scalable framework for automated, large-scale generation of diverse and realistic data, together with unified evaluation protocols for dual-arm manipulation. At its core is RoboTwin-OD, an object library of 731 instances across 147 categories with semantic and manipulation-relevant annotations. Building on this, we design an expert data synthesis pipeline that leverages multimodal language models (MLLMs) and simulation-in-the-loop refinement to automatically generate task-level execution code. To improve sim-to-real transfer, RoboTwin 2.0 applies structured domain randomization along five axes: clutter, lighting, background, tabletop height, and language, enhancing data diversity and policy robustness. The framework is instantiated across 50 dual-arm tasks and five robot embodiments. Empirically, it yields a 10.9% gain in code generation success rate. For downstream policy learning, a VLA model trained with synthetic data plus only 10 real demonstrations achieves a 367% relative improvement over the 10-demo baseline, while zero-shot models trained solely on synthetic data obtain a 228% gain. These results highlight the effectiveness of RoboTwin 2.0 in strengthening sim-to-real transfer and robustness to environmental variations. We release the data generator, benchmark, dataset, and code to support scalable research in robust bimanual manipulation. Project Page: https://robotwin-platform.github.io/, Code: https://github.com/robotwin-Platform/robotwin/.</summary>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-22T16:26:53Z</published>
+    <arxiv:comment>Project Page: https://robotwin-platform.github.io/, Code: https://github.com/robotwin-Platform/robotwin, Doc: https://robotwin-platform.github.io/doc/</arxiv:comment>
+    <arxiv:primary_category term="cs.RO"/>
+    <author>
+      <name>Tianxing Chen</name>
+    </author>
+    <author>
+      <name>Zanxin Chen</name>
+    </author>
+    <author>
+      <name>Baijun Chen</name>
+    </author>
+    <author>
+      <name>Zijian Cai</name>
+    </author>
+    <author>
+      <name>Yibin Liu</name>
+    </author>
+    <author>
+      <name>Zixuan Li</name>
+    </author>
+    <author>
+      <name>Qiwei Liang</name>
+    </author>
+    <author>
+      <name>Xianliang Lin</name>
+    </author>
+    <author>
+      <name>Yiheng Ge</name>
+    </author>
+    <author>
+      <name>Zhenyu Gu</name>
+    </author>
+    <author>
+      <name>Weiliang Deng</name>
+    </author>
+    <author>
+      <name>Yubin Guo</name>
+    </author>
+    <author>
+      <name>Tian Nian</name>
+    </author>
+    <author>
+      <name>Xuanbing Xie</name>
+    </author>
+    <author>
+      <name>Qiangyu Chen</name>
+    </author>
+    <author>
+      <name>Kailun Su</name>
+    </author>
+    <author>
+      <name>Tianling Xu</name>
+    </author>
+    <author>
+      <name>Guodong Liu</name>
+    </author>
+    <author>
+      <name>Mengkang Hu</name>
+    </author>
+    <author>
+      <name>Huan-ang Gao</name>
+    </author>
+    <author>
+      <name>Kaixuan Wang</name>
+    </author>
+    <author>
+      <name>Zhixuan Liang</name>
+    </author>
+    <author>
+      <name>Yusen Qin</name>
+    </author>
+    <author>
+      <name>Xiaokang Yang</name>
+    </author>
+    <author>
+      <name>Ping Luo</name>
+    </author>
+    <author>
+      <name>Yao Mu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.19723v3</id>
+    <title>OS-Genesis: Automating GUI Agent Trajectory Construction via Reverse Task Synthesis</title>
+    <updated>2025-06-27T08:25:48Z</updated>
+    <link href="https://arxiv.org/abs/2412.19723v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.19723v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Graphical User Interface (GUI) agents powered by Vision-Language Models (VLMs) have demonstrated human-like computer control capability. Despite their utility in advancing digital automation, a critical bottleneck persists: collecting high-quality trajectory data for training. Common practices for collecting such data rely on human supervision or synthetic data generation through executing pre-defined tasks, which are either resource-intensive or unable to guarantee data quality. Moreover, these methods suffer from limited data diversity and significant gaps between synthetic data and real-world environments. To address these challenges, we propose OS-Genesis, a novel GUI data synthesis pipeline that reverses the conventional trajectory collection process. Instead of relying on pre-defined tasks, OS-Genesis enables agents first to perceive environments and perform step-wise interactions, then retrospectively derive high-quality tasks to enable trajectory-level exploration. A trajectory reward model is then employed to ensure the quality of the generated trajectories. We demonstrate that training GUI agents with OS-Genesis significantly improves their performance on highly challenging online benchmarks. In-depth analysis further validates OS-Genesis's efficiency and its superior data quality and diversity compared to existing synthesis methods. Our codes, data, and checkpoints are available at https://qiushisun.github.io/OS-Genesis-Home/.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-27T16:21:58Z</published>
+    <arxiv:comment>ACL 2025 Camera Ready</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Qiushi Sun</name>
+    </author>
+    <author>
+      <name>Kanzhi Cheng</name>
+    </author>
+    <author>
+      <name>Zichen Ding</name>
+    </author>
+    <author>
+      <name>Chuanyang Jin</name>
+    </author>
+    <author>
+      <name>Yian Wang</name>
+    </author>
+    <author>
+      <name>Fangzhi Xu</name>
+    </author>
+    <author>
+      <name>Zhenyu Wu</name>
+    </author>
+    <author>
+      <name>Chengyou Jia</name>
+    </author>
+    <author>
+      <name>Liheng Chen</name>
+    </author>
+    <author>
+      <name>Zhoumianze Liu</name>
+    </author>
+    <author>
+      <name>Ben Kao</name>
+    </author>
+    <author>
+      <name>Guohao Li</name>
+    </author>
+    <author>
+      <name>Junxian He</name>
+    </author>
+    <author>
+      <name>Yu Qiao</name>
+    </author>
+    <author>
+      <name>Zhiyong Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.08741v3</id>
+    <title>Oasis: One Image is All You Need for Multimodal Instruction Data Synthesis</title>
+    <updated>2025-03-26T09:01:55Z</updated>
+    <link href="https://arxiv.org/abs/2503.08741v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.08741v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The success of multi-modal large language models (MLLMs) has been largely attributed to the large-scale training data. However, the training data of many MLLMs is unavailable due to privacy concerns. The expensive and labor-intensive process of collecting multi-modal data further exacerbates the problem. Is it possible to synthesize multi-modal training data automatically without compromising diversity and quality? In this paper, we propose a new method, Oasis, to synthesize high-quality multi-modal data with only images. Oasis breaks through traditional methods by prompting only images to the MLLMs, thus extending the data diversity by a large margin. Our method features a delicate quality control method which ensures the data quality. We collected over 500k data and conducted incremental experiments on LLaVA-NeXT. Extensive experiments demonstrate that our method can significantly improve the performance of MLLMs. The image-based synthesis also allows us to focus on the specific-domain ability of MLLMs. Code and dataset are publicly available at https://github.com/Letian2003/MM_INF.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-11T08:25:40Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Letian Zhang</name>
+    </author>
+    <author>
+      <name>Quan Cui</name>
+    </author>
+    <author>
+      <name>Bingchen Zhao</name>
+    </author>
+    <author>
+      <name>Cheng Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2308.06038v2</id>
+    <title>Diverse Data Augmentation with Diffusions for Effective Test-time Prompt Tuning</title>
+    <updated>2023-08-17T05:20:18Z</updated>
+    <link href="https://arxiv.org/abs/2308.06038v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2308.06038v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Benefiting from prompt tuning, recent years have witnessed the promising performance of pre-trained vision-language models, e.g., CLIP, on versatile downstream tasks. In this paper, we focus on a particular setting of learning adaptive prompts on the fly for each test sample from an unseen new domain, which is known as test-time prompt tuning (TPT). Existing TPT methods typically rely on data augmentation and confidence selection. However, conventional data augmentation techniques, e.g., random resized crops, suffers from the lack of data diversity, while entropy-based confidence selection alone is not sufficient to guarantee prediction fidelity. To address these issues, we propose a novel TPT method, named DiffTPT, which leverages pre-trained diffusion models to generate diverse and informative new data. Specifically, we incorporate augmented data by both conventional method and pre-trained stable diffusion to exploit their respective merits, improving the models ability to adapt to unknown new test data. Moreover, to ensure the prediction fidelity of generated data, we introduce a cosine similarity-based filtration technique to select the generated data with higher similarity to the single test sample. Our experiments on test datasets with distribution shifts and unseen categories demonstrate that DiffTPT improves the zero-shot accuracy by an average of 5.13\% compared to the state-of-the-art TPT method. Our code and models will be publicly released.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-11T09:36:31Z</published>
+    <arxiv:comment>Proceedings of the IEEE/CVF International Conference on Computer Vision 2023</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Chun-Mei Feng</name>
+    </author>
+    <author>
+      <name>Kai Yu</name>
+    </author>
+    <author>
+      <name>Yong Liu</name>
+    </author>
+    <author>
+      <name>Salman Khan</name>
+    </author>
+    <author>
+      <name>Wangmeng Zuo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2305.18671v2</id>
+    <title>Perturbation-Assisted Sample Synthesis: A Novel Approach for Uncertainty Quantification</title>
+    <updated>2024-02-13T22:44:31Z</updated>
+    <link href="https://arxiv.org/abs/2305.18671v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2305.18671v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper introduces a novel Perturbation-Assisted Inference (PAI) framework utilizing synthetic data generated by the Perturbation-Assisted Sample Synthesis (PASS) method. The framework focuses on uncertainty quantification in complex data scenarios, particularly involving unstructured data while utilizing deep learning models. On one hand, PASS employs a generative model to create synthetic data that closely mirrors raw data while preserving its rank properties through data perturbation, thereby enhancing data diversity and bolstering privacy. By incorporating knowledge transfer from large pre-trained generative models, PASS enhances estimation accuracy, yielding refined distributional estimates of various statistics via Monte Carlo experiments. On the other hand, PAI boasts its statistically guaranteed validity. In pivotal inference, it enables precise conclusions even without prior knowledge of the pivotal's distribution. In non-pivotal situations, we enhance the reliability of synthetic data generation by training it with an independent holdout sample. We demonstrate the effectiveness of PAI in advancing uncertainty quantification in complex, data-driven tasks by applying it to diverse areas such as image synthesis, sentiment word analysis, multimodal inference, and the construction of prediction intervals.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-05-30T01:01:36Z</published>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Yifei Liu</name>
+    </author>
+    <author>
+      <name>Rex Shen</name>
+    </author>
+    <author>
+      <name>Xiaotong Shen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.26013v2</id>
+    <title>Toward Culturally Grounded Natural Language Processing</title>
+    <updated>2026-05-04T17:26:19Z</updated>
+    <link href="https://arxiv.org/abs/2603.26013v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.26013v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multilingual NLP is often treated as a route to global inclusion, but linguistic coverage and cultural competence frequently diverge. This paper synthesizes over 50 papers spanning multilingual performance inequality, cross-lingual transfer, culture-aware evaluation, cultural alignment, multimodal benchmarks, benchmark-design critique, and community-grounded data practices. Across this literature, training data coverage remains important, but outcomes are also shaped by tokenization, prompt language, translated benchmark design, culturally grounded supervision, modality, and who authors or validates evaluation data. We argue that culturally grounded NLP should move beyond treating languages as isolated rows in benchmark tables and instead model communicative ecologies: the institutions, scripts, domains, modalities, and communities through which language is used. We propose a layered evaluation and reporting agenda centered on representation audits, mixed elicitation, ecological validity, community validation, adaptation provenance, within-language variation, and maintenance of living cultural resources.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-27T02:08:32Z</published>
+    <arxiv:comment>Accepted at The 4th Workshop on Cross-Cultural Considerations in NLP (C3NLP) @ ACL 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Sina Bagheri Nezhad</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.12181v1</id>
+    <title>MolDeTox: Evaluating Language Model's Stepwise Fragment Editing for Molecular Detoxification</title>
+    <updated>2026-05-12T14:24:52Z</updated>
+    <link href="https://arxiv.org/abs/2605.12181v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.12181v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Language Models (LLMs) and Vision Language Models (VLMs) have recently shown promising capabilities in various scientific domain. In particular, these advances have opened new opportunities in drug discovery, where the ability to understand and modify molecular structures is critical for optimizing drug properties such as efficacy and toxicity. However, existing models and benchmarks often overlook toxicity-related challenges, focusing primarily on general property optimization without adequately addressing safety concerns. In addition, even existing toxicity repair benchmarks suffer from limited data diversity, low structural validity of generated molecules, and heavy reliance on proxy models for toxicity assessment. To address these limitations, we propose MolDeTox, a novel benchmark for molecular detoxification, designed to enable fine-grained and reliable evaluation of toxicity-aware molecular optimization across stepwise tasks. We evaluate a wide range of general-purpose LLMs and VLMs under diverse settings, and demonstrate that understanding and generating molecules at the fragment-level improves structural validity and enhances the quality of generated molecules. Moreover, through detailed task-level performance analysis, MolDeTox provides an interpretable benchmark that enables a deeper understanding of the detoxification process. Our dataset is available at : https://huggingface.co/datasets/MolDeTox/MolDeTox</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-12T14:24:52Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Jueon Park</name>
+    </author>
+    <author>
+      <name>Wonjune Jang</name>
+    </author>
+    <author>
+      <name>Jiwoo Lee</name>
+    </author>
+    <author>
+      <name>Yein Park</name>
+    </author>
+    <author>
+      <name>Jaewoo Kang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.07820v3</id>
+    <title>SONIC: Supersizing Motion Tracking for Natural Humanoid Whole-Body Control</title>
+    <updated>2026-05-21T17:26:49Z</updated>
+    <link href="https://arxiv.org/abs/2511.07820v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.07820v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Despite the rise of billion-parameter foundation models trained across thousands of GPUs, similar scaling gains have not been shown for humanoid control. Current neural controllers for humanoids remain modest in size, target a limited set of behaviors, and are trained on a handful of GPUs. We show that scaling model capacity, data, and compute yields a generalist humanoid controller capable of natural, robust whole-body movements. We position motion tracking as a scalable task for humanoid control, leveraging dense supervision from diverse motion-capture data to acquire human motion priors without manual reward engineering. We build a foundation model for motion tracking by scaling along three axes: network size (1.2M to 42M parameters), dataset volume (100M+ frames from 700 hours of motion capture), and compute (21k GPU hours). Beyond demonstrating the benefits of scale, we further show downstream utility through: (1) a real-time kinematic planner bridging motion tracking to tasks such as navigation, enabling natural and interactive control, and (2) a unified token space supporting VR teleoperation and vision-language-action (VLA) models with a single policy. Through this interface, we demonstrate autonomous VLA-driven whole-body loco-manipulation requiring coordinated hand and foot placement. Scaling motion tracking exhibits favorable properties: performance improves steadily with compute and data diversity, and learned policies generalize to unseen motions, establishing motion tracking at scale as a practical foundation for humanoid control.</summary>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SY" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-11T04:37:40Z</published>
+    <arxiv:comment>Project page: https://nvlabs.github.io/SONIC/</arxiv:comment>
+    <arxiv:primary_category term="cs.RO"/>
+    <author>
+      <name>Zhengyi Luo</name>
+    </author>
+    <author>
+      <name>Ye Yuan</name>
+    </author>
+    <author>
+      <name>Tingwu Wang</name>
+    </author>
+    <author>
+      <name>Chenran Li</name>
+    </author>
+    <author>
+      <name>Fernando Castañeda</name>
+    </author>
+    <author>
+      <name>Sirui Chen</name>
+    </author>
+    <author>
+      <name>Zi-Ang Cao</name>
+    </author>
+    <author>
+      <name>Jiefeng Li</name>
+    </author>
+    <author>
+      <name>David Minor</name>
+    </author>
+    <author>
+      <name>Qingwei Ben</name>
+    </author>
+    <author>
+      <name>Jinhyung Park</name>
+    </author>
+    <author>
+      <name>David Sami</name>
+    </author>
+    <author>
+      <name>Zi Wang</name>
+    </author>
+    <author>
+      <name>Xingye Da</name>
+    </author>
+    <author>
+      <name>Runyu Ding</name>
+    </author>
+    <author>
+      <name>Cyrus Hogg</name>
+    </author>
+    <author>
+      <name>Lina Song</name>
+    </author>
+    <author>
+      <name>Edy Lim</name>
+    </author>
+    <author>
+      <name>Eugene Jeong</name>
+    </author>
+    <author>
+      <name>Tairan He</name>
+    </author>
+    <author>
+      <name>Haoru Xue</name>
+    </author>
+    <author>
+      <name>Wenli Xiao</name>
+    </author>
+    <author>
+      <name>Simon Yuen</name>
+    </author>
+    <author>
+      <name>Jan Kautz</name>
+    </author>
+    <author>
+      <name>Yan Chang</name>
+    </author>
+    <author>
+      <name>Umar Iqbal</name>
+    </author>
+    <author>
+      <name>Linxi "Jim" Fan</name>
+    </author>
+    <author>
+      <name>Yuke Zhu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.22301v1</id>
+    <title>AnyECG-Lab: An Exploration Study of Fine-tuning an ECG Foundation Model to Estimate Laboratory Values from Single-Lead ECG Signals</title>
+    <updated>2025-10-25T14:04:26Z</updated>
+    <link href="https://arxiv.org/abs/2510.22301v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.22301v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Timely access to laboratory values is critical for clinical decision-making, yet current approaches rely on invasive venous sampling and are intrinsically delayed. Electrocardiography (ECG), as a non-invasive and widely available signal, offers a promising modality for rapid laboratory estimation. Recent progress in deep learning has enabled the extraction of latent hematological signatures from ECGs. However, existing models are constrained by low signal-to-noise ratios, substantial inter-individual variability, limited data diversity, and suboptimal generalization, especially when adapted to low-lead wearable devices. In this work, we conduct an exploratory study leveraging transfer learning to fine-tune ECGFounder, a large-scale pre-trained ECG foundation model, on the Multimodal Clinical Monitoring in the Emergency Department (MC-MED) dataset from Stanford. We generated a corpus of more than 20 million standardized ten-second ECG segments to enhance sensitivity to subtle biochemical correlates. On internal validation, the model demonstrated strong predictive performance (area under the curve above 0.65) for thirty-three laboratory indicators, moderate performance (between 0.55 and 0.65) for fifty-nine indicators, and limited performance (below 0.55) for sixteen indicators. This study provides an efficient artificial-intelligence driven solution and establishes the feasibility scope for real-time, non-invasive estimation of laboratory values.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-25T14:04:26Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Yujie Xiao</name>
+    </author>
+    <author>
+      <name>Gongzhen Tang</name>
+    </author>
+    <author>
+      <name>Wenhui Liu</name>
+    </author>
+    <author>
+      <name>Jun Li</name>
+    </author>
+    <author>
+      <name>Guangkun Nie</name>
+    </author>
+    <author>
+      <name>Zhuoran Kan</name>
+    </author>
+    <author>
+      <name>Deyun Zhang</name>
+    </author>
+    <author>
+      <name>Qinghao Zhao</name>
+    </author>
+    <author>
+      <name>Shenda Hong</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2408.15823v2</id>
+    <title>Benchmarking foundation models as feature extractors for weakly-supervised computational pathology</title>
+    <updated>2024-12-08T23:59:11Z</updated>
+    <link href="https://arxiv.org/abs/2408.15823v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2408.15823v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Advancements in artificial intelligence have driven the development of numerous pathology foundation models capable of extracting clinically relevant information. However, there is currently limited literature independently evaluating these foundation models on truly external cohorts and clinically-relevant tasks to uncover adjustments for future improvements. In this study, we benchmarked 19 histopathology foundation models on 13 patient cohorts with 6,818 patients and 9,528 slides from lung, colorectal, gastric, and breast cancers. The models were evaluated on weakly-supervised tasks related to biomarkers, morphological properties, and prognostic outcomes. We show that a vision-language foundation model, CONCH, yielded the highest performance when compared to vision-only foundation models, with Virchow2 as close second. The experiments reveal that foundation models trained on distinct cohorts learn complementary features to predict the same label, and can be fused to outperform the current state of the art. An ensemble combining CONCH and Virchow2 predictions outperformed individual models in 55% of tasks, leveraging their complementary strengths in classification scenarios. Moreover, our findings suggest that data diversity outweighs data volume for foundation models. Our work highlights actionable adjustments to improve pathology foundation models.</summary>
+    <category term="eess.IV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-08-28T14:34:45Z</published>
+    <arxiv:primary_category term="eess.IV"/>
+    <author>
+      <name>Peter Neidlinger</name>
+    </author>
+    <author>
+      <name>Omar S. M. El Nahhas</name>
+    </author>
+    <author>
+      <name>Hannah Sophie Muti</name>
+    </author>
+    <author>
+      <name>Tim Lenz</name>
+    </author>
+    <author>
+      <name>Michael Hoffmeister</name>
+    </author>
+    <author>
+      <name>Hermann Brenner</name>
+    </author>
+    <author>
+      <name>Marko van Treeck</name>
+    </author>
+    <author>
+      <name>Rupert Langer</name>
+    </author>
+    <author>
+      <name>Bastian Dislich</name>
+    </author>
+    <author>
+      <name>Hans Michael Behrens</name>
+    </author>
+    <author>
+      <name>Christoph Röcken</name>
+    </author>
+    <author>
+      <name>Sebastian Foersch</name>
+    </author>
+    <author>
+      <name>Daniel Truhn</name>
+    </author>
+    <author>
+      <name>Antonio Marra</name>
+    </author>
+    <author>
+      <name>Oliver Lester Saldanha</name>
+    </author>
+    <author>
+      <name>Jakob Nikolas Kather</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.07793v3</id>
+    <title>LLM4Cell: A Survey of Large Language and Agentic Models for Single-Cell Biology</title>
+    <updated>2025-11-23T05:07:35Z</updated>
+    <link href="https://arxiv.org/abs/2510.07793v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.07793v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models (LLMs) and emerging agentic frameworks are beginning to transform single-cell biology by enabling natural-language reasoning, generative annotation, and multimodal data integration. However, progress remains fragmented across data modalities, architectures, and evaluation standards. LLM4Cell presents the first unified survey of 58 foundation and agentic models developed for single-cell research, spanning RNA, ATAC, multi-omic, and spatial modalities. We categorize these methods into five families-foundation, text-bridge, spatial, multimodal, epigenomic, and agentic-and map them to eight key analytical tasks including annotation, trajectory and perturbation modeling, and drug-response prediction. Drawing on over 40 public datasets, we analyze benchmark suitability, data diversity, and ethical or scalability constraints, and evaluate models across 10 domain dimensions covering biological grounding, multi-omics alignment, fairness, privacy, and explainability. By linking datasets, models, and evaluation domains, LLM4Cell provides the first integrated view of language-driven single-cell intelligence and outlines open challenges in interpretability, standardization, and trustworthy model development.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-09T05:12:09Z</published>
+    <arxiv:comment>34 pages, 5 figures, 7 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Sajib Acharjee Dip</name>
+    </author>
+    <author>
+      <name>Adrika Zafor</name>
+    </author>
+    <author>
+      <name>Bikash Kumar Paul</name>
+    </author>
+    <author>
+      <name>Uddip Acharjee Shuvo</name>
+    </author>
+    <author>
+      <name>Muhit Islam Emon</name>
+    </author>
+    <author>
+      <name>Xuan Wang</name>
+    </author>
+    <author>
+      <name>Liqing Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2311.01483v5</id>
+    <title>FedSN: A Federated Learning Framework over Heterogeneous LEO Satellite Networks</title>
+    <updated>2024-10-18T06:38:11Z</updated>
+    <link href="https://arxiv.org/abs/2311.01483v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2311.01483v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, a large number of Low Earth Orbit (LEO) satellites have been launched and deployed successfully in space by commercial companies, such as SpaceX. Due to multimodal sensors equipped by the LEO satellites, they serve not only for communication but also for various machine learning applications, such as space modulation recognition, remote sensing image classification, etc. However, the ground station (GS) may be incapable of downloading such a large volume of raw sensing data for centralized model training due to the limited contact time with LEO satellites (e.g. 5 minutes). Therefore, federated learning (FL) has emerged as the promising solution to address this problem via on-device training. Unfortunately, to enable FL on LEO satellites, we still face three critical challenges that are i) heterogeneous computing and memory capabilities, ii) limited uplink rate, and iii) model staleness. To this end, we propose FedSN as a general FL framework to tackle the above challenges, and fully explore data diversity on LEO satellites. Specifically, we first present a novel sub-structure scheme to enable heterogeneous local model training considering different computing, memory, and communication constraints on LEO satellites. Additionally, we propose a pseudo-synchronous model aggregation strategy to dynamically schedule model aggregation for compensating model staleness. To further demonstrate the effectiveness of the FedSN, we evaluate it using space modulation recognition and remote sensing image classification tasks by leveraging the data from real-world satellite networks. Extensive experimental results demonstrate that FedSN framework achieves higher accuracy, lower computing, and communication overhead than the state-of-the-art benchmarks and the effectiveness of each components in FedSN.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-11-02T14:47:06Z</published>
+    <arxiv:comment>15 pages, 17 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Zheng Lin</name>
+    </author>
+    <author>
+      <name>Zhe Chen</name>
+    </author>
+    <author>
+      <name>Zihan Fang</name>
+    </author>
+    <author>
+      <name>Xianhao Chen</name>
+    </author>
+    <author>
+      <name>Xiong Wang</name>
+    </author>
+    <author>
+      <name>Yue Gao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.06139v1</id>
+    <title>EgoAVU: Egocentric Audio-Visual Understanding</title>
+    <updated>2026-02-05T19:16:55Z</updated>
+    <link href="https://arxiv.org/abs/2602.06139v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.06139v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Understanding egocentric videos plays a vital role for embodied intelligence. Recent multi-modal large language models (MLLMs) can accept both visual and audio inputs. However, due to the challenge of obtaining text labels with coherent joint-modality information, whether MLLMs can jointly understand both modalities in egocentric videos remains under-explored. To address this problem, we introduce EgoAVU, a scalable data engine to automatically generate egocentric audio-visual narrations, questions, and answers. EgoAVU enriches human narrations with multimodal context and generates audio-visual narrations through cross-modal correlation modeling. Token-based video filtering and modular, graph-based curation ensure both data diversity and quality. Leveraging EgoAVU, we construct EgoAVU-Instruct, a large-scale training dataset of 3M samples, and EgoAVU-Bench, a manually verified evaluation split covering diverse tasks. EgoAVU-Bench clearly reveals the limitations of existing MLLMs: they bias heavily toward visual signals, often neglecting audio cues or failing to correspond audio with the visual source. Finetuning MLLMs on EgoAVU-Instruct effectively addresses this issue, enabling up to 113% performance improvement on EgoAVU-Bench. Such benefits also transfer to other benchmarks such as EgoTempo and EgoIllusion, achieving up to 28% relative performance gain. Code will be released to the community.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-05T19:16:55Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Ashish Seth</name>
+    </author>
+    <author>
+      <name>Xinhao Mei</name>
+    </author>
+    <author>
+      <name>Changsheng Zhao</name>
+    </author>
+    <author>
+      <name>Varun Nagaraja</name>
+    </author>
+    <author>
+      <name>Ernie Chang</name>
+    </author>
+    <author>
+      <name>Gregory P. Meyer</name>
+    </author>
+    <author>
+      <name>Gael Le Lan</name>
+    </author>
+    <author>
+      <name>Yunyang Xiong</name>
+    </author>
+    <author>
+      <name>Vikas Chandra</name>
+    </author>
+    <author>
+      <name>Yangyang Shi</name>
+    </author>
+    <author>
+      <name>Dinesh Manocha</name>
+    </author>
+    <author>
+      <name>Zhipeng Cai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.06929v1</id>
+    <title>Physics-Based Flow Matching for Full-Field Prediction of Silicon Photonic Devices</title>
+    <updated>2026-05-07T20:40:24Z</updated>
+    <link href="https://arxiv.org/abs/2605.06929v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.06929v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Designing photonic integrated circuits requires accurate electromagnetic field simulations, which remain computationally expensive even for simple device geometries. We present PIC-Flow, a generative neural surrogate that predicts electromagnetic field distributions for photonic devices given their geometry and operating wavelength as an alternative to costly finite-difference time-domain (FDTD) simulations. Our approach combines three key ideas: (i) conditional flow matching as the generative framework, learning a velocity field that transports Gaussian noise to physically valid field solutions; (ii) a real-valued U-Net operating on split real and imaginary field channels; and (iii) physics-constrained training through a Helmholtz residual loss enforcing $\nabla^2 E_z + k_0^2 \varepsilon E_z = 0$. We introduce an interface-aware masking scheme for the Helmholtz residual that excludes dielectric boundary pixels where finite-difference stencil errors dominate, yielding a physically meaningful compliance metric. The data set consists of 22,500 ground-truth FDTD simulations split evenly between multimode interferometers, Y-branches, and directional couplers at $λ=1.55\,μ$m in an 80/10/10 split between training, validation, and test sets. We evaluate ablations on the network against the held out test devices and also show that the model generalizes to held out device classes such as S-bends, tapers, and cascaded Y-branches. Rather than a drop-in replacement for FDTD, this work establishes a foundation that, with broader data coverage, more compute, and further training optimization, could scale toward broadband, device-agnostic field prediction with dramatically improved runtime for rapid design-space exploration of complex photonic devices and circuits.</summary>
+    <category term="physics.optics" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-07T20:40:24Z</published>
+    <arxiv:comment>11 pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="physics.optics"/>
+    <author>
+      <name>Joseph Quaratiello</name>
+    </author>
+    <author>
+      <name>Anthony Rizzo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.17028v1</id>
+    <title>IMA-MoE: An Interpretable Modality-Aware Mixture-of-Experts Framework for Characterizing the Neurobiological Signatures of Binge Eating Disorder</title>
+    <updated>2026-04-18T15:22:44Z</updated>
+    <link href="https://arxiv.org/abs/2604.17028v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.17028v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Binge eating disorder (BED) is the most prevalent eating disorder. However, current diagnostic frameworks remain largely grounded in symptom-based criteria rather than underlying biological mechanisms, thereby limiting early detection and the development of biologically-informed interventions. Emerging studies have begun to investigate the neurobiological signatures of BED, yet their findings are often difficult to generalize due to the reliance on hypothesis-driven parametric models, single-modality analyses, and limited data diversity. Therefore, there is a critical need for advanced data-driven frameworks capable of modeling multimodal data to uncover generalizable and biologically meaningful signatures of BED. In this study, we propose the Interpretable Modality-Aware Mixture-of-Experts (IMA-MoE), a novel architecture designed to integrate heterogeneous neuroimaging, behavioral, hormonal, and demographic measures within a unified predictive framework. By encoding each measure as a distinct token, IMA-MoE enables flexible modeling of cross-modal dependencies while preserving modality-specific characteristics. We further introduce a token-importance mechanism to enhance interpretability by quantifying the contribution of each measure to model predictions. Evaluated on the large-scale Adolescent Brain Cognitive Development (ABCD) dataset, IMA-MoE demonstrates superior performance in differentiating BED from healthy controls compared with baseline methods, while revealing sex-specific predictive patterns, with hormonal measures contributing more prominently to prediction in females. Collectively, these findings highlight the promise of interpretable, data-driven multimodal modeling in advancing biologically-informed characterization of BED and facilitating more precise and personalized interventions in neuropsychiatric disorders.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-18T15:22:44Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Lin Zhao</name>
+    </author>
+    <author>
+      <name>Qiaohui Gao</name>
+    </author>
+    <author>
+      <name>Elizabeth Martin</name>
+    </author>
+    <author>
+      <name>Kurt P. Schulz</name>
+    </author>
+    <author>
+      <name>Tom Hildebrandt</name>
+    </author>
+    <author>
+      <name>Robyn Sysko</name>
+    </author>
+    <author>
+      <name>Tianming Liu</name>
+    </author>
+    <author>
+      <name>Xiaobo Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.05533v1</id>
+    <title>The New Quant: A Survey of Large Language Models in Financial Prediction and Trading</title>
+    <updated>2025-10-07T02:46:18Z</updated>
+    <link href="https://arxiv.org/abs/2510.05533v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.05533v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models are reshaping quantitative investing by turning unstructured financial information into evidence-grounded signals and executable decisions. This survey synthesizes research with a focus on equity return prediction and trading, consolidating insights from domain surveys and more than fifty primary studies. We propose a task-centered taxonomy that spans sentiment and event extraction, numerical and economic reasoning, multimodal understanding, retrieval-augmented generation, time series prompting, and agentic systems that coordinate tools for research, backtesting, and execution. We review empirical evidence for predictability, highlight design patterns that improve faithfulness such as retrieval first prompting and tool-verified numerics, and explain how signals feed portfolio construction under exposure, turnover, and capacity controls. We assess benchmarks and datasets for prediction and trading and outline desiderata-for time safe and economically meaningful evaluation that reports costs, latency, and capacity. We analyze challenges that matter in production, including temporal leakage, hallucination, data coverage and structure, deployment economics, interpretability, governance, and safety. The survey closes with recommendations for standardizing evaluation, building auditable pipelines, and advancing multilingual and cross-market research so that language-driven systems deliver robust and risk-controlled performance in practice.</summary>
+    <category term="q-fin.PM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-07T02:46:18Z</published>
+    <arxiv:comment>21 pages</arxiv:comment>
+    <arxiv:primary_category term="q-fin.PM"/>
+    <author>
+      <name>Weilong Fu</name>
+    </author>
+  </entry>
+</feed>

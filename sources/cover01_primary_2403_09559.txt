@@ -1,0 +1,563 @@
+[2403.09559] Less is More: Data Value Estimation for Visual Instruction Tuning
+11institutetext: Gaoling School of Artificial Intelligence, Renmin University of China1,
+School of Information, Renmin University of China2,
+Alibaba Group3
+11email: {gaodawei.gdw, yaliang.li}@alibaba-inc.com, 11email: {jasonlaw8121, batmanfly}@gmail.com
+11email: francis_kun_zhou@163.com
+11email: jrwen@ruc.edu.cn
+Less is More: Data Value Estimation for
+Visual Instruction Tuning
+Zikang Liu
+Equal Contribution.11
+Kun Zhou*
+22
+Wayne Xin Zhao\faIconenvelope
+11
+Dawei Gao
+33
+Yaliang Li
+33
+Ji-Rong Wen
+11
+Abstract
+Visual instruction tuning is the key to building multimodal large language models (MLLMs), which greatly improves the reasoning capabilities of large language models (LLMs) in vision scenario. However, existing MLLMs mostly rely on a mixture of multiple highly diverse visual instruction datasets for training (even more than a million instructions), which may introduce data redundancy.
+To investigate this issue, we conduct a series of empirical studies, which reveal a significant redundancy within the visual instruction datasets, and show that greatly reducing the amount of several instruction dataset even do not affect the performance.
+Based on the findings, we propose a new data selection approach TIVE, to eliminate redundancy within visual instruction data.
+TIVE first estimates the task-level and instance-level value of the visual instructions based on computed gradients.
+Then, according to the estimated values, TIVE determines the task proportion within the visual instructions, and selects representative instances to compose a smaller visual instruction subset for training.
+Experiments on LLaVA-1.5 show that our approach using only about 7.5% data can achieve comparable performance as the full-data fine-tuned model across seven benchmarks, even surpassing it on four of the benchmarks. Our code and data will be publicly released.
+Keywords:
+Visual Instruction Tuning Data Selection
+1 Introduction
+The advent of large language models (LLMs) [2, 23, 30, 34] has marked significant advancements in the field of natural language processing (NLP). These models have transcended the boundaries of conventional NLP tasks, exhibiting excellent capabilities in knowledge utilization, complex reasoning, and instruction following. However, due to their unimodal nature, LLMs are confined to processing textual information, thus limiting their applications in real-world scenarios.
+A number of recent studies [37, 16, 6, 15] have attempted to equip LLMs with the capability to process visual information, leading to the creation of multimodal LLMs (MLLMs)111In this work, we mainly study the MLLMs specially for processing visual information. Note that our approach is also general to the MLLMs for other modals, e.g. speech..
+Technically speaking, to build a MLLM based on a LLM, a typical process often involves three basic steps: (1) integrating a well-trained visual encoder into the LLM; (2) performing cross-modal alignment through pre-training on large-scale image-text pairs; (3) fine-tuning MLLMs on visual instructions.
+In this way, visual instruction tuning [16, 6] is the key technique for building the MLLM since it can greatly improves the MLLM’s instruction-following capability on various vision-related tasks.
+Therefore, the construction of visual instruction datasets is very crucial for MLLMs.
+Typically, a visual instruction comprises an image, a textual task instruction related to the image, and the corresponding textual output. There are two widely used ways to construct visual instructions: synthesizing instructions based on LLMs [16] or transforming existing vision-language datasets into visual instructions [6, 15]. To achieve better performance, existing MLLMs generally combine a mixture of visual instructions from different domains or tasks, to compose a large-scale visual instruction dataset for training.
+The MLLMs fine-tuned on these mixtures of visual instructions have shown remarkable performance on massive downstream multimodal benchmarks.
+However, such a mixture of instructions may also introduce significant data redundancy, leading to increased training costs and potentially degraded model performance.
+To investigate the redundancy in visual instruction data, we first conduct an empirical investigation into the effectiveness of using different types of mixed visual instructions.
+Given the mixed instruction set, we reduce the number of instructions for a certain task at each time and
+test the impact of gradually reducing its data amount on model performance.
+The results indicate that there exists a significant data redundancy in existing visual instruction datasets.
+Thus, it is promising to mitigate this redundancy by selecting a small set of representative data samples.
+Furthermore, we also find that the degree of redundancy varies across different tasks, which suggests that the contribution of each task should be considered when performing the redundancy elimination.
+To this end, in this paper, we propose a novel instruction data selection approach TIVE, based on Task-level and Instance-level Value Estimation, for visual instruction tuning.
+Despite data selection has been studied in previous work, prior studies [29, 24, 28] mostly focus on single-modal classification tasks and small models, which may not be suitable for the visual instruction tuning of MLLMs.
+As the key point of our approach, we employ the computed gradients from the key parameters of MLLMs, to measure the potential contribution to model performance for each task or instance, termed as task-level value and instance-level value.
+Specifically, for task-level value, we compute the average gradient norm of data instances from each task, to measure the potential contribution of this task.
+For instance-level value, we calculate the similarity between each instance’s gradient vector and the average gradient vector of all instances from a target task, for distinguishing the most representative instances (with larger similarity).
+Finally, we leverage the task-level value to determine the task data proportion, and the instance-level value to sample the most representative instances, to compose a smaller visual instruction subset for training.
+To the best of our knowledge, we are the first to study data selection for a mixture of visual instructions using intrinsic features from the MLLM.
+It is essentially more challenging and realistic in developing MLLMs.
+Previous work mostly studies selecting instructions from an instruction dataset focused on a single task, and relies on prior features (e.g. diversity) [31] or specially designed external quality evaluator [4].
+To demonstrate the effectiveness of our approach, we select LLaVA-1.5 [15] as the base model, and conduct extensive experiments on seven downstream benchmarks.
+Owing to our data selection approach, only using 7.5% of the visual instruction data is capable of achieving the comparable performance as the full-data fine-tuned model, even outperforms it on four benchmarks.
+Besides, our approach also performs consistently better than other data selection methods.
+2 Redundancy Analysis on Visual Instruction Data
+In this section, we conduct the empirical study to examine: (1) to what extent data redundancy exists in existing visual instruction datasets, and (2) whether the degree of redundancy differs in different task instructions.
+Table 1: Statistics of base training data for empirical studies.
+Task
+MC-VQA
+OE-VQA
+REC
+VC
+Caption
+TC
+Numbers.
+60K
+80K
+120K
+40K
+100K
+40K
+Refer to caption
+(a) MME-P
+Refer to caption
+(b) MMBench
+Refer to caption
+(c) SEED-Bench (Image)
+Refer to caption
+(d) ScienceQA (Image)
+Figure 1: Evaluation results on four benchmarks after pruning the amount of visual instructions from one task.
+2.1 Analysis Setup
+Given a mixture of visual instruction datasets for training MLLMs, our experiments are conducted by reducing the number of visual instructions of a certain type and then examining the performance change after fine-tuning with the adjusted instruction dataset.
+In this experiment, we mainly study the widely used instruction dataset for training LLaVA-1.5, as it is one of the SOTA methods across open-source MLLMs.
+Backbone Model.
+We choose the LLaVA-1.5 [15] model after cross-modal alignment training as the backbone model (without instruction-tuning), which has been trained on more than 500k image-text pairs.
+It incorporates CLIP [25] as the visual encoder and Vicuna-v1.5 [5] as the LLM, and further leverages two linear layers for mapping the encoded visual features to the latent space of LLM.
+Visual Instruction Dataset.
+LLaVA-1.5 has been fine-tuned on a mixture of instruction datasets from different tasks. To ensure internal consistency across different tasks, we select only one dataset for each type of task from it. The selected subset of instruction datasets is demonstrated as follows:
+•
+Open-Ended Visual Question Answering (OE-VQA): it requires a model to generate natural language answers without predefined options. We select VQAv2 [8] since it’s one of the most commonly-used OE-VQA dataset.
+•
+Multi-Choice Visual Question Answering (MC-VQA): it also requires a model to answer visual questions, but only selects the answer from the provided candidate choices. We select the A-OKVQA dataset [26].
+•
+Referring Expression Comprehension (REC): it requires a model to generate the regional description of the given object or select the correct object based on the given description. We select RefCOCO dataset [21, 9].
+•
+Visual Conversation (VC): it requires a model to generate long conversations based on visual content. We select the VC data from instructions of LLaVA-1.0 [16].
+•
+Image Caption (IC): it requires a model to provide an description of the given image. We select CC3M dataset [27] as it is already used for cross-modal alignment training of LLaVA-1.5 [16].
+•
+Textual Conversation (TC): it requires the model to generate conversation in a text-only setting. We select ShareGPT [35], as it has been widely used in training LLMs.
+All these selected datasets are constructed based on MSCOCO [14], and thus they tend to have similar data distribution. To investigate the redundancy issue in visual instruction datasets, we gradually halve the number of instructions from each task, then fine-tune the backbone model on the new instruction set and finally compare the performance change. For all experiments, we follow the default experimental configuration of LLaVA-1.5.
+Evaluation Benchmark.
+To conduct a comprehensive empirical analysis, we evaluate the fine-tuned MLLMs on the following commonly-used benchmarks:
+•
+MME: [7] it evaluates MLLM’s reasoning ability from the two dimensions of perception and cognition. It comprises a total of 14 subtasks, each designed to assess various capabilities of MLLMs from distinct perspectives. Each instance in MME includes an image and two binary questions. We only select the MME-Perception subset to evaluate the perception capability of MLLMs.
+•
+MMBench: [18] it is a systematically-constructed dataset for evaluating the capacity of MLLMs. It encompasses an evaluation of 20 fine-grained capabilities of MLLMs. We perform the evaluation through its official website.
+•
+SEED-Bench: [11] it develops a comprehensive set of multimodal evaluation tasks across twelve dimensions with the assistence of GPT-4. SEED-Bench encompasses assessments of both image and video understanding capabilities. In our experiments, we only utilize the image benchmark of SEED-Bench.
+•
+ScienceQA: [19] it is a benchmark constructed around various science topics, encompassing both pure text-based questions and image-related text questions. In our experiment, we assess ScienceQA under the image-only setting.
+2.2 Results and Findings
+According to the results on Fig. 1, we list the main findings as follows:
+First, there exists a significant redundancy in these visual instruction datasets. We can observe that decreasing the amount of instruction data leads to very little performance drop in most cases.
+For example, reducing the number of VC would not significantly affect the model’s performance across all benchmarks, and even lead to improvement on ScienceQA using 50% proportion.
+It indicates that all the used instruction datasets may not be indispensable.
+Second, for each task, the redundancy degree of different instruction datasets differs.
+For OE-VQA and MC-VQA, reducing their instruction number leads to relatively significant performance degradation, e.g. 8% on MME-P and 7% on MMBench using pruning ratio 87.5%, respectively.
+While pruning task instructions from VC leads to minimal decline on most of the benchmarks. A possible reason is that different task instructions contribute to model’s final performance differently.
+Therefore, it is necessary to estimate the value of each task, for helping set a more proper pruning ratio and mixing proportion for all the tasks.
+Overall, our findings reveal the data redundancy issue in visual instruction datasets, which would greatly increase the cost of visual instruction tuning.
+To address it, we aim to estimate the data value of all tasks and instances, to construct a visual instruction subset containing fewer instances but sufficient knowledge for fine-tuning MLLMs.
+3 Approach
+In this section, we present our approach TIVE, standing for Task-level and Instance-level Value Estimation, for reducing the redundancy of visual instruction data.
+Based on the findings in Sec. 2, it is necessary to consider the contribution degree (termed as data value) to the model performance across tasks and instances for fine-tuning MLLMs.
+Specially, we consider measuring both task-level and instance-level contributions for selecting visual instruction data.
+Based on the two kinds of value measurements, we design the data selection process, which can sample a smaller high-quality visual instruction subset for efficiently and effectively fine-tuning MLLMs. We show the details of TIVE in Fig. 2.
+3.1 Problem Formulation
+The elimination of dataset redundancy aims to select a high-quality subset from a large dataset suffering the redundancy issue. The selected subset should be in a relatively small scale but sufficiently informative, to ensure that models trained on the data subset could achieve similar performance as using the full dataset.
+In this work, we focus on reducing the redundancy of the visual instruction data pool \mathcal{D}=\left\{D_{1},...,D_{n}\right\}\ , which is a mixture of multiple highly diverse instruction datasets from different tasks. Each dataset comprises a set of instruction samples, denoted as D_{i}=\left\{s_{1},...,s_{n}\right\}\ .
+Our goal is to select a data subset \mathcal{D}_{T} from the visual instruction data pool for fine-tuning MLLMs. We use |\mathcal{D}_{T}| to denote the target size of the selected subset.
+Specially, we select the data subset from two perspectives, with the help of a pre-learned reference model.
+First, we estimate the value of each task and rely on its contribution to the model performance to determine their proportions within the final subset \mathcal{D}_{T} .
+Second, we estimate the value of each instance within each task D_{i} to select the most representative instances for this task.
+Refer to caption
+Figure 2: The illustration of our proposed approach. We utilize the gradient vectors computed by the projection layers and last layer of the LLM, to measure the task-level (via average gradient norm) and instance-level values (via gradient vector similarity). Then, the data values are leveraged to determine the task proportion and select instances.
+3.2 Estimating Task-level Value
+According to our findings in Sec. 2, different task instructions would have different impacts on the MLLM performance.
+In this part, we aim to distinguish the tasks with higher contributions and assign larger values to them.
+As MLLMs require the task data to compute the gradients for optimization, the larger gradients would bring more update to the model’s parameters, potentially leading to more impact on the final performance.
+Thus, we consider to utilize the gradient norms for estimating the value for each task.
+However, it is costly to compute the gradient norms for all the parameters of MLLMs.
+To reduce the cost, we only calculate the gradient norms on the important parameter matrices, i.e. the linear layers connecting the visual encoder and LLM (projection layers), and the output layer of the LLM.
+These parameter matrices play the key role of aligning visual and language representations, and generating the final text, respectively, hence their gradients are representative for the whole gradients of MLLMs.
+Formally, for each instance s , its gradient norm can be computed as:
+\displaystyle norm_{s}=\sqrt{\sum_{w\in W}\lVert g_{w}(s)\rVert^{2}},
+(1)
+where W denotes the parameter matrices mentioned above, and g_{w}(s) denotes the gradient of the parameter w for the instance s .
+This formula can estimate the value of each task instance.
+However, the instruction datasets likely contain noisy data or mislabeled ones, which might lead to abnormally higher gradient norm.
+To reduce the influence of unexpected data noise, we compute the average gradient norm for all instances within each task, as the task-level value:
+\displaystyle v_{i}^{t}=\frac{1}{|D_{i}|}\sum_{s\in D_{i}}norm_{s},
+(2)
+3.3 Estimating Instance-level Value
+In addition to the task-level value, we aim to obtain the value of each task instance, to help select a small proportion of representative training samples for the given tasks.
+To estimate the representativeness of each instance, we consider to leverage the similarity between the mean gradient of all instances from a task and the gradient of an instance.
+For each instance, if its computed gradient is more similar to the task mean gradient (the average over all instances of some specific task), it would be more capable of resulting in the same update on the model parameters as using all the task data.
+Thus, these instances are more representative for this task, and should be assigned with higher value.
+Formally, the data value for an instance s from D_{i} is calculated as:
+\displaystyle v^{i}_{s}=\text{cos}\bigg{(}g(s),\frac{1}{|D_{i}|}\sum_{s^{\prime}\in D_{i}}g(s^{\prime})\bigg{)},
+(3)
+where g(s) denotes the gradient vector of the instance s , it is the concatenation of the gradient of the vision-language connection layer and the output layer of the LLM, as the computation of task-level value in Sec. 3.2, and
+\text{cos}(\cdot) denotes the computation of cosine similarity for the two gradient vectors.
+3.4 Data Subset Selection
+In this section, we introduce how we select a small data subset based on the proposed data value measurements.
+Reference Model Training.
+To efficiently compute the gradient-based measurements for data selection, we train a reference model using a small amount of instruction data.
+Concretely, we only sample 2% instances for all the tasks from the entire instruction data pool.
+In this way, the reference model can be warm-up to learn the basic ability of following visual instructions and will not be overfitted to certain data points or distribution compared to training on the whole dataset.
+Thus, the gradients from the reference model can better reflect the influence of one instruction sample to model training during the actual instruction tuning stage, and better reflect task-level and instance-level data value.
+Selecting Data based on Estimated Values.
+After obtaining the task-level and instance-level values, we can select the subset from the visual instruction data pool.
+First, we use the task-level value to determine the proportion for each task in the data subset.
+The target data subset \mathcal{D}_{T}=\{D_{1}^{{}^{\prime}},...,D_{n}^{{}^{\prime}}\}\ contains the same number of task datasets as the original data pool, but changes the total amount and data proportion.
+For each task subset D_{i}^{{}^{\prime}} , we calculate the data proportion of this task p_{i}^{{}^{\prime}} within the target data subset as follows:
+\displaystyle p_{i}^{{}^{\prime}}=\frac{v^{t}_{i}}{\sum_{j=1}^{n}v^{t}_{j}},
+(4)
+where v^{t}_{i} is the estimated task-level value defined in Eq. 2.
+Based on the data proportion, we can obtain the amount of the task data by multiplying it with the expected total instance number, denoted by |D_{i}^{{}^{\prime}}| .
+Then, we rely on the instance-level value to sample |D_{i}^{{}^{\prime}}| instances from the original visual instruction dataset.
+Here, we multiply the instance-level and task-level values, to estimate the value of the instance, considering its belonged task. We do this to ensure that our approach can select more representative samples for tasks with higher importance (sharper sampling distribution), while opting for more diverse samples for tasks with lower importance (more uniform sampling distribution). Then, we utilize a sigmoid function to normalize the instance weights, to produce the sampling weight as:
+\displaystyle score_{s}=\frac{1}{1+e^{-\lambda v^{t}_{i}v^{i}_{s}}}
+(5)
+where \lambda is the hyperparameter to control the distribution of the scores.
+For all the tasks, we sample the instances based on the above scores, and combine all the datasets to compose our final selected data subset.
+Balancing Data Proportion via Data Augmentation.
+In early experiments, we notice that the highly imbalanced instruction number across different dataset might greatly affect our data selection approach.
+When an important task with very few instances is assigned with a large proportion, there would be no sufficient instances for reaching the expected proportion.
+Therefore, for the dataset with extremely few visual instructions, we employ a simple data augmentation approach to revise the type of the instructions into other ones for extending the data scale, e.g. revising open-ended VQA data into Multi-Choice VQA data.
+To avoid changing the data distribution, we only alter the style of the instruction data using the instruction type that already exists in the data pool, without introducing any new knowledge.
+4 Experiments
+Table 2: A comparison between TIVE and other baseline approaches for data selection on several downstream benchmarks. Benchmark names are abbreviated due to space limits. MME-P: MME-Perception, SEED-I: SEED-Bench (Image), MMB: MMBench, MMB-CN: MMBench (Chinese), SciQA: ScienceQA, SciQA-I: ScienceQA (Image). * indicates our reimplemented results. Improvement over best represents the relative improvement of TIVE over the best performance among other baseline approaches. Bold and underline fonts indicate the best and second best performance on the task.
+Method
+# Images
+# Instructions
+MME-P
+SEED-I
+MMB
+MMB-CN
+SciQA
+SciQA-I
+POPE
+BLIP-2 [12]
+-
+-
+1293.8
+-
+-
+-
+-
+61.0
+85.3
+InstructBLIP-7B [6]
+-
+1.2M
+-
+-
+36.0
+23.7
+-
+60.5
+-
+Shikra [3]
+-
+5.5M
+-
+-
+58.8
+-
+-
+-
+-
+IDEFICS-80B [10]
+-
+1M
+-
+-
+54.5
+38.1
+-
+-
+-
+Qwen-VL [1]
+-
+50M
+-
+-
+38.2
+7.4
+-
+67.1
+-
+Qwen-VL-Chat [1]
+-
+50M
+1487.5
+-
+60.6
+56.7
+-
+68.2
+-
+InstructionGPT-4 [31]
+-
+0.2K
+463.3
+-
+31.4
+-
+-
+-
+-
+SELF-FILTER [4]
+-
+25K
+955.6
+47.5
+38.5
+-
+59.4
+-
+-
+Backbone model
+LLaVA-1.5 [15]
+349K
+665K
+1510.7
+65.6*
+64.3
+58.3
+69.4*
+66.8
+85.9
+Our experiment
+Random
+37K
+50K
+1314.2
+61.8
+61.8
+55.1
+69.8
+68.1
+84.7
+Length
+39K
+50K
+1288.4
+61.2
+59.0
+52.5
+69.4
+66.9
+81.5
+Perplexity
+37K
+50K
+1295.7
+59.7
+57.4
+49.9
+70.0
+67.9
+84.3
+GraNd [24]
+32K
+50K
+1282.2
+59.7
+61.2
+53.5
+69.8
+68.1
+84.3
+EL2N [24]
+36K
+50K
+1329.4
+27.9
+60.0
+52.8
+69.4
+66.9
+84.5
+TIVE (ours)
+25K
+50K
+1334.8
+62.2
+65.8
+57.4
+71.4
+69.2
+85.9
+Improvement over best
+1.5%
+0.6%
+6.4%
+4.2%
+2.0%
+1.6%
+1.4%
+4.1 Experiment Setup
+Data Pool.
+We follow the settings in Sec. 2 to curate a representative subset of instructions from the LLaVA-1.5 instruction dataset as our data pool. Similar to our empirical study in Sec. 2, our data pool primarily consists of four types of visual instruction data: OE-VQA, MC-VQA, REC, and VC. These tasks essentially encompass most of the classes of instructions within the LLaVA-1.5 original instruction set. We exclude the caption data and textual conversation data because they have been used during language instruction tuning and visual-text alignment pre-training. It’s also proven in Sec. 2 that reducing these two types of instructions causes minimal effect on model performance. In practice, we discover that the proportion of original MC-VQA instructions is too small, which causes bias to our redundancy estimation for each task. To ensure a relatively balanced proportions of task instructions, we use ChatGPT to augment MC-VQA instructions based on randomly sampled OE-VQA instructions. We only synthesize 15000 MC-VQA instruction samples with very low cost (approximately 10 dollars’ cost using ChatGPT API).
+Baselines
+We compare our methods with several baselines for data selection: (1) Random Selection selects data randomly; (2) Instruction Length utilizes length of instruction to determine the importance of an instruction sample; (3) Perplexity computes the perplexity score of an instruction sample to measure its importance; (4) GraNd [24] measures the importance of each sample by the L2-norm of the gradient caused by each sample; (5) EL2N [24] measures the importance of each sample by the L2-norm of the error vector of each sample. The EL2N scores are primarily used for estimating sample importance in image classification tasks. To adapt it for visual instruction tuning, we compute all the error vectors for each token in each sample, and then compute the final EL2N score by averaging norms of all error vectors.
+Evaluation Benchmark.
+To comprehensively evaluate the efficacy of our approach, we evaluate models trained on data subsets selected with different strategies. We evaluate our models on benchmarks which are utilized in our empirical study. We add three other benchmarks for comprehensiveness. We use POPE [13] to evaluate the model’s object hallucination problems, MM-Bench-CN [18] to evaluate the model’s multilingual ability, and ScienceQA [19] in both image-text and text-only setting to evaluate the model’s ability in both multi-modal and uni-modal scenarios. To evaluate the model’s generalization performance across different tasks, we make sure that the evaluation benchmarks have no overlap with the training instruction data.
+Implementation Detail.
+We follow the training settings of LLaVA-1.5 across all experiments. During fine-tuning, the learning rate is set to 2e-5 and the batch size is set to 16. All models are trained for two epochs. The training settings for reference model training are the same as previous settings. We sample 8000 instructions and train the reference model on sampled data for one epoch.
+4.2 Main Results
+We present our main experiments results in Tab. 2.
+Based on the results, we can have the main findings as follows:
+For the traditional data selection approaches used in single-modal classification tasks (GraNd and EL2N), the performance is not ideal across most of the benchmarks. A possible reason is that these approaches tend to select samples with high gradient norm. The= selected samples may contain a significant amount of noise or deviate greatly from the model’s optimization direction, which can have a side effect for the model’s performance.
+For the data selection approaches used in LLM instruction tuning (Length and Perplexity), the performances across several benchmarks overall remain unsatisfactory. We find that these approaches mostly focus on samples that have a high influence on improving the model’s generation ability, which leads to minor enhancement of the model’s visual understanding ability. Also, the proportion of task instructions in selected data is severely imbalanced, which results in a decrease in the final performance.
+We compare our approach with all baselines. It is clear that our approach can achieve consistently promising results across all benchmarks under a limited data setting. With only 50K instruction data, our approach even demonstrates competitive performance compared to the LLaVA-1.5 model trained with 665K instruction data in their original research. Compared to the original LLaVA-1.5 model, with only 7.5% of full data, we can achieve at least 88% performance on all benchmarks, and even surpass or match the performance of LLaVA-1.5 in four benchmarks. These results show that our proposed approach can effectively address the issues of data redundancy within LLaVA-1.5 instructions.
+Furthermore, to assess the transferability of TIVE to other instruction datasets, we evaluate our approach on different visual instruction datasets. We select Vision-Flan [33] as our target dataset, which comprises 191 tasks, with each task containing 1000 samples. Given the large number of tasks in Vision-Flan and the relatively small sample size for each task, we manually group the Vision-Flan task set into 7 tasks and then applied our method for data selection. Our evaluation results are presented in Tab. 3.
+We can observe that our approach can achieve 95% performance compared to the model trained with the original Vision-Flan dataset with only 16.7% of the data. Nevertheless, we find that the performance of our approach on Vision-Flan was inferior to that on LLaVA-1.5. This may be attributed to the excessive diversity of the Vision-Flan dataset, making it challenging to select representative data subsets for each task without compromising performance, leading to greater performance losses.
+Table 3: The performance comparison between TIVE and other data selection approaches using Vision-Flan as the mixed visual instruction set.
+Method
+# Instructions
+SEED-I
+SciQA-I
+POPE
+Baseline
+191K
+58.4
+65.6
+81.7
+TIVE
+30K
+57.4
+65.3
+81.5
+Random
+30K
+56.8
+64.9
+81.1
+Length
+30K
+56.8
+64.4
+81.8
+4.3 More Detailed Analysis
+Effectiveness of Data Value Measurements.
+We conduct a series of ablation studies to validate the efficacy of our proposed data value on both levels. Initially, to verify the effectiveness of the task-level data value, we standardize the weight of all tasks to 1 and then conduct data selection based on instance-level data value within instructions of each task. Subsequently, to verify the effectiveness of the instance-level data value, we calculate task weights based on task-level data value, but select instances within task instructions randomly. We present our results in Tab. 4.
+We discover that data selection based on task value alone or instance value alone can both boost the performance on three benchmarks. And selecting data based on both of the data values achieve the best results than all other baseline methods on all of the benchmarks, which proves the effectiveness of both values.
+Table 4: The ablation of the effectiveness of different data values. Task value and Instance value denote selecting data based on each of the value. Both denotes selecting data considering both values. Neither denotes selecting data randomly.
+Benchmarks
+Ours (Both)
+\neg Instance-level
+\neg Task-level
+Neither
+SciQA-IMG
+69.2
+68.1
+68.2
+67.9
+MM-bench
+65.8
+63.5
+62.7
+60.9
+Model Performance with Different Data Size.
+To explore the trend of model performance as data size changes, we conducted a series of experiments with different sizes of selected data. In all of our experiments, we maintain consistency in the data selection approach as well as in the model training configuration. Our experimental results are presented in Fig. 3(a).
+As we can observe, the model’s performance continuously improves with the increasing amount of data yet, the trend of this enhancement varies across different tasks. The model’s performance on MME-P rapidly increases as the data size increases. However, on MM-bench and SciQA-IMG, the model’s performance increases at first and then stabilizes. A possible reason for this is that MME-P tends to evaluate the model’s ability to recognize a variety of images while the other two benchmarks focus on the model’s general reasoning capability. We also find that the model can maintain a certain level of performance under the minimal data size, indicating that models can acquire basic capability for downstream tasks even with a small amount of data.
+Influence of Different Hyperparameter \lambda .
+To achieve a balanced choice between data effectiveness and data diversity, we introduce a hyperparameter \lambda in the weight score function from Eq. 5. We study the influence of different \lambda on the quality of the final selected data. We set \lambda to different values and evaluate the model’s performance on several benchmarks.
+Fig. 3(b) shows the evaluation results on MME-P, MM-Bench and ScienceQA-Image. We can observe a slight decline in the model’s performance on the MME-P benchmark as \lambda increases, indicating that the MME-P benchmark is highly sensitive to instruction diversity, which is consistent with previous conclusions. On the other hand, the performance on ScienceQA-Image and MM-Bench initially increases with the escalation of \lambda , then shows a decline once the \lambda reaches 0.1 . The results demonstrate that our approach with \lambda=0.1 is an optimal data selection strategy that balances data effectiveness and data diversity for the model’s consistent optimal performance across all downstream tasks.
+Refer to caption
+(a) The ablation of different sizes of selected data.
+Refer to caption
+(b) The ablation of selecting data with different hyperparameter \lambda .
+Figure 3: The results of ablation study about the data size and hyperparameter \lambda .
+5 Related Work
+Visual Instruction Tuning.
+Visual instruction tuning is a crucial part of the construction of MLLMs, which aims to enhance the model’s ability on instruction following. The collection of visual instructions is essential for visual instruction tuning. Early studies often employ LLMs to synthesize visual instructions. MLLMs trained on these instructions demonstrate promising capabilities in visual conversation and instruction following, but fail to achieve satisfactory performance on academic benchmark [8, 26, 22]. Subsequent studies [15, 20, 6] have usually mixed the synthesized visual instructions and instructions from existing academic datasets together as the final instruction data. MLLMs trained on these mixtures of instructions demonstrate exceptional performance in both understanding and generation scenarios. Despite the success, these efforts solely combine all instructions in a simple way, neglecting the potential redundancy within the instructions from different tasks. We investigate the redundancy in existing visual instruction datasets and propose a measurement for data value at both the task level and instance level to reduce redundancy.
+Data Selection for Instruction Tuning.
+With the advancement of LLMs, the significance of data selection has become increasingly prominent due to the high training costs. As for instruction tuning, LIMA [36] is the first to demonstrate that instruction tuning can be accomplished with only a small amount of data, with subsequent efforts focusing on estimating the importance of an instruction sample. The importance estimation is either based on certain prior characteristics (e.g. length, complexity, diversity) [17], or through the similarity of gradient on the validation set of target benchmark [32]. Compared to the data selection approach for language instruction tuning, our approach doesn’t only rely on prior characteristics of texts, but considers the importance of visual instructions from a holistic perspective of both image and text. Compared to LESS [32], our approach doesn’t require data from downstream benchmark, thereby achieving better generalization ability.
+Data Selection for Visual Instruction Tuning.
+Fewer studies have been focusing on data-efficient visual instruction tuning. To the best of our knowledge, there are only two studies currently conducted in this area. Among these studies, InstructionGPT-4 [31] selects high-quality instructions based on several metrics designed in their studies and SELF-FILTER [4] proposes selecting instruction data with higher diversity and difficulty by training a score-net. Compared to these studies, We are the first to study data selection for a highly complex mixture of visual instructions, which provides much better results than the candidate datasets from these studies. To handle such complex visual instructions, we propose a gradient-based approach to estimate data value for data selection. With our approach, we accomplish better results compared to previous studies on data selection for visual instruction tuning with our selected data.
+6 Conclusion
+In this work, we focused on the redundancy issue within a mixture of visual instruction datasets that have been widely used for fine-tuning MLLMs. Through our empirical studies, we found that a significant redundancy exists in the mixed visual instruction datasets, with varying redundancy degrees across different task instructions. To eliminate redundancy, we designed a novel method namely TIVE, which first estimates data value on both instance-level and task-level, then determines the instruction task proportion and selects representative instances to compose a smaller visual instruction subset for training.
+Experimental results indicated that, with the help of our data selection method, using only about 7.5% data can achieve comparable performance as the full-data fine-tuned model across seven benchmarks, even surpassing it on four of the benchmarks.
+References
+[1]
+Bai, J., Bai, S., Yang, S., Wang, S., Tan, S., Wang, P., Lin, J., Zhou, C., Zhou, J.: Qwen-vl: A frontier large vision-language model with versatile abilities. arXiv preprint arXiv:2308.12966 (2023)
+[2]
+Brown, T.B., Mann, B., Ryder, N., Subbiah, M., Kaplan, J., Dhariwal, P., Neelakantan, A., Shyam, P., Sastry, G., Askell, A., Agarwal, S., Herbert-Voss, A., Krueger, G., Henighan, T., Child, R., Ramesh, A., Ziegler, D.M., Wu, J., Winter, C., Hesse, C., Chen, M., Sigler, E., Litwin, M., Gray, S., Chess, B., Clark, J., Berner, C., McCandlish, S., Radford, A., Sutskever, I., Amodei, D.: Language models are few-shot learners. ArXiv abs/2005.14165 (2020)
+[3]
+Chen, K., Zhang, Z., Zeng, W., Zhang, R., Zhu, F., Zhao, R.: Shikra: Unleashing multimodal llm’s referential dialogue magic. arXiv preprint arXiv:2306.15195 (2023)
+[4]
+Chen, R., Wu, Y., Chen, L., Liu, G., He, Q., Xiong, T., Liu, C., Guo, J., Huang, H.: Your vision-language model itself is a strong filter: Towards high-quality instruction tuning with data selection. arXiv preprint arXiv:2402.12501 (2024)
+[5]
+Chiang, W.L., Li, Z., Lin, Z., Sheng, Y., Wu, Z., Zhang, H., Zheng, L., Zhuang, S., Zhuang, Y., Gonzalez, J.E., Stoica, I., Xing, E.P.: Vicuna: An open-source chatbot impressing gpt-4 with 90%* chatgpt quality (March 2023), https://lmsys.org/blog/2023-03-30-vicuna/
+[6]
+Dai, W., Li, J., Li, D., Tiong, A.M.H., Zhao, J., Wang, W., Li, B.A., Fung, P., Hoi, S.C.H.: Instructblip: Towards general-purpose vision-language models with instruction tuning. ArXiv abs/2305.06500 (2023)
+[7]
+Fu, C., Chen, P., Shen, Y., Qin, Y., Zhang, M., Lin, X., Yang, J., Zheng, X., Li, K., Sun, X., et al.: Mme: A comprehensive evaluation benchmark for multimodal large language models. arXiv preprint arXiv:2306.13394 (2023)
+[8]
+Goyal, Y., Khot, T., Summers-Stay, D., Batra, D., Parikh, D.: Making the v in vqa matter: Elevating the role of image understanding in visual question answering. In: Proceedings of the IEEE conference on computer vision and pattern recognition. pp. 6904–6913 (2017)
+[9]
+Kazemzadeh, S., Ordonez, V., Matten, M., Berg, T.: Referitgame: Referring to objects in photographs of natural scenes. In: Proceedings of the 2014 conference on empirical methods in natural language processing (EMNLP). pp. 787–798 (2014)
+[10]
+Laurençon, H., Saulnier, L., Tronchon, L., Bekman, S., Singh, A., Lozhkov, A., Wang, T., Karamcheti, S., Rush, A., Kiela, D., et al.: Obelics: An open web-scale filtered dataset of interleaved image-text documents. Advances in Neural Information Processing Systems 36 (2024)
+[11]
+Li, B., Wang, R., Wang, G., Ge, Y., Ge, Y., Shan, Y.: Seed-bench: Benchmarking multimodal llms with generative comprehension. arXiv preprint arXiv:2307.16125 (2023)
+[12]
+Li, J., Li, D., Savarese, S., Hoi, S.: Blip-2: Bootstrapping language-image pre-training with frozen image encoders and large language models. arXiv preprint arXiv:2301.12597 (2023)
+[13]
+Li, Y., Du, Y., Zhou, K., Wang, J., Zhao, W.X., Wen, J.R.: Evaluating object hallucination in large vision-language models. arXiv preprint arXiv:2305.10355 (2023)
+[14]
+Lin, T.Y., Maire, M., Belongie, S., Hays, J., Perona, P., Ramanan, D., Dollár, P., Zitnick, C.L.: Microsoft coco: Common objects in context. In: Computer Vision–ECCV 2014: 13th European Conference, Zurich, Switzerland, September 6-12, 2014, Proceedings, Part V 13. pp. 740–755. Springer (2014)
+[15]
+Liu, H., Li, C., Li, Y., Lee, Y.J.: Improved baselines with visual instruction tuning. arXiv preprint arXiv:2310.03744 (2023)
+[16]
+Liu, H., Li, C., Wu, Q., Lee, Y.J.: Visual instruction tuning. ArXiv abs/2304.08485 (2023)
+[17]
+Liu, W., Zeng, W., He, K., Jiang, Y., He, J.: What makes good data for alignment? a comprehensive study of automatic data selection in instruction tuning. arXiv preprint arXiv:2312.15685 (2023)
+[18]
+Liu, Y., Duan, H., Zhang, Y., Li, B., Zhang, S., Zhao, W., Yuan, Y., Wang, J., He, C., Liu, Z., et al.: Mmbench: Is your multi-modal model an all-around player? arXiv preprint arXiv:2307.06281 (2023)
+[19]
+Lu, P., Mishra, S., Xia, T., Qiu, L., Chang, K.W., Zhu, S.C., Tafjord, O., Clark, P., Kalyan, A.: Learn to explain: Multimodal reasoning via thought chains for science question answering. Advances in Neural Information Processing Systems 35, 2507–2521 (2022)
+[20]
+Luo, G., Zhou, Y., Ren, T., Chen, S., Sun, X., Ji, R.: Cheap and quick: Efficient vision-language instruction tuning for large language models. Advances in Neural Information Processing Systems 36 (2024)
+[21]
+Mao, J., Huang, J., Toshev, A., Camburu, O., Yuille, A.L., Murphy, K.: Generation and comprehension of unambiguous object descriptions. In: Proceedings of the IEEE conference on computer vision and pattern recognition. pp. 11–20 (2016)
+[22]
+Marino, K., Rastegari, M., Farhadi, A., Mottaghi, R.: Ok-vqa: A visual question answering benchmark requiring external knowledge. In: Proceedings of the IEEE/cvf conference on computer vision and pattern recognition. pp. 3195–3204 (2019)
+[23]
+Ouyang, L., Wu, J., Jiang, X., Almeida, D., Wainwright, C.L., Mishkin, P., Zhang, C., Agarwal, S., Slama, K., Ray, A., Schulman, J., Hilton, J., Kelton, F., Miller, L.E., Simens, M., Askell, A., Welinder, P., Christiano, P.F., Leike, J., Lowe, R.J.: Training language models to follow instructions with human feedback. ArXiv abs/2203.02155 (2022)
+[24]
+Paul, M., Ganguli, S., Dziugaite, G.K.: Deep learning on a data diet: Finding important examples early in training. Advances in Neural Information Processing Systems 34, 20596–20607 (2021)
+[25]
+Radford, A., Kim, J.W., Hallacy, C., Ramesh, A., Goh, G., Agarwal, S., Sastry, G., Askell, A., Mishkin, P., Clark, J., et al.: Learning transferable visual models from natural language supervision. In: International conference on machine learning. pp. 8748–8763. PMLR (2021)
+[26]
+Schwenk, D., Khandelwal, A., Clark, C., Marino, K., Mottaghi, R.: A-okvqa: A benchmark for visual question answering using world knowledge. In: European Conference on Computer Vision. pp. 146–162. Springer (2022)
+[27]
+Sharma, P., Ding, N., Goodman, S., Soricut, R.: Conceptual captions: A cleaned, hypernymed, image alt-text dataset for automatic image captioning. In: Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers). pp. 2556–2565 (2018)
+[28]
+Tan, H., Wu, S., Du, F., Chen, Y., Wang, Z., Wang, F., Qi, X.: Data pruning via moving-one-sample-out. Advances in Neural Information Processing Systems 36 (2024)
+[29]
+Toneva, M., Sordoni, A., Combes, R.T.d., Trischler, A., Bengio, Y., Gordon, G.J.: An empirical study of example forgetting during deep neural network learning. arXiv preprint arXiv:1812.05159 (2018)
+[30]
+Touvron, H., Lavril, T., Izacard, G., Martinet, X., Lachaux, M.A., Lacroix, T., Rozière, B., Goyal, N., Hambro, E., Azhar, F., Rodriguez, A., Joulin, A., Grave, E., Lample, G.: Llama: Open and efficient foundation language models. ArXiv abs/2302.13971 (2023)
+[31]
+Wei, L., Jiang, Z., Huang, W., Sun, L.: Instructiongpt-4: A 200-instruction paradigm for fine-tuning minigpt-4. arXiv preprint arXiv:2308.12067 (2023)
+[32]
+Xia, M., Malladi, S., Gururangan, S., Arora, S., Chen, D.: Less: Selecting influential data for targeted instruction tuning. arXiv preprint arXiv:2402.04333 (2024)
+[33]
+Xu, Z., Feng, C., Shao, R., Ashby, T., Shen, Y., Jin, D., Cheng, Y., Wang, Q., Huang, L.: Vision-flan: Scaling human-labeled tasks in visual instruction tuning. arXiv preprint arXiv:2402.11690 (2024)
+[34]
+Zhao, W.X., Zhou, K., Li, J., Tang, T., Wang, X., Hou, Y., Min, Y., Zhang, B., Zhang, J., Dong, Z., et al.: A survey of large language models. arXiv preprint arXiv:2303.18223 (2023)
+[35]
+Zheng, L., Chiang, W.L., Sheng, Y., Zhuang, S., Wu, Z., Zhuang, Y., Lin, Z., Li, Z., Li, D., Xing, E.P., Zhang, H., Gonzalez, J.E., Stoica, I.: Judging llm-as-a-judge with mt-bench and chatbot arena (2023)
+[36]
+Zhou, C., Liu, P., Xu, P., Iyer, S., Sun, J., Mao, Y., Ma, X., Efrat, A., Yu, P., Yu, L., et al.: Lima: Less is more for alignment. Advances in Neural Information Processing Systems 36 (2024)
+[37]
+Zhu, D., Chen, J., Shen, X., Li, X., Elhoseiny, M.: Minigpt-4: Enhancing vision-language understanding with advanced large language models. ArXiv abs/2304.10592 (2023)
+Appendix 0.A System Prompts for Data Augmentation
+To balance the task proportion in the visual instruction dataset pool, we synthesize a small amount of MC-VQA task instructions via ChatGPT based on existing VQA datasets. We present our used prompts used as follows:
+Refer to caption
+Figure 4: The prompt used for instruction synthesis via ChatGPT.
+Appendix 0.B Visualization of Task Instance Gradients
+We present the visualization of gradient vectors for instances from three tasks, respectively. For each task, we mark the instances with the top 20% highest instance-level data value with a different color (green). The results are presented in Fig. 5.
+Refer to caption
+Refer to caption
+Refer to caption
+Figure 5: The visualization results of gradient vectors for instances from three tasks. Green points denote the instances with the top 20% highest instance-level value.
+Based on the results, we can see that
+for tasks with higher data value, their instances with higher data value will have a more concentrated distribution. The reason is that the average gradients for the high-value tasks are more representative for model’s optimization direction, which results in a clear boundary between effective data points (more similar to the average gradients) and relatively less effective data points.
+Appendix 0.C Calculated Task Proportion
+We present the task proportion calculated via the task-level data value for LLaVA-1.5 instructions in Tab. 5.
+Table 5: Statistics of calculated task proportion.
+Task
+MC-VQA
+OE-VQA
+REC
+VC
+proportion
+57.9%
+25.8%
+7.9%
+8.4%
+We find that tasks which require precise answers to visually related questions have a relatively higher proportions in the final selected subset. The potential reason is that these tasks often require models to possess a higher level of visual reasoning ability, which contributes more to the enhancement of the model’s performance on downstream tasks.
+◄
+ar5iv homepage
+Feeling
+lucky?
+Conversion
+report
+Report
+an issue
+View original
+on arXiv►
+Copyright
+Privacy Policy
+Generated on Fri Apr 5 15:59:41 2024 by LaTeXML Mascot Sammy

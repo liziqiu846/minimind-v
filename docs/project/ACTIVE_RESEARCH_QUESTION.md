@@ -17,10 +17,11 @@ Mission Question 不得由 Agent 自行改变。
 
 当前 active question 是：
 
-> 是否存在一个由 architecture 与正式理论共同唯一固定、无需 layer/rank/proxy
-> sweep 的 frozen-feature readout，能够先裁决当前视觉表示是否含有 held-out
-> rotation 所需信号，并区分“信号在 frozen representation 中缺失”与“信号存在但
-> 下游 autoregressive 模型未吸收/未迁移”？
+> 是否存在由数据发布者预先定义的 crossed multimodal schema：同一
+> image/acquisition unit 系统地对应多个 text/task factors，从而在固定视觉来源、
+> 质量、难度和 output format 后，唯一构造 baseline、complementary、matched
+> redundancy 与 held-out crossed cells，用 generative VLM prediction 裁决跨模态
+> 组合覆盖？
 
 这一问题是当前子问题，不是永久冻结的唯一主线。Agent 可以依据可靠实验、
 反例或权威文献自主切换 Active Research Question。
@@ -348,8 +349,38 @@ Agent 可以自主改变：
 - **What remains open from the previous question**: frozen representation 中
   signal 是否存在、downstream absorption/transfer、objective mismatch、encoder
   limitation 与 independently justified decodability family 全部开放。
-- **Status**: ACTIVE_DATA_INTERFACE_GATE；`experiments/plans/COVER-01_round1.md`
-  已由当前 plan commit 冻结。Round 1 只执行 primary-source、official dataset、
-  data-lineage 与 local-interface audit，不运行 checkpoint 或 training，不访问
-  final confirmation，也不把 random cluster、embedding neighborhood、事后
-  benchmark category 或 sample count 称为 controlled coverage。
+- **Status**: DEMOTED_AS_ACTIVE；failure level=`BRIDGE_REJECTED`。冻结 plan 后
+  搜索 442 raw records、380 unique titles，完整核查 14 篇决定性 primary sources、
+  official MiniMind/ALLaVA schemas 与 exact local artifact。169/169 保存的官方
+  caption samples 可通过 assistant text 映射到本地行，说明 lineage 并非整体不可
+  恢复；但 broad source/task labels 与 acquisition、task、style、quality、difficulty、
+  output format 和 target choice 同变，direct generative studies 还依赖
+  ratio/category/target search，最干净 control 仅为 CLIP。只否定当前
+  authoritative-broad-label-to-local-single-factor bridge，不否定 coverage
+  mechanism。
+
+### 2026-08-07｜CROSSFACT-01 authoritative crossed-cell gate
+
+- **Question**: 是否存在由发布者预先定义、可版本化重建的同一
+  image/acquisition unit × multiple text/task factors 的 crossed schema，使
+  baseline、complementary、matched redundancy 与一个 held-out crossed cell 能在
+  outcome 前唯一冻结，并在 generative VLM 上形成单因素 prediction？
+- **Why the old question was insufficient**: `COVER-01` 证明 LAION/VFLAN 与 broad
+  task/domain labels 不是正交 coverage factor；即使 sample source 能部分恢复，
+  source、任务、内容、caption style、quality、difficulty 与 output schema 仍一起
+  变化。继续选择 mixture/domain/target 会重复已经失败的 analyst-choice route。
+- **Evidence / literature origin**: `COVER-01` 的 14-source matrix 中，
+  Vision-Flan 提供 direct generative task-diversity 信号但混入 task/output/difficulty，
+  DomainNet 提供 clean crossed domain/class control 但只适用于 CLIP；官方 ALLaVA
+  又表明同一 images 可跨 caption/instruction sources 复用。三者共同指向
+  within-unit crossed schema 这一尚未被当前 gate 检验的更窄缺口。
+- **Mission relation**: 在固定视觉 acquisition 后缺失某些 image×task/text cells，
+  是单模态 LLM 不具有的跨模态组合覆盖问题；若成立可导出 crossed-cell sampling、
+  factor-balanced curriculum 或 targeted task generation，若失败则精确否定当前
+  factorial bridge 而不否定组合泛化机制。
+- **What remains open from the previous question**: broad domain/source coverage、
+  task diversity、source-specific transfer、ALLaVA 全量 lineage 与 future formal
+  generative coverage theorem 均开放。
+- **Status**: ACTIVE_PLAN_REQUIRED；在独立 immutable plan 提交前，不执行新的
+  primary-source search、schema selection、local cell construction、checkpoint
+  inference 或 training。

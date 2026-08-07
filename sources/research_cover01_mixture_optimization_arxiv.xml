@@ -1,0 +1,2010 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/ZeA+vqB4tf9lVxrkVyOJP+lVcxM</id>
+  <title>arXiv Query: search_query=(all:multimodal OR all:"vision language") AND (all:"mixture optimization" OR all:"data selection" OR all:"mixture weights") AND (all:pretraining OR all:training)&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-08-07T06:59:33Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=(all:multimodal+OR+all:%22vision+language%22)+AND+((all:%22mixture+optimization%22+OR+(all:%22data+selection%22+OR+all:%22mixture+weights%22))+AND+(all:pretraining+OR+all:training))&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>79</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2501.00654v4</id>
+    <title>ICONS: Influence Consensus for Vision-Language Data Selection</title>
+    <updated>2025-12-28T01:12:45Z</updated>
+    <link href="https://arxiv.org/abs/2501.00654v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.00654v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Training vision-language models via instruction tuning relies on large data mixtures spanning diverse tasks and domains, yet these mixtures frequently include redundant information that increases computational costs without proportional gains. Existing methods typically rely on task-agnostic heuristics to estimate data importance, limiting their effectiveness across tasks. We introduce ICONS, a gradient-based Influence CONsensus approach for vision-language data Selection. Our method leverages first-order training dynamics to estimate each example's influence on validation performance, then aggregates these estimates across tasks via majority voting. This cross-task consensus identifies consistently valuable data points while mitigating score calibration and outlier sensitivity, enabling robust and scalable data selection for diverse multitask mixtures. Models trained on our selected 20% data subset from LLAVA-665K (respectively: from CAMBRIAN-7M, from VISION-FLAN-186K) retain 98.6% (respectively: 98.8%, 99.8%) of full-dataset performance. We demonstrate that our selected data generalizes to unseen tasks and model architectures, and release three compact subsets LLAVA-ICONS-133K, CAMBRIAN-ICONS-1.4M, and VISION-FLAN-ICONS-37K for efficient vision-language model development.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-31T21:33:38Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xindi Wu</name>
+    </author>
+    <author>
+      <name>Mengzhou Xia</name>
+    </author>
+    <author>
+      <name>Rulin Shao</name>
+    </author>
+    <author>
+      <name>Zhiwei Deng</name>
+    </author>
+    <author>
+      <name>Pang Wei Koh</name>
+    </author>
+    <author>
+      <name>Olga Russakovsky</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.09715v2</id>
+    <title>Does the Question Really Matter? Training-Free Data Selection for Vision-Language SFT</title>
+    <updated>2026-06-10T06:53:56Z</updated>
+    <link href="https://arxiv.org/abs/2603.09715v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.09715v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Visual instruction tuning is crucial for improving vision-language large models (VLLMs). However, many samples can be solved via linguistic patterns or common-sense shortcuts, without genuine cross-modal reasoning, limiting the effectiveness of multimodal learning. Prior data selection methods often rely on costly proxy model training and focus on difficulty or diversity, failing to capture a sample's true contribution to vision-language joint reasoning. In this paper, we propose CVS, a training-free data selection method based on the insight that, for high-quality multimodal samples, introducing the question should substantially alter the model's assessment of answer validity given an image. CVS leverages a frozen VLLM as an evaluator and measures the discrepancy in answer validity with and without conditioning on the question, enabling the identification of samples that require vision-language joint reasoning while filtering semantic-conflict noise. Experiments on Vision-Flan and The Cauldron show that CVS achieves solid performance across datasets. On Vision-Flan, CVS outperforms full-data training by 3.5% and 4.8% using only 10% and 15% of the data, respectively, and remains robust on the highly heterogeneous Cauldron dataset. Moreover, CVS reduces computational cost by 17.3% and 44.4% compared to COINCIDE and XMAS.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-10T14:23:38Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Peng Sun</name>
+    </author>
+    <author>
+      <name>Yi Yang</name>
+    </author>
+    <author>
+      <name>Huawen Shen</name>
+    </author>
+    <author>
+      <name>Yi Ban</name>
+    </author>
+    <author>
+      <name>Tianfan Fu</name>
+    </author>
+    <author>
+      <name>Yanbo Wang</name>
+    </author>
+    <author>
+      <name>Yuqiang Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.04937v1</id>
+    <title>Linear Model Merging Unlocks Simple and Scalable Multimodal Data Mixture Optimization</title>
+    <updated>2026-02-04T16:06:39Z</updated>
+    <link href="https://arxiv.org/abs/2602.04937v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.04937v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Selecting the best data mixture is critical for successful Supervised Fine-Tuning (SFT) of Multimodal Large Language Models. However, determining the optimal mixture weights across multiple domain-specific datasets remains a significant bottleneck due to the combinatorial search space and the high cost associated with even a single training run. This is the so-called Data Mixture Optimization (DMO) problem. On the other hand, model merging unifies domain-specific experts through parameter interpolation. This strategy is efficient, as it only requires a single training run per domain, yet oftentimes leads to suboptimal models. In this work, we take the best of both worlds, studying model merging as an efficient strategy for estimating the performance of different data mixtures. We train domain-specific multimodal experts and evaluate their weighted parameter-space combinations to estimate the efficacy of corresponding data mixtures. We conduct extensive experiments on 14 multimodal benchmarks, and empirically demonstrate that the merged proxy models exhibit a high rank correlation with models trained on actual data mixtures. This decouples the search for optimal mixtures from the resource-intensive training process, thereby providing a scalable and efficient strategy for navigating the complex landscape of mixture weights. Code is publicly available at https://github.com/BerasiDavide/mLLMs_merging_4_DMO.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-04T16:06:39Z</published>
+    <arxiv:comment>Preprint</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Davide Berasi</name>
+    </author>
+    <author>
+      <name>Matteo Farina</name>
+    </author>
+    <author>
+      <name>Massimiliano Mancini</name>
+    </author>
+    <author>
+      <name>Elisa Ricci</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.11636v1</id>
+    <title>ScalSelect: Scalable Training-Free Multimodal Data Selection for Efficient Visual Instruction Tuning</title>
+    <updated>2026-02-12T06:38:49Z</updated>
+    <link href="https://arxiv.org/abs/2602.11636v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.11636v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large-scale Visual Instruction Tuning (VIT) has become a key paradigm for advancing the performance of vision-language models (VLMs) across various multimodal tasks. However, training on the large-scale datasets is computationally expensive and inefficient due to redundancy in the data, which motivates the need for multimodal data selection to improve training efficiency. Existing data selection methods for VIT either require costly training or gradient computation. Training-free alternatives often depend on proxy models or datasets, instruction-agnostic representations, and pairwise similarity with quadratic complexity, limiting scalability and representation fidelity. In this work, we propose ScalSelect, a scalable training-free multimodal data selection method with linear-time complexity with respect to the number of samples, eliminating the need for external models or auxiliary datasets. ScalSelect first constructs sample representations by extracting visual features most attended by instruction tokens in the target VLM, capturing instruction-relevant information. It then identifies samples whose representations best approximate the dominant subspace of the full dataset representations, enabling scalable importance scoring without pairwise comparisons. Extensive experiments across multiple VLMs, datasets, and selection budgets demonstrate that ScalSelect achieves over 97.5% of the performance of training on the full dataset using only 16% of the data, and even outperforms full-data training in some settings. The code is available at \href{https://github.com/ChangtiWu/ScalSelect}{ScalSelect}.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-12T06:38:49Z</published>
+    <arxiv:comment>The code is available at \href{https://github.com/ChangtiWu/ScalSelect}{ScalSelect}</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Changti Wu</name>
+    </author>
+    <author>
+      <name>Jiahuai Mao</name>
+    </author>
+    <author>
+      <name>Yuzhuo Miao</name>
+    </author>
+    <author>
+      <name>Shijie Lian</name>
+    </author>
+    <author>
+      <name>Bin Yu</name>
+    </author>
+    <author>
+      <name>Xiaopeng Lin</name>
+    </author>
+    <author>
+      <name>Cong Huang</name>
+    </author>
+    <author>
+      <name>Lei Zhang</name>
+    </author>
+    <author>
+      <name>Kai Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.10995v2</id>
+    <title>Concept-skill Transferability-based Data Selection for Large Vision-Language Models</title>
+    <updated>2024-10-02T17:20:28Z</updated>
+    <link href="https://arxiv.org/abs/2406.10995v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.10995v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Instruction tuning, or supervised finetuning on extensive task-specific data, is necessary for Large Vision-Language Models (LVLMs) to generalize well across a broad range of vision-language (VL) tasks. However, training on large VL datasets can become prohibitively expensive. In this work, we introduce COINCIDE, an effective and scalable data selection technique that uses a small model as a reference model to select visual instruction tuning data for efficient finetuning of a target LVLM, focusing on diversity and transferability. Specifically, we cluster the training data using internal activations from a small model, which identifies VL concept-skill compositions needed by a target LVLM. We then sample data from these diverse clusters by considering their density and transferability, or the ability to transfer well to other concept-skill compositions. This approach ensures the diversity of these compositions, which is vital for LVLM generalization. Extensive experiments demonstrate that COINCIDE achieves superior performance and data selection efficiency against 8 strong baselines on two distinct datasets: LLaVA-1.5 and Vision-Flan. Using only 20% of the LLaVA-1.5 dataset, COINCIDE achieves performance comparable to the LVLM finetuned on the whole dataset, with 70% reduction of the wall-clock running time. On the Vision-Flan dataset, our method achieves superior results with only 16.7% of the training data.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-16T16:15:20Z</published>
+    <arxiv:comment>EMNLP 2024</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jaewoo Lee</name>
+    </author>
+    <author>
+      <name>Boyang Li</name>
+    </author>
+    <author>
+      <name>Sung Ju Hwang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.05251v1</id>
+    <title>TADS: Task-Aware Data Selection for Multi-Task Multimodal Pre-Training</title>
+    <updated>2026-02-05T03:08:45Z</updated>
+    <link href="https://arxiv.org/abs/2602.05251v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.05251v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large-scale multimodal pre-trained models like CLIP rely heavily on high-quality training data, yet raw web-crawled datasets are often noisy, misaligned, and redundant, leading to inefficient training and suboptimal generalization. Existing data selection methods are either heuristic-based, suffering from bias and limited diversity, or data-driven but task-agnostic, failing to optimize for multi-task scenarios. To address these gaps, we introduce TADS (Task-Aware Data Selection), a novel framework for multi-task multimodal pre-training that integrates Intrinsic Quality, Task Relevance, and Distributional Diversity into a learnable value function. TADS employs a comprehensive quality assessment system with unimodal and cross-modal operators, quantifies task relevance via interpretable similarity vectors, and optimizes diversity through cluster-based weighting. A feedback-driven meta-learning mechanism adaptively refines the selection strategy based on proxy model performance across multiple downstream tasks. Experiments on CC12M demonstrate that TADS achieves superior zero-shot performance on benchmarks like ImageNet, CIFAR-100, MS-COCO, and Flickr30K, using only 36% of the data while outperforming baselines by an average of 1.0%. This highlights that TADS significantly enhances data efficiency by curating a high-utility subset that yields a much higher performance ceiling within the same computational constraints.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-05T03:08:45Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Guanjie Cheng</name>
+    </author>
+    <author>
+      <name>Boyi Li</name>
+    </author>
+    <author>
+      <name>Lingyu Sun</name>
+    </author>
+    <author>
+      <name>Mengying Zhu</name>
+    </author>
+    <author>
+      <name>Yangyang Wu</name>
+    </author>
+    <author>
+      <name>Xinkui Zhao</name>
+    </author>
+    <author>
+      <name>Shuiguang Deng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.15485v1</id>
+    <title>Diffusion models recover accurate mixture weights despite score function insensitivity</title>
+    <updated>2026-07-16T22:16:27Z</updated>
+    <link href="https://arxiv.org/abs/2607.15485v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.15485v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Score-based generative models exhibit a puzzling behavior: they often appear to cover all modes of a target multimodal distribution and yet may fail to learn the correct relative mode amplitudes, which can be interpreted as mixture weights. We resolve this apparent paradox by relating the diffusion score matching (DSM) loss to the error in estimating mixture weights from generated samples. We show that, even when the target score is insensitive to mixture weights, generated samples can recover the weights accurately if the scores at intermediate noise levels are informative about the weights. Accordingly, we define the diffusion score sensitivity index (DSSI) as the variation in the DSM loss relative to changes in a parameter. We then show that the DSSI governs the accuracy with which the parameter of the target distribution can be estimated from generated samples. For Gaussian mixtures in arbitrary dimensions, we prove that the mixture weight estimation errors are on the same order as the DSM loss under mild conditions. Empirically, we show the emergence of sensitivity during the noising process of benchmark data distributions under typical noise schedules, and that these sensitivity values predict how well a well-trained model recovers mixture weights. Furthermore, we show that the choice of noise schedule can reduce diffusion sensitivity, leading to mode amplification. Although we focus on mixture weights, the proposed sensitivity framework governs the recovery of any qualitative parameter of the target distribution.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-16T22:16:27Z</published>
+    <arxiv:comment>37 pages, 7 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Andrew Dennehy</name>
+    </author>
+    <author>
+      <name>Ramchandran Muthukumar</name>
+    </author>
+    <author>
+      <name>Rebecca Willett</name>
+    </author>
+    <author>
+      <name>Nisha Chandramoorthy</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.12119v4</id>
+    <title>PRISM: Self-Pruning Intrinsic Selection Method for Training-Free Multimodal Data Selection</title>
+    <updated>2026-05-29T11:31:58Z</updated>
+    <link href="https://arxiv.org/abs/2502.12119v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.12119v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Visual instruction tuning adapts pre-trained Multimodal Large Language Models (MLLMs) to follow human instructions for real-world applications. However, the rapid growth of these datasets introduces significant redundancy, leading to increased computational costs. Existing methods for selecting instruction data aim to prune this redundancy, but predominantly rely on computationally demanding techniques such as proxy-based inference or training-based metrics. Consequently, the substantial computational costs incurred by these selection processes often exacerbate the very efficiency bottlenecks they are intended to resolve, posing a significant challenge to the scalable and effective tuning of MLLMs. To address this challenge, we first identify a critical, yet previously overlooked, factor: the anisotropy inherent in visual feature distributions. We find that this anisotropy induces a \textit{Global Semantic Drift}, and overlooking this phenomenon is a key factor limiting the efficiency of current data selection methods. Motivated by this insight, we devise \textbf{PRISM}, the first training-free framework for efficient visual instruction selection. PRISM surgically removes the corrupting influence of global background features by modeling the intrinsic visual semantics via implicit re-centering. Empirically, PRISM reduces the end-to-end time for data selection and model tuning to just 30\% of conventional pipelines. More remarkably, it achieves this efficiency while simultaneously enhancing performance, surpassing models fine-tuned on the full dataset across eight multimodal and three language understanding benchmarks, culminating in a 101.7\% relative improvement over the baseline. The code is available for access via \href{https://github.com/bibisbar/PRISM}{this repository}.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-17T18:43:41Z</published>
+    <arxiv:comment>Accepted to ACL 2026 and selected for the Best Paper list; later desk-rejected due to an inadvertent manual bibliography-editing error. Previous versions are withdrawn due to an inadvertent manual bibliography-editing error; please refer to the latest corrected version</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jinhe Bi</name>
+    </author>
+    <author>
+      <name> Aniri</name>
+    </author>
+    <author>
+      <name>Zengjie Jin</name>
+    </author>
+    <author>
+      <name>Yifan Wang</name>
+    </author>
+    <author>
+      <name>Danqi Yan</name>
+    </author>
+    <author>
+      <name>Wenke Huang</name>
+    </author>
+    <author>
+      <name>Xiaowen Ma</name>
+    </author>
+    <author>
+      <name>Sikuan Yan</name>
+    </author>
+    <author>
+      <name>Artur Hecker</name>
+    </author>
+    <author>
+      <name>Mang Ye</name>
+    </author>
+    <author>
+      <name>Xun Xiao</name>
+    </author>
+    <author>
+      <name>Hinrich Schuetze</name>
+    </author>
+    <author>
+      <name>Volker Tresp</name>
+    </author>
+    <author>
+      <name>Yunpu Ma</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.01454v1</id>
+    <title>Data Selection for Fine-tuning Vision Language Models via Cross Modal Alignment Trajectories</title>
+    <updated>2025-10-01T20:47:29Z</updated>
+    <link href="https://arxiv.org/abs/2510.01454v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.01454v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Data-efficient learning aims to eliminate redundancy in large training datasets by training models on smaller subsets of the most informative examples. While data selection has been extensively explored for vision models and large language models (LLMs), it remains underexplored for Large Vision-Language Models (LVLMs). Notably, none of existing methods can outperform random selection at different subset sizes. In this work, we propose the first principled method for data-efficient instruction tuning of LVLMs. We prove that examples with similar cross-modal attention matrices during instruction tuning have similar gradients. Thus, they influence model parameters in a similar manner and convey the same information to the model during training. Building on this insight, we propose XMAS, which clusters examples based on the trajectories of the top singular values of their attention matrices obtained from fine-tuning a small proxy LVLM. By sampling a balanced subset from these clusters, XMAS effectively removes redundancy in large-scale LVLM training data. Extensive experiments show that XMAS can discard 50% of the LLaVA-665k dataset and 85% of the Vision-Flan dataset while fully preserving performance of LLaVA-1.5-7B on 10 downstream benchmarks and speeding up its training by 1.2x. This is 30% more data reduction compared to the best baseline for LLaVA-665k. The project's website can be found at https://bigml-cs-ucla.github.io/XMAS-project-page/.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-01T20:47:29Z</published>
+    <arxiv:comment>30 pages, 10 figures, 5 tables, link: https://bigml-cs-ucla.github.io/XMAS-project-page/</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Nilay Naharas</name>
+    </author>
+    <author>
+      <name>Dang Nguyen</name>
+    </author>
+    <author>
+      <name>Nesihan Bulut</name>
+    </author>
+    <author>
+      <name>Mohammadhossein Bateni</name>
+    </author>
+    <author>
+      <name>Vahab Mirrokni</name>
+    </author>
+    <author>
+      <name>Baharan Mirzasoleiman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.14198v1</id>
+    <title>MixAtlas: Uncertainty-aware Data Mixture Optimization for Multimodal LLM Midtraining</title>
+    <updated>2026-04-03T04:26:43Z</updated>
+    <link href="https://arxiv.org/abs/2604.14198v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.14198v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Domain reweighting can improve sample efficiency and downstream generalization, but data-mixture optimization for multimodal midtraining remains largely unexplored. Current multimodal training recipes tune mixtures along a single dimension, typically data format or task type. We introduce MixAtlas, a method that produces benchmark-targeted data recipes that can be inspected, adapted, and transferred to new corpora. MixAtlas decomposes the training corpus along two axes: image concepts (10 visual-domain clusters discovered via CLIP embeddings) and task supervision (5 objective types including captioning, OCR, grounding, detection, and VQA). Using small proxy models (Qwen2-0.5B) paired with a Gaussian-process surrogate and GP-UCB acquisition, MixAtlas searches the resulting mixture space with the same proxy budget as regression-based baselines but finds better-performing mixtures. We evaluate on 10 benchmarks spanning visual understanding, document reasoning, and multimodal reasoning. On Qwen2-7B, optimized mixtures improve average performance by 8.5%-17.6% over the strongest baseline; on Qwen2.5-7B, gains are 1.0%-3.3%. Both settings reach baseline-equivalent training loss in up to 2 times fewer steps. Recipes discovered on 0.5B proxies transfer to 7B-scale training across Qwen model families.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-03T04:26:43Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Bingbing Wen</name>
+    </author>
+    <author>
+      <name>Sirajul Salekin</name>
+    </author>
+    <author>
+      <name>Feiyang Kang</name>
+    </author>
+    <author>
+      <name>Bill Howe</name>
+    </author>
+    <author>
+      <name>Lucy Lu Wang</name>
+    </author>
+    <author>
+      <name>Javier Movellan</name>
+    </author>
+    <author>
+      <name>Manjot Bilkhu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.12501v1</id>
+    <title>Your Vision-Language Model Itself Is a Strong Filter: Towards High-Quality Instruction Tuning with Data Selection</title>
+    <updated>2024-02-19T20:08:48Z</updated>
+    <link href="https://arxiv.org/abs/2402.12501v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.12501v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Data selection in instruction tuning emerges as a pivotal process for acquiring high-quality data and training instruction-following large language models (LLMs), but it is still a new and unexplored research area for vision-language models (VLMs). Existing data selection approaches on LLMs either rely on single unreliable scores, or use downstream tasks for selection, which is time-consuming and can lead to potential over-fitting on the chosen evaluation datasets. To address this challenge, we introduce a novel dataset selection method, Self-Filter, that utilizes the VLM itself as a filter. This approach is inspired by the observation that VLMs benefit from training with the most challenging instructions. Self-Filter operates in two stages. In the first stage, we devise a scoring network to evaluate the difficulty of training instructions, which is co-trained with the VLM. In the second stage, we use the trained score net to measure the difficulty of each instruction, select the most challenging samples, and penalize similar samples to encourage diversity. Comprehensive experiments on LLaVA and MiniGPT-4 show that Self-Filter can reach better results compared to full data settings with merely about 15% samples, and can achieve superior performance against competitive baselines.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-19T20:08:48Z</published>
+    <arxiv:comment>9 pages, 3 figures, 4 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Ruibo Chen</name>
+    </author>
+    <author>
+      <name>Yihan Wu</name>
+    </author>
+    <author>
+      <name>Lichang Chen</name>
+    </author>
+    <author>
+      <name>Guodong Liu</name>
+    </author>
+    <author>
+      <name>Qi He</name>
+    </author>
+    <author>
+      <name>Tianyi Xiong</name>
+    </author>
+    <author>
+      <name>Chenxi Liu</name>
+    </author>
+    <author>
+      <name>Junfeng Guo</name>
+    </author>
+    <author>
+      <name>Heng Huang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.26761v2</id>
+    <title>Once-For-All: A Train-Once and Select-Anytime Framework for Multimodal Instruction Tuning</title>
+    <updated>2026-06-04T11:25:43Z</updated>
+    <link href="https://arxiv.org/abs/2605.26761v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.26761v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal instruction tuning is the de facto recipe for adapting vision language models (VLMs), yet instruction data are highly redundant, making data selection critical for training efficiency. Existing methods derive selection signals from a specific model or dataset, so whenever the target model or candidate pool changes, the criteria must be recomputed from scratch at substantial cost. To address this, we propose OFA, a data selection framework that trains a reusable selector once and applies it to any dataset or model without recomputation. OFA clusters multimodal instructions in a frozen CLIP space, derives pseudo labels from the cluster structure, and trains a lightweight selector for only a few epochs; samples on which this selector is least confident are selected as the most informative. Once trained, the frozen selector transfers directly across datasets and model scales. The selector is trained once on LLaVA-665K and applied both to LLaVA-665K itself and, without any retraining, to the unseen Vision-Flan-186K. Selecting only 15% of the data, OFA achieves 98.3% of full data performance across 10 downstream benchmarks; on the smaller Vision-Flan-186K, the transferred selector surpasses full data training by 10.6%, confirming that the learned signal generalizes to datasets never seen during selector training. The same selected subsets benefit VLMs at both Qwen2.5-VL-3B and LLaVA-v1.5-7B without per model recomputation, decoupling selection from the target model. These results demonstrate that a single, transferable selector provides an effective and reusable solution for efficient multimodal instruction tuning.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-26T09:31:20Z</published>
+    <arxiv:comment>15 pages, 6 figures. Mingkang Dong and Hongyi Cai contributed equally to this work. Muxin Pu is the corresponding author</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Mingkang Dong</name>
+    </author>
+    <author>
+      <name>Hongyi Cai</name>
+    </author>
+    <author>
+      <name>Xiwen Lei</name>
+    </author>
+    <author>
+      <name>Jie Li</name>
+    </author>
+    <author>
+      <name>Tao Zhang</name>
+    </author>
+    <author>
+      <name>Muxin Pu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.28058v1</id>
+    <title>Is One-Shot In-Context Learning Helpful for Data Selection in Task-Specific Fine-Tuning of Multimodal LLMs?</title>
+    <updated>2026-03-30T05:48:20Z</updated>
+    <link href="https://arxiv.org/abs/2603.28058v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.28058v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Injecting world knowledge into pretrained multimodal large language models (MLLMs) is essential for domain-specific applications. Task-specific fine-tuning achieves this by tailoring MLLMs to high-quality in-domain data but encounters scalability challenges as datasets grow, necessitating a trade-off between performance and computational overhead. Existing data selection methods rely on additional scoring models or heuristic clustering, failing to concentrate on both data importance and diversity. Moreover, both methods overlook the interplay among training samples. To address these limitations, we propose CLIPPER, a training-free data selection pipeline that separates parameter and world knowledge, and leverages in-context learning to probe model responses to different demonstration-query combinations. CLIPPER identifies coresets that mirror the original dataset's perplexity distribution, preserving critical samples while maintaining diversity. Experiments on two MLLMs and three datasets show that CLIPPER matches full fine-tuning performance with significantly lower costs: Qwen2.5-VL-7B attains 47% data efficiency on VRSBench, and Llama-3.2-11B-Vision-Instruct reduces ScienceQA training time by 37%.</summary>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-30T05:48:20Z</published>
+    <arxiv:comment>Accepted by ICME 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.MM"/>
+    <author>
+      <name>Xiao An</name>
+    </author>
+    <author>
+      <name>Jiaxing Sun</name>
+    </author>
+    <author>
+      <name>Ting Hu</name>
+    </author>
+    <author>
+      <name>Wei He</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.10636v2</id>
+    <title>Adapt-$\infty$: Scalable Continual Multimodal Instruction Tuning via Dynamic Data Selection</title>
+    <updated>2025-03-24T09:17:13Z</updated>
+    <link href="https://arxiv.org/abs/2410.10636v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.10636v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Visual instruction datasets from various distributors are released at different times and often contain a significant number of semantically redundant text-image pairs, depending on their task compositions (i.e., skills) or reference sources. This redundancy greatly limits the efficient deployment of continually adaptable multimodal large language models, hindering their ability to refine existing skills and acquire new competencies over time. We reframe the problem of lifelong Instruction Tuning (LiIT) via data selection, where the model automatically selects beneficial samples to learn from earlier and new datasets based on the current state of acquired knowledge in the model. We propose Adapt-$\infty$, a new multi-way and adaptive data selection approach that dynamically balances sample efficiency and effectiveness during LiIT. We first construct pseudo-skill clusters by grouping gradient-based sample vectors. Next, we select the best-performing data selector for each skill cluster from a pool of selector experts, including our newly proposed scoring function, Image Grounding score. This data selector samples a subset of the most important samples from each skill cluster for training. To prevent the continuous increase in the size of the dataset pool during LiIT, we introduce a cluster-wise permanent data pruning strategy to remove the most semantically redundant samples from each cluster, keeping computational requirements manageable. We validate the effectiveness and efficiency of Adapt-$\infty$ over a sequence of multimodal instruction tuning datasets with various tasks, including (Knowledge) VQA, multilingual, grounding, reasoning, language-only, and multi-image comprehension. Training with samples selected by Adapt-$\infty$ alleviates catastrophic forgetting, especially for rare tasks, and promotes forward transfer across the continuum using only a fraction of the original data.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-14T15:48:09Z</published>
+    <arxiv:comment>First two authors contributed equally. Code: https://github.com/adymaharana/adapt-inf</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Adyasha Maharana</name>
+    </author>
+    <author>
+      <name>Jaehong Yoon</name>
+    </author>
+    <author>
+      <name>Tianlong Chen</name>
+    </author>
+    <author>
+      <name>Mohit Bansal</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.16979v1</id>
+    <title>DOSE: Data Selection for Multi-Modal LLMs via Off-the-Shelf Models</title>
+    <updated>2026-04-18T12:41:06Z</updated>
+    <link href="https://arxiv.org/abs/2604.16979v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.16979v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>High-quality and diverse multimodal data are essential for improving vision-language models (VLMs), yet existing datasets often contain noisy, redundant, and poorly aligned samples. To address these problems, data filtering is commonly used to enhance the efficiency and performance of multimodal learning, but it introduces extra computational cost because filtering models are usually trained on the same data they are meant to screen. To reduce this cost, we study DOSE, which explores whether off-the-shelf pretrained models that have never seen the target data can be used to select training samples for larger and stronger multimodal models without any task-specific training. Even without fine-tuning, these models can effectively assess text quality and image-text alignment to guide data selection. Based on this, we build a joint quality-alignment distribution and apply adaptive weighted sampling to select informative samples while maintaining long-tail diversity. This approach enhances data diversity, enabling models trained on DOSE-filtered data to match or surpass those trained on the full dataset on standard VQA and math benchmarks. Extensive experiments demonstrate its effectiveness, efficiency, and scalability.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-18T12:41:06Z</published>
+    <arxiv:comment>10 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Biao Wu</name>
+    </author>
+    <author>
+      <name>Yiwu Zhong</name>
+    </author>
+    <author>
+      <name>Meng Fang</name>
+    </author>
+    <author>
+      <name>Ling Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.07488v1</id>
+    <title>Efficient Data Selection for Multimodal Models via Incremental Optimization Utility</title>
+    <updated>2026-05-08T09:28:26Z</updated>
+    <link href="https://arxiv.org/abs/2605.07488v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.07488v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The scaling of Large Multimodal Models (LMMs) is constrained by the quality-quantity trade-off inherent in synthetic data. Previous approaches, such as LLM-as-a-Judge, have proven their effectiveness in addressing this but suffer from prohibitive computational costs and lack of interpretability. To bridge this gap, we propose One-Step-Train (OST), a framework that reformulates data selection as an incremental optimization utility ranking problem. Instead of relying on semantic heuristics, OST estimates the marginal utility of each sample via a simulated single-step update on a lightweight proxy. Experiments on the Qwen series across multimodal mathematical reasoning benchmarks demonstrate that OST achieves Pareto-optimal efficiency. By selecting the top-50 subset, OST reduces training costs by 43% (and total time consumption by 17) while surpassing the strong LLM-as-a-Judge baseline by 1.8 points. Furthermore, under a fixed compute budget, our method using only the top-20 subset achieves a 5.6 point gain over LLM-as-a-Judge, improves upon heuristic scoring baselines like DEITA, and outperforms the Full-SFT baseline by 8.8 points. Notably, while Full-SFT suffers from performance degradation due to noise, our optimization-grounded approach effectively identifies toxic samples, successfully reversing the negative transfer frequently observed in complex reasoning tasks.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-08T09:28:26Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Jinhao Jing</name>
+    </author>
+    <author>
+      <name>Qiannian Zhao</name>
+    </author>
+    <author>
+      <name>Chao Huang</name>
+    </author>
+    <author>
+      <name>Zhan Su</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.23611v1</id>
+    <title>Data Selection Through Iterative Self-Filtering for Vision-Language Settings</title>
+    <updated>2026-06-22T17:11:15Z</updated>
+    <link href="https://arxiv.org/abs/2606.23611v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.23611v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The availability of large amounts of clean data is paramount to training neural networks. However, at large scales, manual oversight is impractical, resulting in sizeable datasets that can be very noisy. Attempts to mitigate this obstacle to producing performant vision-language models have so far involved heuristics, curated reference datasets, and using pre-trained models. Here we propose a novel, bootstrapped method in which a CLIP model is trained on an evolving, self-selected dataset. This evolving dataset constitutes a balance of filtered, highly probable clean samples as well as diverse samples from the entire distribution. Our proposed Self-Filtering method iterates between training the model and selecting a subsequently improved data mixture. Training on vision-language datasets filtered by the proposed approach improves downstream performance without the need for additional data or pre-trained models.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-22T17:11:15Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Andrei Liviu Nicolicioiu</name>
+    </author>
+    <author>
+      <name>Sarvjeet Singh Ghotra</name>
+    </author>
+    <author>
+      <name>Morgane M. Moss</name>
+    </author>
+    <author>
+      <name>Aaron Courville</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2401.07853v2</id>
+    <title>VeCAF: Vision-language Collaborative Active Finetuning with Training Objective Awareness</title>
+    <updated>2024-04-13T10:56:49Z</updated>
+    <link href="https://arxiv.org/abs/2401.07853v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2401.07853v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Finetuning a pretrained vision model (PVM) is a common technique for learning downstream vision tasks. However, the conventional finetuning process with randomly sampled data points results in diminished training efficiency. To address this drawback, we propose a novel approach, Vision-language Collaborative Active Finetuning (VeCAF). With the emerging availability of labels and natural language annotations of images through web-scale crawling or controlled generation, VeCAF makes use of these information to perform parametric data selection for PVM finetuning. VeCAF incorporates the finetuning objective to select significant data points that effectively guide the PVM towards faster convergence to meet the performance goal. This process is assisted by the inherent semantic richness of the text embedding space which we use to augment image features. Furthermore, the flexibility of text-domain augmentation allows VeCAF to handle out-of-distribution scenarios without external data. Extensive experiments show the leading performance and high computational efficiency of VeCAF that is superior to baselines in both in-distribution and out-of-distribution image classification tasks. On ImageNet, VeCAF uses up to 3.3x less training batches to reach the target performance compared to full finetuning, and achieves an accuracy improvement of 2.7% over the state-of-the-art active finetuning method with the same number of batches.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-01-15T17:28:37Z</published>
+    <arxiv:comment>13 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Rongyu Zhang</name>
+    </author>
+    <author>
+      <name>Zefan Cai</name>
+    </author>
+    <author>
+      <name>Huanrui Yang</name>
+    </author>
+    <author>
+      <name>Zidong Liu</name>
+    </author>
+    <author>
+      <name>Denis Gudovskiy</name>
+    </author>
+    <author>
+      <name>Tomoyuki Okuno</name>
+    </author>
+    <author>
+      <name>Yohei Nakata</name>
+    </author>
+    <author>
+      <name>Kurt Keutzer</name>
+    </author>
+    <author>
+      <name>Baobao Chang</name>
+    </author>
+    <author>
+      <name>Yuan Du</name>
+    </author>
+    <author>
+      <name>Li Du</name>
+    </author>
+    <author>
+      <name>Shanghang Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.10922v2</id>
+    <title>Data-Efficient Curation for Multimodal Reasoning under Fixed Training Protocols</title>
+    <updated>2026-07-12T07:23:21Z</updated>
+    <link href="https://arxiv.org/abs/2601.10922v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.10922v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study data curation for multimodal reasoning in a fixed-protocol fine-tuning regime, where the base model, optimizer, training schedule, and evaluation pipeline are held constant and the main degree of freedom is the training data. Using the NeurIPS 2025 Data Curation for Vision--Language Reasoning (DCVLR) challenge as a controlled testbed, we analyze how source-dataset alignment, model-relative difficulty, dataset size, diversity heuristics, and rewritten synthetic mixtures affect downstream reasoning accuracy. Among the tested interventions, difficulty filtering on an aligned source corpus provides the strongest gains at matched scale. The effect is not explained only by LiveXivTQA weighting: a per-benchmark decomposition shows that much of the improvement over random sampling comes from OlympiadBench, the largest non-LiveXivTQA benchmark. Qwen-derived difficulty scores also transfer to some additional model families, though the benefit is architecture-dependent. In contrast, increasing dataset size beyond roughly 1k aligned examples mainly reduces run-to-run variance under the fixed recipe, while the diversity and rewritten CoSyn mixtures we tested do not improve over the difficulty-filtered baseline. These results provide a scoped empirical recipe for data-constrained multimodal reasoning fine-tuning, rather than a universal claim about data selection across all training regimes.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-16T00:50:01Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Yosub Shin</name>
+    </author>
+    <author>
+      <name>Michael Buriek</name>
+    </author>
+    <author>
+      <name>Boris Sobolev</name>
+    </author>
+    <author>
+      <name>Pavel Bushuyeu</name>
+    </author>
+    <author>
+      <name>Vikas Kumar</name>
+    </author>
+    <author>
+      <name>Haoyang Xu</name>
+    </author>
+    <author>
+      <name>Samuel Watson</name>
+    </author>
+    <author>
+      <name>Igor Molybog</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.07167v2</id>
+    <title>Deciphering Cross-Modal Alignment in Large Vision-Language Models with Modality Integration Rate</title>
+    <updated>2024-10-16T07:23:03Z</updated>
+    <link href="https://arxiv.org/abs/2410.07167v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.07167v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present the Modality Integration Rate (MIR), an effective, robust, and generalized metric to indicate the multi-modal pre-training quality of Large Vision Language Models (LVLMs). Large-scale pre-training plays a critical role in building capable LVLMs, while evaluating its training quality without the costly supervised fine-tuning stage is under-explored. Loss, perplexity, and in-context evaluation results are commonly used pre-training metrics for Large Language Models (LLMs), while we observed that these metrics are less indicative when aligning a well-trained LLM with a new modality. Due to the lack of proper metrics, the research of LVLMs in the critical pre-training stage is hindered greatly, including the training data choice, efficient module design, etc. In this paper, we propose evaluating the pre-training quality from the inter-modal distribution distance perspective and present MIR, the Modality Integration Rate, which is 1) \textbf{Effective} to represent the pre-training quality and show a positive relation with the benchmark performance after supervised fine-tuning. 2) \textbf{Robust} toward different training/evaluation data. 3) \textbf{Generalize} across training configurations and architecture choices. We conduct a series of pre-training experiments to explore the effectiveness of MIR and observe satisfactory results that MIR is indicative about training data selection, training strategy schedule, and model architecture design to get better pre-training results. We hope MIR could be a helpful metric for building capable LVLMs and inspire the following research about modality alignment in different areas. Our code is at: https://github.com/shikiw/Modality-Integration-Rate.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-09T17:59:04Z</published>
+    <arxiv:comment>Project page: https://github.com/shikiw/Modality-Integration-Rate</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Qidong Huang</name>
+    </author>
+    <author>
+      <name>Xiaoyi Dong</name>
+    </author>
+    <author>
+      <name>Pan Zhang</name>
+    </author>
+    <author>
+      <name>Yuhang Zang</name>
+    </author>
+    <author>
+      <name>Yuhang Cao</name>
+    </author>
+    <author>
+      <name>Jiaqi Wang</name>
+    </author>
+    <author>
+      <name>Dahua Lin</name>
+    </author>
+    <author>
+      <name>Weiming Zhang</name>
+    </author>
+    <author>
+      <name>Nenghai Yu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.09199v1</id>
+    <title>$Δ$-AttnMask: Attention-Guided Masked Hidden States for Efficient Data Selection and Augmentation</title>
+    <updated>2025-08-08T13:25:30Z</updated>
+    <link href="https://arxiv.org/abs/2508.09199v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.09199v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Visual Instruction Finetuning (VIF) is pivotal for post-training Vision-Language Models (VLMs). Unlike unimodal instruction finetuning in plain-text large language models, which mainly requires instruction datasets to enable model instruction-following ability, VIF also requires multimodal data to enable joint visual and textual understanding; therefore, it typically requires more data. Consequently, VIF imposes stricter data selection challenges: the method must scale efficiently to handle larger data demands while ensuring the quality of both visual and textual content, as well as their alignment. Despite its critical impact on performance, data selection for VIF remains an understudied area. In this paper, we propose $Δ$-AttnMask. This data-efficient framework quantifies sample quality through attention-guided masking of the model's hidden states, jointly evaluating image-text pairs without requiring domain labels, auxiliary models, or extra training. By computing loss differences ($Δ$) between the original states and states masked using high-attention regions, $Δ$-AttnMask intrinsically assesses sample quality. Experiments across multiple VLMs and datasets show that $Δ$-AttnMask achieves state-of-the-art performance with just 20% of data, accelerating training by 5x while surpassing full-dataset baselines by +10.1% in overall accuracy. Its model-agnostic and data-agnostic design ensures broad applicability across modalities and architectures.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-08T13:25:30Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jucheng Hu</name>
+    </author>
+    <author>
+      <name>Suorong Yang</name>
+    </author>
+    <author>
+      <name>Dongzhan Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.13263v1</id>
+    <title>Multimodal Consistency-Guided Reference-Free Data Selection for ASR Accent Adaptation</title>
+    <updated>2026-02-03T21:35:58Z</updated>
+    <link href="https://arxiv.org/abs/2602.13263v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.13263v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Automatic speech recognition (ASR) systems often degrade on accented speech because acoustic-phonetic and prosodic shifts induce a mismatch to training data, making labeled accent adaptation costly. However, common pseudo-label selection heuristics are largely text-centric (e.g., perplexity (PPL) filtering) and can prefer fluent yet acoustically mismatched hypotheses, leading to error amplification when fine-tuning. To address this, we introduce a multimodal consistency-guided, reference-free data selection pipeline for ASR accent adaptation under a transductive, label-free protocol. The pipeline starts with a target-aware preselection step based on submodular mutual information to improve query relevance and reduce downstream computation. It then generates multiple pseudo-transcriptions per utterance via perturbation-based decoding and scores each hypothesis using two reference-free signals: speech--text alignment in a shared embedding space and predicted word error rate (WER). A simple percentile-based selection rule retains reliable pseudo-labels for fine-tuning while discarding noisy utterances. In an in-domain setting, selecting ~1.5k utterances from a 30k pool achieves 10.91% WER, close to 10.45% obtained using 30k supervised labels. In a cross-domain setting with a mismatched candidate pool, consistency-filtered subsets avoid the degradation caused by unfiltered pseudo-labels under strong accent shift, and matched-hour experiments on a stronger ASR backbone further confirm gains over random sampling and recent selection baselines.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SD" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.AS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-03T21:35:58Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Ligong Lei</name>
+    </author>
+    <author>
+      <name>Wenwen Lu</name>
+    </author>
+    <author>
+      <name>Xudong Pang</name>
+    </author>
+    <author>
+      <name>Zaokere Kadeer</name>
+    </author>
+    <author>
+      <name>Aishan Wumaier</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.19547v2</id>
+    <title>CLIPLoss and Norm-Based Data Selection Methods for Multimodal Contrastive Learning</title>
+    <updated>2024-12-20T04:54:04Z</updated>
+    <link href="https://arxiv.org/abs/2405.19547v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.19547v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Data selection has emerged as a core issue for large-scale visual-language model pretaining (e.g., CLIP), particularly with noisy web-curated datasets. Three main data selection approaches are: (1) leveraging external non-CLIP models to aid data selection, (2) training new CLIP-style embedding models that are more effective at selecting high-quality data than the original OpenAI CLIP model, and (3) designing better metrics or strategies universally applicable to any CLIP embedding without requiring specific model properties (e.g., CLIPScore is one popular metric). While the first two approaches have been extensively studied, the third remains under-explored. In this paper, we advance the third approach by proposing two new methods. Firstly, instead of classical CLIP scores that only consider the alignment between two modalities from a single sample, we introduce surrogate-CLIPLoss (s-CLIPLoss), a CLIP loss-inspired method that adds the alignment between one sample and its contrastive pairs as an extra normalization term for better quality measurement. Secondly, when downstream tasks are known, we propose a new norm-based metric, NormSim, to measure the similarity between pretraining data and target data. We test our methods on the data selection benchmark, DataComp~\cite{gadre2023datacomp}. Compared to the best baseline using only OpenAI's CLIP-L/14, our methods achieve a 5.3\% improvement on ImageNet-1k and a 2.8\% improvement on 38 downstream evaluation tasks. Moreover, both s-CLIPLoss and NormSim are compatible with existing techniques. By combining our methods with the current best methods DFN and HYPE, we can boost average performance on downstream tasks by 0.9\%, achieving a new state-of-the-art on the DataComp-medium benchmark.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-29T22:19:57Z</published>
+    <arxiv:comment>This paper supercedes our previous VAS paper (arXiv:2402.02055). It's accepted by NeurIPS2024 as spotlight paper. DataComp benchmark: https://www.datacomp.ai/dcclip/leaderboard.html</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Yiping Wang</name>
+    </author>
+    <author>
+      <name>Yifang Chen</name>
+    </author>
+    <author>
+      <name>Wendan Yan</name>
+    </author>
+    <author>
+      <name>Alex Fang</name>
+    </author>
+    <author>
+      <name>Wenjing Zhou</name>
+    </author>
+    <author>
+      <name>Kevin Jamieson</name>
+    </author>
+    <author>
+      <name>Simon Shaolei Du</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.18787v2</id>
+    <title>Understanding Task Transfer in Vision-Language Models</title>
+    <updated>2026-04-09T10:41:06Z</updated>
+    <link href="https://arxiv.org/abs/2511.18787v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.18787v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-Language Models (VLMs) perform well on multimodal benchmarks but lag behind humans and specialized models on visual perception tasks like depth estimation or object counting. Finetuning on one task can unpredictably affect performance on others, making task-specific finetuning challenging. In this paper, we address this challenge through a systematic study of task transferability. We examine how finetuning a VLM on one perception task affects its zero-shot performance on others. We introduce Perfection Gap Factor (PGF), a normalized metric that measures change in performance as a result of task transfer. We utilize PGF to compute Task Transferability, which captures both the breadth and the magnitude of transfer induced by a source task. Using three open-weight VLMs evaluated across 13 perception tasks, we construct a task transfer graph that reveals previously unobserved relationships among perception tasks. Our analysis uncovers patterns of positive and negative transfer, identifies groups of tasks that mutually influence each other, organizes tasks into personas based on their transfer behavior and demonstrates how PGF can guide data selection for more efficient training. These findings highlight both opportunities for positive transfer and risks of negative interference, offering actionable guidance for advancing VLMs.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-24T05:37:52Z</published>
+    <arxiv:comment>CVPR 2026 (Oral)</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Bhuvan Sachdeva</name>
+    </author>
+    <author>
+      <name>Karan Uppal</name>
+    </author>
+    <author>
+      <name>Abhinav Java</name>
+    </author>
+    <author>
+      <name>Vineeth N. Balasubramanian</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.03809v1</id>
+    <title>When Dynamic Data Selection Meets Data Augmentation</title>
+    <updated>2025-05-02T11:38:48Z</updated>
+    <link href="https://arxiv.org/abs/2505.03809v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.03809v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Dynamic data selection aims to accelerate training with lossless performance. However, reducing training data inherently limits data diversity, potentially hindering generalization. While data augmentation is widely used to enhance diversity, it is typically not optimized in conjunction with selection. As a result, directly combining these techniques fails to fully exploit their synergies. To tackle the challenge, we propose a novel online data training framework that, for the first time, unifies dynamic data selection and augmentation, achieving both training efficiency and enhanced performance. Our method estimates each sample's joint distribution of local density and multimodal semantic consistency, allowing for the targeted selection of augmentation-suitable samples while suppressing the inclusion of noisy or ambiguous data. This enables a more significant reduction in dataset size without sacrificing model generalization. Experimental results demonstrate that our method outperforms existing state-of-the-art approaches on various benchmark datasets and architectures, e.g., reducing 50\% training costs on ImageNet-1k with lossless performance. Furthermore, our approach enhances noise resistance and improves model robustness, reinforcing its practical utility in real-world scenarios.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-02T11:38:48Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>ICML 2025</arxiv:journal_ref>
+    <author>
+      <name>Suorong Yang</name>
+    </author>
+    <author>
+      <name>Peng Ye</name>
+    </author>
+    <author>
+      <name>Furao Shen</name>
+    </author>
+    <author>
+      <name>Dongzhan Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.06442v1</id>
+    <title>SIEVE: Structure-Aware Data Selection for Imitation Learning with VLA Models</title>
+    <updated>2026-07-07T16:10:02Z</updated>
+    <link href="https://arxiv.org/abs/2607.06442v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.06442v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-Language-Action (VLA) models are typically trained by imitation learning on large-scale robot demonstration datasets, but more data does not necessarily yield better policies due to redundancy, noise, and uneven coverage. Existing data selection methods often assess demonstrations at either the trajectory or state-action level, missing the reusable structures that compose long-horizon behaviors. In this paper, we propose SIEVE, a structure-aware data selection method for VLA imitation learning. SIEVE views demonstrations as compositions of reusable primitives and transition interfaces. It first discovers visuo-motor primitives from segmented trajectories, then allocates selection budgets to composition patterns by maximizing reuse-aware structural exposure under diminishing returns. Finally, it selects medoid trajectories within each composition-pattern bucket to retain central, stable, and imitation-friendly demonstrations. Experiments across multiple datasets, benchmarks, and VLA models show that SIEVE consistently outperforms competitive data selection baselines. Notably, SIEVE can surpass full-data training while using only 50% of demonstrations and 50% of training steps, suggesting that reusable structure, captured through primitives and transitions, is an important signal for efficient VLA imitation learning.</summary>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-07T16:10:02Z</published>
+    <arxiv:comment>The code is available at \href{https://github.com/ChangtiWu/SIEVE}{SIEVE}</arxiv:comment>
+    <arxiv:primary_category term="cs.RO"/>
+    <author>
+      <name>Changti Wu</name>
+    </author>
+    <author>
+      <name>Bin Yu</name>
+    </author>
+    <author>
+      <name>Zhaolong Shen</name>
+    </author>
+    <author>
+      <name>Shijie Lian</name>
+    </author>
+    <author>
+      <name>Xiaopeng Lin</name>
+    </author>
+    <author>
+      <name>Cong Huang</name>
+    </author>
+    <author>
+      <name>Zhirui Zhang</name>
+    </author>
+    <author>
+      <name>Lei Zhang</name>
+    </author>
+    <author>
+      <name>Kai Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.17509v2</id>
+    <title>MoAPT: Mixture of Adversarial Prompt Tuning for Vision-Language Models</title>
+    <updated>2025-12-18T09:15:05Z</updated>
+    <link href="https://arxiv.org/abs/2505.17509v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.17509v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large pre-trained Vision Language Models (VLMs) demonstrate excellent generalization capabilities but remain highly susceptible to adversarial examples, posing potential security risks. To improve the robustness of VLMs against adversarial examples, adversarial prompt tuning methods are proposed to align the text feature with the adversarial image feature without changing model parameters. However, when facing various adversarial attacks, a single learnable text prompt has insufficient generalization to align well with all adversarial image features, which ultimately results in overfitting. To address the above challenge, in this paper, we empirically find that increasing the number of learned prompts yields greater robustness improvements than simply extending the length of a single prompt. Building on this observation, we propose an adversarial tuning method named \textbf{Mixture of Adversarial Prompt Tuning (MoAPT)} to enhance the generalization against various adversarial attacks for VLMs. MoAPT aims to learn mixture text prompts to obtain more robust text features. To further enhance the adaptability, we propose a conditional weight router based on the adversarial images to predict the mixture weights of multiple learned prompts, which helps obtain sample-specific mixture text features aligning with different adversarial image features. Extensive experiments across 11 datasets under different settings show that our method can achieve better adversarial robustness than state-of-the-art approaches.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-23T06:04:15Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Shiji Zhao</name>
+    </author>
+    <author>
+      <name>Qihui Zhu</name>
+    </author>
+    <author>
+      <name>Shukun Xiong</name>
+    </author>
+    <author>
+      <name>Shouwei Ruan</name>
+    </author>
+    <author>
+      <name>Maoxun Yuan</name>
+    </author>
+    <author>
+      <name>Jialing Tao</name>
+    </author>
+    <author>
+      <name>Jiexi Liu</name>
+    </author>
+    <author>
+      <name>Ranjie Duan</name>
+    </author>
+    <author>
+      <name>Jie Zhang</name>
+    </author>
+    <author>
+      <name>Jie Zhang</name>
+    </author>
+    <author>
+      <name>Xingxing Wei</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.11215v2</id>
+    <title>A CLIP-Powered Framework for Robust and Generalizable Data Selection</title>
+    <updated>2025-06-20T04:41:06Z</updated>
+    <link href="https://arxiv.org/abs/2410.11215v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.11215v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large-scale datasets have been pivotal to the advancements of deep learning models in recent years, but training on such large datasets invariably incurs substantial storage and computational overhead. Meanwhile, real-world datasets often contain redundant and noisy data, imposing a negative impact on training efficiency and model performance. Data selection has shown promise in identifying the most representative samples from the entire dataset, which aims to minimize the performance gap with reduced training costs. Existing works typically rely on single-modality information to assign importance scores for individual samples, which may lead to inaccurate assessments, especially when dealing with noisy or corrupted samples. To address this limitation, we propose a novel CLIP-powered data selection framework that leverages multimodal information for more robust and generalizable sample selection. Specifically, our framework consists of three key modules-dataset adaptation, sample scoring, and selection optimization-that together harness extensive pre-trained multimodal knowledge to comprehensively assess sample influence and optimize the selection results through multi-objective optimization. Extensive experiments demonstrate that our approach consistently outperforms existing state-of-the-art baselines on various benchmark datasets. Notably, our method effectively removes noisy or damaged samples from the dataset, enabling it to achieve even higher performance with less data. This indicates that it is not only a way to accelerate training but can also improve overall data quality.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-15T03:00:58Z</published>
+    <arxiv:comment>ICLR 2025 Spotlight</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <arxiv:journal_ref>ICLR 2025</arxiv:journal_ref>
+    <author>
+      <name>Suorong Yang</name>
+    </author>
+    <author>
+      <name>Peng Ye</name>
+    </author>
+    <author>
+      <name>Wanli Ouyang</name>
+    </author>
+    <author>
+      <name>Dongzhan Zhou</name>
+    </author>
+    <author>
+      <name>Furao Shen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.09559v4</id>
+    <title>Less is More: High-value Data Selection for Visual Instruction Tuning</title>
+    <updated>2024-10-10T14:16:13Z</updated>
+    <link href="https://arxiv.org/abs/2403.09559v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.09559v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Visual instruction tuning is the key to building large vision language models~(LVLMs), which can greatly improve the task generalization and solving capabilities by learning a mixture of instruction data from diverse visual tasks. Previous work mostly collects multiple existing visual instruction datasets via heuristic ways for training (even more than a million instructions), which may introduce data redundancy and enlarge the training cost. To investigate this issue, we conduct a series of empirical studies, which reveal a significant redundancy within the visual instruction datasets, and show that greatly reducing the amount of instructions from several tasks even do not affect the performance. Based on the findings, we propose a high-value data selection approach TIVE, to eliminate redundancy within the visual instruction data and reduce the training cost. In TIVE, we first estimate the instance influence score on its corresponding task, and the task difficulty score, based on the gradient-based influence functions. Then, we leverage the two kinds of scores to determine the task proportion within the selected visual instruction subset, and select high-value instances for each task, respectively. Experiments on various LVLMs show that our approach using only about 15% data can achieve comparable average performance to the full-data fine-tuned model across eight benchmarks, even surpassing it on four of the benchmarks. Our code and data will be publicly released.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-14T16:47:25Z</published>
+    <arxiv:comment>Under Review</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Zikang Liu</name>
+    </author>
+    <author>
+      <name>Kun Zhou</name>
+    </author>
+    <author>
+      <name>Wayne Xin Zhao</name>
+    </author>
+    <author>
+      <name>Dawei Gao</name>
+    </author>
+    <author>
+      <name>Yaliang Li</name>
+    </author>
+    <author>
+      <name>Ji-Rong Wen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.07591v2</id>
+    <title>Filter Images First, Generate Instructions Later: Pre-Instruction Data Selection for Visual Instruction Tuning</title>
+    <updated>2025-04-05T15:13:01Z</updated>
+    <link href="https://arxiv.org/abs/2503.07591v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.07591v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Visual instruction tuning (VIT) for large vision-language models (LVLMs) requires training on expansive datasets of image-instruction pairs, which can be costly. Recent efforts in VIT data selection aim to select a small subset of high-quality image-instruction pairs, reducing VIT runtime while maintaining performance comparable to full-scale training. However, a major challenge often overlooked is that generating instructions from unlabeled images for VIT is highly expensive. Most existing VIT datasets rely heavily on human annotations or paid services like the GPT API, which limits users with constrained resources from creating VIT datasets for custom applications. To address this, we introduce Pre-Instruction Data Selection (PreSel), a more practical data selection paradigm that directly selects the most beneficial unlabeled images and generates instructions only for the selected images. PreSel first estimates the relative importance of each vision task within VIT datasets to derive task-wise sampling budgets. It then clusters image features within each task, selecting the most representative images with the budget. This approach reduces computational overhead for both instruction generation during VIT data formation and LVLM fine-tuning. By generating instructions for only 15% of the images, PreSel achieves performance comparable to full-data VIT on the LLaVA-1.5 and Vision-Flan datasets. The link to our project page: https://bardisafa.github.io/PreSel</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-10T17:55:11Z</published>
+    <arxiv:comment>Accepted at CVPR 2025 (Highlight)</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Bardia Safaei</name>
+    </author>
+    <author>
+      <name>Faizan Siddiqui</name>
+    </author>
+    <author>
+      <name>Jiacong Xu</name>
+    </author>
+    <author>
+      <name>Vishal M. Patel</name>
+    </author>
+    <author>
+      <name>Shao-Yuan Lo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.17847v1</id>
+    <title>CoIDO: Efficient Data Selection for Visual Instruction Tuning via Coupled Importance-Diversity Optimization</title>
+    <updated>2025-10-11T09:41:21Z</updated>
+    <link href="https://arxiv.org/abs/2510.17847v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.17847v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal large language models (MLLMs) rely heavily on instruction tuning to align vision and language capabilities, yet the computational cost of training on large-scale datasets remains a major bottleneck. Existing data selection methods aim to mitigate this by selecting important and diverse subsets, but they often suffer from two critical drawbacks: high computational overhead from processing the entire dataset and suboptimal data selection due to separate treatment of importance and diversity.
+  We introduce CoIDO, a novel dual-objective framework that jointly optimizes data importance and diversity to overcome these challenges. Unlike existing approaches that require costly evaluations across the whole dataset, CoIDO employs a lightweight plug-in scorer. This scorer is trained on just a small random sample of data to learn the distribution of the candidate set, drastically reducing computational demands. By leveraging a homoscedastic uncertainty-based formulation, CoIDO effectively balances importance and diversity during training, enabling efficient and scalable data selection.
+  In our experiments, we trained the CoIDO scorer using only 20 percent of randomly sampled data. Once trained, CoIDO was applied to the entire dataset to select a 20 percent subset for instruction tuning. On the widely used LLaVA-1.5-7B model across ten downstream tasks, this selected subset achieved an impressive 98.2 percent of the performance of full-data fine-tuning, on average.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-11T09:41:21Z</published>
+    <arxiv:comment>22 pages, 8 figures, 39th Conference on Neural Information Processing Systems (NeurIPS 2025)</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yichen Yan</name>
+    </author>
+    <author>
+      <name>Ming Zhong</name>
+    </author>
+    <author>
+      <name>Qi Zhu</name>
+    </author>
+    <author>
+      <name>Xiaoling Gu</name>
+    </author>
+    <author>
+      <name>Jinpeng Chen</name>
+    </author>
+    <author>
+      <name>Huan Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.16722v2</id>
+    <title>Active Prompt Learning with Vision-Language Model Priors</title>
+    <updated>2026-03-10T05:02:18Z</updated>
+    <link href="https://arxiv.org/abs/2411.16722v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.16722v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-language models (VLMs) have demonstrated remarkable zero-shot performance across various classification tasks. Nonetheless, their reliance on hand-crafted text prompts for each task hinders efficient adaptation to new tasks. While prompt learning offers a promising solution, most studies focus on maximizing the utilization of given few-shot labeled datasets, often overlooking the potential of careful data selection strategies, which enable higher accuracy with fewer labeled data. This motivates us to study a budget-efficient active prompt learning framework. Specifically, we introduce a class-guided clustering that leverages the pre-trained image and text encoders of VLMs, thereby enabling our cluster-balanced acquisition function from the initial round of active learning. Furthermore, considering the substantial class-wise variance in confidence exhibited by VLMs, we propose a budget-saving selective querying based on adaptive class-wise thresholds. Extensive experiments in active learning scenarios across seven datasets demonstrate that our method outperforms existing baselines.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-23T02:34:33Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Hoyoung Kim</name>
+    </author>
+    <author>
+      <name>Seokhee Jin</name>
+    </author>
+    <author>
+      <name>Changhwan Sung</name>
+    </author>
+    <author>
+      <name>Jaechang Kim</name>
+    </author>
+    <author>
+      <name>Jungseul Ok</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.02055v1</id>
+    <title>Variance Alignment Score: A Simple But Tough-to-Beat Data Selection Method for Multimodal Contrastive Learning</title>
+    <updated>2024-02-03T06:29:04Z</updated>
+    <link href="https://arxiv.org/abs/2402.02055v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.02055v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In recent years, data selection has emerged as a core issue for large-scale visual-language model pretraining, especially on noisy web-curated datasets. One widely adopted strategy assigns quality scores such as CLIP similarity for each sample and retains the data pairs with the highest scores. However, these approaches are agnostic of data distribution and always fail to select the most informative samples. To solve this problem, we propose a simple yet theoretically principled metric named Variance Alignment Score (VAS), which has the form $\langle Σ_{\text{test}}, Σ_i\rangle$. Here, $Σ_{\text{test}}$ represents the target (cross-)covariance matrix we aim to align, potentially based on prior knowledge, while $Σ_i$ denotes the tensor product of single or multi-modal representations for the $i$-th sample. We further design a new data selection method that maximizes the total VAS. We provide theoretical analysis in a simplified setting to demonstrate the theoretical advantage of VAS over random or other existing data selection. Experimentally, applying VAS and CLIP scores together can outperform baselines by a margin of $1.3\%$ average on 38 evaluation sets for noisy dataset DataComp and $2.5\%$ on VTAB for high-quality dataset CC12M. Additionally, our ablation study also shows visual features are better than text for calculating VAS, and the related classical experimental design methods may fail under this context.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-03T06:29:04Z</published>
+    <arxiv:comment>17 pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Yiping Wang</name>
+    </author>
+    <author>
+      <name>Yifang Chen</name>
+    </author>
+    <author>
+      <name>Wendan Yan</name>
+    </author>
+    <author>
+      <name>Kevin Jamieson</name>
+    </author>
+    <author>
+      <name>Simon Shaolei Du</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.20991v1</id>
+    <title>Hard Cases Detection in Motion Prediction by Vision-Language Foundation Models</title>
+    <updated>2024-05-31T16:35:41Z</updated>
+    <link href="https://arxiv.org/abs/2405.20991v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.20991v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Addressing hard cases in autonomous driving, such as anomalous road users, extreme weather conditions, and complex traffic interactions, presents significant challenges. To ensure safety, it is crucial to detect and manage these scenarios effectively for autonomous driving systems. However, the rarity and high-risk nature of these cases demand extensive, diverse datasets for training robust models. Vision-Language Foundation Models (VLMs) have shown remarkable zero-shot capabilities as being trained on extensive datasets. This work explores the potential of VLMs in detecting hard cases in autonomous driving. We demonstrate the capability of VLMs such as GPT-4v in detecting hard cases in traffic participant motion prediction on both agent and scenario levels. We introduce a feasible pipeline where VLMs, fed with sequential image frames with designed prompts, effectively identify challenging agents or scenarios, which are verified by existing prediction models. Moreover, by taking advantage of this detection of hard cases by VLMs, we further improve the training efficiency of the existing motion prediction pipeline by performing data selection for the training samples suggested by GPT. We show the effectiveness and feasibility of our pipeline incorporating VLMs with state-of-the-art methods on NuScenes datasets. The code is accessible at https://github.com/KTH-RPL/Detect_VLM.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-31T16:35:41Z</published>
+    <arxiv:comment>IEEE Intelligent Vehicles Symposium (IV) 2024</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yi Yang</name>
+    </author>
+    <author>
+      <name>Qingwen Zhang</name>
+    </author>
+    <author>
+      <name>Kei Ikemura</name>
+    </author>
+    <author>
+      <name>Nazre Batool</name>
+    </author>
+    <author>
+      <name>John Folkesson</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.19656v1</id>
+    <title>Multimodal Misinformation Detection by Learning from Synthetic Data with Multimodal LLMs</title>
+    <updated>2024-09-29T11:01:14Z</updated>
+    <link href="https://arxiv.org/abs/2409.19656v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.19656v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Detecting multimodal misinformation, especially in the form of image-text pairs, is crucial. Obtaining large-scale, high-quality real-world fact-checking datasets for training detectors is costly, leading researchers to use synthetic datasets generated by AI technologies. However, the generalizability of detectors trained on synthetic data to real-world scenarios remains unclear due to the distribution gap. To address this, we propose learning from synthetic data for detecting real-world multimodal misinformation through two model-agnostic data selection methods that match synthetic and real-world data distributions. Experiments show that our method enhances the performance of a small MLLM (13B) on real-world fact-checking datasets, enabling it to even surpass GPT-4V~\cite{GPT-4V}.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-29T11:01:14Z</published>
+    <arxiv:comment>EMNLP 2024 Findings</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Fengzhu Zeng</name>
+    </author>
+    <author>
+      <name>Wenqian Li</name>
+    </author>
+    <author>
+      <name>Wei Gao</name>
+    </author>
+    <author>
+      <name>Yan Pang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.19688v1</id>
+    <title>DataProphet: Demystifying Supervision Data Generalization in Multimodal LLMs</title>
+    <updated>2026-03-20T06:42:26Z</updated>
+    <link href="https://arxiv.org/abs/2603.19688v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.19688v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Conventional wisdom for selecting supervision data for multimodal large language models (MLLMs) is to prioritize datasets that appear similar to the target benchmark, such as text-intensive or vision-centric tasks. However, it remains unclear whether such intuitive similarity reliably predicts downstream performance gains. In this work, we take a first step toward answering a practical question: can we estimate the influence of a training dataset on a target benchmark before any training is performed? To investigate this question, we conduct an in-depth analysis of transfer across 14 vision-language datasets spanning 7 diverse tasks. Our results show that intuitive task similarity is an unreliable predictor of transferability, and that generalization depends more on the specific dataset than on its broad task category. Motivated by this finding, we propose DATAPROPHET, a simple and effective training-free metric that combines multimodal perplexity, similarity, and data diversity. Experiments show that DATAPROPHET produces supervision-data rankings that strongly correlate with rankings based on actual post-training performance gains, achieving a Kendall's tau of 86.0%. Moreover, DATAPROPHET enables better supervision-data selection, yielding up to 6.9% improvement over uniform selection, 1.4% over a state-of-the-art training-based baseline, and 0.2% above oracle selection based on experimental performance. Our code and data will be released.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-20T06:42:26Z</published>
+    <arxiv:comment>14 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Xuan Qi</name>
+    </author>
+    <author>
+      <name>Luxi He</name>
+    </author>
+    <author>
+      <name>Dan Roth</name>
+    </author>
+    <author>
+      <name>Xingyu Fu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.19325v1</id>
+    <title>Innovator-VL: A Multimodal Large Language Model for Scientific Discovery</title>
+    <updated>2026-01-27T08:12:18Z</updated>
+    <link href="https://arxiv.org/abs/2601.19325v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.19325v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present Innovator-VL, a scientific multimodal large language model designed to advance understanding and reasoning across diverse scientific domains while maintaining excellent performance on general vision tasks. Contrary to the trend of relying on massive domain-specific pretraining and opaque pipelines, our work demonstrates that principled training design and transparent methodology can yield strong scientific intelligence with substantially reduced data requirements. (i) First, we provide a fully transparent, end-to-end reproducible training pipeline, covering data collection, cleaning, preprocessing, supervised fine-tuning, reinforcement learning, and evaluation, along with detailed optimization recipes. This facilitates systematic extension by the community. (ii) Second, Innovator-VL exhibits remarkable data efficiency, achieving competitive performance on various scientific tasks using fewer than five million curated samples without large-scale pretraining. These results highlight that effective reasoning can be achieved through principled data selection rather than indiscriminate scaling. (iii) Third, Innovator-VL demonstrates strong generalization, achieving competitive performance on general vision, multimodal reasoning, and scientific benchmarks. This indicates that scientific alignment can be integrated into a unified model without compromising general-purpose capabilities. Our practices suggest that efficient, reproducible, and high-performing scientific multimodal models can be built even without large-scale data, providing a practical foundation for future research.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-27T08:12:18Z</published>
+    <arxiv:comment>Innovator-VL tech report</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zichen Wen</name>
+    </author>
+    <author>
+      <name>Boxue Yang</name>
+    </author>
+    <author>
+      <name>Shuang Chen</name>
+    </author>
+    <author>
+      <name>Yaojie Zhang</name>
+    </author>
+    <author>
+      <name>Yuhang Han</name>
+    </author>
+    <author>
+      <name>Junlong Ke</name>
+    </author>
+    <author>
+      <name>Cong Wang</name>
+    </author>
+    <author>
+      <name>Yicheng Fu</name>
+    </author>
+    <author>
+      <name>Jiawang Zhao</name>
+    </author>
+    <author>
+      <name>Jiangchao Yao</name>
+    </author>
+    <author>
+      <name>Xi Fang</name>
+    </author>
+    <author>
+      <name>Zhen Wang</name>
+    </author>
+    <author>
+      <name>Henxing Cai</name>
+    </author>
+    <author>
+      <name>Lin Yao</name>
+    </author>
+    <author>
+      <name>Zhifeng Gao</name>
+    </author>
+    <author>
+      <name>Yanhui Hong</name>
+    </author>
+    <author>
+      <name>Nang Yuan</name>
+    </author>
+    <author>
+      <name>Yixuan Li</name>
+    </author>
+    <author>
+      <name>Guojiang Zhao</name>
+    </author>
+    <author>
+      <name>Haoyi Tao</name>
+    </author>
+    <author>
+      <name>Nan Wang</name>
+    </author>
+    <author>
+      <name>Han Lyu</name>
+    </author>
+    <author>
+      <name>Guolin Ke</name>
+    </author>
+    <author>
+      <name>Ning Liao</name>
+    </author>
+    <author>
+      <name>Xiaoxing Wang</name>
+    </author>
+    <author>
+      <name>Kai Chen</name>
+    </author>
+    <author>
+      <name>Zhiyu Li</name>
+    </author>
+    <author>
+      <name>Feiyu Xiong</name>
+    </author>
+    <author>
+      <name>Sihan Hu</name>
+    </author>
+    <author>
+      <name>Kun Chen</name>
+    </author>
+    <author>
+      <name>Yanfeng Wang</name>
+    </author>
+    <author>
+      <name>Weinan E</name>
+    </author>
+    <author>
+      <name>Linfeng Zhang</name>
+    </author>
+    <author>
+      <name>Linfeng Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2306.08306v2</id>
+    <title>Towards Balanced Active Learning for Multimodal Classification</title>
+    <updated>2023-08-21T05:26:45Z</updated>
+    <link href="https://arxiv.org/abs/2306.08306v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2306.08306v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Training multimodal networks requires a vast amount of data due to their larger parameter space compared to unimodal networks. Active learning is a widely used technique for reducing data annotation costs by selecting only those samples that could contribute to improving model performance. However, current active learning strategies are mostly designed for unimodal tasks, and when applied to multimodal data, they often result in biased sample selection from the dominant modality. This unfairness hinders balanced multimodal learning, which is crucial for achieving optimal performance. To address this issue, we propose three guidelines for designing a more balanced multimodal active learning strategy. Following these guidelines, a novel approach is proposed to achieve more fair data selection by modulating the gradient embedding with the dominance degree among modalities. Our studies demonstrate that the proposed method achieves more balanced multimodal learning by avoiding greedy sample selection from the dominant modality. Our approach outperforms existing active learning strategies on a variety of multimodal classification tasks. Overall, our work highlights the importance of balancing sample selection in multimodal active learning and provides a practical solution for achieving more balanced active learning for multimodal classification.</summary>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-06-14T07:23:36Z</published>
+    <arxiv:comment>12 pages, accepted by ACMMM 2023</arxiv:comment>
+    <arxiv:primary_category term="cs.MM"/>
+    <author>
+      <name>Meng Shen</name>
+    </author>
+    <author>
+      <name>Yizheng Huang</name>
+    </author>
+    <author>
+      <name>Jianxiong Yin</name>
+    </author>
+    <author>
+      <name>Heqing Zou</name>
+    </author>
+    <author>
+      <name>Deepu Rajan</name>
+    </author>
+    <author>
+      <name>Simon See</name>
+    </author>
+    <arxiv:doi>10.1145/3581783.3612463</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3581783.3612463" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.15691v2</id>
+    <title>SEED: Targeted Data Selection by Weighted Independent Set</title>
+    <updated>2026-05-20T05:59:15Z</updated>
+    <link href="https://arxiv.org/abs/2605.15691v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.15691v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Data selection seeks to identify a compact yet informative subset from large-scale training corpora, balancing sample quality against collection diversity. We formulate this problem as a Weighted Independent Set (WIS) on a similarity graph, where nodes represent data samples weighted by influence, and edges connect semantically redundant pairs. This formulation naturally yields subsets that are simultaneously high-quality and diverse. However, two challenges arise in practice: naive node weights fail to distinguish informative signals from gradient noise, and edge construction under heterogeneous domain distributions produces structurally imbalanced graphs that bias selection toward sparse regions. To address these issues, we introduce two principled refinements from a unified graph perspective: (1) \textit{node value calibration} that restricts influence estimation to the bilateral salient subspace to ground node importance in task-relevant signals rather than surface-level statistics; (2) \textit{local scale normalization} that adapts edge thresholds to local neighborhood density, mitigating graph imbalance induced by cross-domain distribution shifts. Together, these components yield a robust and scalable data selection pipeline dubbed SEED. We further construct \texttt{Honeybee-Remake-SEED-200K}, a compact multimodal dataset curated by SEED. Extensive experiments show that SEED consistently outperforms state-of-the-art methods on instruction tuning, visual instruction tuning, and semantic segmentation across diverse model families.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-15T07:26:54Z</published>
+    <arxiv:comment>20 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Yuan Zhang</name>
+    </author>
+    <author>
+      <name>Lifeng Guo</name>
+    </author>
+    <author>
+      <name>Junwen Pan</name>
+    </author>
+    <author>
+      <name>Wenzhao Zheng</name>
+    </author>
+    <author>
+      <name>Wen Zhou</name>
+    </author>
+    <author>
+      <name>Kuan Cheng</name>
+    </author>
+    <author>
+      <name>Kurt Keutzer</name>
+    </author>
+    <author>
+      <name>Shanghang Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.13860v1</id>
+    <title>SSE: Multimodal Semantic Data Selection and Enrichment for Industrial-scale Data Assimilation</title>
+    <updated>2024-09-20T19:17:52Z</updated>
+    <link href="https://arxiv.org/abs/2409.13860v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.13860v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In recent years, the data collected for artificial intelligence has grown to an unmanageable amount. Particularly within industrial applications, such as autonomous vehicles, model training computation budgets are being exceeded while model performance is saturating -- and yet more data continues to pour in. To navigate the flood of data, we propose a framework to select the most semantically diverse and important dataset portion. Then, we further semantically enrich it by discovering meaningful new data from a massive unlabeled data pool. Importantly, we can provide explainability by leveraging foundation models to generate semantics for every data point. We quantitatively show that our Semantic Selection and Enrichment framework (SSE) can a) successfully maintain model performance with a smaller training dataset and b) improve model performance by enriching the smaller dataset without exceeding the original dataset size. Consequently, we demonstrate that semantic diversity is imperative for optimal data selection and model performance.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-20T19:17:52Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Maying Shen</name>
+    </author>
+    <author>
+      <name>Nadine Chang</name>
+    </author>
+    <author>
+      <name>Sifei Liu</name>
+    </author>
+    <author>
+      <name>Jose M. Alvarez</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.20241v3</id>
+    <title>DreamPRM: Domain-Reweighted Process Reward Model for Multimodal Reasoning</title>
+    <updated>2025-11-04T01:10:36Z</updated>
+    <link href="https://arxiv.org/abs/2505.20241v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.20241v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Reasoning has substantially improved the performance of large language models (LLMs) on complicated tasks. Central to the current reasoning studies, Process Reward Models (PRMs) offer a fine-grained evaluation of intermediate reasoning steps and guide the reasoning process. However, extending PRMs to multimodal large language models (MLLMs) introduces challenges. Since multimodal reasoning covers a wider range of tasks compared to text-only scenarios, the resulting distribution shift from the training to testing sets is more severe, leading to greater generalization difficulty. Training a reliable multimodal PRM, therefore, demands large and diverse datasets to ensure sufficient coverage. However, current multimodal reasoning datasets suffer from a marked quality imbalance, which degrades PRM performance and highlights the need for an effective data selection strategy. To address the issues, we introduce DreamPRM, a domain-reweighted training framework for multimodal PRMs which employs bi-level optimization. In the lower-level optimization, DreamPRM performs fine-tuning on multiple datasets with domain weights, allowing the PRM to prioritize high-quality reasoning signals and alleviating the impact of dataset quality imbalance. In the upper-level optimization, the PRM is evaluated on a separate meta-learning dataset; this feedback updates the domain weights through an aggregation loss function, thereby improving the generalization capability of trained PRM. Extensive experiments on multiple multimodal reasoning benchmarks covering both mathematical and general reasoning show that test-time scaling with DreamPRM consistently improves the performance of state-of-the-art MLLMs. Further comparisons reveal that DreamPRM's domain-reweighting strategy surpasses other data selection methods and yields higher accuracy gains than existing test-time scaling approaches.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-26T17:20:17Z</published>
+    <arxiv:comment>28 pages, 10 figures, to appear in NeurIPS 2025 (Conference on Neural Information Processing Systems)</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Qi Cao</name>
+    </author>
+    <author>
+      <name>Ruiyi Wang</name>
+    </author>
+    <author>
+      <name>Ruiyi Zhang</name>
+    </author>
+    <author>
+      <name>Sai Ashish Somayajula</name>
+    </author>
+    <author>
+      <name>Pengtao Xie</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.22651v1</id>
+    <title>What Does the Caption Really Say? Counterfactual Phrase Intervention for Compositional Data Selection in Vision-Language Pretraining</title>
+    <updated>2026-05-21T15:55:15Z</updated>
+    <link href="https://arxiv.org/abs/2605.22651v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.22651v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>CLIP-style contrastive pretraining typically curates web-scale image-text pairs using sample-level filtering signals, often based on pair-level alignment. We show that this signal saturates: once coarse mismatches are removed, stricter global filtering no longer tracks the compositional supervision provided by the retained captions. The reason is structural - a global score conflates whether a pair is broadly plausible with whether the individual object, attribute, and relation phrases inside the caption materially support the image-text match. The latter is what compositional generalization demands, yet pair-level filters are blind to it. We address this with Counterfactual Phrase Intervention (CPI), a phrase-level curation framework that converts controlled nonce-token substitutions into image-conditioned phrase-sensitivity scores. CPI uses global alignment only for coarse mismatch removal, then ranks the surviving pool by whether caption phrases measurably affect the image-text score under controlled substitution. We frame CPI as a first-order phrase-sensitivity signal rather than a grounding or identification result, and evaluate it at CC3M scale. Ranking by this signal yields a 50%-data subset that improves VL-CheckList-VG Relation by +1.91 over the full-data baseline and +1.00 over alignment-only filtering at matched budget, while improving SugarCrepe overall and preserving general transfer. CPI is loss-orthogonal: applied unchanged to NegCLIP, it further improves VL-CheckList-VG Relation by +3.84, with additional CE-CLIP gains in the main text.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-21T15:55:15Z</published>
+    <arxiv:comment>11 pages, 2 figures, 4 tables. Preprint</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Hyejin Go</name>
+    </author>
+    <author>
+      <name>Semi Lee</name>
+    </author>
+    <author>
+      <name>Hyesong Choi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.17711v1</id>
+    <title>Data curation via joint example selection further accelerates multimodal learning</title>
+    <updated>2024-06-25T16:52:37Z</updated>
+    <link href="https://arxiv.org/abs/2406.17711v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.17711v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Data curation is an essential component of large-scale pretraining. In this work, we demonstrate that jointly selecting batches of data is more effective for learning than selecting examples independently. Multimodal contrastive objectives expose the dependencies between data and thus naturally yield criteria for measuring the joint learnability of a batch. We derive a simple and tractable algorithm for selecting such batches, which significantly accelerate training beyond individually-prioritized data points. As performance improves by selecting from larger super-batches, we also leverage recent advances in model approximation to reduce the associated computational overhead. As a result, our approach--multimodal contrastive learning with joint example selection (JEST)--surpasses state-of-the-art models with up to 13$\times$ fewer iterations and 10$\times$ less computation. Essential to the performance of JEST is the ability to steer the data selection process towards the distribution of smaller, well-curated datasets via pretrained reference models, exposing the level of data curation as a new dimension for neural scaling laws.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-25T16:52:37Z</published>
+    <arxiv:comment>Main text: 9 pages, 5 figures, 3 tables, 1 algorithm. Appendix: 7 pages, 5 figures, 1 table, 2. algorithm</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Talfan Evans</name>
+    </author>
+    <author>
+      <name>Nikhil Parthasarathy</name>
+    </author>
+    <author>
+      <name>Hamza Merzic</name>
+    </author>
+    <author>
+      <name>Olivier J. Henaff</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.09126v1</id>
+    <title>Enhancing Modality Representation and Alignment for Multimodal Cold-start Active Learning</title>
+    <updated>2024-12-12T10:03:46Z</updated>
+    <link href="https://arxiv.org/abs/2412.09126v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.09126v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Training multimodal models requires a large amount of labeled data. Active learning (AL) aim to reduce labeling costs. Most AL methods employ warm-start approaches, which rely on sufficient labeled data to train a well-calibrated model that can assess the uncertainty and diversity of unlabeled data. However, when assembling a dataset, labeled data are often scarce initially, leading to a cold-start problem. Additionally, most AL methods seldom address multimodal data, highlighting a research gap in this field. Our research addresses these issues by developing a two-stage method for Multi-Modal Cold-Start Active Learning (MMCSAL).
+  Firstly, we observe the modality gap, a significant distance between the centroids of representations from different modalities, when only using cross-modal pairing information as self-supervision signals. This modality gap affects data selection process, as we calculate both uni-modal and cross-modal distances. To address this, we introduce uni-modal prototypes to bridge the modality gap. Secondly, conventional AL methods often falter in multimodal scenarios where alignment between modalities is overlooked. Therefore, we propose enhancing cross-modal alignment through regularization, thereby improving the quality of selected multimodal data pairs in AL. Finally, our experiments demonstrate MMCSAL's efficacy in selecting multimodal data pairs across three multimodal datasets.</summary>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-12T10:03:46Z</published>
+    <arxiv:comment>11 pages, ACMMM Asia 2024, Oral Presentation</arxiv:comment>
+    <arxiv:primary_category term="cs.MM"/>
+    <author>
+      <name>Meng Shen</name>
+    </author>
+    <author>
+      <name>Yake Wei</name>
+    </author>
+    <author>
+      <name>Jianxiong Yin</name>
+    </author>
+    <author>
+      <name>Deepu Rajan</name>
+    </author>
+    <author>
+      <name>Di Hu</name>
+    </author>
+    <author>
+      <name>Simon See</name>
+    </author>
+    <arxiv:doi>10.1145/3696409.3700225</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3696409.3700225" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.11295v2</id>
+    <title>Human Uncertainty-Aware Data Selection and Automatic Labeling in Visual Question Answering</title>
+    <updated>2025-10-30T20:31:38Z</updated>
+    <link href="https://arxiv.org/abs/2510.11295v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.11295v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large vision-language models (VLMs) achieve strong performance in Visual Question Answering but still rely heavily on supervised fine-tuning (SFT) with massive labeled datasets, which is costly due to human annotations. Crucially, real-world datasets often exhibit human uncertainty (HU) -- variation in human confidence across annotations -- but standard SFT simply optimizes toward the most frequent label, disregarding HU distributions. This leaves two open questions: How does HU affect SFT, and how can HU be effectively leveraged in training? In this work, we first conduct a systematic evaluation of VLMs across varying HU levels. We have two key findings: (i) surprisingly, high-HU samples contribute little or even degrade model performance, and (ii) naively training on the full dataset yields under-calibrated models that fail to capture HU distributions. Motivated by these findings, we introduce HaDola, a human uncertainty-aware data selection and automatic labeling framework. HaDola operates in four stages -- discriminate, self-annotate, error trigger, and training -- to iteratively identify harmful samples, prioritize informative ones, and bootstrap from a small seed set (5\% of data). Our approach substantially reduces reliance on costly HU annotations and makes VLMs more accurate and better calibrated. Extensive experiments on VQAv2 and VizWiz datasets demonstrate that HaDola consistently matches or outperforms state-of-the-art baselines with less training data. Our work highlights the importance of explicitly modeling HU in SFT, suggesting that better utilization of HU is more effective than merely scaling up dataset size.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-13T11:35:30Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jian Lan</name>
+    </author>
+    <author>
+      <name>Zhicheng Liu</name>
+    </author>
+    <author>
+      <name>Udo Schlegel</name>
+    </author>
+    <author>
+      <name>Raoyuan Zhao</name>
+    </author>
+    <author>
+      <name>Yihong Liu</name>
+    </author>
+    <author>
+      <name>Hinrich Schütze</name>
+    </author>
+    <author>
+      <name>Michael A. Hedderich</name>
+    </author>
+    <author>
+      <name>Thomas Seidl</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.00283v1</id>
+    <title>What's Hidden Matters: Identifying Planning-Critical Occluded Agents using Vision-Language Models</title>
+    <updated>2026-07-01T00:14:13Z</updated>
+    <link href="https://arxiv.org/abs/2607.00283v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.00283v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Autonomous vehicles must safely navigate complex environments where planning-critical agents may be hidden from view. Current approaches often treat all occlusions with uniform conservatism, yielding needlessly defensive driving, or they infer hidden spaces without estimating the impact on the planner. This work bridges the critical gap between perception and planning by enabling Vision-Language Models (VLMs) to identify and reason about the specific hidden agents that are most critical to the ego-vehicle's trajectory. We introduce a novel framework that uses Planning KL-divergence (PKL), an information-theoretic metric, to systematically identify and rank occluded agents based on their impact on the ego vehicle's plan. Using this planning-aware ranking, we employ an expert VLM (GPT-5) to generate rich, structured annotations that capture the visual evidence and reasoning required for this task. We apply this framework to the nuScenes dataset to create a new benchmark focused on high-impact scenarios. We conduct comprehensive experiments on a wide range of general-purpose and domain-adapted VLMs, demonstrating that fine-tuning on our PKL-guided data yields dramatic performance improvements across all models. Notably, our results show that smaller, fine-tuned models significantly outperform their much larger zero-shot counterparts, and that our PKL-guided data selection strategy improves performance by approximately 30\% over random sampling. Our work presents the first systematic approach for training VLMs to focus on planning-critical occlusions, enabling more semantically grounded and efficient risk assessment in autonomous driving.</summary>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-01T00:14:13Z</published>
+    <arxiv:comment>Accepted to the 2026 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS 2026). 9 pages, 5 figures, 5 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.RO"/>
+    <author>
+      <name>Amirhosein Chahe</name>
+    </author>
+    <author>
+      <name>Tyler Naes</name>
+    </author>
+    <author>
+      <name>Jovin D'sa</name>
+    </author>
+    <author>
+      <name>Faizan M. Tariq</name>
+    </author>
+    <author>
+      <name>Sangjae Bae</name>
+    </author>
+    <author>
+      <name>Lifeng Zhou</name>
+    </author>
+    <author>
+      <name>David Isele</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.01195v2</id>
+    <title>VisNec: Measuring and Leveraging Visual Necessity for Multimodal Instruction Tuning</title>
+    <updated>2026-06-25T08:08:57Z</updated>
+    <link href="https://arxiv.org/abs/2603.01195v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.01195v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The effectiveness of multimodal instruction tuning depends not only on dataset scale, but critically on whether training samples genuinely require visual reasoning. However, existing instruction datasets often contain a substantial portion of visually redundant samples (solvable from text alone), as well as multimodally misaligned supervision that can degrade learning. To address this, we propose VisNec (Visual Necessity Score), a principled data selection framework that measures the marginal contribution of visual input during instruction tuning. By comparing predictive loss with and without visual context, VisNec identifies whether a training instance is vision-critical, redundant, or misaligned. To preserve task diversity, we combine VisNec with semantic clustering and select high-necessity samples within each cluster. Across 10 downstream benchmarks, training on only 15% of the LLaVA-665K dataset selected by VisNec achieves 100.2% of full-data performance. On the smaller Vision-Flan-186K dataset, our selection not only further reduces data size but also surpasses full-data training by 15.8%. These results demonstrate that measuring and leveraging visual necessity provides an effective solution for both efficient and robust multimodal instruction tuning. Codes and selected subsets will be released upon acceptance.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-01T17:26:02Z</published>
+    <arxiv:comment>Accepted at ECCV 2026. Project Page: https://dmk041218.github.io/VisNec/</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Mingkang Dong</name>
+    </author>
+    <author>
+      <name>Hongyi Cai</name>
+    </author>
+    <author>
+      <name>Jie Li</name>
+    </author>
+    <author>
+      <name>Sifan Zhou</name>
+    </author>
+    <author>
+      <name>Bin Ren</name>
+    </author>
+    <author>
+      <name>Kunyu Peng</name>
+    </author>
+    <author>
+      <name>Yuqian Fu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.24791v1</id>
+    <title>Vision Function Layer in Multimodal LLMs</title>
+    <updated>2025-09-29T13:45:35Z</updated>
+    <link href="https://arxiv.org/abs/2509.24791v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.24791v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This study identifies that visual-related functional decoding is distributed across different decoder layers in Multimodal Large Language Models (MLLMs). Typically, each function, such as counting, grounding, or OCR recognition, narrows down to two or three layers, which we define as Vision Function Layers (VFL). Additionally, the depth and its order of different VFLs exhibits a consistent pattern across different MLLMs, which is well-aligned with human behaviors (e.g., recognition occurs first, followed by counting, and then grounding). These findings are derived from Visual Token Swapping, our novel analytical framework that modifies targeted KV cache entries to precisely elucidate layer-specific functions during decoding. Furthermore, these insights offer substantial utility in tailoring MLLMs for real-world downstream applications. For instance, when LoRA training is selectively applied to VFLs whose functions align with the training data, VFL-LoRA not only outperform full-LoRA but also prevent out-of-domain function forgetting. Moreover, by analyzing the performance differential on training data when particular VFLs are ablated, VFL-select automatically classifies data by function, enabling highly efficient data selection to directly bolster corresponding capabilities. Consequently, VFL-select surpasses human experts in data selection, and achieves 98% of full-data performance with only 20% of the original dataset. This study delivers deeper comprehension of MLLM visual processing, fostering the creation of more efficient, interpretable, and robust models.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-29T13:45:35Z</published>
+    <arxiv:comment>Accepted at NeurIPS 2025 (preview; camera-ready in preparation)</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Cheng Shi</name>
+    </author>
+    <author>
+      <name>Yizhou Yu</name>
+    </author>
+    <author>
+      <name>Sibei Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.19917v1</id>
+    <title>Picking the Cream of the Crop: Visual-Centric Data Selection with Collaborative Agents</title>
+    <updated>2025-02-27T09:37:30Z</updated>
+    <link href="https://arxiv.org/abs/2502.19917v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.19917v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>To improve Multimodal Large Language Models' (MLLMs) ability to process images and complex instructions, researchers predominantly curate large-scale visual instruction tuning datasets, which are either sourced from existing vision tasks or synthetically generated using LLMs and image descriptions. However, they often suffer from critical flaws, including misaligned instruction-image pairs and low-quality images. Such issues hinder training efficiency and limit performance improvements, as models waste resources on noisy or irrelevant data with minimal benefit to overall capability. To address this issue, we propose a \textbf{Vi}sual-Centric \textbf{S}election approach via \textbf{A}gents Collaboration (ViSA), which centers on image quality assessment and image-instruction relevance evaluation. Specifically, our approach consists of 1) an image information quantification method via visual agents collaboration to select images with rich visual information, and 2) a visual-centric instruction quality assessment method to select high-quality instruction data related to high-quality images. Finally, we reorganize 80K instruction data from large open-source datasets. Extensive experiments demonstrate that ViSA outperforms or is comparable to current state-of-the-art models on seven benchmarks, using only 2.5\% of the original data, highlighting the efficiency of our data selection approach. Moreover, we conduct ablation studies to validate the effectiveness of each component of our method. The code is available at https://github.com/HITsz-TMG/ViSA.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-27T09:37:30Z</published>
+    <arxiv:comment>15 pages, 7 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Zhenyu Liu</name>
+    </author>
+    <author>
+      <name>Yunxin Li</name>
+    </author>
+    <author>
+      <name>Baotian Hu</name>
+    </author>
+    <author>
+      <name>Wenhan Luo</name>
+    </author>
+    <author>
+      <name>Yaowei Wang</name>
+    </author>
+    <author>
+      <name>Min Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.13451v1</id>
+    <title>AdaptAgent: Adapting Multimodal Web Agents with Few-Shot Learning from Human Demonstrations</title>
+    <updated>2024-11-20T16:54:15Z</updated>
+    <link href="https://arxiv.org/abs/2411.13451v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.13451v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>State-of-the-art multimodal web agents, powered by Multimodal Large Language Models (MLLMs), can autonomously execute many web tasks by processing user instructions and interacting with graphical user interfaces (GUIs). Current strategies for building web agents rely on (i) the generalizability of underlying MLLMs and their steerability via prompting, and (ii) large-scale fine-tuning of MLLMs on web-related tasks. However, web agents still struggle to automate tasks on unseen websites and domains, limiting their applicability to enterprise-specific and proprietary platforms. Beyond generalization from large-scale pre-training and fine-tuning, we propose building agents for few-shot adaptability using human demonstrations. We introduce the AdaptAgent framework that enables both proprietary and open-weights multimodal web agents to adapt to new websites and domains using few human demonstrations (up to 2). Our experiments on two popular benchmarks -- Mind2Web &amp; VisualWebArena -- show that using in-context demonstrations (for proprietary models) or meta-adaptation demonstrations (for meta-learned open-weights models) boosts task success rate by 3.36% to 7.21% over non-adapted state-of-the-art models, corresponding to a relative increase of 21.03% to 65.75%. Furthermore, our additional analyses (a) show the effectiveness of multimodal demonstrations over text-only ones, (b) shed light on the influence of different data selection strategies during meta-learning on the generalization of the agent, and (c) demonstrate the effect of number of few-shot examples on the web agent's success rate. Overall, our results unlock a complementary axis for developing widely applicable multimodal web agents beyond large-scale pre-training and fine-tuning, emphasizing few-shot adaptability.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-20T16:54:15Z</published>
+    <arxiv:comment>18 pages, 3 figures, an abridged version to appear in NeurIPS 2024 AFM Workshop</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Gaurav Verma</name>
+    </author>
+    <author>
+      <name>Rachneet Kaur</name>
+    </author>
+    <author>
+      <name>Nishan Srishankar</name>
+    </author>
+    <author>
+      <name>Zhen Zeng</name>
+    </author>
+    <author>
+      <name>Tucker Balch</name>
+    </author>
+    <author>
+      <name>Manuela Veloso</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.07880v1</id>
+    <title>Unsupervised Data Validation Methods for Efficient Model Training</title>
+    <updated>2024-10-10T13:00:53Z</updated>
+    <link href="https://arxiv.org/abs/2410.07880v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.07880v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper investigates the challenges and potential solutions for improving machine learning systems for low-resource languages. State-of-the-art models in natural language processing (NLP), text-to-speech (TTS), speech-to-text (STT), and vision-language models (VLM) rely heavily on large datasets, which are often unavailable for low-resource languages. This research explores key areas such as defining "quality data," developing methods for generating appropriate data and enhancing accessibility to model training. A comprehensive review of current methodologies, including data augmentation, multilingual transfer learning, synthetic data generation, and data selection techniques, highlights both advancements and limitations. Several open research questions are identified, providing a framework for future studies aimed at optimizing data utilization, reducing the required data quantity, and maintaining high-quality model performance. By addressing these challenges, the paper aims to make advanced machine learning models more accessible for low-resource languages, enhancing their utility and impact across various sectors.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-10T13:00:53Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Yurii Paniv</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.24516v1</id>
+    <title>DecoupleMix: Decoupled Ratio Search and Convex Allocation for Scalable VLM Data Recipes</title>
+    <updated>2026-07-27T14:55:04Z</updated>
+    <link href="https://arxiv.org/abs/2607.24516v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.24516v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>While data curation for Vision Language Models (VLMs) is increasingly active, public practice for constructing pretraining mixtures remains largely heuristic: practitioners stack datasets that pass quality filters, set cross-domain ratios by intuition, and lack a principled, attributable criterion for admitting new data, while frontier recipes remain undisclosed. We formulate data construction as a systematic mixture-optimization problem and turn it into a reproducible engineering discipline by decoupling the mixture into two orthogonal sub-problems: inter-class ratios across capabilities and intra-class ratios within a category. For inter-class allocation, we use a single-variable iterative search; for intra-class composition, we apply a multidimensional, dataset-level assessment scoring Quality and Difficulty, and formulate selection as a constrained convex optimization with a diversity objective. The DecoupleMix framework delivers two critical capabilities: guiding what data to collect next and rendering dataset validation a controlled, attributable experiment. Experiments show our approach consistently surpasses heuristic baselines. Moreover, optimal ratios discovered on small-scale proxies transfer seamlessly to larger scales without retuning. Using 80B additional multimodal continue-pretraining tokens, our VLM is competitive with strong open-source models trained with substantially larger multimodal budgets.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-27T14:55:04Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jiahao Xie</name>
+    </author>
+    <author>
+      <name>Zhongbin Guo</name>
+    </author>
+    <author>
+      <name>Qianle Wang</name>
+    </author>
+    <author>
+      <name>Ruiqi Lu</name>
+    </author>
+    <author>
+      <name>Dongling Xiao</name>
+    </author>
+    <author>
+      <name>Wanxuan Sun</name>
+    </author>
+    <author>
+      <name>Cheng Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.21268v1</id>
+    <title>MMR1: Enhancing Multimodal Reasoning with Variance-Aware Sampling and Open Resources</title>
+    <updated>2025-09-25T14:58:29Z</updated>
+    <link href="https://arxiv.org/abs/2509.21268v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.21268v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large multimodal reasoning models have achieved rapid progress, but their advancement is constrained by two major limitations: the absence of open, large-scale, high-quality long chain-of-thought (CoT) data, and the instability of reinforcement learning (RL) algorithms in post-training. Group Relative Policy Optimization (GRPO), the standard framework for RL fine-tuning, is prone to gradient vanishing when reward variance is low, which weakens optimization signals and impairs convergence. This work makes three contributions: (1) We propose Variance-Aware Sampling (VAS), a data selection strategy guided by Variance Promotion Score (VPS) that combines outcome variance and trajectory diversity to promote reward variance and stabilize policy optimization. (2) We release large-scale, carefully curated resources containing ~1.6M long CoT cold-start data and ~15k RL QA pairs, designed to ensure quality, difficulty, and diversity, along with a fully reproducible end-to-end training codebase. (3) We open-source a family of multimodal reasoning models in multiple scales, establishing standardized baselines for the community. Experiments across mathematical reasoning benchmarks demonstrate the effectiveness of both the curated data and the proposed VAS. Comprehensive ablation studies and analyses provide further insight into the contributions of each component. In addition, we theoretically establish that reward variance lower-bounds the expected policy gradient magnitude, with VAS serving as a practical mechanism to realize this guarantee. Our code, data, and checkpoints are available at https://github.com/LengSicong/MMR1.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-25T14:58:29Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Sicong Leng</name>
+    </author>
+    <author>
+      <name>Jing Wang</name>
+    </author>
+    <author>
+      <name>Jiaxi Li</name>
+    </author>
+    <author>
+      <name>Hao Zhang</name>
+    </author>
+    <author>
+      <name>Zhiqiang Hu</name>
+    </author>
+    <author>
+      <name>Boqiang Zhang</name>
+    </author>
+    <author>
+      <name>Yuming Jiang</name>
+    </author>
+    <author>
+      <name>Hang Zhang</name>
+    </author>
+    <author>
+      <name>Xin Li</name>
+    </author>
+    <author>
+      <name>Lidong Bing</name>
+    </author>
+    <author>
+      <name>Deli Zhao</name>
+    </author>
+    <author>
+      <name>Wei Lu</name>
+    </author>
+    <author>
+      <name>Yu Rong</name>
+    </author>
+    <author>
+      <name>Aixin Sun</name>
+    </author>
+    <author>
+      <name>Shijian Lu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.21628v2</id>
+    <title>RuCL: Stratified Rubric-Based Curriculum Learning for Multimodal Large Language Model Reasoning</title>
+    <updated>2026-03-03T09:05:32Z</updated>
+    <link href="https://arxiv.org/abs/2602.21628v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.21628v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Reinforcement Learning with Verifiable Rewards (RLVR) has emerged as a prevailing paradigm for enhancing reasoning in Multimodal Large Language Models (MLLMs). However, relying solely on outcome supervision risks reward hacking, where models learn spurious reasoning patterns to satisfy final answer checks. While recent rubric-based approaches offer fine-grained supervision signals, they suffer from high computational costs of instance-level generation and inefficient training dynamics caused by treating all rubrics as equally learnable. In this paper, we propose Stratified Rubric-based Curriculum Learning (RuCL), a novel framework that reformulates curriculum learning by shifting the focus from data selection to reward design. RuCL generates generalized rubrics for broad applicability and stratifies them based on the model's competence. By dynamically adjusting rubric weights during training, RuCL guides the model from mastering foundational perception to tackling advanced logical reasoning. Extensive experiments on various visual reasoning benchmarks show that RuCL yields a remarkable +7.83% average improvement over the Qwen2.5-VL-7B model, achieving a state-of-the-art accuracy of 60.06%.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-25T06:46:24Z</published>
+    <arxiv:comment>8 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Yukun Chen</name>
+    </author>
+    <author>
+      <name>Jiaming Li</name>
+    </author>
+    <author>
+      <name>Longze Chen</name>
+    </author>
+    <author>
+      <name>Ze Gong</name>
+    </author>
+    <author>
+      <name>Jingpeng Li</name>
+    </author>
+    <author>
+      <name>Zhen Qin</name>
+    </author>
+    <author>
+      <name>Hengyu Chang</name>
+    </author>
+    <author>
+      <name>Ancheng Xu</name>
+    </author>
+    <author>
+      <name>Zhihao Yang</name>
+    </author>
+    <author>
+      <name>Hamid Alinejad-Rokny</name>
+    </author>
+    <author>
+      <name>Qiang Qu</name>
+    </author>
+    <author>
+      <name>Bo Zheng</name>
+    </author>
+    <author>
+      <name>Min Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2205.12502v2</id>
+    <title>The Dialog Must Go On: Improving Visual Dialog via Generative Self-Training</title>
+    <updated>2023-03-02T12:33:10Z</updated>
+    <link href="https://arxiv.org/abs/2205.12502v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2205.12502v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Visual dialog (VisDial) is a task of answering a sequence of questions grounded in an image, using the dialog history as context. Prior work has trained the dialog agents solely on VisDial data via supervised learning or leveraged pre-training on related vision-and-language datasets. This paper presents a semi-supervised learning approach for visually-grounded dialog, called Generative Self-Training (GST), to leverage unlabeled images on the Web. Specifically, GST first retrieves in-domain images through out-of-distribution detection and generates synthetic dialogs regarding the images via multimodal conditional text generation. GST then trains a dialog agent on the synthetic and the original VisDial data. As a result, GST scales the amount of training data up to an order of magnitude that of VisDial (1.2M to 12.9M QA data). For robust training of the synthetic dialogs, we also propose perplexity-based data selection and multimodal consistency regularization. Evaluation on VisDial v1.0 and v0.9 datasets shows that GST achieves new state-of-the-art results on both datasets. We further observe the robustness of GST against both visual and textual adversarial attacks. Finally, GST yields strong performance gains in the low-data regime. Code is available at https://github.com/gicheonkang/gst-visdial.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-05-25T05:40:00Z</published>
+    <arxiv:comment>CVPR 2023</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Gi-Cheon Kang</name>
+    </author>
+    <author>
+      <name>Sungdong Kim</name>
+    </author>
+    <author>
+      <name>Jin-Hwa Kim</name>
+    </author>
+    <author>
+      <name>Donghyun Kwak</name>
+    </author>
+    <author>
+      <name>Byoung-Tak Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.19336v1</id>
+    <title>DaMo: Data Mixing Optimizer in Fine-tuning Multimodal LLMs for Mobile Phone Agents</title>
+    <updated>2025-10-22T07:57:59Z</updated>
+    <link href="https://arxiv.org/abs/2510.19336v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.19336v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Mobile Phone Agents (MPAs) have emerged as a promising research direction due to their broad applicability across diverse scenarios. While Multimodal Large Language Models (MLLMs) serve as the foundation for MPAs, their effectiveness in handling multiple mobile phone tasks simultaneously remains limited. Although multitask supervised fine-tuning (SFT) is widely adopted for multitask learning, existing approaches struggle to determine optimal training data compositions for peak performance. To address this challenge, we propose DaMo (Data Mixture Optimizer) - a novel solution employing a trainable network that predicts optimal data mixtures by forecasting downstream task performance for any given dataset ratio. To support comprehensive evaluation, we introduce PhoneAgentBench, the first specialized benchmark to evaluate MLLMs on multimodal mobile phone tasks, comprising 1235 QA pairs spanning diverse real-world industrial mobile application scenarios. Demonstrating strong predictive capability (R^2=0.81) in small-scale pilot experiments, DaMo efficiently extrapolates optimal data mixing configurations. Our results show DaMo achieves a 3.38% performance improvement on PhoneAgentBench compared to alternative methods. Furthermore, extensive experiments across established benchmarks including BFCL-v3, MME-Reasoning, MME-Perception, and OCRBench reveal DaMo's superior generalization, outperforming other approaches by 2.57% in terms of average score. When used solely for MLLM optimization on the BFCL-v3 task, DaMo improves the metrics by 12.47% than other methods. Notably, DaMo maintains robust scalability, preserving its effectiveness when applied to other model architectures. The code and dataset are available at https://github.com/OPPO-Mente-Lab/DaMo.git</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-22T07:57:59Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Kai Shi</name>
+    </author>
+    <author>
+      <name>Jun Yang</name>
+    </author>
+    <author>
+      <name>Ni Yang</name>
+    </author>
+    <author>
+      <name>Binqiang Pan</name>
+    </author>
+    <author>
+      <name>Qingsong Xie</name>
+    </author>
+    <author>
+      <name>Chao Zhang</name>
+    </author>
+    <author>
+      <name>Zhenyu Yang</name>
+    </author>
+    <author>
+      <name>Tianhuang Su</name>
+    </author>
+    <author>
+      <name>Haonan Lu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.04365v1</id>
+    <title>EXaMCaP: Subset Selection with Entropy Gain Maximization for Probing Capability Gains of Large Chart Understanding Training Sets</title>
+    <updated>2026-02-04T09:41:03Z</updated>
+    <link href="https://arxiv.org/abs/2602.04365v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.04365v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent works focus on synthesizing Chart Understanding (ChartU) training sets to inject advanced chart knowledge into Multimodal Large Language Models (MLLMs), where the sufficiency of the knowledge is typically verified by quantifying capability gains via the fine-tune-then-evaluate paradigm. However, full-set fine-tuning MLLMs to assess such gains incurs significant time costs, hindering the iterative refinement cycles of the ChartU dataset. Reviewing the ChartU dataset synthesis and data selection domains, we find that subsets can potentially probe the MLLMs' capability gains from full-set fine-tuning. Given that data diversity is vital for boosting MLLMs' performance and entropy reflects this feature, we propose EXaMCaP, which uses entropy gain maximization to select a subset. To obtain a high-diversity subset, EXaMCaP chooses the maximum-entropy subset from the large ChartU dataset. As enumerating all possible subsets is impractical, EXaMCaP iteratively selects samples to maximize the gain in set entropy relative to the current set, approximating the maximum-entropy subset of the full dataset. Experiments show that EXaMCaP outperforms baselines in probing the capability gains of the ChartU training set, along with its strong effectiveness across diverse subset sizes and compatibility with various MLLM architectures.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-04T09:41:03Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Jiapeng Liu</name>
+    </author>
+    <author>
+      <name>Liang Li</name>
+    </author>
+    <author>
+      <name>Bing Li</name>
+    </author>
+    <author>
+      <name>Peng Fu</name>
+    </author>
+    <author>
+      <name>Xiyan Gao</name>
+    </author>
+    <author>
+      <name>Chengyang Fang</name>
+    </author>
+    <author>
+      <name>Xiaoshuai Hao</name>
+    </author>
+    <author>
+      <name>Can Ma</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.12680v1</id>
+    <title>Vision-G1: Towards General Vision Language Reasoning with Multi-Domain Data Curation</title>
+    <updated>2025-08-18T07:24:33Z</updated>
+    <link href="https://arxiv.org/abs/2508.12680v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.12680v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Despite their success, current training pipelines for reasoning VLMs focus on a limited range of tasks, such as mathematical and logical reasoning. As a result, these models face difficulties in generalizing their reasoning capabilities to a wide range of domains, primarily due to the scarcity of readily available and verifiable reward data beyond these narrowly defined areas. Moreover, integrating data from multiple domains is challenging, as the compatibility between domain-specific datasets remains uncertain. To address these limitations, we build a comprehensive RL-ready visual reasoning dataset from 46 data sources across 8 dimensions, covering a wide range of tasks such as infographic, mathematical, spatial, cross-image, graphic user interface, medical, common sense and general science. We propose an influence function based data selection and difficulty based filtering strategy to identify high-quality training samples from this dataset. Subsequently, we train the VLM, referred to as Vision-G1, using multi-round RL with a data curriculum to iteratively improve its visual reasoning capabilities. Our model achieves state-of-the-art performance across various visual reasoning benchmarks, outperforming similar-sized VLMs and even proprietary models like GPT-4o and Gemini-1.5 Flash. The model, code and dataset are publicly available at https://github.com/yuh-zha/Vision-G1.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-18T07:24:33Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yuheng Zha</name>
+    </author>
+    <author>
+      <name>Kun Zhou</name>
+    </author>
+    <author>
+      <name>Yujia Wu</name>
+    </author>
+    <author>
+      <name>Yushu Wang</name>
+    </author>
+    <author>
+      <name>Jie Feng</name>
+    </author>
+    <author>
+      <name>Zhi Xu</name>
+    </author>
+    <author>
+      <name>Shibo Hao</name>
+    </author>
+    <author>
+      <name>Zhengzhong Liu</name>
+    </author>
+    <author>
+      <name>Eric P. Xing</name>
+    </author>
+    <author>
+      <name>Zhiting Hu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.10855v1</id>
+    <title>Learning More from Less: Exploiting Counterfactuals for Data-Efficient Chart Understanding</title>
+    <updated>2026-05-11T17:02:09Z</updated>
+    <link href="https://arxiv.org/abs/2605.10855v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.10855v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-Language Models (VLMs) have demonstrated remarkable progress in chart understanding, largely driven by supervised fine-tuning (SFT) on increasingly large synthetic datasets. However, scaling SFT data alone is inefficient and overlooks a key property of charts: charts are programmatically generated visual artifacts, where small, code-controlled visual changes can induce drastic shifts in semantics and correct answers. Learning this counterfactual sensitivity requires VLMs to discriminate fine-grained visual differences, yet standard SFT treats training instances independently and provides limited supervision to enforce this behavior. To address this, we introduce ChartCF, a data-efficient training framework designed to enhance counterfactual sensitivity. ChartCF consists of: (1) a counterfactual data synthesis pipeline via code modification, (2) a chart similarity-based data selection strategy that filters overly difficult samples for improved training efficiency, and (3) multimodal preference optimization across both textual and visual modalities. Experiments on five benchmarks show that ChartCF achieves superior or comparable performance to strong chart-specific VLMs while using significantly less training data.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-11T17:02:09Z</published>
+    <arxiv:comment>Accepted to ACL 2026 Main Conference</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Jianzhu Bao</name>
+    </author>
+    <author>
+      <name>Haozhen Zhang</name>
+    </author>
+    <author>
+      <name>Kuicai Dong</name>
+    </author>
+    <author>
+      <name>Bozhi Wu</name>
+    </author>
+    <author>
+      <name>Sarthak Ketanbhai Modi</name>
+    </author>
+    <author>
+      <name>Zi Pong Lim</name>
+    </author>
+    <author>
+      <name>Yon Shin Teo</name>
+    </author>
+    <author>
+      <name>Wenya Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2408.12109v2</id>
+    <title>RoVRM: A Robust Visual Reward Model Optimized via Auxiliary Textual Preference Data</title>
+    <updated>2025-01-31T14:30:07Z</updated>
+    <link href="https://arxiv.org/abs/2408.12109v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2408.12109v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large vision-language models (LVLMs) often fail to align with human preferences, leading to issues like generating misleading content without proper visual context (also known as hallucination). A promising solution to this problem is using human-preference alignment techniques, such as best-of-n sampling and reinforcement learning. However, these techniques face the difficulty arising from the scarcity of visual preference data, which is required to train a visual reward model (VRM). In this work, we continue the line of research. We present a Robust Visual Reward Model (RoVRM) which improves human-preference alignment for LVLMs. RoVRM leverages auxiliary textual preference data through a three-phase progressive training and optimal transport-based preference data selection to effectively mitigate the scarcity of visual preference data. We experiment with RoVRM on the commonly used vision-language tasks based on the LLaVA-1.5-7B and -13B models. Experimental results demonstrate that RoVRM consistently outperforms traditional VRMs. Furthermore, our three-phase progressive training and preference data selection approaches can yield consistent performance gains over ranking-based alignment techniques, such as direct preference optimization.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-08-22T03:49:18Z</published>
+    <arxiv:comment>Accepted by AAAI 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Chenglong Wang</name>
+    </author>
+    <author>
+      <name>Yang Gan</name>
+    </author>
+    <author>
+      <name>Yifu Huo</name>
+    </author>
+    <author>
+      <name>Yongyu Mu</name>
+    </author>
+    <author>
+      <name>Murun Yang</name>
+    </author>
+    <author>
+      <name>Qiaozhi He</name>
+    </author>
+    <author>
+      <name>Tong Xiao</name>
+    </author>
+    <author>
+      <name>Chunliang Zhang</name>
+    </author>
+    <author>
+      <name>Tongran Liu</name>
+    </author>
+    <author>
+      <name>Quan Du</name>
+    </author>
+    <author>
+      <name>Di Yang</name>
+    </author>
+    <author>
+      <name>Jingbo Zhu</name>
+    </author>
+  </entry>
+</feed>

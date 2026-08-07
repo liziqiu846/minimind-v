@@ -200,6 +200,7 @@ prediction test 和两个符合阶段三规则的 paired training pilot。当前
 | `PROJALLOC-01` | `INSTANTIATION_REJECTED` | 当前 frozen-base / hashed-coordinate setting 的 exact `1/4094/1` fixed-total projector allocation | frozen-feature identifiability、其他预注册 module-placement regime、objective mismatch、gradient routing、task-specific absorption |
 | `LITMAP-04` | `BRIDGE_REJECTED` | 当前 objective-routing / task-specific-absorption primary literature 到本地唯一、单因素、no-sweep 最小干预的桥 | objective competition、gradient routing、task-specific absorption 与 frozen-feature/objective mismatch 机制本身 |
 | `LITMAP-05` | `BRIDGE_REJECTED` | 当前 formal probing/decodability theory、direct LVLM evidence 与 MiniMind-V architecture 到唯一、no-sweep、具有可靠负向排除力的 frozen-feature readout bridge | frozen feature 中存在可读 signal、downstream absorption/transfer failure、objective mismatch、encoder limitation 与其他被独立理论固定的 readout family |
+| `COVER-01` | `BRIDGE_REJECTED` | 当前 authoritative broad source/task labels、official/local lineage 与 audited literature 到唯一、no-sweep、单因素 complementary-coverage-versus-redundancy local bridge | coverage/diversity、Vision-Flan task diversity、domain/compositional coverage、source transfer、ALLaVA full lineage 与真正 source-factorial generative experiment |
 
 这些状态不改动任何原始实验结果。历史 result 中的 `REJECT_IDEA` 是当时 autonomous
 workflow 的“停止该 candidate 并转向下一路线”判定；其科学外推必须按上表的 failure
@@ -217,31 +218,33 @@ level 解读。当前没有证据达到 `MECHANISM_REJECTED`。
 
 ## 9. 当前 Active Research Question
 
-> MiniMind-V 当前训练数据及可在本服务器取得的 authoritative source data 中，是否
-> 存在无需新 proxy、由来源语义唯一固定的 domain / mixture / multimodal-combination
-> strata，使“增加互补覆盖”相对“增加同域冗余”能够形成单因素、可证伪且可在当前
-> 资源内验证的 VLM 泛化 prediction？
+> 是否存在由数据发布者预先定义的 crossed multimodal schema：同一
+> image/acquisition unit 系统地对应多个 text/task factors，从而在固定视觉来源、
+> 质量、难度和 output format 后，唯一构造 baseline cells、complementary crossed
+> cells、matched redundancy cells 与一个 held-out crossed cell，用 generative
+> VLM prediction 裁决跨模态组合覆盖？
 
 ### 本次研究重心切换
 
-- **Previous active question**：`LITMAP-05` 是否存在 architecture/theory 唯一
-  固定的 frozen-feature readout，可区分 representation-absent 与
-  downstream-unabsorbed。
-- **Why it was demoted**：553 条 raw records、491 个 unique titles 与 13 篇决定性
-  primary sources 的完整核查显示，formal quantities 都依赖研究者事先选择
-  predictive family、target distribution 或 regularization；最直接的 LVLM studies
-  也需要 layer/token/pooling/learning-rate 选择或 max-over-layer。MiniMind-V 只固定
-  SigLIP2 `last_hidden_state` 的位置，没有固定 task readout 或 negative
-  completeness。
-- **New active question**：`COVER-01` authoritative controlled-coverage gate。
-- **Evidence motivating the switch**：连续两次 training instantiation 与两次
-  literature bridge 均无法无歧义定位 representation/objective failure；相比继续
-  制造 probe，数据来源已有的 domain/mixture/combination labels 更可能提供不依赖
-  checkpoint proxy 的受控科学对象。
-- **What remains open from the previous question**：frozen-feature signal、
-  downstream absorption/transfer failure、objective mismatch、encoder limitation
-  及 linear/nonlinear decodability 均未被机制性否定；只否定当前
-  identifiability bridge。
+- **Previous active question**：`COVER-01` 是否能从 authoritative broad
+  source/domain/task labels 与本地 lineage 唯一构造 complementary coverage
+  versus same-domain redundancy。
+- **Why it was demoted**：442 条 raw records、380 个 unique titles、14 篇决定性
+  primary sources 与 official MiniMind/ALLaVA lineage audit 显示，direct generative
+  evidence 依赖 ratio/category/target search；LAION/VFLAN 与 broad task labels
+  同时改变 acquisition、task、style、quality、difficulty 与 output schema。最干净
+  的 source-domain control 只适用于 CLIP，无 autoregressive LVLM risk bridge。
+- **New active question**：`CROSSFACT-01` authoritative crossed-cell gate。
+- **Evidence motivating the switch**：本地 parquet 虽无 source IDs，但保存的
+  169 个官方 ALLaVA captions 全部能以 exact assistant text 映射回 source row；
+  因而 decisive failure 不是“lineage 完全不可恢复”，而是 broad source labels
+  不正交。固定同一 image/acquisition unit，再 crossing publisher-defined
+  text/task factors，是直接针对该混杂的更窄设计。
+- **What remains open from the previous question**：coverage/diversity、
+  Vision-Flan task diversity、source/domain/compositional coverage、
+  source-specific transfer、ALLaVA 全量 ID 恢复与未来真正 factorial 的
+  generative-LVLM 实验均开放；只否定当前 broad-label-to-local-single-factor
+  bridge。
 
 更完整的 Mission Envelope 与 active-question 历史见
 `docs/project/ACTIVE_RESEARCH_QUESTION.md`。
@@ -250,21 +253,21 @@ level 解读。当前没有证据达到 `MECHANISM_REJECTED`。
 
 ## 10. 当前动态 backlog
 
-- **ACTIVE**：`COVER-01` authoritative controlled-coverage gate。Immutable
-  literature/data-interface plan 已由当前 plan commit 冻结；round 1 只执行
-  primary-source、official dataset、data-lineage 与 local-interface audit，不运行
-  checkpoint inference 或训练。
-- **NEXT**：尚未登记可执行 candidate。`COVER-01` 只有在 authoritative strata、
-  single-factor contrast、held-out prediction 与 local feasibility 同时通过时才允许
-  选择一个 coverage candidate。
+- **ACTIVE**：`CROSSFACT-01` authoritative crossed-cell gate。它只接受发布者在
+  outcome 前定义的同一 image/acquisition × 多 text/task cells；当前必须先提交
+  immutable literature/schema plan，plan commit 前不执行新科学分析。
+- **NEXT**：尚无可执行 training candidate。只有 exact crossed-cell lineage、
+  source-factor orthogonality、matched redundancy、frozen held-out cell、direct
+  generative evidence 与 local feasibility 全部通过，才允许登记一个最小训练
+  candidate。
 - **BACKLOG**：`OBJ-01`。它不能由已失败的 `VISCOND-01` positive gate 启动；
   `LITMAP-04` 也没有提供合法最小 objective bridge。该上位假设仍开放，但不是可直接
   训练 candidate。
 
-`LITMAP-05` 已按 immutable gate 作出 `NO_CANDIDATE` /
-`BRIDGE_REJECTED`。`COVER-01_round1` immutable plan 已冻结；下一步核查
-authoritative domain/mixture labels、现有数据 lineage 与唯一 controlled-coverage
-contrast；不得把数据量、随机 cluster 或事后 embedding 分组换名为 coverage。
+`COVER-01` 已按 immutable gate 作出 `NO_CANDIDATE` /
+`BRIDGE_REJECTED`。下一步只允许冻结并执行 `CROSSFACT-01` 的 targeted
+primary-source/schema gate；不得从 LAION/VFLAN、broad task categories、
+embedding/LLM clusters 中搜索 mixture 或 held-out target。
 
 ---
 
@@ -282,8 +285,11 @@ contrast；不得把数据量、随机 cluster 或事后 embedding 分组换名�
    representation 中确实缺失；`LITMAP-05` 说明当前文献与 architecture 不能用唯一
    readout 区分二者，而不是二者之一已被排除。
 8. authoritative domain/mixture/combination coverage 可能比原始样本数更能预测
-   未见组合或域的风险；但是否存在可用于本地单因素实验的可靠 strata 尚待
-   `COVER-01` 审计。
+   未见组合或域的风险；`COVER-01` 只说明 broad source/task labels 不能构成本地
+   唯一单因素 bridge。
+9. 同一 image/acquisition unit 上 publisher-defined text/task factors 的 crossed-cell
+   coverage 可能隔离真正跨模态组合泛化；是否存在 authoritative schema、exact
+   lineage 与 generative held-out cell 尚待 `CROSSFACT-01` 裁决。
 
 ---
 
@@ -298,6 +304,8 @@ contrast；不得把数据量、随机 cluster 或事后 embedding 分组换名�
 - 不制造新的无理论桥 checkpoint proxy；
 - 不把 random cluster、embedding neighborhood、事后 benchmark category 或原始
   sample count 直接称为 controlled coverage；
+- 不把 LAION/VFLAN、broad dataset/task labels 或非唯一官方 ID 直接当作 factorial
+  cell；不搜索 domain pair、mixture ratio、target cell 或 output format；
 - 不访问 final confirmation set；
 - 不提前宣布进入阶段四。
 
@@ -305,15 +313,17 @@ contrast；不得把数据量、随机 cluster 或事后 embedding 分组换名�
 
 ## 13. 仓库与执行状态
 
-- 当前最新 scientific result：`experiments/results/LITMAP-05_round1/RESULT.md`
-  （`NO_CANDIDATE` / `BRIDGE_REJECTED`，由本次 result commit 冻结）。
-- 当前 immutable plan：`experiments/plans/COVER-01_round1.md`（由当前 plan
-  commit 冻结）。
+- 当前最新 scientific result：`experiments/results/COVER-01_round1/RESULT.md`
+  （`NO_CANDIDATE` / `BRIDGE_REJECTED`；只否定当前
+  authoritative-broad-label-to-local-single-factor bridge）。
+- 最近完成的 immutable plan：`experiments/plans/COVER-01_round1.md`
+  （plan commit `cc88cd3`）；`CROSSFACT-01` 新分析必须等待其独立 plan commit。
 - `RUNNING_JOB=none`，`HARD_STOP=false`。
-- 昨夜新增 plans、results、raw receipts、logs 和 SHA manifests 已在
+- 新增 plans、results、raw receipts、logs 和 SHA manifests 已在
   `EXPERIMENT_REGISTRY.md` 建立 canonical 索引；失败原始证据保留。
-- `LITMAP-05` 的 result、13-source evidence matrix、deterministic search index、
-  local interface audit 与 source hashes 已固化；13/13 决定性来源均可核查。
+- `COVER-01` 的 14-source matrix、deterministic search index、official
+  data-lineage audit、169 exact sample mappings 与 source hashes 已固化；14/14
+  决定性来源均可核查，0 GPU/checkpoint/training，未访问 final confirmation。
 
 ---
 
@@ -324,6 +334,8 @@ contrast；不得把数据量、随机 cluster 或事后 embedding 分组换名�
 > canonical state 优先于聊天与 nightly report。当前仍处于阶段三；五个初始
 > candidate 的失败粒度分别是 bridge/proxy/proxy/instantiation/instantiation，
 > 后续 `LITMAP-04` 与 `LITMAP-05` 均为 bridge rejection，没有上位 mechanism 被
-> 否定。当前 active question 是 `COVER-01` authoritative controlled-coverage
-> gate；从已提交的 immutable plan 继续 source/data-lineage audit，不重跑既有
-> 实验，不制造新 proxy，不访问 final confirmation set。
+> 否定；`COVER-01` 也只得到 broad-label bridge rejection。当前 active question
+> 是 `CROSSFACT-01` authoritative crossed-cell gate；先确认其 immutable plan 已
+> 提交，再继续同一 image/acquisition × publisher-defined text/task factor 的
+> targeted schema audit。不重跑既有实验，不搜索 mixture/target，不制造新 proxy，
+> 不访问 final confirmation set。

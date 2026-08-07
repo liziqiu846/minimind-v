@@ -1,0 +1,338 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/EKLcifJtNw0+MKYMXyRAmxmuuCs</id>
+  <title>arXiv Query: search_query=(all:ALLaVA OR all:"Vision-FLAN" OR all:VFLAN) AND (all:dataset OR all:instruction OR all:multimodal)&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-08-07T06:59:16Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=(all:ALLaVA+OR+(all:%22Vision-FLAN%22+OR+all:VFLAN))+AND+(all:dataset+OR+(all:instruction+OR+all:multimodal))&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>11</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2402.11690v1</id>
+    <title>Vision-Flan: Scaling Human-Labeled Tasks in Visual Instruction Tuning</title>
+    <updated>2024-02-18T19:38:44Z</updated>
+    <link href="https://arxiv.org/abs/2402.11690v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.11690v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Despite vision-language models' (VLMs) remarkable capabilities as versatile visual assistants, two substantial challenges persist within the existing VLM frameworks: (1) lacking task diversity in pretraining and visual instruction tuning, and (2) annotation error and bias in GPT-4 synthesized instruction tuning data. Both challenges lead to issues such as poor generalizability, hallucination, and catastrophic forgetting. To address these challenges, we construct Vision-Flan, the most diverse publicly available visual instruction tuning dataset to date, comprising 187 diverse tasks and 1,664,261 instances sourced from academic datasets, and each task is accompanied by an expert-written instruction. In addition, we propose a two-stage instruction tuning framework, in which VLMs are firstly finetuned on Vision-Flan and further tuned on GPT-4 synthesized data. We find this two-stage tuning framework significantly outperforms the traditional single-stage visual instruction tuning framework and achieves the state-of-the-art performance across a wide range of multi-modal evaluation benchmarks. Finally, we conduct in-depth analyses to understand visual instruction tuning and our findings reveal that: (1) GPT-4 synthesized data does not substantially enhance VLMs' capabilities but rather modulates the model's responses to human-preferred formats; (2) A minimal quantity (e.g., 1,000) of GPT-4 synthesized data can effectively align VLM responses with human-preference; (3) Visual instruction tuning mainly helps large-language models (LLMs) to understand visual features.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-18T19:38:44Z</published>
+    <arxiv:comment>8 Pages, visual instruction tuning</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Zhiyang Xu</name>
+    </author>
+    <author>
+      <name>Chao Feng</name>
+    </author>
+    <author>
+      <name>Rulin Shao</name>
+    </author>
+    <author>
+      <name>Trevor Ashby</name>
+    </author>
+    <author>
+      <name>Ying Shen</name>
+    </author>
+    <author>
+      <name>Di Jin</name>
+    </author>
+    <author>
+      <name>Yu Cheng</name>
+    </author>
+    <author>
+      <name>Qifan Wang</name>
+    </author>
+    <author>
+      <name>Lifu Huang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.26004v1</id>
+    <title>MAGIC: Multimodal Alignment &amp; Grounding-aware Instruction Coreset for Vision-Language Models</title>
+    <updated>2026-05-25T16:22:09Z</updated>
+    <link href="https://arxiv.org/abs/2605.26004v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.26004v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Instruction tuning of large vision-language models (LVLMs) increasingly depends on massive multimodal corpora, yet these datasets contain samples with substantial redundancy, low visual dependency, and highly imbalanced coverage of multimodal reasoning behaviors. As a result, uniform subsampling or naive score-based selection often yields suboptimal training subsets. We introduce MAGIC, a training-free, forward-only coreset selection method designed to construct compact yet behaviorally faithful subsets for multimodal instruction tuning. MAGIC is built on three intrinsic signals extracted from a pretrained VLM: Multimodal Gain, which measures the likelihood improvement obtained from visual input; Bridging Relevance, which captures the sharpness of answer-token grounding over visual tokens; and Skill-Neuron Signatures, which characterize the functional computation elicited by each sample via top-activated feed-forward neurons. MAGIC combines these signals in a three-stage pipeline: filtering low-gain examples, ranking candidates by a normalized quality objective, and performing bucket-wise budget allocation over discrete neuron signatures to preserve latent multimodal skill coverage. This formulation avoids backpropagation, auxiliary selector training, and expensive clustering in continuous activation spaces, while remaining efficient and easily deployable in existing VLMs. Across LLaVA-665K and Vision-Flan datasets, and transfer settings to large target models, LLaVA-1.5-7B and -13B, MAGIC consistently improves over strong baselines under matched 20% budgets: it achieves 100.3% relative performance to full finetuning on LLaVA-665K and 101.6% relative performance on Vision-Flan-186K, while yielding a 73.7% reduction in wall-clock run time.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-25T16:22:09Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Shristi Das Biswas</name>
+    </author>
+    <author>
+      <name>Kaushik Roy</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.26761v2</id>
+    <title>Once-For-All: A Train-Once and Select-Anytime Framework for Multimodal Instruction Tuning</title>
+    <updated>2026-06-04T11:25:43Z</updated>
+    <link href="https://arxiv.org/abs/2605.26761v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.26761v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal instruction tuning is the de facto recipe for adapting vision language models (VLMs), yet instruction data are highly redundant, making data selection critical for training efficiency. Existing methods derive selection signals from a specific model or dataset, so whenever the target model or candidate pool changes, the criteria must be recomputed from scratch at substantial cost. To address this, we propose OFA, a data selection framework that trains a reusable selector once and applies it to any dataset or model without recomputation. OFA clusters multimodal instructions in a frozen CLIP space, derives pseudo labels from the cluster structure, and trains a lightweight selector for only a few epochs; samples on which this selector is least confident are selected as the most informative. Once trained, the frozen selector transfers directly across datasets and model scales. The selector is trained once on LLaVA-665K and applied both to LLaVA-665K itself and, without any retraining, to the unseen Vision-Flan-186K. Selecting only 15% of the data, OFA achieves 98.3% of full data performance across 10 downstream benchmarks; on the smaller Vision-Flan-186K, the transferred selector surpasses full data training by 10.6%, confirming that the learned signal generalizes to datasets never seen during selector training. The same selected subsets benefit VLMs at both Qwen2.5-VL-3B and LLaVA-v1.5-7B without per model recomputation, decoupling selection from the target model. These results demonstrate that a single, transferable selector provides an effective and reusable solution for efficient multimodal instruction tuning.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-26T09:31:20Z</published>
+    <arxiv:comment>15 pages, 6 figures. Mingkang Dong and Hongyi Cai contributed equally to this work. Muxin Pu is the corresponding author</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Mingkang Dong</name>
+    </author>
+    <author>
+      <name>Hongyi Cai</name>
+    </author>
+    <author>
+      <name>Xiwen Lei</name>
+    </author>
+    <author>
+      <name>Jie Li</name>
+    </author>
+    <author>
+      <name>Tao Zhang</name>
+    </author>
+    <author>
+      <name>Muxin Pu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.01195v2</id>
+    <title>VisNec: Measuring and Leveraging Visual Necessity for Multimodal Instruction Tuning</title>
+    <updated>2026-06-25T08:08:57Z</updated>
+    <link href="https://arxiv.org/abs/2603.01195v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.01195v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The effectiveness of multimodal instruction tuning depends not only on dataset scale, but critically on whether training samples genuinely require visual reasoning. However, existing instruction datasets often contain a substantial portion of visually redundant samples (solvable from text alone), as well as multimodally misaligned supervision that can degrade learning. To address this, we propose VisNec (Visual Necessity Score), a principled data selection framework that measures the marginal contribution of visual input during instruction tuning. By comparing predictive loss with and without visual context, VisNec identifies whether a training instance is vision-critical, redundant, or misaligned. To preserve task diversity, we combine VisNec with semantic clustering and select high-necessity samples within each cluster. Across 10 downstream benchmarks, training on only 15% of the LLaVA-665K dataset selected by VisNec achieves 100.2% of full-data performance. On the smaller Vision-Flan-186K dataset, our selection not only further reduces data size but also surpasses full-data training by 15.8%. These results demonstrate that measuring and leveraging visual necessity provides an effective solution for both efficient and robust multimodal instruction tuning. Codes and selected subsets will be released upon acceptance.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-01T17:26:02Z</published>
+    <arxiv:comment>Accepted at ECCV 2026. Project Page: https://dmk041218.github.io/VisNec/</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Mingkang Dong</name>
+    </author>
+    <author>
+      <name>Hongyi Cai</name>
+    </author>
+    <author>
+      <name>Jie Li</name>
+    </author>
+    <author>
+      <name>Sifan Zhou</name>
+    </author>
+    <author>
+      <name>Bin Ren</name>
+    </author>
+    <author>
+      <name>Kunyu Peng</name>
+    </author>
+    <author>
+      <name>Yuqian Fu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.07591v2</id>
+    <title>Filter Images First, Generate Instructions Later: Pre-Instruction Data Selection for Visual Instruction Tuning</title>
+    <updated>2025-04-05T15:13:01Z</updated>
+    <link href="https://arxiv.org/abs/2503.07591v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.07591v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Visual instruction tuning (VIT) for large vision-language models (LVLMs) requires training on expansive datasets of image-instruction pairs, which can be costly. Recent efforts in VIT data selection aim to select a small subset of high-quality image-instruction pairs, reducing VIT runtime while maintaining performance comparable to full-scale training. However, a major challenge often overlooked is that generating instructions from unlabeled images for VIT is highly expensive. Most existing VIT datasets rely heavily on human annotations or paid services like the GPT API, which limits users with constrained resources from creating VIT datasets for custom applications. To address this, we introduce Pre-Instruction Data Selection (PreSel), a more practical data selection paradigm that directly selects the most beneficial unlabeled images and generates instructions only for the selected images. PreSel first estimates the relative importance of each vision task within VIT datasets to derive task-wise sampling budgets. It then clusters image features within each task, selecting the most representative images with the budget. This approach reduces computational overhead for both instruction generation during VIT data formation and LVLM fine-tuning. By generating instructions for only 15% of the images, PreSel achieves performance comparable to full-data VIT on the LLaVA-1.5 and Vision-Flan datasets. The link to our project page: https://bardisafa.github.io/PreSel</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-10T17:55:11Z</published>
+    <arxiv:comment>Accepted at CVPR 2025 (Highlight)</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Bardia Safaei</name>
+    </author>
+    <author>
+      <name>Faizan Siddiqui</name>
+    </author>
+    <author>
+      <name>Jiacong Xu</name>
+    </author>
+    <author>
+      <name>Vishal M. Patel</name>
+    </author>
+    <author>
+      <name>Shao-Yuan Lo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.11684v2</id>
+    <title>ALLaVA: Harnessing GPT4V-Synthesized Data for Lite Vision-Language Models</title>
+    <updated>2024-06-17T07:55:59Z</updated>
+    <link href="https://arxiv.org/abs/2402.11684v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.11684v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large vision-language models (LVLMs) have shown premise in a broad range of vision-language tasks with their strong reasoning and generalization capabilities. However, they require considerable computational resources for training and deployment. This study aims to bridge the performance gap between traditional-scale LVLMs and resource-friendly lite versions by adopting high-quality training data. To this end, we propose a comprehensive pipeline for generating a synthetic dataset. The key idea is to leverage strong proprietary models to generate (i) fine-grained image annotations for vision-language alignment and (ii) complex reasoning visual question-answering pairs for visual instruction fine-tuning, yielding 1.3M samples in total. We train a series of lite VLMs on the synthetic dataset and experimental results demonstrate the effectiveness of the proposed scheme, where they achieve competitive performance on 17 benchmarks among 4B LVLMs, and even perform on par with 7B/13B-scale models on various benchmarks. This work highlights the feasibility of adopting high-quality data in crafting more efficient LVLMs. We name our dataset \textit{ALLaVA}, and open-source it to research community for developing better resource-efficient LVLMs for wider usage.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-18T19:26:49Z</published>
+    <arxiv:comment>22 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Guiming Hardy Chen</name>
+    </author>
+    <author>
+      <name>Shunian Chen</name>
+    </author>
+    <author>
+      <name>Ruifei Zhang</name>
+    </author>
+    <author>
+      <name>Junying Chen</name>
+    </author>
+    <author>
+      <name>Xiangbo Wu</name>
+    </author>
+    <author>
+      <name>Zhiyi Zhang</name>
+    </author>
+    <author>
+      <name>Zhihong Chen</name>
+    </author>
+    <author>
+      <name>Jianquan Li</name>
+    </author>
+    <author>
+      <name>Xiang Wan</name>
+    </author>
+    <author>
+      <name>Benyou Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.01717v1</id>
+    <title>Decentralized Instruction Tuning: Conflict-Aware Splitting and Weight Merging</title>
+    <updated>2026-06-01T05:33:56Z</updated>
+    <link href="https://arxiv.org/abs/2606.01717v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.01717v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Instruction tuning aligns large language models, including multimodal ones, with diverse user intents, but scaling to heterogeneous mixtures is hindered by gradient interference and bandwidth-heavy synchronization. We ask whether these two bottlenecks can be addressed jointly by training parts of the mixture independently and reconciling them once in parameter space. We develop a local quadratic theory inside a shared flat basin that yields three results: weight merging produces a curvature-weighted variance reduction; PCA-aligned conflict splitting maximizes this gain along high-curvature directions; and merging additionally acts as spectral filtering with implicit norm regularization. These results directly motivate MERIT, a decentralized merge-ready instruction-tuning pipeline that estimates dataset-level gradient conflicts, partitions the mixture along the top PCA conflict axes, fine-tunes each partition independently with no inter-partition communication, and merges once via token-weighted averaging. On Qwen2.5-VL-3B with 136 Vision-FLAN tasks, MERIT improves the 8-benchmark average from 54.3 (joint training) to 57.0. The same recipe scales to a 7B model on a 1.6M-example, 176-source mixture -- matching or exceeding centralized joint training with minimal cost overhead -- and transfers to text-only FLAN. Our code is available at https://github.com/naver-ai/merit.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-01T05:33:56Z</published>
+    <arxiv:comment>32 pages, 5 figures. Accepted for publication at ICML 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Minsik Choi</name>
+    </author>
+    <author>
+      <name>Geewook Kim</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.10995v2</id>
+    <title>Concept-skill Transferability-based Data Selection for Large Vision-Language Models</title>
+    <updated>2024-10-02T17:20:28Z</updated>
+    <link href="https://arxiv.org/abs/2406.10995v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.10995v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Instruction tuning, or supervised finetuning on extensive task-specific data, is necessary for Large Vision-Language Models (LVLMs) to generalize well across a broad range of vision-language (VL) tasks. However, training on large VL datasets can become prohibitively expensive. In this work, we introduce COINCIDE, an effective and scalable data selection technique that uses a small model as a reference model to select visual instruction tuning data for efficient finetuning of a target LVLM, focusing on diversity and transferability. Specifically, we cluster the training data using internal activations from a small model, which identifies VL concept-skill compositions needed by a target LVLM. We then sample data from these diverse clusters by considering their density and transferability, or the ability to transfer well to other concept-skill compositions. This approach ensures the diversity of these compositions, which is vital for LVLM generalization. Extensive experiments demonstrate that COINCIDE achieves superior performance and data selection efficiency against 8 strong baselines on two distinct datasets: LLaVA-1.5 and Vision-Flan. Using only 20% of the LLaVA-1.5 dataset, COINCIDE achieves performance comparable to the LVLM finetuned on the whole dataset, with 70% reduction of the wall-clock running time. On the Vision-Flan dataset, our method achieves superior results with only 16.7% of the training data.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-16T16:15:20Z</published>
+    <arxiv:comment>EMNLP 2024</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jaewoo Lee</name>
+    </author>
+    <author>
+      <name>Boyang Li</name>
+    </author>
+    <author>
+      <name>Sung Ju Hwang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.09715v2</id>
+    <title>Does the Question Really Matter? Training-Free Data Selection for Vision-Language SFT</title>
+    <updated>2026-06-10T06:53:56Z</updated>
+    <link href="https://arxiv.org/abs/2603.09715v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.09715v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Visual instruction tuning is crucial for improving vision-language large models (VLLMs). However, many samples can be solved via linguistic patterns or common-sense shortcuts, without genuine cross-modal reasoning, limiting the effectiveness of multimodal learning. Prior data selection methods often rely on costly proxy model training and focus on difficulty or diversity, failing to capture a sample's true contribution to vision-language joint reasoning. In this paper, we propose CVS, a training-free data selection method based on the insight that, for high-quality multimodal samples, introducing the question should substantially alter the model's assessment of answer validity given an image. CVS leverages a frozen VLLM as an evaluator and measures the discrepancy in answer validity with and without conditioning on the question, enabling the identification of samples that require vision-language joint reasoning while filtering semantic-conflict noise. Experiments on Vision-Flan and The Cauldron show that CVS achieves solid performance across datasets. On Vision-Flan, CVS outperforms full-data training by 3.5% and 4.8% using only 10% and 15% of the data, respectively, and remains robust on the highly heterogeneous Cauldron dataset. Moreover, CVS reduces computational cost by 17.3% and 44.4% compared to COINCIDE and XMAS.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-10T14:23:38Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Peng Sun</name>
+    </author>
+    <author>
+      <name>Yi Yang</name>
+    </author>
+    <author>
+      <name>Huawen Shen</name>
+    </author>
+    <author>
+      <name>Yi Ban</name>
+    </author>
+    <author>
+      <name>Tianfan Fu</name>
+    </author>
+    <author>
+      <name>Yanbo Wang</name>
+    </author>
+    <author>
+      <name>Yuqiang Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.01454v1</id>
+    <title>Data Selection for Fine-tuning Vision Language Models via Cross Modal Alignment Trajectories</title>
+    <updated>2025-10-01T20:47:29Z</updated>
+    <link href="https://arxiv.org/abs/2510.01454v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.01454v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Data-efficient learning aims to eliminate redundancy in large training datasets by training models on smaller subsets of the most informative examples. While data selection has been extensively explored for vision models and large language models (LLMs), it remains underexplored for Large Vision-Language Models (LVLMs). Notably, none of existing methods can outperform random selection at different subset sizes. In this work, we propose the first principled method for data-efficient instruction tuning of LVLMs. We prove that examples with similar cross-modal attention matrices during instruction tuning have similar gradients. Thus, they influence model parameters in a similar manner and convey the same information to the model during training. Building on this insight, we propose XMAS, which clusters examples based on the trajectories of the top singular values of their attention matrices obtained from fine-tuning a small proxy LVLM. By sampling a balanced subset from these clusters, XMAS effectively removes redundancy in large-scale LVLM training data. Extensive experiments show that XMAS can discard 50% of the LLaVA-665k dataset and 85% of the Vision-Flan dataset while fully preserving performance of LLaVA-1.5-7B on 10 downstream benchmarks and speeding up its training by 1.2x. This is 30% more data reduction compared to the best baseline for LLaVA-665k. The project's website can be found at https://bigml-cs-ucla.github.io/XMAS-project-page/.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-01T20:47:29Z</published>
+    <arxiv:comment>30 pages, 10 figures, 5 tables, link: https://bigml-cs-ucla.github.io/XMAS-project-page/</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Nilay Naharas</name>
+    </author>
+    <author>
+      <name>Dang Nguyen</name>
+    </author>
+    <author>
+      <name>Nesihan Bulut</name>
+    </author>
+    <author>
+      <name>Mohammadhossein Bateni</name>
+    </author>
+    <author>
+      <name>Vahab Mirrokni</name>
+    </author>
+    <author>
+      <name>Baharan Mirzasoleiman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.00654v4</id>
+    <title>ICONS: Influence Consensus for Vision-Language Data Selection</title>
+    <updated>2025-12-28T01:12:45Z</updated>
+    <link href="https://arxiv.org/abs/2501.00654v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.00654v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Training vision-language models via instruction tuning relies on large data mixtures spanning diverse tasks and domains, yet these mixtures frequently include redundant information that increases computational costs without proportional gains. Existing methods typically rely on task-agnostic heuristics to estimate data importance, limiting their effectiveness across tasks. We introduce ICONS, a gradient-based Influence CONsensus approach for vision-language data Selection. Our method leverages first-order training dynamics to estimate each example's influence on validation performance, then aggregates these estimates across tasks via majority voting. This cross-task consensus identifies consistently valuable data points while mitigating score calibration and outlier sensitivity, enabling robust and scalable data selection for diverse multitask mixtures. Models trained on our selected 20% data subset from LLAVA-665K (respectively: from CAMBRIAN-7M, from VISION-FLAN-186K) retain 98.6% (respectively: 98.8%, 99.8%) of full-dataset performance. We demonstrate that our selected data generalizes to unseen tasks and model architectures, and release three compact subsets LLAVA-ICONS-133K, CAMBRIAN-ICONS-1.4M, and VISION-FLAN-ICONS-37K for efficient vision-language model development.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-31T21:33:38Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xindi Wu</name>
+    </author>
+    <author>
+      <name>Mengzhou Xia</name>
+    </author>
+    <author>
+      <name>Rulin Shao</name>
+    </author>
+    <author>
+      <name>Zhiwei Deng</name>
+    </author>
+    <author>
+      <name>Pang Wei Koh</name>
+    </author>
+    <author>
+      <name>Olga Russakovsky</name>
+    </author>
+  </entry>
+</feed>

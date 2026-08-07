@@ -1,0 +1,525 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/ymp8XMHHeZIiTaHVlGlfi6/J7LE</id>
+  <title>arXiv Query: search_query=(all:"multimodal large language model" OR all:"vision language model") AND (all:"data mixture" OR all:"dataset mixture") AND (all:ablation OR all:controlled OR all:generalization)&amp;id_list=&amp;start=0&amp;max_results=60</title>
+  <updated>2026-08-07T06:59:31Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=(all:%22multimodal+large+language+model%22+OR+all:%22vision+language+model%22)+AND+((all:%22data+mixture%22+OR+all:%22dataset+mixture%22)+AND+(all:ablation+OR+(all:controlled+OR+all:generalization)))&amp;start=0&amp;max_results=60&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>60</opensearch:itemsPerPage>
+  <opensearch:totalResults>9</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2512.04032v3</id>
+    <title>jina-vlm: Small Multilingual Vision Language Model</title>
+    <updated>2026-05-04T16:45:33Z</updated>
+    <link href="https://arxiv.org/abs/2512.04032v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.04032v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present jina-vlm, a token-efficient 2.4B parameter vision-language model that achieves state-of-the-art multilingual VQA performance among open 2B-scale VLMs. The model couples a SigLIP2 vision encoder with a Qwen3 language decoder and makes use of image tiling and attention-pooling for token-efficient processing of arbitrary-resolution images. To understand the contribution of different training data categories, we conduct a leave-one-out data mixture ablation study-systematically removing task, domain, modality, and language categories-to diagnose which data types are necessary versus redundant and whether task benefits transfer across domains. Model weights and code are publicly released at https://huggingface.co/jinaai/jina-vlm.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-03T18:13:41Z</published>
+    <arxiv:comment>23 pages, 1-10 main content, 11-23 references and appendix</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Andreas Koukounas</name>
+    </author>
+    <author>
+      <name>Georgios Mastrapas</name>
+    </author>
+    <author>
+      <name>Florian Hönicke</name>
+    </author>
+    <author>
+      <name>Sedigheh Eslami</name>
+    </author>
+    <author>
+      <name>Guillaume Roncari</name>
+    </author>
+    <author>
+      <name>Scott Martens</name>
+    </author>
+    <author>
+      <name>Han Xiao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.13831v1</id>
+    <title>Training Long-Context Vision-Language Models Effectively with Generalization Beyond 128K Context</title>
+    <updated>2026-05-13T17:52:53Z</updated>
+    <link href="https://arxiv.org/abs/2605.13831v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.13831v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Long-context modeling is becoming a core capability of modern large vision-language models (LVLMs), enabling sustained context management across long-document understanding, video analysis, and multi-turn tool use in agentic workflows. Yet practical training recipes remain insufficiently explored, particularly for designing and balancing long-context data mixtures. In this work, we present a systematic study of long-context continued pre-training for LVLMs, extending a 7B model from 32K to 128K context with extensive ablations on long-document data. We first show that long-document VQA is substantially more effective than OCR transcription. Building on this observation, our ablations further yield three key findings: i) for sequence-length distribution, balanced data outperforms target-length-focused data (e.g., 128K), suggesting that long-context ability requires generalizable key-information retrieval across various lengths and positions; ii) retrieval remains the primary bottleneck, favoring retrieval-heavy mixtures with modest reasoning data for task diversity; and iii) pure long-document VQA largely preserves short-context capabilities, suggesting that instruction-formatted long data reduces the need for short-data mixing. Based on these findings, we introduce MMProLong, obtained by long-context continued pre-training from Qwen2.5-VL-7B with only a 5B-token budget. MMProLong improves long-document VQA scores by 7.1% and maintains strong performance at 256K and 512K contexts beyond its 128K training window, without additional training. It further generalizes to webpage-based multimodal needle retrieval, long-context vision-text compression, and long-video understanding without task-specific supervision. Overall, our study establishes a practical LongPT recipe and an empirical foundation for advancing long-context vision-language models.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-13T17:52:53Z</published>
+    <arxiv:comment>work in progress</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhaowei Wang</name>
+    </author>
+    <author>
+      <name>Lishu Luo</name>
+    </author>
+    <author>
+      <name>Haodong Duan</name>
+    </author>
+    <author>
+      <name>Weiwei Liu</name>
+    </author>
+    <author>
+      <name>Sijin Wu</name>
+    </author>
+    <author>
+      <name>Ji Luo</name>
+    </author>
+    <author>
+      <name>Shen Yan</name>
+    </author>
+    <author>
+      <name>Shuai Peng</name>
+    </author>
+    <author>
+      <name>Sihang Yuan</name>
+    </author>
+    <author>
+      <name>Chaoyi Huang</name>
+    </author>
+    <author>
+      <name>Yi Lin</name>
+    </author>
+    <author>
+      <name>Yangqiu Song</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.20566v1</id>
+    <title>MM1.5: Methods, Analysis &amp; Insights from Multimodal LLM Fine-tuning</title>
+    <updated>2024-09-30T17:59:34Z</updated>
+    <link href="https://arxiv.org/abs/2409.20566v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.20566v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present MM1.5, a new family of multimodal large language models (MLLMs) designed to enhance capabilities in text-rich image understanding, visual referring and grounding, and multi-image reasoning. Building upon the MM1 architecture, MM1.5 adopts a data-centric approach to model training, systematically exploring the impact of diverse data mixtures across the entire model training lifecycle. This includes high-quality OCR data and synthetic captions for continual pre-training, as well as an optimized visual instruction-tuning data mixture for supervised fine-tuning. Our models range from 1B to 30B parameters, encompassing both dense and mixture-of-experts (MoE) variants, and demonstrate that careful data curation and training strategies can yield strong performance even at small scales (1B and 3B). Additionally, we introduce two specialized variants: MM1.5-Video, designed for video understanding, and MM1.5-UI, tailored for mobile UI understanding. Through extensive empirical studies and ablations, we provide detailed insights into the training processes and decisions that inform our final designs, offering valuable guidance for future research in MLLM development.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-30T17:59:34Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Haotian Zhang</name>
+    </author>
+    <author>
+      <name>Mingfei Gao</name>
+    </author>
+    <author>
+      <name>Zhe Gan</name>
+    </author>
+    <author>
+      <name>Philipp Dufter</name>
+    </author>
+    <author>
+      <name>Nina Wenzel</name>
+    </author>
+    <author>
+      <name>Forrest Huang</name>
+    </author>
+    <author>
+      <name>Dhruti Shah</name>
+    </author>
+    <author>
+      <name>Xianzhi Du</name>
+    </author>
+    <author>
+      <name>Bowen Zhang</name>
+    </author>
+    <author>
+      <name>Yanghao Li</name>
+    </author>
+    <author>
+      <name>Sam Dodge</name>
+    </author>
+    <author>
+      <name>Keen You</name>
+    </author>
+    <author>
+      <name>Zhen Yang</name>
+    </author>
+    <author>
+      <name>Aleksei Timofeev</name>
+    </author>
+    <author>
+      <name>Mingze Xu</name>
+    </author>
+    <author>
+      <name>Hong-You Chen</name>
+    </author>
+    <author>
+      <name>Jean-Philippe Fauconnier</name>
+    </author>
+    <author>
+      <name>Zhengfeng Lai</name>
+    </author>
+    <author>
+      <name>Haoxuan You</name>
+    </author>
+    <author>
+      <name>Zirui Wang</name>
+    </author>
+    <author>
+      <name>Afshin Dehghan</name>
+    </author>
+    <author>
+      <name>Peter Grasch</name>
+    </author>
+    <author>
+      <name>Yinfei Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.21728v1</id>
+    <title>BEiTScore: Reference-free Image Captioning Evaluation with an Efficient Cross-Encoder Model</title>
+    <updated>2026-05-20T20:43:38Z</updated>
+    <link href="https://arxiv.org/abs/2605.21728v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.21728v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Image captioning evaluation remains a significant challenge, as vision-language models evolve toward more challenging capabilities such as generating long-form and context-rich descriptions. State-of-the-art evaluation metrics involve extensive computational costs associated with the use of Large Language Models (LLMs) as judges, or instead suffer from the limitations of standard CLIP-based encoders, such as strict token limits, lack of fine-grained sensitivity, or lack of compositional generalization by treating captions as ``bags-of-words.'' We propose a new learned metric that tackles the aforementioned challenges, based on a lightweight cross-encoder that is initialized from a visual question-answering model checkpoint, balancing a strong weight initialization with computational efficiency. Our training scheme uses a carefully assembled data mixture for supervised learning, featuring adversarial LLM-based data augmentations to enhance model sensitivity to fine-grained visual-linguistic errors. We also introduce a new benchmark designed to assess detailed captioning evaluation across diverse scenarios. Experimental results demonstrate that the proposed metric achieves state-of-the-art performance while maintaining the efficiency required for large-scale benchmarking, quality-aware decoding, or reward guidance.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-20T20:43:38Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Gonçalo Gomes</name>
+    </author>
+    <author>
+      <name>Bruno Martins</name>
+    </author>
+    <author>
+      <name>Chrysoula Zerva</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.00654v4</id>
+    <title>ICONS: Influence Consensus for Vision-Language Data Selection</title>
+    <updated>2025-12-28T01:12:45Z</updated>
+    <link href="https://arxiv.org/abs/2501.00654v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.00654v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Training vision-language models via instruction tuning relies on large data mixtures spanning diverse tasks and domains, yet these mixtures frequently include redundant information that increases computational costs without proportional gains. Existing methods typically rely on task-agnostic heuristics to estimate data importance, limiting their effectiveness across tasks. We introduce ICONS, a gradient-based Influence CONsensus approach for vision-language data Selection. Our method leverages first-order training dynamics to estimate each example's influence on validation performance, then aggregates these estimates across tasks via majority voting. This cross-task consensus identifies consistently valuable data points while mitigating score calibration and outlier sensitivity, enabling robust and scalable data selection for diverse multitask mixtures. Models trained on our selected 20% data subset from LLAVA-665K (respectively: from CAMBRIAN-7M, from VISION-FLAN-186K) retain 98.6% (respectively: 98.8%, 99.8%) of full-dataset performance. We demonstrate that our selected data generalizes to unseen tasks and model architectures, and release three compact subsets LLAVA-ICONS-133K, CAMBRIAN-ICONS-1.4M, and VISION-FLAN-ICONS-37K for efficient vision-language model development.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-31T21:33:38Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xindi Wu</name>
+    </author>
+    <author>
+      <name>Mengzhou Xia</name>
+    </author>
+    <author>
+      <name>Rulin Shao</name>
+    </author>
+    <author>
+      <name>Zhiwei Deng</name>
+    </author>
+    <author>
+      <name>Pang Wei Koh</name>
+    </author>
+    <author>
+      <name>Olga Russakovsky</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.16445v2</id>
+    <title>FiLM-Nav: Efficient and Generalizable Navigation via VLM Fine-tuning</title>
+    <updated>2026-04-15T00:41:18Z</updated>
+    <link href="https://arxiv.org/abs/2509.16445v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.16445v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Enabling robotic assistants to navigate complex environments and locate objects described in free-form language is a critical capability for real-world deployment. While foundation models, particularly Vision-Language Models (VLMs), offer powerful semantic understanding, effectively adapting their web-scale knowledge for embodied decision-making remains a key challenge. We present FiLM-Nav (Fine-tuned Language Model for Navigation), an approach that directly fine-tunes pre-trained VLM as the navigation policy. In contrast to methods that use foundation models primarily in a zero-shot manner or for map annotation, FiLM-Nav learns to select the next best exploration frontier by conditioning directly on raw visual trajectory history and the navigation goal. Leveraging targeted simulated embodied experience allows the VLM to ground its powerful pre-trained representations in the specific dynamics and visual patterns relevant to goal-driven navigation. Critically, fine-tuning on a diverse data mixture combining ObjectNav, OVON, ImageNav, and an auxiliary spatial reasoning task proves essential for achieving robustness and broad generalization. FiLM-Nav sets a new state-of-the-art in both SPL and success rate on HM3D ObjectNav among open-vocabulary methods, and sets a state-of-the-art SPL on the challenging HM3D-OVON benchmark, demonstrating strong generalization to unseen object categories. Our work validates that directly fine-tuning VLMs on diverse simulated embodied data is a highly effective pathway towards generalizable and efficient semantic navigation capabilities.</summary>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-19T21:51:42Z</published>
+    <arxiv:primary_category term="cs.RO"/>
+    <author>
+      <name>Naoki Yokoyama</name>
+    </author>
+    <author>
+      <name>Sehoon Ha</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.19336v1</id>
+    <title>DaMo: Data Mixing Optimizer in Fine-tuning Multimodal LLMs for Mobile Phone Agents</title>
+    <updated>2025-10-22T07:57:59Z</updated>
+    <link href="https://arxiv.org/abs/2510.19336v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.19336v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Mobile Phone Agents (MPAs) have emerged as a promising research direction due to their broad applicability across diverse scenarios. While Multimodal Large Language Models (MLLMs) serve as the foundation for MPAs, their effectiveness in handling multiple mobile phone tasks simultaneously remains limited. Although multitask supervised fine-tuning (SFT) is widely adopted for multitask learning, existing approaches struggle to determine optimal training data compositions for peak performance. To address this challenge, we propose DaMo (Data Mixture Optimizer) - a novel solution employing a trainable network that predicts optimal data mixtures by forecasting downstream task performance for any given dataset ratio. To support comprehensive evaluation, we introduce PhoneAgentBench, the first specialized benchmark to evaluate MLLMs on multimodal mobile phone tasks, comprising 1235 QA pairs spanning diverse real-world industrial mobile application scenarios. Demonstrating strong predictive capability (R^2=0.81) in small-scale pilot experiments, DaMo efficiently extrapolates optimal data mixing configurations. Our results show DaMo achieves a 3.38% performance improvement on PhoneAgentBench compared to alternative methods. Furthermore, extensive experiments across established benchmarks including BFCL-v3, MME-Reasoning, MME-Perception, and OCRBench reveal DaMo's superior generalization, outperforming other approaches by 2.57% in terms of average score. When used solely for MLLM optimization on the BFCL-v3 task, DaMo improves the metrics by 12.47% than other methods. Notably, DaMo maintains robust scalability, preserving its effectiveness when applied to other model architectures. The code and dataset are available at https://github.com/OPPO-Mente-Lab/DaMo.git</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-22T07:57:59Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Kai Shi</name>
+    </author>
+    <author>
+      <name>Jun Yang</name>
+    </author>
+    <author>
+      <name>Ni Yang</name>
+    </author>
+    <author>
+      <name>Binqiang Pan</name>
+    </author>
+    <author>
+      <name>Qingsong Xie</name>
+    </author>
+    <author>
+      <name>Chao Zhang</name>
+    </author>
+    <author>
+      <name>Zhenyu Yang</name>
+    </author>
+    <author>
+      <name>Tianhuang Su</name>
+    </author>
+    <author>
+      <name>Haonan Lu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.01949v1</id>
+    <title>Kwai Keye-VL Technical Report</title>
+    <updated>2025-07-02T17:57:28Z</updated>
+    <link href="https://arxiv.org/abs/2507.01949v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.01949v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>While Multimodal Large Language Models (MLLMs) demonstrate remarkable capabilities on static images, they often fall short in comprehending dynamic, information-dense short-form videos, a dominant medium in today's digital landscape. To bridge this gap, we introduce \textbf{Kwai Keye-VL}, an 8-billion-parameter multimodal foundation model engineered for leading-edge performance in short-video understanding while maintaining robust general-purpose vision-language abilities. The development of Keye-VL rests on two core pillars: a massive, high-quality dataset exceeding 600 billion tokens with a strong emphasis on video, and an innovative training recipe. This recipe features a four-stage pre-training process for solid vision-language alignment, followed by a meticulous two-phase post-training process. The first post-training stage enhances foundational capabilities like instruction following, while the second phase focuses on stimulating advanced reasoning. In this second phase, a key innovation is our five-mode ``cold-start'' data mixture, which includes ``thinking'', ``non-thinking'', ``auto-think'', ``think with image'', and high-quality video data. This mixture teaches the model to decide when and how to reason. Subsequent reinforcement learning (RL) and alignment steps further enhance these reasoning capabilities and correct abnormal model behaviors, such as repetitive outputs. To validate our approach, we conduct extensive evaluations, showing that Keye-VL achieves state-of-the-art results on public video benchmarks and remains highly competitive on general image-based tasks (Figure 1). Furthermore, we develop and release the \textbf{KC-MMBench}, a new benchmark tailored for real-world short-video scenarios, where Keye-VL shows a significant advantage.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-02T17:57:28Z</published>
+    <arxiv:comment>Technical Report: https://github.com/Kwai-Keye/Keye</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name> Kwai Keye Team</name>
+    </author>
+    <author>
+      <name>Biao Yang</name>
+    </author>
+    <author>
+      <name>Bin Wen</name>
+    </author>
+    <author>
+      <name>Changyi Liu</name>
+    </author>
+    <author>
+      <name>Chenglong Chu</name>
+    </author>
+    <author>
+      <name>Chengru Song</name>
+    </author>
+    <author>
+      <name>Chongling Rao</name>
+    </author>
+    <author>
+      <name>Chuan Yi</name>
+    </author>
+    <author>
+      <name>Da Li</name>
+    </author>
+    <author>
+      <name>Dunju Zang</name>
+    </author>
+    <author>
+      <name>Fan Yang</name>
+    </author>
+    <author>
+      <name>Guorui Zhou</name>
+    </author>
+    <author>
+      <name>Hao Peng</name>
+    </author>
+    <author>
+      <name>Haojie Ding</name>
+    </author>
+    <author>
+      <name>Jiaming Huang</name>
+    </author>
+    <author>
+      <name>Jiangxia Cao</name>
+    </author>
+    <author>
+      <name>Jiankang Chen</name>
+    </author>
+    <author>
+      <name>Jingyun Hua</name>
+    </author>
+    <author>
+      <name>Jin Ouyang</name>
+    </author>
+    <author>
+      <name>Kaibing Chen</name>
+    </author>
+    <author>
+      <name>Kaiyu Jiang</name>
+    </author>
+    <author>
+      <name>Kaiyu Tang</name>
+    </author>
+    <author>
+      <name>Kun Gai</name>
+    </author>
+    <author>
+      <name>Shengnan Zhang</name>
+    </author>
+    <author>
+      <name>Siyang Mao</name>
+    </author>
+    <author>
+      <name>Sui Huang</name>
+    </author>
+    <author>
+      <name>Tianke Zhang</name>
+    </author>
+    <author>
+      <name>Tingting Gao</name>
+    </author>
+    <author>
+      <name>Wei Chen</name>
+    </author>
+    <author>
+      <name>Wei Yuan</name>
+    </author>
+    <author>
+      <name>Xiangyu Wu</name>
+    </author>
+    <author>
+      <name>Xiao Hu</name>
+    </author>
+    <author>
+      <name>Xingyu Lu</name>
+    </author>
+    <author>
+      <name>Yang Zhou</name>
+    </author>
+    <author>
+      <name>Yi-Fan Zhang</name>
+    </author>
+    <author>
+      <name>Yiping Yang</name>
+    </author>
+    <author>
+      <name>Yulong Chen</name>
+    </author>
+    <author>
+      <name>Zhenhua Wu</name>
+    </author>
+    <author>
+      <name>Zhenyu Li</name>
+    </author>
+    <author>
+      <name>Zhixin Ling</name>
+    </author>
+    <author>
+      <name>Ziming Li</name>
+    </author>
+    <author>
+      <name>Dehua Ma</name>
+    </author>
+    <author>
+      <name>Di Xu</name>
+    </author>
+    <author>
+      <name>Haixuan Gao</name>
+    </author>
+    <author>
+      <name>Hang Li</name>
+    </author>
+    <author>
+      <name>Jiawei Guo</name>
+    </author>
+    <author>
+      <name>Jing Wang</name>
+    </author>
+    <author>
+      <name>Lejian Ren</name>
+    </author>
+    <author>
+      <name>Muhao Wei</name>
+    </author>
+    <author>
+      <name>Qianqian Wang</name>
+    </author>
+    <author>
+      <name>Qigen Hu</name>
+    </author>
+    <author>
+      <name>Shiyao Wang</name>
+    </author>
+    <author>
+      <name>Tao Yu</name>
+    </author>
+    <author>
+      <name>Xinchen Luo</name>
+    </author>
+    <author>
+      <name>Yan Li</name>
+    </author>
+    <author>
+      <name>Yiming Liang</name>
+    </author>
+    <author>
+      <name>Yuhang Hu</name>
+    </author>
+    <author>
+      <name>Zeyi Lu</name>
+    </author>
+    <author>
+      <name>Zhuoran Yang</name>
+    </author>
+    <author>
+      <name>Zixing Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.17495v2</id>
+    <title>GroundingME: Exposing the Visual Grounding Gap in MLLMs through Multi-Dimensional Evaluation</title>
+    <updated>2026-03-23T05:18:21Z</updated>
+    <link href="https://arxiv.org/abs/2512.17495v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.17495v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Visual grounding, localizing objects from natural language descriptions, represents a critical bridge between language and vision understanding. While multimodal large language models (MLLMs) achieve impressive scores on existing benchmarks, a fundamental question remains: can MLLMs truly visually ground with human-like sophistication, or are they merely pattern-matching on simplified datasets? Current benchmarks fail to capture real-world complexity where humans effortlessly navigate intricate references and recognize when grounding is impossible. To rigorously assess MLLMs' true capabilities, we introduce GroundingME, a benchmark that systematically challenges models across four critical dimensions: (1) Discriminative: distinguishing highly similar objects, (2) Spatial: understanding complex relational descriptions, (3) Limited: handling occlusions or tiny objects, and (4) Rejection: recognizing ungroundable queries. Through careful curation combining automated generation with human verification, we create 1,005 challenging examples mirroring real-world complexity. Evaluating 25 state-of-the-art MLLMs reveals a profound capability gap: the best model achieves only 45.1% accuracy, while most score 0% on rejection tasks. We explore two strategies for improvements: (1) test-time scaling selects optimal response by thinking trajectory to improve overall performance by up to 4.5%, and (2) data-mixture training boosts rejection accuracy from 0% to 27.9%. GroundingME thus serves as both a diagnostic tool revealing current limitations in MLLMs and a roadmap toward human-level visual grounding. Project page: https://groundingme.github.io</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-19T12:06:25Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Rang Li</name>
+    </author>
+    <author>
+      <name>Lei Li</name>
+    </author>
+    <author>
+      <name>Shuhuai Ren</name>
+    </author>
+    <author>
+      <name>Hao Tian</name>
+    </author>
+    <author>
+      <name>Shuhao Gu</name>
+    </author>
+    <author>
+      <name>Shicheng Li</name>
+    </author>
+    <author>
+      <name>Zihao Yue</name>
+    </author>
+    <author>
+      <name>Yudong Wang</name>
+    </author>
+    <author>
+      <name>Wenhan Ma</name>
+    </author>
+    <author>
+      <name>Zhe Yang</name>
+    </author>
+    <author>
+      <name>Jingyuan Ma</name>
+    </author>
+    <author>
+      <name>Zhifang Sui</name>
+    </author>
+    <author>
+      <name>Fuli Luo</name>
+    </author>
+  </entry>
+</feed>

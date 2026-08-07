@@ -406,3 +406,44 @@ authoritative controlled-coverage gate。
   strata、exact data lineage、single-factor contrast、held-out prediction 与本地
   资源可行性；plan 提交前不执行新的 scientific analysis，不访问 final
   confirmation。
+
+---
+
+## 2026-08-07｜COVER-01 broad-label coverage bridge 被否定并转向 CROSSFACT-01
+
+**决定**：`COVER-01` 按 immutable gate 判为 `NO_CANDIDATE`，科学 failure
+level=`BRIDGE_REJECTED`。Active Research Question 切换为 `CROSSFACT-01`
+authoritative crossed-cell gate；在其独立 immutable plan commit 前不执行新分析。
+
+**依据**：
+
+1. 五族冻结检索得到 442 raw records、380 unique titles，完整核查 14 篇决定性
+   primary sources；deterministic index fresh-temp rebuild byte-identical；
+2. Vision-Flan、MM1/MM1.5、DCVLR 与近年的 mixture-optimization work 提供 direct
+   generative data-composition evidence，但均把 coverage 与 task/source/style/quality/
+   difficulty/output format 同时改变，或需要 ratio/category/target search；
+3. DomainNet controlled study 以 matched sizes、source-defined domains/classes 和
+   three seeds 提供最干净 evidence，但认证对象是 CLIP zero-shot classification，
+   没有到 autoregressive LVLM risk 的 bridge；
+4. local `pretrain_i2t.parquet` 的 size/SHA-256 与官方 MiniMind revision/tree
+   完全一致。虽然 schema 无 ID，保存的 169 个 official ALLaVA caption rows 全部以
+   exact assistant text 映射到 local rows；因此“lineage 完全不可恢复”不是合法
+   rejection reason；
+5. sample 中 3 个 VFLAN `id` 各出现两次，full-dataset/translation lineage 仍未
+   证明；更关键的是 LAION/VFLAN label 不是 source-factorial coverage variable。
+
+**后果**：
+
+- 只否定当前 authoritative broad source/task label + current lineage + audited
+  literature 到本地 unique single-factor complementary/redundancy experiment 的
+  bridge；
+- 不否定 coverage/diversity、Vision-Flan task diversity、domain/compositional
+  generalization、source-specific transfer、ALLaVA 全量 lineage 或未来真正
+  factorial 的 generative-LVLM experiment；
+- 不从 LAION/VFLAN、broad task categories、embedding/LLM clusters 中搜索
+  mixture、domain pair 或 target；
+- `CROSSFACT-01` 只核查 publisher-defined 的同一 image/acquisition unit × multiple
+  text/task factors，要求 exact cells、source-factor orthogonality、matched
+  redundancy 与 outcome 前冻结的 held-out cell；
+- 本轮 0 GPU、0 checkpoint inference、0 training，未访问 final confirmation；
+  没有 `MECHANISM_REJECTED`，没有 `HARD_STOP`。

@@ -1,0 +1,1448 @@
+{
+  "audit": "COVER-01 local/official lineage audit",
+  "audit_version": 1,
+  "inference_boundary": {
+    "demonstrated": "For all 169 saved official caption samples, exact English assistant text reconstructs the corresponding authoritative ALLaVA row occurrence, source ID, and image path in the local parquet.",
+    "interpretation": "The local schema omits IDs, but sample reconstruction is demonstrated; full coverage remains unproved. This audit does not by itself accept or reject the upper-level coverage mechanism.",
+    "not_demonstrated": [
+      "Full-dataset source-ID reconstruction coverage.",
+      "Global example-key uniqueness of the official ID field: three VFLAN ID values are duplicated in the saved sample.",
+      "Source-ID propagation from an English row to translated rows via identical image bytes.",
+      "A source-defined single-factor complementary-coverage versus same-domain-redundancy contrast.",
+      "A frozen held-out target whose direction is unconfounded by source, task, style, quality, or difficulty."
+    ]
+  },
+  "local_parquet": {
+    "embedded_source_token_row_counts": {
+      "allava_laion": 0,
+      "allava_vflan": 0,
+      "original_caption": 0,
+      "source_id": 0
+    },
+    "hash_matches_official_tree": true,
+    "official_minimind_dataset_revision": "1e279a8b665cb10383451a6af6fd62b9f35bdd79",
+    "official_tree_lfs_sha256": "65761f37d1947d54a1d85457ff70938275e4ef58ba5cedcd02463a3a247c93fd",
+    "official_tree_size_bytes": 4326415097,
+    "path": "dataset/pretrain_i2t.parquet",
+    "row_count": 1274698,
+    "schema": [
+      {
+        "dtype": "String",
+        "name": "conversations"
+      },
+      {
+        "dtype": "Binary",
+        "name": "image_bytes"
+      }
+    ],
+    "sha256": "65761f37d1947d54a1d85457ff70938275e4ef58ba5cedcd02463a3a247c93fd",
+    "size_bytes": 4326415097,
+    "size_matches_official_tree": true
+  },
+  "read_only": true,
+  "sample_reconstruction": {
+    "duplicated_official_id_values": {
+      "allava_vflan_cap_13941": 2,
+      "allava_vflan_cap_14554": 2,
+      "allava_vflan_cap_2293": 2
+    },
+    "exact_assistant_matches": 169,
+    "matches": [
+      {
+        "assistant_sha256": "556ea198e77cf6952cd210ee84eff87ad7e1da359ccfd1c44c5a95914940495b",
+        "local_row_index": 809293,
+        "official_id": "allava_laion_cap_72328992",
+        "official_image_path": "allava_laion/images/72328992.jpeg",
+        "official_row_index": 0,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "7f6743c7a58b020da9b307d56cc67d67d4e8b63207e09dc54ca7710c3c86031f",
+        "local_row_index": 282212,
+        "official_id": "allava_laion_cap_135854136",
+        "official_image_path": "allava_laion/images/135854136.jpeg",
+        "official_row_index": 1,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "a5ebe963dfd1a0d48d1ac8fb75ed4e2d9d18ef1a887a38acce39ad93b28cc956",
+        "local_row_index": 22183,
+        "official_id": "allava_laion_cap_100508511",
+        "official_image_path": "allava_laion/images/100508511.jpeg",
+        "official_row_index": 2,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "af11fe30b596cf8fff0e999bd2364402fcf766adde73122614319bbd1e98cc67",
+        "local_row_index": 376672,
+        "official_id": "allava_laion_cap_18769",
+        "official_image_path": "allava_laion/images/18769.png",
+        "official_row_index": 3,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "5266715f1c657ffd0250b825fc01b8c31c69c00461fedadfcf122f91570888ab",
+        "local_row_index": 765950,
+        "official_id": "allava_laion_cap_62691",
+        "official_image_path": "allava_laion/images/62691.jpeg",
+        "official_row_index": 4,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "6d139e7c1b234901341565ad3a811b94ee51d82d46d1aafe7f4ce54e8122d45f",
+        "local_row_index": 258174,
+        "official_id": "allava_laion_cap_133230964",
+        "official_image_path": "allava_laion/images/133230964.jpeg",
+        "official_row_index": 5,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "c9087f6d06eada93aa0c297885f5e017d1bdbba153468700782e6210e37224c0",
+        "local_row_index": 432627,
+        "official_id": "allava_laion_cap_220102",
+        "official_image_path": "allava_laion/images/220102.jpeg",
+        "official_row_index": 6,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "1ef75bf73037e5da138051127142b73703f1c8e489ec9748e0698104fb7d7555",
+        "local_row_index": 324252,
+        "official_id": "allava_laion_cap_153477",
+        "official_image_path": "allava_laion/images/153477.jpeg",
+        "official_row_index": 7,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "79e4365bb879583bd1fd3fa84f892d73219f43183d828ec4cfe43f7b9e1e00a9",
+        "local_row_index": 897050,
+        "official_id": "allava_laion_cap_91368",
+        "official_image_path": "allava_laion/images/91368.jpeg",
+        "official_row_index": 8,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "f401bbb92c9022ea197aa415c5d20f48183c379d181b89c7059ae3e54f2c6dc7",
+        "local_row_index": 475087,
+        "official_id": "allava_laion_cap_240166",
+        "official_image_path": "allava_laion/images/240166.jpeg",
+        "official_row_index": 9,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "ccdbde2ce569b96dac5144f9d8cb315357a6a0594f6245113fdd6a2f359b8374",
+        "local_row_index": 57946,
+        "official_id": "allava_laion_cap_101308341",
+        "official_image_path": "allava_laion/images/101308341.jpeg",
+        "official_row_index": 10,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "49208ba19283e1fc8ae0e30a35ccce71851074ad4ff8b75a37d128807d5870be",
+        "local_row_index": 749435,
+        "official_id": "allava_laion_cap_53495",
+        "official_image_path": "allava_laion/images/53495.jpeg",
+        "official_row_index": 11,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "f3522aa4a1509949a8744c7a8c7435d41591bc6dba9f32dd35c373a1824a6037",
+        "local_row_index": 35077,
+        "official_id": "allava_laion_cap_100761676",
+        "official_image_path": "allava_laion/images/100761676.jpeg",
+        "official_row_index": 12,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "0ca4b89bd5094bfdd853dbe5fec0ff4402e48b8abe29f448f2d9948ce3effb43",
+        "local_row_index": 229778,
+        "official_id": "allava_laion_cap_130774916",
+        "official_image_path": "allava_laion/images/130774916.jpeg",
+        "official_row_index": 13,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "9400cf686b48fe51bd2af736ba68bebe29dde860020408d36ece3605512a5e44",
+        "local_row_index": 816781,
+        "official_id": "allava_laion_cap_72895941",
+        "official_image_path": "allava_laion/images/72895941.jpeg",
+        "official_row_index": 14,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "0423789f47e7b6abec882f3354ca429a052d804184db03266cd408b86eab498a",
+        "local_row_index": 181808,
+        "official_id": "allava_laion_cap_107273117",
+        "official_image_path": "allava_laion/images/107273117.jpeg",
+        "official_row_index": 15,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "24233d29a05c56ce17dadbe2622af0d51b254e71e556e5a618e3676e4d3cae0d",
+        "local_row_index": 356533,
+        "official_id": "allava_laion_cap_174458",
+        "official_image_path": "allava_laion/images/174458.jpeg",
+        "official_row_index": 16,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "7d9926b0f7ad87cf65a3c91e66b57223240392176b5625e0a8c542cb093280fa",
+        "local_row_index": 399190,
+        "official_id": "allava_laion_cap_202553",
+        "official_image_path": "allava_laion/images/202553.jpeg",
+        "official_row_index": 17,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "4bc832236c3e3d517669ed2e99b53cad194706d57b7a61e29c691b6e69db1791",
+        "local_row_index": 282413,
+        "official_id": "allava_laion_cap_135875798",
+        "official_image_path": "allava_laion/images/135875798.jpeg",
+        "official_row_index": 18,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "097daf8a1e3d9069bf528841f03112d35bae7422d9a15e5d0b02b0b81b5b7861",
+        "local_row_index": 277634,
+        "official_id": "allava_laion_cap_135342139",
+        "official_image_path": "allava_laion/images/135342139.jpeg",
+        "official_row_index": 19,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "5f2c6f2ed11e444c6682271eb76555fbd6f95446434314a52ea0b69e0f9e728e",
+        "local_row_index": 328689,
+        "official_id": "allava_laion_cap_156373",
+        "official_image_path": "allava_laion/images/156373.webp",
+        "official_row_index": 20,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "ba9323129aafd4e7376bf677b0f2061ff2335d044813fc23876f7557fbfa046a",
+        "local_row_index": 188014,
+        "official_id": "allava_laion_cap_108501",
+        "official_image_path": "allava_laion/images/108501.jpeg",
+        "official_row_index": 21,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "c544c9cff8c82aa0ff520d364f9e79e3d91fa2c105fbee650216eb8fcaef7aff",
+        "local_row_index": 341900,
+        "official_id": "allava_laion_cap_16492",
+        "official_image_path": "allava_laion/images/16492.png",
+        "official_row_index": 22,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "06c7b28dfa0700bf4139f7e9fae12be293e7797f40241336ff6c297d1ddee128",
+        "local_row_index": 136012,
+        "official_id": "allava_laion_cap_104441194",
+        "official_image_path": "allava_laion/images/104441194.jpeg",
+        "official_row_index": 23,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "efa36d6b432483d9c517df8b442735a82d426ac3cf39e2a20726e8f5cc60b113",
+        "local_row_index": 228691,
+        "official_id": "allava_laion_cap_130697277",
+        "official_image_path": "allava_laion/images/130697277.jpeg",
+        "official_row_index": 24,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "fd73e3d039ed62b6ada54dba7f23bf8cf9fcc685d6e736bdabec47b6153e323f",
+        "local_row_index": 146763,
+        "official_id": "allava_laion_cap_105058286",
+        "official_image_path": "allava_laion/images/105058286.jpeg",
+        "official_row_index": 25,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "e35a4f04cc2b23441be06d7bf323780a43fe4be614ffa6bbf624e0012cf858cb",
+        "local_row_index": 897548,
+        "official_id": "allava_laion_cap_91658",
+        "official_image_path": "allava_laion/images/91658.jpeg",
+        "official_row_index": 26,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "c5736210f2198445004c0365e6eee2261dbb8240aef1c8494332ef9ef684d465",
+        "local_row_index": 295482,
+        "official_id": "allava_laion_cap_137364327",
+        "official_image_path": "allava_laion/images/137364327.jpeg",
+        "official_row_index": 27,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "079e8bfc04cc86b13cd61325f316800418e5c9e2b15e8225101aef964cfcd9b9",
+        "local_row_index": 331993,
+        "official_id": "allava_laion_cap_158496",
+        "official_image_path": "allava_laion/images/158496.jpeg",
+        "official_row_index": 28,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "4e9a2aa37f87d41538807db38bc6cee17ef4e2d0e954e4209ac81904f19f0810",
+        "local_row_index": 72103,
+        "official_id": "allava_laion_cap_101725387",
+        "official_image_path": "allava_laion/images/101725387.png",
+        "official_row_index": 29,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "5c1cbb6fa0835941dd203f93e00e2ea8b9b3f1a448228f3790eddbb822989eef",
+        "local_row_index": 416131,
+        "official_id": "allava_laion_cap_211519",
+        "official_image_path": "allava_laion/images/211519.jpeg",
+        "official_row_index": 30,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "2b3a88476c4dc8dc08ae71103b5f238dc51c48d6507d7acf0b532688b158d136",
+        "local_row_index": 409429,
+        "official_id": "allava_laion_cap_208038",
+        "official_image_path": "allava_laion/images/208038.jpeg",
+        "official_row_index": 31,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "6b3d3ad8664e5d8b5163438039d9b04f6e85efd6979bb6ceb32dbc3901a262ff",
+        "local_row_index": 876125,
+        "official_id": "allava_laion_cap_80581",
+        "official_image_path": "allava_laion/images/80581.png",
+        "official_row_index": 32,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "a780951d2c9b94d8df8a0977dd8d3ceb8f2bcac6833af31f930b929a9d51ee3b",
+        "local_row_index": 35023,
+        "official_id": "allava_laion_cap_100760552",
+        "official_image_path": "allava_laion/images/100760552.jpeg",
+        "official_row_index": 33,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "b3bf14fa45e9a7f27e7c84d6d2da0208e03d178d781e1b43ca02d79fcbbed290",
+        "local_row_index": 191252,
+        "official_id": "allava_laion_cap_110378",
+        "official_image_path": "allava_laion/images/110378.png",
+        "official_row_index": 34,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "241b81872bc49a4af739c48858c887075a561c723697ff04cef7836e88827945",
+        "local_row_index": 628955,
+        "official_id": "allava_laion_cap_42509338",
+        "official_image_path": "allava_laion/images/42509338.jpeg",
+        "official_row_index": 35,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "4c449e60f3355e0b33097a776a1b943ca9421498e57b27159b45a35ac17331ce",
+        "local_row_index": 84206,
+        "official_id": "allava_laion_cap_102115996",
+        "official_image_path": "allava_laion/images/102115996.jpeg",
+        "official_row_index": 36,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "18b1c5fb1756eeefe0e06df94901dbc595bef96512f067123a730f19407ea43c",
+        "local_row_index": 423978,
+        "official_id": "allava_laion_cap_215615",
+        "official_image_path": "allava_laion/images/215615.jpeg",
+        "official_row_index": 37,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "266db0db58af1ef4e10fc6b3e460cb1c74115d46403ab783f0308895693b113a",
+        "local_row_index": 22380,
+        "official_id": "allava_laion_cap_100511498",
+        "official_image_path": "allava_laion/images/100511498.jpeg",
+        "official_row_index": 38,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "2405788a94f508de26dfed283a9dbb41511b19568f39eb2d0b0ae14641837518",
+        "local_row_index": 226588,
+        "official_id": "allava_laion_cap_130547087",
+        "official_image_path": "allava_laion/images/130547087.jpeg",
+        "official_row_index": 39,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "cfd7c434c6081e9d0fd066f8e9cb9b6568705d1e0547708bb137e76685e3aed0",
+        "local_row_index": 262515,
+        "official_id": "allava_laion_cap_133689811",
+        "official_image_path": "allava_laion/images/133689811.jpeg",
+        "official_row_index": 40,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "2f526edfd91fdb741b1d63bd5609080014a2b2033e4fb37a29b3ef83b2fdcc0d",
+        "local_row_index": 295697,
+        "official_id": "allava_laion_cap_137386369",
+        "official_image_path": "allava_laion/images/137386369.png",
+        "official_row_index": 41,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "d28dac69a4d5d978385e584a873b33afe7cab91b097494328dde3ed78c21d0b8",
+        "local_row_index": 773212,
+        "official_id": "allava_laion_cap_66765",
+        "official_image_path": "allava_laion/images/66765.jpeg",
+        "official_row_index": 42,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "dd280f0973bc3ec234a28cb95fbfe448ea9fe4d4774f710a5c1d7538ba55cec3",
+        "local_row_index": 19854,
+        "official_id": "allava_laion_cap_100470643",
+        "official_image_path": "allava_laion/images/100470643.jpeg",
+        "official_row_index": 43,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "4ede3d2922b52b632681766ed44a6fa5b837314d05836873c055e99f2c2d1ced",
+        "local_row_index": 179035,
+        "official_id": "allava_laion_cap_107086895",
+        "official_image_path": "allava_laion/images/107086895.jpeg",
+        "official_row_index": 44,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "768ae096d87b50f7b96eccf88e890f7307336ff64361bc0b200b63640ffbd26d",
+        "local_row_index": 506060,
+        "official_id": "allava_laion_cap_37345",
+        "official_image_path": "allava_laion/images/37345.jpeg",
+        "official_row_index": 45,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "afae97653466873507f864f69eeef338dedb51b1c3a74602e62a7a3cfdb1fcf7",
+        "local_row_index": 464014,
+        "official_id": "allava_laion_cap_23571",
+        "official_image_path": "allava_laion/images/23571.jpeg",
+        "official_row_index": 46,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "8d6c3c171c6c2a6b8371c964132df3b4d34bdef0a04394392ca083436d381cbd",
+        "local_row_index": 184712,
+        "official_id": "allava_laion_cap_107467881",
+        "official_image_path": "allava_laion/images/107467881.jpeg",
+        "official_row_index": 47,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "10be4761c061cbf2ac6c827dc61110aa735d6769733d56215a5161e7223b42d2",
+        "local_row_index": 314763,
+        "official_id": "allava_laion_cap_147237",
+        "official_image_path": "allava_laion/images/147237.jpeg",
+        "official_row_index": 48,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "a9bf0e501b13c5be18a7b69297263cf9f51309b086d299c7d682b6b33f57f991",
+        "local_row_index": 678246,
+        "official_id": "allava_laion_cap_44565706",
+        "official_image_path": "allava_laion/images/44565706.png",
+        "official_row_index": 49,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "7f42d62d348795a64f2d8b2febef717111cb7ff681d740486dc22dd647ba2355",
+        "local_row_index": 537531,
+        "official_id": "allava_laion_cap_40309323",
+        "official_image_path": "allava_laion/images/40309323.jpeg",
+        "official_row_index": 50,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "09260e62b7f0eceda2d849974730c53ddb7c1efac7f560110dd9a12047e1e93b",
+        "local_row_index": 65037,
+        "official_id": "allava_laion_cap_101512456",
+        "official_image_path": "allava_laion/images/101512456.jpeg",
+        "official_row_index": 51,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "cb5f5fbfc5be67edeaa5d212301da59c0d4c279ca1971d5d176bf0a023821ef9",
+        "local_row_index": 24669,
+        "official_id": "allava_laion_cap_100552202",
+        "official_image_path": "allava_laion/images/100552202.jpeg",
+        "official_row_index": 52,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "cb1a2ec0f2d3d21f710d9a305bdac3fe79d5cf5c97c3c8bf1bdc7129f78ab8c9",
+        "local_row_index": 432478,
+        "official_id": "allava_laion_cap_220023",
+        "official_image_path": "allava_laion/images/220023.jpeg",
+        "official_row_index": 53,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "bcb90296567a7dfc69b0e5701f98d23765186be6b6f37c09b8750d970809aec1",
+        "local_row_index": 205020,
+        "official_id": "allava_laion_cap_118627",
+        "official_image_path": "allava_laion/images/118627.jpeg",
+        "official_row_index": 54,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "98979137d4bb76b94781b69c8d7123bfd5b2f23501711495496c75f1fd10b1b1",
+        "local_row_index": 45549,
+        "official_id": "allava_laion_cap_100994934",
+        "official_image_path": "allava_laion/images/100994934.jpeg",
+        "official_row_index": 55,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "943234029931e505a9031753ae8969307e268aa17350891da8937566eb1148e5",
+        "local_row_index": 430854,
+        "official_id": "allava_laion_cap_219164",
+        "official_image_path": "allava_laion/images/219164.jpeg",
+        "official_row_index": 56,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "10b0164dd06654099029bbd8c4be8996022c65c05285ffcdf28812f63efb24e0",
+        "local_row_index": 176392,
+        "official_id": "allava_laion_cap_106912",
+        "official_image_path": "allava_laion/images/106912.jpeg",
+        "official_row_index": 57,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "6e48ce6d180e700b1849264b6a100cae1234b9603910e4ac1687323b38eefbc5",
+        "local_row_index": 412688,
+        "official_id": "allava_laion_cap_209748",
+        "official_image_path": "allava_laion/images/209748.jpeg",
+        "official_row_index": 58,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "955c17516be48594a38c97bf7f69f427b3b750a0146cf3a286a475aed289a4ed",
+        "local_row_index": 771057,
+        "official_id": "allava_laion_cap_65559",
+        "official_image_path": "allava_laion/images/65559.jpeg",
+        "official_row_index": 59,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "f1776d5677b9168c475fb6017116d0c825a4bfdad8bdd952b4d126a471bac2e6",
+        "local_row_index": 220565,
+        "official_id": "allava_laion_cap_127456",
+        "official_image_path": "allava_laion/images/127456.png",
+        "official_row_index": 60,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "5029f15770df65c7b5dd1141f5cfc0e75457f5ea90dce7d1de0fb4b0dda33d74",
+        "local_row_index": 485910,
+        "official_id": "allava_laion_cap_26179",
+        "official_image_path": "allava_laion/images/26179.jpeg",
+        "official_row_index": 61,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "612863c9f30c777915a891555929a46d520b2d0047cd651a6948d03f45e10f12",
+        "local_row_index": 188341,
+        "official_id": "allava_laion_cap_108695",
+        "official_image_path": "allava_laion/images/108695.jpeg",
+        "official_row_index": 62,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "c6c2f626b30bfc0d66fb31ece6bdd075bbb3cad42f7cf0a8878db8aa934a3b34",
+        "local_row_index": 220705,
+        "official_id": "allava_laion_cap_127542",
+        "official_image_path": "allava_laion/images/127542.jpeg",
+        "official_row_index": 63,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "94d4533a8dd5af6adf900d9fee51ad2978828f9426501959e6e431c6ff3424d7",
+        "local_row_index": 266286,
+        "official_id": "allava_laion_cap_134099317",
+        "official_image_path": "allava_laion/images/134099317.jpeg",
+        "official_row_index": 64,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "523a912fc8ce83304d36c1b4964738b768c5e4a54928b301374fd7a418e40d6f",
+        "local_row_index": 6779,
+        "official_id": "allava_laion_cap_100284783",
+        "official_image_path": "allava_laion/images/100284783.jpeg",
+        "official_row_index": 65,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "f9923ddc7f9a595ce03fd45fc1b73184b5fcabe00f94d4f46818bdef1a545617",
+        "local_row_index": 405171,
+        "official_id": "allava_laion_cap_205827",
+        "official_image_path": "allava_laion/images/205827.jpeg",
+        "official_row_index": 66,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "2a9bb195d68bd1db164e851d82bc03a9de94c048fdcd70c89cffb7a1fc2e60d4",
+        "local_row_index": 906049,
+        "official_id": "allava_laion_cap_96502",
+        "official_image_path": "allava_laion/images/96502.jpeg",
+        "official_row_index": 67,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "d57455dd1b30678c706d7a0872abe0cfd4b7052e1c39c73e942f5973cbd0d8a6",
+        "local_row_index": 878917,
+        "official_id": "allava_laion_cap_81770",
+        "official_image_path": "allava_laion/images/81770.jpeg",
+        "official_row_index": 68,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "f3aec72386ea80a040ffc4c019b2b2d4309b7d6342f8b52f9dbed77d0680fbf4",
+        "local_row_index": 487804,
+        "official_id": "allava_laion_cap_27219",
+        "official_image_path": "allava_laion/images/27219.jpeg",
+        "official_row_index": 69,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "e810efded2a3ed87d1c6b08bfbc9525ee0504f4e6aede3abc94007751e9a6313",
+        "local_row_index": 717915,
+        "official_id": "allava_laion_cap_4655",
+        "official_image_path": "allava_laion/images/4655.jpeg",
+        "official_row_index": 70,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "27d24dd00ee30a98fca6170f7511a758497267c22070d6e616010830f9e2a7f8",
+        "local_row_index": 72936,
+        "official_id": "allava_laion_cap_101751607",
+        "official_image_path": "allava_laion/images/101751607.jpeg",
+        "official_row_index": 71,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "fe83ab463a41c24278b8b78920216728481706c5bbf5ce76f7e49af4fb43d3be",
+        "local_row_index": 237828,
+        "official_id": "allava_laion_cap_131406",
+        "official_image_path": "allava_laion/images/131406.png",
+        "official_row_index": 72,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "80d6b249a32cab44e5c82cb58c571516d802da201f89ede0509ca3e46b090807",
+        "local_row_index": 156728,
+        "official_id": "allava_laion_cap_105661118",
+        "official_image_path": "allava_laion/images/105661118.jpeg",
+        "official_row_index": 73,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "ceee1611bc938fae9def869a5cd88b85dc6f3150b0b273256cc51473d87df32e",
+        "local_row_index": 35371,
+        "official_id": "allava_laion_cap_100768372",
+        "official_image_path": "allava_laion/images/100768372.jpeg",
+        "official_row_index": 74,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "228c276ff557aa8e06b75c9abe983deaf72578dbbc515b7c3343cb3da4ff93fd",
+        "local_row_index": 826050,
+        "official_id": "allava_laion_cap_73692",
+        "official_image_path": "allava_laion/images/73692.jpeg",
+        "official_row_index": 75,
+        "source": "laion"
+      },
+      {
+        "assistant_sha256": "326dcbb0a1f8b80b2858271b976d401f8b5b5fa919ac3dee3174a765c2ad576b",
+        "local_row_index": 970847,
+        "official_id": "allava_vflan_cap_80429",
+        "official_image_path": "images/images_191task_1k/DOCVQA+question_answer_949_qncj0037_2.png",
+        "official_row_index": 0,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "54788be0985708e5d28907d88e9194cc7ee98f9c001905a2838623efa6fefd8e",
+        "local_row_index": 970632,
+        "official_id": "allava_vflan_cap_83607",
+        "official_image_path": "images/images_191task_1k/DOCVQA+question_answer_832_pzkw0023_1.png",
+        "official_row_index": 1,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "62cb249afb152e663344bf65bfb5d486b61f84be908a436b14b83b22e19bb1cd",
+        "local_row_index": 1227336,
+        "official_id": "allava_vflan_cap_1996",
+        "official_image_path": "images/images_191task_1k/infographicvqa+single_document_question_685_qjwh0078_9.png",
+        "official_row_index": 2,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "f95882de198ba9a08b989c7dc5e5eb2bc9c0935de7fc57341e5106faf5b53d6b",
+        "local_row_index": 970601,
+        "official_id": "allava_vflan_cap_117294",
+        "official_image_path": "images/images_191task_1k/DOCVQA+question_answer_816_hrfw0227_22.png",
+        "official_row_index": 3,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "4d35057a0a0454b35105190c4df334b4109108b246edea3b3fe43f2b61d1b28d",
+        "local_row_index": 1270209,
+        "official_id": "allava_vflan_cap_24955",
+        "official_image_path": "images/images_191task_1k/wikihow_immediate_next_step_selection_method_2_step_0.jpg",
+        "official_row_index": 4,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "9a958e1ed983440258e6e624040f8ba424243c1cf557bb437bdf79cc3efed0de",
+        "local_row_index": 969869,
+        "official_id": "allava_vflan_cap_13941",
+        "official_image_path": "images/images_191task_1k/DOCVQA+question_answer_429_hxjw0023_1.png",
+        "official_row_index": 5,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "78bb0363a568a8969ec0ce7f4eee044c65243db5a2d0bfeb8b7c8f0876245968",
+        "local_row_index": 1010105,
+        "official_id": "allava_vflan_cap_8857",
+        "official_image_path": "images/images_191task_1k/FUNSD+text_detection_162_71108371.png",
+        "official_row_index": 6,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "f0f7f7b26ff1dde1c5df761f68c855b2be5622ba59eefd81b93e9964a5909f5d",
+        "local_row_index": 1227592,
+        "official_id": "allava_vflan_cap_2293",
+        "official_image_path": "images/images_191task_1k/infographicvqa+single_document_question_820_gfmg0227_1.png",
+        "official_row_index": 7,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "4bb4f7833f878c86f39881f9deccafdb381a2c6d5f11953468c5bd3875e51d5c",
+        "local_row_index": 1227675,
+        "official_id": "allava_vflan_cap_99119",
+        "official_image_path": "images/images_191task_1k/infographicvqa+single_document_question_864_kkcw0081_2.png",
+        "official_row_index": 8,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "c21e3b20592a59a19b86b5dfa9b6deb7cfa38217eeca703d10f0b875da8ca8a3",
+        "local_row_index": 1227863,
+        "official_id": "allava_vflan_cap_246",
+        "official_image_path": "images/images_191task_1k/infographicvqa+single_document_question_966_fpjw0023_1.png",
+        "official_row_index": 9,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "eeb1eb96c1a3ca4385c6562bc3b34983455cc7d9cffb879f45d3abbe11ccaba9",
+        "local_row_index": 1227696,
+        "official_id": "allava_vflan_cap_10282",
+        "official_image_path": "images/images_191task_1k/infographicvqa+single_document_question_877_ggmx0225_4.png",
+        "official_row_index": 10,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "abf9eed0ef3458c5b73d456a46281f3463fd8574efc15ea3fe7ed43686b8a039",
+        "local_row_index": 1226545,
+        "official_id": "allava_vflan_cap_131431",
+        "official_image_path": "images/images_191task_1k/infographicvqa+single_document_question_256_fzym0020_3.png",
+        "official_row_index": 11,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "1ba05da75ef73da5841e2f90176f2b09663496841a5edb7f7f932606918ba7e8",
+        "local_row_index": 970611,
+        "official_id": "allava_vflan_cap_14983",
+        "official_image_path": "images/images_191task_1k/DOCVQA+question_answer_821_qjwh0078_7.png",
+        "official_row_index": 12,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "ac0b08f962ec7faeb3c9c9990cc30e161984a44ae2b7680fe6e3154882d5ab72",
+        "local_row_index": 1227578,
+        "official_id": "allava_vflan_cap_32066",
+        "official_image_path": "images/images_191task_1k/infographicvqa+single_document_question_813_knjw0023_1.png",
+        "official_row_index": 13,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "b29d08c445172818d8739ed0c8f314d78be5c1ee0a5d00a5149a28036dd9a2bd",
+        "local_row_index": 1226684,
+        "official_id": "allava_vflan_cap_109004",
+        "official_image_path": "images/images_191task_1k/infographicvqa+single_document_question_330_jjxg0023_14.png",
+        "official_row_index": 14,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "c514d92707f8a1c35c2f9516cd5e1415f7e855ee1d22c2dd32d7b3eeabeb8536",
+        "local_row_index": 1226481,
+        "official_id": "allava_vflan_cap_10809",
+        "official_image_path": "images/images_191task_1k/infographicvqa+single_document_question_223_njjw0023_1.png",
+        "official_row_index": 15,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "97414f268a44bd45dbb3004cda5b7f3c745d780c8b7f35ba1e8f193fd858a308",
+        "local_row_index": 970691,
+        "official_id": "allava_vflan_cap_178671",
+        "official_image_path": "images/images_191task_1k/DOCVQA+question_answer_861_gfyc0227_135.png",
+        "official_row_index": 16,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "abe6debf92222260d5bde1a5e54cc1805cadb59878f683cbb1a90721a6a5aa1e",
+        "local_row_index": 1010051,
+        "official_id": "allava_vflan_cap_81221",
+        "official_image_path": "images/images_191task_1k/FUNSD+text_detection_136_0011838621.png",
+        "official_row_index": 17,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "62a99bd1d19327868543eaea8f27db79889b9c770d00dcbe20ca190c8b32c3c6",
+        "local_row_index": 1077896,
+        "official_id": "allava_vflan_cap_89030",
+        "official_image_path": "images/images_191task_1k/Office_31+Image_Classification_Category_806_frame_0036.jpg",
+        "official_row_index": 18,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "0e86bbc26ed93d0f566d376fc82da5e75620fddcc84c93376e28be8ae9a8d473",
+        "local_row_index": 970140,
+        "official_id": "allava_vflan_cap_8924",
+        "official_image_path": "images/images_191task_1k/DOCVQA+question_answer_568_fzym0020_3.png",
+        "official_row_index": 19,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "3e5be14b0d0e18c07d1589d433c5d8a85f6e4f263f437e43218641fe4fd41bf7",
+        "local_row_index": 1032106,
+        "official_id": "allava_vflan_cap_72097",
+        "official_image_path": "images/images_191task_1k/ImageNet-C+image_classification_noise_952_ILSVRC2012_val_00036413.JPEG",
+        "official_row_index": 20,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "90aa1115480ec510ff7321f13ee5a7dd39024f91936424e5ae69d7b192b11beb",
+        "local_row_index": 955255,
+        "official_id": "allava_vflan_cap_163854",
+        "official_image_path": "images/images_191task_1k/Clevr+Multiple_Question_Answering_989_CLEVR_train_017809.png",
+        "official_row_index": 21,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "119dc69af13e029ba8d2e71858b35d099137ec8e152c773e5e3a3fe75567596c",
+        "local_row_index": 1226559,
+        "official_id": "allava_vflan_cap_8128",
+        "official_image_path": "images/images_191task_1k/infographicvqa+single_document_question_263_kxcg0023_2.png",
+        "official_row_index": 22,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "66bc54d0514fde5b4e4b685450887fd3a6acc84ea811c9e561454937916c9407",
+        "local_row_index": 1010117,
+        "official_id": "allava_vflan_cap_94710",
+        "official_image_path": "images/images_191task_1k/FUNSD+text_detection_167_92094751.png",
+        "official_row_index": 23,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "ebebdbeb534a117bdf0d4201b3f9a1d124ca4ec10ffaef379d5982022b0220fd",
+        "local_row_index": 1080020,
+        "official_id": "allava_vflan_cap_81469",
+        "official_image_path": "images/images_191task_1k/Office_31+Image_Classification_ObjectAndCategory_871_frame_0011.jpg",
+        "official_row_index": 24,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "bd54f7cba4eb0190277f1d6ed51f39a9a32a01f0dd973f6d9d84e59130e6eda7",
+        "local_row_index": 970824,
+        "official_id": "allava_vflan_cap_113228",
+        "official_image_path": "images/images_191task_1k/DOCVQA+question_answer_935_fjvg0227_14.png",
+        "official_row_index": 25,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "4d6eaf81fbb5f4f97e0a310cb73e9c97210f92757e150e833c02edcfcdc5497c",
+        "local_row_index": 1226674,
+        "official_id": "allava_vflan_cap_74580",
+        "official_image_path": "images/images_191task_1k/infographicvqa+single_document_question_325_mfcn0020_2.png",
+        "official_row_index": 26,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "807125836586198fc39608b52e596d75e013c7ab67a1ade5eabb7bc045d56d8e",
+        "local_row_index": 937955,
+        "official_id": "allava_vflan_cap_143398",
+        "official_image_path": "images/images_191task_1k/CONCADIA+image_caption_context_2_334_66356.jpg",
+        "official_row_index": 27,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "369704da5da838315a4b822105c17cc4779d73754c3e35d56176b2f3556c999e",
+        "local_row_index": 1010026,
+        "official_id": "allava_vflan_cap_105206",
+        "official_image_path": "images/images_191task_1k/FUNSD+text_detection_122_0001123541.png",
+        "official_row_index": 28,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "cd5a55a964cbf723855c969c77f3211bac61fe20c2035a13668249b64aa4928b",
+        "local_row_index": 1060377,
+        "official_id": "allava_vflan_cap_37288",
+        "official_image_path": "images/images_191task_1k/MNIST-M+number_recognition_66_00005249.png",
+        "official_row_index": 29,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "472712d82e59ca3ab0953cadfe235a44e270a8f350156de9a4513c8d3a6fbd8b",
+        "local_row_index": 1227195,
+        "official_id": "allava_vflan_cap_25058",
+        "official_image_path": "images/images_191task_1k/infographicvqa+single_document_question_606_qzmv0001_2.png",
+        "official_row_index": 30,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "6884fa1ce26d5c3def2a7e54585f6aa29edafc2e693da684d5746bb44a558f52",
+        "local_row_index": 1270210,
+        "official_id": "allava_vflan_cap_177568",
+        "official_image_path": "images/images_191task_1k/wikihow_immediate_next_step_selection_method_2_step_0.jpg",
+        "official_row_index": 31,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "b18e4751ca835be9f7f2f485327b27b9618cd4abedc9cc1cbc8c6c998f8d8fb5",
+        "local_row_index": 935059,
+        "official_id": "allava_vflan_cap_168688",
+        "official_image_path": "images/images_191task_1k/CLEVR_CoGenT+VQA_context_821_CLEVR_trainA_049438.png",
+        "official_row_index": 32,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "789d9883bc3fbe80e68d517a2403be817c72c79cc539a6a57110acb68547fb49",
+        "local_row_index": 1227894,
+        "official_id": "allava_vflan_cap_119346",
+        "official_image_path": "images/images_191task_1k/infographicvqa+single_document_question_985_qjgn0226_190.png",
+        "official_row_index": 33,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "95ba808940a053ecfa0c3b956fed90918ad453a204db943338a215cf025213e7",
+        "local_row_index": 1226742,
+        "official_id": "allava_vflan_cap_165134",
+        "official_image_path": "images/images_191task_1k/infographicvqa+single_document_question_361_ffng0227_2.png",
+        "official_row_index": 34,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "3cea19f220aa4fd30bfb3d066c6d27bbc7498e9e29a12cc929abe0efd3319f31",
+        "local_row_index": 1018805,
+        "official_id": "allava_vflan_cap_32662",
+        "official_image_path": "images/images_191task_1k/GTSRB+image_classification_560_00060_00008.jpeg",
+        "official_row_index": 35,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "5171dc42ec29a5a14023cb9baf12d5c285165ce00b47a23391351eb8f3c028ad",
+        "local_row_index": 1227686,
+        "official_id": "allava_vflan_cap_181618",
+        "official_image_path": "images/images_191task_1k/infographicvqa+single_document_question_870_tqlg0227_2.png",
+        "official_row_index": 36,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "e91e7e12547e8c6858567d404fbea6848f2d26370780ebc0618f7d546d70311b",
+        "local_row_index": 1032124,
+        "official_id": "allava_vflan_cap_182486",
+        "official_image_path": "images/images_191task_1k/ImageNet-C+image_classification_noise_960_ILSVRC2012_val_00032766.JPEG",
+        "official_row_index": 37,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "29e5fbc7636bdce3523435c9c16ef60be2d972696f964205bd89d3a1d889f98d",
+        "local_row_index": 1226682,
+        "official_id": "allava_vflan_cap_161619",
+        "official_image_path": "images/images_191task_1k/infographicvqa+single_document_question_32_mxxx0023_1.png",
+        "official_row_index": 38,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "9dfc0e26d2cbfc6bbfe390bda4e62deb6246d484d322cb87159c7cd52ab3110d",
+        "local_row_index": 1077586,
+        "official_id": "allava_vflan_cap_142895",
+        "official_image_path": "images/images_191task_1k/Office_31+Image_Classification_Category_664_frame_0073.jpg",
+        "official_row_index": 39,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "ff517f1ae9a82fd78e9f68f953c83a021865a5891b81660a275a6abb72040258",
+        "local_row_index": 1029629,
+        "official_id": "allava_vflan_cap_71527",
+        "official_image_path": "images/images_191task_1k/ImageNet-C+image_classification_general_540_ILSVRC2012_val_00014800.JPEG",
+        "official_row_index": 40,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "d2f6e1dbcf14ba5afac33bc1dd0fa844b746e9c138f5368395448949ffb17cfb",
+        "local_row_index": 969709,
+        "official_id": "allava_vflan_cap_76237",
+        "official_image_path": "images/images_191task_1k/DOCVQA+question_answer_34_rlww0217_3.png",
+        "official_row_index": 41,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "daee5a6db180da097254a6a111bfa89014c1b530473da5bad418f2a7a4d27dbb",
+        "local_row_index": 994975,
+        "official_id": "allava_vflan_cap_30524",
+        "official_image_path": "images/images_191task_1k/DeepWeeds+weed_species_recognition_298_20170920-130803-2.jpg",
+        "official_row_index": 42,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "a6d014f17b60a69e974f0b688e0defb1314f9272d4da9c57589cc95fd2d74f86",
+        "local_row_index": 969796,
+        "official_id": "allava_vflan_cap_158574",
+        "official_image_path": "images/images_191task_1k/DOCVQA+question_answer_394_qjyg0023_4.png",
+        "official_row_index": 43,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "c0dceeb6d61c748131daadf0d7d1285b39a06d41c453f49b0cb1e9dd04b1ea54",
+        "local_row_index": 1227503,
+        "official_id": "allava_vflan_cap_62096",
+        "official_image_path": "images/images_191task_1k/infographicvqa+single_document_question_773_hfhb0018_7.png",
+        "official_row_index": 44,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "6555bb0245ba9f7f4c4a011f417da749eb40b4b9a9746ac1d06737228c0c462b",
+        "local_row_index": 1010185,
+        "official_id": "allava_vflan_cap_185207",
+        "official_image_path": "images/images_191task_1k/FUNSD+text_detection_22_0012529295.png",
+        "official_row_index": 45,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "f73cdfcd681ed3108e31ad7341288d8c7e96e8e35ac56e20bc634eea04d8f7e8",
+        "local_row_index": 976523,
+        "official_id": "allava_vflan_cap_162402",
+        "official_image_path": "images/images_191task_1k/DOMAIN_NET+infograph_image_classification_81_infograph_110_000043.jpg",
+        "official_row_index": 46,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "724b65ce15ce7b36c10f076ee7d6fb7b739fc6fc96a8a6f6dc1d0aa979a37019",
+        "local_row_index": 970609,
+        "official_id": "allava_vflan_cap_126170",
+        "official_image_path": "images/images_191task_1k/DOCVQA+question_answer_820_kkxx0023_1.png",
+        "official_row_index": 47,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "5056a5717db6dc15149101a80e8e0136e1b9b0fdf9ab94ed3cdf00ec9b29b861",
+        "local_row_index": 1229541,
+        "official_id": "allava_vflan_cap_109561",
+        "official_image_path": "images/images_191task_1k/model-vs-human+image_style_classification_893_0299_hp_dnn_0.55_chair_10_n03376595_5503.png",
+        "official_row_index": 48,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "bb185401976b61ebfd7f8103cd3c7c057d82f01b4519d1231fa71d10da8e4dd2",
+        "local_row_index": 1032530,
+        "official_id": "allava_vflan_cap_44576",
+        "official_image_path": "images/images_191task_1k/ImageNet-C+image_classification_weather_265_ILSVRC2012_val_00017043.JPEG",
+        "official_row_index": 49,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "2fad00fffd0365d0f1d6695831d0b6f659b24a0ab6a7862fe5a5f139fb8b5d92",
+        "local_row_index": 1226316,
+        "official_id": "allava_vflan_cap_101589",
+        "official_image_path": "images/images_191task_1k/infographicvqa+single_document_question_144_xlwc0228_1.png",
+        "official_row_index": 50,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "8efacf91fac6f7a530d76195b4bcacc2bc7b31a2ed09a421c0d54f2d0c896f29",
+        "local_row_index": 1170139,
+        "official_id": "allava_vflan_cap_156603",
+        "official_image_path": "images/images_191task_1k/VisDA-2017+object_classification_train_118_src_2_04468005_565d7f01c9f8b6b53ae1361afc45ac52__61_236_165.png",
+        "official_row_index": 51,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "866e454a77799e66d53cf34c9b020b4e52a940471eae6e6558cb525aa0131c14",
+        "local_row_index": 1221913,
+        "official_id": "allava_vflan_cap_72095",
+        "official_image_path": "images/images_191task_1k/image_quality_VizWiz_train_00018985.jpg",
+        "official_row_index": 52,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "fecb2c38d2c89adbffb28d0012a7868293d4376cc7d1db1bf35b2d50da6f44b8",
+        "local_row_index": 1030279,
+        "official_id": "allava_vflan_cap_133291",
+        "official_image_path": "images/images_191task_1k/ImageNet-C+image_classification_general_88_ILSVRC2012_val_00035197.JPEG",
+        "official_row_index": 53,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "f246b6156e68671b977980cd6928ce8483f2ab44089b02e72859b4c4f3ecdbf4",
+        "local_row_index": 1254094,
+        "official_id": "allava_vflan_cap_73452",
+        "official_image_path": "images/images_191task_1k/trainSet+image_classification_333_175.jpg",
+        "official_row_index": 54,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "0f323d4cefb285ae7cfcc5db3a6a6c357a616f36d3e6f4a533587f6859fe0d77",
+        "local_row_index": 970360,
+        "official_id": "allava_vflan_cap_309",
+        "official_image_path": "images/images_191task_1k/DOCVQA+question_answer_691_yjxn0226_459.png",
+        "official_row_index": 55,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "ff55e258b1a03cc138f3285dd00e351df153d7593e9da6a0f47d4b7568cd5867",
+        "local_row_index": 1225512,
+        "official_id": "allava_vflan_cap_56072",
+        "official_image_path": "images/images_191task_1k/infographicvqa+question_answer_676_20103.jpeg",
+        "official_row_index": 56,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "f90f979332f3196083b1a39a33aeffe9a78e1aa3d6a08b767e27c4cb7e0ed640",
+        "local_row_index": 1060675,
+        "official_id": "allava_vflan_cap_27389",
+        "official_image_path": "images/images_191task_1k/MNIST-M+number_recognition_886_00021689.png",
+        "official_row_index": 57,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "be6d139e894a94f99472985213cc7e4fa5398d1e7c03949ab11a7897dd8efda3",
+        "local_row_index": 1227593,
+        "official_id": "allava_vflan_cap_2293",
+        "official_image_path": "images/images_191task_1k/infographicvqa+single_document_question_820_gfmg0227_1.png",
+        "official_row_index": 58,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "cb2ccf7eb7e0da40b8212587fa6fd4350350bae086299814f03042e0ce12c953",
+        "local_row_index": 970840,
+        "official_id": "allava_vflan_cap_123305",
+        "official_image_path": "images/images_191task_1k/DOCVQA+question_answer_946_zxlb0019_11.png",
+        "official_row_index": 59,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "97f2429496eb414c6bfa830a4876c8a4d547b8e3143fdd093eeba1ad23ab3ee4",
+        "local_row_index": 970471,
+        "official_id": "allava_vflan_cap_58775",
+        "official_image_path": "images/images_191task_1k/DOCVQA+question_answer_749_zrxn0020_1.png",
+        "official_row_index": 60,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "5eaf102bb2abf11215cfc4e40fc075140450417ec683ed2eb5fcd7288941faf1",
+        "local_row_index": 969451,
+        "official_id": "allava_vflan_cap_108256",
+        "official_image_path": "images/images_191task_1k/DOCVQA+question_answer_213_kncw0217_2.png",
+        "official_row_index": 61,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "a4abf81bcf5664f380018e8e0565a396b061b5b2827cc3ead9f303f3e8e35be0",
+        "local_row_index": 1227282,
+        "official_id": "allava_vflan_cap_25930",
+        "official_image_path": "images/images_191task_1k/infographicvqa+single_document_question_652_fgcf0004_1.png",
+        "official_row_index": 62,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "26d0131c6f69e2522004386965fd7a1bbd54cb96fa83f9b6b7602a3e145aa62b",
+        "local_row_index": 969870,
+        "official_id": "allava_vflan_cap_13941",
+        "official_image_path": "images/images_191task_1k/DOCVQA+question_answer_429_hxjw0023_1.png",
+        "official_row_index": 63,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "06694afde67c32dba4afbf3326b2a925d9987ccea6e9e1f58c9023355cd6ec47",
+        "local_row_index": 1251324,
+        "official_id": "allava_vflan_cap_167177",
+        "official_image_path": "images/images_191task_1k/spot-the-diff+image_diff_identification_873_14459.png",
+        "official_row_index": 64,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "d44a17f79d1ab2f11cbbfc257edb9d6302a2c804c31478a82528e1bc344963ff",
+        "local_row_index": 1096581,
+        "official_id": "allava_vflan_cap_125537",
+        "official_image_path": "images/images_191task_1k/PACS+house_image_category_classification_342_8825.png",
+        "official_row_index": 65,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "397fdc7b96174a1af52982fe92fcef1017f1a977f147815bb0371e7a1a7fa06b",
+        "local_row_index": 1059925,
+        "official_id": "allava_vflan_cap_127986",
+        "official_image_path": "images/images_191task_1k/MNIST-M+number_recognition_303_00010643.png",
+        "official_row_index": 66,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "aaaeb6b93ea77ba3d9d00a27d26421a8a49938832f59a708618c3f06a751d46a",
+        "local_row_index": 1010020,
+        "official_id": "allava_vflan_cap_128252",
+        "official_image_path": "images/images_191task_1k/FUNSD+text_detection_11_0001463282.png",
+        "official_row_index": 67,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "98226af2fb169bcfd7575c7d1825ee07f69db0ca84019a61cc607da605c075b2",
+        "local_row_index": 1270595,
+        "official_id": "allava_vflan_cap_159490",
+        "official_image_path": "images/images_191task_1k/wikihow_immediate_next_step_selection_method_2_step_4.jpg",
+        "official_row_index": 68,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "596cb474fec7e747f00816aa1102d053be61dd77a5ffdc00a313f9abc6d69b35",
+        "local_row_index": 1227448,
+        "official_id": "allava_vflan_cap_24593",
+        "official_image_path": "images/images_191task_1k/infographicvqa+single_document_question_742_fjxw0023_1.png",
+        "official_row_index": 69,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "eb08fc73f42c514dc2e0594aaa4a0348d2d807685b14a89b974b2896b20a9c12",
+        "local_row_index": 1076516,
+        "official_id": "allava_vflan_cap_4386",
+        "official_image_path": "images/images_191task_1k/Office_31+Image_Classification_Category_17_frame_0071.jpg",
+        "official_row_index": 70,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "30f34757e858fb635ec9f7ff57935a7f659300e8a43ccff7121d4848986377ee",
+        "local_row_index": 970833,
+        "official_id": "allava_vflan_cap_14554",
+        "official_image_path": "images/images_191task_1k/DOCVQA+question_answer_941_jjlh0077_29.png",
+        "official_row_index": 71,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "80571efe4771461ff505b28ff5e0a6428941256beb905d23de79f324e3497fad",
+        "local_row_index": 1018579,
+        "official_id": "allava_vflan_cap_123436",
+        "official_image_path": "images/images_191task_1k/GTSRB+image_classification_399_00062_00010.jpeg",
+        "official_row_index": 72,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "dc766dd84b9779a7fdc3b8f256a56c59a41846e28055cde0c927185ff2f09176",
+        "local_row_index": 1267147,
+        "official_id": "allava_vflan_cap_20699",
+        "official_image_path": "images/images_191task_1k/wikihow_image_text_step_order_method_0_step_2.jpg",
+        "official_row_index": 73,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "01068ae7a301f77bb4c9f3bf7fd46c2318d34010b0bb3d9bd30e694da7543529",
+        "local_row_index": 951765,
+        "official_id": "allava_vflan_cap_139951",
+        "official_image_path": "images/images_191task_1k/Cars+car_classification_349_00287.jpg",
+        "official_row_index": 74,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "97908d714d7e42e33d8aa3d3dcc96245324cb1a61873105a17cd1a176314abd6",
+        "local_row_index": 969359,
+        "official_id": "allava_vflan_cap_108354",
+        "official_image_path": "images/images_191task_1k/DOCVQA+question_answer_166_jkmm0020_13.png",
+        "official_row_index": 75,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "a3178e8fd1e298894657ed949408dd85a92b4e7a1c45faeebc26c8641b8d2835",
+        "local_row_index": 1010163,
+        "official_id": "allava_vflan_cap_15362",
+        "official_image_path": "images/images_191task_1k/FUNSD+text_detection_192_0060000813.png",
+        "official_row_index": 76,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "75c003b975c61d9f92f32bf39717b096278dfeccf108cf854a2b053df79e600e",
+        "local_row_index": 1262147,
+        "official_id": "allava_vflan_cap_16584",
+        "official_image_path": "images/images_191task_1k/visdial+answer_question_9_523_COCO_val2014_000000562805.jpg",
+        "official_row_index": 77,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "4421f9b04b65548aab996db20d5696847716304e915a543d4c953ebdb3e3ee20",
+        "local_row_index": 1226722,
+        "official_id": "allava_vflan_cap_53451",
+        "official_image_path": "images/images_191task_1k/infographicvqa+single_document_question_348_yzlh0227_1.png",
+        "official_row_index": 78,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "c53ae5afe567ed6704507a6fc9ca2ec8d6e6924923acd5ba7c04ae7ba2d6fc74",
+        "local_row_index": 996465,
+        "official_id": "allava_vflan_cap_147299",
+        "official_image_path": "images/images_191task_1k/DeepWeeds+weed_species_recognition_967_20171121-181049-2.jpg",
+        "official_row_index": 79,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "b428bd93424bd3eea6c3b6990322799718572df66bbdff76bb7adcf496439e99",
+        "local_row_index": 1227118,
+        "official_id": "allava_vflan_cap_12941",
+        "official_image_path": "images/images_191task_1k/infographicvqa+single_document_question_560_rnbg0023_2.png",
+        "official_row_index": 80,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "5bec31e0b32cf60786c47959524bbd50e94e56429267200b0c2c8ba992ce2803",
+        "local_row_index": 1218018,
+        "official_id": "allava_vflan_cap_178859",
+        "official_image_path": "images/images_191task_1k/iconqa+fill_in_blank_769_image.png",
+        "official_row_index": 81,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "02e76ffec15168715ecffe4e5ac470e3dbd51e651a6703fca68d57970fbd9340",
+        "local_row_index": 970224,
+        "official_id": "allava_vflan_cap_1220",
+        "official_image_path": "images/images_191task_1k/DOCVQA+question_answer_618_hjjw0023_1.png",
+        "official_row_index": 82,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "18330ad840bb28a97e3795b9751f82012fd7f7dcd8bb48f25b0cafefe7918eb3",
+        "local_row_index": 1165421,
+        "official_id": "allava_vflan_cap_142937",
+        "official_image_path": "images/images_191task_1k/VQG+caption_generation_670_37b79822-7401-4350-b175-15820d9a5d42.jpg",
+        "official_row_index": 83,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "84cf44385e4f3abe6c9d95c3d71a5ca6322dfe87c1009973ec7755a01e902edc",
+        "local_row_index": 970630,
+        "official_id": "allava_vflan_cap_94119",
+        "official_image_path": "images/images_191task_1k/DOCVQA+question_answer_830_qjgn0226_174.png",
+        "official_row_index": 84,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "9e978929aa1e0c697a8a8c9afbc6617cacec66f162f38af1aaecc7eb32298471",
+        "local_row_index": 1274097,
+        "official_id": "allava_vflan_cap_140331",
+        "official_image_path": "images/images_191task_1k/wikihow_text_image_step_order_method_2_step_0.jpg",
+        "official_row_index": 85,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "86bb6edc487c3383cd2f108b2f7c2fb36e6c5cefc9c28a7859cb90e4db37119e",
+        "local_row_index": 1152375,
+        "official_id": "allava_vflan_cap_3786",
+        "official_image_path": "images/images_191task_1k/VQA_positional_reasoning_COCO_train2014_000000170683.jpg",
+        "official_row_index": 86,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "ded6801e176e5d9ed8f4b0151e0a935ec7984c7a2023dabcbd5f82efe91db8f7",
+        "local_row_index": 970834,
+        "official_id": "allava_vflan_cap_14554",
+        "official_image_path": "images/images_191task_1k/DOCVQA+question_answer_941_jjlh0077_29.png",
+        "official_row_index": 87,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "464e687ee7f84e8a7989a266eb03f052a9279423dbaea814e615dae8c1db15d6",
+        "local_row_index": 1227759,
+        "official_id": "allava_vflan_cap_184624",
+        "official_image_path": "images/images_191task_1k/infographicvqa+single_document_question_913_gfyc0227_110.png",
+        "official_row_index": 88,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "65b9aa9cf08f2f01c5855cda27baad23dd17b92a8a60b615aa7d1395ef32675b",
+        "local_row_index": 969325,
+        "official_id": "allava_vflan_cap_12253",
+        "official_image_path": "images/images_191task_1k/DOCVQA+question_answer_150_grxv0228_6.png",
+        "official_row_index": 89,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "3a0c4e53dea8b4c317a262767648d5dab73b5e38816a682c72d03b0d4f7781c2",
+        "local_row_index": 1270211,
+        "official_id": "allava_vflan_cap_99702",
+        "official_image_path": "images/images_191task_1k/wikihow_immediate_next_step_selection_method_2_step_0.jpg",
+        "official_row_index": 90,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "8207a5872dab3de699faad063fa57c28f1a684bac72cc16fe53eca6aa451125f",
+        "local_row_index": 1060586,
+        "official_id": "allava_vflan_cap_23730",
+        "official_image_path": "images/images_191task_1k/MNIST-M+number_recognition_822_00043378.png",
+        "official_row_index": 91,
+        "source": "vflan"
+      },
+      {
+        "assistant_sha256": "a06bfc3e647242dd11cecef510386661dc47b43cd42faa9a5f7964327a7b73d0",
+        "local_row_index": 1029916,
+        "official_id": "allava_vflan_cap_134766",
+        "official_image_path": "images/images_191task_1k/ImageNet-C+image_classification_general_696_ILSVRC2012_val_00016551.JPEG",
+        "official_row_index": 92,
+        "source": "vflan"
+      }
+    ],
+    "official_records": 169,
+    "one_to_one": true,
+    "source_counts": {
+      "laion": 76,
+      "vflan": 93
+    },
+    "unique_exact_assistant_matches": 169,
+    "unique_official_ids": 166
+  },
+  "upstream": {
+    "minimind_card_license": "apache-2.0",
+    "official_allava_dataset_revision": "0fd42fce5c047d387a4bb5318d588eae9a9797f0",
+    "official_allava_license": "cc-by-nc-4.0",
+    "sample_receipts": [
+      {
+        "config": "allava_laion",
+        "dataset": "FreedomIntelligence/ALLaVA-4V",
+        "duplicate_official_ids": {},
+        "path": "sources/cover01_official_allava_laion_first_rows.json",
+        "raw_rows": 76,
+        "sha256": "dc57981de07878e0fbb8c499726677ab51053024dcd5febe23f1558b411f6e7c",
+        "split": "caption",
+        "truncated_rows_excluded": 0,
+        "unique_official_ids": 76,
+        "usable_rows": 76
+      },
+      {
+        "config": "allava_vflan",
+        "dataset": "FreedomIntelligence/ALLaVA-4V",
+        "duplicate_official_ids": {
+          "allava_vflan_cap_13941": 2,
+          "allava_vflan_cap_14554": 2,
+          "allava_vflan_cap_2293": 2
+        },
+        "path": "sources/cover01_official_allava_vflan_first_rows.json",
+        "raw_rows": 93,
+        "sha256": "2aedc0e3c1740dd79bbd3bfdd9481eb71426f23f9a954e09599390f514f3b04c",
+        "split": "caption",
+        "truncated_rows_excluded": 0,
+        "unique_official_ids": 90,
+        "usable_rows": 93
+      }
+    ]
+  }
+}
