@@ -285,3 +285,8 @@ checkpoint-only prediction test；不训练。
   competition / gradient routing、task-specific signal absorption 与 frozen visual
   representation 对 autoregressive objective 的匹配问题中，寻找不重复旧路线的唯一
   最小可证伪 candidate。该 gate 本身不训练、不运行 checkpoint。
+- `LITMAP-04_round1` immutable plan 已冻结：严格覆盖 objective/gradient
+  competition、visual-token credit、task-specific transfer、frozen-feature/
+  autoregressive-objective mismatch 与 matched auxiliary-objective 五族检索；只有
+  ≥2 篇 direct autoregressive-LVLM sources、≥1 个 matched control、mechanism 与
+  external 双证据及无需 sweep 的唯一干预同时满足时，才允许登记一个新 candidate。
