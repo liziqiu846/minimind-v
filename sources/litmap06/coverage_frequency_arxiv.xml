@@ -1,0 +1,1595 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/JYbjK6la5KUhZQJdpep5f2KAf/0</id>
+  <title>arXiv Query: search_query=all:vision OR all:language OR all:pretraining OR all:frequency OR all:compositional OR all:generalization OR all:data&amp;id_list=&amp;start=0&amp;max_results=50</title>
+  <updated>2026-08-07T08:30:53Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:vision+OR+(all:language+OR+(all:pretraining+OR+(all:frequency+OR+(all:compositional+OR+(all:generalization+OR+all:data)))))&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <opensearch:totalResults>1656751</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2502.18326v1</id>
+    <title>Pretraining Frequency Predicts Compositional Generalization of CLIP on Real-World Tasks</title>
+    <updated>2025-02-17T16:52:02Z</updated>
+    <link href="https://arxiv.org/abs/2502.18326v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.18326v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate the success conditions for compositional generalization of CLIP models on real-world data through performance prediction. Prior work shows that CLIP requires exponentially more pretraining data for linear performance gains on individual concepts. This sample-inefficient scaling could be mitigated if CLIP systematically understood new inputs as compositions of learned components, allowing rare observation to be mapped to common concepts. To explore CLIP's compositional generalization ability, we filter retrieval corpora for samples with object combinations not present in the pretraining corpus. We show that CLIP's performance on these samples can be accurately predicted from the pretraining frequencies of individual objects. Our findings demonstrate that CLIP learns to disentangle objects observed in its pretraining data and can recompose them straightforwardly. Additionally, we are the first to show how this ability scales with pretraining data. For data curation in practice, our results suggest that balancing object occurrences improves generalization, which should benefit CLIP's efficiency and accuracy without scaling data volume.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-17T16:52:02Z</published>
+    <arxiv:comment>NeurIPS 2024 Workshop on Compositional Learning: Perspectives, Methods, and Paths Forward</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Thaddäus Wiedemer</name>
+    </author>
+    <author>
+      <name>Yash Sharma</name>
+    </author>
+    <author>
+      <name>Ameya Prabhu</name>
+    </author>
+    <author>
+      <name>Matthias Bethge</name>
+    </author>
+    <author>
+      <name>Wieland Brendel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1106.1451v2</id>
+    <title>A data-based power transformation for compositional data</title>
+    <updated>2011-06-16T11:56:33Z</updated>
+    <link href="https://arxiv.org/abs/1106.1451v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1106.1451v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Compositional data analysis is carried out either by neglecting the compositional constraint and applying standard multivariate data analysis, or by transforming the data using the logs of the ratios of the components. In this work we examine a more general transformation which includes both approaches as special cases. It is a power transformation and involves a single parameter, α. The transformation has two equivalent versions. The first is the stay-in-the-simplex version, which is the power transformation as defined by Aitchison in 1986. The second version, which is a linear transformation of the power transformation, is a Box-Cox type transformation. We discuss a parametric way of estimating the value of α, which is maximization of its profile likelihood (assuming multivariate normality of the transformed data) and the equivalence between the two versions is exhibited. Other ways include maximization of the correct classification probability in discriminant analysis and maximization of the pseudo R-squared (as defined by Aitchison in 1986) in linear regression. We examine the relationship between the α-transformation, the raw data approach and the isometric log-ratio transformation. Furthermore, we also define a suitable family of metrics corresponding to the family of α-transformation and consider the corresponding family of Frechet means.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-06-07T20:35:58Z</published>
+    <arxiv:comment>Published in the proceddings of the 4th international workshop on Compositional Data Analysis. http://congress.cimne.com/codawork11/frontal/default.asp</arxiv:comment>
+    <arxiv:primary_category term="stat.ME"/>
+    <arxiv:journal_ref>Proceedings of CoDaWork'11: 4th international workshop on Compositional Data Analysis, Egozcue, J.J., Tolosana-Delgado, R. and Ortego, M.I. (eds.) 2011. ISBN: 978-84-87867-76-7</arxiv:journal_ref>
+    <author>
+      <name>Michail T. Tsagris</name>
+    </author>
+    <author>
+      <name>Simon Preston</name>
+    </author>
+    <author>
+      <name>Andrew T. A. Wood</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.21391v1</id>
+    <title>TerraGen: A Unified Multi-Task Layout Generation Framework for Remote Sensing Data Augmentation</title>
+    <updated>2025-10-24T12:29:12Z</updated>
+    <link href="https://arxiv.org/abs/2510.21391v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.21391v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Remote sensing vision tasks require extensive labeled data across multiple, interconnected domains. However, current generative data augmentation frameworks are task-isolated, i.e., each vision task requires training an independent generative model, and ignores the modeling of geographical information and spatial constraints. To address these issues, we propose \textbf{TerraGen}, a unified layout-to-image generation framework that enables flexible, spatially controllable synthesis of remote sensing imagery for various high-level vision tasks, e.g., detection, segmentation, and extraction. Specifically, TerraGen introduces a geographic-spatial layout encoder that unifies bounding box and segmentation mask inputs, combined with a multi-scale injection scheme and mask-weighted loss to explicitly encode spatial constraints, from global structures to fine details. Also, we construct the first large-scale multi-task remote sensing layout generation dataset containing 45k images and establish a standardized evaluation protocol for this task. Experimental results show that our TerraGen can achieve the best generation image quality across diverse tasks. Additionally, TerraGen can be used as a universal data-augmentation generator, enhancing downstream task performance significantly and demonstrating robust cross-task generalisation in both full-data and few-shot scenarios.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-24T12:29:12Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Datao Tang</name>
+    </author>
+    <author>
+      <name>Hao Wang</name>
+    </author>
+    <author>
+      <name>Yudeng Xin</name>
+    </author>
+    <author>
+      <name>Hui Qiao</name>
+    </author>
+    <author>
+      <name>Dongsheng Jiang</name>
+    </author>
+    <author>
+      <name>Yin Li</name>
+    </author>
+    <author>
+      <name>Zhiheng Yu</name>
+    </author>
+    <author>
+      <name>Xiangyong Cao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.22398v3</id>
+    <title>On the Reliability of Vision-Language Models Under Adversarial Frequency-Domain Perturbations</title>
+    <updated>2025-08-13T01:15:41Z</updated>
+    <link href="https://arxiv.org/abs/2507.22398v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.22398v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-Language Models (VLMs) are increasingly used as perceptual modules for visual content reasoning, including through captioning and DeepFake detection. In this work, we expose a critical vulnerability of VLMs when exposed to subtle, structured perturbations in the frequency domain. Specifically, we highlight how these feature transformations undermine authenticity/DeepFake detection and automated image captioning tasks. We design targeted image transformations, operating in the frequency domain to systematically adjust VLM outputs when exposed to frequency-perturbed real and synthetic images. We demonstrate that the perturbation injection method generalizes across five state-of-the-art VLMs which includes different-parameter Qwen2/2.5 and BLIP models. Experimenting across ten real and generated image datasets reveals that VLM judgments are sensitive to frequency-based cues and may not wholly align with semantic content. Crucially, we show that visually-imperceptible spatial frequency transformations expose the fragility of VLMs deployed for automated image captioning and authenticity detection tasks. Our findings under realistic, black-box constraints challenge the reliability of VLMs, underscoring the need for robust multimodal perception systems.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-30T05:41:29Z</published>
+    <arxiv:comment>Keywords: Vision-Language Models, Frequency-Domain Perturbations, Adversarial Robustness, Image Authenticity, Reliability</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jordan Vice</name>
+    </author>
+    <author>
+      <name>Naveed Akhtar</name>
+    </author>
+    <author>
+      <name>Yansong Gao</name>
+    </author>
+    <author>
+      <name>Richard Hartley</name>
+    </author>
+    <author>
+      <name>Ajmal Mian</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1907.02664v2</id>
+    <title>Data Encoding for Byzantine-Resilient Distributed Optimization</title>
+    <updated>2020-11-04T05:57:11Z</updated>
+    <link href="https://arxiv.org/abs/1907.02664v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1907.02664v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study distributed optimization in the presence of Byzantine adversaries, where both data and computation are distributed among $m$ worker machines, $t$ of which may be corrupt. The compromised nodes may collaboratively and arbitrarily deviate from their pre-specified programs, and a designated (master) node iteratively computes the model/parameter vector for generalized linear models. In this work, we primarily focus on two iterative algorithms: Proximal Gradient Descent (PGD) and Coordinate Descent (CD). Gradient descent (GD) is a special case of these algorithms. PGD is typically used in the data-parallel setting, where data is partitioned across different samples, whereas, CD is used in the model-parallelism setting, where data is partitioned across the parameter space.
+  In this paper, we propose a method based on data encoding and error correction over real numbers to combat adversarial attacks. We can tolerate up to $t\leq \lfloor\frac{m-1}{2}\rfloor$ corrupt worker nodes, which is information-theoretically optimal. We give deterministic guarantees, and our method does not assume any probability distribution on the data. We develop a {\em sparse} encoding scheme which enables computationally efficient data encoding and decoding. We demonstrate a trade-off between the corruption threshold and the resource requirements (storage, computational, and communication complexity). As an example, for $t\leq\frac{m}{3}$, our scheme incurs only a {\em constant} overhead on these resources, over that required by the plain distributed PGD/CD algorithms which provide no adversarial protection. To the best of our knowledge, ours is the first paper that makes CD secure against adversarial attacks.
+  Our encoding scheme extends efficiently to the data streaming model and for stochastic gradient descent (SGD). We also give experimental results to show the efficacy of our proposed schemes.</summary>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-07-05T03:31:43Z</published>
+    <arxiv:comment>38 pages, Accepted for publication in the IEEE Transactions on Information Theory</arxiv:comment>
+    <arxiv:primary_category term="cs.DC"/>
+    <author>
+      <name>Deepesh Data</name>
+    </author>
+    <author>
+      <name>Linqi Song</name>
+    </author>
+    <author>
+      <name>Suhas Diggavi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2005.07866v1</id>
+    <title>Byzantine-Resilient SGD in High Dimensions on Heterogeneous Data</title>
+    <updated>2020-05-16T04:15:27Z</updated>
+    <link href="https://arxiv.org/abs/2005.07866v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2005.07866v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study distributed stochastic gradient descent (SGD) in the master-worker architecture under Byzantine attacks. We consider the heterogeneous data model, where different workers may have different local datasets, and we do not make any probabilistic assumptions on data generation. At the core of our algorithm, we use the polynomial-time outlier-filtering procedure for robust mean estimation proposed by Steinhardt et al. (ITCS 2018) to filter-out corrupt gradients. In order to be able to apply their filtering procedure in our {\em heterogeneous} data setting where workers compute {\em stochastic} gradients, we derive a new matrix concentration result, which may be of independent interest.
+  We provide convergence analyses for smooth strongly-convex and non-convex objectives. We derive our results under the bounded variance assumption on local stochastic gradients and a {\em deterministic} condition on datasets, namely, gradient dissimilarity; and for both these quantities, we provide concrete bounds in the statistical heterogeneous data model. We give a trade-off between the mini-batch size for stochastic gradients and the approximation error. Our algorithm can tolerate up to $\frac{1}{4}$ fraction Byzantine workers. It can find approximate optimal parameters in the strongly-convex setting exponentially fast and reach to an approximate stationary point in the non-convex setting with a linear speed, thus, matching the convergence rates of vanilla SGD in the Byzantine-free setting.
+  We also propose and analyze a Byzantine-resilient SGD algorithm with gradient compression, where workers send $k$ random coordinates of their gradients. Under mild conditions, we show a $\frac{d}{k}$-factor saving in communication bits as well as decoding complexity over our compression-free algorithm without affecting its convergence rate (order-wise) and the approximation error.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-05-16T04:15:27Z</published>
+    <arxiv:comment>57 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Deepesh Data</name>
+    </author>
+    <author>
+      <name>Suhas Diggavi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1110.5626v1</id>
+    <title>Constraints on dark energy from H II starburst galaxy apparent magnitude versus redshift data</title>
+    <updated>2011-10-25T19:44:22Z</updated>
+    <link href="https://arxiv.org/abs/1110.5626v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1110.5626v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we use H II starburst galaxy apparent magnitude versus redshift data from Siegel et al. (2005) to constrain dark energy cosmological model parameters. These constraints are generally consistent with those derived using other data sets, but are not as restrictive as the tightest currently available constraints.</summary>
+    <category term="astro-ph.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-10-25T19:44:22Z</published>
+    <arxiv:comment>18 pages, 6 figures, 1 table</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.CO"/>
+    <author>
+      <name>Data Mania</name>
+    </author>
+    <author>
+      <name>Bharat Ratra</name>
+    </author>
+    <arxiv:doi>10.1016/j.physletb.2012.07.011</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.physletb.2012.07.011" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.15497v3</id>
+    <title>AeroGen: Enhancing Remote Sensing Object Detection with Diffusion-Driven Data Generation</title>
+    <updated>2025-02-24T15:22:40Z</updated>
+    <link href="https://arxiv.org/abs/2411.15497v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.15497v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Remote sensing image object detection (RSIOD) aims to identify and locate specific objects within satellite or aerial imagery. However, there is a scarcity of labeled data in current RSIOD datasets, which significantly limits the performance of current detection algorithms. Although existing techniques, e.g., data augmentation and semi-supervised learning, can mitigate this scarcity issue to some extent, they are heavily dependent on high-quality labeled data and perform worse in rare object classes. To address this issue, this paper proposes a layout-controllable diffusion generative model (i.e. AeroGen) tailored for RSIOD. To our knowledge, AeroGen is the first model to simultaneously support horizontal and rotated bounding box condition generation, thus enabling the generation of high-quality synthetic images that meet specific layout and object category requirements. Additionally, we propose an end-to-end data augmentation framework that integrates a diversity-conditioned generator and a filtering mechanism to enhance both the diversity and quality of generated data. Experimental results demonstrate that the synthetic data produced by our method are of high quality and diversity. Furthermore, the synthetic RSIOD data can significantly improve the detection performance of existing RSIOD models, i.e., the mAP metrics on DIOR, DIOR-R, and HRSC datasets are improved by 3.7%, 4.3%, and 2.43%, respectively. The code is available at https://github.com/Sonettoo/AeroGen.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-23T09:04:33Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Datao Tang</name>
+    </author>
+    <author>
+      <name>Xiangyong Cao</name>
+    </author>
+    <author>
+      <name>Xuan Wu</name>
+    </author>
+    <author>
+      <name>Jialin Li</name>
+    </author>
+    <author>
+      <name>Jing Yao</name>
+    </author>
+    <author>
+      <name>Xueru Bai</name>
+    </author>
+    <author>
+      <name>Dongsheng Jiang</name>
+    </author>
+    <author>
+      <name>Yin Li</name>
+    </author>
+    <author>
+      <name>Deyu Meng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.21725v2</id>
+    <title>Procedural Pretraining: Warming Up Language Models with Abstract Data</title>
+    <updated>2026-05-27T19:52:53Z</updated>
+    <link href="https://arxiv.org/abs/2601.21725v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.21725v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Pretraining language models directly on web-scale corpora is the de facto paradigm. We study an alternative where the model is initially exposed to abstract structured data to ease the subsequent acquisition of rich semantic knowledge, much like humans learning simple logic and mathematics before higher reasoning. We focus on procedural data, generated by formal languages and other simple algorithms, as such abstract data. We first diagnose the algorithmic skills that different forms of procedural data can improve, often significantly. For example, the accuracy of context recall (Needle-in-a-haystack) jumps from 10 to 98% when a model is pretrained on Dyck sequences (balanced brackets). Second, we study how these gains are reflected in pretraining larger models (up to 1.3B). We find that front-loading as little as 0.1 to 0.3% procedural data significantly outperforms standard pretraining on natural language, code, and informal mathematics (C4, CodeParrot, and DeepMind-Math datasets). Notably, this also enables the models to reach the same loss value with only 55/67/86% of the original data and thus a comparable reduction in FLOPs. Third, we explore the mechanisms behind the benefits and find that procedural pretraining instills non-trivial structure in both attention and MLP layers. The former is particularly important for structured domains (e.g. code), and the latter for language. Finally, we lay a path for combining multiple forms of procedural data. Our results show that procedural pretraining is a simple, lightweight means of improving performance and accelerating language model pretraining, ultimately suggesting the promise of disentangling knowledge acquisition from reasoning in LLMs.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-29T13:48:43Z</published>
+    <arxiv:comment>ICML 2026. Project page: https://zlshinnick.github.io/procedural-pretraining-page/</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Liangze Jiang</name>
+    </author>
+    <author>
+      <name>Zachary Shinnick</name>
+    </author>
+    <author>
+      <name>Anton van den Hengel</name>
+    </author>
+    <author>
+      <name>Hemanth Saratchandran</name>
+    </author>
+    <author>
+      <name>Damien Teney</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2202.09061v4</id>
+    <title>VLP: A Survey on Vision-Language Pre-training</title>
+    <updated>2022-07-30T14:38:11Z</updated>
+    <link href="https://arxiv.org/abs/2202.09061v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2202.09061v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In the past few years, the emergence of pre-training models has brought uni-modal fields such as computer vision (CV) and natural language processing (NLP) to a new era. Substantial works have shown they are beneficial for downstream uni-modal tasks and avoid training a new model from scratch. So can such pre-trained models be applied to multi-modal tasks? Researchers have explored this problem and made significant progress. This paper surveys recent advances and new frontiers in vision-language pre-training (VLP), including image-text and video-text pre-training. To give readers a better overall grasp of VLP, we first review its recent advances from five aspects: feature extraction, model architecture, pre-training objectives, pre-training datasets, and downstream tasks. Then, we summarize the specific VLP models in detail. Finally, we discuss the new frontiers in VLP. To the best of our knowledge, this is the first survey focused on VLP. We hope that this survey can shed light on future research in the VLP field.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-02-18T07:54:02Z</published>
+    <arxiv:comment>A Survey on Vision-Language Pre-training</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <arxiv:journal_ref>Machine Intelligence Research. 20(1), February 2023, 38-56</arxiv:journal_ref>
+    <author>
+      <name>Feilong Chen</name>
+    </author>
+    <author>
+      <name>Duzhen Zhang</name>
+    </author>
+    <author>
+      <name>Minglun Han</name>
+    </author>
+    <author>
+      <name>Xiuyi Chen</name>
+    </author>
+    <author>
+      <name>Jing Shi</name>
+    </author>
+    <author>
+      <name>Shuang Xu</name>
+    </author>
+    <author>
+      <name>Bo Xu</name>
+    </author>
+    <arxiv:doi>10.1007/s11633-022-1369-5</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s11633-022-1369-5" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.07104v2</id>
+    <title>Vision-Language-Vision Auto-Encoder: Scalable Knowledge Distillation from Diffusion Models</title>
+    <updated>2025-07-11T03:43:50Z</updated>
+    <link href="https://arxiv.org/abs/2507.07104v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.07104v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Building state-of-the-art Vision-Language Models (VLMs) with strong captioning capabilities typically necessitates training on billions of high-quality image-text pairs, requiring millions of GPU hours. This paper introduces the Vision-Language-Vision (VLV) auto-encoder framework, which strategically leverages key pretrained components: a vision encoder, the decoder of a Text-to-Image (T2I) diffusion model, and subsequently, a Large Language Model (LLM). Specifically, we establish an information bottleneck by regularizing the language representation space, achieved through freezing the pretrained T2I diffusion decoder. Our VLV pipeline effectively distills knowledge from the text-conditioned diffusion model using continuous embeddings, demonstrating comprehensive semantic understanding via high-quality reconstructions. Furthermore, by fine-tuning a pretrained LLM to decode the intermediate language representations into detailed descriptions, we construct a state-of-the-art (SoTA) captioner comparable to leading models like GPT-4o and Gemini 2.0 Flash. Our method demonstrates exceptional cost-efficiency and significantly reduces data requirements; by primarily utilizing single-modal images for training and maximizing the utility of existing pretrained models (image encoder, T2I diffusion model, and LLM), it circumvents the need for massive paired image-text datasets, keeping the total training expenditure under $1,000 USD.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-09T17:59:04Z</published>
+    <arxiv:comment>Project Page: https://lambert-x.github.io/Vision-Language-Vision/</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Tiezheng Zhang</name>
+    </author>
+    <author>
+      <name>Yitong Li</name>
+    </author>
+    <author>
+      <name>Yu-cheng Chou</name>
+    </author>
+    <author>
+      <name>Jieneng Chen</name>
+    </author>
+    <author>
+      <name>Alan Yuille</name>
+    </author>
+    <author>
+      <name>Chen Wei</name>
+    </author>
+    <author>
+      <name>Junfei Xiao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.09625v2</id>
+    <title>Grounding Synthetic Data Generation With Vision and Language Models</title>
+    <updated>2026-05-02T13:56:02Z</updated>
+    <link href="https://arxiv.org/abs/2603.09625v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.09625v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Deep learning models benefit from increasing data diversity and volume, motivating synthetic data augmentation to improve existing datasets. However, existing evaluation metrics for synthetic data typically calculate latent feature similarity, which is difficult to interpret and does not always correlate with the contribution to downstream tasks.
+  We propose a vision-language grounded framework for interpretable synthetic data augmentation and evaluation in remote sensing. Our approach combines generative models, semantic segmentation and image captioning with vision and language models. Based on this framework, we introduce ARAS400k: A large-scale Remote sensing dataset Augmented with Synthetic data for segmentation and captioning, containing 100k real images and 300k synthetic images, each paired with segmentation maps and descriptions.
+  ARAS400k enables the automated evaluation of synthetic data by analyzing semantic composition, minimizing caption redundancy, and verifying cross-modal consistency between visual structures and language descriptions. Experimental results indicate that while models trained exclusively on synthetic data reach competitive performance levels, those trained with augmented data (a combination of real and synthetic images) consistently outperform real-data baselines. Consequently, this work establishes a scalable benchmark for remote sensing tasks, specifically in semantic segmentation and image captioning. The dataset is available at zenodo.org/records/18890661 and the code base at github.com/caglarmert/ARAS400k.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-10T13:03:53Z</published>
+    <arxiv:comment>Accepted for presentation at IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR), Synthetic Data for Computer Vision Workshop (SynData4CV) 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Ümit Mert Çağlar</name>
+    </author>
+    <author>
+      <name>Alptekin Temizel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.00086v2</id>
+    <title>Hierarchical Pre-Training of Vision Encoders with Large Language Model</title>
+    <updated>2026-08-03T16:53:23Z</updated>
+    <link href="https://arxiv.org/abs/2604.00086v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.00086v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The field of computer vision has experienced significant advancements through scalable vision encoders and multimodal pre-training frameworks. However, existing approaches often treat vision encoders and large language models (LLMs) as independent modules, limiting the integration of hierarchical visual features. In this work, we propose HIVE (Hierarchical Pre-Training of Vision Encoders), a novel framework that enhances vision-language alignment by introducing hierarchical cross-attention between the vision encoder and LLM. Unlike conventional methods that flatten image embeddings, HIVE enables structured feature fusion across multiple layers, improving gradient flow and representation learning. To optimize this interaction, we introduce a three-stage training strategy that progressively aligns the vision encoder with the LLM, ensuring stable optimization and effective multimodal fusion. Empirical evaluations demonstrate that HIVE achieves superior performance not only in image classification but also on various vision-language tasks, outperforming self-attention-based methods in benchmarks such as MME, GQA, OK-VQA, and ScienceQA. Our results highlight the benefits of hierarchical feature integration, paving the way for more efficient and expressive vision-language models.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-31T18:00:39Z</published>
+    <arxiv:comment>17 pages, 14 figures, accepted to Computer Vision and Pattern Recognition Conference (CVPR) Workshops 2026. 5th MMFM Workshop: What is Next in Multimodal Foundation Models?</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <arxiv:journal_ref>In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (pp. 7415-7424) 2026</arxiv:journal_ref>
+    <author>
+      <name>Eugene Lee</name>
+    </author>
+    <author>
+      <name>Ting-Yu Chang</name>
+    </author>
+    <author>
+      <name>Jui-Huang Tsai</name>
+    </author>
+    <author>
+      <name>Jiajie Diao</name>
+    </author>
+    <author>
+      <name>Chen-Yi Lee</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.19294v2</id>
+    <title>Object Detection with Multimodal Large Vision-Language Models: An In-depth Review</title>
+    <updated>2025-09-30T07:34:01Z</updated>
+    <link href="https://arxiv.org/abs/2508.19294v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.19294v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The fusion of language and vision in large vision-language models (LVLMs) has revolutionized deep learning-based object detection by enhancing adaptability, contextual reasoning, and generalization beyond traditional architectures. This in-depth review presents a structured exploration of the state-of-the-art in LVLMs, systematically organized through a three-step research review process. First, we discuss the functioning of vision language models (VLMs) for object detection, describing how these models harness natural language processing (NLP) and computer vision (CV) techniques to revolutionize object detection and localization. We then explain the architectural innovations, training paradigms, and output flexibility of recent LVLMs for object detection, highlighting how they achieve advanced contextual understanding for object detection. The review thoroughly examines the approaches used in integration of visual and textual information, demonstrating the progress made in object detection using VLMs that facilitate more sophisticated object detection and localization strategies. This review presents comprehensive visualizations demonstrating LVLMs' effectiveness in diverse scenarios including localization and segmentation, and then compares their real-time performance, adaptability, and complexity to traditional deep learning systems. Based on the review, its is expected that LVLMs will soon meet or surpass the performance of conventional methods in object detection. The review also identifies a few major limitations of the current LVLM modes, proposes solutions to address those challenges, and presents a clear roadmap for the future advancement in this field. We conclude, based on this study, that the recent advancement in LVLMs have made and will continue to make a transformative impact on object detection and robotic applications in the future.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-25T17:21:00Z</published>
+    <arxiv:comment>First Peer Reviewed Review Paper for Object Detection with Vision-Language Models (VLMs)</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <arxiv:journal_ref>Information Fusion, 2025</arxiv:journal_ref>
+    <author>
+      <name>Ranjan Sapkota</name>
+    </author>
+    <author>
+      <name>Manoj Karkee</name>
+    </author>
+    <arxiv:doi>10.1016/j.inffus.2025.103575</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.inffus.2025.103575" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.22720v1</id>
+    <title>LayoutAgent: A Vision-Language Agent Guided Compositional Diffusion for Spatial Layout Planning</title>
+    <updated>2025-09-24T20:41:04Z</updated>
+    <link href="https://arxiv.org/abs/2509.22720v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.22720v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Designing realistic multi-object scenes requires not only generating images, but also planning spatial layouts that respect semantic relations and physical plausibility. On one hand, while recent advances in diffusion models have enabled high-quality image generation, they lack explicit spatial reasoning, leading to unrealistic object layouts. On the other hand, traditional spatial planning methods in robotics emphasize geometric and relational consistency, but they struggle to capture semantic richness in visual scenes. To bridge this gap, in this paper, we propose LayoutAgent, an agentic framework that unifies vision-language reasoning with compositional diffusion for layout generation. Given multiple input images with target objects in them, our method first employs visual-language model to preprocess the inputs through segmentation, object size estimation, scene graph construction, and prompt rewriting. Then we leverage compositional diffusion-a method traditionally used in robotics-to synthesize bounding boxes that respect object relations encoded in the scene graph for spatial layouts. In the end, a foreground-conditioned image generator composes the complete scene by rendering the objects into the planned layout guided by designed prompts. Experiments demonstrate that LayoutAgent outperforms other state-of-the-art layout generation models in layout coherence, spatial realism and aesthetic alignment.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-24T20:41:04Z</published>
+    <arxiv:comment>NeurIPS 2025 Workshop on SPACE in Vision, Language, and Embodied AI</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zezhong Fan</name>
+    </author>
+    <author>
+      <name>Xiaohan Li</name>
+    </author>
+    <author>
+      <name>Luyi Ma</name>
+    </author>
+    <author>
+      <name>Kai Zhao</name>
+    </author>
+    <author>
+      <name>Liang Peng</name>
+    </author>
+    <author>
+      <name>Topojoy Biswas</name>
+    </author>
+    <author>
+      <name>Evren Korpeoglu</name>
+    </author>
+    <author>
+      <name>Kaushiki Nag</name>
+    </author>
+    <author>
+      <name>Kannan Achan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.03973v1</id>
+    <title>VLS: Steering Pretrained Robot Policies via Vision-Language Models</title>
+    <updated>2026-02-03T19:50:16Z</updated>
+    <link href="https://arxiv.org/abs/2602.03973v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.03973v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Why do pretrained diffusion or flow-matching policies fail when the same task is performed near an obstacle, on a shifted support surface, or amid mild clutter? Such failures rarely reflect missing motor skills; instead, they expose a limitation of imitation learning under train-test shifts, where action generation is tightly coupled to training-specific spatial configurations and task specifications. Retraining or fine-tuning to address these failures is costly and conceptually misaligned, as the required behaviors already exist but cannot be selectively adapted at test time. We propose Vision-Language Steering (VLS), a training-free framework for inference-time adaptation of frozen generative robot policies. VLS treats adaptation as an inference-time control problem, steering the sampling process of a pretrained diffusion or flow-matching policy in response to out-of-distribution observation-language inputs without modifying policy parameters. By leveraging vision-language models to synthesize trajectory-differentiable reward functions, VLS guides denoising toward action trajectories that satisfy test-time spatial and task requirements. Across simulation and real-world evaluations, VLS consistently outperforms prior steering methods, achieving a 31% improvement on CALVIN and a 13% gain on LIBERO-PRO. Real-world deployment on a Franka robot further demonstrates robust inference-time adaptation under test-time spatial and semantic shifts. Project page: https://vision-language-steering.github.io/webpage/</summary>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-03T19:50:16Z</published>
+    <arxiv:comment>11 Pages, Project page: https://vision-language-steering.github.io/webpage/</arxiv:comment>
+    <arxiv:primary_category term="cs.RO"/>
+    <author>
+      <name>Shuo Liu</name>
+    </author>
+    <author>
+      <name>Ishneet Sukhvinder Singh</name>
+    </author>
+    <author>
+      <name>Yiqing Xu</name>
+    </author>
+    <author>
+      <name>Jiafei Duan</name>
+    </author>
+    <author>
+      <name>Ranjay Krishna</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2204.07356v5</id>
+    <title>Vision-and-Language Pretrained Models: A Survey</title>
+    <updated>2022-05-03T21:31:58Z</updated>
+    <link href="https://arxiv.org/abs/2204.07356v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2204.07356v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Pretrained models have produced great success in both Computer Vision (CV) and Natural Language Processing (NLP). This progress leads to learning joint representations of vision and language pretraining by feeding visual and linguistic contents into a multi-layer transformer, Visual-Language Pretrained Models (VLPMs). In this paper, we present an overview of the major advances achieved in VLPMs for producing joint representations of vision and language. As the preliminaries, we briefly describe the general task definition and genetic architecture of VLPMs. We first discuss the language and vision data encoding methods and then present the mainstream VLPM structure as the core content. We further summarise several essential pretraining and fine-tuning strategies. Finally, we highlight three future directions for both CV and NLP researchers to provide insightful guidance.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-04-15T07:33:06Z</published>
+    <arxiv:comment>Accepted in IJCAI 2022</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Siqu Long</name>
+    </author>
+    <author>
+      <name>Feiqi Cao</name>
+    </author>
+    <author>
+      <name>Soyeon Caren Han</name>
+    </author>
+    <author>
+      <name>Haiqin Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1812.10860v5</id>
+    <title>Can You Tell Me How to Get Past Sesame Street? Sentence-Level Pretraining Beyond Language Modeling</title>
+    <updated>2019-07-22T22:38:54Z</updated>
+    <link href="https://arxiv.org/abs/1812.10860v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1812.10860v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Natural language understanding has recently seen a surge of progress with the use of sentence encoders like ELMo (Peters et al., 2018a) and BERT (Devlin et al., 2019) which are pretrained on variants of language modeling. We conduct the first large-scale systematic study of candidate pretraining tasks, comparing 19 different tasks both as alternatives and complements to language modeling. Our primary results support the use language modeling, especially when combined with pretraining on additional labeled-data tasks. However, our results are mixed across pretraining tasks and show some concerning trends: In ELMo's pretrain-then-freeze paradigm, random baselines are worryingly strong and results vary strikingly across target tasks. In addition, fine-tuning BERT on an intermediate task often negatively impacts downstream transfer. In a more positive trend, we see modest gains from multitask training, suggesting the development of more sophisticated multitask and transfer learning techniques as an avenue for further research.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-12-28T01:21:17Z</published>
+    <arxiv:comment>ACL 2019. This paper supercedes "Looking for ELMo's Friends: Sentence-Level Pretraining Beyond Language Modeling", an earlier version of this work by the same authors</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Alex Wang</name>
+    </author>
+    <author>
+      <name>Jan Hula</name>
+    </author>
+    <author>
+      <name>Patrick Xia</name>
+    </author>
+    <author>
+      <name>Raghavendra Pappagari</name>
+    </author>
+    <author>
+      <name>R. Thomas McCoy</name>
+    </author>
+    <author>
+      <name>Roma Patel</name>
+    </author>
+    <author>
+      <name>Najoung Kim</name>
+    </author>
+    <author>
+      <name>Ian Tenney</name>
+    </author>
+    <author>
+      <name>Yinghui Huang</name>
+    </author>
+    <author>
+      <name>Katherin Yu</name>
+    </author>
+    <author>
+      <name>Shuning Jin</name>
+    </author>
+    <author>
+      <name>Berlin Chen</name>
+    </author>
+    <author>
+      <name>Benjamin Van Durme</name>
+    </author>
+    <author>
+      <name>Edouard Grave</name>
+    </author>
+    <author>
+      <name>Ellie Pavlick</name>
+    </author>
+    <author>
+      <name>Samuel R. Bowman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2010.16064v1</id>
+    <title>A 20 Gbps Data Transmitting ASIC with PAM4 for Particle Physics Experiments</title>
+    <updated>2020-10-30T04:24:49Z</updated>
+    <link href="https://arxiv.org/abs/2010.16064v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2010.16064v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present the design principle and test results of a data transmitting ASIC, GBS20, for particle physics experiments. The goal of GBS20 will be an ASIC that employs two serializers each from the 10.24 Gbps lpGBT SerDes, sharing the PLL also from lpGBT. A PAM4 encoder plus a VCSEL driver will be implemented in the same die to use the same clock system, eliminating the need of CDRs in the PAM4 encoder. This way the transmitter module, GBT20, developed using the GBS20 ASIC, will have the exact lpGBT data interface and transmission protocol, with an output up to 20.48 Gbps over one fiber. With PAM4 embedded FPGAs at the receiving end, GBT20 will halve the fibers needed in a system and better use the input bandwidth of the FPGA. A prototype, GBS20v0 is fabricated using a commercial 65 nm CMOS technology. This prototype has two serializers and a PAM4 encoder sharing the lpGBT PLL, but no user data input. An internal PRBS generator provides data to the serializers. GBS20v0 is tested barely up to 20.48 Gbps. With lessons learned from this prototype, we are designing the second prototype, GBS20v1, that will have 16 user data input channels each at 1.28 Gbps. We present the design concept of the GBS20 ASIC and the GBT20 module, the preliminary test results, and lessons learned from GBS20v0 and the design of GBS20v1 which will be not only a test chip but also a user chip with 16 input data channels.</summary>
+    <category term="physics.ins-det" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ex" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-10-30T04:24:49Z</published>
+    <arxiv:comment>3 pages, 3 figures,22nd IEEE Real Time Conference</arxiv:comment>
+    <arxiv:primary_category term="physics.ins-det"/>
+    <author>
+      <name>Li Zhang</name>
+      <arxiv:affiliation>Southern Methodist University</arxiv:affiliation>
+      <arxiv:affiliation>Central China Normal University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Datao Gong</name>
+      <arxiv:affiliation>Southern Methodist University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Suen Hou</name>
+      <arxiv:affiliation>Academia Sinica, Nangang</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Guanming Huang</name>
+      <arxiv:affiliation>Central China Normal University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Xing Huang</name>
+      <arxiv:affiliation>Central China Normal University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Chonghan Liu</name>
+      <arxiv:affiliation>Southern Methodist University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Tiankuan Liu</name>
+      <arxiv:affiliation>Southern Methodist University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Hanhan Sun</name>
+      <arxiv:affiliation>Southern Methodist University</arxiv:affiliation>
+      <arxiv:affiliation>Central China Normal University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Quan Sun</name>
+      <arxiv:affiliation>Fermi National Accelerator Laboratory</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Xiangming Sun</name>
+      <arxiv:affiliation>Central China Normal University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Wei Zhang</name>
+      <arxiv:affiliation>Southern Methodist University</arxiv:affiliation>
+      <arxiv:affiliation>Central China Normal University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Jingbo Ye</name>
+      <arxiv:affiliation>Southern Methodist University</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2210.09263v1</id>
+    <title>Vision-Language Pre-training: Basics, Recent Advances, and Future Trends</title>
+    <updated>2022-10-17T17:11:36Z</updated>
+    <link href="https://arxiv.org/abs/2210.09263v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.09263v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper surveys vision-language pre-training (VLP) methods for multimodal intelligence that have been developed in the last few years. We group these approaches into three categories: ($i$) VLP for image-text tasks, such as image captioning, image-text retrieval, visual question answering, and visual grounding; ($ii$) VLP for core computer vision tasks, such as (open-set) image classification, object detection, and segmentation; and ($iii$) VLP for video-text tasks, such as video captioning, video-text retrieval, and video question answering. For each category, we present a comprehensive review of state-of-the-art methods, and discuss the progress that has been made and challenges still being faced, using specific systems and models as case studies. In addition, for each category, we discuss advanced topics being actively explored in the research community, such as big foundation models, unified modeling, in-context few-shot learning, knowledge, robustness, and computer vision in the wild, to name a few.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-17T17:11:36Z</published>
+    <arxiv:comment>A survey paper/book on Vision-Language Pre-training (102 pages)</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhe Gan</name>
+    </author>
+    <author>
+      <name>Linjie Li</name>
+    </author>
+    <author>
+      <name>Chunyuan Li</name>
+    </author>
+    <author>
+      <name>Lijuan Wang</name>
+    </author>
+    <author>
+      <name>Zicheng Liu</name>
+    </author>
+    <author>
+      <name>Jianfeng Gao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2206.01127v2</id>
+    <title>VL-BEiT: Generative Vision-Language Pretraining</title>
+    <updated>2022-09-03T14:18:55Z</updated>
+    <link href="https://arxiv.org/abs/2206.01127v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2206.01127v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce a vision-language foundation model called VL-BEiT, which is a bidirectional multimodal Transformer learned by generative pretraining. Our minimalist solution conducts masked prediction on both monomodal and multimodal data with a shared Transformer. Specifically, we perform masked vision-language modeling on image-text pairs, masked language modeling on texts, and masked image modeling on images. VL-BEiT is learned from scratch with one unified pretraining task, one shared backbone, and one-stage training. Our method is conceptually simple and empirically effective. Experimental results show that VL-BEiT obtains strong results on various vision-language benchmarks, such as visual question answering, visual reasoning, and image-text retrieval. Moreover, our method learns transferable visual features, achieving competitive performance on image classification, and semantic segmentation.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-06-02T16:14:19Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Hangbo Bao</name>
+    </author>
+    <author>
+      <name>Wenhui Wang</name>
+    </author>
+    <author>
+      <name>Li Dong</name>
+    </author>
+    <author>
+      <name>Furu Wei</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.11108v2</id>
+    <title>Benchmarking Vision Language Models on German Factual Data</title>
+    <updated>2025-06-27T10:17:13Z</updated>
+    <link href="https://arxiv.org/abs/2504.11108v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.11108v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Similar to LLMs, the development of vision language models is mainly driven by English datasets and models trained in English and Chinese language, whereas support for other languages, even those considered high-resource languages such as German, remains significantly weaker. In this work we present an analysis of open-weight VLMs on factual knowledge in the German and English language. We disentangle the image-related aspects from the textual ones by analyzing accu-racy with jury-as-a-judge in both prompt languages and images from German and international contexts. We found that for celebrities and sights, VLMs struggle because they are lacking visual cognition of German image contents. For animals and plants, the tested models can often correctly identify the image contents ac-cording to the scientific name or English common name but fail in German lan-guage. Cars and supermarket products were identified equally well in English and German images across both prompt languages.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-15T11:55:24Z</published>
+    <arxiv:comment>Peinl, René; Tischler, Vincent (2025): Benchmarking Vision Language Models on German Factual Data. 21st International Conference on Artificial Intelligence Applications and Innovations, 26-29 June, 2025, Limassol, Cyprus (accepted)</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>René Peinl</name>
+    </author>
+    <author>
+      <name>Vincent Tischler</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2302.14383v3</id>
+    <title>Linear Spaces of Meanings: Compositional Structures in Vision-Language Models</title>
+    <updated>2024-01-11T18:21:52Z</updated>
+    <link href="https://arxiv.org/abs/2302.14383v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2302.14383v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate compositional structures in data embeddings from pre-trained vision-language models (VLMs). Traditionally, compositionality has been associated with algebraic operations on embeddings of words from a pre-existing vocabulary. In contrast, we seek to approximate representations from an encoder as combinations of a smaller set of vectors in the embedding space. These vectors can be seen as "ideal words" for generating concepts directly within the embedding space of the model. We first present a framework for understanding compositional structures from a geometric perspective. We then explain what these compositional structures entail probabilistically in the case of VLM embeddings, providing intuitions for why they arise in practice. Finally, we empirically explore these structures in CLIP's embeddings and we evaluate their usefulness for solving different vision-language tasks such as classification, debiasing, and retrieval. Our results show that simple linear algebraic operations on embedding vectors can be used as compositional and interpretable methods for regulating the behavior of VLMs.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-02-28T08:11:56Z</published>
+    <arxiv:comment>18 pages, 9 figures, 7 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>Proceedings of the IEEE/CVF International Conference on Computer Vision 2023 (pp. 15395-15404)</arxiv:journal_ref>
+    <author>
+      <name>Matthew Trager</name>
+    </author>
+    <author>
+      <name>Pramuditha Perera</name>
+    </author>
+    <author>
+      <name>Luca Zancato</name>
+    </author>
+    <author>
+      <name>Alessandro Achille</name>
+    </author>
+    <author>
+      <name>Parminder Bhatia</name>
+    </author>
+    <author>
+      <name>Stefano Soatto</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2201.05729v3</id>
+    <title>CLIP-TD: CLIP Targeted Distillation for Vision-Language Tasks</title>
+    <updated>2022-12-28T20:07:58Z</updated>
+    <link href="https://arxiv.org/abs/2201.05729v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2201.05729v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Contrastive language-image pretraining (CLIP) links vision and language modalities into a unified embedding space, yielding the tremendous potential for vision-language (VL) tasks. While early concurrent works have begun to study this potential on a subset of tasks, important questions remain: 1) What is the benefit of CLIP on unstudied VL tasks? 2) Does CLIP provide benefit in low-shot or domain-shifted scenarios? 3) Can CLIP improve existing approaches without impacting inference or pretraining complexity? In this work, we seek to answer these questions through two key contributions. First, we introduce an evaluation protocol that includes Visual Commonsense Reasoning (VCR), Visual Entailment (SNLI-VE), and Visual Question Answering (VQA), across a variety of data availability constraints and conditions of domain shift. Second, we propose an approach, named CLIP Targeted Distillation (CLIP-TD), to intelligently distill knowledge from CLIP into existing architectures using a dynamically weighted objective applied to adaptively selected tokens per instance. Experiments demonstrate that our proposed CLIP-TD leads to exceptional gains in the low-shot (up to 51.9%) and domain-shifted (up to 71.3%) conditions of VCR, while simultaneously improving performance under standard fully-supervised conditions (up to 2%), achieving state-of-art performance on VCR compared to other single models that are pretrained with image-text data only. On SNLI-VE, CLIP-TD produces significant gains in low-shot conditions (up to 6.6%) as well as fully supervised (up to 3%). On VQA, CLIP-TD provides improvement in low-shot (up to 9%), and in fully-supervised (up to 1.3%). Finally, CLIP-TD outperforms concurrent works utilizing CLIP for finetuning, as well as baseline naive distillation approaches. Code will be made available.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-01-15T01:54:01Z</published>
+    <arxiv:comment>This paper is greatly modified and updated to be re-submitted to another conference. The new paper is under the name "Multimodal Adaptive Distillation for Leveraging Unimodal Encoders for Vision-Language Tasks", https://doi.org/10.48550/arXiv.2204.10496</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhecan Wang</name>
+    </author>
+    <author>
+      <name>Noel Codella</name>
+    </author>
+    <author>
+      <name>Yen-Chun Chen</name>
+    </author>
+    <author>
+      <name>Luowei Zhou</name>
+    </author>
+    <author>
+      <name>Jianwei Yang</name>
+    </author>
+    <author>
+      <name>Xiyang Dai</name>
+    </author>
+    <author>
+      <name>Bin Xiao</name>
+    </author>
+    <author>
+      <name>Haoxuan You</name>
+    </author>
+    <author>
+      <name>Shih-Fu Chang</name>
+    </author>
+    <author>
+      <name>Lu Yuan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2308.14179v1</id>
+    <title>Towards Vision-Language Mechanistic Interpretability: A Causal Tracing Tool for BLIP</title>
+    <updated>2023-08-27T18:46:47Z</updated>
+    <link href="https://arxiv.org/abs/2308.14179v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2308.14179v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Mechanistic interpretability seeks to understand the neural mechanisms that enable specific behaviors in Large Language Models (LLMs) by leveraging causality-based methods. While these approaches have identified neural circuits that copy spans of text, capture factual knowledge, and more, they remain unusable for multimodal models since adapting these tools to the vision-language domain requires considerable architectural changes. In this work, we adapt a unimodal causal tracing tool to BLIP to enable the study of the neural mechanisms underlying image-conditioned text generation. We demonstrate our approach on a visual question answering dataset, highlighting the causal relevance of later layer representations for all tokens. Furthermore, we release our BLIP causal tracing tool as open source to enable further experimentation in vision-language mechanistic interpretability by the community. Our code is available at https://github.com/vedantpalit/Towards-Vision-Language-Mechanistic-Interpretability.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-27T18:46:47Z</published>
+    <arxiv:comment>Final version for 5th Workshop on Closing the Loop Between Vision and Language (CLVL) @ ICCV 2023. 4 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Vedant Palit</name>
+    </author>
+    <author>
+      <name>Rohan Pandey</name>
+    </author>
+    <author>
+      <name>Aryaman Arora</name>
+    </author>
+    <author>
+      <name>Paul Pu Liang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.12459v1</id>
+    <title>On Linear Representations and Pretraining Data Frequency in Language Models</title>
+    <updated>2025-04-16T19:50:03Z</updated>
+    <link href="https://arxiv.org/abs/2504.12459v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.12459v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Pretraining data has a direct impact on the behaviors and quality of language models (LMs), but we only understand the most basic principles of this relationship. While most work focuses on pretraining data's effect on downstream task behavior, we investigate its relationship to LM representations. Previous work has discovered that, in language models, some concepts are encoded `linearly' in the representations, but what factors cause these representations to form? We study the connection between pretraining data frequency and models' linear representations of factual relations. We find evidence that the formation of linear representations is strongly connected to pretraining term frequencies; specifically for subject-relation-object fact triplets, both subject-object co-occurrence frequency and in-context learning accuracy for the relation are highly correlated with linear representations. This is the case across all phases of pretraining. In OLMo-7B and GPT-J, we discover that a linear representation consistently (but not exclusively) forms when the subjects and objects within a relation co-occur at least 1k and 2k times, respectively, regardless of when these occurrences happen during pretraining. Finally, we train a regression model on measurements of linear representation quality in fully-trained LMs that can predict how often a term was seen in pretraining. Our model achieves low error even on inputs from a different model with a different pretraining dataset, providing a new method for estimating properties of the otherwise-unknown training data of closed-data models. We conclude that the strength of linear representations in LMs contains signal about the models' pretraining corpora that may provide new avenues for controlling and improving model behavior: particularly, manipulating the models' training data to meet specific frequency thresholds.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-16T19:50:03Z</published>
+    <arxiv:comment>ICLR 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Jack Merullo</name>
+    </author>
+    <author>
+      <name>Noah A. Smith</name>
+    </author>
+    <author>
+      <name>Sarah Wiegreffe</name>
+    </author>
+    <author>
+      <name>Yanai Elazar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2309.08612v1</id>
+    <title>Explaining Vision and Language through Graphs of Events in Space and Time</title>
+    <updated>2023-08-29T07:25:06Z</updated>
+    <link href="https://arxiv.org/abs/2309.08612v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2309.08612v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Artificial Intelligence makes great advances today and starts to bridge the gap between vision and language. However, we are still far from understanding, explaining and controlling explicitly the visual content from a linguistic perspective, because we still lack a common explainable representation between the two domains. In this work we come to address this limitation and propose the Graph of Events in Space and Time (GEST), by which we can represent, create and explain, both visual and linguistic stories. We provide a theoretical justification of our model and an experimental validation, which proves that GEST can bring a solid complementary value along powerful deep learning models. In particular, GEST can help improve at the content-level the generation of videos from text, by being easily incorporated into our novel video generation engine. Additionally, by using efficient graph matching techniques, the GEST graphs can also improve the comparisons between texts at the semantic level.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-29T07:25:06Z</published>
+    <arxiv:comment>Accepted at IEEE International Conference on Computer Vision (ICCV) 2023 Workshops: 5th Workshop On Closing The Loop Between Vision And Language</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Mihai Masala</name>
+    </author>
+    <author>
+      <name>Nicolae Cudlenco</name>
+    </author>
+    <author>
+      <name>Traian Rebedea</name>
+    </author>
+    <author>
+      <name>Marius Leordeanu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.20329v3</id>
+    <title>Image Generators are Generalist Vision Learners</title>
+    <updated>2026-06-03T18:02:24Z</updated>
+    <link href="https://arxiv.org/abs/2604.20329v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.20329v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent works show that image and video generators exhibit zero-shot visual understanding behaviors, in a way reminiscent of how LLMs develop emergent capabilities of language understanding and reasoning from generative pretraining. While it has long been conjectured that the ability to create visual content implies an ability to understand it, there has been limited evidence that generative vision models have developed strong understanding capabilities. In this work, we demonstrate that image generation training serves a role similar to LLM pretraining, and lets models learn powerful and general visual representations that enable SOTA performance on various vision tasks. We introduce Vision Banana, a generalist model built by instruction-tuning Nano Banana Pro (NBP) on a mixture of its original training data alongside a small amount of vision task data. By parameterizing the output space of vision tasks as RGB images, we seamlessly reframe perception as image generation. Our generalist model, Vision Banana, achieves SOTA results on a variety of vision tasks involving both 2D and 3D understanding, beating or rivaling zero-shot domain-specialists, including Segment Anything Model 3 on segmentation tasks, and the Depth Anything series on metric depth estimation. We show that these results can be achieved with lightweight instruction-tuning without sacrificing the base model's image generation capabilities. The superior results suggest that image generation pretraining is a generalist vision learner. It also shows that image generation serves as a unified and universal interface for vision tasks, similar to text generation's role in language understanding and reasoning. We could be witnessing a major paradigm shift for computer vision, where generative vision pretraining takes a central role in building Foundational Vision Models for both generation and understanding.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-22T08:23:48Z</published>
+    <arxiv:comment>Project Page: http://vision-banana.github.io</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Valentin Gabeur</name>
+    </author>
+    <author>
+      <name>Shangbang Long</name>
+    </author>
+    <author>
+      <name>Songyou Peng</name>
+    </author>
+    <author>
+      <name>Paul Voigtlaender</name>
+    </author>
+    <author>
+      <name>Shuyang Sun</name>
+    </author>
+    <author>
+      <name>Yanan Bao</name>
+    </author>
+    <author>
+      <name>Karen Truong</name>
+    </author>
+    <author>
+      <name>Zhicheng Wang</name>
+    </author>
+    <author>
+      <name>Wenlei Zhou</name>
+    </author>
+    <author>
+      <name>Jonathan T. Barron</name>
+    </author>
+    <author>
+      <name>Kyle Genova</name>
+    </author>
+    <author>
+      <name>Nithish Kannen</name>
+    </author>
+    <author>
+      <name>Sherry Ben</name>
+    </author>
+    <author>
+      <name>Yandong Li</name>
+    </author>
+    <author>
+      <name>Mandy Guo</name>
+    </author>
+    <author>
+      <name>Suhas Yogin</name>
+    </author>
+    <author>
+      <name>Yiming Gu</name>
+    </author>
+    <author>
+      <name>Huizhong Chen</name>
+    </author>
+    <author>
+      <name>Oliver Wang</name>
+    </author>
+    <author>
+      <name>Saining Xie</name>
+    </author>
+    <author>
+      <name>Howard Zhou</name>
+    </author>
+    <author>
+      <name>Kaiming He</name>
+    </author>
+    <author>
+      <name>Thomas Funkhouser</name>
+    </author>
+    <author>
+      <name>Jean-Baptiste Alayrac</name>
+    </author>
+    <author>
+      <name>Radu Soricut</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.02851v2</id>
+    <title>Enhancing Compositional Generalization via Compositional Feature Alignment</title>
+    <updated>2024-05-22T05:34:28Z</updated>
+    <link href="https://arxiv.org/abs/2402.02851v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.02851v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Real-world applications of machine learning models often confront data distribution shifts, wherein discrepancies exist between the training and test data distributions. In the common multi-domain multi-class setup, as the number of classes and domains scales up, it becomes infeasible to gather training data for every domain-class combination. This challenge naturally leads the quest for models with Compositional Generalization (CG) ability, where models can generalize to unseen domain-class combinations. To delve into the CG challenge, we develop CG-Bench, a suite of CG benchmarks derived from existing real-world image datasets, and observe that the prevalent pretraining-finetuning paradigm on foundational models, such as CLIP and DINOv2, struggles with the challenge. To address this challenge, we propose Compositional Feature Alignment (CFA), a simple two-stage finetuning technique that i) learns two orthogonal linear heads on a pretrained encoder with respect to class and domain labels, and ii) fine-tunes the encoder with the newly learned head frozen. We theoretically and empirically justify that CFA encourages compositional feature learning of pretrained models. We further conduct extensive experiments on CG-Bench for CLIP and DINOv2, two powerful pretrained vision foundation models. Experiment results show that CFA outperforms common finetuning techniques in compositional generalization, corroborating CFA's efficacy in compositional feature learning.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-05T10:06:24Z</published>
+    <arxiv:comment>Published in Transactions on Machine Learning Research (TMLR). The code is released at https://github.com/Haoxiang-Wang/Compositional-Feature-Alignment</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Haoxiang Wang</name>
+    </author>
+    <author>
+      <name>Haozhe Si</name>
+    </author>
+    <author>
+      <name>Huajie Shao</name>
+    </author>
+    <author>
+      <name>Han Zhao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.10797v1</id>
+    <title>Compositional Context Fine-Tuning Vision-Language Model for Complex Assembly Action Understanding from Videos</title>
+    <updated>2026-07-12T15:09:33Z</updated>
+    <link href="https://arxiv.org/abs/2607.10797v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.10797v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Assembly action understanding is a key enabler for effective human-robot collaborative assembly, yet it remains challenging due to subtle motions and fine-grained hand-object interactions. We adapt vision-language models (VLMs) to this challenging domain with Compositional Context Fine-Tuning (CCFT), a method that decomposes assembly actions into semantic elements (Verb, Object, Tool) and fine-tunes VLMs to recognize each action element using templated question-answering pairs. This approach ensures near-deterministic outputs. To enable efficient and effective multi-task learning under limited data, a Layer-Partitioned Alternating Training (LP-AT) method is presented, which assigns distinct model layers to recognize specific action elements through element-specific low-rank adapters. LP-AT alternates weight updates across element-specific adapters, reducing cross-task interference while enabling per-adapter hyperparameter optimization. Furthermore, we create HA-ViD-VQA and IKEA-ASM-VQA datasets from existing assembly video datasets. Extensive experiments on these datasets demonstrate that our method consistently outperforms strong action recognition baselines while providing interpretable element-level predictions that can support diverse downstream applications.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-12T15:09:33Z</published>
+    <arxiv:comment>Accepted by ICRA 2026. Video Understanding; Vision Language Model; Multi-modal LLM; Action Recognition; Assembly</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Hao Zheng</name>
+    </author>
+    <author>
+      <name>Jinyi Huang</name>
+    </author>
+    <author>
+      <name>Tiantian Zheng</name>
+    </author>
+    <author>
+      <name>Xun Xu</name>
+    </author>
+    <author>
+      <name>Tuka Alhanai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2210.12607v1</id>
+    <title>Learning to Perform Complex Tasks through Compositional Fine-Tuning of Language Models</title>
+    <updated>2022-10-23T03:22:34Z</updated>
+    <link href="https://arxiv.org/abs/2210.12607v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.12607v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>How to usefully encode compositional task structure has long been a core challenge in AI. Recent work in chain of thought prompting has shown that for very large neural language models (LMs), explicitly demonstrating the inferential steps involved in a target task may improve performance over end-to-end learning that focuses on the target task alone. However, chain of thought prompting has significant limitations due to its dependency on huge pretrained LMs. In this work, we present compositional fine-tuning (CFT): an approach based on explicitly decomposing a target task into component tasks, and then fine-tuning smaller LMs on a curriculum of such component tasks. We apply CFT to recommendation tasks in two domains, world travel and local dining, as well as a previously studied inferential task (sports understanding). We show that CFT outperforms end-to-end learning even with equal amounts of data, and gets consistently better as more component tasks are modeled via fine-tuning. Compared with chain of thought prompting, CFT performs at least as well using LMs only 7.4% of the size, and is moreover applicable to task domains for which data are not available during pretraining.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-23T03:22:34Z</published>
+    <arxiv:comment>Accepted to findings of EMNLP 2022. Data and code available at https://github.com/vbursztyn/compositional-fine-tuning</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Victor S. Bursztyn</name>
+    </author>
+    <author>
+      <name>David Demeter</name>
+    </author>
+    <author>
+      <name>Doug Downey</name>
+    </author>
+    <author>
+      <name>Larry Birnbaum</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2312.06224v1</id>
+    <title>Medical Vision Language Pretraining: A survey</title>
+    <updated>2023-12-11T09:14:13Z</updated>
+    <link href="https://arxiv.org/abs/2312.06224v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2312.06224v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Medical Vision Language Pretraining (VLP) has recently emerged as a promising solution to the scarcity of labeled data in the medical domain. By leveraging paired/unpaired vision and text datasets through self-supervised learning, models can be trained to acquire vast knowledge and learn robust feature representations. Such pretrained models have the potential to enhance multiple downstream medical tasks simultaneously, reducing the dependency on labeled data. However, despite recent progress and its potential, there is no such comprehensive survey paper that has explored the various aspects and advancements in medical VLP. In this paper, we specifically review existing works through the lens of different pretraining objectives, architectures, downstream evaluation tasks, and datasets utilized for pretraining and downstream tasks. Subsequently, we delve into current challenges in medical VLP, discussing existing and potential solutions, and conclude by highlighting future directions. To the best of our knowledge, this is the first survey focused on medical VLP.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-12-11T09:14:13Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Prashant Shrestha</name>
+    </author>
+    <author>
+      <name>Sanskar Amgain</name>
+    </author>
+    <author>
+      <name>Bidur Khanal</name>
+    </author>
+    <author>
+      <name>Cristian A. Linte</name>
+    </author>
+    <author>
+      <name>Binod Bhattarai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2207.01772v3</id>
+    <title>Vision-and-Language Pretraining</title>
+    <updated>2024-12-11T16:30:19Z</updated>
+    <link href="https://arxiv.org/abs/2207.01772v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2207.01772v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>With the burgeoning amount of data of image-text pairs and diversity of Vision-and-Language (V\&amp;L) tasks, scholars have introduced an abundance of deep learning models in this research domain. Furthermore, in recent years, transfer learning has also shown tremendous success in Computer Vision for tasks such as Image Classification, Object Detection, etc., and in Natural Language Processing for Question Answering, Machine Translation, etc. Inheriting the spirit of Transfer Learning, research works in V\&amp;L have devised multiple pretraining techniques on large-scale datasets in order to enhance the performance of downstream tasks. The aim of this article is to provide a comprehensive revision of contemporary V\&amp;L pretraining models. In particular, we categorize and delineate pretraining approaches, along with the summary of state-of-the-art vision-and-language pretrained models. Moreover, a list of training datasets and downstream tasks is supplied to further polish the perspective into V\&amp;L pretraining. Lastly, we decided to take a further step to discuss numerous directions for future research.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-07-05T02:18:49Z</published>
+    <arxiv:comment>The content of the paper has been outdated. I would like to rewrite a new version with completely new information.</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Thong Nguyen</name>
+    </author>
+    <author>
+      <name>Cong-Duy Nguyen</name>
+    </author>
+    <author>
+      <name>Xiaobao Wu</name>
+    </author>
+    <author>
+      <name>See-Kiong Ng</name>
+    </author>
+    <author>
+      <name>Anh Tuan Luu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2208.10442v2</id>
+    <title>Image as a Foreign Language: BEiT Pretraining for All Vision and Vision-Language Tasks</title>
+    <updated>2022-08-31T02:26:45Z</updated>
+    <link href="https://arxiv.org/abs/2208.10442v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2208.10442v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A big convergence of language, vision, and multimodal pretraining is emerging. In this work, we introduce a general-purpose multimodal foundation model BEiT-3, which achieves state-of-the-art transfer performance on both vision and vision-language tasks. Specifically, we advance the big convergence from three aspects: backbone architecture, pretraining task, and model scaling up. We introduce Multiway Transformers for general-purpose modeling, where the modular architecture enables both deep fusion and modality-specific encoding. Based on the shared backbone, we perform masked "language" modeling on images (Imglish), texts (English), and image-text pairs ("parallel sentences") in a unified manner. Experimental results show that BEiT-3 obtains state-of-the-art performance on object detection (COCO), semantic segmentation (ADE20K), image classification (ImageNet), visual reasoning (NLVR2), visual question answering (VQAv2), image captioning (COCO), and cross-modal retrieval (Flickr30K, COCO).</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-08-22T16:55:04Z</published>
+    <arxiv:comment>18 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Wenhui Wang</name>
+    </author>
+    <author>
+      <name>Hangbo Bao</name>
+    </author>
+    <author>
+      <name>Li Dong</name>
+    </author>
+    <author>
+      <name>Johan Bjorck</name>
+    </author>
+    <author>
+      <name>Zhiliang Peng</name>
+    </author>
+    <author>
+      <name>Qiang Liu</name>
+    </author>
+    <author>
+      <name>Kriti Aggarwal</name>
+    </author>
+    <author>
+      <name>Owais Khan Mohammed</name>
+    </author>
+    <author>
+      <name>Saksham Singhal</name>
+    </author>
+    <author>
+      <name>Subhojit Som</name>
+    </author>
+    <author>
+      <name>Furu Wei</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.22903v1</id>
+    <title>Seeing without Looking: Do Vision-Language Benchmarks Really Test Vision?</title>
+    <updated>2026-05-21T17:35:04Z</updated>
+    <link href="https://arxiv.org/abs/2605.22903v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.22903v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Benchmark accuracy is often implicitly assumed to reflect grounded visual understanding in vision-language models (VLMs), yet it remains unclear to what extent such scores truly reflect reliance on visual evidence. Motivated by a surprising observation that removing a substantial fraction of image tokens only degrades model performance very slightly on a widely used hallucination benchmark, we systematically investigate this mismatch in a set of open-source VLMs. Our analysis spans multiple levels of granularity, spanning global visual degradation, localized occlusion, question reformulation, answer-space expansion, and decision-level analyses beyond standard accuracy. We further complement these behavioral results with a layer-wise analysis of vision-token geometry. Throughout the experiments, we find that although VLMs do incorporate visual input, their predictions are less sensitive to the loss of fine-grained visual evidence that standard accuracy should have suggested. Even when the final prediction remains unchanged, the model's internal support for the correct answer may already be weakened. We further complement a representation-level analysis, which shows increasing similarity among visual tokens in deeper layers, providing a possible explanation for our findings. Together, these results suggest that current benchmarks are not sufficient to reliably evaluate fine-grained visual grounding in VLMs.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-21T17:35:04Z</published>
+    <arxiv:comment>Accepted to GRAIL-V: Grounded Retrieval and Agentic Intelligence for Vision-Language, CVPR 2026 Workshop. accepted version</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zixuan Lan</name>
+    </author>
+    <author>
+      <name>Luzhe Sun</name>
+    </author>
+    <author>
+      <name>Matthew R. Walter</name>
+    </author>
+    <author>
+      <name>Jiawei Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2012.05011v4</id>
+    <title>Intrinsically Motivated Compositional Language Emergence</title>
+    <updated>2023-01-27T11:04:58Z</updated>
+    <link href="https://arxiv.org/abs/2012.05011v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2012.05011v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, there has been a great deal of research in emergent communication on artificial agents interacting in simulated environments. Recent studies have revealed that, in general, emergent languages do not follow the compositionality patterns of natural language. To deal with this, existing works have proposed a limited channel capacity as an important constraint for learning highly compositional languages. In this paper, we show that this is not a sufficient condition and propose an intrinsic reward framework for improving compositionality in emergent communication. We use a reinforcement learning setting with two agents -- a \textit{task-aware} Speaker and a \textit{state-aware} Listener that are required to communicate to perform a set of tasks. Through our experiments on three different referential game setups, including a novel environment gComm, we show intrinsic rewards improve compositionality scores by $\approx \mathbf{1.5-2}$ times that of existing frameworks that use limited channel capacity.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-12-09T12:47:20Z</published>
+    <arxiv:comment>abridged version Accepted in NAACL 2021 workshop: Visually Grounded Interaction and Language (ViGIL) titled "gComm: An environment for investigating generalization in Grounded Language Acquisition"</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Rishi Hazra</name>
+    </author>
+    <author>
+      <name>Sonu Dixit</name>
+    </author>
+    <author>
+      <name>Sayambhu Sen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.02228v2</id>
+    <title>Unforgettable Generalization in Language Models</title>
+    <updated>2026-08-05T15:54:56Z</updated>
+    <link href="https://arxiv.org/abs/2409.02228v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.02228v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>When language models (LMs) are trained to forget (or "unlearn'') a skill, how precisely does their behavior change? We study the behavior of transformer LMs in which tasks have been forgotten via fine-tuning on randomized labels. Such LMs learn to generate near-random predictions for individual examples in the "training'' set used for forgetting. Across tasks, however, LMs exhibit extreme variability in whether LM predictions change on examples outside the training set. In some tasks (like entailment classification), forgetting generalizes robustly, and causes models to produce uninformative predictions on new task instances; in other tasks (like physical commonsense reasoning and scientific question answering) forgetting affects only the training examples, and models continue to perform the "forgotten'' task accurately even for examples very similar to those that appeared in the training set. Dataset difficulty is not predictive of whether a behavior can be forgotten; instead, generalization in forgetting is (weakly) predicted by the confidence of LMs' initial task predictions and the variability of LM representations of training data, with low confidence and low variability both associated with greater generalization. Perhaps most surprisingly, random-label forgetting appears to be somewhat insensitive to the contents of the training set: for example, models trained on science questions with random labels continue to answer other science questions accurately, but begin to produce random labels on entailment classification tasks. Finally, we show that even generalizable forgetting is shallow: linear probes trained on LMs' representations can still perform tasks reliably after forgetting. Our results highlight the difficulty and unpredictability of performing targeted skill removal from models via fine-tuning.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-03T18:55:54Z</published>
+    <arxiv:comment>18 pages, 9 figures, published in First Conference on Language Modeling 2024</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>First Conference on Language Modeling (2024)</arxiv:journal_ref>
+    <author>
+      <name>Eric Zhang</name>
+    </author>
+    <author>
+      <name>Leshem Choshen</name>
+    </author>
+    <author>
+      <name>Jacob Andreas</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.11773v1</id>
+    <title>Small Data Explainer -- The impact of small data methods in everyday life</title>
+    <updated>2025-07-15T22:24:17Z</updated>
+    <link href="https://arxiv.org/abs/2507.11773v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.11773v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The emergence of breakthrough artificial intelligence (AI) techniques has led to a renewed focus on how small data settings, i.e., settings with limited information, can benefit from such developments. This includes societal issues such as how best to include under-represented groups in data-driven policy and decision making, or the health benefits of assistive technologies such as wearables. We provide a conceptual overview, in particular contrasting small data with big data, and identify common themes from exemplary case studies and application areas. Potential solutions are described in a more detailed technical overview of current data analysis and modelling techniques, highlighting contributions from different disciplines, such as knowledge-driven modelling from statistics and data-driven modelling from computer science. By linking application settings, conceptual contributions and specific techniques, we highlight what is already feasible and suggest what an agenda for fully leveraging small data might look like.</summary>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-15T22:24:17Z</published>
+    <arxiv:comment>Written in collaboration with the Royal Society, contributing to the Disability Technology report (https://royalsociety.org/news-resources/projects/disability-data-assistive-technology/)</arxiv:comment>
+    <arxiv:primary_category term="cs.CY"/>
+    <author>
+      <name>Maren Hackenberg</name>
+    </author>
+    <author>
+      <name>Sophia G. Connor</name>
+    </author>
+    <author>
+      <name>Fabian Kabus</name>
+    </author>
+    <author>
+      <name>June Brawner</name>
+    </author>
+    <author>
+      <name>Ella Markham</name>
+    </author>
+    <author>
+      <name>Mahi Hardalupas</name>
+    </author>
+    <author>
+      <name>Areeq Chowdhury</name>
+    </author>
+    <author>
+      <name>Rolf Backofen</name>
+    </author>
+    <author>
+      <name>Anna Köttgen</name>
+    </author>
+    <author>
+      <name>Angelika Rohde</name>
+    </author>
+    <author>
+      <name>Nadine Binder</name>
+    </author>
+    <author>
+      <name>Harald Binder</name>
+    </author>
+    <author>
+      <name>the Collaborative Research Center 1597 Small Data</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2304.08345v2</id>
+    <title>VALOR: Vision-Audio-Language Omni-Perception Pretraining Model and Dataset</title>
+    <updated>2025-01-06T09:10:55Z</updated>
+    <link href="https://arxiv.org/abs/2304.08345v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2304.08345v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we propose a Vision-Audio-Language Omni-peRception pretraining model (VALOR) for multi-modal understanding and generation. Different from widely-studied vision-language pretraining models, VALOR jointly models relationships of vision, audio and language in an end-to-end manner. It contains three separate encoders for single modality representations, and a decoder for multimodal conditional text generation. We design two pretext tasks to pretrain VALOR model, including Multimodal Grouping Alignment (MGA) and Multimodal Grouping Captioning (MGC). MGA projects vision, language and audio to the same common space, building vision-language, audio-language and audiovisual-language alignment simultaneously. MGC learns how to generate text tokens in conditions of vision, audio or their both. To promote vision-audio-language pretraining research, we construct a large-scale high-quality tri-modality dataset named VALOR-1M, which contains 1M audiable videos with human annotated audiovisual captions. Extensive experiments show that VALOR can learn strong multimodal correlations and be generalized to various downstream tasks (e.g., retrieval, captioning and question answering), with different input modalities (e.g., vision-language, audio-language and audiovisual-language). VALOR achieves new state-of-the-art performances on series of public cross-modality benchmarks. Code and data are available at project page https://casia-iva-group.github.io/projects/VALOR.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.AS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-04-17T15:08:15Z</published>
+    <arxiv:comment>Preprint version w/o audio files embeded in PDF. Audio embeded version can be found on project page or github</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Jing Liu</name>
+    </author>
+    <author>
+      <name>Sihan Chen</name>
+    </author>
+    <author>
+      <name>Xingjian He</name>
+    </author>
+    <author>
+      <name>Longteng Guo</name>
+    </author>
+    <author>
+      <name>Xinxin Zhu</name>
+    </author>
+    <author>
+      <name>Weining Wang</name>
+    </author>
+    <author>
+      <name>Jinhui Tang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2109.03160v2</id>
+    <title>How much pretraining data do language models need to learn syntax?</title>
+    <updated>2021-09-09T15:59:00Z</updated>
+    <link href="https://arxiv.org/abs/2109.03160v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2109.03160v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Transformers-based pretrained language models achieve outstanding results in many well-known NLU benchmarks. However, while pretraining methods are very convenient, they are expensive in terms of time and resources. This calls for a study of the impact of pretraining data size on the knowledge of the models. We explore this impact on the syntactic capabilities of RoBERTa, using models trained on incremental sizes of raw text data. First, we use syntactic structural probes to determine whether models pretrained on more data encode a higher amount of syntactic information. Second, we perform a targeted syntactic evaluation to analyze the impact of pretraining data size on the syntactic generalization performance of the models. Third, we compare the performance of the different models on three downstream applications: part-of-speech tagging, dependency parsing and paraphrase identification. We complement our study with an analysis of the cost-benefit trade-off of training such models. Our experiments show that while models pretrained on more data encode more syntactic knowledge and perform better on downstream applications, they do not always offer a better performance across the different syntactic phenomena and come at a higher financial and environmental cost.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-09-07T15:51:39Z</published>
+    <arxiv:comment>To be published in proceedings of the 2021 Conference on Empirical Methods in Natural Language Processing (EMNLP 2021)</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Laura Pérez-Mayos</name>
+    </author>
+    <author>
+      <name>Miguel Ballesteros</name>
+    </author>
+    <author>
+      <name>Leo Wanner</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2108.09105v1</id>
+    <title>Airbert: In-domain Pretraining for Vision-and-Language Navigation</title>
+    <updated>2021-08-20T10:58:09Z</updated>
+    <link href="https://arxiv.org/abs/2108.09105v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2108.09105v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-and-language navigation (VLN) aims to enable embodied agents to navigate in realistic environments using natural language instructions. Given the scarcity of domain-specific training data and the high diversity of image and language inputs, the generalization of VLN agents to unseen environments remains challenging. Recent methods explore pretraining to improve generalization, however, the use of generic image-caption datasets or existing small-scale VLN environments is suboptimal and results in limited improvements. In this work, we introduce BnB, a large-scale and diverse in-domain VLN dataset. We first collect image-caption (IC) pairs from hundreds of thousands of listings from online rental marketplaces. Using IC pairs we next propose automatic strategies to generate millions of VLN path-instruction (PI) pairs. We further propose a shuffling loss that improves the learning of temporal order inside PI pairs. We use BnB pretrain our Airbert model that can be adapted to discriminative and generative settings and show that it outperforms state of the art for Room-to-Room (R2R) navigation and Remote Referring Expression (REVERIE) benchmarks. Moreover, our in-domain pretraining significantly increases performance on a challenging few-shot VLN evaluation, where we train the model only on VLN instructions from a few houses.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-08-20T10:58:09Z</published>
+    <arxiv:comment>To be published on ICCV 2021. Webpage is at https://airbert-vln.github.io/ linking to our dataset, codes and models</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Pierre-Louis Guhur</name>
+    </author>
+    <author>
+      <name>Makarand Tapaswi</name>
+    </author>
+    <author>
+      <name>Shizhe Chen</name>
+    </author>
+    <author>
+      <name>Ivan Laptev</name>
+    </author>
+    <author>
+      <name>Cordelia Schmid</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.11417v2</id>
+    <title>Enhancing Generalization in Vision-Language-Action Models by Preserving Pretrained Representations</title>
+    <updated>2025-09-17T02:41:34Z</updated>
+    <link href="https://arxiv.org/abs/2509.11417v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.11417v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-language-action (VLA) models finetuned from vision-language models (VLMs) hold the promise of leveraging rich pretrained representations to build generalist robots across diverse tasks and environments. However, direct fine-tuning on robot data often disrupts these representations and limits generalization. We present a framework that better preserves pretrained features while adapting them for robot manipulation. Our approach introduces three components: (i) a dual-encoder design with one frozen vision encoder to retain pretrained features and another trainable for task adaptation, (ii) a string-based action tokenizer that casts continuous actions into character sequences aligned with the model's pretraining domain, and (iii) a co-training strategy that combines robot demonstrations with vision-language datasets emphasizing spatial reasoning and affordances. Evaluations in simulation and on real robots show that our method improves robustness to visual perturbations, generalization to novel instructions and environments, and overall task success compared to baselines.</summary>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-14T20:08:56Z</published>
+    <arxiv:comment>Project Page: https://gen-vla.github.io/</arxiv:comment>
+    <arxiv:primary_category term="cs.RO"/>
+    <author>
+      <name>Shresth Grover</name>
+    </author>
+    <author>
+      <name>Akshay Gopalkrishnan</name>
+    </author>
+    <author>
+      <name>Bo Ai</name>
+    </author>
+    <author>
+      <name>Henrik I. Christensen</name>
+    </author>
+    <author>
+      <name>Hao Su</name>
+    </author>
+    <author>
+      <name>Xuanlin Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.23521v1</id>
+    <title>Chitrakshara: A Large Multilingual Multimodal Dataset for Indian languages</title>
+    <updated>2026-03-06T15:01:25Z</updated>
+    <link href="https://arxiv.org/abs/2603.23521v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.23521v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal research has predominantly focused on single-image reasoning, with limited exploration of multi-image scenarios. Recent models have sought to enhance multi-image understanding through large-scale pretraining on interleaved image-text datasets. However, most Vision-Language Models (VLMs) are trained primarily on English datasets, leading to inadequate representation of Indian languages. To address this gap, we introduce the Chitrakshara dataset series, covering 11 Indian languages sourced from Common Crawl. It comprises (1) Chitrakshara-IL, a large-scale interleaved pretraining dataset with 193M images, 30B text tokens, and 50M multilingual documents, and (2) Chitrakshara-Cap, which includes 44M image-text pairs with 733M tokens. This paper details the data collection pipeline, including curation, filtering, and processing methodologies. Additionally, we present a comprehensive quality and diversity analysis to assess the dataset's representativeness across Indic languages and its potential for developing more culturally inclusive VLMs.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-06T15:01:25Z</published>
+    <arxiv:comment>Accepted at "CVPR 2025: Workshop Vision Language Models For All"</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Shaharukh Khan</name>
+    </author>
+    <author>
+      <name>Ali Faraz</name>
+    </author>
+    <author>
+      <name>Abhinav Ravi</name>
+    </author>
+    <author>
+      <name>Mohd Nauman</name>
+    </author>
+    <author>
+      <name>Mohd Sarfraz</name>
+    </author>
+    <author>
+      <name>Akshat Patidar</name>
+    </author>
+    <author>
+      <name>Raja Kolla</name>
+    </author>
+    <author>
+      <name>Chandra Khatri</name>
+    </author>
+    <author>
+      <name>Shubham Agarwal</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.21676v2</id>
+    <title>How do language models learn facts? Dynamics, curricula and hallucinations</title>
+    <updated>2025-07-24T14:04:20Z</updated>
+    <link href="https://arxiv.org/abs/2503.21676v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.21676v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models accumulate vast knowledge during pre-training, yet the dynamics governing this acquisition remain poorly understood. This work investigates the learning dynamics of language models on a synthetic factual recall task, uncovering three key findings: First, language models learn in three phases, exhibiting a performance plateau before acquiring precise factual knowledge. Mechanistically, this plateau coincides with the formation of attention-based circuits that support recall. Second, the training data distribution significantly impacts learning dynamics, as imbalanced distributions lead to shorter plateaus. Finally, hallucinations emerge simultaneously with knowledge, and integrating new knowledge into the model through fine-tuning is challenging, as it quickly corrupts its existing parametric memories. Our results emphasize the importance of data distribution in knowledge acquisition and suggest novel data scheduling strategies to accelerate neural network training.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-27T16:43:45Z</published>
+    <arxiv:comment>Accepted at the 2nd Conference on Language Modeling (2025)</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <arxiv:journal_ref>Conference on Language Modeling (2025)</arxiv:journal_ref>
+    <author>
+      <name>Nicolas Zucchet</name>
+    </author>
+    <author>
+      <name>Jörg Bornschein</name>
+    </author>
+    <author>
+      <name>Stephanie Chan</name>
+    </author>
+    <author>
+      <name>Andrew Lampinen</name>
+    </author>
+    <author>
+      <name>Razvan Pascanu</name>
+    </author>
+    <author>
+      <name>Soham De</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.21194v1</id>
+    <title>MEDLAYXPLAIN: Benchmarking the Expert-Lay Gap in Medical Vision-Language Models</title>
+    <updated>2026-06-19T08:06:09Z</updated>
+    <link href="https://arxiv.org/abs/2606.21194v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.21194v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Medical Vision-Language Models (Med-VLMs) achieve strong expert-level performance, yet their ability to generate patient-accessible descriptions remains underexplored. With the 21st Century Cures Act now mandating immediate patient access to diagnostic imaging results, evaluating whether Med-VLMs can bridge this Expert-Lay Gap is both urgent and clinically consequential for patient education and shared decision-making. To this end, we introduce MedLayXPlain, the first large-scale multimodal benchmark and evaluation framework for Medical Lay Language Generation (MLLG). MedLayXPlain-122K provides 122,789 region-grounded samples across 8 imaging modalities from 12 publicly available source datasets, each comprising a medical image with paired expert and lay captions anchored in a three-level Unified Medical Language System (UMLS) ontology hierarchy spanning 7 semantic groups, 43 semantic types, and 2,411 medical concepts. Lay captions are constructed via Hierarchical Ontology-Verified Refinement (HOVER), a three-step pipeline combining patient-centric vocabulary mapping, LLM-based constrained rewriting, and cross-model visual verification to enforce semantic equivalence while preventing hallucination. We further introduce MedLayEval, a lightweight 3B evaluator distilled from a 27B verifier that scores expert-lay alignment across five clinically grounded attributes, addressing the poor correlation between standard NLG metrics and clinical judgment. Benchmarking 33 VLMs on MedLayXPlain-122K reveals a systematic Expert-Lay Gap: medical VLMs achieve strong expert captioning but suffer significant lay-register degradation, while general-purpose VLMs produce more accessible language yet lack clinical precision, confirming that neither current paradigm adequately serves patient-facing communication.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-19T08:06:09Z</published>
+    <arxiv:comment>40 pages (10 pages main text, 30 pages appendix), 4 main figures, 33 vision-language models benchmarked</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Han Jang</name>
+    </author>
+    <author>
+      <name>Junhyeok Lee</name>
+    </author>
+    <author>
+      <name>Songsoo Kim</name>
+    </author>
+    <author>
+      <name>Chae Young Lim</name>
+    </author>
+    <author>
+      <name>Hyeonjin Goh</name>
+    </author>
+    <author>
+      <name>Heeseong Eum</name>
+    </author>
+    <author>
+      <name>Kyu Sung Choi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1909.10225v1</id>
+    <title>WiCV 2019: The Sixth Women In Computer Vision Workshop</title>
+    <updated>2019-09-23T08:52:33Z</updated>
+    <link href="https://arxiv.org/abs/1909.10225v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1909.10225v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we present the Women in Computer Vision Workshop - WiCV 2019, organized in conjunction with CVPR 2019. This event is meant for increasing the visibility and inclusion of women researchers in the computer vision field. Computer vision and machine learning have made incredible progress over the past years, but the number of female researchers is still low both in academia and in industry. WiCV is organized especially for the following reason: to raise visibility of female researchers, to increase collaborations between them, and to provide mentorship to female junior researchers in the field. In this paper, we present a report of trends over the past years, along with a summary of statistics regarding presenters, attendees, and sponsorship for the current workshop.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-09-23T08:52:33Z</published>
+    <arxiv:comment>Report of the Sixth Women In Computer Vision Workshop</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <arxiv:journal_ref>The IEEE Conference on Computer Vision and Pattern Recognition (CVPR) Workshops, 2019, pp. 0-0</arxiv:journal_ref>
+    <author>
+      <name>Irene Amerini</name>
+    </author>
+    <author>
+      <name>Elena Balashova</name>
+    </author>
+    <author>
+      <name>Sayna Ebrahimi</name>
+    </author>
+    <author>
+      <name>Kathryn Leonard</name>
+    </author>
+    <author>
+      <name>Arsha Nagrani</name>
+    </author>
+    <author>
+      <name>Amaia Salvador</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2209.07118v1</id>
+    <title>Align, Reason and Learn: Enhancing Medical Vision-and-Language Pre-training with Knowledge</title>
+    <updated>2022-09-15T08:00:01Z</updated>
+    <link href="https://arxiv.org/abs/2209.07118v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2209.07118v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Medical vision-and-language pre-training (Med-VLP) has received considerable attention owing to its applicability to extracting generic vision-and-language representations from medical images and texts. Most existing methods mainly contain three elements: uni-modal encoders (i.e., a vision encoder and a language encoder), a multi-modal fusion module, and pretext tasks, with few studies considering the importance of medical domain expert knowledge and explicitly exploiting such knowledge to facilitate Med-VLP. Although there exist knowledge-enhanced vision-and-language pre-training (VLP) methods in the general domain, most require off-the-shelf toolkits (e.g., object detectors and scene graph parsers), which are unavailable in the medical domain. In this paper, we propose a systematic and effective approach to enhance Med-VLP by structured medical knowledge from three perspectives. First, considering knowledge can be regarded as the intermediate medium between vision and language, we align the representations of the vision encoder and the language encoder through knowledge. Second, we inject knowledge into the multi-modal fusion model to enable the model to perform reasoning using knowledge as the supplementation of the input image and text. Third, we guide the model to put emphasis on the most critical information in images and texts by designing knowledge-induced pretext tasks. To perform a comprehensive evaluation and facilitate further research, we construct a medical vision-and-language benchmark including three tasks. Experimental results illustrate the effectiveness of our approach, where state-of-the-art performance is achieved on all downstream tasks. Further analyses explore the effects of different components of our approach and various settings of pre-training.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-09-15T08:00:01Z</published>
+    <arxiv:comment>Natural Language Processing. 10 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Zhihong Chen</name>
+    </author>
+    <author>
+      <name>Guanbin Li</name>
+    </author>
+    <author>
+      <name>Xiang Wan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1604.05076v1</id>
+    <title>On temporal correlations in high-resolution frequency counting</title>
+    <updated>2016-04-18T10:39:16Z</updated>
+    <link href="https://arxiv.org/abs/1604.05076v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1604.05076v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We analyze noise properties of time series of frequency data from different counting modes of a Keysight 53230A frequency counter. We use a 10 MHz reference signal from a passive hydrogen maser connected via phase-stable Huber+Suhner Sucoflex 104 cables to the reference and input connectors of the counter. We find that the high resolution gap-free (CONT) frequency counting process imposes long-term correlations in the output data, resulting in a modified Allan deviation that is characteristic of random walk phase noise. Equally important, the CONT mode results in a frequency bias. In contrast, the counter's undocumented raw continuous mode (RCON) yields unbiased frequency stability estimates with white phase noise characteristics, and of a magnitude consistent with the counter's 20 ps single-shot resolution. Furthermore, we demonstrate that a 100-point running average filter in conjunction with the RCON mode yields resolution enhanced frequency estimates with flicker phase noise characteristics. For instance, the counter's built-in moving-average function can be used. The improved noise characteristics of the averaged RCON mode versus the CONT mode imply that the former mode yields frequency estimates with improved confidence for a given measurement time.</summary>
+    <category term="physics.ins-det" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-04-18T10:39:16Z</published>
+    <arxiv:comment>Submitted to the proceedings of the 30th European Frequency and Time Forum, held at the University of York, UK, 4 April to 7 April 2016</arxiv:comment>
+    <arxiv:primary_category term="physics.ins-det"/>
+    <arxiv:journal_ref>European Frequency and Time Forum (EFTF), 2016</arxiv:journal_ref>
+    <author>
+      <name>Tim Dunker</name>
+    </author>
+    <author>
+      <name>Harald Hauglin</name>
+    </author>
+    <author>
+      <name>Ole Petter Rønningen</name>
+    </author>
+    <arxiv:doi>10.1109/EFTF.2016.7477833</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/EFTF.2016.7477833" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1409.1484v3</id>
+    <title>The Evolution of First Person Vision Methods: A Survey</title>
+    <updated>2015-04-03T10:00:17Z</updated>
+    <link href="https://arxiv.org/abs/1409.1484v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1409.1484v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The emergence of new wearable technologies such as action cameras and smart-glasses has increased the interest of computer vision scientists in the First Person perspective. Nowadays, this field is attracting attention and investments of companies aiming to develop commercial devices with First Person Vision recording capabilities. Due to this interest, an increasing demand of methods to process these videos, possibly in real-time, is expected. Current approaches present a particular combinations of different image features and quantitative methods to accomplish specific objectives like object detection, activity recognition, user machine interaction and so on. This paper summarizes the evolution of the state of the art in First Person Vision video analysis between 1997 and 2014, highlighting, among others, most commonly used features, methods, challenges and opportunities within the field.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-09-04T16:38:43Z</published>
+    <arxiv:comment>First Person Vision, Egocentric Vision, Wearable Devices, Smart Glasses, Computer Vision, Video Analytics, Human-machine Interaction</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <arxiv:journal_ref>Betancourt, A., Morerio, P., Regazzoni, C. S., &amp; Rauterberg, M. (2015). The Evolution of First Person Vision Methods: A Survey. IEEE Transactions on Circuits and Systems for Video Technology, doi:10.1109/TCSVT.2015.2409731</arxiv:journal_ref>
+    <author>
+      <name>Alejandro Betancourt</name>
+    </author>
+    <author>
+      <name>Pietro Morerio</name>
+    </author>
+    <author>
+      <name>Carlo S. Regazzoni</name>
+    </author>
+    <author>
+      <name>Matthias Rauterberg</name>
+    </author>
+    <arxiv:doi>10.1109/TCSVT.2015.2409731</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/TCSVT.2015.2409731" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2109.10246v1</id>
+    <title>Does Vision-and-Language Pretraining Improve Lexical Grounding?</title>
+    <updated>2021-09-21T15:12:39Z</updated>
+    <link href="https://arxiv.org/abs/2109.10246v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2109.10246v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Linguistic representations derived from text alone have been criticized for their lack of grounding, i.e., connecting words to their meanings in the physical world. Vision-and-Language (VL) models, trained jointly on text and image or video data, have been offered as a response to such criticisms. However, while VL pretraining has shown success on multimodal tasks such as visual question answering, it is not yet known how the internal linguistic representations themselves compare to their text-only counterparts. This paper compares the semantic representations learned via VL vs. text-only pretraining for two recent VL models using a suite of analyses (clustering, probing, and performance on a commonsense question answering task) in a language-only setting. We find that the multimodal models fail to significantly outperform the text-only variants, suggesting that future work is required if multimodal pretraining is to be pursued as a means of improving NLP in general.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-09-21T15:12:39Z</published>
+    <arxiv:comment>Camera ready for Findings of EMNLP 2021</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Tian Yun</name>
+    </author>
+    <author>
+      <name>Chen Sun</name>
+    </author>
+    <author>
+      <name>Ellie Pavlick</name>
+    </author>
+  </entry>
+</feed>

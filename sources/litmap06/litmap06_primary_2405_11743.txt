@@ -1,0 +1,673 @@
+[2405.11743] A General Theory for Compositional Generalization
+A General Theory for Compositional Generalization
+Jingwen Fu1 , Zhizheng Zhang2,
+Yan Lu2 , Nanning Zheng1
+{fu1371252069@stu,nnzheng@mail}.xjtu.edu.cn
+{zhizzhang, yanlu}@microsoft.com
+1National Key Laboratory of Human-Machine Hybrid Augmented Intelligence,
+National Engineering Research Center for Visual Information and Applications,
+and Institute of Artificial Intelligence and Robotics, Xi’an Jiaotong University, 2Microsoft
+Corresponding Authors
+Abstract
+Compositional Generalization (CG) embodies the ability to comprehend novel combinations of familiar concepts, representing a significant cognitive leap in human intellectual advancement. Despite its critical importance, the deep neural network (DNN) faces challenges in addressing the compositional generalization problem, prompting considerable research interest. However, existing theories often rely on task-specific assumptions, constraining the comprehensive understanding of CG. This study aims to explore compositional generalization from a task-agnostic perspective, offering a complementary viewpoint to task-specific analyses. The primary challenge is to define CG without overly restricting its scope, a feat achieved by identifying its fundamental characteristics and basing the definition on them. Using this definition, we seek to answer the question "what does the ultimate solution to CG look like?" through the following theoretical findings: 1) the first No Free Lunch theorem in CG, indicating the absence of general solutions; 2) a novel generalization bound applicable to any CG problem, specifying the conditions for an effective CG solution; and 3) the introduction of the generative effect to enhance understanding of CG problems and their solutions. This paper’s significance lies in providing a general theory for CG problems, which, when combined with prior theorems under task-specific scenarios, can lead to a comprehensive understanding of CG.
+1 Introduction
+Compositional Generalization (CG) represents the capacity to comprehend novel combinations of familiar concepts, an intellectual feat widely regarded as a pivotal milestone in human cognitive evolution [41, 17]. This remarkable ability empowers humans to generate an infinite array of ideas and constructs from finite building blocks of knowledge. However, machines have consistently struggled to emulate this level of compositional generalization, as it fundamentally challenges the prevalent assumption of independent and identically distributed (IID) data, a cornerstone principle in the machine learning literature [25, 6, 8, 33, 32, 14, 15]. When faced with the data significantly divergent from the training (support) distribution, achieving meaningful generalization becomes virtually insurmountable [27, 49, 12]. This stark reality underscores the critical need for a rigorous theoretical examination of compositional generalization, as it holds the key to bridging the gap between human-like adaptability and the limitations of current machine learning models in handling unforeseen, complex combinations of concepts.
+Despite numerous studies [59, 12, 37, 66] have tackled the issue of compositional generalization (CG), yet these inquiries have predominantly delved into isolated scenarios rather than offering a holistic perspective. This fragmented approach impedes a comprehensive understanding of CG. We assert that grasping the entirety of the CG problem is imperative for several reasons: 1) A comprehensive view is necessary to discern which aspects of findings are universally applicable to CG and which are contingent upon specific tasks. 2) Without a comprehensive understanding, it’s challenging to contextualize specific problems within the broader CG task, hindering insight into its development and future research directions. 3)
+The significance of general analysis in advancing theoretical frameworks is confirmed by the works of other disciplines [26, 53, 31].
+It’s crucial to clarify that our stance does not advocate for the superiority of general theories over task-specific ones, nor do we propose replacing task-specific theories entirely. Rather, we argue that a comprehensive understanding of CG necessitates integrating both general and task-specific theories, as they complement each other.
+The primary challenge in general analysis lies in defining the CG problem without constraining its scope. Existing definitions [12, 59, 45] tend to focus narrowly on specific tasks, because of the human tendency to approach problems through concrete examples. Moreover, methods employed in other fields to develop general theories or meta-analyses are unsuitable for addressing CG, as they may overlook its unique characteristics. To address this challenge, we reevaluate the fundamental properties intrinsic to CG, crafting a new definition that incorporates only these essential elements. These properties include:
+1) Each sample within a compositional generalization context originates from well-defined, predetermined concepts. 2) A clear compositional rule exists, enabling the systematic generation of novel, previously unseen samples from known ones based on this rule.
+Given this definition, we arrive at the fundamental question regarding CG: what does the ultimate solution to CG look like? The key findings are:
+1) No Free Lunch (NFL) Theorem: We establish the presence of a No Free Lunch (NFL) theorem in the realm of compositional generalization. This theorem posits that there are no methodologies consistently outperforming others across the entire spectrum of CG problems. It underscores the absence of a universally superior approach, necessitating tailored methods for specific problem contexts. In essence, our general analysis of CG reveals the absence of general solutions.
+2) Generalization Bounds:
+To further understand the conditions for an effective CG solution, we present a bound applicable to any task-specific problem. Our findings suggest that an effective solution for CG should result in reduced mutual information between the learning algorithm’s output and the composition rule, considering the distribution generating the training data. The generality of this bound lies in its applicability across various CG problems, transcending limitations of prior bounds confined to specific types of CG problems.
+3) Generative Effect: To enhance the understanding of CG problems and their solutions, we introduce the concept of the “generative effect” — the emergent effect when combining two concepts. The CG tasks are divided into two groups based on the presence of the generative effect to enhance our comprehension of solution design. A sufficient condition is given for addressing tasks without generative effects. Additionally, we posit that the generative effect will pose an unavoidable challenge for future endeavors.
+2 Motivation and Related Works
+Numerous prior studies delve into the theoretical analysis of compositional generalization. In our examination, we scrutinize these studies through the lens of the assumptions they adopt, which we categorize into two main groups: method assumptions and task assumptions. Method assumptions pertain to constraints placed on methodologies devoid of task-specific information, while task assumptions encapsulate any presumptions that elucidate task properties. Our primary focus lies on task assumptions, as they inherently circumscribe the breadth of the analysis. We regard most method assumptions as less critical for several reasons: 1) Firstly, prioritizing the analysis of methodologies exhibiting superior performance is paramount over those burdened by internal limitations. 2) Secondly, method assumptions typically aim to streamline analytical complexities rather than constrain the scope of our findings. 3) Thirdly, unlike tasks, method design is a product of deliberate human endeavor and thus more readily controllable.
+Due to these reasons, the essence of the “general theory” in this paper lies in the removal of task assumptions rather than method assumptions.
+We contend that previous research on analyzing compositional generalization has heavily relied on task assumptions throughout their processes. 1) Firstly, some studies [12, 59, 45] analyze compositional generalization under clear assumptions about the distribution or data generation process. These assumptions are inherently task-specific because they are tailored to particular tasks. 2) Secondly, another line of inquiry focuses on compositional generalization within specific domains such as natural language [42, 11, 40, 16], reinforcement learning [51, 30, 54, 55, 5], and object-centric image generation [58, 9]. Although these studies may not explicitly state task assumptions, their narrow focus indicates task specificity. Consequently, we classify all these works as task-specific analyses.
+In this study, we adopt a distinct approach by initially analyzing compositional generalization within a general framework, gradually exploring how these assumptions influence the problem. Therefore, the primary divergence in our work lies in the minimal task assumptions at the outset, allowing us to disentangle conclusions derived from general properties of compositional tasks from those specific to compositional generalization tasks. Another significant departure is that our method takes into consideration the role of the learning algorithm.
+In essence, we argue that our contributions offer a supplementary viewpoint on the CG issue in contrast to earlier efforts. We are confident that integrating our research with past analyses can enrich the broader understanding of CG. More discussions about the other related works are given in Appendix A
+3 Problem Definition
+In this section, we provide the fundamental concepts for the CG problem (Section 3.1), followed by the definition of the CG (Section 3.2).
+3.1 Preliminary
+Notations In this paper, we employ \mathbb{P} to signify the distribution and \mathbb{P}(\cdot) to denote its corresponding density. \Pr(\cdot) denotes probability. Bold symbols represent random variables, while unbold symbols represent their corresponding values. For a random variable \boldsymbol{x} , \mathbb{P}_{\boldsymbol{x}} represents its distribution. The calligraphic font is used to denote the space or learning algorithm.
+Learning algorithm We consider the learning problem on a data space \mathcal{Z} and a function space \mathcal{F} , where f:\mathcal{Z}\to\mathbb{R}_{+}\in\mathcal{F} . Given a distribution \mathbb{P}_{\boldsymbol{z}} on this data space \mathcal{Z} and a function f , err(\mathbb{P}_{\boldsymbol{z}},f)=\mathbb{E}_{\boldsymbol{z}\sim\mathbb{P}_{\boldsymbol{z}}}f(\boldsymbol{z}) and given the samples D_{n}\sim\mathbb{P}_{\boldsymbol{z}}^{\otimes n} , err(D_{n},f)=\frac{1}{n}\sum_{z\in D_{n}}f(z) . The learning algorithm \mathcal{A}(\cdot) is the mapping from the data and the distribution on the function space. We consider the output of the learning algorithm as the distribution is aligned with the inner randomness of the learning process. We denote \mathcal{A}(D_{n}) as the operation on dataset D_{n} , and we denote \mathcal{A}(\mathbb{P}_{\boldsymbol{z}}) as the learning algorithm operates on the infinity data sampled from \mathbb{P}_{\boldsymbol{z}} . The corresponding random variable and distribution are denoted as \boldsymbol{f} and \mathbb{P}_{\boldsymbol{f}} .
+Subdistribution We denote the two compositional factors as a\in A and b\in B . The other factors, including randomness, are denoted as \zeta . We divided the whole data distribution \mathbb{P}_{\boldsymbol{z}} into several subdistributions based on the different values of the compositional factors. These distributions are \{\mathbb{P}_{a,b}\}_{a\in A,b\in B} .
+The \mathbb{P}_{a,b}(z) satisfies that \mathbb{P}_{a,b}(z)=\frac{\mathbb{P}_{\boldsymbol{z}}(z)}{\mathbb{P}(a,b)}\mathbf{1}_{(a_{z}=a)\land(b_{z}=b)} , where a_{z} , b_{z} are the corresponding fact value of the sample z .
+Distribution split We denote E=A\times B as the all possible combinations of factor a,b . The set E is further divided into support set S and unknown set U , where U\cap S= and U\cup S=E . Similarly, the distribution is also divided into the support distribution \mathbb{P}_{S}=\{\mathbb{P}_{a,b}\}_{(a,b)\in S} and \mathbb{P}_{U}=\{\mathbb{P}_{a,b}\}_{(a,b)\in U} . Similar, we denote err(\mathbb{P}_{S},f)=\mathbb{E}_{(a,b)\in S}[err(\mathbb{P}_{a,b},f)] and similar for err(\mathbb{P}_{U},f) . We denote \boldsymbol{f}_{S}\sim\mathcal{A}(\mathbb{P}_{S}) .
+3.2 Compositional Generalization
+Defining a problem is often the most challenging aspect. Previous definitions of compositional generalization have been restricted to specific contexts, thereby limiting their applicability. For example, some researchers [11, 28, 34] describe compositional generalization in language as “The algebraic capacity to understand and produce an infinite number of utterances from known components”. However, this definition is unclear about its applicability beyond language and lacks a formal framework. Wiedemer et al. [59] provide a formal definition, but it is confined to object-centric image understanding. The definition by Zhao et al. [66] is specific to reinforcement learning scenarios. Although Dong and Ma [12] offer a definition that is not restricted to a particular application area, they impose stringent constraints on distributions.
+The key challenge in developing a general definition of compositional generalization lies in identifying its intrinsic nature, which represents the inseparable core of CG. In this paper, we argue that the compositional generalization problem should possess the following properties:
+(1) Each individual sample within a compositional generalization context is fundamentally derived from well-defined, predetermined concepts.
+(2) There is a clear compositional rule, and the novel, previously unseen samples can be systematically generated from existing, known samples based on the rule.
+Condition (1) ensures the existence of basic units, i.e., concepts, that make composition possible. Condition (2) ensures a connection between samples with different concepts. Both conditions are essential to the CG problem: without condition (1), “composition” cannot be explained, and without condition (2), “generalization” cannot be addressed. Building on this intuition, we provide the following formal definition of compositional generalization, which incorporates both conditions. The definition is given below:
+Definition 3.1.
+The distributions \{\mathbb{P}_{a,b},(a,b)\in E\} are compositional distributions if they satisfy:
+•
+(1) (Well-defined concepts) For a_{1},b_{1},a_{2},b_{2} , if a_{1}\neq a_{2} or b_{1}\neq b_{2} , we have \operatorname{supp}\mathbb{P}_{a_{1},b_{1}}\cap\operatorname{supp}\mathbb{P}_{a_{2},b_{2}}=\emptyset .
+•
+(2) (Compositional rule) For all a_{1},a_{2},b_{1},b_{2} , there exsits a measurable bijection function T_{a_{1}\to a_{2},b_{1}\to b_{2}} , such that for all z\subset\operatorname{supp}{\mathbb{P}_{a_{1},b_{1}}} we have \mathbb{P}_{a_{1},b_{1}}(z)=\mathbb{P}_{a_{2},b_{2}}(T_{a_{1}\to a_{2},b_{1}\to b_{2}}(z)) and T_{a_{1}\to a_{1},b_{1}\to b_{1}}(z)=z .
+Remark 3.2.
+Definition (1) ensures that each example is derived from well-defined, predetermined concepts. If this condition is violated, there exist a_{1},b_{1} , a_{2},b_{2} , and z such that a_{1}\neq a_{2} or b_{1}\neq b_{2} , yet \mathbb{P}_{a_{1},b_{1}}(z)>0 and \mathbb{P}_{a_{2},b_{2}}(z)>0 . This implies that concept value z satisfies both a_{z}=a_{1} , a_{z}=a_{2} , b_{z}=b_{1} , and b_{z}=b_{2} . Since a_{z} and b_{z} can only take one value, at least one equation is violated. Definition (2) ensures that for all (a_{1},b_{1}),(a_{2},b_{2}) , we can derive \mathbb{P}_{a_{2},b_{2}} given \mathbb{P}_{a_{1},b_{1}} and T_{a_{1}\rightarrow a_{2},b_{1}\rightarrow b_{2}} , and vice versa. The function T serves as the compositional rule for the CG problem.
+Remark 3.3.
+In this paper, we primarily focus on compositional generalization involving two concepts. This definition and our conclusions can be readily extended to CG scenarios with more than two concepts. Analyzing CG with two concepts serves as a fundamental basis for addressing more complex CG problems [12, 59, 45, 42, 11, 40, 16, 51, 30, 54, 55, 5, 58, 9].
+Example 3.4.
+(Image) Within the realm of single-object images, let set A signify the object’s shape, and set B denote its size. We define \mathbb{P}_{a,b} as the distribution of images with shape a and size b . One possible mapping T could be a function solely altering the object’s shape and size while maintaining other attributes like color and position.
+Example 3.5.
+(Robot) We examine a task distribution for robots comprising one walking task and one operational task. Let set A denote a sequence of walking sub-tasks, while set B signifies a collection of operational sub-tasks. We define distributions such as \mathbb{P}_{a_{1},b_{1}} to cover tasks involving slow walking and object picking, \mathbb{P}_{a_{2},b_{1}} for tasks involving regular walking and object picking, and \mathbb{P}_{a_{1},b_{2}} for tasks involving slow walking and object stacking. The target distribution, labeled as \mathbb{P}_{a_{1},b_{2}} , is tailored for tasks specifically involving slow walking and object stacking.
+Remark 3.6.
+In certain compositional generalization tasks, neural networks are required to first master basic concepts before progressing to more complex challenges. Consider robot learning as an example: initial tasks may concentrate solely on activities like walking and fetching objects independently. Subsequently, the network must extend its comprehension to situations where the robot performs both activities simultaneously. In such instances, we introduce the null factor \emptyset . The distribution pertaining to individual concept can be represented as \mathbb{P}_{a,\emptyset} or \mathbb{P}_{\emptyset,b} . We can adjust A^{\prime}=A\cup{\emptyset} and B^{\prime}=B\cup{\emptyset} .
+Definition 3.7.
+(Solvable) A CG problem is solvable if there exsits a learning algorithm \mathcal{A} , such that err(\mathbb{P}_{U},\boldsymbol{f}_{S})=\mathcal{O}(\epsilon) , where \epsilon=\max\limits_{(a,b)\in E}\min\limits_{f\in\mathcal{F}}err(\mathbb{P}_{a,b},f) .
+Remark 3.8.
+Recall that \boldsymbol{f}_{S}\sim\mathcal{A}(\mathbb{P}_{S}) , meaning \boldsymbol{f}_{S} is trained on an infinite dataset sampled from \mathbb{P}_{S} . The solvability of a CG problem implies the existence of a learning algorithm capable of achieving a low error when trained on infinitely large samples from the support distribution.
+4 No free lunch theorem
+When approaching a problem, it is natural to ask what the solution will look like. The key question is whether a general solution for a set of tasks is feasible or if task-specific solutions are necessary. To answer this, we must examine the relationship between the solutions for different tasks. If the solution for one type of task is also effective for another type, then a general solution may be possible. However, if a solution for one task performs poorly in other tasks, it is crucial to develop task-specific solutions rather than a general one.
+To begin our analysis, we define the surrogate function, a methodological technique used for analysis:
+Definition 4.1.
+(Surrogate function) Given a base distribution \mathbb{P}_{a_{0},b_{0}} where (a_{0},b_{0})\in S , We say (\tilde{f},\tilde{T}) is a surrogate function of function f if for all (a_{1},b_{1})\in S , we have err(\mathbb{P}_{a_{0},b_{0}},f)=err(\mathbb{P}_{a_{0},b_{0}},\tilde{f}) and err(\mathbb{P}_{a_{1},b_{1}},f)=err((T_{a_{0}\to a_{1},b_{0}\to b_{1}})_{*}\mathbb{P}_{a_{0},b_{0}},\tilde{f}) , where (\cdot)_{*} denotes the pushforward operation.
+Then, we present the assumptions for the analysis below:
+Assumption 4.2.
+The function space \mathcal{F} and the learning algorithm \mathcal{A}(\cdot) satisfies the following properties:
+•
+( i ) (Surrogate) There exsits a base distribution \mathbb{P}_{a_{0},b_{0}} and a surrogate generation function \mathcal{B}(\cdot) , where (\tilde{f},\tilde{T}_{f})=\mathcal{B}(f) , such that for all f_{1},f_{2}\in\operatorname{supp}\mathbb{P}_{\boldsymbol{f}_{S}} , we have (\tilde{T}_{f_{1}}=\tilde{T}_{f_{2}})\Longleftrightarrow(f_{1}=f_{2}) .
+•
+( ii ) (Consitency) For all valid distributions \{\mathbb{P}_{a,b}^{(T)}\}_{(a,b)\in E} , we have \epsilon=\max\limits_{(a,b)\in E}\min\limits_{f\in\mathcal{F}}err(\mathbb{P}_{a,b},f)=0 and there exists f\in\mathcal{F} , such that \tilde{T}_{f}=T .
+•
+( iii ) (Convergence) \max\limits_{(a,b)\in S}err(\mathbb{P}_{a,b},\boldsymbol{f}_{S})=0 , where \boldsymbol{f}_{S}\sim\mathcal{A}(\mathbb{P}_{S}) .
+Remark 4.3.
+The Assumption ( i ) is to reduce the difficulty of the analysis. Similar results can also be infered by removing Assumption ( i ) but this can only introduce more difficulty in analyzing instead of giving more insights. The Assumption ( ii ) and ( iii ) is to make sure both the function space \mathcal{F} and learning algorithm \mathcal{A}(\cdot) are will designed. Therefore, we regard the ( i ) and ( iii ) as the method assumption as they will not constrain the applicable tasks. The assumption (ii) contains certain constraint about the tasks that is it ensure there exists f\in\mathcal{F} , such that \tilde{T}_{f}=T . We believe that this constraint is quite weak because 1) the function space \mathcal{F} is usually to be quite large in practice which makes the constraint trival and 2) many theoretic analysis target for general problems incorporate similar assumption and our work is in line with them. As a result, this assumption will not impact the generality of the analysis.
+Definition 4.4.
+Given two composition rule T,T^{\prime} , if T=T^{\prime} , then for all (a_{1},b_{1}),(a_{2},b_{2})\in S , we have T_{a_{1}\to a_{2},b_{1}\to b_{2}}=T^{\prime}_{a_{1}\to a_{2},b_{1}\to b_{2}} .
+Based on the Assumption 4.2, we have the following conclusion:
+Theorem 4.5.
+Under Assumption 4.2, for all valid division of S and U , and any (\mathcal{A}_{1},\mathcal{F}_{1}),(\mathcal{A}_{2},\mathcal{F}_{2}) , satisfying |\mathcal{F}_{1}|=|\mathcal{F}_{2}| , we have
+\sum_{T\in\mathcal{T}}\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{1},\mathcal{A}_{1},\mathbb{P}_{S}^{(T)})=\sum_{T\in\mathcal{T}}\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{2},\mathcal{A}_{2},\mathbb{P}_{S}^{(T)}),
+(1)
+where \tilde{\boldsymbol{T}}=\tilde{T}_{\boldsymbol{f}_{S}} and \mathbb{P}_{S}^{(T)} is the support distribution generated using the compositional rule T .
+Proof Sketch: We use the methematical induction to prove the theorem:
+Step 1: we consider S=\emptyset , then it is obvious that the Equation 1 holds,
+Step 2: We consider two set S_{1}\subset S_{2}\subset S and |S_{2}|=|S_{1}|+1 . Assume that \sum_{T\in\mathcal{T}}\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{1},\mathcal{A}_{1},\mathbb{P}_{S_{1}}^{(T)})=\sum_{T\in\mathcal{T}}\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{2},\mathcal{A}_{2},\mathbb{P}_{S_{1}}^{(T)}) holds, then we can prove that \sum_{T\in\mathcal{T}}\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{1},\mathcal{A}_{1},\mathbb{P}_{S_{2}}^{(T)})=\sum_{T\in\mathcal{T}}\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{2},\mathcal{A}_{2},\mathbb{P}_{S_{2}}^{(T)}) using the properties in Definition 3.1.
+Step 3: By iterative applying the step 2, we can obtain Equation 1.
+Intepretation The sum over all T\in\mathcal{T} can be regarded as add the performance over all possible compositional generalization problems. Each T can be regarded as one problem. The result indicates that the performance is not better than randomly choose a function from the function space when consider the peformence from all the compositional task. Therefore, it is possible to improve the performance on the task generated by a specific function T , but it is impossible to design one method (\mathcal{A},\mathcal{F}) that achieve better than other method over all the compositional generalization problem. The NFL theory emphasizes the impossibility for a universally solution. Therefore, a more fruitful direction involves exploring strategies for leveraging task-specific information. Such information is provided by making task assumptions and leverage these assumptions to design specific methods.
+Contribution. The key contribution of the Theorem 4.5 is to consider the performance of the methods (i.e., (\mathcal{A},\mathcal{F}) ) across all possible tasks with different composition rule T\in\mathcal{T} . From this perspective, we can relaxed our attention from a specific tasks to the broader situations. And the result indicates that a general method to solve all CG problems cannot be found.
+Compared with prior works. 1) Compositional Generalization. There are some previous works [12, 13] discussing about the impossibility for us to solve specific compositional generalization problems without under certain conditions. Our work advances previous understanding of the compositional generalization in that instead of finding specific conditions or situations where the CG problem is unsolvable, our method tackle a general situation. 2) No free lunch Theorem. The “No free lunch” Theorem are first proposed in optimization [62] and the search problems [63]. The others extend this theorem in the learning problem, mainly focused on the supervised learning [52, 61, 60]. More details about the no free lunch theorem can be found in the references [4, 24, 19, 20, 65, 47]. In this paper, we extend the “No Free Lunch” Theorem in Compositional Generalization. The key different of our paper compared with prior works in that the mainly focus of our paper lies in the compositional rule T and our theorem isn’t limited any perticular learning problem, e.g. supervised learning and unsupervised learning, as long as the tasks are CG in sense of Definition 3.1.
+5 Generalizaton Bounds
+The analysis in the previous section indicates that there are no universal solutions for CG problems. In this section, we aim to explore the properties of effective solutions for CG by devising a new generalization bound. By minimizing this bound, we can infer these properties. To start, we will present the assumption and definition.
+Assumption 5.1.
+The learning algorithm satisfies that for all S\subset E , we have err(\mathbb{P}_{S},\boldsymbol{f}_{S})=\mathcal{O}(\epsilon) , where \epsilon=\max\limits_{(a,b)\in E}\min\limits_{f\in\mathcal{F}}err(\mathbb{P}_{a,b},f) .
+Remark 5.2.
+The condition is to ensure that the learning algorithm can learning algorithm can find a good convergence point for possible any distributions.
+Definition 5.3.
+( L -bounded) We say a function h(\cdot) is L , if for all valid input x , we have |h(x)|\leq L .
+Theorem 5.4.
+Given training data D_{n}\in\mathcal{Z}^{n} sampled from the support distribution \mathbb{P}_{S} , learning algorithm \mathcal{A} and function space \mathcal{F} , if err is L -bounded, then we have
+\left|\mathbb{E}_{D_{n},f\sim\mathcal{A}(D_{n})}[err(\mathbb{P}_{U},f)-err(D_{n},f)]\right|\leq GenIID+\kappa_{n}L\Phi(I(\boldsymbol{f}_{S};\boldsymbol{T}|\mathbb{P}_{S}^{(\boldsymbol{T})}))+\mathcal{O}\left(\epsilon\right),
+where \epsilon=\max\limits_{(a,b)\in E}\min\limits_{f\in\mathcal{F}}err(\mathbb{P}_{a,b},f) , I(\cdot;\cdot) denotes the mutual information, GenIID denote any generalization error bound with IID assumption, \Phi(x)\triangleq\sqrt{\min\{x/2,1-\exp(-x)\}} and \kappa_{n}\triangleq\frac{\left|\mathbb{E}_{D_{n}\sim\mathbb{P}_{S}}[err(\mathbb{P}_{U},\boldsymbol{f}_{D_{n}})-err(\mathbb{P}_{S},\boldsymbol{f}_{D_{n}})]\right|}{\left|err(\mathbb{P}_{U},\boldsymbol{f}_{S})-err(\mathbb{P}_{S},\boldsymbol{f}_{S})\right|} (note that \boldsymbol{f}_{D_{n}}\sim\mathcal{A}(D_{n}) ).
+Remark 5.5.
+\kappa quantifies the variation in performance gap between the support distribution and the target distribution across varying numbers of training samples.
+The \kappa satisfies that \lim_{n\to\infty}\kappa_{n}=1 . Recall that \lim_{n\to\infty}\boldsymbol{f}_{D_{n}}=\lim_{n\to\infty}\mathcal{A}(D_{n})=\mathcal{A}(\mathbb{P}_{S})=\boldsymbol{f}_{S} . Then, we have \lim_{n\to\infty}|\mathbb{E}_{D_{n}\sim\mathbb{P}_{S}}[err(\mathbb{P}_{U},\boldsymbol{f}_{D_{n}})-err(\mathbb{P}_{S},\boldsymbol{f}_{D_{n}})]|=|err(\mathbb{P}_{U},\boldsymbol{f}_{S})-err(\mathbb{P}_{S},\boldsymbol{f}_{S})| .
+Remark 5.6.
+The GenIID term is one of a upper bound for err(\mathbb{P}_{S},f)-err(D_{n},f) . We can use any method to obtain the bounds, including uniform stability [18], information-thoretic methods [48, 14] and Rademacher Complexity. If we use the Rademacher complexity, we have GenIID=2\mathcal{R}_{n}(\mathcal{F}) , where \mathcal{R}_{n}=\mathbb{E}_{\sigma,D_{n}}[\sup_{f\in\mathcal{F}}\frac{1}{n}\sum_{i=1}^{n}\sigma_{i}f(x_{i})] with \sigma_{i} being independent uniform random variables taking values in \{-1,+1\} .
+Remark 5.7.
+The key term of the Theorem 5.4 is \Phi(I(\boldsymbol{f};\boldsymbol{T}|\mathbb{P}_{S}^{(\boldsymbol{T})})) . This terms establishes a connection between compositional generalization and the information theory. It suggests that achieving a small CG error is probable if \boldsymbol{f}_{S} exhibits lesser dependence with \boldsymbol{T} given \mathbb{P}_{S}^{(\boldsymbol{T})} .The independence of \boldsymbol{f}_{S} from \boldsymbol{T} implies that the performance of \boldsymbol{f} cannot be improved even with additional information about \boldsymbol{T} given the support distribution \mathbb{P}_{S}^{(\boldsymbol{T})} .
+Technique contribution We regard the compositional generalization as a specific kind of the out of distribution generalization, in line with the recent works [37, 37, 44, 39, 21]. Therefore, the performance of the compositional generalization can be divided into two parts: the first part is the in-distribution learning and the second part is the influence of distribution shift. By considering the surrogate function, we can decompose these two parts and take our attention on the second part, which is the core of CG problems.
+Tightness
+To illustrate the tightness of our bounds, we compare our bound with that of Ben-David et al. [7], which is a general bound for out of distribution generalization, and therefore, it is comparable to us. The detail is given in Appendix C.4. Here, we list the results of the comparison. We find that we can not simply say that one method is tighter to the other. We divided the CG tasks into two kind: the learning algorithm dominiated one and the function dominated one. In the first situation, the performance of the CG is highly depended on the learning algorithm and our bound is much better than Ben-David et al. [7]. This is reasonable because Ben-David et al. [7] doesn’t consider the influence of the learning algorithm. When comes to the second situation, we find that our bound is better when given relative good support distributions, i.e. |S| is large. On the other hand, the [7] is better.
+Proof Sketch
+The full version of the proof is given in Appendix C. Here the sketch of the proof is given, which is divided into three steps:
+Step 1: We decomposite the generalization behavior into two terms:
+err(\mathbb{P}_{U},f)-err(D_{n},f)=\underbrace{err(\mathbb{P}_{S},f)-err(D_{n},f)}_{\text{IID~{}gen~{}error}}+\underbrace{err(\mathbb{P}_{U},f)-err(\mathbb{P}_{S},f)}_{\text{CG~{}gen~{}error}}
+(2)
+Step 2: We replace “IID gen error" term with GenIID to indicate any generalization bound with IID assumption. The motivation is that the generalization behavior under IID situation is out of the scope of this paper.
+Step 3: For the “CG gen error" term, we first use the \kappa_{n} to decouple the influence of insufficient data. Then, with the Assumption 5.1, we can transform the term into err(\mathbb{P}_{U},\boldsymbol{f}_{S})-err(\mathbb{P}_{U},\boldsymbol{f}_{E})+\mathcal{O}(\epsilon) . By leveraging the knowledge of Wasserstein Distance and its connection to mutual information, we obtain the upper bound \kappa_{n}L\Phi(I(\boldsymbol{f}_{S};\boldsymbol{T}|\mathbb{P}_{S}^{(\boldsymbol{T})}))+\mathcal{O}(\epsilon) .
+Step 3: Combining the results of “Step 1" and “Step 2", we obtain the proposition.
+Corollary 5.8.
+Given the support distribution \mathbb{P}_{S} , if err is L -bounded, and \lim_{n\to\infty}GenIID=0 ,
+the CG problem is solvable if err(\mathbb{P}_{S},\boldsymbol{f}_{S})+\Phi(I(\boldsymbol{f}_{S};\boldsymbol{T}|\mathbb{P}_{S}^{(\boldsymbol{T})}))=\mathcal{O}(\epsilon) .
+Remark 5.9.
+According to the definition 3.7, we consider the situation where n\to\infty to check when the CG problem is solvable or not. The GenIID\to 0 when n\to\infty . Therefore, we have \lim_{n\to\infty}\left|\mathbb{E}_{D_{n},f\sim\mathcal{A}(D_{n})}[err(\mathbb{P}_{U},f)-err(D_{n},f)]\right|=\left|[err(\mathbb{P}_{U},\boldsymbol{f}_{S})-err(\mathbb{P}_{S},\boldsymbol{f})]\right| .
+Remark 5.10.
+Remind that GenIID can be equal to any generalization bound under IID condition. There are many IID generalization bound that can ensure \lim_{n\to\infty}GenIID\to 0 , including the uniform convergence methods, algorithm stability methods and information theoretic methods.
+Remark 5.11.
+This generalization bound is special for certain learning algorithm \mathcal{A} and function space \mathcal{F} . If we can select the learning algorithm and the function space that take into consider of the specific task, then we can achieve small \Phi(I(\boldsymbol{f}_{S};\boldsymbol{T}|\mathbb{P}_{S}^{(\boldsymbol{T})})) . Usually, the information of the specific task is given by the task assumption. If we make enough task assumption, by taking the assumptions into the design of the learning algorithm and function, we can achieve obtain a small \Phi(I(\boldsymbol{f}_{S};\boldsymbol{T}|\mathbb{P}_{S}^{(\boldsymbol{T})})) .
+Compared with Prior Works Previous works [37, 12] provide generalization bound solutions for CG problems that are tailored to specific tasks. In contrast, our method offers the following unique characteristics: 1) Our bound is universally applicable to all problems, without restriction to any specific problem. 2) Our bound connects the generalization behavior with the mutual information “ I(\boldsymbol{f}_{S};\boldsymbol{T}|\mathbb{P}_{S}^{(\boldsymbol{T})}) ”; this connection allows for a deeper understanding of the conditions necessary for effective solutions to CG problems.
+6 Generative Effect
+The previous sections established the proof that there are no general solutions for CG and outlined the properties of effective CG methods by deriving a new generalization bound. In this section, we advance our analysis of CG solutions by examining the generative effect. We start by considering the problem without the generative effect, which we term the Independent Rule Mechanism (IRM). Then, we proceed to discuss the problem with the generative effect.
+6.1 Independent rule mechanism
+In many cases, we can expect that the influence of one factor is independent of another. For example, we expect the position of one object to be independent of the position of another object. This independence is not in the statistical sense. We refer to it as independence because the effect of the first factor is unrelated to the effect of the second factor. The formal definition is given below:
+Definition 6.1.
+We say a CG problem has IRM if the compositional rule is decomposition, i.e. for all (a_{1},b_{1}),(a_{2},b_{2})\in E , we have T_{a_{1}\to a_{2},b_{1}\to b_{2}}=T_{a_{1}\to a_{2}}\circ T_{b_{1}\to b_{2}}=T_{b_{1}\to b_{2}}\circ T_{a_{1}\to a_{2}} .
+Remark 6.2.
+The definition of IRM can be understood as follows: if we change one part of the whole, it will not affect another part. We argue that many prior CG works adhere to the IRM principle. Here are some examples: 1) In object-centric tasks [58, 9], a and b can represent information about different objects. If we change one object, the others remain unchanged. 2) In reinforcement learning problems [51, 30, 54, 55, 5] with two independent subtasks, changing one task does not affect the other task.
+Assumption 6.3.
+The compositional generalization problem satisfies the following properties:
+•
+( i ) (C-Support) The CG problem has C-support (C is short for compositional), i.e., S satisffies that 1) for all a\in A , there exsits b\in B such that (a,b)\in S and 2) for all b\in B , there exsits a\in A such that (a,b)\in S .
+•
+( ii ) (Identifiable) The compositional rule is indentifiable, i.e. for all (a_{1},b_{1}),(a_{2},b_{2})\in S we can recover (T_{a_{1}\to a_{2}},T_{b_{1}\to b_{2}}) given the two distribution \mathbb{P}_{a_{1},b_{1}} and \mathbb{P}_{a_{2},b_{2}} .
+Remark 6.4.
+The assumption is stronger than the Assumption 4.2. The key difference is that this assumption contrains the distribution and true compositional rule, which are task specific information, whether Assumption 4.2 is mainly about the method, which will not limit the scope to specific task.
+Assumption 6.5.
+The function space \mathcal{F} has unversal approximation ability, i.e. for any valid function h , we have f\in\mathcal{F} such that f=h .
+Remark 6.6.
+This assumption is aligned with the research works that point out the neural networks are universal approximator. Current mainstream used neural network has been approved to have universal approximation ability.
+Theorem 6.7.
+The CG problem with IRM is solvable under the Assumption 6.3 and Assumption 6.5.
+Remark 6.8.
+This Theorem states that we can obtain the solution for the CG problem with IRM by fully leveraging the information in Assumption 6.3.
+Prior works There are a lot of works [37, 59] that aim to find a provable solution for compositional generalization. We want to argue that the the solutions of most prior works are aligned with the independent relation mechanism. The detail analysis is given in Appendix LABEL:app_sec:gen_effect.
+6.2 Generative effect
+The IRM applies to problems where the whole is exactly the “sum” of its parts. Typically, however, the whole is “greater” than its parts. Drawing on the works of Adam and Dahleh [2, 3, 1] in category theory, we describe this as the generative effect. Below, we provide the formal definition of the generative effect.
+Definition 6.9.
+(Generative effects) A CG problem has generative effects if it doesn’t have the IRM.
+Remark 6.10.
+The generative effect implies that different factors are interdependent in the CG problem. If one factor changes, the effect of the other factors will also change. For CG problems with generative effects, we need to study not only the mechanism of each individual concept but also understand how different concepts interact and cooperate with each other.
+In the following, we give the simple examples of the generative effect.
+Example 6.11.
+The factors a,b are integers that take value in (0,10] . The z is also take interger value in (0,100] . The distributon is assigned as \mathbb{P}_{a,b}(a\times b)=1 and \mathbb{P}_{a,b}(z)=1 for z\neq a\times b . Under this setting, we have T_{a_{1}\to a_{1},b_{1}\to b_{2}}(z)=z+a_{1}\times(b_{2}-b_{1}) . We cannot have the decomposition that T_{a_{1}\to a_{1},b_{1}\to b_{2}}=T_{a_{1}\to a_{1}}\circ T_{b_{1}\to b_{2}}=T_{b_{1}\to b_{2}} , because T_{b_{1}\to b_{2}} has to depend on the value of a_{1} .
+Remark 6.12.
+The Example 6.11 gives the situation involve a multiplication mechanism. The problems involve a similar mechansim can also have generative effects.
+According to Theorem 4.5, the solutions for the IRM problem are not suitable for problems involving generative effects. Consequently, new methods are needed to model these generative effects, presenting a challenge for future research. Two potential approaches to address the CG problems with generative effects are: 1) transforming the CG problem with generative effects into a CG problem without generative effects by redefining the concepts that generate the distribution, and 2) devising a new methodology to model the generative effects.
+7 Conclusion
+This paper endeavors to establish a comprehensive theory of compositional generalization devoid of specific task assumptions. Task assumptions often confine the analysis to particular problems, impeding a holistic view of the compositional generalization (CG) issue. We commence with Definition 3.1, delineating the problem with two fundamental CG properties: 1) each datum embodies clear concepts, and 2) composition rules interconnect data with diverse concepts. Building upon this overarching definition, we establish the no free lunch theorem (Theorem 4.5), asserting that no general solutions for CG tasks. Leveraging this insight, we derive a generalization bound for any CG tasks (Theorem 5.4), along with the conditions for the problem’s solvability (Corollary 5.8). Additionally, we categorize CG problems into two types based on the presence of generative effects. We furnish a provable condition for solving problems devoid of generative effects (Theorem 6.7), leaving those with generative effects as a future challenge. In essence, the importance of this paper lies in furnishing a general theory for CG tasks. When integrated with previous theorems tailored to specific tasks, it contributes to a thorough comprehension of CG.
+8 Limitation
+This paper aims to provide a general theory of compositional generalization. As a result, the analysis presented here does not directly offer solutions to specific compositional generalization problems. However, we argue that the theoretical findings in this paper can inspire the design of methods for addressing CG problems. These insights include:
+1) Theorem 4.5 suggests that a universal solution for all CG tasks is impossible. Therefore, it is more reasonable to explore which solutions are suitable for specific tasks and develop task-specific solutions accordingly. 2) Theorem 5.4 further analyzes the conditions for the solvability of CG problems. Future method design should consider these conditions. 3) Section 6 introduces the generative effect to enhance understanding of CG problems and their solutions.
+References
+Adam and Dahleh [2019a]
+E. M. Adam and M. A. Dahleh.
+On the abstract structure of the behavioral approach to systems theory.
+arXiv preprint arXiv:1911.10398, 2019a.
+Adam and Dahleh [2019b]
+E. M. Adam and M. A. Dahleh.
+Generativity and interactional effects: an overview.
+arXiv preprint arXiv:1911.10406, 2019b.
+Adam and Dahleh [2019c]
+E. M. Adam and M. A. Dahleh.
+On the mathematical structure of cascade effects and emergent phenomena.
+arXiv preprint arXiv:1911.10376, 2019c.
+Adam et al. [2019]
+S. P. Adam, S.-A. N. Alexandropoulos, P. M. Pardalos, and M. N. Vrahatis.
+No free lunch theorem: A review.
+Approximation and optimization: Algorithms, complexity and applications, pages 57–82, 2019.
+Bacon et al. [2017]
+P.-L. Bacon, J. Harb, and D. Precup.
+The option-critic architecture.
+In Proceedings of the AAAI conference on artificial intelligence, volume 31, 2017.
+Bartlett and Mendelson [2002]
+P. L. Bartlett and S. Mendelson.
+Rademacher and gaussian complexities: Risk bounds and structural results.
+Journal of Machine Learning Research, 3(Nov):463–482, 2002.
+Ben-David et al. [2010]
+S. Ben-David, J. Blitzer, K. Crammer, A. Kulesza, F. Pereira, and J. W. Vaughan.
+A theory of learning from different domains.
+Machine learning, 79:151–175, 2010.
+Bousquet and Elisseeff [2002]
+O. Bousquet and A. Elisseeff.
+Stability and generalization.
+The Journal of Machine Learning Research, 2:499–526, 2002.
+Brady et al. [2023]
+J. Brady, R. S. Zimmermann, Y. Sharma, B. Schölkopf, J. Von Kügelgen, and W. Brendel.
+Provably learning object-centric representations.
+In International Conference on Machine Learning, pages 3038–3062. PMLR, 2023.
+Brutzkus et al. [2017]
+A. Brutzkus, A. Globerson, E. Malach, and S. Shalev-Shwartz.
+Sgd learns over-parameterized networks that provably generalize on linearly separable data.
+arXiv preprint arXiv:1710.10174, 2017.
+Chomsky [2002]
+N. Chomsky.
+Syntactic structures.
+Mouton de Gruyter, 2002.
+Dong and Ma [2022]
+K. Dong and T. Ma.
+First steps toward understanding the extrapolation of nonlinear models to unseen domains.
+arXiv preprint arXiv:2211.11719, 2022.
+Dziri et al. [2024]
+N. Dziri, X. Lu, M. Sclar, X. L. Li, L. Jiang, B. Y. Lin, S. Welleck, P. West, C. Bhagavatula, R. Le Bras, et al.
+Faith and fate: Limits of transformers on compositionality.
+Advances in Neural Information Processing Systems, 36, 2024.
+Fu and Zheng [2023]
+J. Fu and N. Zheng.
+Generalization error bounds for iterative learning algorithms with bounded updates.
+arXiv preprint arXiv:2309.05077, 2023.
+Fu et al. [2023]
+J. Fu, Z. Zhang, D. Yin, Y. Lu, and N. Zheng.
+Learning trajectories are generalization indicators.
+arXiv preprint arXiv:2304.12579, 2023.
+Gordon et al. [2019]
+J. Gordon, D. Lopez-Paz, M. Baroni, and D. Bouchacourt.
+Permutation equivariant models for compositional generalization in language.
+In International Conference on Learning Representations, 2019.
+Harari [2014]
+Y. N. Harari.
+Sapiens: A brief history of humankind.
+Random House, 2014.
+Hardt et al. [2016]
+M. Hardt, B. Recht, and Y. Singer.
+Train faster, generalize better: Stability of stochastic gradient descent.
+In International conference on machine learning, pages 1225–1234. PMLR, 2016.
+Ho and Pepyne [2001]
+Y.-C. Ho and D. L. Pepyne.
+Simple explanation of the no free lunch theorem of optimization.
+In Proceedings of the 40th IEEE conference on decision and control (Cat. No. 01CH37228), volume 5, pages 4409–4414. IEEE, 2001.
+Ho et al. [2003]
+Y.-C. Ho, Q.-C. Zhao, and D. L. Pepyne.
+The no free lunch theorems: Complexity and security.
+IEEE Transactions on Automatic Control, 48(5):783–793, 2003.
+Hosseini et al. [2022]
+A. Hosseini, A. Vani, D. Bahdanau, A. Sordoni, and A. Courville.
+On the compositional generalization gap of in-context learning.
+arXiv preprint arXiv:2211.08473, 2022.
+Jin et al. [2022]
+D. Jin, Z. Jin, Z. Hu, O. Vechtomova, and R. Mihalcea.
+Deep learning for text style transfer: A survey.
+Computational Linguistics, 48(1):155–205, 2022.
+Jing et al. [2019]
+Y. Jing, Y. Yang, Z. Feng, J. Ye, Y. Yu, and M. Song.
+Neural style transfer: A review.
+IEEE transactions on visualization and computer graphics, 26(11):3365–3385, 2019.
+Joyce and Herrmann [2018]
+T. Joyce and J. M. Herrmann.
+A review of no free lunch theorems, and their implications for metaheuristic optimisation.
+Nature-inspired algorithms and applied optimization, pages 27–51, 2018.
+Kawaguchi et al. [2017]
+K. Kawaguchi, L. P. Kaelbling, and Y. Bengio.
+Generalization in deep learning.
+arXiv preprint arXiv:1710.05468, 1(8), 2017.
+Keynes [1937]
+J. M. Keynes.
+The general theory of employment.
+The quarterly journal of economics, 51(2):209–223, 1937.
+Koh et al. [2021]
+P. W. Koh, S. Sagawa, H. Marklund, S. M. Xie, M. Zhang, A. Balsubramani, W. Hu, M. Yasunaga, R. L. Phillips, I. Gao, et al.
+Wilds: A benchmark of in-the-wild distribution shifts.
+In International Conference on Machine Learning, pages 5637–5664. PMLR, 2021.
+Lake et al. [2019]
+B. M. Lake, T. Linzen, and M. Baroni.
+Human few-shot learning of compositional instructions.
+arXiv preprint arXiv:1901.04587, 2019.
+Li and Liang [2018]
+Y. Li and Y. Liang.
+Learning overparameterized neural networks via stochastic gradient descent on structured data.
+Advances in neural information processing systems, 31, 2018.
+Li et al. [2021]
+Y. Li, Y. Wu, H. Xu, X. Wang, and Y. Wu.
+Solving compositional reinforcement learning problems via task reduction.
+arXiv preprint arXiv:2103.07607, 2021.
+Marquis [1996]
+J.-P. Marquis.
+Category theory.
+1996.
+McAllester [1998]
+D. A. McAllester.
+Some pac-bayesian theorems.
+In Proceedings of the eleventh annual conference on Computational learning theory, pages 230–234, 1998.
+Mohri et al. [2018]
+M. Mohri, A. Rostamizadeh, and A. Talwalkar.
+Foundations of machine learning.
+MIT press, 2018.
+Montague et al. [1970]
+R. Montague et al.
+Universal grammar.
+1974, pages 222–46, 1970.
+Morwani and Ramaswamy [2021]
+D. Morwani and H. G. Ramaswamy.
+Inductive bias of gradient descent for exponentially weight normalized smooth homogeneous neural nets, 2021.
+URL https://openreview.net/forum?id=vCEhC7nOb6.
+Nacson et al. [2019]
+M. S. Nacson, N. Srebro, and D. Soudry.
+Stochastic gradient descent on separable data: Exact convergence with a fixed learning rate.
+In The 22nd International Conference on Artificial Intelligence and Statistics, pages 3051–3059. PMLR, 2019.
+Netanyahu et al. [2023]
+A. Netanyahu, A. Gupta, M. Simchowitz, K. Zhang, and P. Agrawal.
+Learning to extrapolate: A transductive approach.
+arXiv preprint arXiv:2304.14329, 2023.
+Neyshabur [2017]
+B. Neyshabur.
+Implicit regularization in deep learning.
+arXiv preprint arXiv:1709.01953, 2017.
+Oren et al. [2020]
+I. Oren, J. Herzig, N. Gupta, M. Gardner, and J. Berant.
+Improving compositional generalization in semantic parsing.
+In Findings of the Association for Computational Linguistics: EMNLP 2020, pages 2482–2495, 2020.
+Partee et al. [1995]
+B. Partee et al.
+Lexical semantics and compositionality.
+An invitation to cognitive science: Language, 1:311–360, 1995.
+Pearl and Mackenzie [2018]
+J. Pearl and D. Mackenzie.
+The book of why: the new science of cause and effect.
+Basic books, 2018.
+Petrache and Trivedi [2024]
+M. Petrache and S. Trivedi.
+Position paper: Generalized grammar rules and structure-based generalization beyond classical equivariance for lexical tasks and transduction.
+arXiv preprint arXiv:2402.01629, 2024.
+Polyanskiy and Wu [2014]
+Y. Polyanskiy and Y. Wu.
+Lecture notes on information theory.
+Lecture Notes for ECE563 (UIUC) and, 6(2012-2016):7, 2014.
+Qiu et al. [2021]
+L. Qiu, P. Shaw, P. Pasupat, P. K. Nowak, T. Linzen, F. Sha, and K. Toutanova.
+Improving compositional generalization with latent structure and data augmentation.
+arXiv preprint arXiv:2112.07610, 2021.
+Ren et al. [2024]
+Y. Ren, S. Lavoie, M. Galkin, D. J. Sutherland, and A. C. Courville.
+Improving compositional generalization using iterated learning and simplicial embeddings.
+Advances in Neural Information Processing Systems, 36, 2024.
+Rodríguez Gálvez et al. [2021]
+B. Rodríguez Gálvez, G. Bassi, R. Thobaben, and M. Skoglund.
+Tighter expected generalization error bounds via wasserstein distance.
+Advances in Neural Information Processing Systems, 34:19109–19121, 2021.
+Rowe et al. [2009]
+J. E. Rowe, M. D. Vose, and A. H. Wright.
+Reinterpreting no free lunch.
+Evolutionary computation, 17(1):117–129, 2009.
+Russo and Zou [2016]
+D. Russo and J. Zou.
+Controlling bias in adaptive data analysis using information theory.
+In Artificial Intelligence and Statistics, pages 1232–1240. PMLR, 2016.
+Sagawa et al. [2021]
+S. Sagawa, P. W. Koh, T. Lee, I. Gao, S. M. Xie, K. Shen, A. Kumar, W. Hu, M. Yasunaga, H. Marklund, et al.
+Extending the wilds benchmark for unsupervised adaptation.
+arXiv preprint arXiv:2112.05090, 2021.
+Shalev-Shwartz and Ben-David [2014]
+S. Shalev-Shwartz and S. Ben-David.
+Understanding machine learning: From theory to algorithms.
+Cambridge university press, 2014.
+Silver and Ciosek [2012]
+D. Silver and K. Ciosek.
+Compositional planning using optimal option models.
+arXiv preprint arXiv:1206.6473, 2012.
+Sterkenburg and Grünwald [2021]
+T. F. Sterkenburg and P. D. Grünwald.
+The no-free-lunch theorems of supervised learning.
+Synthese, 199(3):9979–10015, 2021.
+Strehler and Mildvan [1960]
+B. L. Strehler and A. S. Mildvan.
+General theory of mortality and aging: A stochastic model relates observations on aging, physiologic decline, mortality, and radiation.
+Science, 132(3418):14–21, 1960.
+Sutton et al. [1999]
+R. S. Sutton, D. Precup, and S. Singh.
+Between mdps and semi-mdps: A framework for temporal abstraction in reinforcement learning.
+Artificial intelligence, 112(1-2):181–211, 1999.
+Tasse et al. [2022]
+G. N. Tasse, D. Jarvis, S. James, and B. Rosman.
+Skill machines: Temporal logic composition in reinforcement learning.
+arXiv preprint arXiv:2205.12532, 2022.
+Vapnik and Chervonenkis [2015]
+V. N. Vapnik and A. Y. Chervonenkis.
+On the uniform convergence of relative frequencies of events to their probabilities.
+In Measures of complexity, pages 11–30. Springer, 2015.
+Villani et al. [2009]
+C. Villani et al.
+Optimal transport: old and new, volume 338.
+Springer, 2009.
+Wiedemer et al. [2023]
+T. Wiedemer, J. Brady, A. Panfilov, A. Juhos, M. Bethge, and W. Brendel.
+Provable compositional generalization for object-centric learning.
+arXiv preprint arXiv:2310.05327, 2023.
+Wiedemer et al. [2024]
+T. Wiedemer, P. Mayilvahanan, M. Bethge, and W. Brendel.
+Compositional generalization from first principles.
+Advances in Neural Information Processing Systems, 36, 2024.
+Wolpert [2002]
+D. H. Wolpert.
+The supervised learning no-free-lunch theorems.
+Soft computing and industry: Recent applications, pages 25–42, 2002.
+Wolpert [2021]
+D. H. Wolpert.
+What is important about the no free lunch theorems?
+In Black box optimization, machine learning, and no-free lunch theorems, pages 373–388. Springer, 2021.
+Wolpert and Macready [1997]
+D. H. Wolpert and W. G. Macready.
+No free lunch theorems for optimization.
+IEEE transactions on evolutionary computation, 1(1):67–82, 1997.
+Wolpert et al. [1995]
+D. H. Wolpert, W. G. Macready, et al.
+No free lunch theorems for search.
+Technical report, Citeseer, 1995.
+Xu and Raginsky [2017]
+A. Xu and M. Raginsky.
+Information-theoretic analysis of generalization capability of learning algorithms.
+Advances in Neural Information Processing Systems, 30, 2017.
+Yang [2012]
+X.-S. Yang.
+Free lunch or no free lunch: that is not just a question?
+International Journal on Artificial Intelligence Tools, 21(03):1240010, 2012.
+Zhao et al. [2022]
+L. Zhao, L. Kong, R. Walters, and L. L. Wong.
+Toward compositional generalization in object-oriented world modeling.
+In International Conference on Machine Learning, pages 26841–26864. PMLR, 2022.
+Appendix A Other related work
+Generalization theory with IID. assumption.
+Most generalization theory focus on analyzing the generalization behavior with IID. assumption. One stream of these works rely on the complexity of function space. These methods includes VC dimension [56], Rademacher Complexity [6] and covering number [50]. Another kind of works leverage the properties of learning algorithm to analyzing the generalization behavior. These methods include stability of algorithm [18] and information-theoretic methods [64, 48].
+Inductive bias of learning algorithm.
+The inductive bias of the learning algorithm is focused on the deep learning regime [15]. The inductive bias of the learning algorihtm refers to the preference of the learning algorithm to select certain functions over other functions even though these functions have negliable difference in training data. Because the deep models are so powerful to fit any data and the tradictional way to understand the model’s behavior based on the complexity of the function space failed. The researchers turn to understand the learning algorithm from the perspective of learning algorithm [35, 10, 36, 29, 38].
+Content and Style generalization
+Another line of out of distribution that close to compositional generalization is domain generalization considering the style and content [23, 22].
+This kind can be regard as two compositional factors: style and content. Their work, they usually consider rich content with limited styles, ususally 2. The compositional generalization usually has more complex combination, in the sense that all the factors can have rich factor values.
+Appendix B No Free Lunch Theory
+Theorem B.1.
+Under Assumption 4.2, for all valid division of S and U , and any (\mathcal{A}_{1},\mathcal{F}_{1}),(\mathcal{A}_{2},\mathcal{F}_{2}) , satisfying |\mathcal{F}_{1}|=|\mathcal{F}_{2}| , we have
+\sum_{T\in\mathcal{T}}\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{1},\mathcal{A}_{1},\mathbb{P}_{S}^{(T)})=\sum_{T\in\mathcal{T}}\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{2},\mathcal{A}_{2},\mathbb{P}_{S}^{(T)}),
+(3)
+where \tilde{\boldsymbol{T}}=\tilde{T}_{\boldsymbol{f}_{S}} and \mathbb{P}_{S}^{(T)} is the support distribution generated using the function T .
+Proof.
+We divided the proof into three parts: base case, induction step and conclusion.
+1) Base case
+In the base case, we consider the situation where S=\emptyset .
+According to Assumption 4.2 ( i ) and ( ii ), for all composition rule T and any function space \mathcal{F} satisfying the assumption, there is only one function f\in\mathcal{F} , such that \tilde{T}_{f}=T . When S= , all learning algorithm cannot perform better than randomly choose a function from the function space. As a result, for any composition rule T , any learning algorithm \mathcal{A}(\cdot) and function space \mathcal{F} , which satisfying Assumption 4.2, we have \operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F},\mathcal{A})=\frac{1}{|\mathcal{F}|} . Because \mathcal{F}_{1}=\mathcal{F}_{2} , obviously we have
+\sum_{T\in\mathcal{T}}\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{1},\mathcal{A}_{1})=\sum_{T\in\mathcal{T}}\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{2},\mathcal{A}_{2}) . Therefore, we have
+\displaystyle\sum_{T\in\mathcal{T}}\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{1},\mathcal{A}_{1},\mathbb{P}_{S})=\sum_{T\in\mathcal{T}}\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{1},\mathcal{A}_{1})
+(4)
+\displaystyle=\sum_{T\in\mathcal{T}}\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{2},\mathcal{A}_{2})=\sum_{T\in\mathcal{T}}\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{2},\mathcal{A}_{2},\mathbb{P}_{S})
+2) Induction step
+We consider two set S_{i}\subset S_{i+1}\subset S and S_{i}\cup\{e_{i}\}=S_{i+1} , where e_{i}\in E . Obviously, we have |S_{i+1}|=|S_{i}|+1 . We assume that
+\sum_{T\in\mathcal{T}}\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{1},\mathcal{A}_{1},\mathbb{P}_{S_{i}}^{(T)})=\sum_{T\in\mathcal{T}}\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{2},\mathcal{A}_{2},\mathbb{P}_{S_{i}}^{(T)})
+(5)
+holds. Then, we have:
+\displaystyle\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{1},\mathcal{A}_{1},\mathbb{P}_{S_{i+1}})
+(6)
+\displaystyle=\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{1},\mathcal{A}_{1},\mathbb{P}_{S_{i}},\mathbb{P}_{e_{i}})
+\displaystyle\overset{(\heartsuit)}{=}\frac{\operatorname{Pr}(\mathbb{P}_{e_{i}}|\mathcal{F}_{1},\mathcal{A}_{1},\mathbb{P}_{S_{i}},\tilde{\boldsymbol{T}}=T)}{\operatorname{Pr}(\mathbb{P}_{e_{i}})}\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{1},\mathcal{A}_{1},\mathbb{P}_{S_{i}})
+\displaystyle\overset{(\Diamond)}{=}\frac{\operatorname{Pr}(e|S_{i})}{\operatorname{Pr}(\mathbb{P}_{e_{i}})}\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{1},\mathcal{A}_{1},\mathbb{P}_{S_{i}}),
+where (\heartsuit) is due to the Bayes rule and (\Diamond) is due to the properties (ii) of Definition 3.1.
+Therefore, we have
+\displaystyle\sum_{T\in\mathcal{T}}\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{1},\mathcal{A}_{1},\mathbb{P}_{S_{i+1}})
+\displaystyle\overset{(\clubsuit)}{=}\sum_{T\in\mathcal{T}}\frac{\operatorname{Pr}(e|S_{i})}{\operatorname{Pr}(\mathbb{P}_{e_{i}})}\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{1},\mathcal{A}_{1},\mathbb{P}_{S_{i}})
+(7)
+\displaystyle=\frac{\operatorname{Pr}(e|S_{i})}{\operatorname{Pr}(\mathbb{P}_{e_{i}})}\sum_{T\in\mathcal{T}}\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{1},\mathcal{A}_{1},\mathbb{P}_{S_{i}})
+\displaystyle\overset{\triangle}{=}\frac{\operatorname{Pr}(e|S_{i})}{\operatorname{Pr}(\mathbb{P}_{e_{i}})}\sum_{T\in\mathcal{T}}\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{2},\mathcal{A}_{2},\mathbb{P}_{S_{i}})
+\displaystyle=\sum_{T\in\mathcal{T}}\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{2},\mathcal{A}_{2},\mathbb{P}_{S_{i+1}}),
+where (\clubsuit) is due to Equation 6 and Equation (\triangle) is due to Equation 5.
+3) Conclusion
+Given S , we can construct \{S_{0},S_{1},S_{2},\cdots,S_{|S|}\} , such that \forall i,~{}S_{i}\subset S and S_{i}\cup\{e_{i}\}=S_{i+1} . We constraint that S_{0}= and S_{|S|}=S . Then, we can iterative apply the Eq. (4) and Eq. (7) for i\in[0,|S|) to obtain that
+\sum_{T\in\mathcal{T}}\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{1},\mathcal{A}_{1},\mathbb{P}_{S})=\sum_{T\in\mathcal{T}}\operatorname{Pr}(\tilde{\boldsymbol{T}}=T|\mathcal{F}_{2},\mathcal{A}_{2},\mathbb{P}_{S}).
+(8)
+Therefore, we establish the theorem.
+∎
+Appendix C Generalization Bound
+C.1 Preliminary: Definition and useful lemma
+In the following, we give the measure for the distribution, i.e. Wasserstein Distance and the some common used function assumption, i.e. Lipschitz assumption and homeomorphis assumption.
+Definition C.1.
+(Wasserstein Distance). For any p\geq 1 , the p -Wasserstein distance between two pobability measures \mathbb{P},\mathbb{Q} on the space \mathcal{W} with metric d_{\mathcal{W}} is defined as:
+\mathbb{W}_{p}(\mathbb{P},\mathbb{Q})=\inf_{M\in\Gamma(\mathbb{P},\mathbb{Q})}(\mathbb{E}_{(W,W^{\prime})\sim M}[d^{p}_{\mathcal{W}}(W,W^{\prime})])^{1/p},
+(9)
+where \Gamma(\mathbb{P},\mathbb{Q}) denotes the collection
+of all measures on W\times W with the marginals \mathbb{P} and \mathbb{Q} on the first and second factors respectively.
+Definition C.2.
+(Lipschitz) Given two metric spaces (\mathcal{M},d_{\mathcal{M}}) and (\mathcal{N},d_{\mathcal{N}}) , where d_{\mathcal{M}} and d_{\mathcal{N}} denote the metrics on \mathcal{M} and \mathcal{N} . A function h:\mathcal{M}\to\mathcal{N} is L -Lipschitz if for all m_{1},m_{2}\in\mathcal{M} , we have d_{\mathcal{N}}(h(m_{1}),h(m_{2}))\leq Ld_{\mathcal{M}}(m_{1},m_{2}) .
+Lipschitz assumption is commonly used assumption
+The majority of research relies on the Lipschitz assumption when analyzing generalization behavior. Some studies attempt to alleviate this assumption by substituting it with its weaker counterpart. However, as the primary focus of this paper does not lie in removing the Lipschitz assumption, we defer this task to future work.
+Definition C.3.
+(homeomorphism) A continuous function f is called a homeomorphism if it is a bijection function
+and its inverse function f^{-1} is continuous as well.
+Definition C.4.
+(Total Variation) The total variation between two probability distributions \mathbb{P} and \mathbb{Q} on \mathcal{W} is
+\operatorname{TV}(\mathbb{P},\mathbb{Q})\triangleq\sup_{A\in\mathcal{W}}\{\mathbb{P}(A)-\mathbb{Q}(A)\}
+(10)
+Definition C.5.
+(Discrete Metric) The discrete metric is d(x,y)\triangleq\boldsymbol{1}[x\neq y] , where \boldsymbol{1} is the indicator function.
+Lemma C.6.
+(Rademacher Complexity (from Mohri et al. [33])) Let \mathcal{F} be a family of functions. Given a distribution \mathbb{P} and a samples D_{n}=\{z_{1},\cdots,z_{n}\}\sim\mathbb{P}^{\otimes n} , the following holds for all g\in\mathcal{F} :
+\mathbb{E}_{D_{n}\sim\mathbb{P}^{\otimes n}}[err(\mathbb{P},f)-err(D_{n},f)]\leq 2\mathcal{R}_{n}(\mathcal{F}),
+(11)
+where \mathcal{R}_{n}=\mathbb{E}_{\sigma,D_{n}}[\sup_{f\in\mathcal{F}}\frac{1}{n}\sum_{i=1}^{n}\sigma_{i}f(x_{i})] with \sigma_{i} being independent uniform random variables taking
+values in \{-1,+1\} .
+Lemma C.7.
+For two pobability measures \mathbb{P},\mathbb{Q} on the space \mathcal{W} with metric d_{\mathcal{W}} , the 1 -Wasserstein distance between \mathbb{P} and \mathbb{Q} can be represented as:
+\mathbb{W}_{1}(\mathbb{P},\mathbb{Q})=\frac{1}{L}\sup_{h\in\mathcal{H}}\mathbb{E}_{w\sim\mathbb{P}}h(w)-\mathbb{E}_{w\sim\mathbb{Q}}h(w),
+(12)
+where \mathcal{H} denotes the function spaces containing function with Lipschitz constant less or equal to L .
+C.2 Proof of Theorem 5.4
+Lemma C.8.
+If err is L -Lipschitz with respect to its second argument,under Assumption 5.1, we have
+\left|\mathbb{E}_{D_{n},f\sim\mathcal{A}(D_{n})}[err(\mathbb{P}_{U},f)-err(D_{n},f)]\right|\leq GenIID+L\mathbb{W}_{1}(\mathbb{P}_{\boldsymbol{f}_{S}},\mathbb{P}_{\boldsymbol{f}_{E}})+\mathcal{O}\left(\epsilon\right),
+(13)
+where \mathcal{R}_{n}=\mathbb{E}_{\sigma,D_{n}}[\sup_{f\in\mathcal{F}}\frac{1}{n}\sum_{i=1}^{n}\sigma_{i}f(x_{i})] with \sigma_{i} being independent uniform random variables taking values in \{-1,+1\} .
+Proof.
+We can decomposite err(\mathbb{P}_{U},f)-err(D_{n},f) as
+\displaystyle\mathbb{E}_{D_{n},f\sim\mathcal{A}(D_{n})}[err(\mathbb{P}_{U},f)-err(D_{n},f)]
+(14)
+\displaystyle=\underbrace{err(\mathbb{P}_{S},\boldsymbol{f}_{D_{n}})-err(D_{n},\boldsymbol{f}_{D_{n}})}_{(1)}+\underbrace{err(\mathbb{P}_{U},\boldsymbol{f}_{D_{n}})-err(\mathbb{P}_{S},\boldsymbol{f}_{D_{n}})}_{(2)}.
+Because (1) is the generalization bound in IID situation, we can upperbound it with any IID bound. Therfore, we can bound " (1) " term with GenIID to denotes any upper bound of IID. Then, we only need to focus on the (2) term, which is the essential part of CG.
+According to Assumption 5.1, we can ensure for any S_{1},S_{2} satisfying that for all S_{1}\subset S_{2} , we have
+\mathbb{E}_{f\sim\mathbb{P}_{\boldsymbol{f}_{S_{2}}}}err(\mathbb{P}_{S_{1}},f)=err(\mathbb{P}_{S_{1}},\boldsymbol{f}_{S_{2}})\leq\max_{e\in S_{1}}err(\mathbb{P}_{e},\boldsymbol{f}_{S_{2}})\leq\max_{e\in S_{2}}err(\mathbb{P}_{e},\boldsymbol{f}_{S_{2}})\overset{(\star)}{=}\mathcal{O}(\epsilon),
+(15)
+where (\star) is due to Assumption 5.1.
+Therefore, we have
+\begin{aligned} &err(\mathbb{P}_{U},\boldsymbol{f}_{S})-err(\mathbb{P}_{S},\boldsymbol{f}_{S})\\
+=&err(\mathbb{P}_{U},\boldsymbol{f}_{S})-err(\mathbb{P}_{U},\boldsymbol{f}_{E})+(err(\mathbb{P}_{U},\boldsymbol{f}_{E})-err(\mathbb{P}_{S},\boldsymbol{f}_{S}))\\
+\leq&err(\mathbb{P}_{U},\boldsymbol{f}_{S})-err(\mathbb{P}_{U},\boldsymbol{f}_{E})+\mathcal{O}(\epsilon)\end{aligned}.
+(16)
+According to Lemma C.7, we have
+\mathbb{W}_{1}(\mathbb{P},\mathbb{Q})=\frac{1}{L}\sup_{h\in\mathcal{H}}\mathbb{E}_{w\sim\mathbb{P}}h(w)-\mathbb{E}_{w\sim\mathbb{Q}}h(w).
+(17)
+By replacing h in Equation 17 with err(\mathbb{P}_{U},\cdot) , \mathbb{P} in Equation 17 with \mathbb{P}_{\boldsymbol{f}_{S}} and \mathbb{Q} in Equation 17 with \mathbb{P}_{\mathcal{F}_{c}} we obtain that
+\displaystyle\mathbb{W}_{1}(\mathbb{P}_{\boldsymbol{f}_{S}},\mathbb{P}_{\boldsymbol{f}_{E}})
+\displaystyle\leq\frac{1}{L}\left(\mathbb{E}_{f\sim\mathbb{P}_{\boldsymbol{f}_{S}}}err(\mathbb{P}_{U},f)-\mathbb{E}_{f\sim\mathbb{P}_{\boldsymbol{f}_{E}}}err(\mathbb{P}_{U},f)\right)
+(18)
+\displaystyle=\frac{1}{L}\left(err(\mathbb{P}_{U},\boldsymbol{f}_{S})-err(\mathbb{P}_{U},\boldsymbol{f}_{E})\right).
+By rearranging the equation, we obtain that
+err(\mathbb{P}_{U},\boldsymbol{f}_{S})-err(\mathbb{P}_{U},\boldsymbol{f}_{E})\leq L\mathbb{W}_{1}(\mathbb{P}_{\boldsymbol{f}_{S}},\mathbb{P}_{\boldsymbol{f}_{E}}).
+(19)
+Combining the equations above, the result is established.
+∎
+Theorem C.9.
+Given training data D_{n}\in\mathcal{Z}^{n} sampled from the support distribution \mathbb{P}_{S} , learning algorithm \mathcal{A} and function space \mathcal{F} , if err is L -bounded, then we have
+\left|\mathbb{E}_{D_{n},f\sim\mathcal{A}(D_{n})}[err(\mathbb{P}_{U},f)-err(D_{n},f)]\right|\leq GenIID+L\Phi(I(\boldsymbol{f}_{S};\boldsymbol{T}|\mathbb{P}_{S}^{(\boldsymbol{T})}))+\mathcal{O}\left(\epsilon\right),
+where \epsilon=\max\limits_{(a,b)\in E}\min\limits_{f\in\mathcal{F}}err(\mathbb{P}_{a,b},f) , I(\cdot;\cdot) denotes the mutual information, GenIID denote any generalization error bound with IID assumption and \Phi(x)\triangleq\sqrt{\min\{x/2,1-\exp(-x)\}} .
+Proof.
+Start from Lemma C.8, we set the metric between the function space, i.e. d_{\mathcal{F}} , as the discrete metric as defined in Definition C.5. Based on this metric, because the err(\cdot) is L -bounded, we have for any distribution \mathbb{Q} and f_{1},f_{2}\in\mathcal{F} , \frac{\left|err(\mathbb{Q},f_{1})-err(\mathbb{Q},f_{2})\right|}{d_{\mathcal{F}}(f_{1},f_{2})}\leq\frac{\left|L-0\right|}{1}=L , i.e. the err(\cdot) is L -Lipschitz.
+Then, we can bound \mathbb{W}_{1}(\mathbb{P}_{\boldsymbol{f}_{S}},\mathbb{P}_{\boldsymbol{f}_{E}}) in Lemma C.8 with \Phi(I(\boldsymbol{f}_{S};\boldsymbol{T}|\mathbb{P}_{S}^{(\boldsymbol{T})})) :
+\mathbb{W}_{1}(\mathbb{P}_{\boldsymbol{f}_{S}},\mathbb{P}_{\boldsymbol{f}_{E}})=\mathbb{W}_{1}(\mathbb{P}_{\boldsymbol{f}_{E}},\mathbb{P}_{\boldsymbol{f}_{S}})\overset{(\clubsuit)}{=}\operatorname{TV}(\mathbb{P}_{\boldsymbol{f}_{E}},\mathbb{P}_{\boldsymbol{f}_{S}})\overset{(\heartsuit)}{\leq}\Phi(KL(\mathbb{P}_{\boldsymbol{f}_{E}},\mathbb{P}_{\boldsymbol{f}_{S}})),
+(20)
+where (\clubsuit) is due the Theorem 6.15 of Villani et al. [57], (\heartsuit) is due to the statement in Theorem 6.5 of Polyanskiy and Wu [43] and Lemma 2 of Rodríguez Gálvez et al. [46]. With some misuses, we denote \mathbb{P}_{\boldsymbol{f}_{S}} as \mathbb{P}_{\boldsymbol{f}}|\mathbb{P}_{S} , where | denotes the condition and the same for \mathbb{P}_{\boldsymbol{f}_{E}} and \mathbb{P}_{\boldsymbol{f}_{U}} . Then, we have
+\displaystyle\operatorname{KL}(\mathbb{P}_{\boldsymbol{f}_{E}},\mathbb{P}_{\boldsymbol{f}_{S}})=\operatorname{KL}(\mathbb{P}_{\boldsymbol{f}}|\mathbb{P}_{E},\mathbb{P}_{\boldsymbol{f}}|\mathbb{P}_{S})=\operatorname{KL}(\mathbb{P}_{\boldsymbol{f}}|(\mathbb{P}_{S},\mathbb{P}_{U}),\mathbb{P}_{\boldsymbol{f}}|\mathbb{P}_{S})
+(21)
+\displaystyle=\operatorname{KL}(\mathbb{P}_{\boldsymbol{f}}|\mathbb{P}_{U},\mathbb{P}_{\boldsymbol{f}})|\mathbb{P}_{S}=I(\mathbb{P}_{\boldsymbol{f}};\mathbb{P}_{U}|\mathbb{P}_{S})=I(\mathbb{P}_{\boldsymbol{f}};T|\mathbb{P}_{S})=I(\mathbb{P}_{\boldsymbol{f}_{S}};T|\mathbb{P}_{S})
+Then, taking Equation 20 and Equation 21 back into Lemma C.8, the Theorem is estabilished.
+∎
+C.3 Proof of Corollary 5.8
+Corollary C.10.
+Given the support distribution \mathbb{P}_{S} , if err is L -bounded, and \lim_{n\to\infty}GenIID=0 ,
+the CG problem is solvable if err(\mathbb{P}_{S},\boldsymbol{f}_{S})+\Phi(I(\boldsymbol{f}_{S};\boldsymbol{T}|\mathbb{P}_{S}^{(\boldsymbol{T})}))=\mathcal{O}(\epsilon) .
+Proof.
+Recall that the generalization bound in Theorem 5.4, that
+\left|\mathbb{E}_{D_{n},f\sim\mathcal{A}(D_{n})}[err(\mathbb{P}_{U},f)-err(D_{n},f)]\right|\leq GenIID+\kappa_{n}L\Phi(I(\boldsymbol{f}_{S};\boldsymbol{T}|\mathbb{P}_{S}^{(\boldsymbol{T})}))+\mathcal{O}\left(\epsilon\right).
+(22)
+According to the Definition 3.7, the CG is solvable if
+\displaystyle\lim_{n\to\infty}\left|\mathbb{E}_{D_{n},f\sim\mathcal{A}(D_{n})}[err(\mathbb{P}_{U},f)-err(D_{n},f)]\right|
+(23)
+\displaystyle=\left|[err(\mathbb{P}_{U},\boldsymbol{f}_{S})-err(\mathbb{P}_{S},\boldsymbol{f}_{S})]\right|
+\displaystyle\overset{(\square)}{=}\lim_{n\to\infty}(GenIID+\kappa_{n}L\Phi(I(\boldsymbol{f}_{S};\boldsymbol{T}|\mathbb{P}_{S}^{(\boldsymbol{T})}))+\mathcal{O}\left(\epsilon\right))
+\displaystyle\overset{(\star)}{=}\lim_{n\to\infty}L\Phi(I(\boldsymbol{f}_{S};\boldsymbol{T}|\mathbb{P}_{S}^{(\boldsymbol{T})}))+\mathcal{O}\left(\epsilon\right)
+\displaystyle=L\Phi(I(\boldsymbol{f}_{S};\boldsymbol{T}|\mathbb{P}_{S}^{(\boldsymbol{T})})+\mathcal{O}\left(\epsilon\right),
+where (\square) is due to Equation 22, and (\star) is due to the condition \lim_{n\to\infty}GenIID=0 and \lim_{n\to\infty}\kappa_{n}=1 .
+Then, we have
+err(\mathbb{P}_{U},\boldsymbol{f}_{S})\leq err(\mathbb{P}_{S},\boldsymbol{f}_{S})+L\Phi(I(\boldsymbol{f}_{S};\boldsymbol{T}|\mathbb{P}_{S}^{(\boldsymbol{T})})+\mathcal{O}\left(\epsilon\right).
+(24)
+Under the condition that err(\mathbb{P}_{S},\boldsymbol{f}_{S})+\Phi(I(\boldsymbol{f}_{S};\boldsymbol{T}|\mathbb{P}_{S}^{(\boldsymbol{T})}))=\mathcal{O}(\epsilon) ,
+we have
+err(\mathbb{P}_{U},\boldsymbol{f}_{S})=\mathcal{O}(\epsilon).
+(25)
+According to the definition 3.7, the problem is solvable. Therefore, the Corollary holds.
+∎
+C.4 Explore the tightness of the generalization bounds
+Refer to caption
+Figure 1: Generalization bounds on the toy problem. The example 1 considers the case where the function space has some bias while the learning algorithm has no bias. The example 2 consider the learning algorithm has certain bias while the function space is powerful to fit data. We find that 1) our bounds can capture the decrease of generalization error in example 1 and 2) our can align with the generalization error in example 2.
+Our ability to assert whether our bound is tighter or looser than previous bounds is contingent upon considering the nuanced intricacies of the problems at hand. According to whether the problem is more influenced by the design of learning algorithm or the function space. We have delineated the issue into two distinct categories
+•
+Function space dominated problem. In this problem, we posit that the learning algorithm randomly selects functions that minimize loss on the training data, within a function space tailored specifically for the problem at hand.
+•
+learning algorithm dominated problem. Here, we assume that the function space is pwerful enough to accommodate any distribution, while the learning algorithm is inclined to favor certain functions over others, provided they minimize loss on the training data.
+To illustrate these concepts, we provide two examples: Example 1 exemplifies a scenario where the function space dominates, whereas Example 2 exemplifies a scenario where the learning algorithm holds sway.
+In summation, our analysis yields the following conclusion: We ascertain that our bound achieves greater tightness in the context of the learning algorithm dominated problem. Conversely, in the scenario where the function space dominates, our bound achieves greater tightness solely when provided with an extensive array of supporting distributions.
+Example setting
+We consider thet |A|=|B|=10 . The two examples are explored. Example 1 The function space \mathcal{F} has the properties that 1) For each function f\in\mathcal{F} , we have \sum_{a,b}\mathbb{I}_{err(\mathbb{P}_{a,b},f)}=10 or \sum_{a,b}\mathbb{I}_{err(\mathbb{P}_{a,b},f)}=0 . 2) \forall a\in A,b\in B,err(\mathbb{P}_{a,b},f)=1 or err(\mathbb{P}_{a,b},f)=0 . The learning algorithm satisfies that \forall(a,b)\in S and for all f\in\operatorname{supp}\mathbb{P}_{\boldsymbol{f}_{S}} and for all (a,b)\in S , we have err(\mathbb{P}_{a,b},f)=0 . Example 2 For all f\in\operatorname{supp}\mathbb{P}_{\boldsymbol{f}_{S}} , for all (a,b)\in S , we have err(\mathbb{P}_{a,b},f)=0 and for all (a,b)\notin S , we have err(\mathbb{P}_{a,b},f)=0 with probability c_{a,b}\frac{|S|}{|E|} else err(\mathbb{P}_{a,b},f)=1 , where c_{a,b} is a ramdonly assigned value for each (a,b) and it takes value between 0.8 and 1. We choose the distance measure d_{\mathcal{F}}(f_{1},f_{2})=\sup_{(a,b)\in E}\mathbb{E}(\left|err(\mathbb{P}_{a,b},f_{1})-err(\mathbb{P}_{a,b},f_{2})\right|) .
+Remark C.11.
+In Example 1, we delve into the bias stemming from the function space. Here, the function space is relatively constrained, containing only a limited set of functions, including the correct one that attains zero loss. The learning algorithm uniformly selects a function only if it achieves minimal loss on the support distribution. Consequently, the learning algorithm exhibits no inherent bias towards specific functions as long as they achieve minimal loss on the support distributions. In Example 2, we explore the bias inherent in the learning algorithm. In this instance, the function space is expansive, encompassing all possible outputs. However, the learning algorithm may assign varying probabilities to functions that achieve zero loss on the support distribution.
+We revisit the results of Ben-David et al. [7], which is the work that we aim to compare with. Ben-David et al. [7] has the following conclusion that:
+err(\mathbb{P}_{U},f)-err(\mathbb{P}_{S},f)\leq d_{\mathcal{F}\Delta\mathcal{F}}(\mathbb{P}_{U},\mathbb{P}_{S})+\mathcal{O}(\epsilon),
+(26)
+where the d_{\mathcal{F}\Delta\mathcal{F}} is defined as
+d_{\mathcal{F}\Delta\mathcal{F}}\triangleq 2\sup_{f,f^{\prime}\in\mathcal{F}}\left|\mathbb{E}_{z\sim\mathbb{P}_{U}}[f(x)\neq f^{\prime}(x)]-\mathbb{E}_{z\sim\mathbb{P}_{S}}[f(x)\neq f^{\prime}(x)]\right| .
+Results
+We compute the generalization bounds and error depicted in Fig. 1, revealing two key observations: Our bound effectively incorporates the impact of the support distribution. In Example 1, our generalization bound accurately reflects the decreasing trend of the generalization error. Similarly, in Example 2, our bound aligns with the generalization trends across various support distributions. Our bound accounts for the influence of the learning algorithm. Notably, in Example 2, the approach proposed by Ben-David et al. [7] fails to capture the dynamics accurately. This failure can be attributed to its predominant focus on the function space influence, whereas our analysis recognizes the dominance of the learning algorithm’s influence in this example.
+C.5 Discussion of Prior Works
+\Phi^{(x)}
+\Phi^{(y)}
+Dong and Ma [12]
+\Phi_{1}^{(x)}(a,\zeta)=(\tilde{\Phi}_{1}^{(x)}(a,\zeta),\boldsymbol{0})\quad\tilde{\Phi}_{1}^{(x)}(b,\zeta)=(\boldsymbol{0},\tilde{\Phi}_{1}^{(x)}(b,\zeta))
+No
+Wiedemer et al. [59]
+\Phi^{(x)}_{1}(a,\zeta)+\Phi^{(x)}_{1}(a,\zeta)=(a,b,\zeta)
+No
+Table 1: The additional contraint imposed by the prior works upon the Equation 27. The term “No" in the Table indicates that there are no additions constraint. The \boldsymbol{0} denotes the vector whose every entry is zero.
+Definition C.12.
+(Generation Function)
+The function \Phi(\cdot) is the generation function for a CG distribution defined in Definition 3.1, if for any (a,b)\in E such that the random variable \boldsymbol{z}_{a,b}\sim\mathbb{P}_{a,b} can be generated according to the generation function \boldsymbol{z}_{a,b}=\Phi(a,b,\boldsymbol{\zeta}) , where the random variable \boldsymbol{\zeta}\sim\mathbb{P}_{\boldsymbol{\zeta}} to denote any other concepts and the noise.
+In the following, we discuss the relation between the generation function and the IRM:
+Proposition C.13.
+For any CG distribution defined according Definition 3.1 whose generation function \Phi(\cdot) has the following form:
+\displaystyle x
+\displaystyle=\Phi_{1}^{(x)}(a,\zeta)+\Phi_{2}^{(x)}(b,\zeta)
+(27)
+\displaystyle y
+\displaystyle=\Phi_{1}^{(y)}(a,\zeta)+\Phi_{2}^{(y)}(b,\zeta),
+where z=(x,y) . Then the distribution has IRM.
+Remark C.14.
+In Table 1, we list the additional constraint for the other related work in additional to the Equation 27.
+Proof.
+According to the Defintion C.12, we have z=\Phi(a,b,\zeta) . Then, according to the Equation 27, we can decomposite the generation function into the following form:
+z=(x,y)=(\Phi_{1}^{(x)}(a,\zeta)+\Phi_{2}^{(x)}(b,\zeta),\Phi_{1}^{(y)}(a,\zeta)+\Phi_{2}^{(y)}(b,\zeta))=\Phi(a,b,\zeta).
+(28)
+With this generation process, the corresponding composition rule can be calculated as:
+\displaystyle T_{a_{1}\to a_{2}}(z)
+\displaystyle=z+(\Phi_{1}^{(x)}(a_{2},\zeta)-\Phi_{1}^{(x)}(a_{1},\zeta),\boldsymbol{0})
+(29)
+\displaystyle T_{b_{1}\to b_{2}}(z)
+\displaystyle=z+(\boldsymbol{0},\Phi_{1}^{(y)}(b_{2},\zeta)-\Phi_{1}^{(y)}(b_{1},\zeta)).
+It is obviously that the Equation 29 holds for any (a_{1},b_{1}),(a_{2},b_{2})\in E . Therefore, we have
+\displaystyle T_{a_{1}\to a_{2},b_{1}\to b_{2}}
+\displaystyle=T_{a_{1}\to a_{2}}\circ T_{b_{1}\to b_{2}}=T_{b_{1}\to b_{2}}\circ T_{a_{1}\to a_{2}}
+(30)
+\displaystyle=z+(\Phi_{1}^{(x)}(a_{2},\zeta)-\Phi_{1}^{(x)}(a_{1},\zeta),\Phi_{1}^{(y)}(b_{2},\zeta)-\Phi_{1}^{(y)}(b_{1},\zeta))
+holds for any (a_{1},b_{1}),(a_{2},b_{2})\in E .
+Accroding to Definition 6.1, we can obtain that the distribution has IRM.
+∎
+◄
+ar5iv homepage
+Feeling
+lucky?
+Conversion
+report
+Report
+an issue
+View original
+on arXiv►
+Copyright
+Privacy Policy
+Generated on Wed Jun 5 13:25:36 2024 by LaTeXML Mascot Sammy

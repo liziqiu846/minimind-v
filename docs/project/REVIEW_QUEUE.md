@@ -271,3 +271,25 @@
   plan commit 前不执行新分析。
 - **Recommended human decision**: 无需立即决定；之后审查 official duplicate-ID
   handling、license boundary 与 broad-label confounding scope 是否表述准确。
+
+## 2026-08-07｜LITMAP-06：选择 XID-01 作为新的科学机制主线
+
+- **Date**: 2026-08-07
+- **Idea / issue**: 三条初始搜索起点共同暴露
+  `cross-modal interaction identifiability under autoregressive supervision`：
+  observed support 上多个低 NLL 条件规则可能只在 unseen multimodal cells 分歧。
+- **Why human should review it**: 该 formulation 有潜在论文价值，但也可能退化为普通
+  no-free-lunch/support mismatch。后续必须证明 VLM-specific interaction 与
+  language-shortcut ambiguity 增加了什么正式内容，不能只换名复述组合泛化。
+- **Current evidence**: LITMAP-06 搜索 3,479 records、2,395 unique titles，核查
+  10 篇决定性 primary sources；text bias、cross-modal skill-composition gap、
+  controlled support-arrangement effects均有直接证据，但没有兼容 theorem 覆盖
+  discrete AR conditional predictors。5/5 DOI verification 通过。
+- **What Agent has already frozen**: `XID-01=ACTIVE_CONJECTURE`；首先做 finite
+  support theorem/proof 与 exhaustive verification。当前不运行真实模型训练，不把
+  predictor-equivalence diameter 当经验 proxy，不访问 final confirmation。
+- **Whether autonomous work can continue**: 可以；按规则创建并提交
+  `XID-01_round1` immutable plan 后直接继续。
+- **Recommended human decision**: 无需立即决定；之后重点审查 theorem 是否超出
+  普通 distribution-shift impossibility，以及新 prediction 是否可在不制造新 gate
+  的条件下转入 MiniMind-V。

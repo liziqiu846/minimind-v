@@ -385,3 +385,35 @@ Agent 可以自主改变：
   已由当前 plan commit 冻结。Round 1 只执行 targeted primary-source、official
   schema 与 local-lineage audit，不运行 checkpoint/GPU/training，不访问 final
   confirmation。
+
+### 2026-08-07｜XID-01 cross-modal interaction identifiability
+
+- **Question**: 在 autoregressive LVLM 中，当 observed training support 上
+  language shortcut 与真实 image–text interaction rule 都能达到低 next-token
+  NLL 时，哪些 support / objective 条件能识别可迁移的 interaction rule，并控制其
+  在 unseen multimodal combinations 上的风险？
+- **Why the old question was insufficient**: `CROSSFACT-01` 把 publisher-defined
+  crossed schema 当成主要 gate，仍在寻找实验工具而不是科学机制。治理重分类已将
+  crossed cells 正确降为 `EXPERIMENT_TOOL`；publisher 是否提供 exact schema 不能
+  决定 interaction identifiability 是否是科学问题。
+- **Evidence / literature origin**: LITMAP-06 定向搜索 3,479 records、2,395 unique
+  titles并核查 10 篇决定性 primary sources。`Words or Vision` 支持 text bias，但
+  theorem 只处理 pure-text/multimodal mixture；ComPABench 显示 individual skills
+  高而 cross-modal composition 极低；controlled CLIP 结果显示 support arrangement
+  改变泛化；multimodal contrastive identifiability theorem 依赖连续可逆生成机制、
+  invariant content 与 contrastive objective，不能直接覆盖 discrete AR risk。
+- **Mission relation**: 该机制直接解释为什么低 observed NLL 或短 checkpoint
+  仍可对应高 unseen multimodal risk；若 formal object 成立，可自然导出
+  interaction-identifying sampling、counterfactual cells 或区分 shortcut rule 的
+  training objective。
+- **New prediction**: 在 \(N\)、factor marginals、target format 与 hypothesis
+  class 匹配时，增加使 shortcut 与 intended interaction 在 observed support 上给出
+  不同预测的 cells，应比增加两者仍一致的 redundant cells 更显著降低
+  unseen-combination risk。
+- **Distinction from failed routes**: `COMP-01`/`VISCOND-01` 失败的是 frozen
+  checkpoint proxy；`VISSUP-01`/`PROJALLOC-01` 失败的是具体 intervention。
+  `XID-01` 的对象是低 observed-risk 条件预测器的等价类，不依赖 caption-NLL、
+  no-pixel margin、rotation task 或 module allocation。
+- **Status**: ACTIVE_CONJECTURE；最高证据为 `CONJECTURE` +
+  `EMPIRICAL_SUPPORT`。下一轮先做 finite crossed-support theorem/proof 与 exhaustive
+  verification，0 checkpoint/GPU/training；不得提前声称 scientific law。

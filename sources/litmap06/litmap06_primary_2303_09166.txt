@@ -1,0 +1,1552 @@
+Published as a conference paper at ICLR 2023
+
+
+IDENTIFIABILITY RESULTS FOR
+MULTIMODAL CONTRASTIVE LEARNING
+
+
+ Imant Daunhawer1,†, Alice Bizeul1,2 , Emanuele Palumbo1,2 , Alexander Marx1,2,∗& Julia E. Vogt1,∗
+  1 Department of Computer Science, ETH Zurich
+  2 ETH AI Center, ETH Zurich
+
+
+                                                 ABSTRACT
+
+          Contrastive learning is a cornerstone underlying recent progress in multi-view
+          andmultimodallearning,e.g.,inrepresentationlearningwithimage/captionpairs.
+          Whileitseffectivenessisnotyetfullyunderstood,alineofrecentworkrevealsthat
+          contrastivelearningcaninvertthedatageneratingprocessandrecovergroundtruth
+          latent factors shared between views. In this work, we present new identiﬁability
+          resultsformultimodal contrastivelearning,showingthatitis possibletorecover
+          sharedfactorsinamoregeneralsetupthanthemulti-viewsettingstudiedpreviously.
+          Speciﬁcally, we distinguish between the multi-view setting with one generative
+          mechanism (e.g.,multiple cameras ofthe same type) andthe multimodal setting
+          that is characterized by distinct mechanisms (e.g., cameras and microphones). Our
+          workgeneralizespreviousidentiﬁabilityresultsbyredeﬁningthegenerativeprocess
+          intermsofdistinctmechanismswithmodality-speciﬁclatentvariables. Weprove
+          thatcontrastivelearningcanblock-identifylatentfactorssharedbetweenmodalities,
+          evenwhentherearenontrivialdependenciesbetweenfactors. Weempiricallyverify
+          ouridentiﬁabilityresultswithnumericalsimulationsandcorroborateourﬁndings
+          on a complex multimodal dataset of image/text pairs.  Zooming out, our work
+          providesa theoreticalbasisfor multimodalrepresentationlearning andexplainsin
+          which settings multimodal contrastive learning can be effective in practice.
+
+1    INTRODUCTION
+
+Multimodalrepresentationlearningisanemergingﬁeldwhosegrowthisfueledbyrecentdevelop-
+mentsinweakly-supervisedlearningalgorithmsandbythecollectionofsuitablemultimodaldatasets.
+Multimodaldataischaracterizedbytheco-occurenceofobservationsfromtwoormoredependent
+data sources, such as paired images and captions (e.g.,Salakhutdinov and Hinton,2009;Shi et al.,
+2019;Radfordetal.,2021),andmoregenerally,multimodalobservationsarecomprisedofaligned
+measurements from different types of sensors (Baltrušaitis et al.,2019). Co-occurrence is a form
+of weak supervision (Shu et al.,2020;Locatello et al.,2020;Chen and Batmanghelich,2020), in
+that paired observations can be viewed as proxies (i.e., weak labels) for a shared but unobserved
+ground truth factor. Among suitable representation learning methods for weakly supervised data,
+contrastive learning (Gutmann and Hyvärinen,2010;Oord et al.,2018) stands out because it is
+designed to leverage co-occurring observations from different views. In practice, contrastive learning
+achieves promising results for multi-view and multimodal learning—a prominent example is the
+contributionofCLIP(Radfordetal.,2021)tothegroundbreakingadvancementsintext-to-image
+generation (Ramesh et al.,2021;2022;Rombach et al.,2022;Saharia et al.,2022).
+Despite its empirical success, it is not sufﬁciently well understood what explains the effectiveness of
+contrastivelearninginpractice. Recentworksattributeitseffectivenesstotherecoveryofsharedlatent
+factorsfromtheunderlyingcausalgraph(Greseleetal.,2019;Zimmermannetal.,2021;vonKügelgen
+et al.,2021). From the perspective of multi-view independent component analysis, itwas shownthat
+contrastivelearningcaninvertanonlinearmixingfunction(i.e.,anonlineargenerativeprocess)thatis
+appliedtoalatentvariablewithmutuallyindependentcomponents(Greseleetal.,2019;Zimmermann
+etal.,2021). Morerecently,vonKügelgenetal.(2021)showthatcontrastivelearningcanrecover
+shared factors up to block-wise indeterminacies, even if there are nontrivial causal and statistical
+
+    *Joint authorship.†Correspondence to: dimant@ethz.ch.
+
+
+                                                        1
+
+Published as a conference paper at ICLR 2023
+
+
+
+
+dependenciesbetweenlatentcomponents. Collectively,theseresultssuggestthatcontrastivelearning
+canidentifypartsofanunknowndatageneratingprocessfrompairsofobservationsalone—evenfrom
+high-dimensionalmulti-viewobservationswithnontrivialdependencies. Inourwork,weinvestigate
+the identiﬁability of shared latent factors in themultimodal setting.
+We consider a generative process with modality-speciﬁc mixing functions and modality-speciﬁc
+latent variables. Our design is motivated by the inherent heterogeneity of multimodal data, which
+follows naturally when observations are generatedby different types ofsensors (Baltrušaitis et al.,
+2019). Forexample,anagentcanperceiveitsenvironmentthroughdistinctsensorymodalities,such
+as cameras sensing light or microphones detecting sound waves. To model information that is shared
+betweenmodalities, wetake inspirationfrom themulti-view setting(von Kügelgenet al.,2021) and
+allowfornontrivialdependenciesbetweenlatentvariables. However,previousworkonlyconsiders
+observationsofthesamedatatypeandassumesthatthesameinputleadstothesameoutputacross
+views. In this work, we introduce a model with distinct generative mechanisms, each of which can
+exhibitasigniﬁcantdegreeofmodality-speciﬁcvariation. Thisdistinctionrendersthemultimodal
+setting more general compared to the multi-view setting considered by previous work.
+In a nutshell, our work is concerned with identiﬁability for multimodal representation learning and
+focusesoncontrastivelearningasaparticularalgorithmforwhichwederiveidentiﬁabilityresults. In
+Section2, we cover relevant background on both topics, identiﬁability and contrastive learning. We
+thenformalizethemultimodalgenerativeprocessasalatentvariablemodel(Section3)andprovethat
+contrastive learning can block-identify latent factors shared between modalities (Section4). We em-
+piricallyverifytheidentiﬁabilityresultswithfullycontrollednumericalsimulations(Section5.1)and
+corroborate ourﬁndings ona complexmultimodal datasetof image/textpairs (Section5.2). Finally,
+we contextualize relatedliterature (Section6) and discusspotential limitations and opportunities for
+future work (Section7).
+
+2    PRELIMINARIES
+
+2.1    IDENTIFIABILITY
+
+Identiﬁabilityliesattheheartofmanyproblemsintheﬁeldsofindependentcomponentanalysis(ICA),
+causal discovery, and inverse problems, among others (Lehmann and Casella,2006).  From the
+perspectiveofICA,weconsidertherelationx  =  f(z),whereanobservationx  isgeneratedfroma
+mixingfunctionf thatisappliedtoalatentvariablez. ThegoalofICAistoinvertthemixingfunction
+inorder torecoverthelatent variable from observationsalone. In manysettings, fullidentiﬁability
+isimpossible andcertainambiguities mightbe acceptable. For example,identiﬁability mighthold
+for a subset of components (i.e., partial identiﬁability). Typical ambiguities include permutation and
+element-wisetransformations(i.e.,component-wiseindeterminacy),oridentiﬁabilityuptogroupsof
+latentvariables(i.e.,block-wiseindeterminacy). Inthegeneralcase,whenf isanonlinearfunction,
+alandmarknegativeresultstatesthattherecoveryofthelatentvariablegiveni.i.d.observationsis
+fundamentally impossible (Hyvärinen and Pajunen,1999). However, a recent line of pioneering
+works provides identiﬁability results for the difﬁcult nonlinear case under additional assumptions,
+suchasauxiliaryvariables(HyvärinenandMorioka,2017;Hyvärinenetal.,2019;Khemakhemetal.,
+2020) or multiple views (Gresele et al.,2019;Locatello et al.,2020;Zimmermann et al.,2021).
+Mostrelevanttoourinvestigationarepreviousworksrelatedtomulti-viewnonlinearICA(Gresele
+etal.,2019;LyuandFu,2020;Locatelloet al.,2020;von Kügelgenetal.,2021;Lyuetal.,2022).
+Generally, this line of work considers the following generative process:
+                                    z∼pz,  x 1 =  f1(z),  x 2 =  f2(z),                                           (1)
+where a latent variable, or a subset of its components, is shared between pairs of observations
+(x 1,x 2)∼px 1,x 2 , where the two viewsx 1  andx 2  are generated by two nonlinear mixing functions,
+f1  andf2  respectively. Intuitively,asecondviewcanresolveambiguityintroducedbythenonlinear
+mixing, if both views contain a shared signal but are otherwise sufﬁciently distinct (Gresele et al.,
+2019). Previousworksdifferintheirassumptionsonthemixingfunctionsanddependencerelations
+between latent components. The majority of previous work considers mutuallyindependent latent
+components (Song et al.,2014;Gresele et al.,2019;Locatello et al.,2020) or independent groups
+of shared and view-speciﬁc components (Lyu and Fu,2020;Lyu et al.,2022). Moreover, some of
+these works (Song et al.,2014;Gresele et al.,2019;Lyu and Fu,2020;Lyu et al.,2022) consider
+
+
+                                                          2
+
+Published as a conference paper at ICLR 2023
+
+
+
+
+view-speciﬁc1 mixingfunctions. Venturingbeyondthe strictassumptionof independent(groupsof)
+components,von Kügelgen et al.(2021) consider additional causal and statistical dependencies
+betweenlatentsandshowthatthesubsetofsharedcomponentscanbeidentiﬁeduptoablock-wise
+indeterminacy. Ourworkconsidersheterogeneousmodalitieswithcausalandstatisticaldependencies
+betweenlatents. Weprovethatsharedfactorscanbeblock-identiﬁedinanovelsettingwithmodality-
+speciﬁc mixing functions and modality-speciﬁc latent variables.
+
+2.2    CONTRASTIVE LEARNING
+
+Contrastivelearning(Gutmann andHyvärinen,2010;Oordet al.,2018)is aself-supervisedrepre-
+sentation learning method that leverages weak supervision in the form of paired observations. On
+ahighlevel,themethodlearnstodistinguish“positive”pairsofencodingssampledfromthejoint
+distribution,against“negative”pairssampledfromtheproductofmarginals. ThepopularInfoNCE
+objective (Oord et al.,2018) is deﬁned as follows:
+                                                  [    K∑                                                   ]
+   LInfoNCE(g 1,g 2) =  E{x i1,x i2}Ki=1∼px 1,x 2   −      log       exp{sim(  g 1(xi1),g 2(xi2))/τ}∑K          ,  (2)
+                                                       i=1         j=1   exp{sim(  g 1(xi1),g 2(xj2))/τ}
+whereg 1  andg 2  are encoders for the ﬁrst and second view,x 1  andx 2  respectively. It is common to
+use a single encoderg 1 =  g 2  whenx 2  is an augmented version ofx 1  or when two augmentations
+are sampled from the same distribution to transform x 1  and x 2  respectively (e.g.,Chen et al.,
+2020).  The set of hyperparameters consists of the temperature   τ, a similarity metric sim(·,·),
+and an integerK  that controls the number of negative pairs (K−1) used for contrasting.  The
+objective has an information-theoretic interpretation as a variational lower bound on the mutual
+informationI(g 1(x 1);g 2(x 2)) (Oord et al.,2018;Poole et al.,2019) and it can alsobe interpreted
+asthealignmentofpositivepairs(numerator)withadditionalentropyregularization(denominator),
+where the regularizer disincentivizes a degenerate solution inwhich both encoders map to a constant
+(Wang and Isola,2020).  Formally, when instantiating the     LInfoNCE objective withτ = 1    and
+sim( a,b) =−(a−b)2 , it asymptotically behaves like the objective
+                   LAlignMaxEnt(g ) =  E (x 1,x 2 )∼px 1,x 2 [∥g (x 1)−g (x 2)∥2]−H(g (x ))                      (3)
+for a single encoderg , whenK→∞(Wang and Isola,2020;von Kügelgen et al.,2021).
+Inthesetting withtwoheterogeneousmodalities, itisnaturalto employ separateencodersg 1̸=  g 2 ,
+whichcanrepresentdifferentarchitectures. Further,itiscommontouseasymmetrizedversionofthe
+objective(e.g.,seeZhangetal.,2022;Radfordetal.,2021),whichcanbeobtainedbycomputingthe
+mean of the loss in both directions:
+                   LSymInfoNCE(g 1,g 2) =    1/2LInfoNCE(g 1,g 2)+    1/2LInfoNCE(g 2,g 1).                    (4)
+Akin to Equation (3), we can approximate the symmetrized objective for τ= 1    and sim( a,b) =
+−(a−b)2 , with a large number of negative samples (K→∞), as follows:
+LSymAlignMaxEnt(g 1,g 2) =  E (x 1,x 2 )∼px 1,x 2 [∥g 1(x 1)−g 2(x 2)∥2]−1/2 (H(g 1(x 1))+ H(g 2(x 2))).
+                                                                                                                   (5)
+Since thesimilarity measure is symmetric, the approximationof thealignment term isidentical for
+bothLInfoNCE(g 1,g 2) andLInfoNCE(g 2,g 1). Eachentropytermisapproximatedviathedenominator
+of the respective loss term, which can be viewed as a nonparametric entropy estimator (Wang and
+Isola,2020). Forourexperiments,weemploy theﬁnite-sampleestimators    LInfoNCE andLSymInfoNCE,
+whilefor ourtheoreticalanalysisweuse theestimandLSymAlignMaxEnt toderiveidentiﬁabilityresults.
+
+3    GENERATIVE PROCESS
+
+In the following, we formulate the multimodal generative process as a latent variable model (Sec-
+tion3.1)andthenspecifyourtechnicalassumptionsontherelationbetweenmodalities(Section3.2).
+
+    1Note that we deﬁnemodality-speciﬁc functions similar to the wayGresele et al.(2019),Lyu and Fu
+(2020),andLyuetal.(2022)deﬁne                            view-speciﬁcfunctions. Toclarifythedistinction,wegenerallyassumethat
+observations from different modalities are generated by distinct mechanismsf1̸=  f2  with modality-speciﬁc
+latentvariables,andwetreatthemulti-viewsettingasaspecialcase,wheref1 =  f2 withoutview-speciﬁclatents.
+
+
+                                                           3
+
+                                            Published as a conference paper at ICLR 2023
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                            Figure 1: Illustration of the multimodal generative process. Latent variables are denoted by clear
+                                            nodes and observations by shaded nodes. We partition the latent space into z 1  = (  c,s,m   1) and
+                                            z 2  = ( ˜c,˜s,m   2), where˜c   =  c  almost everywhere (Assumption1) and hence we consider only                    c.
+                                            Further,˜s  is a perturbed version ofs (Assumption2) and                    m   1 ,m   2  are modality-speciﬁc variables.
+                                            The observations x 1  and x 2  are generated by two distinct mixing functions f1̸=   f2 , which are
+                                            applied to the subsets of latent variablesz 1  andz 2  respectively.
+
+
+                                            3.1    LATENT VARIABLE MODEL
+
+                                            On ahighlevel,we assumethat thereexists acontinuous randomvariablez thattakes values inthe
+                                            latent spaceZ⊆Rn, which containsall information togenerate observations of both modalities.2
+                                            Moreover, we assume thatz = (  c,s,m   1,m   2) can be uniquely partitioned into four disjoint parts:
+
+                                              (i) aninvariantpartc whichisalways sharedacrossmodalities,and whichwerefertoas content;
+                                             (ii)  a variable parts which may change across modalities, and which we refer to asstyle;
+                                            (iii) two modality-speciﬁc parts,m   1  andm   2 , each of which is unique to the respective modality.
+
+                                            Let z 1  = (  c,s,m   1) and z 2  = ( ˜c,˜s,m   2), where˜c   =  c  almost everywhere and˜s  is generated by
+                                            perturbationsthatarespeciﬁedinSection3.2. Akintomulti-viewICA(Equation1),wedeﬁnethe
+                                            generative process for modalitiesx 1  andx 2  as follows:
+                                                                                z∼pz,  x 1 =  f1(z 1),  x 2 =  f2(z 2),                                         (6)
+                                            wheref1 :Z1→X1  andf2 :Z2→X2  aretwosmoothandinvertiblemixingfunctionswithsmooth
+                                            inverse (i.e., diffeomorphisms) that generate observations x 1  and x 2  taking values inX1⊆Rd1
+                                            andX2⊆Rd2  respectively. Generally, we assume that observations from different modalities are
+                                            generatedbydistinctmechanismsf1̸=  f2  thattakemodality-speciﬁclatentvariablesasinput. Asfor
+                                            the multi-view setting(vonKügelgen et al.,2021), the considered generative process               goes beyond
+                                            the classical ICA setting by allowing for statistical dependencies within blocks of variables (e.g.,
+                                            between dimensions ofc) and also for causal dependencies from content to style, as illustrated in
+                                            Figure1. Weassumethat     pz isasmoothdensitythatfactorizesaspz = pcps|cpm   1pm   2  inthecausal
+                                            setting,andastheproductofallinvolvedmarginalswhenthereisnocausaldependencefromc tos.
+                                            The outlined generative process is fairly general and it applies to a wide variety of practical settings.
+                                            The content invariance describes a shared phenomenon that is not directly observed but manifests
+                                            in the observations from both modalities.  Style changes describe shared inﬂuences that are not
+                                            robust across modalities, e.g., non-invertible transformations such as data augmentations, or non-
+                                            deterministic effects of an unobserved confounder.  Modality-speciﬁc factors can be viewed as
+                                            variables that describe the inherent heterogeneity of each modality (e.g., background noise).
+
+                                            3.2    RELATION BETWEEN MODALITIES
+
+                                            Next, we specify our assumptions on the relation between modalities by deﬁning the conditional
+                                            distributionpz 2|z 1 , which describes the relation between latent variables z 1  and z 2 , from which
+                                            observationsx 1  andx 2  are generated via Equation (6). Similar to previous work in the multi-view
+                                            setting(vonKügelgenetal.,2021),weassumethatcontentisinvariant,i.e.,            ˜c  =  c almosteverywhere
+                                            (Assumption1),and that                    ˜s  isaperturbedversionofs (Assumption2). Tostateourassumptionsfor
+                                            the multimodal setting, we also need to consider the modality-speciﬁc latent variables.
+z 1                                z 2          2Putdifferently,weassumethatallobservationslieonacontinuousmanifold,whichcanhavemuchsmaller
+                                            dimensionality than the observation space of the respective modality.
+m   1     s       c        ˜s     m   2
+                                                                                                        4
+
+
+         x 1              x 2
+
+Published as a conference paper at ICLR 2023
+
+
+
+
+Assumption 1(Content-invariance). The conditional densitypz 2|z 1  overZ2×Z1  takes the form
+                                 pz 2|z 1(z 2|z 1) = δ(˜c−c)p˜s|s(˜s|s)pm   2(m   2)                                        (7)
+for some continuous densityp˜s|s onS×S, whereδ(·) is the Dirac delta function, i.e.,˜c  =  c a.e.
+
+Tofully specifypz 2|z 1 ,it remainstodeﬁne thestyle changes,whichare describedby theconditional
+distributionp˜s|s. Thereareseveraljustiﬁcationsformodelingsuchastochasticrelationbetweens
+and˜s  (Zimmermannetal.,2021;vonKügelgenetal.,2021);onecouldeitherconsider                        ˜s  tobeanoisy
+version ofs, or consider˜s  to be the result of an augmentation that induces a soft intervention ons.3
+Assumption2(Stylechanges). LetAbethepowersetofstylevariables{1,...,ns}andletpA bea
+distribution onA. Then, the style conditionalp˜s|s is obtained by conditioning on a setA:
+
+                           p˜s|s(˜s|s) = ∑     pA(A)(δ(˜sAc−sAc)p˜s A|sA (˜sA|sA))                             (8)
+                                         A∈A
+wherep˜s A|sA  isa continuousdensityonSA×SA,SA⊆Sdenotesthe subspaceofchanging style
+variables speciﬁed byA, andAc={1,...,ns}\A denotes the complementofA. Further, for any
+style variablel∈{1,...,ns}, there exists a setA⊆{1,...,ns}withl∈A, s.t.
+
+  (i)pA(A)> 0,
+ (ii)p˜s A|sA  is smooth w.r.t. bothsA and˜sA, and
+
+(iii)for any     sA,p˜s A|sA (·|sA)> 0, in some open non-empty subset containingsA.
+
+Intuitively,togeneratea pairofobservations(x 1,x 2),we independentlyﬂipabiasedcoin foreach
+styledimensiontoselectasubsetofstylefeaturesA⊆{1,...,ns},whicharejointlyperturbedto
+obtain˜s . Condition (i) ensures that everystyle dimensionhas apositive probability to beperturbed,4
+while (ii)and (iii)are technical smoothness conditions that will be used for the proof of Theorem1.
+Summarizing, in this section we have formalized the multimodal generative process as a latent
+variablemodel(Section3.1)andspeciﬁedourassumptionsontherelationbetweenmodalitiesviathe
+conditionaldistributionpz 1|z 2  (Section3.2). Next,wesegueintothetopicofrepresentationlearning
+and show that, for the speciﬁed generative process, multimodal contrastive learning can identify the
+content factors up to a block-wise indeterminacy.
+
+4    IDENTIFIABILITY RESULTS
+
+First, weneed todeﬁne block-identiﬁability (vonKügelgen et al.,2021) forthe multimodalsetting in
+whichweconsidermodality-speciﬁcmixingfunctionsandencoders. Inthefollowing,ncdenotesthe
+numberofcontentvariablesandthesubscript1:ncdenotesthesubsetofcontentdimensions(indexed
+from 1 toncw.l.o.g.).
+Deﬁnition 1 (Block-identiﬁability).  The true content partitionc =  f−11   (x 1)1:nc =  f−12   (x 2)1:nc is
+block-identiﬁed by a functiongi:Xi→Zi, withi∈{1,2}, if there exists an invertible function
+hi:Rnc→Rnc, s.t. for the inferred content partitionˆci=  gi(xi)1:nc it holds thatˆci=  hi(c).
+
+It is important to note that block-identiﬁability does not require the identiﬁcation ofindividual
+factors,which isthegoalinmulti-viewnonlinearICA(Greseleetal.,2019;Locatelloetal.,2020;
+Zimmermannetal.,2021;Klindtetal.,2021)andthebasisforstrictdeﬁnitionsofdisentanglement
+(Bengioetal.,2013;Higginsetal.,2018;Shuetal.,2020). Instead,ourgoalistoisolatethegroupof
+invariant factors (i.e., the content partition) from the remaining factors of variation in the data.
+Speciﬁcally, our goal is to show that contrastive learning can block-identify thecontent variables for
+the multimodal setting described in Section3. We formalize this in Theorem1and thereby relax
+the assumptions from previous work by allowing for distinct generating mechanismsf1̸=  f2  and
+additional modality-speciﬁc latent variables.
+
+    3Notethattheasymmetrybetweenz 1  andz 2  (orbetweens and˜s ) isnotstrictlyrequired. Wechosetowrite
+z 2  asaperturbationofz 1  tosimplifythenotationandforconsistencywithpreviouswork. Instead, wecould
+modelbothz 1  andz 2  via perturbations ofz, as described in AppendixA.2.
+    4If a style variable would be perturbed with zero probability, it would be a content variable.
+
+
+                                                           5
+
+                                Published as a conference paper at ICLR 2023
+
+
+
+
+
+
+
+
+
+
+
+
+                                                 (a) Original setting                                       (b) Multimodal setting
+
+                               Table1: Resultsof the numericalsimulations. We compare theoriginal setting (f1 =  f2 , lefttable)
+                               with the multimodal setting (f1̸=  f2 , right table). Only the multimodal setting includes modality-
+                                speciﬁclatentvariables. Eachrowpresentstheresultsofadifferentsetupwithvaryingstyle-change
+                                probability p(chg.) and possible statistical (Stat.) and/or causal (Caus.) dependencies. Each value
+                                denotes theR2  coefﬁcient of determination (averaged across 3 seeds) for a nonlinear regression
+                                model that predicts the respective ground truth factor (c,s, orm i) from the learned representation.
+
+
+                               Theorem 1.  Assume the data generating process described in Sec.3.1, i.e. data pairs           (x 1,x 2)
+                                generated from Equation (6)    withpz 1  = pz\{m   2}andpz 2|z 1  as deﬁned in Assumptions1and2.
+                               Further,assumethatpz isasmoothand continuousdensityonZwithpz(z)> 0 almosteverywhere.
+                               Letg 1 :X1→ (0,1)nc andg 2 :X2→ (0,1)nc be smoothfunctions that minimizeLSymAlignMaxEnt as
+                                deﬁned in Eq. (5). Then,   g 1  andg 2  block-identify the true content variables in the sense of Def.1.
+
+                               A proof of Theorem1is provided in AppendixA.1. Intuitively, the result states that contrastive
+                                learningcanidentifythecontentvariablesuptoablock-wiseindeterminacy. Similartopreviouswork,
+                                the result is based on the optimization of the asymptotic form of the contrastive loss (Equation5).
+                                Moreover, Theorem1assumes that the number of content variables is known or that it can be
+                                estimated (e.g., with a heuristic like the elbow method). We address the question of selecting the
+                                encoding size with dimensionality ablations throughout our experiments. In Section7, we will return
+                                to the discussion of the assumptions in the context of the experimental results.
+
+                                5    EXPERIMENTS
+
+                               The goalof our experiments isto test whether contrastivelearning can block-identifycontent in the
+                                multimodalsetting,asdescribedby Theorem1. First, weverifyidentiﬁabilityinafully controlled
+                                settingwithnumerical simulations (Section5.1). Second,wecorroborate ourﬁndingsonacomplex
+                                multimodaldatasetof image/textpairs(Section5.2). Thecode isprovidedinour githubrepository.                         5
+
+
+                                5.1    NUMERICAL SIMULATION
+
+                               WeextendthenumericalsimulationfromvonKügelgenetal.(2021)andimplementthemultimodal
+                                setting using modality-speciﬁc mixing functions (f1̸=  f2 ) with modality-speciﬁc latent variables.
+                               Thenumerical simulationallowsusto measureidentiﬁability withfullcontrol over thegenerative
+                                process. The data generation is consistent with the generative process described in Section3. We
+                                sample c∼N(0,Σ c), m i∼N(0,Σ m  i), and s∼N(a  + Bc,Σ s).  Statistical dependencies
+                               within blocks (e.g., among components of c) are induced by non-zero off-diagonal entries in the
+                                correspondingcovariancematrix(e.g.,inΣ c). Toinduceacausaldependencefrom content tostyle,
+                               wesetai,Bij∼N(0,1) ;otherwise,wesetai,Bij= 0  . Forstylechanges,Gaussiannoiseisadded
+                               with probabilityπindependently for each style dimension:˜si=  si+ ϵ, whereϵ∼N(0,Σϵ) with
+                                probabilityπ. We generate the observationsx 1  =  f1(c,s,m   1) andx 2  =  f2(c,˜s,m   2) using two
+                                distinct nonlinear mixing functions, i.e, for eachi∈{1,2},fi:Rd→Rdis a separate, invertible
+                                3-layer MLP with LeakyReLU activations. We train the encoders for 300,000 iterations using the
+                                symmetrized InfoNCE objective (Equation4) and thehyperparameters listed in AppendixB.1. We
+                                evaluateblock-identiﬁabilitybypredictingthegroundtruthfactorsfromthelearnedrepresentation
+                                using kernel ridge regression and report theR2  coefﬁcient of determination on holdout data.
+
+
+                                    5https://github.com/imantdaunhawer/multimodal-contrastive-learning.
+
+
+                                                                                            6
+ Generativeprocess        R 2 (nonlinear)Generativeprocess               R 2 (nonlinear)
+p(chg.)   Stat.   Cau.    Contentc        Stylesp(chg.)   Stat.   Cau.    Contentc        Styles       Modalitym  i
+ 1.0                   1.00±0.00   0.00±0.001.0                   0.99±0.00   0.00±0.00    0.00±0.00
+ 0.75                   0.99±0.01   0.00±0.000.75                   1.00±0.00   0.00±0.00    0.00±0.00
+ 0.75                   0.99±0.00   0.52±0.090.75                   0.95±0.01   0.56±0.23    0.00±0.00
+ 0.75                   0.98±0.00     0.87±0.04    0.00±0.000.75                   1.00±0.00     0.79±0.04
+ 0.75                    0.99±0.01     0.81±0.040.75                    0.95±0.03     0.89±0.07    0.00±0.00
+
+Published as a conference paper at ICLR 2023
+
+
+
+
+Results   We comparetheoriginalsetting (f1 =  f2 ,Table1a)withthe multimodalsetting(        f1̸=  f2 ,
+Table1b) and ﬁnd that content can be block-identiﬁed in          both settings, as theR2  score is close to
+oneforthepredictionofcontent,andquasi-randomforthepredictionofstyleandmodality-speciﬁc
+information. Consistentwithpreviouswork,weobservethatsomestyleinformationcanbepredicted
+whentherearestatisticaland/orcausaldependencies;thisisexpectedbecausestatisticaldependencies
+decrease the effective dimensionality of content, while the causal dependencec→ s makes style
+partially predictable from the encoded content information. Overall, the results of the numerical
+simulationareconsistentwithourtheoreticalresultfromTheorem1,showingthatcontrastivelearning
+can block-identify content in the multimodal setting.
+
+5.2    IMAGE/TEXT PAIRS
+
+Next,wetestwhetherblock-identiﬁabilityholdsinamorerealisticsettingwithimage/textpairs—two
+complex modalities with distinct generating mechanisms. We extend the Causal3DIdent dataset
+(von Kügelgen et al.,2021;Zimmermann et al.,2021), which allows usto measure and control the
+groundtruthlatentfactorsusedtogeneratecomplexobservations. WeuseBlender (BlenderOnline
+Community,2018) to render high-dimensional images that depict a scene with a colored object
+illuminatedby adifferently coloredspotlight andpositioned infront ofa coloredbackground. The
+scene is deﬁnedby 11 latent factors: the shape of the object (7 classes), position ofthe object (x,y,z
+coordinates), orientationof the object (α,β,γangles), positionof the spotlight (θangle), aswell as
+the color of the object, background, and spotlight respectively (one numerical value for each).
+
+Multimodal3DIdent    We extend the Causal3DIdent
+dataset to the multimodal setting as follows. We gener-
+atetextualdescriptionsfromthelatentfactorsbyadapt-
+ingthetextrenderingfromtheCLEVRdataset(Johnson
+et al.,2017). Each image/text pair shares information
+about the shape of the object (cow, teapot, etc.) and
+its position in the scene (e.g., bottom-right). For each
+position factor, we use three clearly discernable values
+(top/center/bottom; left/center/right), which can be de-
+scribedin textmorenaturally thancoordinates. While                   Figure 2: Examples of image/text pairs.
+shapeandpositionarealwaysshared(i.e.,content)be-
+tween the paired image and text, the color of the object is causally inﬂuenced by position and is
+stochasticallyshared(i.e.,style). Fortheobjectcolor,weuseacontinuoushuevalue,whereasforthe
+textwematchtheRGBvaluewiththenearestvaluefromagivenpalette(i.e.,alistofnamedcolors,
+such as brown, beige, olive, etc.). The color palette is randomly sampled from a set of three palettes
+to ensure the object color depicted in the image does not uniquely determine the color described
+in thetext. As modality-speciﬁcfactorsfor the images,we haveobject rotation, spotlightposition,
+andbackground color, whileforthe textualdescriptions, wefollowJohnsonet al.(2017)and use5
+different types of phrases to introduce modality-speciﬁc variation. Examples of image/text pairs are
+shown in Figure2. Further details about the dataset are provided in AppendixB.1.
+We train the encoders for 100,000 iterations using the symmetrized InfoNCE objective (Equation4)
+and the hyperparameters listed in AppendixB.1.  For the image encoder we use a ResNet-18
+architecture (He et al.,2016) and for the text we use a convolutional network. As for the numerical
+simulation,weevaluateblock-identiﬁabilitybypredictingthegroundtruthfactorsfromthelearned
+representation. Forcontinuousfactors,weusekernelridgeregressionandreporttheR2 score,whereas
+for discrete factors we report the classiﬁcation accuracy of an MLP with a single hidden layer.
+
+Results   Figure3presentstheresultson             Multimodal3DIdent withadimensionalityablation,where
+wevarythesize oftheencodingof themodel. Contentfactors(objectpositionand shape)arealways
+encodedwell,unlesstheencodingsizeistoosmall(i.e.,smallerthan3-4dimensions). Whenthereis
+sufﬁcientcapacity,styleinformation (objectcolor)isalso encoded,partlybecausethere isacausal
+dependence from content to style and partly because of the excess capacity, as already observed in
+previous work. Image-speciﬁc information (object rotation, spotlight position, background color) is
+mostly discarded, independent of the encoding size. Text-speciﬁc information (phrasing) is encoded
+to a moderate degree (48–80% accuracy), which we attribute to the fact that phrasing is a discrete
+factor that violates the assumption of continuous latents. This hints at possible limitations in the
+
+
+                                                          7
+
+Published as a conference paper at ICLR 2023
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            (a) Prediction of image factors                               (b) Prediction of text factors
+
+Figure 3: Results onMultimodal3DIdent as afunction ofthe encodingsize ofthe model. Weassess
+the nonlinear prediction ofgroundtruth image factors (left subplot) and text factors (right subplot)
+toquantifyhowwellthelearnedrepresentationencodestherespectivefactors. Contentfactorsare
+denotedinboldandstylefactorsinitalic. Alongthex-axis,wevarytheencodingsize,i.e.,theoutput
+dimensionality of the model. We measure the prediction performance in terms of theR2  coefﬁcient
+ofdeterminationforcontinuousfactorsandclassiﬁcationaccuracyfordiscretefactorsrespectively.
+Each point denotes the average across three seeds and bands show one standard deviation.
+
+
+presence of discrete latent factors, which we further investigate in AppendixB.2and discuss in
+Section7. Overall,ourresultssuggestthatcontrastivelearningcanblock-identifycontentfactorsina
+complex multimodal setting with image/text pairs.
+
+6    RELATED WORK
+
+Multi-view nonlinear ICA   The goal of multi-view nonlinear ICA is to identify latent factors
+sharedbetweendifferentviews,asdescribedinSection2.1. Thereisathreadofworks(Greseleetal.,
+2019;Locatelloetal.,2020)thatrecoverthelatentvariableuptoacomponent-wiseindeterminacy
+inasetting withmutuallyindependentlatentcomponents, oruptoblock-wise inderterminaciesin
+the case of independent groups of shared and view-speciﬁc components (Lyu and Fu,2020;Lyu
+etal.,2022). Beyondthe assumptionof independent(groups of)components, thereis aline ofworks
+(vonKügelgenetal.,2021;Kongetal.,2022)thatpartitionthelatentspaceintoblocksofinvariant
+and blocks of changing components and showthat the invariant components can beidentiﬁed up to a
+block-wiseindeterminacy,evenwhentherearenontrivialdependenciesbetweenlatentcomponents.
+Ourworkadvancesinthisdirectionandconsidersheterogeneousmodalitieswithnontrivialstatistical
+and causal dependencies between latents. We prove that sharedfactors can be block-identiﬁedin a
+novel setting with modality-speciﬁc mixing functions and modality-speciﬁc latent variables.
+
+Multimodal representation learning   Multimodal representation learning seeks to integrate infor-
+mationfrom heterogeneoussourcesintoa jointrepresentation(Baltrušaitis etal.,2019;Guo etal.,
+2019). There is a myriad of methods designed to learn representations of multimodal data either
+directly or indirectly. Among methods that learn representations indirectly, there are multimodal
+autoencoders (Ngiam et al.,2011;Genget al.,2022;Bachmann et al.,2022;Aghajanyan et al.,2022)
+and a large variety of multimodal generative models (e.g.,Suzuki et al.,2016;Wu and Goodman,
+2018;Shi et al.,2019;Huang et al.,2018;Tsai et al.,2019;Ramesh et al.,2021) that learn repre-
+sentationsbybackpropagationofdifferentformsofreconstructionand/ormaskedpredictionerror.
+A more direct approach is taken by decoder-free methods that maximize the similarity between the
+encodings of different modalities. This class of methods includes nonlinear canonical correlation
+analysis(Akaho,2001;Bach andJordan,2002;Andrewet al.,2013;Wang etal.,2016;Tanget al.,
+2017;Karami and Schuurmans,2021) as well as multi-view and multimodal contrastive learning
+(Tianetal.,2019;Bachmanetal.,2019;Federicietal.,2020;Tsaietal.,2021;Radfordetal.,2021;
+Poklukaretal.,2022). Whileallofthenamedmethodsaimtointegrateinformationacrossmodalities,
+they do not answer the underlying question of identiﬁability, which our work seeks to address.
+
+
+                                                          8
+
+Published as a conference paper at ICLR 2023
+
+
+
+7    DISCUSSION
+
+Implicationsand scope   We haveshownthatcontrastivelearningcan block-identify sharedfactors
+inthemultimodalsetting. Numericalsimulations(Section5.1)verifyourmaintheoreticalresult(The-
+orem1), showing that contrastivelearning block-identiﬁescontent information(Deﬁnition1),when
+the size of the encoding matches the number of content factors. Experiments on a complex dataset of
+image/textpairscorroboratethatcontrastivelearningcanisolatecontentinamorerealisticsetting
+and even under some violations of the assumptions underlying Theorem1. In AppendixB.2, we
+includefurtherexperimentsthattestviolationswithdiscretefactorsanddimensionality ablations that
+examine the robustness and sample complexity. More generally, we observe that contrastive learning
+encodes invariant information (i.e., content) very well across all settings. When there is sufﬁcient
+capacity,stochasticallysharedinformation(i.e.,style)isencodedtoamoderatedegree,butwithout
+affecting the prediction of invariant information. For practice, our results suggest that contrastive
+learningwithoutcapacityconstraintscanencodeanysharedfactor,irregardlessofwhetherthefactor
+istrulyinvariantacrossmodalitiesorifitseffectontheobservationsisconfoundedbynoiseorother
+factors. Thisisinlinewiththeinformation-theoreticview(Oordetal.,2018;Pooleetal.,2019),i.e.,
+thatcontrastive learningmaximizes themutual informationbetweenrepresentations—a measureof
+mutual dependencethat quantiﬁesany information thatis shared. Ourresults demonstrate thatthe
+size of the encoding can be reduced to learn a representation that recovers invariant information, as
+captured by the notion of block-identiﬁability. In practice, this can be leveraged for representation
+learning in settings of content-preserving distribution shifts (Mitrovic et al.,2021;Federici et al.,
+2021), where information relevant for a downstream task remains unchanged.
+
+Limitations and outlook   First, Theorem1suggests that only                  invariant factors can be block-
+identiﬁed.  However, in practice, there can be pairs of observations for which the invariance is
+inadvertently violated, e.g., due to measurement errors, occlusions, or other mistakes in the data
+collection. On the one hand, such a violation can be viewed as a mere artifact of the data collection
+and could be managed via interventions on the generative process, e.g., actions in reinforcement
+learning (Lippe et al.,2022;Brehmer et al.,2022;Ahuja et al.,2022;Lachapelle et al.,2022). On
+the other hand, violations of the content-invariance blur the line between content and style factors
+andit wouldbeinteresting tostudyidentiﬁabilityin amoregeneral settingwithonlystochastically
+shared factors. Second, Theorem1assumes that the number of content factors is known or that it
+canbeestimated. Inpractice,thismightnotbeasigniﬁcantlimitation,sincethenumberofcontent
+factors can be viewed as a single hyperparameter (e.g.,Locatello et al.,2020), though the design
+of suitable heuristics is an interesting research direction.  We explore the idea of estimating the
+number of content factors in AppendixB.2Figure7.  Third, Theorem1assumes that all latent
+factors are continuous.  While this assumption prevails in related work (Hyvärinen and Pajunen,
+1999;Hyvärinen and Morioka,2016;Hyvärinen et al.,2019;Gresele et al.,2019;Locatello et al.,
+2019;2020;Zimmermannetal.,2021;vonKügelgenet al.,2021;Klindtetal.,2021),ourresultsin
+Figure3bindicatethatinthepresenceofdiscretefactors,somestyleormodality-speciﬁcinformation
+can be encoded. In AppendixB.2Figure5, we provide numerical simulations that support these
+ﬁndings. Finally, our model can be extended to more than two modalities—a setting for which there
+areintriguingidentiﬁabilityresults(Greseleetal.,2019;Schölkopfetal.,2016)aswellassuitable
+learningobjectives(Tianetal.,2019;Lyuetal.,2022). Summarizing,thedescribedlimitationsmirror
+the assumptions on the generative process (Section3), which may be relaxed in future work.
+
+8    CONCLUSION
+
+We addressedtheproblem ofidentiﬁability formultimodalrepresentation learningand showedthat
+contrastivelearningcanblock-identifylatentfactorssharedbetweenheterogeneousmodalities. We
+formalize the multimodalgenerative process as anovel latent variable model with modality-speciﬁc
+generativemechanismsand nontrivialstatisticaland causaldependencies betweenlatents. Weprove
+that contrastive learning can identify shared latent factors up to a block-wise indeterminacy and
+thereforeisolateinvariancesbetweenmodalitiesfromotherchangeablefactors. Ourtheoreticalresults
+are corroborated by numerical simulations and on a complex multimodal dataset of image/text pairs.
+Moregenerally,webelievethatourworkwillhelpinshapingatheoreticalfoundationformultimodal
+representation learning and that further relaxations of the presented generative process offer rich
+opportunities for future work.
+
+
+                                                           9
+
+Published as a conference paper at ICLR 2023
+
+
+
+ACKNOWLEDGEMENTS
+
+ID wassupported bythe SNSFgrant #200021-188466. EPwas supportedby thegrant #2021-911
+of the Strategic Focal Area “Personalized Health and Related Technologies (PHRT)” of the ETH
+Domain (Swiss Federal Institutes of Technology). Experiments were performed on the ETH Zurich
+Leonhard cluster. Special thanks to Kieran Chin-Cheong for his support in the early stages of the
+project as well as to Luigi Gresele and Julius von Kügelgen for helpful discussions.
+
+REPRODUCIBILITY STATEMENT
+
+Forourtheoreticalstatements, weprovidedetailedderivations andstatethenecessaryassumptions.
+The generative process is speciﬁed in Section3and the assumptions for block-identiﬁability are
+referenced in Theorem1.  We test violations of the key assumptions with suitable experiments
+(dimensionality ablations; discrete latent factors) and discuss the limitations of our work in Section7.
+Further, we empirically verify our theoretical results with numerical simulations and on complex
+multimodaldata. Toensureempiricalreproducibility,theresultsofeveryexperimentwereaveraged
+over multiple seeds and are reported with standard deviations. Information about implementation
+details, hyperparameter settings, and evaluation metrics are included in AppendixB.1. Additionally,
+we publish the code to reproduce the experiments.
+
+REFERENCES
+Aghajanyan, A., Huang, B., Ross, C., Karpukhin, V., Xu, H., Goyal, N., Okhonko, D., Joshi, M.,
+   Ghosh, G., Lewis, M., and Zettlemoyer, L. (2022). CM3: A causal masked multimodal model of
+   the internet. arXiv preprint arXiv:2201.07520.
+Ahuja,K.,Hartford,J.,andBengio,Y.(2022). Weaklysupervisedrepresentationlearningwithsparse
+   perturbations. InAdvances in Neural Information Processing Systems.
+Akaho,  S.  (2001).     A  kernel  method  for  canonical  correlation  analysis.     arXiv  preprint
+   arxiv:cs/0609071.
+Andrew,G.,Arora,R.,Bilmes,J.,andLivescu,K.(2013). Deepcanonicalcorrelationanalysis. In
+  International conference on machine learning.
+
+Bach,F.R.andJordan,M.I.(2002). Kernelindependentcomponentanalysis. Journalofmachine
+   learning research, 3:1–48.
+
+Bachman, P., Hjelm, R. D., and Buchwalter, W. (2019). Learning representations by maximizing
+   mutual information across views. Advances in neural information processing systems.
+Bachmann,R.,Mizrahi, D.,Atanov,A., andZamir,A.(2022). MultiMAE:Multi-modalmulti-task
+   masked autoencoders. InEuropean Conference on Computer Vision.
+Baltrušaitis, T., Ahuja, C., and Morency, L.-P. (2019). Multimodal Machine Learning: A survey and
+  Taxonomy. IEEE Transactions on Pattern Analysis and Machine Intelligence, 41(2):423–443.
+Bengio, Y., Courville, A. C., and Vincent, P. (2013). Representation learning: A review and new
+   perspectives. IEEETransactionson PatternAnalysis and Machine Intelligence,35(8):1798–1828.
+Blender Online Community (2018).  Blender - a 3D modelling and rendering package.  Blender
+   Foundation, Stichting Blender Foundation, Amsterdam.
+Brehmer,J.,deHaan,P.,Lippe,P.,andCohen,T.(2022). Weaklysupervisedcausalrepresentation
+   learning. In Advances in Neural Information Processing Systems.
+Chen, J. and Batmanghelich, K. (2020). Weakly supervised disentanglement by pairwise similarities.
+   InAAAI Conference on Artiﬁcial Intelligence.
+Chen, T., Kornblith, S., Norouzi, M., and Hinton, G. E. (2020). A simple framework for contrastive
+   learning of visual representations. InInternational Conference on Machine Learning.
+
+
+                                                        10
+
+Published as a conference paper at ICLR 2023
+
+
+
+
+Darmois, G. (1951). Analyse des liaisons de probabilité. InProc. Int. Stat. Conferences.
+Federici,M.,Dutta,A.,Forré,P.,Kushman,N.,andAkata,Z.(2020). Learningrobustrepresentations
+  via multi-view information bottleneck. In International Conference on Learning Representations.
+
+Federici,M., Tomioka,R., andForré,P.(2021). Aninformation-theoretic approachto distribution
+  shifts. InAdvances in Neural Information Processing Systems.
+Geng,X., Liu,H., Lee,L.,Schuurams, D.,Levine, S.,andAbbeel, P.(2022). Multimodalmasked
+  autoencoders learn transferable representations. arXiv preprint arXiv:2205.14204.
+Gresele,L.,Rubenstein,P.K.,Mehrjou,A.,Locatello,F.,andSchölkopf,B.(2019). Theincomplete
+  rosetta stone problem: Identiﬁability results for multi-view nonlinear ICA.  InConference on
+  Uncertainty in Artiﬁcial Intelligence.
+Guo, W., Wang, J.,and Wang,S. (2019). Deep multimodalrepresentation learning: Asurvey. IEEE
+  Access, 7:63373–63394.
+Gutmann, M. and Hyvärinen, A. (2010). Noise-contrastive estimation: A new estimation principle
+  for unnormalized statistical models. In International Conference on Artiﬁcial Intelligence and
+  Statistics.
+He, K., Zhang, X., Ren, S., and Sun, J. (2016). Deep residual learning for image recognition. In
+  Conference on Computer Vision and Pattern Recognition.
+Higgins, I., Amos, D., Pfau, D., Racanière, S., Matthey, L., Rezende, D. J., and Lerchner, A. (2018).
+  Towards a deﬁnition of disentangled representations.arXiv preprint arXiv:1812.02230.
+Huang,X.,Liu,M.,Belongie,S.J.,andKautz,J.(2018). Multimodalunsupervisedimage-to-image
+  translation. InEuropean Conference on Computer Vision.
+Hyvärinen,A.andMorioka,H.(2016). Unsupervisedfeatureextractionbytime-contrastivelearning
+  and nonlinear ICA. Advances in Neural Information Processing Systems.
+
+Hyvärinen, A. and Morioka, H. (2017). Nonlinear ICA of temporally dependent stationary sources.
+  InInternational Conference on Artiﬁcial Intelligence and Statistics.
+Hyvärinen,A.andPajunen,P.(1999). Nonlinearindependentcomponentanalysis: Existenceand
+  uniqueness results. Neural networks, 12(3):429–439.
+Hyvärinen, A., Sasaki, H., and Turner, R. E. (2019).  Nonlinear ICA using auxiliary variables
+  and generalized contrastive learning. In International Conference on Artiﬁcial Intelligence and
+  Statistics.
+James,G.,Witten,D.,Hastie,T.,andTibshirani,R.(2013). Anintroductiontostatisticallearning,
+  volume 112. Springer.
+Johnson, J., Hariharan, B., van der Maaten, L., Fei-Fei, L., Zitnick, C. L., and Girshick, R. (2017).
+  CLEVR: A diagnostic dataset for compositional language and elementary visual reasoning. In
+  Conference on Computer Vision and Pattern Recognition.
+Karami, M. and Schuurmans, D. (2021). Deep probabilistic canonical correlation analysis. In AAAI
+  Conference on Artiﬁcial Intelligence.
+Khemakhem, I., Kingma, D. P., Monti, R. P., and Hyvärinen, A. (2020). Variational autoencoders
+  andnonlinearICA:aunifyingframework. In InternationalConferenceonArtiﬁcialIntelligence
+  and Statistics.
+Klindt,D. A.,Schott,L., Sharma, Y.,Ustyuzhaninov,I., Brendel,W.,Bethge,M., andPaiton,D. M.
+  (2021).  Towards nonlinear disentanglement in natural data with temporal sparse coding.  In
+  International Conference on Learning Representations.
+Kong, L., Xie, S., Yao, W., Zheng, Y., Chen, G., Stojanov, P., Akinwande, V., and Zhang, K. (2022).
+  Partialdisentanglement fordomain adaptation. InInternationalConferenceon MachineLearning.
+
+
+                                                        11
+
+Published as a conference paper at ICLR 2023
+
+
+
+
+Lachapelle, S., Rodriguez, P., Sharma, Y., Everett, K. E., Le Priol, R., Lacoste, A., and Lacoste-
+  Julien, S. (2022). Disentanglement via mechanism sparsity regularization: a new principle for
+  nonlinear ICA. InConference on Causal Learning and Reasoning.
+Lehmann, E. L. and Casella, G. (2006). Theory of point estimation. Springer Science & Business
+  Media.
+Lippe, P., Sarah, M., S., L., M., A. Y., Taco, C., and S., G. (2022). CITRIS: Causal identiﬁability
+  from temporal intervened sequences. InInternational Conference on Machine Learning.
+Locatello, F., Bauer, S., Lucic, M., Rätsch, G., Gelly, S., Schölkopf, B., and Bachem, O. (2019).
+  Challengingcommonassumptionsintheunsupervisedlearningofdisentangledrepresentations. In
+  International Conference on Machine Learning.
+Locatello,F.,Poole,B.,Rätsch,G.,Schölkopf,B.,Bachem,O.,andTschannen,M.(2020). Weakly-
+  supervised disentanglement without compromises.   In International Conference on Machine
+  Learning.
+Lyu, Q.andFu, X.(2020). Nonlinear multiviewanalysis: Identiﬁabilityandneural network-assisted
+  implementation. IEEE Trans. Signal Process., 68:2697–2712.
+Lyu, Q., Fu, X., Wang, W., and Lu, S. (2022). Understanding latent correlation-based multiview
+  learning and self-supervision:  An identiﬁability perspective.  InInternational Conference on
+  Learning Representations.
+Mitrovic, J., McWilliams, B., Walker, J. C., Buesing, L. H., and Blundell, C. (2021). Representation
+  learning via invariant causal mechanisms. In International Conference on Learning Representa-
+  tions.
+Ngiam, J., Khosla, A., Kim, M., Nam, J., Lee, H., and Ng, A. Y. (2011). Multimodal deep learning.
+  InInternational Conference on Machine Learning.
+Oord, A. v. d., Li, Y., and Vinyals, O. (2018). Representation learning with contrastive predictive
+  coding. arXiv preprint arXiv:1807.03748.
+Poklukar,P.,Vasco,M.,Yin,H.,Melo,F.S.,Paiva,A.,andKragic,D.(2022). Geometricmultimodal
+  contrastive representation learning. InInternational Conference on Machine Learning.
+Poole, B.,Ozair, S., VanDen Oord,A., Alemi, A.,and Tucker, G.(2019). Onvariational boundsof
+  mutual information. InInternational Conference on Machine Learning.
+Radford, A., Kim, J. W., Hallacy, C., Ramesh, A., Goh, G., Agarwal, S., Sastry, G., Askell, A.,
+  Mishkin, P., Clark, J., Krueger, G., and Sutskever, I. (2021). Learning transferable visual models
+  from natural language supervision. InInternational Conference on Machine Learning.
+Ramesh,A.,Dhariwal,P.,Nichol,A.,Chu,C.,andChen,M.(2022). Hierarchicaltext-conditional
+  image generation with CLIP latents. arXiv preprint arXiv:2204.06125.
+Ramesh,A.,Pavlov,M.,Goh,G.,Gray,S.,Voss,C.,Radford,A.,Chen,M.,andSutskever,I.(2021).
+  Zero-shot text-to-image generation. InInternational Conference on Machine Learning.
+Rombach,R.,Blattmann,A.,Lorenz,D.,Esser,P.,andOmmer,B.(2022). High-resolutionimage
+  synthesiswithlatentdiffusionmodels. InConferenceonComputerVisionandPatternRecognition.
+Saharia, C., Chan, W., Saxena, S., Li, L., Whang, J., Denton, E., Ghasemipour, S. K. S., Ayan,
+  B. K., Mahdavi, S. S., Lopes, R. G., Salimans, T., Ho, J., Fleet, D. J., and Norouzi, M. (2022).
+  Photorealistic text-to-image diffusion models with deep language understanding. In Advances in
+  Neural Information Processing Systems.
+Salakhutdinov,R.andHinton,G.E.(2009). Deepboltzmannmachines. InInternationalConference
+  on Artiﬁcial Intelligence and Statistics.
+Schölkopf,B.,Hogg, D.W.,Wang, D.,Foreman-Mackey,D.,Janzing,D., Simon-Gabriel,C.-J.,and
+  Peters,J. (2016). Modelingconfounding byhalf-siblingregression. Proceedings ofthe National
+  Academy of Sciences, 113(27):7391–7398.
+
+
+                                                        12
+
+Published as a conference paper at ICLR 2023
+
+
+
+
+Shi,Y.,Siddharth,N., Paige,B., andTorr,P.(2019). Variationalmixture-of-expertsautoencodersfor
+  multi-modal deep generative models. InAdvances in Neural Information Processing Systems.
+Shu, R.,Chen, Y., Kumar,A., Ermon, S.,and Poole,B. (2020). Weakly superviseddisentanglement
+  with guarantees. InInternational Conference on Learning Representations.
+Song, L., Anandkumar, A., Dai, B., and Xie, B. (2014). Nonparametric estimation of multi-view
+  latent variable models. InInternational Conference on Machine Learning.
+Suzuki, M., Nakayama, K., and Matsuo, Y. (2016). Joint multimodal learning with deep generative
+  models. arXiv preprint arXiv:1611.01891.
+Tang, Q., Wang, W., and Livescu, K. (2017). Acoustic feature learning via deep variational canonical
+  correlation analysis. InINTERSPEECH.
+Tian, Y., Krishnan, D., and Isola, P. (2019).   Contrastive multiview coding.   arXiv preprint
+  arXiv:1906.05849.
+Tsai,Y.H.,Bai,S.,Liang,P.P.,Kolter,J.Z.,Morency,L.,andSalakhutdinov,R.(2019). Multimodal
+  transformerforunalignedmultimodallanguagesequences. InConferenceoftheAssociationfor
+  Computational Linguistics.
+Tsai, Y. H., Wu, Y., Salakhutdinov, R., and Morency, L. (2021). Self-supervised learning from a
+  multi-view perspective. InInternational Conference on Learning Representations.
+vonKügelgen,J.,Sharma,Y.,Gresele,L.,Brendel,W.,Schölkopf,B.,Besserve,M.,andLocatello,F.
+  (2021). Self-supervised learning withdata augmentationsprovably isolatescontent from style. In
+  Advances in Neural Information Processing Systems.
+Wang, T. and Isola, P. (2020). Understanding contrastive representation learning through alignment
+  and uniformity on the hypersphere. InInternational Conference on Machine Learning.
+Wang, W., Lee, H., and Livescu, K. (2016). Deep variationalcanonical correlation analysis. arXiv
+  preprint arXiv:1610.03454.
+Wu, M. and Goodman, N. (2018). Multimodal generative models for scalable weakly-supervised
+  learning. In Advances in Neural Information Processing Systems.
+Zhang,Y.,Jiang,H.,Miura,Y.,Manning,C.D.,andLanglotz,C.P.(2022). Contrastivelearningof
+  medicalvisual representationsfrompaired imagesandtext. In MachineLearning forHealthcare.
+Zimmermann, R. S., Sharma, Y., Schneider, S., Bethge, M., and Brendel, W. (2021). Contrastive
+  learning inverts the data generating process. InInternational Conference on Machine Learning.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                        13
+
+Published as a conference paper at ICLR 2023
+
+
+
+A    THEORY
+
+A.1    PROOF OF THEOREM 1
+
+Theorem 1.  Assume the data generating process described in Sec.3.1, i.e. data pairs           (x 1,x 2)
+generated from Equation (6)    withpz 1  = pz\{m   2}andpz 2|z 1  as deﬁned in Assumptions1and2.
+Further,assumethatpz isasmoothand continuousdensityonZwithpz(z)> 0 almosteverywhere.
+Letg 1 :X1→ (0,1)nc andg 2 :X2→ (0,1)nc be smoothfunctions that minimizeLSymAlignMaxEnt as
+deﬁned in Eq. (5). Then,   g 1  andg 2  block-identify the true content variables in the sense of Def.1.
+
+Proof. To prove Theorem1, we follow the proof structure fromvon Kügelgen et al.(2021, The-
+orem 4.4) and divide the proof into three steps. First, we show that there exists a pair of smooth
+functionsg∗1,g∗2  that attainthe globalminimum ofLSymAlignMaxEnt (Eq.5). Further,in Equations (13–
+15), wederive invariance conditions that have to holdalmost surelyfor anypair of smoothfunctions
+g 1,g 2  attaining the global minimum of Eq. (5). In Step 2, we use the invariance conditions derived
+in Step 1 to show by contradiction that any pair of smooth functionsg 1,g 2  that attain the global
+minimumin Eq.(5) canonly dependon contentandnot onstyle ormodality-speciﬁc information. In
+the third and ﬁnal step, forh 1 :=  g 1◦f1  andh 2 :=  g 2◦f2 , we show that both functions must be
+bijections and hence thatc is block-identiﬁed byg 1  andg 2  respectively.
+
+Step 1.   Recall the asymptotic form of the objective, as deﬁned in Equation (5):
+
+  LSymAlignMaxEnt(g 1,g 2)=  E (x 1,x 2 )∼px 1,x 2 [∥g 1(x 1)−g 2(x 2)∥2]−1/2 (H(g 1(x 1))+ H(g 2(x 2))) .  (5)
+TheglobalminimumofLSymAlignMaxEnt isreachedwhentheﬁrsttermisminimizedandthesecond
+termis maximized. The ﬁrsttermis minimizedwhen theencodersg 1  andg 2  areperfectly aligned,
+i.e., when g 1(x 1) =   g 2(x 2) holds for all pairs (x 1,x 2)∼px 1,x 2 .  The second term attains its
+maximum wheng 1  andg 2  map to auniformly distributed randomvariable on(0,1)nc respectively.6
+Toshowthatthereexistsapairoffunctionsthat minimizeLSymAlignMaxEnt,letg∗1 :=  d 1◦f−11,1:nc and
+letg∗2 :=  d 2◦f−12,1:nc,wherethesubscript1:ncindexesthesubsetofcontentdimensionsw.l.o.g.and
+whered 1  andd 2  will be deﬁned using the Darmois construction (Darmois,1951;Hyvärinen and
+Pajunen,1999). First, recall that                  f−11   (x 1)1:nc =  c and thatf−12   (x 2)1:nc =  ˜c   by deﬁnition. Second,
+fori∈{1,2}, let us deﬁnedi:C↦→(0,1)nc using the Darmois construction, such thatdimapsc
+and˜c   to a uniform random variable respectively. It follows thatg∗1,g∗2  are smooth functions, because
+any functiondiobtained via the Darmois construction is smooth andf−11 ,f−12    are smooth as well
+(each being the inverse of a smooth function).
+Next, we show that the pair of functionsg∗1,g∗2 , as deﬁned above, attains the global minimum of the
+objectiveLSymAlignMaxEnt. We have that
+
+   LSymAlignMaxEnt(g∗1,g∗2)=  E (x 1,x 2 )∼px 1,x 2 [∥g∗1(x 1)−g∗2(x 2)∥2]−1/2 (H(g∗1(x 1))+ H(g∗2(x 2)))      (9)
+                              =  E (x 1,x 2 )∼px 1,x 2 [∥d 1(c)−d 2(˜c )∥2]−1/2 (H(d 1(c))+ H(d 2(˜c )))             (10)
+                              =0                                                                                                                            (11)
+wherebyAssumption1,                   c =  ˜c   almostsurely,whichimpliesthattheﬁrsttermiszeroalmostsurely.
+Further,dimapsc,˜c   to uniformly distributed random variables on(0,1)nc, which implies thatthe
+differentialentropyofd 1(c) andd 2(˜c ) iszero,aswell. Consequently,thereexistsapairoffunctions
+g∗1,g∗2  that minimizesLSymAlignMaxEnt.
+Next,letg 1 :X1↦→(0,1)nc andg 2 :X2↦→(0,1)nc be any pairof smoothfunctionsthat attainsthe
+global minimum of Eq. (5), i.e.,
+
+  LSymAlignMaxEnt(g 1,g 2)=  E (x 1,x 2 )∼px 1,x 2 [∥g 1(x 1)−g 2(x 2)∥2]−1/2 (H(g 1(x 1))+ H(g 2(x 2)))=0 .
+                                                                                                                       (12)
+Leth 1  :=  g 1◦f1  andh 2  :=  g 2◦f2 , and notice that both are smooth functions since all involved
+functionsaresmoothbydeﬁnition. SinceEquation(12)isaglobalminimum,itimpliesthefollowing
+
+
+    6Note that we restrict the range of g 1  and g 2  to (0,1) n c  by deﬁnition merely to simplify the notation.
+Generally, the uniform distributionU(a,b) is the maximum entropy distribution on the interval[a,b].
+
+
+                                                            14
+
+Published as a conference paper at ICLR 2023
+
+
+
+
+invariance conditions for the individual terms:
+                                     E (x 1,x 2 )∼px 1,x 2 [∥h 1(z 1)−h 2(z 2)∥2]=0                                                (13)
+                                                                     H(h 1(z 2))=0                                                 (14)
+                                                                     H(h 2(z 2))=0                                                 (15)
+Hence,h 1(z 1) =   h 2(z 2) must hold almost surely w.r.t.px 1,x 2 . Additionally, Equation (14) (resp.
+Equation (15)) implies that     ˆc 1 =  h 1(z 1) (resp. ˆc 2 =  h 2(z 2)) must be uniform on(0,1)nc.
+
+Step 2.   Next, we show that any pair of functions that minimizeLSymAlignMaxEnt depend only on
+contentinformation. Sincestyleisindependentofm   1  andm   2 ,weﬁrstshowthath 1(z 1) doesnot
+depend onm   1 , and thath 2(z 2) does not depend onm   2 . We then showthath 1  andh 2  also cannot
+depend on style, based on a result from previous work.
+First note, that we can exclude all degenerate solutions where g 1  maps a component of m   1  to a
+constant, sinceg 1  would not be invertible anymore and such a solution would violate the invariance
+inEq. (14). To prove acontradiction, supposethat,w.l.o.g.,     h 1(c,s,m   1)1:nc :=  h 1(z 1)1:nc depends
+onsome componentinm   1  inthe sensethat thepartial derivativeofh 1(z 1)1:nc w.r.t.some modality-
+speciﬁc variablem 1,lis non-zero for some point (c∗,s∗,m∗1)∈Z1 . Speciﬁcally, it implies that
+the partial derivative∂h 1 (z 1 )1:nc/∂m1,l is positive in a neighborhood around(c∗,s∗,m∗1), which is
+a non-empty open set, sinceh 1  is smooth. On the other hand, due to the independence ofz 2  and
+m   1 , the fact thath 2(z 2)1:nc cannot not depend onm   1 , and thatp(z)> 0 almost everywhere, we
+come toa contradiction. Thatis, there exists anopen set ofpoints with positive measure, namelythe
+neighbourhood around(c∗,s∗,m∗1), on which
+                                           |(h 1(z 1)1: n c−h 2(z 2)1: n c)|> 0                                                       (16)
+almostsurely,whichcontradictstheinvarianceinEquation(13). Thestatementdoesnotchange,ifwe
+add further dependencies ofh 1  on components ofm   1 , or forh 2  on components ofm   2 , becausem   1
+andz 2  are independent, andm   2  andz 1  are independentas well. Hence, we show that any encoder
+that minimizes the objective in Equation (5) cannot depend on modality-speciﬁc information.
+Havingestablished that neitherh 1(z 1)1:nc, norh 2(z 2)1:nc can dependon modality-speciﬁc informa-
+tion,itremainstoshowthatstyleinformationisnotencoded,aswell. LeveragingAssumption2,we
+canshowthatthestrictinequalityinEquation(13)hasapositvedensityif     h 1(z 1)1:nc orh 2(z 2)1:nc
+was dependent on a dimension in s respectively˜s , which would again lead to a violation of the
+invariance derived in Equation (13), as shown invon Kügelgen et al.(2021, Proof of Theorem 4.2).
+
+Step 3.   It remains to show that h 1,h 2  are bijections.  We know thatCand (0,1)nc  are simply
+connectedand orientedC1  manifolds, andwehave establishedin Step1 thath 1  andh 2  aresmooth
+andhence differentiablefunctions. Sincepc isa regulardensity,the uniformdistributions w.r.t.the
+pushthroughfunctionsh 1  andh 2  areregulardensities. Thus,h 1  andh 2  arebijections(Zimmermann
+et al.,2021, Proposition 5)
+Step3concludestheproof. Wehaveshownthatforanypairofsmoothfunctionsg 1,g 2  thatattain
+the global minimum of Eq. (5), we have that   c is block-identiﬁed (Def.1) by         g 1  andg 2 .
+
+A.2    SYMMETRIC GENERATIVE PROCESS
+
+Throughoutthemainbodyofthepaper,wedescribedanasymmetricgeneratingmechanism,where
+z 2  is a perturbed version ofz 1 . Here, we will brieﬂy sketch out how our model and results can be
+adapted to a symmetric setting, wherebothz 1  andz 2  are generated as perturbations ofz.
+Concretely, we would need to make small adjustments to Assumptions1and2as follows.  We
+start with the content invariance in Assumption1, which speciﬁes how                   z 1  = ( ˜c  1,˜s  1,˜m     1) and
+z 2 = ( ˜c  2,˜s  2,˜m     2) are generated.
+Leti∈{1,2}. The conditional densitypzi|z overZi×Ztakes the form
+                                pzi|z(zi|z) = δ(˜ci−c)δ( ˜m i−m i)p˜s i|s(˜si|s),                                (17)
+whereδ(·) is the Dirac delta function, i.e.,˜ci=  c almost everywhere, as well as ˜m i=  m ialmost
+everywhere. Note that since˜c  1 =  c a.e. andc =  ˜c  2  a.e., it follows that˜c  1 =  ˜c  2  almost everywhere,
+which is a property that is needed in Step 1 in the proof of Theorem1. In addition, it still holds
+
+
+                                                             15
+
+Published as a conference paper at ICLR 2023
+
+
+
+
+that ˜m i⊥⊥zj, fori,j∈{1,2}andi̸= j, which is needed in Step 2 of the proof to show that
+modality-speciﬁc information is not encoded.
+Lastly, we need to revisit Assumption2, for which both                   ˜s  1  and˜s  2  would be generated through
+perturbations ofs via theconditional distributionp˜s i|s onS×S, asdescribed in Assumption2, for
+eachiindividually. Asasmalltechnicalnuance,wewouldneedtospecifytheconditionalgeneration
+of the perturbed style variables˜s  1  and˜s  2  such that they are not perturbed in an identical manner
+w.r.t.s. Thiscanbe ensuredby,e.g.,constrainingpA appropriatelyto exclude thedegenerate case
+where dimensions in˜s  1  and˜s  2  are perfectly aligned—a case that needs to be excluded for Step 2 of
+the proof of Theorem1.
+
+B    EXPERIMENTS
+
+B.1    EXPERIMENTAL DETAILS
+
+Numerical simulation   The generative process is described in Section5.1.  Here, we provide
+additional information about the experiment. The invertible MLP is constructed similar to previous
+work (Hyvärinen and Morioka,2016;Hyvärinen and Morioka,2017;Zimmermann et al.,2021;
+von Kügelgen et al.,2021) by resampling square weight matrices until their condition number
+surpassesathresholdvalue. Fortheoriginalsetting(f1 =  f2 ),weuseoneencoder(g 1 =  g 2 ),whereas
+for themultimodal setting (f1̸=  f2 ), we usedistinct encoders (g 1̸=  g 2 ) tomirror the assumption of
+distinct mixing functions and because, in practice, the dimensionality of the observations can differ
+across modalities. In Table2a, we specify the main hyperparameters for the numerical simulation.
+
+Multimodal3DIdent   Our dataset of image/text pairs is based on the code used to generate the
+Causal3DIdent (von Kügelgenet al.,2021;Zimmermannetal.,2021)and                             CLEVR (Johnsonet al.,
+2017) datasets. Images are generated using the        Blender renderer (Blender Online Community,2018).
+The rendering serves as a complex mixing function that generates the images from 11 different
+parameters (i.e., latent factors) that are listed in Table3.  To generate textual descriptions, we
+adapt the text rendering from CLEVR (Johnson et al.,2017) and use 5 different phrases to induce
+modality-speciﬁc variation. The latent factors usedto generate the text are also listedin Table3. The
+dependencebetweentheimageandtextmodalityisdeterminedbythreecontentfactors(objectshape,
+x-position,andy-position)and onestylefactor(objectcolor). For theobjectcolorintheimage, we
+use a continuous hue value, whereas for the text we match the RGB value with the nearest color
+value from one of three different palettes7 that is sampled uniformly at random for each observation.
+Further, we ensure that there are no overlapping color values across palettes by using a preﬁx for
+the respective palette (e.g., “xkcd:black”) when necessary.  In Section5.2, we use a version of
+the Multimodal3DIdent dataset with a causal dependence from content to style. Speciﬁcally, the
+color of the object depends on its x-position. In particular, we split the range of hue values [0,1]
+into three equally sized intervals and associate each of these intervals with a ﬁxed x-position of
+the object. For instance, if x-position is “left”, we sample the hue value from the interval  [0,1/3].
+Consequently,thecoloroftheobjectcanbepredictedtosomedegreefromthepositionoftheobject.
+Samples ofimage/text pairs fromthe Multimodal3DIdent dataset areshown in Figures2and4. The
+hyperparametersfor theexperimentarelisted inTable2b. InAppendixB.2,we provideadditional
+results for a version of the dataset with mutually independent factors.
+
+High-dimensional image pairs    In AppendixB.2, we provide additional results using adataset of
+high-dimensional pairs of images of size 224×224×3. Similar to Multimodal3DIdent, images
+are generated using Blender (Blender Online Community,2018) and code adapted from previous
+work(Zimmermannetal.,2021;vonKügelgenetal.,2021). Eachimagedepictsascenewithone
+type of object (a teapot, like inZimmermann et al.,2021) in front of a colored background and
+illuminated bya colored spotlight(for examples, seeFigure9). The sceneis deﬁned by9 continuous
+latent variables eachof which is sampledfrom a uniformdistribution. Object positions (x-,y- and
+z-coordinates)arecontentfactorsthatarealwayssharedbetweenmodalities,whileobject-,spotlight-
+and background-colors are style factors that are stochastically shared. Modality-speciﬁc factors are
+object rotation (αandβangles) for one modality and spotlight position for the other. To simulate
+modality-speciﬁc mixing functions, we render the objects using distinct textures (i.e., rubber and
+metallic) for each modality.  Further, we generate two versions of this dataset, with and without
+
+
+                                                          16
+
+Published as a conference paper at ICLR 2023
+
+
+
+
+causaldependencies. Forthedatasetwithcausaldependencieswesamplethelatentfactorsaccording
+to a causal model, where background-color depends on z-position and spotlight-color depends on
+object-color. We use ResNet-18 encoders and similar hyperparameter values to those used for the
+image/text experiment (Table2b).
+
+
+
+
+      Parameter                                            Value            Parameter                                                            Value
+      Generating function                    3-layer MLP                    Generating function                Image and text rendering
+      Encoder                                      7-layer MLP              Image encoder                                               ResNet-18
+      Optimizer                                              Adam           Text encoder                                        4-layer ConvNet
+      Cond. threshold ratio                               1e-3              Optimizer                                                              Adam
+      Dimensionalityd                                        15             Batch size                                                                 256
+      Batch size                                                6144        Learning rate                                                           1e-5
+      Learning rate                                            1e-4         Temperatureτ                                                           1.0
+      Temperatureτ                                           1.0            # Seeds                                                                         3
+      # Seeds                                                          3    # Iterations                                                         100,000
+      # Iterations                                         300,000          # Samples (train/val/test)     125,000/10,000/10,000
+      Similarity metric                              Euclidian              Similarity metric                                 Cosine similarity
+      Gradient clipping           2-norm; max value 2                       Gradient clipping                          2-norm; max value 2
+
+    (a) Parameters used for the numerical simulation.                            (b) Parameters used forMultimodal3DIdent.
+
+Table2: Experimentalparametersandhyperparametersusedforthetwoexperimentsinthemaintext.
+
+
+
+
+                                Latent factor            Distribution                                 Details
+                                Object shape              Categorical                    7 unique values
+                                Object x-position       Categorical                    3 unique values
+                                Object y-position       Categorical                    3 unique values
+                                Object color                     Uniform                hue value in[0,1]
+                                Object rotationα              Uniform             angle value in[0,1]
+                                Object rotationβ              Uniform             angle value in[0,1]
+                                Object rotationγ              Uniform             angle value in[0,1]
+                                Spotlight position             Uniform             angle value in[0,1]
+                                Spotlight color                 Uniform                hue value in[0,1]
+                                Background color             Uniform                hue value in[0,1]
+                                Object shape              Categorical                    7 unique values
+                                Object x-position       Categorical                    3 unique values
+                                Object y-position       Categorical                    3 unique values
+                                Object color                 Categorical     color names (3 palettes)7
+                                Text phrasing               Categorical                    5 unique values
+
+Table3: DescriptionofthelatentfactorsusedtogenerateMultimodal3DIdent. Theﬁrst10factors
+are usedto generate theimages and the remaining 5factorsare usedto generate thetext. Object z-
+positioniskeptconstantforallimages,whichiswhywedonotlistitamongthegenerativefactors.
+Independentfactorsaredrawnuniformlyfromtherespectivedistribution. Contentfactorsaredenoted
+in bold and style factors in italic; the remaining factors are modality-speciﬁc.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     7 We use the following three palettes from thematplotlib.colors API: Tableau colors (10 values),
+CSS4 colors (148 values), and XKCD colors (949 values).
+
+
+                                                                        17
+
+                               Published as a conference paper at ICLR 2023
+
+
+
+
+
+
+
+
+
+
+
+
+
+                               Figure4: Examplesofimage/textpairsfromtheMultimodal3DIdent dataset. Eachsampleshowsone
+                               of the seven shapes or classes of objects included in the dataset.
+
+
+
+
+
+
+
+
+
+
+
+
+                                                    (a) Original setting                                      (b) Multimodal setting
+
+                               Table 4: Results of the numerical simulations without modality-speciﬁc latent variables. We compare
+                               the original setting (f1 =  f2 , left table) with the multimodal setting (f1̸=  f2 , right table). Each row
+                               presents the results of a different setup with varying style-change probability p(chg.) and possible
+                               statistical (Stat.)  and/or causal (Caus.)  dependencies.  Each value denotes theR2  coefﬁcient of
+                               determination(averagedacross3seeds)foranonlinearregressionmodelthatpredictstherespective
+                               ground truth factor (c,s, orm i) from the learned representation.
+
+
+                               B.2    ADDITIONAL EXPERIMENTAL RESULTS
+
+                               Numerical simulation without modality-speciﬁc latents   Recall that the considered generative
+                               process(Section3)hastwosourcesofmodality-speciﬁcvariation: modality-speciﬁcmixingfunctions
+                               and modality-speciﬁc latent variables. To decouple the effect of these two sources of variation, we
+                               conduct an ablation study without modality-speciﬁc latent variables. Table4presents the results,
+                               showing that content is block-identiﬁed in both the original setting (f1  =   f2 , Table4a) and the
+                               multimodalsetting(f1̸=  f2 ,Table4b). Comparedto Table1, weobservethatthecontentprediction
+                               is improved slightlyin the casewithout modality-speciﬁclatent variables. Hence, ourresults suggest
+                               thatcontrastivelearningcanblock-identifycontentfactorsinthemultimodalsettingwithandwithout
+                               modality-speciﬁc latent variables.
+
+                               Numerical simulation with discrete latent factors   Extending the numerical simulation from
+                               Section5.1, we test block-identiﬁability of content information when observations are generated
+                               fromamixtureofcontinuousanddiscretelatentvariables,thusviolatingoneoftheassumptionsfrom
+                               Theorem1. In this setting, content, style and modality-speciﬁc information are random variables
+                               with 5 components sampled from either a continuous normal distribution or a discrete multinomial
+                               distributionwithkclasses,forwhichweexperimentwithdifferentk∈{3,4,...,10}. Forallsettings,
+                               we train an encoder with the InfoNCE objective and set the encoding size to 5 dimensions. The other
+                               hyperparametersused inthis setof experimentsare detailedin Table2a. Toensure convergenceof
+                               themodels, weextended thenumberof trainingiterations to600,000and 3,000,000for experiments
+                               withdiscretestyle/modality-speciﬁcanddiscretecontentvariablesrespectively. Withdiscretestyle
+                               or modality-speciﬁcvariablesand continuouscontent (Figures5aand5b),the results suggestthat
+                               contentisblock-identiﬁed,sincethepredictionofstyleandmodality-speciﬁcinformationisatchance
+                               level(i.e.,accuracy = 1 /k)whilecontentisconsistentlyfullyrecovered(R2≥0.99 ). Intheopposite
+                               setting, withcontinuous styleand modality-speciﬁcvariablesand discretecontent (Figure5c),the
+                               number of content classes appears to be a critical factor for block-identiﬁability of content: while
+                               content is always encoded well, style information is also encoded to a signiﬁcant extent when the
+                               number of content classes is small, but signiﬁcantly less style can be recovered when the number
+
+
+ Generativeprocess          R 2 (nonlinear)Generativeprocess          R 2 (nonlinear)      18
+
+p(chg.)    Stat.    Cau.     Contentc          Stylesp(chg.)    Stat.    Cau.     Contentc          Styles
+  1.0                      1.00±0.00   0.00±0.001.0                      1.00±0.00   0.00±0.00
+ 0.75                      1.00±0.00   0.00±0.000.75                      0.99±0.01   0.00±0.00
+ 0.75                      0.99±0.00   0.52±0.090.75                      0.99±0.01   0.36±0.10
+ 0.75                      1.00±0.00      0.81±0.030.75                      1.00±0.00      0.79±0.04
+ 0.75                      0.99±0.01      0.81±0.040.75                      0.99±0.01      0.83±0.05
+
+Published as a conference paper at ICLR 2023
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         (a) Onlys is discrete            (b) Onlym   1,m   2  are discrete          (c) Onlyc is discrete
+
+Figure5: Numericalsimulationswithdiscretelatentfactors. Theresultsshowthreesettingsineachof
+whichonegroupoflatentvariablesisdiscretewhiletheremaininggroupsarecontinuous. Continuous
+variables are normally distributed, whereas discrete variables are sampled from a multinomial
+distribution withkdistinct classes. We measure the prediction performance witha nonlinear model
+intermsoftheR2  coefﬁcientofdeterminationforcontinuousfactorsandclassiﬁcationaccuracyfor
+discrete factorsrespectively. Each pointdenotes theaverage acrossthree seeds anderror barsshow
+the standard deviation, which is relatively small.
+
+
+ofcontentclasses increases. Through this setofexperiments,we challengetheassumptionthat all
+generativefactorsshouldbecontinuous(c.f.,Section3)andshowthatblock-identiﬁabilityofcontent
+canstillbesatisﬁedwhencontentiscontinuouswhilestyleormodality-speciﬁcvariablesarediscrete.
+On the other hand, style is encoded to a signiﬁcant extent when content is discrete, which might
+explain our observation for the image/text experiment, wherewe saw that, in the presence of discrete
+content factors, some style information can be encoded.
+
+Dimensionalityablationsforthenumericalsimulation    Totesttheeffectoflatentdimensionality
+onidentiﬁability, Figure6presents dimensionalityablations wherewe keepthenumber ofcontent
+dimensions ﬁxed and only vary the number of style or modality-speciﬁc dimensions,nsandnm
+respectively.  Figures6aand6cconﬁrm that block-identiﬁability of content still holds when we
+signiﬁcantly increase the number of style or modality-speciﬁc dimensions, as the representation
+consistentlyencodesonlycontentandnostyleormodality-speciﬁcinformation. InFigures6band6d,
+we can observe that the training loss decreases more slowly when we increase the dimensionality of
+ncandnsrespectively,whichprovidesanintuitionthatthesamplecomplexitymightincreasewith
+the number of style and modality-speciﬁc dimensions.
+
+Estimating the number of content factors   The estimationof the numberof content factorsis an
+importantpuzzlepiece,sinceTheorem1assumesthatthenumberofcontentfactorsisknownorthatit
+canbeestimated. Inpractice,thenumberofcontentfactorscanbeviewedasasinglehyperparameter
+(e.g.,Locatello etal.,2020) that canbe tuned with respectto a suitable modelselection metric. For
+instance, one could use the validation loss for model selection, which would be convenient since the
+validation loss only requires a holdout dataset and no additional supervision. In Figure7, we plot
+the validation loss (averaged over 2,000 validation samples) as a function of the encoding size for
+both experimentsused in our paper. Results for the numericalsimulation are shown inFigure7aand
+for the image/text experiment in Figure7b. For both datasets, we observe that the validation loss
+increasesmostsigniﬁcantlyintherangearoundthetruenumberofcontentfactors. Forthenumerical
+simulation,theresultslookpromisingastheyshowaclear“elbow”(Jamesetal.,2013)atthecorrect
+valueof 5, which correspondsto the truenumber of content factors. The results areless clear forthe
+image/textexperiment,wheretheelbowmethodmightsuggesttherangeof2-4contentfactors,while
+thetruevalueis 3. Whiletheseinitialresultslookpromising, webelievethatmoreworkisrequired
+to investigate the estimation of the number of content factors and the design of suitable heuristics,
+which are interesting directions for future research.
+
+
+
+
+
+
+
+
+
+                                                         19
+
+Published as a conference paper at ICLR 2023
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     (a) Prediction performance as a function ofnm                     (b) Learning curves for differentnm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      (c) Prediction performance as a function ofns                    (d) Learning curves for differentns
+
+Figure 6: Dimensionality ablation for the numerical simulation. We consider the multimodal setting
+with mutually independent factors and test the effect of latent dimensionality on identiﬁability by
+keeping the numberof content dimensions ﬁxed and onlyvaryingthe number of style ormodality-
+speciﬁc dimensions (ns andnm  respectively).  In Figures6aand6cwe measure the nonlinear
+prediction performance in terms of theR2  coefﬁcient of determination of a nonlinear regression
+model that predicts the respective ground truth factor (c,s, orm i) from the learned representation.
+In Figures6band6d, we plot the learning curves (i.e., the training loss) of the respective models to
+compare how fast they converge.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      (a) Validation loss for the numerical simulation          (b) Validation loss for the image/text experiment
+
+Figure 7:  An attempt at estimating of the number of content factors using the validation loss.
+The validation loss corresponds to the value of theLSymInfoNCE objective computed on a holdout
+dataset.  Since we are interested in estimating the true number of content factors to select the
+encoding size appropriately, we plot the validation loss as a function of the encoding size. We show
+the validation loss for the numerical simulation with independent factors (Figure7a) and for the
+image/text experiment (Figure7b) respectively.
+
+
+
+                                                            20
+
+                               Published as a conference paper at ICLR 2023
+
+
+
+
+
+
+
+
+
+
+
+
+                               Figure 8: Evaluation with test-time interventions. We use the interventional setup that is illustrated
+                               on the left, i.e., perturbed samplesx′1,x′2  that are generated from the intervened contentc′, which is
+                               a copyof theoriginal contentc with anintervention, i.e.,a batch-wise permutation(⇝) thatmakes
+                               c′independent of s. Each row presents the results of a different setup with varying style-change
+                               probability p(chg.) and possible statistical (Stat.) and/or causal (Caus.) dependencies. Each value
+                               denotes theR2  coefﬁcient of determination (averaged across 3 seeds) for a nonlinear regression
+                               modelthatpredictstherespectivegroundtruthfactor(c,c′,s,orm i)fromthelearnedrepresentation.
+
+
+                               Evaluation with test-time interventions    Previously, we observed that style can be predicted to
+                               some degree when there are causal dependencies from content to style (Table1), which can be
+                               attributedto styleinformationbeingpartiallypredictablefrom theencodedcontentinformationin
+                               thecausal setup. Toverifythat theencoders onlydepend oncontent information(i.e., thatcontent is
+                               block-identiﬁed), we assess the trained models using a novel, more rigorous empirical evaluation
+                               for the numericalsimulation. Wetest theeffectof interventionsc→c′, which perturbthe content
+                               informationattesttimeviabatch-wisepermutationsofcontent,beforegeneratingx′1 =  f1(c′,s,m   1)
+                               and x′2  =   f1(c′,˜s,m   1). Hence, we break the causal dependence between content and style (see
+                               illustration in Figure8), which allows us to better assess whether the trained encoders depend
+                               on content or style information.  Speciﬁcally, we train the encoders for 3,000,000 iterations to
+                               ensureconvergenceandthentrainnonlinearregressionmodelstopredictboththeoriginalandthe
+                               intervened content variables from the learned representations. Figure8presents our results using
+                               the interventional setup, showing that in most cases only content information can be recovered. We
+                               observeanexception(underlinedvalues)inthetwocaseswithstatisticaldependencies,wheresome
+                               style information can be recovered, which is expected because statistical dependencies reduce the
+                               effective dimensionality of content (cp.von Kügelgen et al.,2021).  Analogously, in the case of
+                               statisticalandcausaldependencies,someof theoriginalcontentinformationcanberecoveredviathe
+                               encodedstyleinformation. Insummary,theevaluationwithinterventionsprovidesamorerigorous
+                               assessmentofblock-identiﬁabilityinthecausalsetup,showingthatneitherstylenormodality-speciﬁc
+                               informationcanberecoveredwhentheencodingsizematchesthetruenumberofcontentdimensions.
+
+                               High-dimensionalimagepairswithcontinuouslatents    Tobridge
+                               thegapbetweencontinuousanddiscretedata,weprovideanadditional
+                               experimentthatoffersarealisticsetupbutusesonlycontinuouslatent
+                               variables to satisfy the assumptions of Theorem1.  Previously, in
+                               Section5.2,weusedacomplexmultimodaldatasetofimage/textpairs,
+                               whichweregeneratedfromacombinationofcontinuousanddiscrete
+                               latent factors. Now, we consider a different dataset that consists of
+                               pairs high-dimensional images generated from a set of continuous
+                               latents, which is more in line with our theoretical assumptions. Note                  Figure 9: Examples of high-
+                               thatdatasetswithpairsofimagesarecommoninpractice,forexample,                           dimensional image pairs.
+                               inmedicalimagingwherepatients areassessedusingmultipleviews
+                               (e.g., images fromdifferent angles)ormultiple modalities(e.g., asinPET-CT imaging). To generate
+                               thedata,weadaptthecodefrom3DIdent(Zimmermannetal.,2021)torenderpairsofimages,for
+                               whichtheobjectpositionisalwaysshared(i.e.,content),theobject-,spotlight-andbackground-color
+                               is stochastically shared (i.e., style), and modality-speciﬁc factors are object rotation for one modality
+                               and spotlight position for the other. Additionally, we render the objects using different textures to
+                               simulate a modality-speciﬁc mixing process. Samples of image pairs are shown in Figure9and
+                               further details about the dataset can be found in AppendixB.1.  We train the encoders with the
+                               InfoNCE objective for 60,000 iterations using the same architectures and hyperparameters as for
+                               Multimodal3DIdent (Table2b), and again evaluate the    R2  coefﬁcient ofdetermination usinga kernel
+  Generativeprocess                R 2 (nonlinear)⇝⇝⇝ridge regression that predicts the respective ground truth factor from the learned representations.
+m  1p(chg.)    Stat.    Cau.     Contentc      Contentc′      Styles       Modalitym  iscc′˜sm  2
+  1.0                   0.00±0.00     1.00±0.00   0.00±0.00    0.00±0.00                  21
+ 0.75                  0.00±0.00     1.00±0.00   0.00±0.00    0.00±0.00
+ 0.75                  0.00±0.00     1.00±0.00   0.50 ±0.19    0.00±0.00
+ 0.75                  0.01±0.00     0.98±0.00   0.03±0.01    0.00±0.00x′1x′2
+ 0.75                   0.28±0.14     0.91±0.03   0.39±0.20    0.00±0.00
+
+Published as a conference paper at ICLR 2023
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        (a) With mutually independent factors                            (b) With causal dependencies
+
+Figure 10: Result with pairs of high-dimensional images. As a function of the encoding size of the
+model,weassessthenonlinearpredictionofgroundtruthfactorstoquantifyhowwellthelearned
+representation encodes the respective factors. Content factors are denoted in bold, style factors in
+italic, and modality-speciﬁc factors in regular font. Each point denotes the averageR2  score across
+three seeds and bands show one standard deviation.
+
+
+Figure10present our results for the dataset of image pairs, showing the prediction performance
+as a function of the encoding size for the setting with causal dependencies (Figure10b) and the
+settingwith mutuallyindependentlatentvariables(Figure10a)respectively. Inboth settings,content
+information (i.e., objectposition) is recovered when sufﬁcient encodingcapacity is available. Style
+and modality-speciﬁc information, on the other hand, are discarded independent of the encoding
+size. InFigure10bweobservetherecoveryofsomestyleinformation,whichisexpectedbecause
+style can be predicted to some degree from the encoded content information when there is a causal
+dependence of style on content. Overall, these ﬁndings lend further support to our theoretical result
+from Theorem1, as we investigate a realistic setting with only continuous latent factors, which is
+moreinlinewithourassumptions. Notably,theresultsappearmoreconsistentwithourtheory,e.g.,
+showingthatlessstyleandmodality-speciﬁcinformationisencoded,comparedtoourresultsforthe
+image/text experiment, where we used a combination of continuous and discrete latent factors.
+
+Multimodal3DIdentwithmutuallyindependentfactors   Fortheresultsoftheimage/textexperi-
+ment in the main text (Section5.2) we used the                   Multimodal3DIdent dataset, which we designed such
+thatobjectcoloriscausallydependentonthex-positionoftheobjecttoimposeacausaldependence
+ofstyleoncontent. InFigure11,weprovideasimilaranalysisusingaversionofthedataset               without
+thecausaldependence,i.e.,withmutuallyindependentfactors. Forbothmodalities,weobservethat
+object color is only encoded when the encoding size is larger than four, i.e., when there is excess
+capacity beyond the capacity needed to encode all content factors. Hence, these results corroborate
+that contrastive learning can block-identify content factors in a complex multimodal setting with
+heterogeneous image/text pairs.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                         22
+
+Published as a conference paper at ICLR 2023
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            (a) Prediction of image factors                               (b) Prediction of text factors
+
+Figure 11: Result on Multimodal3DIdent with mutually independent factors. As a function of the
+encoding size of the model, we assess the nonlinear prediction of ground truth image factors (left
+subplot)andtextfactors (rightsubplot)toquantifyhowwellthe learnedrepresentationencodesthe
+respective factors. Contentfactors are denoted inbold and style factors initalic. Along the x-axis,
+wevarytheencodingsize,i.e.,theoutputdimensionalityofthemodel. Wemeasuretheprediction
+performance in terms of theR2  coefﬁcient of determination for continuous factors and classiﬁcation
+accuracy for discrete factors respectively. Each point denotes the average across three seeds and
+bands show one standard deviation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                          23

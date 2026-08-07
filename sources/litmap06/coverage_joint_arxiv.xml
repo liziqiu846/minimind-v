@@ -1,0 +1,1580 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/7XPzEqyE3AfRQYtmmCghCGujexg</id>
+  <title>arXiv Query: search_query=all:multimodal OR all:data OR all:coverage OR all:generalization OR all:joint OR all:distribution&amp;id_list=&amp;start=0&amp;max_results=50</title>
+  <updated>2026-08-07T08:22:35Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:multimodal+OR+(all:data+OR+(all:coverage+OR+(all:generalization+OR+(all:joint+OR+all:distribution))))&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <opensearch:totalResults>1612514</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1907.02664v2</id>
+    <title>Data Encoding for Byzantine-Resilient Distributed Optimization</title>
+    <updated>2020-11-04T05:57:11Z</updated>
+    <link href="https://arxiv.org/abs/1907.02664v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1907.02664v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study distributed optimization in the presence of Byzantine adversaries, where both data and computation are distributed among $m$ worker machines, $t$ of which may be corrupt. The compromised nodes may collaboratively and arbitrarily deviate from their pre-specified programs, and a designated (master) node iteratively computes the model/parameter vector for generalized linear models. In this work, we primarily focus on two iterative algorithms: Proximal Gradient Descent (PGD) and Coordinate Descent (CD). Gradient descent (GD) is a special case of these algorithms. PGD is typically used in the data-parallel setting, where data is partitioned across different samples, whereas, CD is used in the model-parallelism setting, where data is partitioned across the parameter space.
+  In this paper, we propose a method based on data encoding and error correction over real numbers to combat adversarial attacks. We can tolerate up to $t\leq \lfloor\frac{m-1}{2}\rfloor$ corrupt worker nodes, which is information-theoretically optimal. We give deterministic guarantees, and our method does not assume any probability distribution on the data. We develop a {\em sparse} encoding scheme which enables computationally efficient data encoding and decoding. We demonstrate a trade-off between the corruption threshold and the resource requirements (storage, computational, and communication complexity). As an example, for $t\leq\frac{m}{3}$, our scheme incurs only a {\em constant} overhead on these resources, over that required by the plain distributed PGD/CD algorithms which provide no adversarial protection. To the best of our knowledge, ours is the first paper that makes CD secure against adversarial attacks.
+  Our encoding scheme extends efficiently to the data streaming model and for stochastic gradient descent (SGD). We also give experimental results to show the efficacy of our proposed schemes.</summary>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-07-05T03:31:43Z</published>
+    <arxiv:comment>38 pages, Accepted for publication in the IEEE Transactions on Information Theory</arxiv:comment>
+    <arxiv:primary_category term="cs.DC"/>
+    <author>
+      <name>Deepesh Data</name>
+    </author>
+    <author>
+      <name>Linqi Song</name>
+    </author>
+    <author>
+      <name>Suhas Diggavi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2005.07866v1</id>
+    <title>Byzantine-Resilient SGD in High Dimensions on Heterogeneous Data</title>
+    <updated>2020-05-16T04:15:27Z</updated>
+    <link href="https://arxiv.org/abs/2005.07866v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2005.07866v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study distributed stochastic gradient descent (SGD) in the master-worker architecture under Byzantine attacks. We consider the heterogeneous data model, where different workers may have different local datasets, and we do not make any probabilistic assumptions on data generation. At the core of our algorithm, we use the polynomial-time outlier-filtering procedure for robust mean estimation proposed by Steinhardt et al. (ITCS 2018) to filter-out corrupt gradients. In order to be able to apply their filtering procedure in our {\em heterogeneous} data setting where workers compute {\em stochastic} gradients, we derive a new matrix concentration result, which may be of independent interest.
+  We provide convergence analyses for smooth strongly-convex and non-convex objectives. We derive our results under the bounded variance assumption on local stochastic gradients and a {\em deterministic} condition on datasets, namely, gradient dissimilarity; and for both these quantities, we provide concrete bounds in the statistical heterogeneous data model. We give a trade-off between the mini-batch size for stochastic gradients and the approximation error. Our algorithm can tolerate up to $\frac{1}{4}$ fraction Byzantine workers. It can find approximate optimal parameters in the strongly-convex setting exponentially fast and reach to an approximate stationary point in the non-convex setting with a linear speed, thus, matching the convergence rates of vanilla SGD in the Byzantine-free setting.
+  We also propose and analyze a Byzantine-resilient SGD algorithm with gradient compression, where workers send $k$ random coordinates of their gradients. Under mild conditions, we show a $\frac{d}{k}$-factor saving in communication bits as well as decoding complexity over our compression-free algorithm without affecting its convergence rate (order-wise) and the approximation error.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-05-16T04:15:27Z</published>
+    <arxiv:comment>57 pages, 2 figures</arxiv:comment>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Deepesh Data</name>
+    </author>
+    <author>
+      <name>Suhas Diggavi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.21391v1</id>
+    <title>TerraGen: A Unified Multi-Task Layout Generation Framework for Remote Sensing Data Augmentation</title>
+    <updated>2025-10-24T12:29:12Z</updated>
+    <link href="https://arxiv.org/abs/2510.21391v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.21391v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Remote sensing vision tasks require extensive labeled data across multiple, interconnected domains. However, current generative data augmentation frameworks are task-isolated, i.e., each vision task requires training an independent generative model, and ignores the modeling of geographical information and spatial constraints. To address these issues, we propose \textbf{TerraGen}, a unified layout-to-image generation framework that enables flexible, spatially controllable synthesis of remote sensing imagery for various high-level vision tasks, e.g., detection, segmentation, and extraction. Specifically, TerraGen introduces a geographic-spatial layout encoder that unifies bounding box and segmentation mask inputs, combined with a multi-scale injection scheme and mask-weighted loss to explicitly encode spatial constraints, from global structures to fine details. Also, we construct the first large-scale multi-task remote sensing layout generation dataset containing 45k images and establish a standardized evaluation protocol for this task. Experimental results show that our TerraGen can achieve the best generation image quality across diverse tasks. Additionally, TerraGen can be used as a universal data-augmentation generator, enhancing downstream task performance significantly and demonstrating robust cross-task generalisation in both full-data and few-shot scenarios.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-24T12:29:12Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Datao Tang</name>
+    </author>
+    <author>
+      <name>Hao Wang</name>
+    </author>
+    <author>
+      <name>Yudeng Xin</name>
+    </author>
+    <author>
+      <name>Hui Qiao</name>
+    </author>
+    <author>
+      <name>Dongsheng Jiang</name>
+    </author>
+    <author>
+      <name>Yin Li</name>
+    </author>
+    <author>
+      <name>Zhiheng Yu</name>
+    </author>
+    <author>
+      <name>Xiangyong Cao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1110.5626v1</id>
+    <title>Constraints on dark energy from H II starburst galaxy apparent magnitude versus redshift data</title>
+    <updated>2011-10-25T19:44:22Z</updated>
+    <link href="https://arxiv.org/abs/1110.5626v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1110.5626v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we use H II starburst galaxy apparent magnitude versus redshift data from Siegel et al. (2005) to constrain dark energy cosmological model parameters. These constraints are generally consistent with those derived using other data sets, but are not as restrictive as the tightest currently available constraints.</summary>
+    <category term="astro-ph.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-10-25T19:44:22Z</published>
+    <arxiv:comment>18 pages, 6 figures, 1 table</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.CO"/>
+    <author>
+      <name>Data Mania</name>
+    </author>
+    <author>
+      <name>Bharat Ratra</name>
+    </author>
+    <arxiv:doi>10.1016/j.physletb.2012.07.011</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.physletb.2012.07.011" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.15497v3</id>
+    <title>AeroGen: Enhancing Remote Sensing Object Detection with Diffusion-Driven Data Generation</title>
+    <updated>2025-02-24T15:22:40Z</updated>
+    <link href="https://arxiv.org/abs/2411.15497v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.15497v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Remote sensing image object detection (RSIOD) aims to identify and locate specific objects within satellite or aerial imagery. However, there is a scarcity of labeled data in current RSIOD datasets, which significantly limits the performance of current detection algorithms. Although existing techniques, e.g., data augmentation and semi-supervised learning, can mitigate this scarcity issue to some extent, they are heavily dependent on high-quality labeled data and perform worse in rare object classes. To address this issue, this paper proposes a layout-controllable diffusion generative model (i.e. AeroGen) tailored for RSIOD. To our knowledge, AeroGen is the first model to simultaneously support horizontal and rotated bounding box condition generation, thus enabling the generation of high-quality synthetic images that meet specific layout and object category requirements. Additionally, we propose an end-to-end data augmentation framework that integrates a diversity-conditioned generator and a filtering mechanism to enhance both the diversity and quality of generated data. Experimental results demonstrate that the synthetic data produced by our method are of high quality and diversity. Furthermore, the synthetic RSIOD data can significantly improve the detection performance of existing RSIOD models, i.e., the mAP metrics on DIOR, DIOR-R, and HRSC datasets are improved by 3.7%, 4.3%, and 2.43%, respectively. The code is available at https://github.com/Sonettoo/AeroGen.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-23T09:04:33Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Datao Tang</name>
+    </author>
+    <author>
+      <name>Xiangyong Cao</name>
+    </author>
+    <author>
+      <name>Xuan Wu</name>
+    </author>
+    <author>
+      <name>Jialin Li</name>
+    </author>
+    <author>
+      <name>Jing Yao</name>
+    </author>
+    <author>
+      <name>Xueru Bai</name>
+    </author>
+    <author>
+      <name>Dongsheng Jiang</name>
+    </author>
+    <author>
+      <name>Yin Li</name>
+    </author>
+    <author>
+      <name>Deyu Meng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2010.16064v1</id>
+    <title>A 20 Gbps Data Transmitting ASIC with PAM4 for Particle Physics Experiments</title>
+    <updated>2020-10-30T04:24:49Z</updated>
+    <link href="https://arxiv.org/abs/2010.16064v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2010.16064v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present the design principle and test results of a data transmitting ASIC, GBS20, for particle physics experiments. The goal of GBS20 will be an ASIC that employs two serializers each from the 10.24 Gbps lpGBT SerDes, sharing the PLL also from lpGBT. A PAM4 encoder plus a VCSEL driver will be implemented in the same die to use the same clock system, eliminating the need of CDRs in the PAM4 encoder. This way the transmitter module, GBT20, developed using the GBS20 ASIC, will have the exact lpGBT data interface and transmission protocol, with an output up to 20.48 Gbps over one fiber. With PAM4 embedded FPGAs at the receiving end, GBT20 will halve the fibers needed in a system and better use the input bandwidth of the FPGA. A prototype, GBS20v0 is fabricated using a commercial 65 nm CMOS technology. This prototype has two serializers and a PAM4 encoder sharing the lpGBT PLL, but no user data input. An internal PRBS generator provides data to the serializers. GBS20v0 is tested barely up to 20.48 Gbps. With lessons learned from this prototype, we are designing the second prototype, GBS20v1, that will have 16 user data input channels each at 1.28 Gbps. We present the design concept of the GBS20 ASIC and the GBT20 module, the preliminary test results, and lessons learned from GBS20v0 and the design of GBS20v1 which will be not only a test chip but also a user chip with 16 input data channels.</summary>
+    <category term="physics.ins-det" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-ex" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-10-30T04:24:49Z</published>
+    <arxiv:comment>3 pages, 3 figures,22nd IEEE Real Time Conference</arxiv:comment>
+    <arxiv:primary_category term="physics.ins-det"/>
+    <author>
+      <name>Li Zhang</name>
+      <arxiv:affiliation>Southern Methodist University</arxiv:affiliation>
+      <arxiv:affiliation>Central China Normal University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Datao Gong</name>
+      <arxiv:affiliation>Southern Methodist University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Suen Hou</name>
+      <arxiv:affiliation>Academia Sinica, Nangang</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Guanming Huang</name>
+      <arxiv:affiliation>Central China Normal University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Xing Huang</name>
+      <arxiv:affiliation>Central China Normal University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Chonghan Liu</name>
+      <arxiv:affiliation>Southern Methodist University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Tiankuan Liu</name>
+      <arxiv:affiliation>Southern Methodist University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Hanhan Sun</name>
+      <arxiv:affiliation>Southern Methodist University</arxiv:affiliation>
+      <arxiv:affiliation>Central China Normal University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Quan Sun</name>
+      <arxiv:affiliation>Fermi National Accelerator Laboratory</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Xiangming Sun</name>
+      <arxiv:affiliation>Central China Normal University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Wei Zhang</name>
+      <arxiv:affiliation>Southern Methodist University</arxiv:affiliation>
+      <arxiv:affiliation>Central China Normal University</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Jingbo Ye</name>
+      <arxiv:affiliation>Southern Methodist University</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.11773v1</id>
+    <title>Small Data Explainer -- The impact of small data methods in everyday life</title>
+    <updated>2025-07-15T22:24:17Z</updated>
+    <link href="https://arxiv.org/abs/2507.11773v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.11773v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The emergence of breakthrough artificial intelligence (AI) techniques has led to a renewed focus on how small data settings, i.e., settings with limited information, can benefit from such developments. This includes societal issues such as how best to include under-represented groups in data-driven policy and decision making, or the health benefits of assistive technologies such as wearables. We provide a conceptual overview, in particular contrasting small data with big data, and identify common themes from exemplary case studies and application areas. Potential solutions are described in a more detailed technical overview of current data analysis and modelling techniques, highlighting contributions from different disciplines, such as knowledge-driven modelling from statistics and data-driven modelling from computer science. By linking application settings, conceptual contributions and specific techniques, we highlight what is already feasible and suggest what an agenda for fully leveraging small data might look like.</summary>
+    <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-15T22:24:17Z</published>
+    <arxiv:comment>Written in collaboration with the Royal Society, contributing to the Disability Technology report (https://royalsociety.org/news-resources/projects/disability-data-assistive-technology/)</arxiv:comment>
+    <arxiv:primary_category term="cs.CY"/>
+    <author>
+      <name>Maren Hackenberg</name>
+    </author>
+    <author>
+      <name>Sophia G. Connor</name>
+    </author>
+    <author>
+      <name>Fabian Kabus</name>
+    </author>
+    <author>
+      <name>June Brawner</name>
+    </author>
+    <author>
+      <name>Ella Markham</name>
+    </author>
+    <author>
+      <name>Mahi Hardalupas</name>
+    </author>
+    <author>
+      <name>Areeq Chowdhury</name>
+    </author>
+    <author>
+      <name>Rolf Backofen</name>
+    </author>
+    <author>
+      <name>Anna Köttgen</name>
+    </author>
+    <author>
+      <name>Angelika Rohde</name>
+    </author>
+    <author>
+      <name>Nadine Binder</name>
+    </author>
+    <author>
+      <name>Harald Binder</name>
+    </author>
+    <author>
+      <name>the Collaborative Research Center 1597 Small Data</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.02527v1</id>
+    <title>The Multimodal Universe: Enabling Large-Scale Machine Learning with 100TB of Astronomical Scientific Data</title>
+    <updated>2024-12-03T16:21:17Z</updated>
+    <link href="https://arxiv.org/abs/2412.02527v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.02527v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present the MULTIMODAL UNIVERSE, a large-scale multimodal dataset of scientific astronomical data, compiled specifically to facilitate machine learning research. Overall, the MULTIMODAL UNIVERSE contains hundreds of millions of astronomical observations, constituting 100\,TB of multi-channel and hyper-spectral images, spectra, multivariate time series, as well as a wide variety of associated scientific measurements and "metadata". In addition, we include a range of benchmark tasks representative of standard practices for machine learning methods in astrophysics. This massive dataset will enable the development of large multi-modal models specifically targeted towards scientific applications. All codes used to compile the MULTIMODAL UNIVERSE and a description of how to access the data is available at https://github.com/MultimodalUniverse/MultimodalUniverse</summary>
+    <category term="astro-ph.IM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="astro-ph.GA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="astro-ph.SR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-03T16:21:17Z</published>
+    <arxiv:comment>Accepted at NeurIPS Datasets and Benchmarks track</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.IM"/>
+    <author>
+      <name> The Multimodal Universe Collaboration</name>
+    </author>
+    <author>
+      <name>Jeroen Audenaert</name>
+    </author>
+    <author>
+      <name>Micah Bowles</name>
+    </author>
+    <author>
+      <name>Benjamin M. Boyd</name>
+    </author>
+    <author>
+      <name>David Chemaly</name>
+    </author>
+    <author>
+      <name>Brian Cherinka</name>
+    </author>
+    <author>
+      <name>Ioana Ciucă</name>
+    </author>
+    <author>
+      <name>Miles Cranmer</name>
+    </author>
+    <author>
+      <name>Aaron Do</name>
+    </author>
+    <author>
+      <name>Matthew Grayling</name>
+    </author>
+    <author>
+      <name>Erin E. Hayes</name>
+    </author>
+    <author>
+      <name>Tom Hehir</name>
+    </author>
+    <author>
+      <name>Shirley Ho</name>
+    </author>
+    <author>
+      <name>Marc Huertas-Company</name>
+    </author>
+    <author>
+      <name>Kartheik G. Iyer</name>
+    </author>
+    <author>
+      <name>Maja Jablonska</name>
+    </author>
+    <author>
+      <name>Francois Lanusse</name>
+    </author>
+    <author>
+      <name>Henry W. Leung</name>
+    </author>
+    <author>
+      <name>Kaisey Mandel</name>
+    </author>
+    <author>
+      <name>Juan Rafael Martínez-Galarza</name>
+    </author>
+    <author>
+      <name>Peter Melchior</name>
+    </author>
+    <author>
+      <name>Lucas Meyer</name>
+    </author>
+    <author>
+      <name>Liam H. Parker</name>
+    </author>
+    <author>
+      <name>Helen Qu</name>
+    </author>
+    <author>
+      <name>Jeff Shen</name>
+    </author>
+    <author>
+      <name>Michael J. Smith</name>
+    </author>
+    <author>
+      <name>Connor Stone</name>
+    </author>
+    <author>
+      <name>Mike Walmsley</name>
+    </author>
+    <author>
+      <name>John F. Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2008.13369v1</id>
+    <title>Introducing Representations of Facial Affect in Automated Multimodal Deception Detection</title>
+    <updated>2020-08-31T05:12:57Z</updated>
+    <link href="https://arxiv.org/abs/2008.13369v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2008.13369v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Automated deception detection systems can enhance health, justice, and security in society by helping humans detect deceivers in high-stakes situations across medical and legal domains, among others. This paper presents a novel analysis of the discriminative power of dimensional representations of facial affect for automated deception detection, along with interpretable features from visual, vocal, and verbal modalities. We used a video dataset of people communicating truthfully or deceptively in real-world, high-stakes courtroom situations. We leveraged recent advances in automated emotion recognition in-the-wild by implementing a state-of-the-art deep neural network trained on the Aff-Wild database to extract continuous representations of facial valence and facial arousal from speakers. We experimented with unimodal Support Vector Machines (SVM) and SVM-based multimodal fusion methods to identify effective features, modalities, and modeling approaches for detecting deception. Unimodal models trained on facial affect achieved an AUC of 80%, and facial affect contributed towards the highest-performing multimodal approach (adaptive boosting) that achieved an AUC of 91% when tested on speakers who were not part of training sets. This approach achieved a higher AUC than existing automated machine learning approaches that used interpretable visual, vocal, and verbal features to detect deception in this dataset, but did not use facial affect. Across all videos, deceptive and truthful speakers exhibited significant differences in facial valence and facial arousal, contributing computational support to existing psychological theories on affect and deception. The demonstrated importance of facial affect in our models informs and motivates the future development of automated, affect-aware machine learning approaches for modeling and detecting deception and other social behaviors in-the-wild.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-08-31T05:12:57Z</published>
+    <arxiv:comment>10 pages, Accepted at ACM International Conference on Multimodal Interaction (ICMI), October 2020</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <arxiv:journal_ref>Proceedings of the 2020 International Conference on Multimodal Interaction (ICMI)</arxiv:journal_ref>
+    <author>
+      <name>Leena Mathur</name>
+    </author>
+    <author>
+      <name>Maja J Matarić</name>
+    </author>
+    <arxiv:doi>10.1145/3382507.3418864</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3382507.3418864" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1204.3055v1</id>
+    <title>IVOA Recommendation: Spectrum Data Model 1.1</title>
+    <updated>2012-04-13T17:19:51Z</updated>
+    <link href="https://arxiv.org/abs/1204.3055v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1204.3055v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a data model describing the structure of spectrophotometric datasets with spectral and temporal coordinates and associated metadata. This data model may be used to represent spectra, time series data, segments of SED (Spectral Energy Distributions) and other spectral or temporal associations.</summary>
+    <category term="astro-ph.IM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2012-04-13T17:19:51Z</published>
+    <arxiv:comment>http://www.ivoa.net</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.IM"/>
+    <author>
+      <name>Jonathan McDowell</name>
+    </author>
+    <author>
+      <name>Doug Tody</name>
+    </author>
+    <author>
+      <name>Tamas Budavari</name>
+    </author>
+    <author>
+      <name>Markus Dolensky</name>
+    </author>
+    <author>
+      <name>Inga Kamp</name>
+    </author>
+    <author>
+      <name>Kelly McCusker</name>
+    </author>
+    <author>
+      <name>Pavlos Protopapas</name>
+    </author>
+    <author>
+      <name>Arnold Rots</name>
+    </author>
+    <author>
+      <name>Randy Thompson</name>
+    </author>
+    <author>
+      <name>Frank Valdes</name>
+    </author>
+    <author>
+      <name>Petr Skoda</name>
+    </author>
+    <author>
+      <name>Bruno Rino</name>
+    </author>
+    <author>
+      <name>Sebastien Derriere</name>
+    </author>
+    <author>
+      <name>Jesus Salgado</name>
+    </author>
+    <author>
+      <name>Omar Laurino</name>
+    </author>
+    <author>
+      <name>the IVOA Data Access Layer</name>
+    </author>
+    <author>
+      <name>Data Model Working Groups</name>
+    </author>
+    <arxiv:doi>10.5479/ADS/bib/2011ivoa.spec.1120M</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.5479/ADS/bib/2011ivoa.spec.1120M" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.18592v4</id>
+    <title>Advances in Multimodal Adaptation and Generalization: From Traditional Approaches to Foundation Models</title>
+    <updated>2025-09-19T11:58:01Z</updated>
+    <link href="https://arxiv.org/abs/2501.18592v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.18592v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In real-world scenarios, achieving domain adaptation and generalization poses significant challenges, as models must adapt to or generalize across unknown target distributions. Extending these capabilities to unseen multimodal distributions, i.e., multimodal domain adaptation and generalization, is even more challenging due to the distinct characteristics of different modalities. Significant progress has been made over the years, with applications ranging from action recognition to semantic segmentation. Besides, the recent advent of large-scale pre-trained multimodal foundation models, such as CLIP, has inspired works leveraging these models to enhance adaptation and generalization performances or adapting them to downstream tasks. This survey provides the first comprehensive review of recent advances from traditional approaches to foundation models, covering: (1) Multimodal domain adaptation; (2) Multimodal test-time adaptation; (3) Multimodal domain generalization; (4) Domain adaptation and generalization with the help of multimodal foundation models; and (5) Adaptation of multimodal foundation models. For each topic, we formally define the problem and thoroughly review existing methods. Additionally, we analyze relevant datasets and applications, highlighting open challenges and potential future research directions. We maintain an active repository that contains up-to-date literature at https://github.com/donghao51/Awesome-Multimodal-Adaptation.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-01-30T18:59:36Z</published>
+    <arxiv:comment>Project page: https://github.com/donghao51/Awesome-Multimodal-Adaptation</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Hao Dong</name>
+    </author>
+    <author>
+      <name>Moru Liu</name>
+    </author>
+    <author>
+      <name>Kaiyang Zhou</name>
+    </author>
+    <author>
+      <name>Eleni Chatzi</name>
+    </author>
+    <author>
+      <name>Juho Kannala</name>
+    </author>
+    <author>
+      <name>Cyrill Stachniss</name>
+    </author>
+    <author>
+      <name>Olga Fink</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.11852v1</id>
+    <title>Evaluating Open-Source Vision-Language Models for Multimodal Sarcasm Detection</title>
+    <updated>2025-10-13T19:05:21Z</updated>
+    <link href="https://arxiv.org/abs/2510.11852v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.11852v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent advances in open-source vision-language models (VLMs) offer new opportunities for understanding complex and subjective multimodal phenomena such as sarcasm. In this work, we evaluate seven state-of-the-art VLMs - BLIP2, InstructBLIP, OpenFlamingo, LLaVA, PaliGemma, Gemma3, and Qwen-VL - on their ability to detect multimodal sarcasm using zero-, one-, and few-shot prompting. Furthermore, we evaluate the models' capabilities in generating explanations to sarcastic instances. We evaluate the capabilities of VLMs on three benchmark sarcasm datasets (Muse, MMSD2.0, and SarcNet). Our primary objectives are twofold: (1) to quantify each model's performance in detecting sarcastic image-caption pairs, and (2) to assess their ability to generate human-quality explanations that highlight the visual-textual incongruities driving sarcasm. Our results indicate that, while current models achieve moderate success in binary sarcasm detection, they are still not able to generate high-quality explanations without task-specific finetuning.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-13T19:05:21Z</published>
+    <arxiv:comment>Accepted to ICDMW 2025 Workshop on Multimodal AI (MMAI). Full workshop info: https://icdmw25mmai.github.io/</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>Proc. IEEE International Conference on Data Mining Workshops (ICDMW 2025), Workshop on Multimodal AI (MMAI 2025), Los Angeles, USA, December 2025</arxiv:journal_ref>
+    <author>
+      <name>Saroj Basnet</name>
+    </author>
+    <author>
+      <name>Shafkat Farabi</name>
+    </author>
+    <author>
+      <name>Tharindu Ranasinghe</name>
+    </author>
+    <author>
+      <name>Diptesh Kanoji</name>
+    </author>
+    <author>
+      <name>Marcos Zampieri</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2212.07892v3</id>
+    <title>Integrating Multimodal Data for Joint Generative Modeling of Complex Dynamics</title>
+    <updated>2024-06-07T11:12:00Z</updated>
+    <link href="https://arxiv.org/abs/2212.07892v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2212.07892v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Many, if not most, systems of interest in science are naturally described as nonlinear dynamical systems. Empirically, we commonly access these systems through time series measurements. Often such time series may consist of discrete random variables rather than continuous measurements, or may be composed of measurements from multiple data modalities observed simultaneously. For instance, in neuroscience we may have behavioral labels in addition to spike counts and continuous physiological recordings. While by now there is a burgeoning literature on deep learning for dynamical systems reconstruction (DSR), multimodal data integration has hardly been considered in this context. Here we provide such an efficient and flexible algorithmic framework that rests on a multimodal variational autoencoder for generating a sparse teacher signal that guides training of a reconstruction model, exploiting recent advances in DSR training techniques. It enables to combine various sources of information for optimal reconstruction, even allows for reconstruction from symbolic data (class labels) alone, and connects different types of observations within a common latent dynamics space. In contrast to previous multimodal data integration techniques for scientific applications, our framework is fully \textit{generative}, producing, after training, trajectories with the same geometrical and temporal structure as those of the ground truth system.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nlin.CD" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-12-15T15:21:28Z</published>
+    <arxiv:comment>ICML 2024. Previously published as a workshop paper for the AAAI 2023 Workshop MLmDS as "Multimodal Teacher Forcing for Reconstructing Nonlinear Dynamical Systems"</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Manuel Brenner</name>
+    </author>
+    <author>
+      <name>Florian Hess</name>
+    </author>
+    <author>
+      <name>Georgia Koppe</name>
+    </author>
+    <author>
+      <name>Daniel Durstewitz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.04318v2</id>
+    <title>Adaptive Coverage Policies in Conformal Prediction</title>
+    <updated>2026-04-02T13:01:10Z</updated>
+    <link href="https://arxiv.org/abs/2510.04318v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.04318v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Traditional conformal prediction methods construct prediction sets such that the true label falls within the set with a user-specified coverage level. However, poorly chosen coverage levels can result in uninformative predictions, either producing overly conservative sets when the coverage level is too high, or empty sets when it is too low. Moreover, the fixed coverage level cannot adapt to the specific characteristics of each individual example, limiting the flexibility and efficiency of these methods. In this work, we leverage recent advances in e-values and post-hoc conformal inference, which allow the use of data-dependent coverage levels while maintaining valid statistical guarantees. We propose to optimize an adaptive coverage policy by training a neural network using a leave-one-out procedure on the calibration set, allowing the coverage level and the resulting prediction set size to vary with the difficulty of each individual example. We support our approach with theoretical coverage guarantees and demonstrate its practical benefits through a series of experiments.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-05T18:37:22Z</published>
+    <arxiv:comment>Code at: https://github.com/GauthierE/adaptive-coverage-policies</arxiv:comment>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Etienne Gauthier</name>
+    </author>
+    <author>
+      <name>Francis Bach</name>
+    </author>
+    <author>
+      <name>Michael I. Jordan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1807.08197v4</id>
+    <title>On Numerical Estimation of Joint Probability Distribution from Lebesgue Integral Quadratures</title>
+    <updated>2020-11-30T16:01:20Z</updated>
+    <link href="https://arxiv.org/abs/1807.08197v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1807.08197v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>An important application of Lebesgue integral quadrature arXiv:1807.06007 is developed. Given two random processes, $f(x)$ and $g(x)$, two generalized eigenvalue problems can be formulated and solved. In addition to obtaining two Lebesgue quadratures (for $f$ and $g$) from two eigenproblems, the projections of $f$- and $g$- eigenvectors on each other allow to build a joint distribution estimator, the most general form of which is a density-matrix correlation. Examples of the density-matrix correlation can be a value-correlation $V_{f^{[i]};g^{[j]}}$, similar to a regular correlation concept, and a new one, a probability-correlation $P_{f^{[i]};g^{[j]}}$. If Christoffel function average is used instead of regular average the approach can be extended to an estimation of joint probability of three and more random processes. The theory is implemented numerically; the software is available under the GPLv3 license.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-07-21T19:52:15Z</published>
+    <arxiv:comment>Christoffel function average is added to obtain joint distribution of three processes. A relation to Low Rank Representation (LRR) arXiv:1906.00460 is added</arxiv:comment>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Vladislav Gennadievich Malyshkin</name>
+    </author>
+    <arxiv:doi>10.2139/ssrn.3229347</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.2139/ssrn.3229347" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.25120v1</id>
+    <title>DFLOP: A Data-driven Framework for Multimodal LLM Training Pipeline Optimization</title>
+    <updated>2026-03-26T07:45:29Z</updated>
+    <link href="https://arxiv.org/abs/2603.25120v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.25120v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Large Language Models (MLLMs) have achieved remarkable advances by integrating text, image, and audio understanding within a unified architecture. However, existing distributed training frameworks remain fundamentally data-blind: they parallelize computation without accounting for variations in input data characteristics. This data unawareness leads to severe computation skew across stages and microbatches, where heterogeneous multimodal inputs incur different processing costs. Consequently, GPU resources are unevenly utilized, synchronization delays accumulate, and overall training efficiency degrades. To address this limitation, we present DFLOP, a data-driven framework for multimodal LLM training pipeline optimization. DFLOP continuously profiles runtime behavior to capture data-induced computation variance and employs predictive scheduling to balance workloads across stages and microbatches. By coupling data characteristics with execution planning, DFLOP substantially improves GPU utilization and throughput. Extensive experiments on large-scale multimodal benchmarks show that DFLOP achieves up to 3.6x faster training compared to state-of-the-art distributed training frameworks.</summary>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-26T07:45:29Z</published>
+    <arxiv:comment>Accepted to Proceedings of the ACM on Management of Data (SIGMOD 2026)</arxiv:comment>
+    <arxiv:primary_category term="cs.DC"/>
+    <arxiv:journal_ref>Proc. ACM Manag. Data 4, 3, Article 160 (June 2026), 29 pages</arxiv:journal_ref>
+    <author>
+      <name>Hyeonjun An</name>
+    </author>
+    <author>
+      <name>Sihyun Kim</name>
+    </author>
+    <author>
+      <name>Chaerim Lim</name>
+    </author>
+    <author>
+      <name>Hyunjoon Kim</name>
+    </author>
+    <author>
+      <name>Rathijit Sen</name>
+    </author>
+    <author>
+      <name>Sangmin Jung</name>
+    </author>
+    <author>
+      <name>Hyeonsoo Lee</name>
+    </author>
+    <author>
+      <name>Dongwook Kim</name>
+    </author>
+    <author>
+      <name>Takki Yu</name>
+    </author>
+    <author>
+      <name>Jinkyu Jeong</name>
+    </author>
+    <author>
+      <name>Youngsok Kim</name>
+    </author>
+    <author>
+      <name>Kwanghyun Park</name>
+    </author>
+    <arxiv:doi>10.1145/3802037</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3802037" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.11614v4</id>
+    <title>CRS-Diff: Controllable Remote Sensing Image Generation with Diffusion Model</title>
+    <updated>2024-09-01T06:32:06Z</updated>
+    <link href="https://arxiv.org/abs/2403.11614v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.11614v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The emergence of generative models has revolutionized the field of remote sensing (RS) image generation. Despite generating high-quality images, existing methods are limited in relying mainly on text control conditions, and thus do not always generate images accurately and stably. In this paper, we propose CRS-Diff, a new RS generative framework specifically tailored for RS image generation, leveraging the inherent advantages of diffusion models while integrating more advanced control mechanisms. Specifically, CRS-Diff can simultaneously support text-condition, metadata-condition, and image-condition control inputs, thus enabling more precise control to refine the generation process. To effectively integrate multiple condition control information, we introduce a new conditional control mechanism to achieve multi-scale feature fusion, thus enhancing the guiding effect of control conditions. To our knowledge, CRS-Diff is the first multiple-condition controllable RS generative model. Experimental results in single-condition and multiple-condition cases have demonstrated the superior ability of our CRS-Diff to generate RS images both quantitatively and qualitatively compared with previous methods. Additionally, our CRS-Diff can serve as a data engine that generates high-quality training data for downstream tasks, e.g., road extraction. The code is available at https://github.com/Sonettoo/CRS-Diff.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-18T09:44:44Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Datao Tang</name>
+    </author>
+    <author>
+      <name>Xiangyong Cao</name>
+    </author>
+    <author>
+      <name>Xingsong Hou</name>
+    </author>
+    <author>
+      <name>Zhongyuan Jiang</name>
+    </author>
+    <author>
+      <name>Junmin Liu</name>
+    </author>
+    <author>
+      <name>Deyu Meng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1910.10504v1</id>
+    <title>Liver Segmentation from Multimodal Images using HED-Mask R-CNN</title>
+    <updated>2019-10-23T12:04:45Z</updated>
+    <link href="https://arxiv.org/abs/1910.10504v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1910.10504v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Precise segmentation of the liver is critical for computer-aided diagnosis such as pre-evaluation of the liver for living donor-based transplantation surgery. This task is challenging due to the weak boundaries of organs, countless anatomical variations, and the complexity of the background. Computed tomography (CT) scanning and magnetic resonance imaging (MRI) images have different parameters and settings. Thus, images acquired from different modalities differ from one another making liver segmentation challenging task. We propose an efficient liver segmentation with the combination of holistically-nested edge detection (HED) and the Mask-region-convolutional neural network (R-CNN) to address these challenges. The proposed HED-Mask R-CNN approach is based on effective identification of edge maps from multimodal images. The proposed system firstly applies a preprocessing step of image enhancement to get the 'primal sketches' of the abdomen. Then the HED network is applied to enhanced CT and MRI modality images to get a better edge map. Finally, the Mask R-CNN is used to segment the liver from edge map images. We used a dataset of 20 CT patients and 9 MR patients from the CHAOS challenge. The system is trained on CT and MRI images separately and then converted to 2D slices. We significantly improved the segmentation accuracy of CT and MRI images on a database with a Dice value of 0.94 for CT, 0.89 for T2-weighted MRI and 0.91 for T1-weighted MRI.</summary>
+    <category term="eess.IV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-10-23T12:04:45Z</published>
+    <arxiv:comment>Accepted in 1st International Workshop on Multiscale Multimodal Medical Imaging (MMMI 2019) - MICCAI 2019</arxiv:comment>
+    <arxiv:primary_category term="eess.IV"/>
+    <arxiv:journal_ref>Multiscale Multimodal Medical Imaging. MMMI 2019. Lecture Notes in Computer Science, vol 11977</arxiv:journal_ref>
+    <author>
+      <name>Supriti Mulay</name>
+    </author>
+    <author>
+      <name>Deepika G</name>
+    </author>
+    <author>
+      <name>Jeevakala S</name>
+    </author>
+    <author>
+      <name>Keerthi Ram</name>
+    </author>
+    <author>
+      <name>Mohanasankar Sivaprakasam</name>
+    </author>
+    <arxiv:doi>10.1007/978-3-030-37969-8_9</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/978-3-030-37969-8_9" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2112.03057v1</id>
+    <title>Thinking Beyond Distributions in Testing Machine Learned Models</title>
+    <updated>2021-12-06T14:03:48Z</updated>
+    <link href="https://arxiv.org/abs/2112.03057v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2112.03057v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Testing practices within the machine learning (ML) community have centered around assessing a learned model's predictive performance measured against a test dataset, often drawn from the same distribution as the training dataset. While recent work on robustness and fairness testing within the ML community has pointed to the importance of testing against distributional shifts, these efforts also focus on estimating the likelihood of the model making an error against a reference dataset/distribution. We argue that this view of testing actively discourages researchers and developers from looking into other sources of robustness failures, for instance corner cases which may have severe undesirable impacts. We draw parallels with decades of work within software engineering testing focused on assessing a software system against various stress conditions, including corner cases, as opposed to solely focusing on average-case behaviour. Finally, we put forth a set of recommendations to broaden the view of machine learning testing to a rigorous practice.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SE" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-12-06T14:03:48Z</published>
+    <arxiv:comment>Neural Information Processing System, NeurIPS 2021 workshop on Distribution Shifts</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>NeurIPS 2021 workshop on Distribution Shifts</arxiv:journal_ref>
+    <author>
+      <name>Negar Rostamzadeh</name>
+    </author>
+    <author>
+      <name>Ben Hutchinson</name>
+    </author>
+    <author>
+      <name>Christina Greer</name>
+    </author>
+    <author>
+      <name>Vinodkumar Prabhakaran</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2009.03651v1</id>
+    <title>Learning more expressive joint distributions in multimodal variational methods</title>
+    <updated>2020-09-08T11:45:27Z</updated>
+    <link href="https://arxiv.org/abs/2009.03651v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2009.03651v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Data often are formed of multiple modalities, which jointly describe the observed phenomena. Modeling the joint distribution of multimodal data requires larger expressive power to capture high-level concepts and provide better data representations. However, multimodal generative models based on variational inference are limited due to the lack of flexibility of the approximate posterior, which is obtained by searching within a known parametric family of distributions. We introduce a method that improves the representational capacity of multimodal variational methods using normalizing flows. It approximates the joint posterior with a simple parametric distribution and subsequently transforms into a more complex one. Through several experiments, we demonstrate that the model improves on state-of-the-art multimodal methods based on variational inference on various computer vision tasks such as colorization, edge and mask detection, and weakly supervised learning. We also show that learning more powerful approximate joint distributions improves the quality of the generated samples. The code of our model is publicly available at https://github.com/SashoNedelkoski/BPFDMVM.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-09-08T11:45:27Z</published>
+    <arxiv:comment>12 pages, Accepted and presented at LOD 2020</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Sasho Nedelkoski</name>
+    </author>
+    <author>
+      <name>Mihail Bogojeski</name>
+    </author>
+    <author>
+      <name>Odej Kao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1412.5262v2</id>
+    <title>The impact of a Hausman pretest, applied to panel data, on the coverage probability of confidence intervals</title>
+    <updated>2015-01-28T05:02:51Z</updated>
+    <link href="https://arxiv.org/abs/1412.5262v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1412.5262v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In the analysis of panel data that includes a time-varying covariate, a Hausman pretest is commonly used to decide whether subsequent inference is made using the random effects model or the fixed effects model. We consider the effect of this pretest on the coverage probability of a confidence interval for the slope parameter. We prove three new finite sample theorems that make it easy to assess, for a wide variety of circumstances, the effect of the Hausman pretest on the minimum coverage probability of this confidence interval. Our results show that for the small levels of significance of the Hausman pretest commonly used in applications, the minimum coverage probability of the confidence interval for the slope parameter can be far below nominal.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-12-17T05:50:49Z</published>
+    <arxiv:comment>The exposition has been improved</arxiv:comment>
+    <arxiv:primary_category term="stat.ME"/>
+    <arxiv:journal_ref>The impact of a Hausman pretest, applied to panel data, on the coverage probability of confidence intervals. Economics Letters, 131, 12-15 (2015)</arxiv:journal_ref>
+    <author>
+      <name>Paul Kabaila</name>
+    </author>
+    <author>
+      <name>Rheanna Mainzer</name>
+    </author>
+    <author>
+      <name>Davide Farchione</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1603.06828v2</id>
+    <title>Robust principal graphs for data approximation</title>
+    <updated>2016-11-24T11:24:10Z</updated>
+    <link href="https://arxiv.org/abs/1603.06828v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1603.06828v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Revealing hidden geometry and topology in noisy data sets is a challenging task. Elastic principal graph is a computationally efficient and flexible data approximator based on embedding a graph into the data space and minimizing the energy functional penalizing the deviation of graph nodes both from data points and from pluri-harmonic configuration (generalization of linearity). The structure of principal graph is learned from data by application of a topological grammar which in the simplest case leads to the construction of principal curves or trees. In order to more efficiently cope with noise and outliers, here we suggest using a trimmed data approximation term to increase the robustness of the method. The modification of the method that we suggest does not affect either computational efficiency or general convergence properties of the original elastic graph method. The trimmed elastic energy functional remains a Lyapunov function for the optimization algorithm. On several examples of complex data distributions we demonstrate how the robust principal graphs learn the global data structure and show the advantage of using the trimmed data approximation term for the construction of principal graphs and other popular data approximators.</summary>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-03-22T15:24:41Z</published>
+    <arxiv:comment>A talk given at ECDA2015 (European Conference on Data Analysis, September 2nd to 4th 2015, University of Essex, Colchester, UK), to be published in Archives of Data Science</arxiv:comment>
+    <arxiv:primary_category term="cs.DS"/>
+    <arxiv:journal_ref>Archives of Data Science, Series A, Vol. 2, No. 1, 2017</arxiv:journal_ref>
+    <author>
+      <name>A. N. Gorban</name>
+    </author>
+    <author>
+      <name>E. M. Mirkes</name>
+    </author>
+    <author>
+      <name>A. Zinovyev</name>
+    </author>
+    <arxiv:doi>10.5445/KSP/1000058749/11</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.5445/KSP/1000058749/11" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1512.07735v2</id>
+    <title>Communication and Randomness Lower Bounds for Secure Computation</title>
+    <updated>2016-05-10T18:27:35Z</updated>
+    <link href="https://arxiv.org/abs/1512.07735v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1512.07735v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In secure multiparty computation (MPC), mutually distrusting users collaborate to compute a function of their private data without revealing any additional information about their data to other users. While it is known that information theoretically secure MPC is possible among $n$ users (connected by secure and noiseless links and have access to private randomness) against the collusion of less than $n/2$ users in the honest-but-curious model, relatively less is known about the communication and randomness complexity of secure computation.
+  In this work, we employ information theoretic techniques to obtain lower bounds on the amount of communication and randomness required for secure MPC. We restrict ourselves to a concrete interactive setting involving 3 users under which all functions are securely computable against corruption of a single user in the honest-but-curious model. We derive lower bounds for both the perfect security case (i.e., zero-error and no leakage of information) and asymptotic security (where the probability of error and information leakage vanish as block-length goes to $\infty$).
+  Our techniques include the use of a data processing inequality for residual information (i.e., the gap between mutual information and Gács-Körner common information), a new information inequality for 3-user protocols, and the idea of distribution switching. Our lower bounds are shown to be tight for various functions of interest. In particular, we show concrete functions which have "communication-ideal" protocols, i.e., which achieve the minimum communication simultaneously on all links in the network, and also use minimum amount of randomness. Also, we obtain the first explicit example of a function that incurs a higher communication cost than the input length in the secure computation model of "Feige, Kilian, and Naor [STOC, 1994]", who had shown that such functions exist.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-12-24T07:22:02Z</published>
+    <arxiv:comment>30 pages, To Appear in the IEEE Transaction of Information Theory. arXiv admin note: substantial text overlap with arXiv:1311.7584</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Deepesh Data</name>
+    </author>
+    <author>
+      <name>Vinod M. Prabhakaran</name>
+    </author>
+    <author>
+      <name>Manoj M. Prabhakaran</name>
+    </author>
+    <arxiv:doi>10.1109/TIT.2016.2568207</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/TIT.2016.2568207" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2110.09580v1</id>
+    <title>Flexible Accuracy for Differential Privacy</title>
+    <updated>2021-10-18T19:03:15Z</updated>
+    <link href="https://arxiv.org/abs/2110.09580v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2110.09580v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Differential Privacy (DP) has become a gold standard in privacy-preserving data analysis. While it provides one of the most rigorous notions of privacy, there are many settings where its applicability is limited.
+  Our main contribution is in augmenting differential privacy with {\em Flexible Accuracy}, which allows small distortions in the input (e.g., dropping outliers) before measuring accuracy of the output, allowing one to extend DP mechanisms to high-sensitivity functions. We present mechanisms that can help in achieving this notion for functions that had no meaningful differentially private mechanisms previously. In particular, we illustrate an application to differentially private histograms, which in turn yields mechanisms for revealing the support of a dataset or the extremal values in the data. Analyses of our constructions exploit new versatile composition theorems that facilitate modular design.
+  All the above extensions use our new definitional framework, which is in terms of "lossy Wasserstein distance" -- a 2-parameter error measure for distributions. This may be of independent interest.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-10-18T19:03:15Z</published>
+    <arxiv:comment>42 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Aman Bansal</name>
+    </author>
+    <author>
+      <name>Rahul Chunduru</name>
+    </author>
+    <author>
+      <name>Deepesh Data</name>
+    </author>
+    <author>
+      <name>Manoj Prabhakaran</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1405.2555v2</id>
+    <title>How to Securely Compute the Modulo-Two Sum of Binary Sources</title>
+    <updated>2014-05-26T06:18:31Z</updated>
+    <link href="https://arxiv.org/abs/1405.2555v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1405.2555v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In secure multiparty computation, mutually distrusting users in a network want to collaborate to compute functions of data which is distributed among the users. The users should not learn any additional information about the data of others than what they may infer from their own data and the functions they are computing. Previous works have mostly considered the worst case context (i.e., without assuming any distribution for the data); Lee and Abbe (2014) is a notable exception. Here, we study the average case (i.e., we work with a distribution on the data) where correctness and privacy is only desired asymptotically.
+  For concreteness and simplicity, we consider a secure version of the function computation problem of Körner and Marton (1979) where two users observe a doubly symmetric binary source with parameter p and the third user wants to compute the XOR. We show that the amount of communication and randomness resources required depends on the level of correctness desired. When zero-error and perfect privacy are required, the results of Data et al. (2014) show that it can be achieved if and only if a total rate of 1 bit is communicated between every pair of users and private randomness at the rate of 1 is used up. In contrast, we show here that, if we only want the probability of error to vanish asymptotically in block length, it can be achieved by a lower rate (binary entropy of p) for all the links and for private randomness; this also guarantees perfect privacy. We also show that no smaller rates are possible even if privacy is only required asymptotically.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2014-05-11T17:42:29Z</published>
+    <arxiv:comment>6 pages, 1 figure, extended version of submission to IEEE Information Theory Workshop, 2014</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Deepesh Data</name>
+    </author>
+    <author>
+      <name>Bikash Kumar Dey</name>
+    </author>
+    <author>
+      <name>Manoj Mishra</name>
+    </author>
+    <author>
+      <name>Vinod M. Prabhakaran</name>
+    </author>
+    <arxiv:doi>10.1109/ITW.2014.6970881</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/ITW.2014.6970881" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2006.13041v2</id>
+    <title>Byzantine-Resilient High-Dimensional Federated Learning</title>
+    <updated>2020-08-16T21:24:14Z</updated>
+    <link href="https://arxiv.org/abs/2006.13041v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2006.13041v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study stochastic gradient descent (SGD) with local iterations in the presence of malicious/Byzantine clients, motivated by the federated learning. The clients, instead of communicating with the central server in every iteration, maintain their local models, which they update by taking several SGD iterations based on their own datasets and then communicate the net update with the server, thereby achieving communication-efficiency. Furthermore, only a subset of clients communicate with the server, and this subset may be different at different synchronization times. The Byzantine clients may collaborate and send arbitrary vectors to the server to disrupt the learning process. To combat the adversary, we employ an efficient high-dimensional robust mean estimation algorithm from Steinhardt et al.~\cite[ITCS 2018]{Resilience_SCV18} at the server to filter-out corrupt vectors; and to analyze the outlier-filtering procedure, we develop a novel matrix concentration result that may be of independent interest.
+  We provide convergence analyses for strongly-convex and non-convex smooth objectives in the heterogeneous data setting, where different clients may have different local datasets, and we do not make any probabilistic assumptions on data generation. We believe that ours is the first Byzantine-resilient algorithm and analysis with local iterations. We derive our convergence results under minimal assumptions of bounded variance for SGD and bounded gradient dissimilarity (which captures heterogeneity among local datasets). We also extend our results to the case when clients compute full-batch gradients.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-06-22T03:54:36Z</published>
+    <arxiv:comment>33 pages; title change; improved bound on the approximation error by the factor of H</arxiv:comment>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Deepesh Data</name>
+    </author>
+    <author>
+      <name>Suhas Diggavi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2210.02884v2</id>
+    <title>Vision+X: A Survey on Multimodal Learning in the Light of Data</title>
+    <updated>2024-06-07T18:32:39Z</updated>
+    <link href="https://arxiv.org/abs/2210.02884v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.02884v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We are perceiving and communicating with the world in a multisensory manner, where different information sources are sophisticatedly processed and interpreted by separate parts of the human brain to constitute a complex, yet harmonious and unified sensing system. To endow the machines with true intelligence, multimodal machine learning that incorporates data from various sources has become an increasingly popular research area with emerging technical advances in recent years. In this paper, we present a survey on multimodal machine learning from a novel perspective considering not only the purely technical aspects but also the intrinsic nature of different data modalities. We analyze the commonness and uniqueness of each data format mainly ranging from vision, audio, text, and motions, and then present the methodological advancements categorized by the combination of data modalities, such as Vision+Text, with slightly inclined emphasis on the visual data. We investigate the existing literature on multimodal learning from both the representation learning and downstream application levels, and provide an additional comparison in the light of their technical connections with the data nature, e.g., the semantic consistency between image objects and textual descriptions, and the rhythm correspondence between video dance moves and musical beats. We hope that the exploitation of the alignment as well as the existing gap between the intrinsic nature of data modality and the technical designs, will benefit future research studies to better address a specific challenge related to the concrete multimodal task, prompting a unified multimodal machine learning framework closer to a real human intelligence system.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-05T13:14:57Z</published>
+    <arxiv:comment>Survey paper on multimodal learning and generation, to appear at IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Ye Zhu</name>
+    </author>
+    <author>
+      <name>Yu Wu</name>
+    </author>
+    <author>
+      <name>Nicu Sebe</name>
+    </author>
+    <author>
+      <name>Yan Yan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2009.00088v1</id>
+    <title>LaDDer: Latent Data Distribution Modelling with a Generative Prior</title>
+    <updated>2020-08-31T20:10:01Z</updated>
+    <link href="https://arxiv.org/abs/2009.00088v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2009.00088v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we show that the performance of a learnt generative model is closely related to the model's ability to accurately represent the inferred \textbf{latent data distribution}, i.e. its topology and structural properties. We propose LaDDer to achieve accurate modelling of the latent data distribution in a variational autoencoder framework and to facilitate better representation learning. The central idea of LaDDer is a meta-embedding concept, which uses multiple VAE models to learn an embedding of the embeddings, forming a ladder of encodings. We use a non-parametric mixture as the hyper prior for the innermost VAE and learn all the parameters in a unified variational framework. From extensive experiments, we show that our LaDDer model is able to accurately estimate complex latent distribution and results in improvement in the representation quality. We also propose a novel latent space interpolation method that utilises the derived data distribution.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-08-31T20:10:01Z</published>
+    <arxiv:comment>Accepted to BMVC 2020. Code and demos are available at: https://github.com/lin-shuyu/ladder-latent-data-distribution-modelling</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Shuyu Lin</name>
+    </author>
+    <author>
+      <name>Ronald Clark</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.15512v2</id>
+    <title>PixelBytes: Catching Unified Embedding for Multimodal Generation</title>
+    <updated>2024-10-21T18:57:08Z</updated>
+    <link href="https://arxiv.org/abs/2409.15512v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.15512v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This report introduces PixelBytes Embedding, a novel approach for unified multimodal representation learning. Our method captures diverse inputs in a single, cohesive representation, enabling emergent properties for multimodal sequence generation, particularly for text and pixelated images. Inspired by state-of-the-art sequence models such as Image Transformers, PixelCNN, and Mamba-Bytes, PixelBytes aims to address the challenges of integrating different data types. We explore various model architectures, including Recurrent Neural Networks (RNNs), State Space Models (SSMs), and Attention-based models, focusing on bidirectional processing and our innovative PxBy embedding technique. Our experiments, conducted on a specialized PixelBytes Pok{é}mon dataset, demonstrate that bidirectional sequence models with PxBy embedding and convolutional layers can generate coherent multimodal sequences. This work contributes to the advancement of integrated AI models capable of understanding and generating multimodal data in a unified manner.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-03T06:02:02Z</published>
+    <arxiv:comment>This article is an earlier version of my work arXiv:2410.01820 "PixelBytes: Catching Unified Representation for Multimodal Generation."</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Fabien Furfaro</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1808.08554v2</id>
+    <title>On the joint distribution of the marginals of multipartite random quantum states</title>
+    <updated>2020-04-21T15:18:53Z</updated>
+    <link href="https://arxiv.org/abs/1808.08554v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1808.08554v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study the joint distribution of the set of all marginals of a random Wishart matrix acting on a tensor product Hilbert space. We compute the limiting free mixed cumulants of the marginals, and we show that in the balanced asymptotical regime, the marginals are asymptotically free. We connect the matrix integrals relevant to the study of operators on tensor product spaces with the corresponding classes of combinatorial maps, for which we develop the combinatorial machinery necessary for the asymptotic study. Finally, we present some applications to the theory of random quantum states in quantum information theory.</summary>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="quant-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-08-26T13:55:52Z</published>
+    <arxiv:comment>53 pages, 25 figures, v2 reviewed for publication</arxiv:comment>
+    <arxiv:primary_category term="math.PR"/>
+    <arxiv:journal_ref>"The joint distribution of the marginals of multipartite random quantum states." Random Matrices: Theory and Applications (2019): 2050010</arxiv:journal_ref>
+    <author>
+      <name>Stephane Dartois</name>
+    </author>
+    <author>
+      <name>Luca Lionni</name>
+    </author>
+    <author>
+      <name>Ion Nechita</name>
+    </author>
+    <arxiv:doi>10.1142/S2010326320500100</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1142/S2010326320500100" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1705.07081v1</id>
+    <title>Secure Computation of Randomized Functions: Further Results</title>
+    <updated>2017-05-19T16:35:09Z</updated>
+    <link href="https://arxiv.org/abs/1705.07081v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1705.07081v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider secure computation of randomized functions between two users, where both the users (Alice and Bob) have inputs, Alice sends a message to Bob over a rate-limited, noise-free link, and then Bob produces the output. We study two cases: (i) when privacy condition is required only against Bob, who tries to learn more about Alice's input from the message than what can be inferred by his own input and output, and (ii) when there is no privacy requirement. For both the problems, we give single-letter expressions for the optimal rates. For the first problem, we also explicitly characterize securely computable randomized functions when input has full support, which leads to a much simpler expression for the optimal rate. Recently, Data (ISIT 2016) studied the remaining two cases (first, when privacy conditions are against both the users; and second, when privacy condition is only against Alice) and obtained single-letter expressions for optimal rates in both the scenarios.</summary>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-05-19T16:35:09Z</published>
+    <arxiv:comment>This is an extended version of a submission to ITW, 2017</arxiv:comment>
+    <arxiv:primary_category term="cs.IT"/>
+    <author>
+      <name>Deepesh Data</name>
+    </author>
+    <author>
+      <name>Vinod M. Prabhakaran</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2204.13206v1</id>
+    <title>Improving Multimodal Speech Recognition by Data Augmentation and Speech Representations</title>
+    <updated>2022-04-27T21:39:20Z</updated>
+    <link href="https://arxiv.org/abs/2204.13206v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2204.13206v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal speech recognition aims to improve the performance of automatic speech recognition (ASR) systems by leveraging additional visual information that is usually associated to the audio input. While previous approaches make crucial use of strong visual representations, e.g. by finetuning pretrained image recognition networks, significantly less attention has been paid to its counterpart: the speech component. In this work, we investigate ways of improving the base speech recognition system by following similar techniques to the ones used for the visual encoder, namely, transferring representations and data augmentation. First, we show that starting from a pretrained ASR significantly improves the state-of-the-art performance; remarkably, even when building upon a strong unimodal system, we still find gains by including the visual modality. Second, we employ speech data augmentation techniques to encourage the multimodal system to attend to the visual stimuli. This technique replaces previously used word masking and comes with the benefits of being conceptually simpler and yielding consistent improvements in the multimodal setting. We provide empirical results on three multimodal datasets, including the newly introduced Localized Narratives.</summary>
+    <category term="cs.SD" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.AS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.IV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-04-27T21:39:20Z</published>
+    <arxiv:comment>Accepted at the Multimodal Learning and Applications Workshop (MULA) from CVPR 2022</arxiv:comment>
+    <arxiv:primary_category term="cs.SD"/>
+    <author>
+      <name>Dan Oneata</name>
+    </author>
+    <author>
+      <name>Horia Cucu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2005.11651v1</id>
+    <title>Successive Refinement of Privacy</title>
+    <updated>2020-05-24T04:16:01Z</updated>
+    <link href="https://arxiv.org/abs/2005.11651v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2005.11651v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This work examines a novel question: how much randomness is needed to achieve local differential privacy (LDP)? A motivating scenario is providing {\em multiple levels of privacy} to multiple analysts, either for distribution or for heavy-hitter estimation, using the \emph{same} (randomized) output. We call this setting \emph{successive refinement of privacy}, as it provides hierarchical access to the raw data with different privacy levels. For example, the same randomized output could enable one analyst to reconstruct the input, while another can only estimate the distribution subject to LDP requirements. This extends the classical Shannon (wiretap) security setting to local differential privacy. We provide (order-wise) tight characterizations of privacy-utility-randomness trade-offs in several cases for distribution estimation, including the standard LDP setting under a randomness constraint. We also provide a non-trivial privacy mechanism for multi-level privacy. Furthermore, we show that we cannot reuse random keys over time while preserving privacy of each user.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-05-24T04:16:01Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Antonious M. Girgis</name>
+    </author>
+    <author>
+      <name>Deepesh Data</name>
+    </author>
+    <author>
+      <name>Kamalika Chaudhuri</name>
+    </author>
+    <author>
+      <name>Christina Fragouli</name>
+    </author>
+    <author>
+      <name>Suhas Diggavi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2404.15406v2</id>
+    <title>Wiki-LLaVA: Hierarchical Retrieval-Augmented Generation for Multimodal LLMs</title>
+    <updated>2024-05-22T07:15:18Z</updated>
+    <link href="https://arxiv.org/abs/2404.15406v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2404.15406v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal LLMs are the natural evolution of LLMs, and enlarge their capabilities so as to work beyond the pure textual modality. As research is being carried out to design novel architectures and vision-and-language adapters, in this paper we concentrate on endowing such models with the capability of answering questions that require external knowledge. Our approach, termed Wiki-LLaVA, aims at integrating an external knowledge source of multimodal documents, which is accessed through a hierarchical retrieval pipeline. Relevant passages, using this approach, are retrieved from the external knowledge source and employed as additional context for the LLM, augmenting the effectiveness and precision of generated dialogues. We conduct extensive experiments on datasets tailored for visual question answering with external data and demonstrate the appropriateness of our approach.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-04-23T18:00:09Z</published>
+    <arxiv:comment>CVPR 2024 Workshop on What is Next in Multimodal Foundation Models</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Davide Caffagni</name>
+    </author>
+    <author>
+      <name>Federico Cocchi</name>
+    </author>
+    <author>
+      <name>Nicholas Moratelli</name>
+    </author>
+    <author>
+      <name>Sara Sarto</name>
+    </author>
+    <author>
+      <name>Marcella Cornia</name>
+    </author>
+    <author>
+      <name>Lorenzo Baraldi</name>
+    </author>
+    <author>
+      <name>Rita Cucchiara</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2307.03388v1</id>
+    <title>General-Purpose Multimodal Transformer meets Remote Sensing Semantic Segmentation</title>
+    <updated>2023-07-07T04:58:34Z</updated>
+    <link href="https://arxiv.org/abs/2307.03388v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2307.03388v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The advent of high-resolution multispectral/hyperspectral sensors, LiDAR DSM (Digital Surface Model) information and many others has provided us with an unprecedented wealth of data for Earth Observation. Multimodal AI seeks to exploit those complementary data sources, particularly for complex tasks like semantic segmentation. While specialized architectures have been developed, they are highly complicated via significant effort in model design, and require considerable re-engineering whenever a new modality emerges. Recent trends in general-purpose multimodal networks have shown great potential to achieve state-of-the-art performance across multiple multimodal tasks with one unified architecture. In this work, we investigate the performance of PerceiverIO, one in the general-purpose multimodal family, in the remote sensing semantic segmentation domain. Our experiments reveal that this ostensibly universal network struggles with object scale variation in remote sensing images and fails to detect the presence of cars from a top-down view. To address these issues, even with extreme class imbalance issues, we propose a spatial and volumetric learning component. Specifically, we design a UNet-inspired module that employs 3D convolution to encode vital local information and learn cross-modal features simultaneously, while reducing network computational burden via the cross-attention mechanism of PerceiverIO. The effectiveness of the proposed component is validated through extensive experiments comparing it with other methods such as 2D convolution, and dual local module (\ie the combination of Conv2D 1x1 and Conv2D 3x3 inspired by UNetFormer). The proposed method achieves competitive results with specialized architectures like UNetFormer and SwinUNet, showing its potential to minimize network architecture engineering with a minimal compromise on the performance.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-07-07T04:58:34Z</published>
+    <arxiv:comment>Accepted to CVPR Workshop on Multimodal Learning for Earth and Environment 2023</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Nhi Kieu</name>
+    </author>
+    <author>
+      <name>Kien Nguyen</name>
+    </author>
+    <author>
+      <name>Sridha Sridharan</name>
+    </author>
+    <author>
+      <name>Clinton Fookes</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1311.7584v2</id>
+    <title>On the Communication Complexity of Secure Computation</title>
+    <updated>2014-04-13T15:32:24Z</updated>
+    <link href="https://arxiv.org/abs/1311.7584v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1311.7584v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Information theoretically secure multi-party computation (MPC) is a central primitive of modern cryptography. However, relatively little is known about the communication complexity of this primitive.
+  In this work, we develop powerful information theoretic tools to prove lower bounds on the communication complexity of MPC. We restrict ourselves to a 3-party setting in order to bring out the power of these tools without introducing too many complications. Our techniques include the use of a data processing inequality for residual information - i.e., the gap between mutual information and Gács-Körner common information, a new information inequality for 3-party protocols, and the idea of distribution switching by which lower bounds computed under certain worst-case scenarios can be shown to apply for the general case.
+  Using these techniques we obtain tight bounds on communication complexity by MPC protocols for various interesting functions. In particular, we show concrete functions that have "communication-ideal" protocols, which achieve the minimum communication simultaneously on all links in the network. Also, we obtain the first explicit example of a function that incurs a higher communication cost than the input length in the secure computation model of Feige, Kilian and Naor (1994), who had shown that such functions exist. We also show that our communication bounds imply tight lower bounds on the amount of randomness required by MPC protocols for many interesting functions.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-11-29T14:55:17Z</published>
+    <arxiv:comment>37 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Deepesh Data</name>
+    </author>
+    <author>
+      <name>Vinod M. Prabhakaran</name>
+    </author>
+    <author>
+      <name>Manoj M. Prabhakaran</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1612.07612v2</id>
+    <title>MixedTrails: Bayesian hypothesis comparison on heterogeneous sequential data</title>
+    <updated>2017-07-11T17:48:43Z</updated>
+    <link href="https://arxiv.org/abs/1612.07612v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1612.07612v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Sequential traces of user data are frequently observed online and offline, e.g., as sequences of visited websites or as sequences of locations captured by GPS. However, understanding factors explaining the production of sequence data is a challenging task, especially since the data generation is often not homogeneous. For example, navigation behavior might change in different phases of browsing a website, or movement behavior may vary between groups of users. In this work, we tackle this task and propose MixedTrails, a Bayesian approach for comparing the plausibility of hypotheses regarding the generative processes of heterogeneous sequence data. Each hypothesis is derived from existing literature, theory or intuition and represents a belief about transition probabilities between a set of states that can vary between groups of observed transitions. For example, when trying to understand human movement in a city and given some observed data, a hypothesis assuming tourists to be more likely to move towards points of interests than locals, can be shown to be more plausible than a hypothesis assuming the opposite. Our approach incorporates such hypotheses as Bayesian priors in a generative mixed transition Markov chain model, and compares their plausibility utilizing Bayes factors. We discuss analytical and approximate inference methods for calculating the marginal likelihoods for Bayes factors, give guidance on interpreting the results, and illustrate our approach with several experiments on synthetic and empirical data from Wikipedia and Flickr. Thus, this work enables a novel kind of analysis for studying sequential data in many application areas.</summary>
+    <category term="cs.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.data-an" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.soc-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-12-21T13:15:25Z</published>
+    <arxiv:comment>Published in Data Mining and Knowledge Discovery (2017) and presented at ECML PKDD 2017</arxiv:comment>
+    <arxiv:primary_category term="cs.SI"/>
+    <arxiv:journal_ref>Data Mining and Knowledge Discovery (2017)</arxiv:journal_ref>
+    <author>
+      <name>Martin Becker</name>
+    </author>
+    <author>
+      <name>Florian Lemmerich</name>
+    </author>
+    <author>
+      <name>Philipp Singer</name>
+    </author>
+    <author>
+      <name>Markus Strohmaier</name>
+    </author>
+    <author>
+      <name>Andreas Hotho</name>
+    </author>
+    <arxiv:doi>10.1007/s10618-017-0518-x</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s10618-017-0518-x" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.05888v2</id>
+    <title>BioAutoML-NAS: An End-to-End AutoML Framework for Multimodal Insect Classification via Neural Architecture Search on Large-Scale Biodiversity Data</title>
+    <updated>2026-06-15T05:56:56Z</updated>
+    <link href="https://arxiv.org/abs/2510.05888v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.05888v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Insect classification is important for agricultural management and ecological research, as it directly affects crop health and production. However, this task remains challenging due to the complex characteristics of insects, class imbalance, and large-scale datasets. To address these issues, we propose BioAutoML-NAS, the first BioAutoML model using multimodal data, including images, and metadata, which applies neural architecture search (NAS) for images to automatically learn the best operations for each connection within each cell. Multiple cells are stacked to form the full network, each extracting detailed image feature representations. A multimodal fusion module combines image embeddings with metadata, allowing the model to use both visual and categorical biological information to classify insects. An alternating bi-level optimization training strategy jointly updates network weights and architecture parameters, while zero operations remove less important connections, producing sparse, efficient, and high-performing architectures. Extensive evaluation on the BIOSCAN-5M dataset demonstrates that BioAutoML-NAS achieves 96.81% accuracy, 97.46% precision, 96.81% recall, and a 97.05% F1 score, outperforming state-of-the-art transfer learning, transformer, AutoML, and NAS methods by approximately 16%, 10%, and 8% respectively. Further validation on the Insects-1M dataset obtains 93.25% accuracy, 93.71% precision, 92.74% recall, and a 93.22% F1 score. These results demonstrate that BioAutoML-NAS provides accurate, confident insect classification that supports modern sustainable farming.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-07T13:00:12Z</published>
+    <arxiv:comment>Accepted in IEEE Transactions on Big Data</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <arxiv:journal_ref>IEEE Transactions on Big Data (2026)</arxiv:journal_ref>
+    <author>
+      <name>Arefin Ittesafun Abian</name>
+    </author>
+    <author>
+      <name>Debopom Sutradhar</name>
+    </author>
+    <author>
+      <name>Md Rafi Ur Rashid</name>
+    </author>
+    <author>
+      <name>Reem E. Mohamed</name>
+    </author>
+    <author>
+      <name>Md Rafiqul Islam</name>
+    </author>
+    <author>
+      <name>Asif Karim</name>
+    </author>
+    <author>
+      <name>Kheng Cher Yeo</name>
+    </author>
+    <author>
+      <name>Sami Azam</name>
+    </author>
+    <arxiv:doi>10.1109/TBDATA.2026.3705415</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/TBDATA.2026.3705415" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.02153v4</id>
+    <title>A Joint Variational Framework for Multimodal X-ray Ptychography and Fluorescence Reconstruction</title>
+    <updated>2026-06-12T02:14:16Z</updated>
+    <link href="https://arxiv.org/abs/2511.02153v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.02153v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recovering high-resolution structural and compositional information from coherent X-ray measurements involves solving coupled, nonlinear, and ill-posed inverse problems. Ptychography reconstructs a complex transmission function from overlapping diffraction patterns, while X-ray fluorescence provides quantitative, element-specific contrast at lower spatial resolution. We formulate a joint variational framework that integrates these two modalities into a single nonlinear least-squares problem with shared spatial variables. This formulation enforces cross-modal consistency between structural and compositional estimates, improving conditioning and promoting stable convergence. The resulting optimization couples complementary contrast mechanisms (i.e., phase and absorption from ptychography, elemental composition from fluorescence) within a unified inverse model. Numerical experiments on simulated data demonstrate that the joint reconstruction achieves faster convergence, sharper and more quantitative reconstructions, and lower relative error compared with separate inversions. The proposed approach illustrates how multimodal variational formulations can enhance stability, resolution, and interpretability in computational X-ray imaging.</summary>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-04T00:44:46Z</published>
+    <arxiv:comment>Keywords: inverse problems, x-ray imaging science, ill-posedness, joint reconstruction. This work is sponsored by NSF DMS-2338904</arxiv:comment>
+    <arxiv:primary_category term="math.NA"/>
+    <author>
+      <name>Chengru Eric Zou</name>
+    </author>
+    <author>
+      <name>Elle Buser</name>
+    </author>
+    <author>
+      <name>Zichao Wendy Di</name>
+    </author>
+    <author>
+      <name>Yuanzhe Xi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.08826v3</id>
+    <title>Ask in Any Modality: A Comprehensive Survey on Multimodal Retrieval-Augmented Generation</title>
+    <updated>2025-06-02T17:15:08Z</updated>
+    <link href="https://arxiv.org/abs/2502.08826v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.08826v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Language Models (LLMs) suffer from hallucinations and outdated knowledge due to their reliance on static training data. Retrieval-Augmented Generation (RAG) mitigates these issues by integrating external dynamic information for improved factual grounding. With advances in multimodal learning, Multimodal RAG extends this approach by incorporating multiple modalities such as text, images, audio, and video to enhance the generated outputs. However, cross-modal alignment and reasoning introduce unique challenges beyond those in unimodal RAG. This survey offers a structured and comprehensive analysis of Multimodal RAG systems, covering datasets, benchmarks, metrics, evaluation, methodologies, and innovations in retrieval, fusion, augmentation, and generation. We review training strategies, robustness enhancements, loss functions, and agent-based approaches, while also exploring the diverse Multimodal RAG scenarios. In addition, we outline open challenges and future directions to guide research in this evolving field. This survey lays the foundation for developing more capable and reliable AI systems that effectively leverage multimodal dynamic external knowledge bases. All resources are publicly available at https://github.com/llm-lab-org/Multimodal-RAG-Survey.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-12T22:33:41Z</published>
+    <arxiv:comment>GitHub repository: https://github.com/llm-lab-org/Multimodal-RAG-Survey</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Mohammad Mahdi Abootorabi</name>
+    </author>
+    <author>
+      <name>Amirhosein Zobeiri</name>
+    </author>
+    <author>
+      <name>Mahdi Dehghani</name>
+    </author>
+    <author>
+      <name>Mohammadali Mohammadkhani</name>
+    </author>
+    <author>
+      <name>Bardia Mohammadi</name>
+    </author>
+    <author>
+      <name>Omid Ghahroodi</name>
+    </author>
+    <author>
+      <name>Mahdieh Soleymani Baghshah</name>
+    </author>
+    <author>
+      <name>Ehsaneddin Asgari</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.16026v2</id>
+    <title>A tutorial on discovering and quantifying the effect of latent causal sources of multimodal EHR data</title>
+    <updated>2025-10-31T14:35:48Z</updated>
+    <link href="https://arxiv.org/abs/2510.16026v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.16026v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We provide an accessible description of a peer-reviewed generalizable causal machine learning pipeline to (i) discover latent causal sources of large-scale electronic health records observations, and (ii) quantify the source causal effects on clinical outcomes. We illustrate how imperfect multimodal clinical data can be processed, decomposed into probabilistic independent latent sources, and used to train taskspecific causal models from which individual causal effects can be estimated. We summarize the findings of the two real-world applications of the approach to date as a demonstration of its versatility and utility for medical discovery at scale.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.AP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-15T20:39:11Z</published>
+    <arxiv:comment>Accepted at the 1st Multimodal Representation Learning for Healthcare EurIPS 2025 Workshop (https://multimodal-rep-learning-for-health.github.io/)</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Marco Barbero-Mota</name>
+    </author>
+    <author>
+      <name>Eric V. Strobl</name>
+    </author>
+    <author>
+      <name>John M. Still</name>
+    </author>
+    <author>
+      <name>William W. Stead</name>
+    </author>
+    <author>
+      <name>Thomas A. Lasko</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1602.08181v2</id>
+    <title>Ratios and Cauchy Distribution</title>
+    <updated>2016-03-03T20:32:38Z</updated>
+    <link href="https://arxiv.org/abs/1602.08181v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1602.08181v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>It is well known that the ratio of two independent standard Gaussian random variables follows a Cauchy distribution. Any convex combination of independent standard Cauchy random variables also follows a Cauchy distribution. In a recent joint work, the author proved a surprising multivariate generalization of the above facts. Fix $m &gt; 1$ and let $Σ$ be a $m\times m$ positive semi-definite matrix. Let $X,Y \sim \mathrm{N}(0,Σ)$ be independent vectors. Let $\vec{w}=(w_1, \dots, w_m)$ be a vector of non-negative numbers with $\sum_{j=1}^m w_j = 1.$ The author proved recently that the random variable $$ Z = \sum_{j=1}^m w_j\frac{X_j}{Y_j}\; $$ also has the standard Cauchy distribution. In this note, we provide some more understanding of this result and give a number of natural generalizations. In particular, we observe that if $(X,Y)$ have the same marginal distribution, they need neither be independent nor be jointly normal for $Z$ to be Cauchy distributed. In fact, our calculations suggest that joint normality of $(X,Y)$ may be the only instance in which they can be independent. Our results also give a method to construct copulas of Cauchy distributions.</summary>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-02-26T02:47:13Z</published>
+    <arxiv:comment>Generalization of a recent conjecture on Cauchy distribution; added a Remark and updated references</arxiv:comment>
+    <arxiv:primary_category term="math.ST"/>
+    <author>
+      <name>Natesh S. Pillai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2208.10822v1</id>
+    <title>Multimodal Across Domains Gaze Target Detection</title>
+    <updated>2022-08-23T09:09:00Z</updated>
+    <link href="https://arxiv.org/abs/2208.10822v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2208.10822v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper addresses the gaze target detection problem in single images captured from the third-person perspective. We present a multimodal deep architecture to infer where a person in a scene is looking. This spatial model is trained on the head images of the person-of- interest, scene and depth maps representing rich context information. Our model, unlike several prior art, do not require supervision of the gaze angles, do not rely on head orientation information and/or location of the eyes of person-of-interest. Extensive experiments demonstrate the stronger performance of our method on multiple benchmark datasets. We also investigated several variations of our method by altering joint-learning of multimodal data. Some variations outperform a few prior art as well. First time in this paper, we inspect domain adaption for gaze target detection, and we empower our multimodal network to effectively handle the domain gap across datasets. The code of the proposed method is available at https://github.com/francescotonini/multimodal-across-domains-gaze-target-detection.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-08-23T09:09:00Z</published>
+    <arxiv:comment>Accepted to 24th ACM International Conference on Multimodal Interaction (ICMI 2022)</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Francesco Tonini</name>
+    </author>
+    <author>
+      <name>Cigdem Beyan</name>
+    </author>
+    <author>
+      <name>Elisa Ricci</name>
+    </author>
+    <arxiv:doi>10.1145/3536221.3556624</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3536221.3556624" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.17856v4</id>
+    <title>Enhancing clinical decision support with physiological waveforms -- a multimodal benchmark in emergency care</title>
+    <updated>2025-04-30T21:32:54Z</updated>
+    <link href="https://arxiv.org/abs/2407.17856v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.17856v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Background: AI-driven prediction algorithms have the potential to enhance emergency medicine by enabling rapid and accurate decision-making regarding patient status and potential deterioration. However, the integration of multimodal data, including raw waveform signals, remains underexplored in clinical decision support. Methods: We present a dataset and benchmarking protocol designed to advance multimodal decision support in emergency care. Our models utilize demographics, biometrics, vital signs, laboratory values, and electrocardiogram (ECG) waveforms as inputs to predict both discharge diagnoses and patient deterioration. Results: The diagnostic model achieves area under the receiver operating curve (AUROC) scores above 0.8 for 609 out of 1,428 conditions, covering both cardiac (e.g., myocardial infarction) and non-cardiac (e.g., renal disease, diabetes) diagnoses. The deterioration model attains AUROC scores above 0.8 for 14 out of 15 targets, accurately predicting critical events such as cardiac arrest, mechanical ventilation, ICU admission, and mortality. Conclusions: Our study highlights the positive impact of incorporating raw waveform data into decision support models, improving predictive performance. By introducing a unique, publicly available dataset and baseline models, we provide a foundation for measurable progress in AI-driven decision support for emergency care.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-25T08:21:46Z</published>
+    <arxiv:comment>Version accepted by Computers in Biology and Medicine: 21 pages, 2 figures, code available under https://github.com/AI4HealthUOL/MDS-ED, dataset available under https://physionet.org/content/multimodal-emergency-benchmark/</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>J.M. Lopez Alcaraz, H. Bouma, N. Strodthoff, Enhancing clinical decision support with physiological waveforms -- A multimodal benchmark in emergency care, Computers in Biology and Medicine, Vol. 192, Part A, 2025, 110196</arxiv:journal_ref>
+    <author>
+      <name>Juan Miguel Lopez Alcaraz</name>
+    </author>
+    <author>
+      <name>Hjalmar Bouma</name>
+    </author>
+    <author>
+      <name>Nils Strodthoff</name>
+    </author>
+    <arxiv:doi>10.1016/j.compbiomed.2025.110196</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.compbiomed.2025.110196" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2302.09934v1</id>
+    <title>CISum: Learning Cross-modality Interaction to Enhance Multimodal Semantic Coverage for Multimodal Summarization</title>
+    <updated>2023-02-20T11:57:23Z</updated>
+    <link href="https://arxiv.org/abs/2302.09934v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2302.09934v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal summarization (MS) aims to generate a summary from multimodal input. Previous works mainly focus on textual semantic coverage metrics such as ROUGE, which considers the visual content as supplemental data. Therefore, the summary is ineffective to cover the semantics of different modalities. This paper proposes a multi-task cross-modality learning framework (CISum) to improve multimodal semantic coverage by learning the cross-modality interaction in the multimodal article. To obtain the visual semantics, we translate images into visual descriptions based on the correlation with text content. Then, the visual description and text content are fused to generate the textual summary to capture the semantics of the multimodal content, and the most relevant image is selected as the visual summary. Furthermore, we design an automatic multimodal semantics coverage metric to evaluate the performance. Experimental results show that CISum outperforms baselines in multimodal semantics coverage metrics while maintaining the excellent performance of ROUGE and BLEU.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-02-20T11:57:23Z</published>
+    <arxiv:comment>accepted by SIAM SDM2023</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Litian Zhang</name>
+    </author>
+    <author>
+      <name>Xiaoming Zhang</name>
+    </author>
+    <author>
+      <name>Ziming Guo</name>
+    </author>
+    <author>
+      <name>Zhipeng Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2210.17444v3</id>
+    <title>Multimodal Information Bottleneck: Learning Minimal Sufficient Unimodal and Multimodal Representations</title>
+    <updated>2022-12-05T12:41:04Z</updated>
+    <link href="https://arxiv.org/abs/2210.17444v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.17444v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Learning effective joint embedding for cross-modal data has always been a focus in the field of multimodal machine learning. We argue that during multimodal fusion, the generated multimodal embedding may be redundant, and the discriminative unimodal information may be ignored, which often interferes with accurate prediction and leads to a higher risk of overfitting. Moreover, unimodal representations also contain noisy information that negatively influences the learning of cross-modal dynamics. To this end, we introduce the multimodal information bottleneck (MIB), aiming to learn a powerful and sufficient multimodal representation that is free of redundancy and to filter out noisy information in unimodal representations. Specifically, inheriting from the general information bottleneck (IB), MIB aims to learn the minimal sufficient representation for a given task by maximizing the mutual information between the representation and the target and simultaneously constraining the mutual information between the representation and the input data. Different from general IB, our MIB regularizes both the multimodal and unimodal representations, which is a comprehensive and flexible framework that is compatible with any fusion methods. We develop three MIB variants, namely, early-fusion MIB, late-fusion MIB, and complete MIB, to focus on different perspectives of information constraints. Experimental results suggest that the proposed method reaches state-of-the-art performance on the tasks of multimodal sentiment analysis and multimodal emotion recognition across three widely used datasets. The codes are available at \url{https://github.com/TmacMai/Multimodal-Information-Bottleneck}.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-31T16:14:18Z</published>
+    <arxiv:comment>This paper is accepted by IEEE Transactions on Multimedia. This version addresses some mistakes and typos in the original paper. The appendix is available at https://github.com/TmacMai/Multimodal-Information-Bottleneck/blob/main/appendix.pdf</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Sijie Mai</name>
+    </author>
+    <author>
+      <name>Ying Zeng</name>
+    </author>
+    <author>
+      <name>Haifeng Hu</name>
+    </author>
+    <arxiv:doi>10.1109/TMM.2022.3171679</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/TMM.2022.3171679" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2301.07526v1</id>
+    <title>AutoFraudNet: A Multimodal Network to Detect Fraud in the Auto Insurance Industry</title>
+    <updated>2023-01-15T13:50:32Z</updated>
+    <link href="https://arxiv.org/abs/2301.07526v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2301.07526v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In the insurance industry detecting fraudulent claims is a critical task with a significant financial impact. A common strategy to identify fraudulent claims is looking for inconsistencies in the supporting evidence. However, this is a laborious and cognitively heavy task for human experts as insurance claims typically come with a plethora of data from different modalities (e.g. images, text and metadata). To overcome this challenge, the research community has focused on multimodal machine learning frameworks that can efficiently reason through multiple data sources. Despite recent advances in multimodal learning, these frameworks still suffer from (i) challenges of joint-training caused by the different characteristics of different modalities and (ii) overfitting tendencies due to high model complexity. In this work, we address these challenges by introducing a multimodal reasoning framework, AutoFraudNet (Automobile Insurance Fraud Detection Network), for detecting fraudulent auto-insurance claims. AutoFraudNet utilizes a cascaded slow fusion framework and state-of-the-art fusion block, BLOCK Tucker, to alleviate the challenges of joint-training. Furthermore, it incorporates a light-weight architectural design along with additional losses to prevent overfitting. Through extensive experiments conducted on a real-world dataset, we demonstrate: (i) the merits of multimodal approaches, when compared to unimodal and bimodal methods, and (ii) the effectiveness of AutoFraudNet in fusing various modalities to boost performance (over 3\% in PR AUC).</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-01-15T13:50:32Z</published>
+    <arxiv:comment>Published at The AAAI-2023 Workshop On Multimodal AI For Financial Forecasting</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Azin Asgarian</name>
+    </author>
+    <author>
+      <name>Rohit Saha</name>
+    </author>
+    <author>
+      <name>Daniel Jakubovitz</name>
+    </author>
+    <author>
+      <name>Julia Peyre</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.19334v2</id>
+    <title>LLMs Meet Multimodal Generation and Editing: A Survey</title>
+    <updated>2024-06-09T11:34:12Z</updated>
+    <link href="https://arxiv.org/abs/2405.19334v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.19334v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>With the recent advancement in large language models (LLMs), there is a growing interest in combining LLMs with multimodal learning. Previous surveys of multimodal large language models (MLLMs) mainly focus on multimodal understanding. This survey elaborates on multimodal generation and editing across various domains, comprising image, video, 3D, and audio. Specifically, we summarize the notable advancements with milestone works in these fields and categorize these studies into LLM-based and CLIP/T5-based methods. Then, we summarize the various roles of LLMs in multimodal generation and exhaustively investigate the critical technical components behind these methods and the multimodal datasets utilized in these studies. Additionally, we dig into tool-augmented multimodal agents that can leverage existing generative models for human-computer interaction. Lastly, we discuss the advancements in the generative AI safety field, investigate emerging applications, and discuss future prospects. Our work provides a systematic and insightful overview of multimodal generation and processing, which is expected to advance the development of Artificial Intelligence for Generative Content (AIGC) and world models. A curated list of all related papers can be found at https://github.com/YingqingHe/Awesome-LLMs-meet-Multimodal-Generation</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SD" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-29T17:59:20Z</published>
+    <arxiv:comment>52 Pages with 16 Figures, 12 Tables, and 545 References. GitHub Repository at: https://github.com/YingqingHe/Awesome-LLMs-meet-Multimodal-Generation</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Yingqing He</name>
+    </author>
+    <author>
+      <name>Zhaoyang Liu</name>
+    </author>
+    <author>
+      <name>Jingye Chen</name>
+    </author>
+    <author>
+      <name>Zeyue Tian</name>
+    </author>
+    <author>
+      <name>Hongyu Liu</name>
+    </author>
+    <author>
+      <name>Xiaowei Chi</name>
+    </author>
+    <author>
+      <name>Runtao Liu</name>
+    </author>
+    <author>
+      <name>Ruibin Yuan</name>
+    </author>
+    <author>
+      <name>Yazhou Xing</name>
+    </author>
+    <author>
+      <name>Wenhai Wang</name>
+    </author>
+    <author>
+      <name>Jifeng Dai</name>
+    </author>
+    <author>
+      <name>Yong Zhang</name>
+    </author>
+    <author>
+      <name>Wei Xue</name>
+    </author>
+    <author>
+      <name>Qifeng Liu</name>
+    </author>
+    <author>
+      <name>Yike Guo</name>
+    </author>
+    <author>
+      <name>Qifeng Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1911.01825v1</id>
+    <title>Unrecognized Sources of Uncertainties (USU) in Experimental Nuclear Data</title>
+    <updated>2019-11-02T04:15:53Z</updated>
+    <link href="https://arxiv.org/abs/1911.01825v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1911.01825v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Evaluated nuclear data uncertainties are often perceived as unrealistic, most often because they are thought to be too small. The impact of this issue in applied nuclear science has been discussed widely in recent years. Commonly suggested causes are: poor estimates of specific error components, neglect of uncertainty correlations, and overlooked known error sources. However, instances have been reported where very careful, objective assessments of all known error sources have been made with realistic error magnitudes and correlations provided, yet the resulting evaluated uncertainties still appear to be inconsistent with observed scatter of predicted mean values. These discrepancies might be attributed to significant unrecognized sources of uncertainty (USU) that limit the accuracy to which these physical quantities can be determined. The objective of our work has been to develop procedures for revealing and including USU estimates in nuclear data evaluations involving experimental input data. We conclude that the presence of USU may be revealed, and estimates of magnitudes made, through quantitative analyses. This paper identifies several specific clues that can be explored by evaluators in identifying the existence of USU. It then describes numerical procedures to generate quantitative estimates of USU magnitudes. Key requirements for these procedures to be viable are that sufficient numbers of data points be available, for statistical reasons, and that additional supporting information about the measurements be provided by the experimenters. Realistic examples are described to illustrate these procedures and demonstrate their outcomes as well as limitations. Our work strongly supports the view that USU is an important issue in nuclear data evaluation, with significant consequences for applications, and that this topic warrants further investigation by the nuclear science community.</summary>
+    <category term="physics.data-an" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nucl-ex" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nucl-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-11-02T04:15:53Z</published>
+    <arxiv:comment>39 pages, 16 figures, submitted to Nuclear Data Sheets</arxiv:comment>
+    <arxiv:primary_category term="physics.data-an"/>
+    <arxiv:journal_ref>Nuclear Data Sheets, Volume 163 (2020) 191-227</arxiv:journal_ref>
+    <author>
+      <name>R. Capote</name>
+    </author>
+    <author>
+      <name>S. Badikov</name>
+    </author>
+    <author>
+      <name>A. Carlson</name>
+    </author>
+    <author>
+      <name>I. Duran</name>
+    </author>
+    <author>
+      <name>F. Gunsing</name>
+    </author>
+    <author>
+      <name>D. Neudecker</name>
+    </author>
+    <author>
+      <name>V. G. Pronyaev</name>
+    </author>
+    <author>
+      <name>P. Schillebeeckx</name>
+    </author>
+    <author>
+      <name>G. Schnabel</name>
+    </author>
+    <author>
+      <name>D. L. Smith</name>
+    </author>
+    <author>
+      <name>A. Wallner</name>
+    </author>
+    <arxiv:doi>10.1016/j.nds.2019.12.004</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.nds.2019.12.004" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.04678v3</id>
+    <title>ChangeBridge: Spatiotemporal Image Generation with Multimodal Controls for Remote Sensing</title>
+    <updated>2026-04-09T07:56:37Z</updated>
+    <link href="https://arxiv.org/abs/2507.04678v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.04678v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Spatiotemporal image generation is a highly meaningful task, which can generate future scenes conditioned on given observations. However, existing change generation methods can only handle event-driven changes (e.g., new buildings) and fail to model cross-temporal variations (e.g., seasonal shifts). In this work, we propose ChangeBridge, a conditional spatiotemporal image generation model for remote sensing. Given pre-event images and multimodal event controls, ChangeBridge generates post-event scenes that are both spatially and temporally coherent. The core idea is a drift-asynchronous diffusion bridge. Specifically, it consists of three main modules: a) Composed Bridge Initialization, which replaces noise initialization. It starts the diffusion from a composed pre-event state, modeling a diffusion bridge process. b) Asynchronous Drift Diffusion, which uses a pixel-wise drift map, assigning different drift magnitudes to event and temporal evolution. This enables differentiated generation during the pre-to-post transition. c) Drift-Aware Denoising, which embeds the drift map into the denoising network, guiding drift-aware reconstruction. Experiments show that ChangeBridge can generate better cross-spatiotemporal aligned scenarios compared to state-of-the-art methods. Additionally, ChangeBridge shows great potential for land-use planning and as a data generation engine for a series of change detection tasks. Code is available at https://github.com/zhenghuizhao/ChangeBridge</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-07T05:51:55Z</published>
+    <arxiv:comment>Accepted by CVPR 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhenghui Zhao</name>
+    </author>
+    <author>
+      <name>Chen Wu</name>
+    </author>
+    <author>
+      <name>Xiangyong Cao</name>
+    </author>
+    <author>
+      <name>Di Wang</name>
+    </author>
+    <author>
+      <name>Hongruixuan Chen</name>
+    </author>
+    <author>
+      <name>Datao Tang</name>
+    </author>
+    <author>
+      <name>Liangpei Zhang</name>
+    </author>
+    <author>
+      <name>Zhuo Zheng</name>
+    </author>
+  </entry>
+</feed>

@@ -87,10 +87,13 @@ def main() -> None:
         if source.suffix.casefold() == ".pdf":
             from pypdf import PdfReader
 
-            pages = [
-                page.extract_text(extraction_mode="layout") or ""
-                for page in PdfReader(source).pages
-            ]
+            pages = []
+            for page in PdfReader(source).pages:
+                layout = page.extract_text(extraction_mode="layout") or ""
+                plain = page.extract_text() or ""
+                # Some ACL PDFs expose only page furniture in layout mode even
+                # though the standard extractor recovers the full text.
+                pages.append(plain if len(plain) > 1.5 * len(layout) else layout)
             output.write_text("\n\n".join(pages).strip() + "\n", encoding="utf-8")
         else:
             extractor = Ar5ivTextParser()

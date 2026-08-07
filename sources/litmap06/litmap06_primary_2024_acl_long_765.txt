@@ -1,0 +1,1132 @@
+Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers), pages 14188–14200
+August 11-16, 2024 ©2024 Association for Computational Linguistics
+Multi-modal Preference Alignment Remedies Degradation of Visual
+Instruction Tuning on Language Models
+Shengzhi Li
+TIFIN Inc
+alex.li@tifin.com
+Rongyu Lin
+KAUST
+rongyu.lin@kaust.edu.sa
+Shichao Pei*
+University of Massachusetts Boston
+shichao.pei@umb.edu
+Abstract
+Multi-modal large language models (MLLMs)
+are expected to support multi-turn queries of
+interchanging image and text modalities in
+production. However, the current MLLMs
+trained with visual-question-answering (VQA)
+datasets could suffer from degradation, as
+VQA datasets lack the diversity and complex-
+ity of the original text instruction datasets
+with which the underlying language model was
+trained. To address this degradation, we first
+collect a lightweight, 5k-sample VQA prefer-
+ence dataset where answers were annotated by
+Gemini for five quality metrics in a granular
+fashion and investigate standard Supervised
+Fine-tuning, rejection sampling, Direct Pref-
+erence Optimization (DPO) and SteerLM algo-
+rithms. Our findings indicate that with DPO,
+we can surpass the instruction-following ca-
+pabilities of the language model, achieving a
+6.73 score on MT-Bench, compared to Vicuna’s
+6.57 and LLaV A’s 5.99. This enhancement
+in textual instruction-following capability cor-
+relates with boosted visual instruction perfor-
+mance (+4.9% on MM-Vet, +6% on LLaV A-
+Bench), with minimal alignment tax on vi-
+sual knowledge benchmarks compared to the
+previous RLHF approach. In conclusion, we
+propose a distillation-based multi-modal align-
+ment model with fine-grained annotations on a
+small dataset that restores and boosts MLLM’s
+language capability after visual instruction tun-
+ing.
+1 Introduction
+Recent advancements in artificial intelligence have
+led to the rise of multi-modal large language mod-
+els (MLLMs), which combine textual and visual
+interpretation capabilities in a single model (Shen
+et al., 2023). However, effectively blending multi-
+modality in one system has proven non-trivial. In-
+tegrating diverse data forms often creates internal
+*Corresponding author.
+representation conflicts, giving rise to the issue
+known as "catastrophic forgetting" (Kirkpatrick
+et al., 2017). The diversity constraint in visual
+question answering (VQA) datasets could be at-
+tributed as a source of the issue. VQA tasks typi-
+cally focus on descriptive queries about image con-
+tents, whereas textual datasets encompass a broader
+range of complex cognitive tasks, including rea-
+soning, writing, summarization, and coding. This
+discrepancy in dataset complexity is a key factor
+contributing to the observed performance degrada-
+tion in MLLMs. Our evaluation of models such
+as BLIP-2, InstructBLIP, and LLaV A against lan-
+guage instruction-following benchmarks like MT-
+Bench (Zheng et al., 2023) and AlpacaEval (Li
+et al., 2023b) revealed diminished language ca-
+pabilities in comparison to their linguistic back-
+bones. For instance, LLaV A, built on the Vicuna-
+13b LLM, demonstrated a decline in MT-Bench
+performance from 6.57 to 5.92, even underperform-
+ing the Vicuna-7B model.
+Driven by the limitations observed in distillation-
+based instruction tuning, particularly its con-
+strained generalizability and the narrow perfor-
+mance improvements on tasks outside the training
+distribution, this study investigates the efficacy of
+distillation-based preference alignment in address-
+ing modality conflict in MLLMs. The decision to
+explore this avenue is predicated on the hypothesis
+that integrating AI-generated preference data can
+provide a more granular and nuanced alignment
+with human expectations, potentially mitigating
+the adverse effects of modality conflict.
+This study rigorously evaluates three baseline
+methodologies—Direct Preference Optimization
+(DPO), SteerLM, and Rejection Sampling—as po-
+tential solutions to utilize the distilled preference
+data to enhance the instruction-following capabil-
+ities and address the modality conflict inherent in
+MLLMs. Each of these methods offers a unique
+approach to model alignment, from the direct opti-
+14188
+
+mization of preferences in DPO to the conditional
+supervision in SteerLM and the selective accep-
+tance in Rejection Sampling. Our empirical anal-
+ysis reveals that DPO, in particular, demonstrates
+a pronounced efficacy in reconciling the perfor-
+mance disparities observed between textual and
+visual modalities. By leveraging a refined pref-
+erence dataset, fine-tuned with the DPO objec-
+tive and supplemented with comprehensive anno-
+tations from advanced AI models, DPO not only
+addresses the modality conflict but also signifi-
+cantly enhances the model’s performance across
+a spectrum of benchmarks. The results indicate
+that, through the application of DPO, MLLMs can
+achieve a more robust alignment with human-like
+preferences, thereby mitigating the adverse effects
+of catastrophic forgetting and modality conflict and
+elevating the models’ capabilities to a level that
+surpasses traditional instruction tuning methods.
+Our main contributions are:
+Exploration of Modality Degradation: This
+work is the first to identify and address modality
+degradation in MLLMs, a phenomenon where vi-
+sual instruction tuning detrimentally impacts lan-
+guage instruction capabilities. Our systematic in-
+vestigation into this issue contributes novel insights
+to the field, laying the groundwork for further re-
+search in mitigating such degradation.
+Efficient and scalable preference alignment
+pipeline as remedy Our data collection strategy
+employs a granular quality metric annotation for-
+mat, leveraging cost-effective commercial APIs.
+This scalable approach enables the efficient pro-
+duction of high-quality datasets. We are able to
+surpass LLaV A and Vicuna’s language instruction-
+following capability with DPO on a 6k dataset.
+2 Related Work
+2.1 MLLMs and Visual Instruction Tuning
+Incorporating another modality into large language
+models represents a natural evolution for these sys-
+tems. Modality expansion can be achieved through
+system-level enhancements at inference time, with
+approaches such as Mm-react (Yang et al., 2023),
+Visual ChatGPT (Wu et al., 2023), and Hugging-
+GPT (Shen et al., 2023) enabling the LLM to in-
+voke off-the-shelf vision models and APIs. An al-
+ternative strand of research involves the training of
+end-to-end MLLMs. To avoid the prohibitive costs
+associated with pre-training from scratch, these
+models often integrate pre-trained vision models
+with large language models, applying various de-
+grees of modality adaptation. Mini-GPT4 (Gong
+et al., 2023) focuses solely on training a linear
+projection matrix to connect CLIP-based (Radford
+et al., 2021) vision representations with the LLaMA
+model (Touvron et al., 2023a); BLIP-2 introduces
+a cross-attention module to extract vision tokens
+relevant to the query. Both LLaV A (Liu et al.,
+2023b) and mPlug-OWL (Ye et al., 2023a) fea-
+ture cross-modality connectors between the vision
+and language domains, but they also fine-tune the
+LLM and vision encoder, respectively. Flamingo
+(Alayrac et al., 2022), in contrast, incorporates new
+cross-attention layers directly into the LLM.
+In the language domain, Wei et al. (2022) dis-
+covered that fine-tuning a base LLM with instruc-
+tions described in natural language enhances the
+model’s ability to follow those instructions. In a
+similar vein, MLLMs are typically fine-tuned with
+visual instructions; Mini-GPT4 (Gong et al., 2023)
+utilized template instructions based on image-text
+pairs, while InstructBLIP (Dai et al., 2023), Otter
+(Li et al., 2023a), and LLaV A (Liu et al., 2023b)
+employed human-written visual question-answers
+or synthetically generated question-answer pairs by
+prompting GPT-4 with COCO captions and bound-
+ing boxes (Liu et al., 2023b). However, consid-
+ering that both LLaV A and Instruct-BLIP utilize
+Vicuna (Chiang et al., 2023), it remains a topic
+of debate whether their steps of visual instruction
+tuning genuinely add to the model’s instruction-
+following capabilities or merely conform to the
+instruction-following format.
+2.2 Mitigating Modality Conflict in MLLMs
+In response to modality conflicts, LLaV A (Liu et al.,
+2023b) and mPLUG-OWL (Ye et al., 2023b) rein-
+corporate language instruction data from ShareGPT
+into their training datasets. Despite this, LLaV A
+1.5’s language instruction-following degrades sig-
+nificantly. As measured by MT-Bench, LLaV A-
+1.5-13B lags behind its Vicuna-V1.5-13b (5.99 vs
+6.57) or even the smaller Vicuna-V1.5-7b (5.99 vs
+6.17). While mPLUG-OWL-2 shows promise on
+text benchmarks and addresses modality conflicts
+with new architecture features, it does so at the cost
+of increased complexity and a higher parameter
+count, rising from 7.2 billion to 8.2 billion. These
+modifications necessitate greater computational re-
+sources and complicate the inference process due to
+separate processing pathways for different modali-
+ties.
+14189
+
+2.3 Distillation-based Instruction Tuning
+Smaller open-source models, including Vicuna
+(Chiang et al., 2023), Alpaca, and more recently
+ShareGPT4V (Chen et al., 2023) have been fine-
+tuned using the outputs of large proprietary mod-
+els, yet this approach often falls short in terms
+of broadening the models’ generalization capabili-
+ties. Gudibande et al. (2023) criticizes the reliance
+on imitation for instruction tuning, noting that it
+fails to substantially bridge the performance gap
+for tasks beyond the training data’s scope. Our
+findings suggest that such strategies do not effec-
+tively extend to out-of-distribution scenarios. In
+fact, small-scale distillation efforts tend to overly
+specialize the model, diminishing its performance
+on general benchmarks. This issue was highlighted
+in an experiment where fine-tuning LLaV A with
+a 5k VQA dataset from Gemini Pro-generated an-
+swers led to notable declines across textual and
+visual benchmarks. Our research takes a novel ap-
+proach by exploring alignment-based methods such
+as Direct Preference Optimization (DPO), which
+not only preserves but enhances the model’s capa-
+bilities across diverse benchmarks, thereby offering
+a more effective solution to the limitations of tradi-
+tional distillation-based instruction tuning.
+2.4 Preference Alignment
+The Instruct-GPT series (Ouyang et al., 2022)
+has shown that merely employing supervised fine-
+tuning (SFT) on Large Language Models (LLMs)
+is insufficient for aligning them with human prefer-
+ences. The technique of Reinforcement Learning
+from Human Feedback (RLHF) (Ouyang et al.,
+2022) addresses this by constructing a reward
+model that encapsulates human preferences and
+then applying reinforcement learning to maximize
+this reward. The Direct Preference Optimization
+(DPO) approach posits that directly tuning the pref-
+erence dataset can serve as an effective substitute
+for reward modeling, offering the added benefit
+of reduced computational complexity. SteerLM
+has recently been identified to achieve perfor-
+mance akin to RLHF by incorporating human-
+annotated quality metrics before generation, serv-
+ing as a conditional SFT-based strategy for align-
+ment (Dong et al., 2023). Rejection sampling se-
+lects the highest-rated self-generated sampling and
+applied SFT and has been used in combination with
+RLHF in works such as LLaMA-2 (Touvron et al.,
+2023b). Our experiments with DPO, SteerLM, and
+rejection sampling are compared to the prior work
+applying RLHF to LLaV A models as a baseline.
+2.5 Distilling AI Feedback for Preference
+Alignment
+In the realm of alignment methods, reliance on
+human-annotated preference annotations is com-
+mon. While effective on a large scale, this approach
+incurs substantial costs and operational complexi-
+ties (Touvron et al., 2023b). The effectiveness of
+reward models based on pairwise ranking is con-
+strained by the inherent subjectivity of human pref-
+erences, with LLaMA’s reward model achieving
+an accuracy range of 64.3-70.6% and the LLaV A-
+RLHF model reaching 67%. In response to these
+limitations, Zephyr (Tunstall et al., 2023) and Ul-
+traFeedback (Cui et al., 2023) have utilized pref-
+erence annotations distilled from GPT-4 to train
+models with 7B parameters and achieve promising
+performance. Motivated to adapt this distillation-
+preference alignment approach for MLLMs, our
+work introduces a chain-of-thought prompting cou-
+pled with a granular annotation guide spanning five
+assessment metrics.
+3 Method
+The focus of this study is to investigate improving
+the text instruction following of MLLMs while re-
+taining or potentially enhancing their multi-modal
+capabilities. For this purpose, we propose to har-
+ness alignment methods that utilize self-sampled
+responses and preference annotations in addition
+to Supervised Fine-Tuning (SFT) as a baseline.
+3.1 Data Collection
+Sources of Multi-modal Prompts. We have cu-
+rated 5,000 samples from SciGraphQA (Li and
+Tajbakhsh, 2023) and LRV-Instruct (Liu et al.,
+2023a) to assemble the image-text prompts for our
+multi-modal preference dataset. SciGraphQA is
+a multi-turn question-answering dataset regarding
+scientific graphs. The LRV-Instruct dataset is a
+visual instruction dataset aimed at mitigating hal-
+lucinations by incorporating both positive prompts
+(inquiring about objects present in the image) and
+negative prompts (requesting information about ab-
+sent objects) (Liu et al., 2023a). Including negative
+examples encourages the multi-modal LLM to crit-
+ically evaluate the prompts and identify instances
+where the requested objects are absent in the image.
+The LRV-Instruct dataset enhanced its performance
+14190
+
+Figure 1: From a visual-instruction-tuned pre-trained model, we generate 4 completions for a given image-question
+prompt. These answers are then presented to Gemini to obtain granular annotations given a labeling guide. We
+construct a preference dataset of (image-text prompt, preferred completion) and (image-text prompt, rejected
+completion). We benchmarked DPO, Rejection sampling, and SteerLM alignment methods, in addition to a pure
+SFT baseline using Gemini-provided answers directly.
+Table 1: Granular annotation format and labelling guide proposed in HelpSteer (Wang et al., 2023) used in VQA
+annotation collection. LLaV A-1.5-13b generates 4 candidates. Using the HelpSteer labeling guide, images, and
+questions, Gemini rates each completion with a score of 0-4 in each metric.
+Metric Description
+Helpfulness Measures if the response fully addresses the prompt’s request.
+Correctness Assesses the accuracy and relevance of the information, ensuring it’s free from errors or
+misinformation.
+Coherence Evaluates the clarity and logical consistency of the response.
+Complexity Looks at the level of sophistication in the language used, from simple to advanced.
+Verbosity Considers the brevity or lengthiness of the response in relation to the prompt’s needs.
+Table 2: Data mixture: We applied about 2.5K from
+the LRV-Instruct, an instruction tuning dataset aiming
+at addressing hallucination with ’negative examples’ re-
+ferring to nonexistent objects, and SciGraphQA (Li and
+Tajbakhsh, 2023), a multi-turn question-answer dataset
+regarding scientific graphs. Our SFT method relied
+on answers from the respective datasets directly, while
+DPO, SteerLM, and rejection sampling methods use
+self-generated instead.
+Data Type Data Name Size
+VQA LRV-Instruct 2562
+SciGraphQA 2522
+Total 5084
+in reducing hallucinations, as evidenced by its ap-
+plication in the Pope framework (Liu et al., 2023a).
+Granular Annotation: We generate 4 comple-
+tions for the dataset above using LLaV A-1.5-13B
+with a temperature of 0.7 and then prompt Gemini-
+Vision (Team et al., 2023) with the labeling guide
+of HelpSteer gave to Scale AI workers (Wang et al.,
+2023), images, questions, and the 4 completions,
+obtaining granular annotations for various quality
+metrics, including helpfulness, correctness, and co-
+herence, providing multifaceted insights into the
+model’s outputs. We leveraged Zero-Shot Chain-of
+Thought prompting (Kojima et al., 2022) such that
+the Gemini gives the reasoning for rating each re-
+sponse, an inner calibration monologue, and ratings
+as shown in 1. The appendix provides two annota-
+tion examples from the LLaV A-RLHF dataset (Sun
+et al., 2023) to visualize how Gemini reasons and
+rates each metric compared to binary preference
+annotations provided by crowd-sourced workers.
+We selected Gemini Pro (dated 01/01/2024) for
+its performance, cost efficiency, and bias mitigation
+(Team et al., 2023). Leading the OpenCompass
+multi-modal leaderboard with an average rank of
+1.89, outperforming GPT-4V’s 2.89 (ope, 2023),
+its generous free tier supports extensive data col-
+lection. Crucially, as GPT-4 is used as a judge in
+multiple instruction-following benchmarks, using
+GPT-4(V) for both benchmark judging and data
+labeling could introduce bias, potentially skewing
+our models towards GPT-4’s preferences. This con-
+sideration led us to opt for Gemini to ensure a more
+14191
+
+objective evaluation of our fine-tuning efforts.
+3.2 Alignment Methods
+Self-sampled SteerLM: SteerLM, a conditional
+Supervised Fine-Tuning (SFT) technique, aligns
+LLMs by augmenting prompts with a description
+of the desired response quality, as introduced by
+(Dong et al., 2023). This method conditions SFT
+on granular annotation generated by Gemini and
+surpasses traditional SFT and alignment strategies.
+We construct a conditional prompt template for this
+technique by incorporating a conditional prompt
+following HelpSteer guidelines. For instance,
+Rejection Sampling: Following Constitutional AI
+(Bai et al., 2022) and LLaMA-2 (Touvron et al.,
+2023b), we adopt a simplified rejection sampling
+approach. Specifically, we select the top-scoring re-
+sponse from the four completions described above
+based on Gemini’s aggregated scores for helpful-
+ness, correctness, and coherence. We apply stan-
+dard SFT based on the selected responses without
+additional prompt conditions, following a straight-
+forward format: (image, prompt, best response).
+Direct Preference Optimization (DPO) : In the
+DPO approach, we first convert our dataset of gran-
+ular annotations into a preference set. This conver-
+sion involves evaluating four responses per sample,
+each scored by Gemini on metrics including Help-
+fulness and Correctness. To form the preference set,
+we aggregate these scores to determine the overall
+quality of each response. The response with the
+highest aggregated score is designated as the ’pre-
+ferred’ response. The rejected response is selected
+from the remaining options. To qualify as a ’re-
+jected’ response, it must have a summed score that
+is at least 2 points lower than that of the preferred
+response. This selection process filters out pairs
+of preferred and rejected responses that could not
+be clearly distinguished. This method allows us to
+harness robust preference signals that enhance the
+training of the DPO model, ensuring that it aligns
+more closely with granular quality signals. We fol-
+low the method outlined in (Rafailov et al., 2023)
+for implementing the loss function, which effec-
+tively utilizes these preference pairs to optimize the
+model’s performance.
+SFT from Gemini Responses This is an important
+baseline not using self-sampling but using answers
+from Gemini directly for pure SFT. Gemini was
+prompted with the questions and images from our
+dataset. We gather the answer directly from Gemini
+answering the question and use the same hyper-
+parameters in SteerLM and Rejection Sampling.
+4 Experiments
+4.1 Experimental Setup
+For training, we utilize Azure Cloud (NC-A100
+series) with 4 A100-80G GPUs. In all experiments,
+LoRA is employed for parameter-efficient tuning.
+For the SFT experiments, including standard SFT
+with Gemini responses, rejection sampling, and
+self-sampled SteerLM, we adhered to the same
+hyperparameters used in LLaV A-v1.5’s instruction
+tuning.
+We conducted a hyperparameter search to opti-
+mize the performance of the DPO model on the
+LLaV A bench, an open-ended instruction tuning
+benchmark. Our experiment involved 1,000 sam-
+ples to evaluate the influence of the beta term,
+which we hypothesized to significantly determine
+the divergence of the finetuned DPO model from
+the original model, potentially leading to knowl-
+edge catastrophic forgetting. The results are in the
+Appendix 9
+Based on these results, we selected the optimal
+hyperparameter set: Beta of 0.1, not using average
+log probability and a learning rate of 5e-5. This
+configuration led to the highest LLaV A-bench score
+of 77.4, indicating superior performance in instruc-
+tion tuning. The LLaV A bench, while primarily
+an instruction tuning benchmark, does not exclu-
+sively focus on knowledge. Future work will need
+to consider whether to fit a knowledge benchmark
+exclusively or a mix of knowledge and instruction
+tuning benchmarks to further validate the robust-
+ness and applicability of the DPO model.
+In our DPO experiments, we performed a hy-
+perparameter search based on 1000 samples on
+LLaV A Bench, exploring various values for beta
+(0.1, 0.2, and 0.3, averaged and non-averaged log
+probabilities, and learning rates of 5e-5 and 5e-
+6. We pre-computed the log probabilities of the
+reference model (LLaV A-v1.5-13b) for our prefer-
+ence dataset before training. The complete list is
+provided in the Appendix.
+4.2 Benchmarks
+We have the following three sets of benchmarks.
+Visual Instruction Benchmarks
+• MM-Vet: MM-Vet measures six core visual-
+language capabilities across 128 tasks, pro-
+viding a comprehensive evaluation of multi-
+14192
+
+Table 3: Model parameters and hyperparameters setup for reproduction. The base model is LLaV A-v1.5-13b,
+derived from Vicuna-1.5-13b (LLama-2-13b). The training was conducted using Deepspeed Stage-3 on a 4x A100
+80GB GPU machine with LoRA for parameter-efficient fine-tuning. DPO and SFT (including SteerLM and rejection
+sampling) employed distinct hyperparameter sets optimized for performance.
+Parameter Settings Name Value
+Model architecture Pre-trained model LLaV A-v1.5-13b
+Language Backbone Vicuna-v1.5-13B
+Vision Tower clip-vit-large
+Multi-modal Adapter 2-layer Multi-layer-Perception
+Lora Setting Lora Rank 128
+Lora Alpha 256
+DPO Setting Average Log Probability False
+Fine-grained DPO False
+Beta 0.1
+Learning Rate 5e-5
+Gradient Accumulation Steps 4
+Per device train batch size 8
+Model Max length 3000
+SFT Setting Learning Rate 4e-4
+Per device train batch size 16
+Model Max Length 2048
+Common settings Hardware 4X A100 80G
+Distributed Learning Zero-3
+Use BF-16 True
+Learning Rate Scheduler Cosine
+Learning Rate Warm up 0.003
+Weight Decay False
+modal understanding. It blends math, reason-
+ing, and visual knowledge. Each task is scored
+by GPT-4 based on the correctness of the
+model’s response relative to GPT-4-generated
+ground truth, with scores ranging from 0 to
+1, aggregated across 187 samples (Yu et al.,
+2023).
+• LLaV A-Bench: LLaV A-Bench (in the wild)
+comprises 60 tasks designed to test visual
+instruction-following and question-answering
+capabilities in natural settings. Scoring fol-
+lows the same methodology as MM-Vet,
+where GPT-4 generates the ground truth an-
+swers and scores the model’s responses from
+0 to 1 (Liu et al., 2023b).
+Visual Multi-Choice Benchmarks
+• PoPE: An object hallucination benchmark
+with 8,440 samples aimed at evaluating the
+model’s ability to accurately discern and de-
+scribe visual content. This benchmark uses
+yes-no binary classification evaluations, re-
+porting F-1 scores, and questions are struc-
+tured to probe the model on the presence of
+objects within images, such as ‘Is there a car
+in the image’ (Li et al., 2023c).
+• MM-Bench: A comprehensive multi-modal
+benchmark with 4.7K samples featuring
+multiple-choice visual knowledge and reason-
+ing tasks. To prevent bias towards any par-
+ticular answer choice, questions are assessed
+through rotational augmentations (e.g., ABC,
+BAC), and a question is considered correctly
+answered only if all rotational formats are cor-
+rect. Overall success is reported as a total
+accuracy percentage (Liu et al., 2023c).
+Language Instruction-Following Benchmarks
+• MT-Bench: Utilizes LLMs to approximate
+human preferences with over 80% agreement,
+focusing on measuring the helpfulness of re-
+sponses across 160 samples in single-turn and
+multi-turn settings. The benchmark evaluates
+responses based on their alignment with GPT-
+4-generated preferred responses (Zheng et al.,
+2023).
+• AlpacaEval: Leverages GPT-4 to assess the
+percentage of cases where the candidate LLM
+outperforms the GPT-3 API (text-davinci-003)
+across 160 evaluations. This benchmark high-
+lights advancements in LLM capabilities over
+previous model iterations (Li et al., 2023b).
+We run benchmark code once on the target
+model, with greedy decoding by default. In case a
+benchmark uses a different decoding setting offi-
+cially, we follow the benchmark’s settings.
+14193
+
+Table 4: Performance comparison among alignment strategies. The results demonstrate DPO-13B’s superior
+performance, particularly in reconciling language capabilities while enhancing visual task performance, validating
+the DPO methodology’s efficacy in multi-modal alignment.
+Model Name Visual Instruction Benchmark Visual Multi-Choice Benchmark Text Instruction Benchmark
+MM-Vet LLaV A-bench PoPe MM-Bench MT-bench AlpacaEval
+Vicuna-1.5-13b (Chiang
+et al., 2023)
+- - - - 6.57 81.4
+LLaV A-1.5-13b (Liu
+et al., 2023b)
+36.3 73.1 0.859 67.4 5.99 79.3
+LLaV A-RLHF-13b
+(Sun et al., 2023)
+37.2 76.8 0.869 60.1 6.18 81.0
+Alignment method we benchmarked, finetuning LLaV A-1.5-13b
+Standard SFT 36.5 63.7 0.850 65.4 5.01 50.2
+SteerLM 35.2 67.0 0.878 65.1 5.70 68.8
+Rejection-sampling 38.0 70.6 0.883 67.6 6.22 74.9
+DPO 41.2 79.1 0.870 66.8 6.73 86.4
+4.3 Results
+Table 4 illustrates a comparative analysis of var-
+ious alignment methods, including RLHF, Stan-
+dard SFT, SteerLM, Rejection Sampling, and DPO,
+aimed at enhancing the language capabilities of
+the LLaV A model that were compromised post-
+visual instruction tuning. Vicuna, the base language
+model of LLaV A, is tested on language tasks. Af-
+ter visual instruction tuning, LLaV A experiences a
+decline in language benchmark scores from Vicuna
+(from 6.57 to 5.99 on MT-Bench and from 81.4 to
+79.3 on AlpacaEval). However, DPO, among the
+alignment strategies on the 5k multi-modal dataset,
+not only mitigates the degradation problem but also
+surpasses Vicuna’s performance on both bench-
+marks.
+In open-ended visual instruction tasks, DPO sig-
+nificantly outperforms the baseline LLaV A and
+LLaV A-RLHF models on both the MM-Vet and
+LLaV A-bench. These open-ended benchmarks,
+structured similarly to MT-Bench where GPT-4
+assesses the responses against a gold standard, re-
+vealed a relatively high 0.73 Pearson Correlation
+between MM-Vet and MT-Bench (n=7, p=0.1).
+In visual multi-choice benchmarks, PoPe, which
+evaluates for hallucination, and MM-Bench, which
+assesses world knowledge and reasoning, rejection
+sampling emerged as the most effective method,
+whereas DPO showed lesser efficacy. While DPO
+improved open-ended benchmarks, it slightly de-
+creased LLaV A’s MM-Bench score from 67.4 to
+66.8, contrasting with LLaV A-RLHF’s notable
+drop from 67.4 to 60.1, indicating a less signifi-
+cant alignment tax. Figure 2 illustrates the effect of
+scaling the DPO dataset on the MT-Bench scores,
+signifying the efficacy of DPO in advancing the
+Figure 2: Advances in MT-Bench scores via DPO data
+scaling
+performance of the LLaV A-v1.5-13b model after
+visual instruction tuning. The baseline at 0% DPO
+data, marked at a score of 5.99, represents the ini-
+tial performance of LLaV A-v1.5-13b. As the DPO
+dataset’s size increases, a notable rise in MT-Bench
+scores is observed, peaking at 6.73 with 100% data
+utilization. Remarkably, the performance surpasses
+that of the Vicuna-v1.5-13b benchmark using less
+than 75% or 4.2K of the DPO data, underlining
+DPO’s data efficiency. This data scaling trend em-
+phasizes DPO’s potential as an effective alignment
+strategy for MLLMs, addressing the challenge of
+performance degradation due to visual instruction
+tuning.
+5 Discussion
+5.1 Limitation of collecting multi-modal
+preference data manually
+The scarcity, high cost, and inconsistency of exist-
+ing multi-modal preference datasets present signifi-
+cant challenges to model alignment. Our manual la-
+beling of a selected subset from the LLaV A-RLHF
+14194
+
+Table 5: Impact of data noising on model performance.
+Data Noising Level MT-Bench Score
+No flip (baseline) 6.73
+25% flip 6.35
+50% flip 6.26
+75% flip 5.99
+human preference dataset underscored the difficulty
+in achieving consensus or identifying clear prefer-
+ences, shedding light on the inherent subjectivity
+of these datasets. To quantify these observations,
+we embarked on a targeted experiment involving
+500 samples. Gemini annotated two distinct re-
+sponses from the dataset employed in the LLaVa-
+RLHF reward model’s data collection (Sun et al.,
+2023). This facilitated a direct comparison between
+Gemini’s annotations and human preferences. The
+correlation heatmap depicted in Figure 3 reveals
+a notably weak correlation between human pref-
+erences from LLaV A-RLHF and Gemini scores,
+with correlation coefficients falling below 0.1. This
+observation was corroborated by further manual in-
+spections, which frequently resulted in an inability
+to definitively determine clear preferences. This
+finding underscores the high subjectivity and in-
+dividual bias within the LLaV A-RLHF preference
+data.
+5.2 Empirical validation of data quality
+To further validate the quality and reliability of our
+annotations, we conducted a data noising exper-
+iment by randomly flipping the polarity of (pre-
+ferred, rejected) pairs in the annotations and mea-
+sured the trained model’s MT-Bench score 5. We
+hypothesized that if our annotations contained sig-
+nificant noise, flipping the polarity would not sub-
+stantially affect the model’s performance. However,
+the results of the experiment indicate otherwise,
+with a clear trend showing performance degrada-
+tion as the level of data noising increased. These
+findings suggest that the original annotations pos-
+sess a strong and consistent signal. The model’s
+performance degradation with increased noise lev-
+els substantiates the reliability of our annotation
+process with Gemini, affirming that the annota-
+tions effectively capture meaningful distinctions
+between preferred and rejected responses.
+Table 6: Performance improvements with multi-modal
+preference data application.
+Model Name MT-Bench Score MM-Vet Score
+Vicuna-7B-v1.5 6.17 N/A
+LLaV A-V1.5-7b 5.87 30.5
+DPO-7b (ours) 6.228 39.8
+5.3 Robustness of the model with noisy
+context
+We introduced a variant of the language instruction-
+following capability benchmark MT-Bench by
+sending a random image sampled from the CoCo-
+2017 train set to simulate real-world use cases. we
+also note that as 7 showed, our DPO model is more
+robust than other baselines in real-world conditions
+where the user may have an irrelevant image in the
+context.
+5.4 Cross-model transfer ability: Can
+preference dataset generated by one
+model be transferred to other models?
+To investigate if the preference alignment dataset
+needs to be sampled and fine-tuned on the same
+model, we investigated applying preferences sam-
+pled from LLaV A-13b to fine-tune a smaller model,
+LLaV A-7b. Notably, this approach yielded signifi-
+cant enhancements, as demonstrated by the perfor-
+mance improvements on key benchmarks. The fol-
+lowing table encapsulates the performance metrics
+observed in these experiments: This cross-model
+transfer ability not only corroborates the versatility
+of our proposed approach but also implies a scal-
+able pathway for improving multi-modal language
+models without necessitating the construction of
+new preference data for each model iteration.
+5.5 Multi-modal preference alignment as a
+data-efficient remedy to instruction tuning
+capabilities
+The superficial alignment hypothesis states that
+a model’s knowledge capabilities are largely ac-
+quired during its initial pre-training stage (Zhou
+et al., 2023). A corollary of this hypothesis is that
+alignment tuning refines the model output genera-
+tion with a preferred response format rather than
+knowledge acquisition. As a result, models can
+be effectively realigned post-visual instruction us-
+ing a relatively small set of examples (Kirstain
+et al., 2022). This principle applies to MLLMs as
+well, which acquire multi-modal knowledge repre-
+sentation via visual instruction tuning (Liu et al.,
+14195
+
+Table 7: This benchmark adds an irrelevant image in
+context when benchmarking MT-Bench, testing for ro-
+bustness in a real-world condition. Vicuna-7B and
+Vicuna-13B are baseline references.
+Model LLM Noisy-image MT-Bench
+Vicuna 13B v1.5 Vicuna 13B 6.57
+Vicuna 7B v1.5 Vicuna 7B 6.17
+BLIP-2 FlanT5 1.93
+InstructBLIP Vicuna 7B 4.73
+LLaV A-v1.5-13b Vicuna 13B 5.92
+DPO (ours) Vicuna 13B 6.63
+2023b). However, existing work mixed large-scale
+text instruction data (518K out of 1.23 million in
+the case of mPlug-OWL 2 and 40K in the case of
+LLaV A-1.5). We hypothesize that the data ineffi-
+ciency above is attributed to the underlying align-
+ment strategy and demonstrate that one would need
+only a small alignment dataset so long as a proper
+alignment strategy such as DPO is utilized.
+As suggested by Table 4, Direct Preference Opti-
+mization (DPO) emerges as a computationally effi-
+cient solution for enhancing model performance in
+the mixed-modal alignment space. Unlike the mix-
+ing text instruction as described above or LLaV A-
+RLHF, which used a large 82K dataset and com-
+plex training pipeline involving reward modeling
+and PPO, DPO achieves significant improvements
+in language capabilities with a smaller dataset
+and one-stop training setup. A notable advantage
+of DPO is its minimal alignment tax, which cur-
+tails the degradation of existing knowledge, as ev-
+idenced by its performance on benchmarks like
+MM-Bench, where DPO shows minimal impact.
+This method not only enables effective alignment
+of multi-modal models post-visual instruction tun-
+ing but also ensures the preservation of model per-
+formance. Our methodology exhibits notable profi-
+ciency in value alignment and data efficiency, yet
+it is imperative to acknowledge certain limitations
+and potential risks. One key consideration is the
+scalability of our approach. While our data scaling
+analysis suggests significant improvements up to
+a 6K preference dataset, the full extent of scalabil-
+ity beyond this threshold remains unexplored. As
+the foundational open-sourced models like LLaV A
+evolve in complexity and size, the effectiveness
+of our distillation-based approach might encounter
+diminishing returns.
+6 Limitations
+This research, while pioneering advancements in
+Direct Preference Optimization (DPO) and multi-
+modal large language models (MLLMs), confronts
+several limitations. The preference dataset, derived
+from artificial annotations, may not fully capture
+the nuanced spectrum of human values, potentially
+affecting the model’s alignment with true human
+preferences and exacerbating existing biases in au-
+tomated decision-making. Additionally, the gener-
+alizability of these findings across different multi-
+modal contexts and languages is yet to be thor-
+oughly tested, and the deployment of such models
+in critical domains raises significant safety risks
+due to the potential unreliability of responses un-
+der varied real-world conditions. These limitations
+highlight the need for cautious application, further
+empirical validation, and ongoing research to mit-
+igate ethical concerns and enhance model robust-
+ness and fairness.
+7 Conclusion
+In this paper, we investigated and addressed the per-
+formance decline of the widely-used multi-modal
+LLM, LLaV A, on language instruction-following
+benchmarks. We investigated various alignment
+strategies to enhance the model’s language instruc-
+tion capabilities, including standard SFT, SteerLM,
+and DPO. Our comprehensive benchmark evalu-
+ations revealed that DPO stands out as the most
+effective method, not only restoring but also sur-
+passing the language capabilities of LLaV A’s lan-
+guage backbone (Vicuna) on both MT-Bench and
+AlpacaEval. Specifically, LLaV A’s performance on
+MT-Bench had dipped from Vicuna’s 6.57 to 5.99,
+whereas our DPO model advanced to 6.73. Be-
+yond language proficiency, DPO also bolstered per-
+formance on multi-modal benchmarks, enhancing
+accuracy by 4.9% on MM-Vet and 6% on LLaV A-
+Bench. Remarkably, DPO achieved this with
+just 5k preference examples, proving more data-
+efficient than other strategies like RLHF, which
+typically demand over 80k training examples. Our
+findings highlight DPO’s minimal alignment tax
+effectively boosting one performance area with-
+out substantially detracting from another. This as-
+pect is particularly valuable for practitioners aiming
+to maintain the pre-training knowledge and avoid
+catastrophic forgetting.
+14196
+
+References
+2023. OpenCompass. [Online; accessed 24. Jan. 2024].
+Jean-Baptiste Alayrac, Jeff Donahue, Pauline Luc,
+Antoine Miech, Iain Barr, Yana Hasson, Karel
+Lenc, Arthur Mensch, Katherine Millican, Malcolm
+Reynolds, et al. 2022. Flamingo: a visual language
+model for few-shot learning. Advances in Neural
+Information Processing Systems, 35:23716–23736.
+Yuntao Bai, Saurav Kadavath, Sandipan Kundu,
+Amanda Askell, Jackson Kernion, Andy Jones, Anna
+Chen, Anna Goldie, Azalia Mirhoseini, Cameron
+McKinnon, Carol Chen, Catherine Olsson, Christo-
+pher Olah, Danny Hernandez, Dawn Drain, Deep
+Ganguli, Dustin Li, Eli Tran-Johnson, Ethan Perez,
+Jamie Kerr, Jared Mueller, Jeffrey Ladish, Joshua
+Landau, Kamal Ndousse, Kamile Lukosuite, Liane
+Lovitt, Michael Sellitto, Nelson Elhage, Nicholas
+Schiefer, Noemi Mercado, Nova DasSarma, Robert
+Lasenby, Robin Larson, Sam Ringer, Scott John-
+ston, Shauna Kravec, Sheer El Showk, Stanislav Fort,
+Tamera Lanham, Timothy Telleen-Lawton, Tom Con-
+erly, Tom Henighan, Tristan Hume, Samuel R. Bow-
+man, Zac Hatfield-Dodds, Ben Mann, Dario Amodei,
+Nicholas Joseph, Sam McCandlish, Tom Brown, and
+Jared Kaplan. 2022. Constitutional ai: Harmlessness
+from ai feedback.
+Lin Chen, Jinsong Li, Xiaoyi Dong, Pan Zhang, Con-
+ghui He, Jiaqi Wang, Feng Zhao, and Dahua Lin.
+2023. Sharegpt4v: Improving large multi-modal
+models with better captions.
+Wei-Lin Chiang, Zhuohan Li, Zi Lin, Ying Sheng,
+Zhanghao Wu, Hao Zhang, Lianmin Zheng, Siyuan
+Zhuang, Yonghao Zhuang, Joseph E. Gonzalez, Ion
+Stoica, and Eric P. Xing. 2023. Vicuna: An open-
+source chatbot impressing gpt-4 with 90%* chatgpt
+quality.
+Ganqu Cui, Lifan Yuan, Ning Ding, Guanming Yao,
+Wei Zhu, Yuan Ni, Guotong Xie, Zhiyuan Liu, and
+Maosong Sun. 2023. Ultrafeedback: Boosting lan-
+guage models with high-quality feedback.
+Wenliang Dai, Junnan Li, Dongxu Li, Anthony
+Meng Huat Tiong, Junqi Zhao, Weisheng Wang,
+Boyang Li, Pascale Fung, and Steven Hoi. 2023. In-
+structblip: Towards general-purpose vision-language
+models with instruction tuning.
+Yi Dong, Zhilin Wang, Makesh Narsimhan Sreedhar,
+Xianchao Wu, and Oleksii Kuchaiev. 2023. Steerlm:
+Attribute conditioned sft as an (user-steerable) alter-
+native to rlhf.
+Tao Gong, Chengqi Lyu, Shilong Zhang, Yudong Wang,
+Miao Zheng, Qian Zhao, Kuikun Liu, Wenwei Zhang,
+Ping Luo, and Kai Chen. 2023. Multimodal-gpt: A
+vision and language model for dialogue with humans.
+ArXiv preprint, abs/2305.04790.
+Arnav Gudibande, Eric Wallace, Charlie Snell, Xinyang
+Geng, Hao Liu, Pieter Abbeel, Sergey Levine, and
+Dawn Song. 2023. The false promise of imitating
+proprietary llms.
+James Kirkpatrick, Razvan Pascanu, Neil Rabinowitz,
+Joel Veness, Guillaume Desjardins, Andrei A Rusu,
+Kieran Milan, John Quan, Tiago Ramalho, Ag-
+nieszka Grabska-Barwinska, et al. 2017. Over-
+coming catastrophic forgetting in neural networks.
+Proceedings of the national academy of sciences,
+114(13):3521–3526.
+Yuval Kirstain, Patrick Lewis, Sebastian Riedel, and
+Omer Levy. 2022. A few more examples may be
+worth billions of parameters. In Findings of the Asso-
+ciation for Computational Linguistics: EMNLP 2022,
+pages 1017–1029, Abu Dhabi, United Arab Emirates.
+Association for Computational Linguistics.
+Takeshi Kojima, Shixiang Shane Gu, Machel Reid, Yu-
+taka Matsuo, and Yusuke Iwasawa. 2022. Large lan-
+guage models are zero-shot reasoners. Advances in
+neural information processing systems, 35:22199–
+22213.
+Bo Li, Yuanhan Zhang, Liangyu Chen, Jinghao Wang,
+Jingkang Yang, and Ziwei Liu. 2023a. Otter: A
+multi-modal model with in-context instruction tuning.
+ArXiv preprint, abs/2305.03726.
+Shengzhi Li and Nima Tajbakhsh. 2023. Sci-
+GraphQA: A Large-Scale Synthetic Multi-Turn
+Question-Answering Dataset for Scientific Graphs.
+arXiv.
+Xuechen Li, Tianyi Zhang, Yann Dubois, Rohan Taori,
+Ishaan Gulrajani, Carlos Guestrin, Percy Liang, and
+Tatsunori B. Hashimoto. 2023b. Alpacaeval: An
+automatic evaluator of instruction-following models.
+https://github.com/tatsu-lab/alpaca_eval.
+Yifan Li, Yifan Du, Kun Zhou, Jinpeng Wang,
+Wayne Xin Zhao, and Ji-Rong Wen. 2023c. Eval-
+uating object hallucination in large vision-language
+models.
+Fuxiao Liu, Kevin Lin, Linjie Li, Jianfeng Wang, Yaser
+Yacoob, and Lijuan Wang. 2023a. Aligning large
+multi-modal model with robust instruction tuning.
+ArXiv preprint, abs/2306.14565.
+Haotian Liu, Chunyuan Li, Qingyang Wu, and Yong Jae
+Lee. 2023b. Visual instruction tuning.
+Yuan Liu, Haodong Duan, Yuanhan Zhang, Bo Li,
+Songyang Zhang, Wangbo Zhao, Yike Yuan, Jiaqi
+Wang, Conghui He, Ziwei Liu, Kai Chen, and Dahua
+Lin. 2023c. Mmbench: Is your multi-modal model
+an all-around player?
+Long Ouyang, Jeffrey Wu, Xu Jiang, Diogo Almeida,
+Carroll Wainwright, Pamela Mishkin, Chong Zhang,
+Sandhini Agarwal, Katarina Slama, Alex Ray, et al.
+2022. Training language models to follow instruc-
+tions with human feedback. Advances in Neural
+Information Processing Systems, 35:27730–27744.
+14197
+
+Alec Radford, Jong Wook Kim, Chris Hallacy, Aditya
+Ramesh, Gabriel Goh, Sandhini Agarwal, Girish Sas-
+try, Amanda Askell, Pamela Mishkin, Jack Clark,
+Gretchen Krueger, and Ilya Sutskever. 2021. Learn-
+ing transferable visual models from natural language
+supervision. In Proceedings of the 38th International
+Conference on Machine Learning, ICML 2021, 18-24
+July 2021, Virtual Event, volume 139 of Proceedings
+of Machine Learning Research, pages 8748–8763.
+PMLR.
+Rafael Rafailov, Archit Sharma, Eric Mitchell, Stefano
+Ermon, Christopher D. Manning, and Chelsea Finn.
+2023. Direct preference optimization: Your language
+model is secretly a reward model.
+Yongliang Shen, Kaitao Song, Xu Tan, Dongsheng Li,
+Weiming Lu, and Yueting Zhuang. 2023. Hugging-
+gpt: Solving ai tasks with chatgpt and its friends in
+huggingface.
+Zhiqing Sun, Sheng Shen, Shengcao Cao, Haotian Liu,
+Chunyuan Li, Yikang Shen, Chuang Gan, Liang-Yan
+Gui, Yu-Xiong Wang, Yiming Yang, Kurt Keutzer,
+and Trevor Darrell. 2023. Aligning large multimodal
+models with factually augmented rlhf.
+Gemini Team, Rohan Anil, Sebastian Borgeaud,
+Yonghui Wu, Jean-Baptiste Alayrac, Jiahui Yu,
+Radu Soricut, Johan Schalkwyk, Andrew M Dai,
+Anja Hauth, et al. 2023. Gemini: a family of
+highly capable multimodal models. ArXiv preprint,
+abs/2312.11805.
+Hugo Touvron, Thibaut Lavril, Gautier Izacard, Xavier
+Martinet, Marie-Anne Lachaux, Timothée Lacroix,
+Baptiste Rozière, Naman Goyal, Eric Hambro, Faisal
+Azhar, et al. 2023a. Llama: Open and effi-
+cient foundation language models. ArXiv preprint,
+abs/2302.13971.
+Hugo Touvron, Louis Martin, Kevin Stone, Peter Al-
+bert, Amjad Almahairi, Yasmine Babaei, Nikolay
+Bashlykov, Soumya Batra, Prajjwal Bhargava, Shruti
+Bhosale, et al. 2023b. Llama 2: Open founda-
+tion and fine-tuned chat models. ArXiv preprint,
+abs/2307.09288.
+Lewis Tunstall, Edward Beeching, Nathan Lambert,
+Nazneen Rajani, Kashif Rasul, Younes Belkada,
+Shengyi Huang, Leandro von Werra, Clémentine
+Fourrier, Nathan Habib, Nathan Sarrazin, Omar San-
+seviero, Alexander M. Rush, and Thomas Wolf. 2023.
+Zephyr: Direct distillation of lm alignment.
+Zhilin Wang, Yi Dong, Jiaqi Zeng, Virginia Adams,
+Makesh Narsimhan Sreedhar, Daniel Egert, Olivier
+Delalleau, Jane Polak Scowcroft, Neel Kant, Aidan
+Swope, and Oleksii Kuchaiev. 2023. HelpSteer:
+Multi-attribute Helpfulness Dataset for SteerLM.
+arXiv.
+Jason Wei, Maarten Bosma, Vincent Y . Zhao, Kelvin
+Guu, Adams Wei Yu, Brian Lester, Nan Du, An-
+drew M. Dai, and Quoc V . Le. 2022. Finetuned
+language models are zero-shot learners. In The Tenth
+International Conference on Learning Representa-
+tions, ICLR 2022, Virtual Event, April 25-29, 2022.
+OpenReview.net.
+Chenfei Wu, Shengming Yin, Weizhen Qi, Xiaodong
+Wang, Zecheng Tang, and Nan Duan. 2023. Visual
+chatgpt: Talking, drawing and editing with visual
+foundation models. ArXiv preprint, abs/2303.04671.
+Zhengyuan Yang, Linjie Li, Jianfeng Wang, Kevin
+Lin, Ehsan Azarnasab, Faisal Ahmed, Zicheng Liu,
+Ce Liu, Michael Zeng, and Lijuan Wang. 2023. Mm-
+react: Prompting chatgpt for multimodal reasoning
+and action. ArXiv preprint, abs/2303.11381.
+Qinghao Ye, Haiyang Xu, Guohai Xu, Jiabo Ye, Ming
+Yan, Yiyang Zhou, Junyang Wang, Anwen Hu,
+Pengcheng Shi, Yaya Shi, et al. 2023a. mplug-owl:
+Modularization empowers large language models
+with multimodality. ArXiv preprint, abs/2304.14178.
+Qinghao Ye, Haiyang Xu, Jiabo Ye, Ming Yan, Anwen
+Hu, Haowei Liu, Qi Qian, Ji Zhang, Fei Huang, and
+Jingren Zhou. 2023b. mplug-owl2: Revolutioniz-
+ing multi-modal large language model with modality
+collaboration.
+Weihao Yu, Zhengyuan Yang, Linjie Li, Jianfeng Wang,
+Kevin Lin, Zicheng Liu, Xinchao Wang, and Lijuan
+Wang. 2023. Mm-vet: Evaluating large multimodal
+models for integrated capabilities.
+Lianmin Zheng, Wei-Lin Chiang, Ying Sheng, Siyuan
+Zhuang, Zhanghao Wu, Yonghao Zhuang, Zi Lin,
+Zhuohan Li, Dacheng Li, Eric P. Xing, Hao Zhang,
+Joseph E. Gonzalez, and Ion Stoica. 2023. Judging
+llm-as-a-judge with mt-bench and chatbot arena.
+Chunting Zhou, Pengfei Liu, Puxin Xu, Srini Iyer, Jiao
+Sun, Yuning Mao, Xuezhe Ma, Avia Efrat, Ping Yu,
+Lili Yu, Susan Zhang, Gargi Ghosh, Mike Lewis,
+Luke Zettlemoyer, and Omer Levy. 2023. LIMA:
+Less Is More for Alignment. arXiv.
+A Appendix
+14198
+
+Table 8: Examples of Annotation
+Gemini-Annotation example
+Question What aspects of the room might
+have artistic or creative signifi-
+cance?
+What do you see happening in this image?
+Response 1 In this image, the room has some
+artistic or creative significance due
+to the presence of several sculptures
+placed on a long wooden table. The
+sculptures appear to be made from
+various materials, such as stone and
+wood. Additionally, the room fea-
+tures a chair and a light fixture that
+resembles a boot. These elements,
+combined with the assortment of
+sculptures, give the room an eclec-
+tic and artistic atmosphere, suggest-
+ing that the space might be used for
+displaying art, inspiration, or as a
+workspace for an artist or designer.
+The presence of the boot-shaped
+light also adds a unique and imag-
+inative touch to the room’s overall
+aesthetic.
+The image features a person running along a
+beach near the water’s edge. Behind the person,
+multiple birds are flying in the sky, creating a
+dynamic and lively scene. The man is wearing
+a swimsuit and appears to be enjoying his time
+at the beach. The birds’ positions vary across
+the sky, with some flying closer to the person
+and others further away, spreading out across
+the background.
+Gemini-Rating for Response 1Helpfulness:4, Correctness 4, Co-
+herence: 4, Complexity: 3, Ver-
+bosity: 3.
+Helpfulness:3, Correctness 4, Coherence: 4,
+Complexity: 2, Verbose: 2
+Response 2 In the room, a collection of wooden
+shoes on a long table next to a chair
+can be considered as having artis-
+tic or creative significance. The
+display of shoes may represent a
+unique form of artistic expression
+or a design concept. Additionally,
+the white-walled setting with a dim
+light allows for a minimalist and vi-
+sually striking atmosphere that en-
+hances the shoes’ display and cre-
+ates a sense of depth and artistic in-
+terest in the space.
+The image captures a beach scene where a man
+is running along the shore near the water, with
+waves crashing behind him. The man is in mo-
+tion, as he is probably enjoying an invigorating
+run on the beach. In the sky above, several
+birds fly in a line, adding a sense of movement
+and liveliness to the scene. The birds’ positions
+vary, with some being closer to the water and
+others higher up in the sky. The overall atmo-
+sphere of the image suggests a pleasant, active
+day at the beach.
+Gemini-Rating for Response 2Helpfulness:3, Correctness 3, Co-
+herence: 3, Complexity: 2, Ver-
+bosity: 3.
+Helpfulness:4, Correctness 4, Coherence: 4,
+Complexity: 3, Verbosity: 3.
+14199
+
+Gemini-Annotation example (continued)
+Gemini Chain-of-thought ReasoningBoth responses are relevant to the
+question and provide good descrip-
+tions of the room. However, the first
+response is more detailed and pro-
+vides more analysis of the potential
+artistic or creative significance of
+the room. I will give the first re-
+sponse a slightly higher rating for
+Helpfulness, Correctness, and Com-
+plexity.
+I think that Response 2 is the best response be-
+cause it is the most detailed, engaging, and ac-
+curate. It provides the most information about
+the image and uses the most vivid language.
+Response 1 is also good, but it is not as de-
+tailed or engaging as Response 2.
+LLaV A-RLHF rated preference Reponse 2 Response 2
+Our preference Response 1 Response 2
+Table 9: Results of DPO hyperparameter search on
+LLaV A bench.
+Beta Value Average Log Probability Learning Rate LLaV A-bench
+0.1 True 5e-5 60.4
+0.1 False 5e-5 77.4
+0.1 True 5e-6 73.8
+0.1 False 5e-6 74.4
+0.5 True 5e-5 59.1
+0.5 False 5e-5 75.3
+0.5 True 5e-6 74.1
+0.5 False 5e-6 73.1
+Figure 3: Pearson Correlation Heatmap among the dif-
+ference in Gemini-Annotated data attributes and LLaV A-
+RLHF human annotated preference (n=500).
+14200

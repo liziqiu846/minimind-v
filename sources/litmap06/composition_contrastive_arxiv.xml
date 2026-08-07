@@ -1,0 +1,1452 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/Xa80WMXZxJdq4rbGvcXQQnLSXi0</id>
+  <title>arXiv Query: search_query=all:multimodal OR all:contrastive OR all:learning OR all:compositional OR all:generalization OR all:theory&amp;id_list=&amp;start=0&amp;max_results=50</title>
+  <updated>2026-08-07T08:22:35Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:multimodal+OR+(all:contrastive+OR+(all:learning+OR+(all:compositional+OR+(all:generalization+OR+all:theory))))&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <opensearch:totalResults>1795365</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2506.09781v2</id>
+    <title>On the Similarities of Embeddings in Contrastive Learning</title>
+    <updated>2025-07-15T05:49:44Z</updated>
+    <link href="https://arxiv.org/abs/2506.09781v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.09781v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Contrastive learning operates on a simple yet effective principle: Embeddings of positive pairs are pulled together, while those of negative pairs are pushed apart. In this paper, we propose a unified framework for understanding contrastive learning through the lens of cosine similarity, and present two key theoretical insights derived from this framework. First, in full-batch settings, we show that perfect alignment of positive pairs is unattainable when negative-pair similarities fall below a threshold, and this misalignment can be mitigated by incorporating within-view negative pairs into the objective. Second, in mini-batch settings, smaller batch sizes induce stronger separation among negative pairs in the embedding space, i.e., higher variance in their similarities, which in turn degrades the quality of learned representations compared to full-batch settings. To address this, we propose an auxiliary loss that reduces the variance of negative-pair similarities in mini-batch settings. Empirical results show that incorporating the proposed loss improves performance in small-batch settings.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-11T14:21:05Z</published>
+    <arxiv:comment>contrastive learning, representation learning, embedding, similarity, negative pair, positive pair</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>International Conference on Machine Learning (ICML) 2025</arxiv:journal_ref>
+    <author>
+      <name>Chungpa Lee</name>
+    </author>
+    <author>
+      <name>Sehee Lim</name>
+    </author>
+    <author>
+      <name>Kibok Lee</name>
+    </author>
+    <author>
+      <name>Jy-yong Sohn</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2208.14227v2</id>
+    <title>CLUDA : Contrastive Learning in Unsupervised Domain Adaptation for Semantic Segmentation</title>
+    <updated>2022-11-08T09:24:48Z</updated>
+    <link href="https://arxiv.org/abs/2208.14227v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2208.14227v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this work, we propose CLUDA, a simple, yet novel method for performing unsupervised domain adaptation (UDA) for semantic segmentation by incorporating contrastive losses into a student-teacher learning paradigm, that makes use of pseudo-labels generated from the target domain by the teacher network. More specifically, we extract a multi-level fused-feature map from the encoder, and apply contrastive loss across different classes and different domains, via source-target mixing of images. We consistently improve performance on various feature encoder architectures and for different domain adaptation datasets in semantic segmentation. Furthermore, we introduce a learned-weighted contrastive loss to improve upon on a state-of-the-art multi-resolution training approach in UDA. We produce state-of-the-art results on GTA $\rightarrow$ Cityscapes (74.4 mIOU, +0.6) and Synthia $\rightarrow$ Cityscapes (67.2 mIOU, +1.4) datasets. CLUDA effectively demonstrates contrastive learning in UDA as a generic method, which can be easily integrated into any existing UDA for semantic segmentation tasks. Please refer to the supplementary material for the details on implementation.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-08-27T05:13:14Z</published>
+    <arxiv:comment>Contrastive learning</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Midhun Vayyat</name>
+    </author>
+    <author>
+      <name>Jaswin Kasi</name>
+    </author>
+    <author>
+      <name>Anuraag Bhattacharya</name>
+    </author>
+    <author>
+      <name>Shuaib Ahmed</name>
+    </author>
+    <author>
+      <name>Rahul Tallamraju</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2206.07869v1</id>
+    <title>Let Invariant Rationale Discovery Inspire Graph Contrastive Learning</title>
+    <updated>2022-06-16T01:28:40Z</updated>
+    <link href="https://arxiv.org/abs/2206.07869v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2206.07869v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Leading graph contrastive learning (GCL) methods perform graph augmentations in two fashions: (1) randomly corrupting the anchor graph, which could cause the loss of semantic information, or (2) using domain knowledge to maintain salient features, which undermines the generalization to other domains. Taking an invariance look at GCL, we argue that a high-performing augmentation should preserve the salient semantics of anchor graphs regarding instance-discrimination. To this end, we relate GCL with invariant rationale discovery, and propose a new framework, Rationale-aware Graph Contrastive Learning (RGCL). Specifically, without supervision signals, RGCL uses a rationale generator to reveal salient features about graph instance-discrimination as the rationale, and then creates rationale-aware views for contrastive learning. This rationale-aware pre-training scheme endows the backbone model with the powerful representation ability, further facilitating the fine-tuning on downstream tasks. On MNIST-Superpixel and MUTAG datasets, visual inspections on the discovered rationales showcase that the rationale generator successfully captures the salient features (i.e. distinguishing semantic nodes in graphs). On biochemical molecule and social network benchmark datasets, the state-of-the-art performance of RGCL demonstrates the effectiveness of rationale-aware views for contrastive learning. Our codes are available at https://github.com/lsh0520/RGCL.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-06-16T01:28:40Z</published>
+    <arxiv:comment>Graph contrastive Learning, Invariant Rationale Discovery, ICML2022</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Sihang Li</name>
+    </author>
+    <author>
+      <name>Xiang Wang</name>
+    </author>
+    <author>
+      <name>An zhang</name>
+    </author>
+    <author>
+      <name>Yingxin Wu</name>
+    </author>
+    <author>
+      <name>Xiangnan He</name>
+    </author>
+    <author>
+      <name>Tat-Seng Chua</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.17889v1</id>
+    <title>Dimensionality Controls When Modularity Helps in Continual Learning</title>
+    <updated>2026-06-16T13:10:21Z</updated>
+    <link href="https://arxiv.org/abs/2606.17889v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.17889v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Compositional learning systems must balance plasticity, the ability to acquire new knowledge, with stability, the preservation of previously learned components, especially when tasks share structure and risk interference. We study how modular architecture, task similarity, and representational dimensionality jointly shape compositional continual learning in a sequential A-B-A paradigm, comparing a task-partitioned recurrent network to a single-network baseline while inducing high- and low-dimensional regimes via weight-scale manipulations. In a high-dimensional "lazy" regime, both architectures achieve similar performance and internal geometry, suggesting that explicit modular structure has little impact when representations are weakly constrained. In a lower-dimensional "rich" regime, modularity becomes decisive: the modular network develops graded task-specific subspaces that overlap for similar tasks, partially align for moderately dissimilar tasks, and separate for dissimilar tasks, yielding a more compositional and interpretable organization than the single network. These findings identify the representational regime induced by initialization scale, which co-varies with representational dimensionality, as a key factor governing when compositional, modular structure is functionally beneficial in continual learning, and support viewing safety and robustness as problems of adaptive allocation of representational subspaces rather than fixed separation versus sharing.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.NE" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-16T13:10:21Z</published>
+    <arxiv:comment>Accepted to the 2nd Workshop on Compositional Learning (CompLearn) at ICML 2026, Seoul, South Korea. 8 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>Poster, 2nd ICML Workshop on Compositional Learning: Safety, Interpretability, and Agents (CompLearn), ICML 2026</arxiv:journal_ref>
+    <author>
+      <name>Kathrin Korte</name>
+    </author>
+    <author>
+      <name>Christian Medeiros Adriano</name>
+    </author>
+    <author>
+      <name>Joachim Winther Pedersen</name>
+    </author>
+    <author>
+      <name>Eleni Nisioti</name>
+    </author>
+    <author>
+      <name>Sebastian Risi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.30389v1</id>
+    <title>The Inclusion Depth of Pattern Languages: An Open Problem in Algorithmic Learning Theory</title>
+    <updated>2026-05-28T11:19:25Z</updated>
+    <link href="https://arxiv.org/abs/2605.30389v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.30389v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Pattern languages are a classical model in formal language theory and algorithmic learning theory. This note formulates the problem of computing the inclusion depth of a pattern language: the length of the longest strict inclusion chain from the universal pattern language to the language generated by a given pattern. Inclusion depth captures the mind-change complexity of pattern identification from positive data. The central open question is whether the inclusion depth ID_Sigma(p) is computable for every pattern p over every finite alphabet Sigma with at least two symbols, and whether it is computable in polynomial time. A simple conjectured formula, ID_Sigma(p) = 2|p| - #var(p) - 1, would imply a linear-time algorithm. The problem connects pattern language inclusion, combinatorics on words, language identification in the limit, and mind-change-bounded learning.</summary>
+    <category term="cs.FL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-28T11:19:25Z</published>
+    <arxiv:comment>2 pages. Open problem from COLT 2005. Generic author-prepared version for arXiv. Originally appeared in Learning Theory, 18th Annual Conference on Learning Theory, COLT 2005, Bertinoro, Italy, June 2005</arxiv:comment>
+    <arxiv:primary_category term="cs.FL"/>
+    <arxiv:journal_ref>Learning Theory, 18th Annual Conference on Learning Theory, COLT 2005, Lecture Notes in Artificial Intelligence 3559, Springer, 2005, pp. 689-690</arxiv:journal_ref>
+    <author>
+      <name>Wei Luo</name>
+    </author>
+    <arxiv:doi>10.1007/11503415_48</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/11503415_48" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2108.02722v1</id>
+    <title>Video Contrastive Learning with Global Context</title>
+    <updated>2021-08-05T16:42:38Z</updated>
+    <link href="https://arxiv.org/abs/2108.02722v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2108.02722v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Contrastive learning has revolutionized self-supervised image representation learning field, and recently been adapted to video domain. One of the greatest advantages of contrastive learning is that it allows us to flexibly define powerful loss objectives as long as we can find a reasonable way to formulate positive and negative samples to contrast. However, existing approaches rely heavily on the short-range spatiotemporal salience to form clip-level contrastive signals, thus limit themselves from using global context. In this paper, we propose a new video-level contrastive learning method based on segments to formulate positive pairs. Our formulation is able to capture global context in a video, thus robust to temporal content change. We also incorporate a temporal order regularization term to enforce the inherent sequential structure of videos. Extensive experiments show that our video-level contrastive learning framework (VCLR) is able to outperform previous state-of-the-arts on five video datasets for downstream action classification, action localization and video retrieval. Code is available at https://github.com/amazon-research/video-contrastive-learning.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-08-05T16:42:38Z</published>
+    <arxiv:comment>Code is publicly available at: https://github.com/amazon-research/video-contrastive-learning</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Haofei Kuang</name>
+    </author>
+    <author>
+      <name>Yi Zhu</name>
+    </author>
+    <author>
+      <name>Zhi Zhang</name>
+    </author>
+    <author>
+      <name>Xinyu Li</name>
+    </author>
+    <author>
+      <name>Joseph Tighe</name>
+    </author>
+    <author>
+      <name>Sören Schwertfeger</name>
+    </author>
+    <author>
+      <name>Cyrill Stachniss</name>
+    </author>
+    <author>
+      <name>Mu Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2107.00921v1</id>
+    <title>Supervised Contrastive Learning for Accented Speech Recognition</title>
+    <updated>2021-07-02T09:23:33Z</updated>
+    <link href="https://arxiv.org/abs/2107.00921v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2107.00921v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Neural network based speech recognition systems suffer from performance degradation due to accented speech, especially unfamiliar accents. In this paper, we study the supervised contrastive learning framework for accented speech recognition. To build different views (similar "positive" data samples) for contrastive learning, three data augmentation techniques including noise injection, spectrogram augmentation and TTS-same-sentence generation are further investigated. From the experiments on the Common Voice dataset, we have shown that contrastive learning helps to build data-augmentation invariant and pronunciation invariant representations, which significantly outperforms traditional joint training methods in both zero-shot and full-shot settings. Experiments show that contrastive learning can improve accuracy by 3.66% (zero-shot) and 3.78% (full-shot) on average, comparing to the joint training method.</summary>
+    <category term="cs.SD" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.AS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-07-02T09:23:33Z</published>
+    <arxiv:comment>Accented speech recognition, deep neural networks, model adaptation, supervised contrastive learning</arxiv:comment>
+    <arxiv:primary_category term="cs.SD"/>
+    <author>
+      <name>Tao Han</name>
+    </author>
+    <author>
+      <name>Hantao Huang</name>
+    </author>
+    <author>
+      <name>Ziang Yang</name>
+    </author>
+    <author>
+      <name>Wei Han</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2005.12419v2</id>
+    <title>Network Comparison with Interpretable Contrastive Network Representation Learning</title>
+    <updated>2022-02-15T16:13:54Z</updated>
+    <link href="https://arxiv.org/abs/2005.12419v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2005.12419v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Identifying unique characteristics in a network through comparison with another network is an essential network analysis task. For example, with networks of protein interactions obtained from normal and cancer tissues, we can discover unique types of interactions in cancer tissues. This analysis task could be greatly assisted by contrastive learning, which is an emerging analysis approach to discover salient patterns in one dataset relative to another. However, existing contrastive learning methods cannot be directly applied to networks as they are designed only for high-dimensional data analysis. To address this problem, we introduce a new analysis approach called contrastive network representation learning (cNRL). By integrating two machine learning schemes, network representation learning and contrastive learning, cNRL enables embedding of network nodes into a low-dimensional representation that reveals the uniqueness of one network compared to another. Within this approach, we also design a method, named i-cNRL, which offers interpretability in the learned results, allowing for understanding which specific patterns are only found in one network. We demonstrate the effectiveness of i-cNRL for network comparison with multiple network models and real-world datasets. Furthermore, we compare i-cNRL and other potential cNRL algorithm designs through quantitative and qualitative evaluations.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-05-25T21:46:59Z</published>
+    <arxiv:comment>To appear in Journal of Data Science, Statistics, and Visualisation. The previous preprint version was titled "Interpretable Contrastive Learning for Networks" (arXiv:2005.12419v1)</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Takanori Fujiwara</name>
+    </author>
+    <author>
+      <name>Jian Zhao</name>
+    </author>
+    <author>
+      <name>Francine Chen</name>
+    </author>
+    <author>
+      <name>Yaoliang Yu</name>
+    </author>
+    <author>
+      <name>Kwan-Liu Ma</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2009.14776v2</id>
+    <title>Joint Contrastive Learning with Infinite Possibilities</title>
+    <updated>2020-10-10T13:27:10Z</updated>
+    <link href="https://arxiv.org/abs/2009.14776v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2009.14776v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper explores useful modifications of the recent development in contrastive learning via novel probabilistic modeling. We derive a particular form of contrastive loss named Joint Contrastive Learning (JCL). JCL implicitly involves the simultaneous learning of an infinite number of query-key pairs, which poses tighter constraints when searching for invariant features. We derive an upper bound on this formulation that allows analytical solutions in an end-to-end training manner. While JCL is practically effective in numerous computer vision applications, we also theoretically unveil the certain mechanisms that govern the behavior of JCL. We demonstrate that the proposed formulation harbors an innate agency that strongly favors similarity within each instance-specific class, and therefore remains advantageous when searching for discriminative features among distinct instances. We evaluate these proposals on multiple benchmarks, demonstrating considerable improvements over existing algorithms. Code is publicly available at: https://github.com/caiqi/Joint-Contrastive-Learning.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-09-30T16:24:21Z</published>
+    <arxiv:comment>NeurIPS 2020 Spotlight; Code is publicly available at: https://github.com/caiqi/Joint-Contrastive-Learning</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Qi Cai</name>
+    </author>
+    <author>
+      <name>Yu Wang</name>
+    </author>
+    <author>
+      <name>Yingwei Pan</name>
+    </author>
+    <author>
+      <name>Ting Yao</name>
+    </author>
+    <author>
+      <name>Tao Mei</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1711.00350v3</id>
+    <title>Generalization without systematicity: On the compositional skills of sequence-to-sequence recurrent networks</title>
+    <updated>2018-06-06T20:52:51Z</updated>
+    <link href="https://arxiv.org/abs/1711.00350v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1711.00350v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Humans can understand and produce new utterances effortlessly, thanks to their compositional skills. Once a person learns the meaning of a new verb "dax," he or she can immediately understand the meaning of "dax twice" or "sing and dax." In this paper, we introduce the SCAN domain, consisting of a set of simple compositional navigation commands paired with the corresponding action sequences. We then test the zero-shot generalization capabilities of a variety of recurrent neural networks (RNNs) trained on SCAN with sequence-to-sequence methods. We find that RNNs can make successful zero-shot generalizations when the differences between training and test commands are small, so that they can apply "mix-and-match" strategies to solve the task. However, when generalization requires systematic compositional skills (as in the "dax" example above), RNNs fail spectacularly. We conclude with a proof-of-concept experiment in neural machine translation, suggesting that lack of systematicity might be partially responsible for neural networks' notorious training data thirst.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-10-31T01:50:02Z</published>
+    <arxiv:comment>Published at the 35th International Conference on Machine Learning (ICML 2018)</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <arxiv:journal_ref>Lake, B. M. and Baroni, M. (2018). Generalization without systematicity: On the compositional skills of sequence-to-sequence recurrent networks. International Conference on Machine Learning (ICML)</arxiv:journal_ref>
+    <author>
+      <name>Brenden M. Lake</name>
+    </author>
+    <author>
+      <name>Marco Baroni</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2312.05933v1</id>
+    <title>Temporal Supervised Contrastive Learning for Modeling Patient Risk Progression</title>
+    <updated>2023-12-10T16:43:15Z</updated>
+    <link href="https://arxiv.org/abs/2312.05933v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2312.05933v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the problem of predicting how the likelihood of an outcome of interest for a patient changes over time as we observe more of the patient data. To solve this problem, we propose a supervised contrastive learning framework that learns an embedding representation for each time step of a patient time series. Our framework learns the embedding space to have the following properties: (1) nearby points in the embedding space have similar predicted class probabilities, (2) adjacent time steps of the same time series map to nearby points in the embedding space, and (3) time steps with very different raw feature vectors map to far apart regions of the embedding space. To achieve property (3), we employ a nearest neighbor pairing mechanism in the raw feature space. This mechanism also serves as an alternative to data augmentation, a key ingredient of contrastive learning, which lacks a standard procedure that is adequately realistic for clinical tabular data, to our knowledge. We demonstrate that our approach outperforms state-of-the-art baselines in predicting mortality of septic patients (MIMIC-III dataset) and tracking progression of cognitive impairment (ADNI dataset). Our method also consistently recovers the correct synthetic dataset embedding structure across experiments, a feat not achieved by baselines. Our ablation experiments show the pivotal role of our nearest neighbor pairing.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-12-10T16:43:15Z</published>
+    <arxiv:comment>Machine Learning for Health (ML4H 2023)</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>In Machine Learning for Health (ML4H), pages 403-427. PMLR, 2023</arxiv:journal_ref>
+    <author>
+      <name>Shahriar Noroozizadeh</name>
+    </author>
+    <author>
+      <name>Jeremy C. Weiss</name>
+    </author>
+    <author>
+      <name>George H. Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2302.09195v5</id>
+    <title>Data-Efficient Contrastive Self-supervised Learning: Most Beneficial Examples for Supervised Learning Contribute the Least</title>
+    <updated>2024-03-12T19:22:20Z</updated>
+    <link href="https://arxiv.org/abs/2302.09195v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2302.09195v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Self-supervised learning (SSL) learns high-quality representations from large pools of unlabeled training data. As datasets grow larger, it becomes crucial to identify the examples that contribute the most to learning such representations. This enables efficient SSL by reducing the volume of data required. Nevertheless, quantifying the value of examples for SSL has remained an open question. In this work, we address this problem for the first time, by proving that examples that contribute the most to contrastive SSL are those that have the most similar augmentations to other examples, in expectation. We provide rigorous guarantees for the generalization performance of contrastive learning on such subsets. Through extensive experiments, we show that we can safely exclude 20% of examples from CIFAR100 and 40% from STL10 and TinyImageNet, without affecting downstream task performance. In general, subsets selected by our method outperform random subsets by over 3% across these datasets. Interestingly, we also discover the subsets that contribute the most to contrastive learning are those that contribute the least to supervised learning. Code available at https://github.com/bigml-cs-ucla/sas-data-efficient-contrastive-learning.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-02-18T00:15:06Z</published>
+    <arxiv:comment>Accepted to ICML 2023, Code: https://github.com/BigML-CS-UCLA/sas-data-efficient-contrastive-learning</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Siddharth Joshi</name>
+    </author>
+    <author>
+      <name>Baharan Mirzasoleiman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.15103v2</id>
+    <title>Khan-GCL: Kolmogorov-Arnold Network Based Graph Contrastive Learning with Hard Negatives</title>
+    <updated>2025-08-08T06:14:32Z</updated>
+    <link href="https://arxiv.org/abs/2505.15103v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.15103v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Graph contrastive learning (GCL) has demonstrated great promise for learning generalizable graph representations from unlabeled data. However, conventional GCL approaches face two critical limitations: (1) the restricted expressive capacity of multilayer perceptron (MLP) based encoders, and (2) suboptimal negative samples that either from random augmentations-failing to provide effective 'hard negatives'-or generated hard negatives without addressing the semantic distinctions crucial for discriminating graph data. To this end, we propose Khan-GCL, a novel framework that integrates the Kolmogorov-Arnold Network (KAN) into the GCL encoder architecture, substantially enhancing its representational capacity. Furthermore, we exploit the rich information embedded within KAN coefficient parameters to develop two novel critical feature identification techniques that enable the generation of semantically meaningful hard negative samples for each graph representation. These strategically constructed hard negatives guide the encoder to learn more discriminative features by emphasizing critical semantic differences between graphs. Extensive experiments demonstrate that our approach achieves state-of-the-art performance compared to existing GCL methods across a variety of datasets and tasks.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-21T04:54:18Z</published>
+    <arxiv:comment>Graph Contrastive Learning, Self-supervised Learning, Kolmogorov-Arnold Network, Representation Learning</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Zihu Wang</name>
+    </author>
+    <author>
+      <name>Boxun Xu</name>
+    </author>
+    <author>
+      <name>Hejia Geng</name>
+    </author>
+    <author>
+      <name>Peng Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/hep-th/9707234v2</id>
+    <title>Variational Approach to Quantum Field Theory: Gaussian Approximation and the Perturbative Expansion around It</title>
+    <updated>1997-08-21T09:31:53Z</updated>
+    <link href="https://arxiv.org/abs/hep-th/9707234v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/hep-th/9707234v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The functional Schrodinger picture formulation of quantum field theory and the variational Gaussian approximation method based on the formulation are briefly reviewed. After presenting recent attempts to improve the variational approximation, we introduce a new systematic method based on the background field method, which enables one to compute the order-by-order correction terms to the Gaussian approximation of the effective action.</summary>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1997-07-29T07:42:59Z</published>
+    <arxiv:comment>To appear in the proceedings of APCTP-ICTP Joint International Conference '97 on "Recent Developments in Nonperturbative Quantum Field Theory". new references are added</arxiv:comment>
+    <arxiv:primary_category term="hep-th"/>
+    <author>
+      <name>Jae Hyung Yee</name>
+      <arxiv:affiliation>Yonsei Univ.</arxiv:affiliation>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2206.09242v1</id>
+    <title>GaLeNet: Multimodal Learning for Disaster Prediction, Management and Relief</title>
+    <updated>2022-06-18T16:45:57Z</updated>
+    <link href="https://arxiv.org/abs/2206.09242v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2206.09242v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>After a natural disaster, such as a hurricane, millions are left in need of emergency assistance. To allocate resources optimally, human planners need to accurately analyze data that can flow in large volumes from several sources. This motivates the development of multimodal machine learning frameworks that can integrate multiple data sources and leverage them efficiently. To date, the research community has mainly focused on unimodal reasoning to provide granular assessments of the damage. Moreover, previous studies mostly rely on post-disaster images, which may take several days to become available. In this work, we propose a multimodal framework (GaLeNet) for assessing the severity of damage by complementing pre-disaster images with weather data and the trajectory of the hurricane. Through extensive experiments on data from two hurricanes, we demonstrate (i) the merits of multimodal approaches compared to unimodal methods, and (ii) the effectiveness of GaLeNet at fusing various modalities. Furthermore, we show that GaLeNet can leverage pre-disaster images in the absence of post-disaster images, preventing substantial delays in decision making.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-06-18T16:45:57Z</published>
+    <arxiv:comment>Accepted to CVPR 2022 Workshop on Multimodal Learning for Earth and Environment</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Rohit Saha</name>
+    </author>
+    <author>
+      <name>Mengyi Fang</name>
+    </author>
+    <author>
+      <name>Angeline Yasodhara</name>
+    </author>
+    <author>
+      <name>Kyryl Truskovskyi</name>
+    </author>
+    <author>
+      <name>Azin Asgarian</name>
+    </author>
+    <author>
+      <name>Daniel Homola</name>
+    </author>
+    <author>
+      <name>Raahil Shah</name>
+    </author>
+    <author>
+      <name>Frederik Dieleman</name>
+    </author>
+    <author>
+      <name>Jack Weatheritt</name>
+    </author>
+    <author>
+      <name>Thomas Rogers</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2402.02851v2</id>
+    <title>Enhancing Compositional Generalization via Compositional Feature Alignment</title>
+    <updated>2024-05-22T05:34:28Z</updated>
+    <link href="https://arxiv.org/abs/2402.02851v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2402.02851v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Real-world applications of machine learning models often confront data distribution shifts, wherein discrepancies exist between the training and test data distributions. In the common multi-domain multi-class setup, as the number of classes and domains scales up, it becomes infeasible to gather training data for every domain-class combination. This challenge naturally leads the quest for models with Compositional Generalization (CG) ability, where models can generalize to unseen domain-class combinations. To delve into the CG challenge, we develop CG-Bench, a suite of CG benchmarks derived from existing real-world image datasets, and observe that the prevalent pretraining-finetuning paradigm on foundational models, such as CLIP and DINOv2, struggles with the challenge. To address this challenge, we propose Compositional Feature Alignment (CFA), a simple two-stage finetuning technique that i) learns two orthogonal linear heads on a pretrained encoder with respect to class and domain labels, and ii) fine-tunes the encoder with the newly learned head frozen. We theoretically and empirically justify that CFA encourages compositional feature learning of pretrained models. We further conduct extensive experiments on CG-Bench for CLIP and DINOv2, two powerful pretrained vision foundation models. Experiment results show that CFA outperforms common finetuning techniques in compositional generalization, corroborating CFA's efficacy in compositional feature learning.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-02-05T10:06:24Z</published>
+    <arxiv:comment>Published in Transactions on Machine Learning Research (TMLR). The code is released at https://github.com/Haoxiang-Wang/Compositional-Feature-Alignment</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Haoxiang Wang</name>
+    </author>
+    <author>
+      <name>Haozhe Si</name>
+    </author>
+    <author>
+      <name>Huajie Shao</name>
+    </author>
+    <author>
+      <name>Han Zhao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2408.17083v1</id>
+    <title>Focus-Consistent Multi-Level Aggregation for Compositional Zero-Shot Learning</title>
+    <updated>2024-08-30T08:13:06Z</updated>
+    <link href="https://arxiv.org/abs/2408.17083v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2408.17083v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>To transfer knowledge from seen attribute-object compositions to recognize unseen ones, recent compositional zero-shot learning (CZSL) methods mainly discuss the optimal classification branches to identify the elements, leading to the popularity of employing a three-branch architecture. However, these methods mix up the underlying relationship among the branches, in the aspect of consistency and diversity. Specifically, consistently providing the highest-level features for all three branches increases the difficulty in distinguishing classes that are superficially similar. Furthermore, a single branch may focus on suboptimal regions when spatial messages are not shared between the personalized branches. Recognizing these issues and endeavoring to address them, we propose a novel method called Focus-Consistent Multi-Level Aggregation (FOMA). Our method incorporates a Multi-Level Feature Aggregation (MFA) module to generate personalized features for each branch based on the image content. Additionally, a Focus-Consistent Constraint encourages a consistent focus on the informative regions, thereby implicitly exchanging spatial information between all branches. Extensive experiments on three benchmark datasets (UT-Zappos, C-GQA, and Clothing16K) demonstrate that our FOMA outperforms SOTA.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-08-30T08:13:06Z</published>
+    <arxiv:comment>Compositional Zero-Shot Learning</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Fengyuan Dai</name>
+    </author>
+    <author>
+      <name>Siteng Huang</name>
+    </author>
+    <author>
+      <name>Min Zhang</name>
+    </author>
+    <author>
+      <name>Biao Gong</name>
+    </author>
+    <author>
+      <name>Donglin Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.06024v1</id>
+    <title>Semi-Supervised Multimodal Multi-Instance Learning for Aortic Stenosis Diagnosis</title>
+    <updated>2024-03-09T22:23:45Z</updated>
+    <link href="https://arxiv.org/abs/2403.06024v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.06024v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Automated interpretation of ultrasound imaging of the heart (echocardiograms) could improve the detection and treatment of aortic stenosis (AS), a deadly heart disease. However, existing deep learning pipelines for assessing AS from echocardiograms have two key limitations. First, most methods rely on limited 2D cineloops, thereby ignoring widely available Doppler imaging that contains important complementary information about pressure gradients and blood flow abnormalities associated with AS. Second, obtaining labeled data is difficult. There are often far more unlabeled echocardiogram recordings available, but these remain underutilized by existing methods. To overcome these limitations, we introduce Semi-supervised Multimodal Multiple-Instance Learning (SMMIL), a new deep learning framework for automatic interpretation for structural heart diseases like AS. When deployed, SMMIL can combine information from two input modalities, spectral Dopplers and 2D cineloops, to produce a study-level AS diagnosis. During training, SMMIL can combine a smaller labeled set and an abundant unlabeled set of both modalities to improve its classifier. Experiments demonstrate that SMMIL outperforms recent alternatives at 3-level AS severity classification as well as several clinically relevant AS detection tasks.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.ET" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-09T22:23:45Z</published>
+    <arxiv:comment>Echocardiography; Multimodal; Semi-supervised Learning; Multiple-Instance Learning</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhe Huang</name>
+    </author>
+    <author>
+      <name>Xiaowei Yu</name>
+    </author>
+    <author>
+      <name>Benjamin S. Wessler</name>
+    </author>
+    <author>
+      <name>Michael C. Hughes</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2008.13369v1</id>
+    <title>Introducing Representations of Facial Affect in Automated Multimodal Deception Detection</title>
+    <updated>2020-08-31T05:12:57Z</updated>
+    <link href="https://arxiv.org/abs/2008.13369v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2008.13369v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Automated deception detection systems can enhance health, justice, and security in society by helping humans detect deceivers in high-stakes situations across medical and legal domains, among others. This paper presents a novel analysis of the discriminative power of dimensional representations of facial affect for automated deception detection, along with interpretable features from visual, vocal, and verbal modalities. We used a video dataset of people communicating truthfully or deceptively in real-world, high-stakes courtroom situations. We leveraged recent advances in automated emotion recognition in-the-wild by implementing a state-of-the-art deep neural network trained on the Aff-Wild database to extract continuous representations of facial valence and facial arousal from speakers. We experimented with unimodal Support Vector Machines (SVM) and SVM-based multimodal fusion methods to identify effective features, modalities, and modeling approaches for detecting deception. Unimodal models trained on facial affect achieved an AUC of 80%, and facial affect contributed towards the highest-performing multimodal approach (adaptive boosting) that achieved an AUC of 91% when tested on speakers who were not part of training sets. This approach achieved a higher AUC than existing automated machine learning approaches that used interpretable visual, vocal, and verbal features to detect deception in this dataset, but did not use facial affect. Across all videos, deceptive and truthful speakers exhibited significant differences in facial valence and facial arousal, contributing computational support to existing psychological theories on affect and deception. The demonstrated importance of facial affect in our models informs and motivates the future development of automated, affect-aware machine learning approaches for modeling and detecting deception and other social behaviors in-the-wild.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-08-31T05:12:57Z</published>
+    <arxiv:comment>10 pages, Accepted at ACM International Conference on Multimodal Interaction (ICMI), October 2020</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <arxiv:journal_ref>Proceedings of the 2020 International Conference on Multimodal Interaction (ICMI)</arxiv:journal_ref>
+    <author>
+      <name>Leena Mathur</name>
+    </author>
+    <author>
+      <name>Maja J Matarić</name>
+    </author>
+    <arxiv:doi>10.1145/3382507.3418864</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3382507.3418864" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.12293v3</id>
+    <title>In-Context Learning of Linear Systems: Generalization Theory and Applications to Operator Learning</title>
+    <updated>2025-05-23T23:35:35Z</updated>
+    <link href="https://arxiv.org/abs/2409.12293v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.12293v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study theoretical guarantees for solving linear systems in-context using a linear transformer architecture. For in-domain generalization, we provide neural scaling laws that bound the generalization error in terms of the number of tasks and sizes of samples used in training and inference. For out-of-domain generalization, we find that the behavior of trained transformers under task distribution shifts depends crucially on the distribution of the tasks seen during training. We introduce a novel notion of task diversity and show that it defines a necessary and sufficient condition for pre-trained transformers generalize under task distribution shifts. We also explore applications of learning linear systems in-context, such as to in-context operator learning for PDEs. Finally, we provide some numerical experiments to validate the established theory.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-18T19:59:50Z</published>
+    <arxiv:comment>Includes new results for in-domain generalization and operator learning, code available at https://github.com/LuGroupUMN/ICL_Linear_Systems</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Frank Cole</name>
+    </author>
+    <author>
+      <name>Yulong Lu</name>
+    </author>
+    <author>
+      <name>Wuzhe Xu</name>
+    </author>
+    <author>
+      <name>Tianhao Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.14190v3</id>
+    <title>Contrastive Diffusion Alignment: Learning Structured Latents for Controllable Generation</title>
+    <updated>2026-08-04T18:07:40Z</updated>
+    <link href="https://arxiv.org/abs/2510.14190v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.14190v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Diffusion models excel at generation, but their latent spaces are high dimensional and not explicitly organized for interpretation or control. We introduce ConDA (Contrastive Diffusion Alignment), a plug-and-play geometry layer that applies contrastive learning to pretrained diffusion latents using auxiliary variables (e.g., time, stimulation parameters, facial action units). ConDA learns a low-dimensional embedding whose directions align with underlying dynamical factors, consistent with recent contrastive learning results on structured and disentangled representations. In this embedding, simple nonlinear trajectories support smooth interpolation, extrapolation, and counterfactual editing while rendering remains in the original diffusion space. ConDA separates editing and rendering by lifting embedding trajectories back to diffusion latents with a neighborhood-preserving kNN decoder and is robust across inversion solvers. Across fluid dynamics, neural calcium imaging, therapeutic neurostimulation, facial expression dynamics, and monkey motor cortex activity, ConDA yields more interpretable and controllable latent structure than linear traversals and conditioning-based baselines, indicating that diffusion latents encode dynamics-relevant structure that can be exploited by an explicit contrastive geometry layer.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-16T00:48:05Z</published>
+    <arxiv:comment>Accepted at the 43rd International Conference on Machine Learning (ICML 2026)</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>Proceedings of the 43rd International Conference on Machine Learning, PMLR 306, 2026</arxiv:journal_ref>
+    <author>
+      <name>Ruchi Sandilya</name>
+    </author>
+    <author>
+      <name>Sumaira Perez</name>
+    </author>
+    <author>
+      <name>Charles Lynch</name>
+    </author>
+    <author>
+      <name>Lindsay Victoria</name>
+    </author>
+    <author>
+      <name>Benjamin Zebley</name>
+    </author>
+    <author>
+      <name>Derrick Matthew Buchanan</name>
+    </author>
+    <author>
+      <name>Mahendra T. Bhati</name>
+    </author>
+    <author>
+      <name>Nolan Williams</name>
+    </author>
+    <author>
+      <name>Timothy J. Spellman</name>
+    </author>
+    <author>
+      <name>Faith M. Gunning</name>
+    </author>
+    <author>
+      <name>Conor Liston</name>
+    </author>
+    <author>
+      <name>Logan Grosenick</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.18326v1</id>
+    <title>Pretraining Frequency Predicts Compositional Generalization of CLIP on Real-World Tasks</title>
+    <updated>2025-02-17T16:52:02Z</updated>
+    <link href="https://arxiv.org/abs/2502.18326v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.18326v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate the success conditions for compositional generalization of CLIP models on real-world data through performance prediction. Prior work shows that CLIP requires exponentially more pretraining data for linear performance gains on individual concepts. This sample-inefficient scaling could be mitigated if CLIP systematically understood new inputs as compositions of learned components, allowing rare observation to be mapped to common concepts. To explore CLIP's compositional generalization ability, we filter retrieval corpora for samples with object combinations not present in the pretraining corpus. We show that CLIP's performance on these samples can be accurately predicted from the pretraining frequencies of individual objects. Our findings demonstrate that CLIP learns to disentangle objects observed in its pretraining data and can recompose them straightforwardly. Additionally, we are the first to show how this ability scales with pretraining data. For data curation in practice, our results suggest that balancing object occurrences improves generalization, which should benefit CLIP's efficiency and accuracy without scaling data volume.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-17T16:52:02Z</published>
+    <arxiv:comment>NeurIPS 2024 Workshop on Compositional Learning: Perspectives, Methods, and Paths Forward</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Thaddäus Wiedemer</name>
+    </author>
+    <author>
+      <name>Yash Sharma</name>
+    </author>
+    <author>
+      <name>Ameya Prabhu</name>
+    </author>
+    <author>
+      <name>Matthias Bethge</name>
+    </author>
+    <author>
+      <name>Wieland Brendel</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2106.04509v2</id>
+    <title>MoCL: Data-driven Molecular Fingerprint via Knowledge-aware Contrastive Learning from Molecular Graph</title>
+    <updated>2022-05-02T16:55:39Z</updated>
+    <link href="https://arxiv.org/abs/2106.04509v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2106.04509v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent years have seen a rapid growth of utilizing graph neural networks (GNNs) in the biomedical domain for tackling drug-related problems. However, like any other deep architectures, GNNs are data hungry. While requiring labels in real world is often expensive, pretraining GNNs in an unsupervised manner has been actively explored. Among them, graph contrastive learning, by maximizing the mutual information between paired graph augmentations, has been shown to be effective on various downstream tasks. However, the current graph contrastive learning framework has two limitations. First, the augmentations are designed for general graphs and thus may not be suitable or powerful enough for certain domains. Second, the contrastive scheme only learns representations that are invariant to local perturbations and thus does not consider the global structure of the dataset, which may also be useful for downstream tasks. Therefore, in this paper, we study graph contrastive learning in the context of biomedical domain, where molecular graphs are present. We propose a novel framework called MoCL, which utilizes domain knowledge at both local- and global-level to assist representation learning. The local-level domain knowledge guides the augmentation process such that variation is introduced without changing graph semantics. The global-level knowledge encodes the similarity information between graphs in the entire dataset and helps to learn representations with richer semantics. The entire model is learned through a double contrast objective. We evaluate MoCL on various molecular datasets under both linear and semi-supervised settings and results show that MoCL achieves state-of-the-art performance.</summary>
+    <category term="physics.bio-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-06-05T18:00:51Z</published>
+    <arxiv:comment>MoCL: Contrastive Learning on Molecular Graphs with Multi-level Domain Knowledge</arxiv:comment>
+    <arxiv:primary_category term="physics.bio-ph"/>
+    <author>
+      <name>Mengying Sun</name>
+    </author>
+    <author>
+      <name>Jing Xing</name>
+    </author>
+    <author>
+      <name>Huijun Wang</name>
+    </author>
+    <author>
+      <name>Bin Chen</name>
+    </author>
+    <author>
+      <name>Jiayu Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2105.09848v1</id>
+    <title>Flexible Compositional Learning of Structured Visual Concepts</title>
+    <updated>2021-05-20T15:48:05Z</updated>
+    <link href="https://arxiv.org/abs/2105.09848v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2105.09848v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Humans are highly efficient learners, with the ability to grasp the meaning of a new concept from just a few examples. Unlike popular computer vision systems, humans can flexibly leverage the compositional structure of the visual world, understanding new concepts as combinations of existing concepts. In the current paper, we study how people learn different types of visual compositions, using abstract visual forms with rich relational structure. We find that people can make meaningful compositional generalizations from just a few examples in a variety of scenarios, and we develop a Bayesian program induction model that provides a close fit to the behavioral data. Unlike past work examining special cases of compositionality, our work shows how a single computational approach can account for many distinct types of compositional generalization.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-05-20T15:48:05Z</published>
+    <arxiv:comment>Please cite as: Zhou, Y. and Lake, B. M. (2021). Flexible compositional learning of structured visual concepts. In Proceedings of the 43rd Annual Conference of the Cognitive Science Society</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yanli Zhou</name>
+    </author>
+    <author>
+      <name>Brenden M. Lake</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1705.00470v2</id>
+    <title>Learning Multimodal Transition Dynamics for Model-Based Reinforcement Learning</title>
+    <updated>2017-08-08T13:50:49Z</updated>
+    <link href="https://arxiv.org/abs/1705.00470v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1705.00470v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper we study how to learn stochastic, multimodal transition dynamics in reinforcement learning (RL) tasks. We focus on evaluating transition function estimation, while we defer planning over this model to future work. Stochasticity is a fundamental property of many task environments. However, discriminative function approximators have difficulty estimating multimodal stochasticity. In contrast, deep generative models do capture complex high-dimensional outcome distributions. First we discuss why, amongst such models, conditional variational inference (VI) is theoretically most appealing for model-based RL. Subsequently, we compare different VI models on their ability to learn complex stochasticity on simulated functions, as well as on a typical RL gridworld with multimodal dynamics. Results show VI successfully predicts multimodal outcomes, but also robustly ignores these for deterministic parts of the transition dynamics. In summary, we show a robust method to learn multimodal transitions using function approximation, which is a key preliminary for model-based RL in stochastic domains.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2017-05-01T11:06:04Z</published>
+    <arxiv:comment>Scaling Up Reinforcement Learning (SURL) Workshop @ European Machine Learning Conference (ECML)</arxiv:comment>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Thomas M. Moerland</name>
+    </author>
+    <author>
+      <name>Joost Broekens</name>
+    </author>
+    <author>
+      <name>Catholijn M. Jonker</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.02527v1</id>
+    <title>The Multimodal Universe: Enabling Large-Scale Machine Learning with 100TB of Astronomical Scientific Data</title>
+    <updated>2024-12-03T16:21:17Z</updated>
+    <link href="https://arxiv.org/abs/2412.02527v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.02527v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present the MULTIMODAL UNIVERSE, a large-scale multimodal dataset of scientific astronomical data, compiled specifically to facilitate machine learning research. Overall, the MULTIMODAL UNIVERSE contains hundreds of millions of astronomical observations, constituting 100\,TB of multi-channel and hyper-spectral images, spectra, multivariate time series, as well as a wide variety of associated scientific measurements and "metadata". In addition, we include a range of benchmark tasks representative of standard practices for machine learning methods in astrophysics. This massive dataset will enable the development of large multi-modal models specifically targeted towards scientific applications. All codes used to compile the MULTIMODAL UNIVERSE and a description of how to access the data is available at https://github.com/MultimodalUniverse/MultimodalUniverse</summary>
+    <category term="astro-ph.IM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="astro-ph.GA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="astro-ph.SR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-03T16:21:17Z</published>
+    <arxiv:comment>Accepted at NeurIPS Datasets and Benchmarks track</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.IM"/>
+    <author>
+      <name> The Multimodal Universe Collaboration</name>
+    </author>
+    <author>
+      <name>Jeroen Audenaert</name>
+    </author>
+    <author>
+      <name>Micah Bowles</name>
+    </author>
+    <author>
+      <name>Benjamin M. Boyd</name>
+    </author>
+    <author>
+      <name>David Chemaly</name>
+    </author>
+    <author>
+      <name>Brian Cherinka</name>
+    </author>
+    <author>
+      <name>Ioana Ciucă</name>
+    </author>
+    <author>
+      <name>Miles Cranmer</name>
+    </author>
+    <author>
+      <name>Aaron Do</name>
+    </author>
+    <author>
+      <name>Matthew Grayling</name>
+    </author>
+    <author>
+      <name>Erin E. Hayes</name>
+    </author>
+    <author>
+      <name>Tom Hehir</name>
+    </author>
+    <author>
+      <name>Shirley Ho</name>
+    </author>
+    <author>
+      <name>Marc Huertas-Company</name>
+    </author>
+    <author>
+      <name>Kartheik G. Iyer</name>
+    </author>
+    <author>
+      <name>Maja Jablonska</name>
+    </author>
+    <author>
+      <name>Francois Lanusse</name>
+    </author>
+    <author>
+      <name>Henry W. Leung</name>
+    </author>
+    <author>
+      <name>Kaisey Mandel</name>
+    </author>
+    <author>
+      <name>Juan Rafael Martínez-Galarza</name>
+    </author>
+    <author>
+      <name>Peter Melchior</name>
+    </author>
+    <author>
+      <name>Lucas Meyer</name>
+    </author>
+    <author>
+      <name>Liam H. Parker</name>
+    </author>
+    <author>
+      <name>Helen Qu</name>
+    </author>
+    <author>
+      <name>Jeff Shen</name>
+    </author>
+    <author>
+      <name>Michael J. Smith</name>
+    </author>
+    <author>
+      <name>Connor Stone</name>
+    </author>
+    <author>
+      <name>Mike Walmsley</name>
+    </author>
+    <author>
+      <name>John F. Wu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.06380v5</id>
+    <title>Structure-preserving contrastive learning for spatial time series</title>
+    <updated>2025-10-26T15:17:05Z</updated>
+    <link href="https://arxiv.org/abs/2502.06380v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.06380v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The effectiveness of neural network models largely relies on learning meaningful latent patterns from data, where self-supervised learning of informative representations can enhance model performance and generalisability. However, self-supervised representation learning for spatially characterised time series, which are ubiquitous in transportation domain, poses unique challenges due to the necessity of maintaining fine-grained spatio-temporal similarities in the latent space. In this study, we introduce two structure-preserving regularisers for the contrastive learning of spatial time series: one regulariser preserves the topology of similarities between instances, and the other preserves the graph geometry of similarities across spatial and temporal dimensions. To balance the contrastive learning objective and the need for structure preservation, we propose a dynamic weighting mechanism that adaptively manages this trade-off and stabilises training. We validate the proposed method through extensive experiments, including multivariate time series classification to demonstrate its general applicability, as well as macroscopic and microscopic traffic prediction to highlight its particular usefulness in encoding traffic interactions. Across all tasks, our method preserves the similarity structures more effectively and improves state-of-the-art task performances. This method can be integrated with an arbitrary neural network model and is particularly beneficial for time series data with spatial or geographical features. Furthermore, our findings suggest that well-preserved similarity structures in the latent space indicate more informative and useful representations. This provides insights to design more effective neural networks for data-driven transportation research. Our code is made openly accessible with all resulting data at https://github.com/yiru-jiao/spclt</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-10T12:01:05Z</published>
+    <arxiv:comment>TL;DR: Preserving certain structures of similarity relations in spatio-temporal data can improve downstream task performance via contrastive learning</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>Artificial Intelligence for Transportation, 2025, 100031</arxiv:journal_ref>
+    <author>
+      <name>Yiru Jiao</name>
+    </author>
+    <author>
+      <name>Sander van Cranenburgh</name>
+    </author>
+    <author>
+      <name>Simeon Calvert</name>
+    </author>
+    <author>
+      <name>Hans van Lint</name>
+    </author>
+    <arxiv:doi>10.1016/j.ait.2025.100031</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.ait.2025.100031" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2303.09166v1</id>
+    <title>Identifiability Results for Multimodal Contrastive Learning</title>
+    <updated>2023-03-16T09:14:26Z</updated>
+    <link href="https://arxiv.org/abs/2303.09166v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2303.09166v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Contrastive learning is a cornerstone underlying recent progress in multi-view and multimodal learning, e.g., in representation learning with image/caption pairs. While its effectiveness is not yet fully understood, a line of recent work reveals that contrastive learning can invert the data generating process and recover ground truth latent factors shared between views. In this work, we present new identifiability results for multimodal contrastive learning, showing that it is possible to recover shared factors in a more general setup than the multi-view setting studied previously. Specifically, we distinguish between the multi-view setting with one generative mechanism (e.g., multiple cameras of the same type) and the multimodal setting that is characterized by distinct mechanisms (e.g., cameras and microphones). Our work generalizes previous identifiability results by redefining the generative process in terms of distinct mechanisms with modality-specific latent variables. We prove that contrastive learning can block-identify latent factors shared between modalities, even when there are nontrivial dependencies between factors. We empirically verify our identifiability results with numerical simulations and corroborate our findings on a complex multimodal dataset of image/text pairs. Zooming out, our work provides a theoretical basis for multimodal representation learning and explains in which settings multimodal contrastive learning can be effective in practice.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-03-16T09:14:26Z</published>
+    <arxiv:comment>ICLR 2023 camera-ready version</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Imant Daunhawer</name>
+    </author>
+    <author>
+      <name>Alice Bizeul</name>
+    </author>
+    <author>
+      <name>Emanuele Palumbo</name>
+    </author>
+    <author>
+      <name>Alexander Marx</name>
+    </author>
+    <author>
+      <name>Julia E. Vogt</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1605.05212v1</id>
+    <title>Multimodal Sparse Coding for Event Detection</title>
+    <updated>2016-05-17T15:37:19Z</updated>
+    <link href="https://arxiv.org/abs/1605.05212v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1605.05212v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Unsupervised feature learning methods have proven effective for classification tasks based on a single modality. We present multimodal sparse coding for learning feature representations shared across multiple modalities. The shared representations are applied to multimedia event detection (MED) and evaluated in comparison to unimodal counterparts, as well as other feature learning methods such as GMM supervectors and sparse RBM. We report the cross-validated classification accuracy and mean average precision of the MED system trained on features learned from our unimodal and multimodal settings for a subset of the TRECVID MED 2014 dataset.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-05-17T15:37:19Z</published>
+    <arxiv:comment>Multimodal Machine Learning Workshop at NIPS 2015</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Youngjune Gwon</name>
+    </author>
+    <author>
+      <name>William Campbell</name>
+    </author>
+    <author>
+      <name>Kevin Brady</name>
+    </author>
+    <author>
+      <name>Douglas Sturim</name>
+    </author>
+    <author>
+      <name>Miriam Cha</name>
+    </author>
+    <author>
+      <name>H. T. Kung</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1906.00336v1</id>
+    <title>The Principle of Unchanged Optimality in Reinforcement Learning Generalization</title>
+    <updated>2019-06-02T03:52:28Z</updated>
+    <link href="https://arxiv.org/abs/1906.00336v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1906.00336v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Several recent papers have examined generalization in reinforcement learning (RL), by proposing new environments or ways to add noise to existing environments, then benchmarking algorithms and model architectures on those environments. We discuss subtle conceptual properties of RL benchmarks that are not required in supervised learning (SL), and also properties that an RL benchmark should possess. Chief among them is one we call the principle of unchanged optimality: there should exist a single $π$ that is optimal across all train and test tasks. In this work, we argue why this principle is important, and ways it can be broken or satisfied due to subtle choices in state representation or model architecture. We conclude by discussing challenges and future lines of research in theoretically analyzing generalization benchmarks.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-06-02T03:52:28Z</published>
+    <arxiv:comment>Published at ICML 2019 Workshop "Understanding and Improving Generalization in Deep Learning"</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Alex Irpan</name>
+    </author>
+    <author>
+      <name>Xingyou Song</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1905.05461v2</id>
+    <title>Learning Generative Models across Incomparable Spaces</title>
+    <updated>2019-05-15T08:27:28Z</updated>
+    <link href="https://arxiv.org/abs/1905.05461v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1905.05461v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Generative Adversarial Networks have shown remarkable success in learning a distribution that faithfully recovers a reference distribution in its entirety. However, in some cases, we may want to only learn some aspects (e.g., cluster or manifold structure), while modifying others (e.g., style, orientation or dimension). In this work, we propose an approach to learn generative models across such incomparable spaces, and demonstrate how to steer the learned distribution towards target properties. A key component of our model is the Gromov-Wasserstein distance, a notion of discrepancy that compares distributions relationally rather than absolutely. While this framework subsumes current generative models in identically reproducing distributions, its inherent flexibility allows application to tasks in manifold learning, relational learning and cross-domain learning.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-05-14T08:56:12Z</published>
+    <arxiv:comment>International Conference on Machine Learning (ICML)</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>Proceedings of Machine Learning Research (PMLR), 97 (2019)</arxiv:journal_ref>
+    <author>
+      <name>Charlotte Bunne</name>
+    </author>
+    <author>
+      <name>David Alvarez-Melis</name>
+    </author>
+    <author>
+      <name>Andreas Krause</name>
+    </author>
+    <author>
+      <name>Stefanie Jegelka</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2204.11018v2</id>
+    <title>Exploring Negatives in Contrastive Learning for Unpaired Image-to-Image Translation</title>
+    <updated>2022-07-13T06:44:26Z</updated>
+    <link href="https://arxiv.org/abs/2204.11018v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2204.11018v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Unpaired image-to-image translation aims to find a mapping between the source domain and the target domain. To alleviate the problem of the lack of supervised labels for the source images, cycle-consistency based methods have been proposed for image structure preservation by assuming a reversible relationship between unpaired images. However, this assumption only uses limited correspondence between image pairs. Recently, contrastive learning (CL) has been used to further investigate the image correspondence in unpaired image translation by using patch-based positive/negative learning. Patch-based contrastive routines obtain the positives by self-similarity computation and recognize the rest patches as negatives. This flexible learning paradigm obtains auxiliary contextualized information at a low cost. As the negatives own an impressive sample number, with curiosity, we make an investigation based on a question: are all negatives necessary for feature contrastive learning? Unlike previous CL approaches that use negatives as much as possible, in this paper, we study the negatives from an information-theoretic perspective and introduce a new negative Pruning technology for Unpaired image-to-image Translation (PUT) by sparsifying and ranking the patches. The proposed algorithm is efficient, flexible and enables the model to learn essential information between corresponding patches stably. By putting quality over quantity, only a few negative patches are required to achieve better results. Lastly, we validate the superiority, stability, and versatility of our model through comparative experiments.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-04-23T08:31:18Z</published>
+    <arxiv:comment>Accepted at ACM MM 2022; Contrastive learning shows better effects by adopting a pruning constraint for negatives</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yupei Lin</name>
+    </author>
+    <author>
+      <name>Sen Zhang</name>
+    </author>
+    <author>
+      <name>Tianshui Chen</name>
+    </author>
+    <author>
+      <name>Yongyi Lu</name>
+    </author>
+    <author>
+      <name>Guangping Li</name>
+    </author>
+    <author>
+      <name>Yukai Shi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2210.02884v2</id>
+    <title>Vision+X: A Survey on Multimodal Learning in the Light of Data</title>
+    <updated>2024-06-07T18:32:39Z</updated>
+    <link href="https://arxiv.org/abs/2210.02884v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.02884v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We are perceiving and communicating with the world in a multisensory manner, where different information sources are sophisticatedly processed and interpreted by separate parts of the human brain to constitute a complex, yet harmonious and unified sensing system. To endow the machines with true intelligence, multimodal machine learning that incorporates data from various sources has become an increasingly popular research area with emerging technical advances in recent years. In this paper, we present a survey on multimodal machine learning from a novel perspective considering not only the purely technical aspects but also the intrinsic nature of different data modalities. We analyze the commonness and uniqueness of each data format mainly ranging from vision, audio, text, and motions, and then present the methodological advancements categorized by the combination of data modalities, such as Vision+Text, with slightly inclined emphasis on the visual data. We investigate the existing literature on multimodal learning from both the representation learning and downstream application levels, and provide an additional comparison in the light of their technical connections with the data nature, e.g., the semantic consistency between image objects and textual descriptions, and the rhythm correspondence between video dance moves and musical beats. We hope that the exploitation of the alignment as well as the existing gap between the intrinsic nature of data modality and the technical designs, will benefit future research studies to better address a specific challenge related to the concrete multimodal task, prompting a unified multimodal machine learning framework closer to a real human intelligence system.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-05T13:14:57Z</published>
+    <arxiv:comment>Survey paper on multimodal learning and generation, to appear at IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Ye Zhu</name>
+    </author>
+    <author>
+      <name>Yu Wu</name>
+    </author>
+    <author>
+      <name>Nicu Sebe</name>
+    </author>
+    <author>
+      <name>Yan Yan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2204.12833v3</id>
+    <title>Transfer Learning with Pre-trained Conditional Generative Models</title>
+    <updated>2025-02-20T14:22:17Z</updated>
+    <link href="https://arxiv.org/abs/2204.12833v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2204.12833v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Transfer learning is crucial in training deep neural networks on new target tasks. Current transfer learning methods always assume at least one of (i) source and target task label spaces overlap, (ii) source datasets are available, and (iii) target network architectures are consistent with source ones. However, holding these assumptions is difficult in practical settings because the target task rarely has the same labels as the source task, the source dataset access is restricted due to storage costs and privacy, and the target architecture is often specialized to each task. To transfer source knowledge without these assumptions, we propose a transfer learning method that uses deep generative models and is composed of the following two stages: pseudo pre-training (PP) and pseudo semi-supervised learning (P-SSL). PP trains a target architecture with an artificial dataset synthesized by using conditional source generative models. P-SSL applies SSL algorithms to labeled target data and unlabeled pseudo samples, which are generated by cascading the source classifier and generative models to condition them with target samples. Our experimental results indicate that our method can outperform the baselines of scratch training and knowledge distillation.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-04-27T10:36:32Z</published>
+    <arxiv:comment>Accepted by Machine Learning</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>Machine Learning 114, 96 (2025)</arxiv:journal_ref>
+    <author>
+      <name>Shin'ya Yamaguchi</name>
+    </author>
+    <author>
+      <name>Sekitoshi Kanai</name>
+    </author>
+    <author>
+      <name>Atsutoshi Kumagai</name>
+    </author>
+    <author>
+      <name>Daiki Chijiwa</name>
+    </author>
+    <author>
+      <name>Hisashi Kashima</name>
+    </author>
+    <arxiv:doi>10.1007/s10994-025-06748-7</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s10994-025-06748-7" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.15962v2</id>
+    <title>Towards Efficient Contrastive PAC Learning</title>
+    <updated>2025-07-05T01:48:18Z</updated>
+    <link href="https://arxiv.org/abs/2502.15962v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.15962v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study contrastive learning under the PAC learning framework. While a series of recent works have shown statistical results for learning under contrastive loss, based either on the VC-dimension or Rademacher complexity, their algorithms are inherently inefficient or not implying PAC guarantees. In this paper, we consider contrastive learning of the fundamental concept of linear representations. Surprisingly, even under such basic setting, the existence of efficient PAC learners is largely open. We first show that the problem of contrastive PAC learning of linear representations is intractable to solve in general. We then show that it can be relaxed to a semi-definite program when the distance between contrastive samples is measured by the $\ell_2$-norm. We then establish generalization guarantees based on Rademacher complexity, and connect it to PAC guarantees under certain contrastive large-margin conditions. To the best of our knowledge, this is the first efficient PAC learning algorithm for contrastive learning.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-21T21:51:01Z</published>
+    <arxiv:comment>accepted to Transactions on Machine Learning Research</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Jie Shen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.17777v4</id>
+    <title>Harnessing Shared Relations via Multimodal Mixup Contrastive Learning for Multimodal Classification</title>
+    <updated>2025-06-30T07:55:13Z</updated>
+    <link href="https://arxiv.org/abs/2409.17777v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.17777v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Deep multimodal learning has shown remarkable success by leveraging contrastive learning to capture explicit one-to-one relations across modalities. However, real-world data often exhibits shared relations beyond simple pairwise associations. We propose M3CoL, a Multimodal Mixup Contrastive Learning approach to capture nuanced shared relations inherent in multimodal data. Our key contribution is a Mixup-based contrastive loss that learns robust representations by aligning mixed samples from one modality with their corresponding samples from other modalities thereby capturing shared relations between them. For multimodal classification tasks, we introduce a framework that integrates a fusion module with unimodal prediction modules for auxiliary supervision during training, complemented by our proposed Mixup-based contrastive loss. Through extensive experiments on diverse datasets (N24News, ROSMAP, BRCA, and Food-101), we demonstrate that M3CoL effectively captures shared multimodal relations and generalizes across domains. It outperforms state-of-the-art methods on N24News, ROSMAP, and BRCA, while achieving comparable performance on Food-101. Our work highlights the significance of learning shared relations for robust multimodal learning, opening up promising avenues for future research. Our code is publicly available at https://github.com/RaghavSinghal10/M3CoL.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-26T12:15:13Z</published>
+    <arxiv:comment>Transactions on Machine Learning Research (TMLR). Raja Kumar and Raghav Singhal contributed equally to this work</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Raja Kumar</name>
+    </author>
+    <author>
+      <name>Raghav Singhal</name>
+    </author>
+    <author>
+      <name>Pranamya Kulkarni</name>
+    </author>
+    <author>
+      <name>Deval Mehta</name>
+    </author>
+    <author>
+      <name>Kshitij Jadhav</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.16624v3</id>
+    <title>A Detailed Account of Compositional Automata Learning through Alphabet Refinement</title>
+    <updated>2026-04-01T05:08:55Z</updated>
+    <link href="https://arxiv.org/abs/2504.16624v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.16624v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Active automata learning infers automaton models of systems from behavioral observations, a technique successfully applied to a wide range of domains. Compositional approaches have recently emerged to address scalability to concurrent systems. We take a significant step beyond available results, including those by the authors, and develop a general technique for compositional learning of a synchronizing parallel system with an unknown decomposition. Our approach automatically refines the global alphabet into component alphabets while learning the component models. We develop a theoretical treatment of distributions of alphabets, i.e., sets of possibly overlapping component alphabets, characterize counter-examples that reveal inconsistencies with global observations, and show how to systematically update the distribution to restore consistency. We extend $L^{\star}$ to handle partial and potentially spurious information arising when learning components from global observations only. We establish correctness and termination of the full algorithm. We provide an implementation, called CoalA, using the state-of-the-art active learning library LearnLib. Our experiments on more than 630 subject systems show that CoalA delivers up to five orders of magnitude fewer membership queries than monolithic learning, and achieves better scalability in equivalence queries on systems with significant concurrency.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.FL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-23T11:30:01Z</published>
+    <arxiv:comment>Extended version of "Compositional Active Learning of Synchronizing Systems Through Automated Alphabet Refinement" (CONCUR 2025, DOI: 10.4230/LIPIcs.CONCUR.2025.20), submitted to the CONCUR 2025 special issue of Logical Methods in Computer Science. Incorporates and extends results from "Compositional Automata Learning of Synchronous Systems" (FASE 2023, DOI: 10.1007/978-3-031-30826-0_3)</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Leo Henry</name>
+    </author>
+    <author>
+      <name>Thomas Neele</name>
+    </author>
+    <author>
+      <name>Mohammad Reza Mousavi</name>
+    </author>
+    <author>
+      <name>Matteo Sammartino</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/chao-dyn/9311011v2</id>
+    <title>The Great Inequality In A Hamiltonian Planetary Theory</title>
+    <updated>1993-12-07T04:05:12Z</updated>
+    <link href="https://arxiv.org/abs/chao-dyn/9311011v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/chao-dyn/9311011v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>  The Jupiter-Saturn 2:5 near-commensurability is analyzed in a fully analytic Hamiltonian planetary theory. Computations for the Sun-Jupiter-Saturn system, extending to the third order of the masses and to the 8th degree in the eccentricities and inclinations, reveal an unexpectedly sensitive dependence of the solution on initial data and its likely nonconvergence. The source of the sensitivity and apparent lack of convergence is this near-commensurability, the so-called great inequality. This indicates that simple averaging, still common in current semi-analytic planetary theories, may not be an adequate technique to obtain information on the long-term dynamics of the Solar System.
+  Preliminary results suggest that these difficulties can be overcome by using resonant normal forms.</summary>
+    <category term="nlin.CD" scheme="http://arxiv.org/schemas/atom"/>
+    <published>1993-11-30T04:18:23Z</published>
+    <arxiv:comment>6 pages, PostScript, compressed and uuencoded, 150KB, figures included, hard copy available upon request</arxiv:comment>
+    <arxiv:primary_category term="nlin.CD"/>
+    <author>
+      <name>F. Varadi</name>
+      <arxiv:affiliation>Institute of Geophysics and Planetary Physics University of California, Los Angeles Los Angeles,CA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>M. Ghil</name>
+      <arxiv:affiliation>Institute of Geophysics and Planetary Physics University of California, Los Angeles Los Angeles,CA</arxiv:affiliation>
+    </author>
+    <author>
+      <name>W. M. Kaula</name>
+      <arxiv:affiliation>Institute of Geophysics and Planetary Physics University of California, Los Angeles Los Angeles,CA</arxiv:affiliation>
+    </author>
+    <author>
+      <name> Keywords</name>
+    </author>
+    <author>
+      <name> :</name>
+    </author>
+    <author>
+      <name>Hamiltonian systems</name>
+    </author>
+    <author>
+      <name>planetary motion</name>
+    </author>
+    <author>
+      <name>perturbation theory</name>
+    </author>
+    <author>
+      <name> resonances</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.20771v2</id>
+    <title>Emergent Compositional Skills in Mixture-of-Experts VLAs</title>
+    <updated>2026-07-24T19:25:04Z</updated>
+    <link href="https://arxiv.org/abs/2607.20771v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.20771v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We consider the problem of learning compositional robot policies end-to-end from expert demonstrations, without any pre-specified notion of task decomposition or hierarchy. We ask whether a VLA trained with a simplified Mixture-of-Experts (MoE) action head can emergently learn to decompose tasks into reusable, interpretable primitives. We find that learned experts are heavily reused across tasks and consistently correspond to qualitatively distinct low-level behaviors, suggesting that the router implicitly learns to perform high-level sequencing while experts serve as compositional primitives. Our MoE matches the task performance of a monolithic baseline while demonstrating meaningful expert specialization, a step toward modular, interpretable robot policies that emerge from data alone.</summary>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-22T22:36:52Z</published>
+    <arxiv:comment>Accepted to the 2nd Workshop on Compositional Learning at ICML 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.RO"/>
+    <author>
+      <name>Shlok Shah</name>
+    </author>
+    <author>
+      <name>Rhiaan Jhaveri</name>
+    </author>
+    <author>
+      <name>Tharun Kumar Tiruppali Kalidoss</name>
+    </author>
+    <author>
+      <name>Chirayu Nimonkar</name>
+    </author>
+    <author>
+      <name>Ishaan Javali</name>
+    </author>
+    <author>
+      <name>Dhruv Shah</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.17098v2</id>
+    <title>Learning Temporal Distances: Contrastive Successor Features Can Provide a Metric Structure for Decision-Making</title>
+    <updated>2025-03-10T07:33:32Z</updated>
+    <link href="https://arxiv.org/abs/2406.17098v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.17098v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Temporal distances lie at the heart of many algorithms for planning, control, and reinforcement learning that involve reaching goals, allowing one to estimate the transit time between two states. However, prior attempts to define such temporal distances in stochastic settings have been stymied by an important limitation: these prior approaches do not satisfy the triangle inequality. This is not merely a definitional concern, but translates to an inability to generalize and find shortest paths. In this paper, we build on prior work in contrastive learning and quasimetrics to show how successor features learned by contrastive learning (after a change of variables) form a temporal distance that does satisfy the triangle inequality, even in stochastic settings. Importantly, this temporal distance is computationally efficient to estimate, even in high-dimensional and stochastic settings. Experiments in controlled settings and benchmark suites demonstrate that an RL algorithm based on these new temporal distances exhibits combinatorial generalization (i.e., "stitching") and can sometimes learn more quickly than prior methods, including those based on quasimetrics.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-24T19:36:45Z</published>
+    <arxiv:comment>Proceedings of the 41st International Conference on Machine Learning (ICML 2024)</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>Proceedings of the 41st International Conference on Machine Learning (ICML 2024)</arxiv:journal_ref>
+    <author>
+      <name>Vivek Myers</name>
+    </author>
+    <author>
+      <name>Chongyi Zheng</name>
+    </author>
+    <author>
+      <name>Anca Dragan</name>
+    </author>
+    <author>
+      <name>Sergey Levine</name>
+    </author>
+    <author>
+      <name>Benjamin Eysenbach</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2302.08893v4</id>
+    <title>Active learning for data streams: a survey</title>
+    <updated>2023-11-29T21:07:15Z</updated>
+    <link href="https://arxiv.org/abs/2302.08893v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2302.08893v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Online active learning is a paradigm in machine learning that aims to select the most informative data points to label from a data stream. The problem of minimizing the cost associated with collecting labeled observations has gained a lot of attention in recent years, particularly in real-world applications where data is only available in an unlabeled form. Annotating each observation can be time-consuming and costly, making it difficult to obtain large amounts of labeled data. To overcome this issue, many active learning strategies have been proposed in the last decades, aiming to select the most informative observations for labeling in order to improve the performance of machine learning models. These approaches can be broadly divided into two categories: static pool-based and stream-based active learning. Pool-based active learning involves selecting a subset of observations from a closed pool of unlabeled data, and it has been the focus of many surveys and literature reviews. However, the growing availability of data streams has led to an increase in the number of approaches that focus on online active learning, which involves continuously selecting and labeling observations as they arrive in a stream. This work aims to provide an overview of the most recently proposed approaches for selecting the most informative observations from data streams in real time. We review the various techniques that have been proposed and discuss their strengths and limitations, as well as the challenges and opportunities that exist in this area of research.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-02-17T14:24:13Z</published>
+    <arxiv:comment>Published in Machine Learning (2023)</arxiv:comment>
+    <arxiv:primary_category term="stat.ML"/>
+    <arxiv:journal_ref>Machine Learning (2023): 1-55</arxiv:journal_ref>
+    <author>
+      <name>Davide Cacciarelli</name>
+    </author>
+    <author>
+      <name>Murat Kulahci</name>
+    </author>
+    <arxiv:doi>10.1007/s10994-023-06454-2</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1007/s10994-023-06454-2" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.14926v3</id>
+    <title>Contrastive Learning on Multimodal Analysis of Electronic Health Records</title>
+    <updated>2026-07-10T12:24:40Z</updated>
+    <link href="https://arxiv.org/abs/2403.14926v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.14926v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Electronic health record (EHR) systems capture a wealth of multimodal clinical data, encompassing both structured clinical codes and unstructured clinical notes. Yet, many EHR-focused studies have traditionally examined these modalities in isolation or combined them using simplistic methods, overlooking the intrinsic synergy between them. In reality, these modalities are deeply interconnected, each containing clinically relevant and complementary information that, when integrated effectively, can provide a more comprehensive understanding of patient health. Despite the success of multimodal contrastive learning in vision-language applications, its potential remains under-explored in multimodal EHR, particularly in terms of theoretical understanding. To support statistical analysis of multimodal EHR data, we propose a multimodal feature embedding generative model and design a multimodal contrastive loss to learn EHR feature representations. Our theoretical analysis demonstrates the effectiveness of multimodal learning over single-modality learning and connects the solution of the loss function to the singular value decomposition of a pointwise mutual information matrix. This connection leads to a privacy-preserving algorithm tailored for multimodal EHR representation learning. Simulation studies show that the proposed algorithm performs well under a variety of configurations. We further validate its clinical utility using real-world EHR data.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-22T03:01:42Z</published>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Tianxi Cai</name>
+    </author>
+    <author>
+      <name>Feiqing Huang</name>
+    </author>
+    <author>
+      <name>Ryumei Nakada</name>
+    </author>
+    <author>
+      <name>Linjun Zhang</name>
+    </author>
+    <author>
+      <name>Doudou Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2103.00113v2</id>
+    <title>Anomaly Detection on Attributed Networks via Contrastive Self-Supervised Learning</title>
+    <updated>2021-05-06T03:15:36Z</updated>
+    <link href="https://arxiv.org/abs/2103.00113v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2103.00113v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Anomaly detection on attributed networks attracts considerable research interests due to wide applications of attributed networks in modeling a wide range of complex systems. Recently, the deep learning-based anomaly detection methods have shown promising results over shallow approaches, especially on networks with high-dimensional attributes and complex structures. However, existing approaches, which employ graph autoencoder as their backbone, do not fully exploit the rich information of the network, resulting in suboptimal performance. Furthermore, these methods do not directly target anomaly detection in their learning objective and fail to scale to large networks due to the full graph training mechanism. To overcome these limitations, in this paper, we present a novel contrastive self-supervised learning framework for anomaly detection on attributed networks. Our framework fully exploits the local information from network data by sampling a novel type of contrastive instance pair, which can capture the relationship between each node and its neighboring substructure in an unsupervised way. Meanwhile, a well-designed graph neural network-based contrastive learning model is proposed to learn informative embedding from high-dimensional attributes and local structure and measure the agreement of each instance pairs with its outputted scores. The multi-round predicted scores by the contrastive learning model are further used to evaluate the abnormality of each node with statistical estimation. In this way, the learning model is trained by a specific anomaly detection-aware target. Furthermore, since the input of the graph neural network module is batches of instance pairs instead of the full network, our framework can adapt to large networks flexibly. Experimental results show that our proposed framework outperforms the state-of-the-art baseline methods on all seven benchmark datasets.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-02-27T03:17:20Z</published>
+    <arxiv:comment>15 pages, 5 figures, 6 tables. Published in IEEE Transactions on Neural Networks and Learning Systems (TNNLS)</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>IEEE Transactions on Neural Networks and Learning Systems (TNNLS), 2021</arxiv:journal_ref>
+    <author>
+      <name>Yixin Liu</name>
+    </author>
+    <author>
+      <name>Zhao Li</name>
+    </author>
+    <author>
+      <name>Shirui Pan</name>
+    </author>
+    <author>
+      <name>Chen Gong</name>
+    </author>
+    <author>
+      <name>Chuan Zhou</name>
+    </author>
+    <author>
+      <name>George Karypis</name>
+    </author>
+    <arxiv:doi>10.1109/TNNLS.2021.3068344</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/TNNLS.2021.3068344" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.10365v2</id>
+    <title>Robust image representations with counterfactual contrastive learning</title>
+    <updated>2025-04-10T16:19:20Z</updated>
+    <link href="https://arxiv.org/abs/2409.10365v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.10365v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Contrastive pretraining can substantially increase model generalisation and downstream performance. However, the quality of the learned representations is highly dependent on the data augmentation strategy applied to generate positive pairs. Positive contrastive pairs should preserve semantic meaning while discarding unwanted variations related to the data acquisition domain. Traditional contrastive pipelines attempt to simulate domain shifts through pre-defined generic image transformations. However, these do not always mimic realistic and relevant domain variations for medical imaging, such as scanner differences. To tackle this issue, we herein introduce counterfactual contrastive learning, a novel framework leveraging recent advances in causal image synthesis to create contrastive positive pairs that faithfully capture relevant domain variations. Our method, evaluated across five datasets encompassing both chest radiography and mammography data, for two established contrastive objectives (SimCLR and DINO-v2), outperforms standard contrastive learning in terms of robustness to acquisition shift. Notably, counterfactual contrastive learning achieves superior downstream performance on both in-distribution and external datasets, especially for images acquired with scanners under-represented in the training set. Further experiments show that the proposed framework extends beyond acquisition shifts, with models trained with counterfactual contrastive learning reducing subgroup disparities across biological sex.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-16T15:11:00Z</published>
+    <arxiv:comment>Code available at https://github.com/biomedia-mira/counterfactual-contrastive/</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <arxiv:journal_ref>Medical Image Analysis, Volume 105, October 2025</arxiv:journal_ref>
+    <author>
+      <name>Mélanie Roschewitz</name>
+    </author>
+    <author>
+      <name>Fabio De Sousa Ribeiro</name>
+    </author>
+    <author>
+      <name>Tian Xia</name>
+    </author>
+    <author>
+      <name>Galvin Khara</name>
+    </author>
+    <author>
+      <name>Ben Glocker</name>
+    </author>
+    <arxiv:doi>10.1016/j.media.2025.103668</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.media.2025.103668" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1305.2505v1</id>
+    <title>On the Generalization Ability of Online Learning Algorithms for Pairwise Loss Functions</title>
+    <updated>2013-05-11T13:52:37Z</updated>
+    <link href="https://arxiv.org/abs/1305.2505v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1305.2505v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we study the generalization properties of online learning based stochastic methods for supervised learning problems where the loss function is dependent on more than one training sample (e.g., metric learning, ranking). We present a generic decoupling technique that enables us to provide Rademacher complexity-based generalization error bounds. Our bounds are in general tighter than those obtained by Wang et al (COLT 2012) for the same problem. Using our decoupling technique, we are further able to obtain fast convergence rates for strongly convex pairwise loss functions. We are also able to analyze a class of memory efficient online learning algorithms for pairwise learning problems that use only a bounded subset of past training samples to update the hypothesis at each step. Finally, in order to complement our generalization bounds, we propose a novel memory efficient online learning algorithm for higher order learning problems with bounded regret guarantees.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2013-05-11T13:52:37Z</published>
+    <arxiv:comment>To appear in proceedings of the 30th International Conference on Machine Learning (ICML 2013)</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>Journal of Machine Learning Research, W&amp;CP 28(3) (2013)</arxiv:journal_ref>
+    <author>
+      <name>Purushottam Kar</name>
+    </author>
+    <author>
+      <name>Bharath K Sriperumbudur</name>
+    </author>
+    <author>
+      <name>Prateek Jain</name>
+    </author>
+    <author>
+      <name>Harish C Karnick</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1912.05075v1</id>
+    <title>Multimodal Generative Models for Compositional Representation Learning</title>
+    <updated>2019-12-11T01:43:56Z</updated>
+    <link href="https://arxiv.org/abs/1912.05075v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1912.05075v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As deep neural networks become more adept at traditional tasks, many of the most exciting new challenges concern multimodality---observations that combine diverse types, such as image and text. In this paper, we introduce a family of multimodal deep generative models derived from variational bounds on the evidence (data marginal likelihood). As part of our derivation we find that many previous multimodal variational autoencoders used objectives that do not correctly bound the joint marginal likelihood across modalities. We further generalize our objective to work with several types of deep generative model (VAE, GAN, and flow-based), and allow use of different model types for different modalities. We benchmark our models across many image, label, and text datasets, and find that our multimodal VAEs excel with and without weak supervision. Additional improvements come from use of GAN image models with VAE language models. Finally, we investigate the effect of language on learned image representations through a variety of downstream tasks, such as compositionally, bounding box prediction, and visual relation prediction. We find evidence that these image representations are more abstract and compositional than equivalent representations learned from only visual data.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-12-11T01:43:56Z</published>
+    <arxiv:comment>24 pages content; 7 pages appendix</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Mike Wu</name>
+    </author>
+    <author>
+      <name>Noah Goodman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.05862v1</id>
+    <title>Bringing Masked Autoencoders Explicit Contrastive Properties for Point Cloud Self-Supervised Learning</title>
+    <updated>2024-07-08T12:28:56Z</updated>
+    <link href="https://arxiv.org/abs/2407.05862v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.05862v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Contrastive learning (CL) for Vision Transformers (ViTs) in image domains has achieved performance comparable to CL for traditional convolutional backbones. However, in 3D point cloud pretraining with ViTs, masked autoencoder (MAE) modeling remains dominant. This raises the question: Can we take the best of both worlds? To answer this question, we first empirically validate that integrating MAE-based point cloud pre-training with the standard contrastive learning paradigm, even with meticulous design, can lead to a decrease in performance. To address this limitation, we reintroduce CL into the MAE-based point cloud pre-training paradigm by leveraging the inherent contrastive properties of MAE. Specifically, rather than relying on extensive data augmentation as commonly used in the image domain, we randomly mask the input tokens twice to generate contrastive input pairs. Subsequently, a weight-sharing encoder and two identically structured decoders are utilized to perform masked token reconstruction. Additionally, we propose that for an input token masked by both masks simultaneously, the reconstructed features should be as similar as possible. This naturally establishes an explicit contrastive constraint within the generative MAE-based pre-training paradigm, resulting in our proposed method, Point-CMAE. Consequently, Point-CMAE effectively enhances the representation quality and transfer performance compared to its MAE counterpart. Experimental evaluations across various downstream applications, including classification, part segmentation, and few-shot learning, demonstrate the efficacy of our framework in surpassing state-of-the-art techniques under standard ViTs and single-modal settings. The source code and trained models are available at: https://github.com/Amazingren/Point-CMAE.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-08T12:28:56Z</published>
+    <arxiv:comment>Bringing Masked Autoencoders Explicit Contrastive Properties for Point Cloud Self-Supervised Learning</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Bin Ren</name>
+    </author>
+    <author>
+      <name>Guofeng Mei</name>
+    </author>
+    <author>
+      <name>Danda Pani Paudel</name>
+    </author>
+    <author>
+      <name>Weijie Wang</name>
+    </author>
+    <author>
+      <name>Yawei Li</name>
+    </author>
+    <author>
+      <name>Mengyuan Liu</name>
+    </author>
+    <author>
+      <name>Rita Cucchiara</name>
+    </author>
+    <author>
+      <name>Luc Van Gool</name>
+    </author>
+    <author>
+      <name>Nicu Sebe</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1106.1451v2</id>
+    <title>A data-based power transformation for compositional data</title>
+    <updated>2011-06-16T11:56:33Z</updated>
+    <link href="https://arxiv.org/abs/1106.1451v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1106.1451v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Compositional data analysis is carried out either by neglecting the compositional constraint and applying standard multivariate data analysis, or by transforming the data using the logs of the ratios of the components. In this work we examine a more general transformation which includes both approaches as special cases. It is a power transformation and involves a single parameter, α. The transformation has two equivalent versions. The first is the stay-in-the-simplex version, which is the power transformation as defined by Aitchison in 1986. The second version, which is a linear transformation of the power transformation, is a Box-Cox type transformation. We discuss a parametric way of estimating the value of α, which is maximization of its profile likelihood (assuming multivariate normality of the transformed data) and the equivalence between the two versions is exhibited. Other ways include maximization of the correct classification probability in discriminant analysis and maximization of the pseudo R-squared (as defined by Aitchison in 1986) in linear regression. We examine the relationship between the α-transformation, the raw data approach and the isometric log-ratio transformation. Furthermore, we also define a suitable family of metrics corresponding to the family of α-transformation and consider the corresponding family of Frechet means.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2011-06-07T20:35:58Z</published>
+    <arxiv:comment>Published in the proceddings of the 4th international workshop on Compositional Data Analysis. http://congress.cimne.com/codawork11/frontal/default.asp</arxiv:comment>
+    <arxiv:primary_category term="stat.ME"/>
+    <arxiv:journal_ref>Proceedings of CoDaWork'11: 4th international workshop on Compositional Data Analysis, Egozcue, J.J., Tolosana-Delgado, R. and Ortego, M.I. (eds.) 2011. ISBN: 978-84-87867-76-7</arxiv:journal_ref>
+    <author>
+      <name>Michail T. Tsagris</name>
+    </author>
+    <author>
+      <name>Simon Preston</name>
+    </author>
+    <author>
+      <name>Andrew T. A. Wood</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2008.02531v2</id>
+    <title>Self-supervised Video Representation Learning Using Inter-intra Contrastive Framework</title>
+    <updated>2020-08-12T07:28:38Z</updated>
+    <link href="https://arxiv.org/abs/2008.02531v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2008.02531v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose a self-supervised method to learn feature representations from videos. A standard approach in traditional self-supervised methods uses positive-negative data pairs to train with contrastive learning strategy. In such a case, different modalities of the same video are treated as positives and video clips from a different video are treated as negatives. Because the spatio-temporal information is important for video representation, we extend the negative samples by introducing intra-negative samples, which are transformed from the same anchor video by breaking temporal relations in video clips. With the proposed Inter-Intra Contrastive (IIC) framework, we can train spatio-temporal convolutional networks to learn video representations. There are many flexible options in our IIC framework and we conduct experiments by using several different configurations. Evaluations are conducted on video retrieval and video recognition tasks using the learned video representation. Our proposed IIC outperforms current state-of-the-art results by a large margin, such as 16.7% and 9.5% points improvements in top-1 accuracy on UCF101 and HMDB51 datasets for video retrieval, respectively. For video recognition, improvements can also be obtained on these two benchmark datasets. Code is available at https://github.com/BestJuly/Inter-intra-video-contrastive-learning.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-08-06T09:08:14Z</published>
+    <arxiv:comment>Accepted by ACMMM 2020. Our project page is at https://bestjuly.github.io/Inter-intra-video-contrastive-learning/</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Li Tao</name>
+    </author>
+    <author>
+      <name>Xueting Wang</name>
+    </author>
+    <author>
+      <name>Toshihiko Yamasaki</name>
+    </author>
+    <arxiv:doi>10.1145/3394171.3413694</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3394171.3413694" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2201.04029v1</id>
+    <title>Motion-Focused Contrastive Learning of Video Representations</title>
+    <updated>2022-01-11T16:15:45Z</updated>
+    <link href="https://arxiv.org/abs/2201.04029v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2201.04029v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Motion, as the most distinct phenomenon in a video to involve the changes over time, has been unique and critical to the development of video representation learning. In this paper, we ask the question: how important is the motion particularly for self-supervised video representation learning. To this end, we compose a duet of exploiting the motion for data augmentation and feature learning in the regime of contrastive learning. Specifically, we present a Motion-focused Contrastive Learning (MCL) method that regards such duet as the foundation. On one hand, MCL capitalizes on optical flow of each frame in a video to temporally and spatially sample the tubelets (i.e., sequences of associated frame patches across time) as data augmentations. On the other hand, MCL further aligns gradient maps of the convolutional layers to optical flow maps from spatial, temporal and spatio-temporal perspectives, in order to ground motion information in feature learning. Extensive experiments conducted on R(2+1)D backbone demonstrate the effectiveness of our MCL. On UCF101, the linear classifier trained on the representations learnt by MCL achieves 81.91% top-1 accuracy, outperforming ImageNet supervised pre-training by 6.78%. On Kinetics-400, MCL achieves 66.62% top-1 accuracy under the linear protocol. Code is available at https://github.com/YihengZhang-CV/MCL-Motion-Focused-Contrastive-Learning.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-01-11T16:15:45Z</published>
+    <arxiv:comment>ICCV 2021 (Oral); Code is publicly available at: https://github.com/YihengZhang-CV/MCL-Motion-Focused-Contrastive-Learning</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Rui Li</name>
+    </author>
+    <author>
+      <name>Yiheng Zhang</name>
+    </author>
+    <author>
+      <name>Zhaofan Qiu</name>
+    </author>
+    <author>
+      <name>Ting Yao</name>
+    </author>
+    <author>
+      <name>Dong Liu</name>
+    </author>
+    <author>
+      <name>Tao Mei</name>
+    </author>
+  </entry>
+</feed>

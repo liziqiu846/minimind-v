@@ -1,6 +1,6 @@
 # 上海交通大学实习——当前研究状态
 
-**版本：v4**
+**版本：v5**
 **日期：2026-08-07**
 **定位：项目当前工作状态的最高优先级入口。任何新对话、Codex 任务或阶段三研究决策开始前，先读本文。**
 
@@ -73,6 +73,17 @@ MiniMind-V 只是低成本验证平台，不能反过来定义理论。
 ---
 
 ## 4. 当前大方向共识：先找 VLM 相比 LLM 真正新增的泛化因素
+
+当前唯一 Active Research Question 是 `XID-01`：
+
+> autoregressive supervision 下，当 language shortcut 与真实 image–text
+> interaction rule 在 observed training support 上都能达到低 next-token NLL 时，
+> 哪些 support / objective 条件能够识别可迁移规则，并控制 unseen multimodal
+> combination risk？
+
+证据级别仅为 `CONJECTURE` + `EMPIRICAL_SUPPORT`。当前先建立有限支持理论对象，
+不运行真实模型训练，不把新 metric、proxy、gate、audit 或 benchmark qualification
+当成科学机制。
 
 当前不再一头扎进某个单一 proxy 或局部公式。先在任务书大方向下系统比较 VLM 泛化的主要来源。
 
@@ -253,21 +264,19 @@ level 解读。当前没有证据达到 `MECHANISM_REJECTED`。
 
 ## 10. 当前动态 backlog
 
-- **ACTIVE**：`CROSSFACT-01` authoritative crossed-cell gate。它只接受发布者在
-  outcome 前定义的同一 image/acquisition × 多 text/task cells；round 1 immutable
-  literature/schema plan 已冻结，禁止 checkpoint/GPU/training。
-- **NEXT**：尚无可执行 training candidate。只有 exact crossed-cell lineage、
-  source-factor orthogonality、matched redundancy、frozen held-out cell、direct
-  generative evidence 与 local feasibility 全部通过，才允许登记一个最小训练
-  candidate。
-- **BACKLOG**：`OBJ-01`。它不能由已失败的 `VISCOND-01` positive gate 启动；
-  `LITMAP-04` 也没有提供合法最小 objective bridge。该上位假设仍开放，但不是可直接
-  训练 candidate。
+- **ACTIVE**：`XID-01` cross-modal interaction identifiability。下一轮先定义
+  observed-support predictor equivalence class，证明最小 finite crossed-support
+  proposition，并 exhaustive verification。
+- **NEXT**：AR visual-credit competition；cross-modal compositional
+  factorization。它们有直接证据与算法出口，但需由 `XID-01` 判断是特例、竞争解释
+  还是独立机制。
+- **BACKLOG**：joint multimodal support coverage；`OBJ-01`。coverage 是
+  interaction identification 的可能数据条件，不预设某 graph statistic；OBJ 不能由
+  已失败的 VISCOND proxy 启动。
 
-`COVER-01` 已按 immutable gate 作出 `NO_CANDIDATE` /
-`BRIDGE_REJECTED`。下一步只允许执行已冻结的 `CROSSFACT-01` targeted
-primary-source/schema gate；不得从 LAION/VFLAN、broad task categories、
-embedding/LLM clusters 中搜索 mixture 或 held-out target。
+`CROSSFACT-01` 保留为 `EXPERIMENT_TOOL` artifact，不再以 authoritative schema gate
+占据科学主问题。只有 `XID-01` 产生独立理论 prediction 后，crossed-cell design 才
+可能作为一种验证工具恢复。
 
 ---
 
@@ -289,7 +298,11 @@ embedding/LLM clusters 中搜索 mixture 或 held-out target。
    唯一单因素 bridge。
 9. 同一 image/acquisition unit 上 publisher-defined text/task factors 的 crossed-cell
    coverage 可能隔离真正跨模态组合泛化；是否存在 authoritative schema、exact
-   lineage 与 generative held-out cell 尚待 `CROSSFACT-01` 裁决。
+   lineage 与 generative held-out cell 保留为实验设计问题，不再决定科学机制准入。
+10. observed support 上多个低 NLL conditional predictors 可能对应不同的
+    cross-modal interaction rules，并在 unseen cells 上产生不同风险；该
+    `XID-01` formulation 仍需证明其超出普通 distribution-shift no-free-lunch 的
+    VLM-specific 内容。
 
 ---
 
@@ -306,6 +319,8 @@ embedding/LLM clusters 中搜索 mixture 或 held-out target。
   sample count 直接称为 controlled coverage；
 - 不把 LAION/VFLAN、broad dataset/task labels 或非唯一官方 ID 直接当作 factorial
   cell；不搜索 domain pair、mixture ratio、target cell 或 output format；
+- 不把 predictor-equivalence diameter 直接实现成 checkpoint proxy；本轮先证明
+  formal object 与 prediction；
 - 不访问 final confirmation set；
 - 不提前宣布进入阶段四。
 
@@ -313,17 +328,16 @@ embedding/LLM clusters 中搜索 mixture 或 held-out target。
 
 ## 13. 仓库与执行状态
 
-- 当前最新 scientific result：`experiments/results/COVER-01_round1/RESULT.md`
-  （`NO_CANDIDATE` / `BRIDGE_REJECTED`；只否定当前
-  authoritative-broad-label-to-local-single-factor bridge）。
-- 当前 immutable plan：`experiments/plans/CROSSFACT-01_round1.md`（由当前 plan
-  commit 冻结）；round 1 为 0 checkpoint/GPU/training 的 literature/schema gate。
+- 当前最新 scientific result：`experiments/results/LITMAP-06_round1/RESULT.md`
+  （选择 `XID-01`，最高证据仅为 `CONJECTURE` + `EMPIRICAL_SUPPORT`）。
+- 下一 immutable plan：`experiments/plans/XID-01_round1.md`，必须提交后才执行
+  finite theory/proof/exhaustive verification；0 checkpoint/GPU/training。
 - `RUNNING_JOB=none`，`HARD_STOP=false`。
 - 新增 plans、results、raw receipts、logs 和 SHA manifests 已在
   `EXPERIMENT_REGISTRY.md` 建立 canonical 索引；失败原始证据保留。
-- `COVER-01` 的 14-source matrix、deterministic search index、official
-  data-lineage audit、169 exact sample mappings 与 source hashes 已固化；14/14
-  决定性来源均可核查，0 GPU/checkpoint/training，未访问 final confirmation。
+- `LITMAP-06` 的 3,479 records、2,395 unique titles、10-source matrix、
+  deterministic search index、5/5 DOI verification 与 source hashes 已固化；
+  0 GPU/checkpoint/training，未访问 final confirmation。
 
 ---
 
@@ -334,8 +348,9 @@ embedding/LLM clusters 中搜索 mixture 或 held-out target。
 > canonical state 优先于聊天与 nightly report。当前仍处于阶段三；五个初始
 > candidate 的失败粒度分别是 bridge/proxy/proxy/instantiation/instantiation，
 > 后续 `LITMAP-04` 与 `LITMAP-05` 均为 bridge rejection，没有上位 mechanism 被
-> 否定；`COVER-01` 也只得到 broad-label bridge rejection。当前 active question
-> 是 `CROSSFACT-01` authoritative crossed-cell gate；先确认其 immutable plan 已
-> 提交，再继续同一 image/acquisition × publisher-defined text/task factor 的
-> targeted schema audit。不重跑既有实验，不搜索 mixture/target，不制造新 proxy，
-> 不访问 final confirmation set。
+> 否定；`COVER-01` 也只得到 broad-label bridge rejection。治理纠偏后
+> `CROSSFACT-01` 降为 experiment tool；`LITMAP-06` 选择 `XID-01`
+> cross-modal interaction identifiability 为 active conjecture。先确认
+> `experiments/plans/XID-01_round1.md` 已提交，再执行 finite support theorem、
+> proof 与 exhaustive verification。不重跑既有实验，不制造新 proxy，不访问 final
+> confirmation set。

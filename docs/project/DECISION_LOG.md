@@ -447,3 +447,36 @@ authoritative crossed-cell gate；在其独立 immutable plan commit 前不执�
   redundancy 与 outcome 前冻结的 held-out cell；
 - 本轮 0 GPU、0 checkpoint inference、0 training，未访问 final confirmation；
   没有 `MECHANISM_REJECTED`，没有 `HARD_STOP`。
+
+---
+
+## 2026-08-07｜治理纠偏后由 LITMAP-06 选择 XID-01
+
+**决定**：`CROSSFACT-01` 按 canonical role 降为 `EXPERIMENT_TOOL`，不再以 schema
+gate 占据 Active Research Question。`LITMAP-06` 选择 `XID-01`：
+autoregressive supervision 下的 cross-modal interaction identifiability，证据级别
+仅为 `CONJECTURE` + `EMPIRICAL_SUPPORT`。
+
+**依据**：
+
+1. 3,479 raw records、2,395 unique titles 与 10 篇决定性 primary sources 显示，
+   AR text bias、cross-modal composition gap 与 support-arrangement effects
+   分别存在，但尚无兼容 theorem 把它们连接到 discrete AR unseen risk；
+2. 一般 CG no-free-lunch 要求 task-specific assumptions，并把 interdependent
+   generative effects 留为开放问题；
+3. multimodal contrastive identifiability 可在连续可逆生成机制、content
+   invariance 与 asymptotic contrastive objective 下 block-identify shared content，
+   但不能直接认证 next-token conditional rule；
+4. `COMP-01`/`VISCOND-01` 只否定 proxy，`VISSUP-01`/`PROJALLOC-01` 只否定具体
+   instantiation；它们不否定 training-support identifiability；
+5. 新 prediction 不依赖旧 proxy：匹配 \(N\)、marginals、target format 与 model
+   class，只改变 cells 是否区分 shortcut/intended rule，应改变 unseen-combination
+   risk。
+
+**后果**：
+
+- 下一步先定义 observed-support predictor equivalence，并构造最小 finite theorem；
+- 必须说明它相比普通 support mismatch / no-free-lunch 新增的 VLM-specific 内容；
+- 当前 0 checkpoint/GPU/training，不访问 final confirmation；
+- 只有 theorem 产生清楚、尚未查看且能区分两个科学解释的 prediction 后，才可考虑
+  existing-artifact test 或最小训练。
