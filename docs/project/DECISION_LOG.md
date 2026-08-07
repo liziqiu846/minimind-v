@@ -535,3 +535,34 @@ VLM-specific。各项使用 target risk，不是可反复计算的 model-selecti
 prediction-theorem validation，目标是证明 diagnostic mass/separation threshold，
 直接区分冗余样本缩小 estimation 与 diagnostic support 改变 identification margin；
 仍不训练真实模型。
+
+---
+
+## 2026-08-07｜XID-01 diagnostic-mass prediction theorem 通过
+
+**决定**：`XID-01` 升为 theory `CONCLUSION_CANDIDATE`；允许下一步冻结一个严格
+matched-support、one-paired-seed MiniMind-V mechanism pilot。真实 LVLM mechanism
+仍未确认。
+
+**依据**：
+
+1. 对 target-bad rules，mixture population gap 至少为
+   \(\lambda\gamma-(1-\lambda)\beta\)；
+2. 当该 gap 大于 \(2\alpha_n\) 时，finite-class ERM 以至少 \(1-\delta\) 概率排除
+   target-bad rules；
+3. 等价 diagnostic-mass threshold 为
+   \(\lambda>(\beta+2\alpha_n)/(\beta+\gamma)\)；
+4. 在 lower margin 不超过 \(2\alpha\) 时，bounded-risk sharpness construction
+   仍可使 bad rule 成为 empirical minimizer；
+5. fixed verifier 覆盖 180 parameter cases、2,700 admissible gaps、68 positive
+   threshold cases 与 112 sharpness cases，无 violation；
+6. round1 identifying gaps 与 redundant \(\gamma=0\) limit 精确恢复。
+
+**边界**：这是 sufficient、worst-case sharp theorem，不是 particular optimizer 的
+necessary threshold。真实 LVLM 的 \(\beta,\gamma\) 尚无 validated estimator，禁止
+把新量做成 checkpoint proxy 或在 final confirmation 上选择 intervention。
+
+**后果**：下一训练必须在相同 \(N\)、visual/language/target marginals、pixels、
+target format、steps、trainable coordinates 与 paired seed 下，只改变 joint support
+是否含 interaction-diagnostic cells；它区分 XID mechanism 与 marginal exposure /
+label-frequency explanation。先 1 paired seed，阳性才补 total 3。

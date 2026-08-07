@@ -314,3 +314,23 @@
   estimation radius 的 prediction theorem。
 - **Recommended human decision**: 无需立即决定；之后审查 separation theorem 是否
   真正产生“diagnostic support vs redundant sample count”的新预测。
+
+## 2026-08-07｜XID-01：diagnostic-mass prediction theorem 通过
+
+- **Date**: 2026-08-07
+- **Idea / issue**: 证明并验证
+  \(\lambda>(\beta+2\alpha_n)/(\beta+\gamma)\) 足以排除 target-bad shortcut，
+  且在 stated information 下 worst-case sharp。
+- **Why human should review it**: 这是首个能直接导出 data-mixture 原则的
+  VLM-specific theory candidate，但真实 LVLM 中 \(\beta,\gamma\) 尚无 validated
+  estimator；下一训练只能检验方向性 mechanism，不能把 synthetic task 当真实规律。
+- **Current evidence**: 180 parameter cases、2,700 admissible gaps、68 positive
+  threshold cases、112 bounded-risk sharpness cases、0 violations；round1 三个 eta
+  与 redundant gamma-zero limit 精确恢复。
+- **What Agent has already frozen**: theory `CONCLUSION_CANDIDATE`；下一步只允许
+  matched-support one-paired-seed pilot。阳性才补 total 3 seeds，阴性且无实现问题
+  必须拒绝当前 empirical mechanism instantiation。
+- **Whether autonomous work can continue**: 可以；先审计本地最小 task/training
+  interface并提交 immutable pilot plan，不访问 final confirmation。
+- **Recommended human decision**: 无需立即决定；后续审查 synthetic construction
+  是否真正匹配 visual/language/target marginals 并只改变 joint diagnostic support。

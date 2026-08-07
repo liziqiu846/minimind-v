@@ -328,12 +328,13 @@ level 解读。当前没有证据达到 `MECHANISM_REJECTED`。
 
 ## 13. 仓库与执行状态
 
-- 当前最新 scientific result：`experiments/results/XID-01_round2/RESULT.md`。
-  finite-class approximation/alignment/identification/estimation decomposition 已
-  `PROVEN`，1,147,625 risk tables / 1,530,375 ERM cases 无 violation；这是
-  `PROMISING` theory bridge，不是已验证 LVLM mechanism。
-- 下一 immutable plan：XID-01 diagnostic-mass separation prediction theorem；
-  0 checkpoint/GPU/training，提交前不执行。
+- 当前最新 scientific result：`experiments/results/XID-01_round3/RESULT.md`。
+  diagnostic-mass threshold 与 worst-case sharpness theorem 已 `PROVEN`；
+  180 parameter cases、2,700 admissible gaps 无 violation。`XID-01` 仅升为
+  theory `CONCLUSION_CANDIDATE`，真实 LVLM mechanism 未验证。
+- 下一步：冻结一个 matched \(N\)、visual/language/target marginals、pixels、
+  target format、steps 与 coordinates 的 MiniMind-V paired pilot，只改变 joint
+  support 是否 interaction-diagnostic；先 1 paired seed，plan commit 前不训练。
 - `RUNNING_JOB=none`，`HARD_STOP=false`。
 - 新增 plans、results、raw receipts、logs 和 SHA manifests 已在
   `EXPERIMENT_REGISTRY.md` 建立 canonical 索引；失败原始证据保留。
