@@ -1,0 +1,579 @@
+[2606.22043] When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR
+When Does a Video–Language Model Stop Watching?
+Reward Strength Controls the Formation and Reversal
+of Visual Shortcuts in Multimodal RLVR
+Zekun Xu
+Affiliation: School of Computer Science, The University of Sydney, Sydney, Australia
+Affiliation: xzk20020423@gmail.com
+Abstract
+Reinforcement learning with verifiable rewards (RLVR) is increasingly applied to
+large vision–language models (LVLMs), yet outcome-only optimization can drive a
+model to stop attending to the video and instead exploit linguistic priors—a
+failure we call a visual shortcut. While the existence of such
+perception bypass is by now documented, how it forms, whether it can be
+undone, and when intervention still helps remain open. We treat the
+strength of a grounding penalty, \lambda , as a control knob and characterize the
+formation–reversal dynamics of visual shortcuts along the training time axis.
+On a held-out, out-of-distribution diagnostic set, we find: (i) a sharp
+onset—shortcut reliance emerges abruptly over a narrow window of
+optimization steps and is robust across random seeds; (ii) a monotone
+dose–response—increasing \lambda progressively suppresses the shortcut,
+and at an intermediate dose the trajectory first forms and then
+reverses the shortcut, exposing a hysteresis-like asymmetry between
+acquiring and removing it; and (iii) a critical intervention window—applying
+the penalty before onset arrests shortcut formation, whereas the same penalty
+applied after consolidation is markedly less effective. Together these results
+recast visual-shortcut collapse not as a binary defect but as a controllable,
+time-dependent, and asymmetric process, with direct implications for when and how
+strongly to regularize multimodal RLVR.
+1 Introduction
+Reinforcement learning with verifiable rewards (RLVR) has become a standard
+recipe for improving the reasoning of large language models, and recent work
+extends it to large vision–language models (LVLMs). A recurring hazard, however,
+is that optimizing a final-answer reward can teach the model to ignore the
+visual input: it learns to answer from language priors and surface statistics
+rather than from what the video actually shows. We refer to this degenerate
+solution as a visual shortcut. The phenomenon—discussed under the
+umbrella of perception bypass or evaluator exploitation (12)—is
+now well documented. Blind-image ablations are striking: replacing informative
+frames with blank ones can improve accuracy, indicating that the policy has
+learned to treat the image as noise (3); and VLMs routinely
+bypass visual comparison in favor of language priors and semantic
+anchors (5; 8; 2). What is far less
+understood is the process: visual shortcuts are typically reported as an
+endpoint property (“the model ignores vision”), with little characterization of
+how the behavior emerges over training, whether it is reversible, and whether the
+timing of intervention matters.
+This paper studies that process. Our central move is to treat the
+strength of a grounding penalty, \lambda , as an experimental control knob,
+and to read out shortcut reliance densely along the training time axis
+using a perturbation-based diagnostic. Concretely, we measure a
+visual-hacking score ( \mathrm{VHS} ) that quantifies how invariant a model’s answers are
+to a visual perturbation that should change the correct answer: a model that
+truly watches the video is sensitive to the perturbation, whereas a model relying
+on a shortcut is not. By sweeping \lambda and tracking \mathrm{VHS} through training on a
+held-out, out-of-distribution (OOD) set, we can ask formation, reversal, and
+timing questions that endpoint evaluations cannot.
+Findings.
+We report three results.
+(1) Onset is real and seed-robust (§3). On OOD data,
+shortcut reliance does not drift in smoothly; it rises abruptly over a narrow
+window of optimization steps, and two independent random seeds produce
+near-identical onset curves. This identifies a developmental transition rather
+than a memorization artifact.
+(2) Reward strength yields a monotone dose–response with a
+formation–reversal asymmetry (§4). Increasing \lambda monotonically
+lowers the plateau level of the shortcut. Strikingly, at an intermediate dose the
+trajectory first forms a strong shortcut and then reverses it later
+in training—an asymmetry between acquiring and removing the shortcut that is
+reminiscent of hysteresis in driven systems.
+(3) There is a critical intervention window (§5).
+Applying the grounding penalty before onset suppresses shortcut formation,
+whereas the same penalty applied after the shortcut has consolidated is
+substantially less able to undo it.
+We additionally probe internal representations (§6) to ask what
+changes inside the model as \lambda reshapes the shortcut.
+Contributions.
+•
+We introduce a dose-controlled, time-resolved study of visual
+shortcuts in multimodal RLVR, treating the grounding-penalty strength \lambda as a
+control knob and reading shortcut reliance densely along training on a held-out OOD
+diagnostic.
+•
+We show that shortcut onset is sharp and seed-robust, that the
+plateau is a monotone function of \lambda , and that an intermediate dose
+forms and then reverses the shortcut—an asymmetry between acquisition and
+removal.
+•
+We demonstrate a critical intervention window: a grounding penalty
+applied before onset prevents the shortcut, whereas the same penalty applied
+after consolidation is much less effective.
+As a secondary, exploratory analysis we also probe internal representations across
+the dose axis (§6); we find a directional, layer-localized tendency
+but it falls within bootstrap variability at our sample size, so we report it as a
+motivating observation rather than a core claim.
+Relation to prior work.
+Our contribution is not the observation that
+LVLMs can ignore vision, which prior work already documents
+(12; 3; 5). It is the
+characterization of the shortcut as a controllable, time-resolved, and
+asymmetric process using reward strength as the control variable. Studies of
+reward-hacking dynamics report onset-like transitions and even non-monotone
+rise/retreat/rebound trajectories (1; 13),
+and large-scale empirical studies document that hacking emerges during
+optimization across many RL settings (10);
+and verifier-grounding can suppress shortcuts (4); but these
+are text or code domains, typically at a single reward setting, and without a
+dose axis that lets one trace formation against reversal. Mechanistic
+accounts localize shortcut circuits on single rewards in text-math
+settings (14). We discuss these distinctions in
+§7.
+2 Setup
+Task and model.
+We post-train Qwen3-VL-8B-Instruct, an 8B-parameter
+video–language model,
+with GRPO-style RLVR (9) on a video question-answering objective. The base
+verifiable reward combines answer correctness and a light format term,
+r_{\text{base}}=(1-w)\,a+w\,f , where a\in\{0,1\} is answer correctness,
+f\in\{0,1\} checks that the answer is enclosed in the required tag, and
+w{=}0.1 . To study controllable grounding, we add a grounding penalty whose
+strength is set by a scalar \lambda\geq 0 :
+r=r_{\text{base}}-\lambda\cdot h,\qquad h=a\cdot\mathbf{1}\!\left[\hat{y}_{\text{pert}}=\hat{y}_{\text{clean}}\right],
+(1)
+where \hat{y}_{\text{clean}} and \hat{y}_{\text{pert}} are the model’s answers on
+the clean and temporally perturbed video (the same perturbation used by the VHS
+diagnostic, §A.3), and h is a per-sample hacking indicator: it fires
+only when the model answers correctly and its answer is unchanged under the
+perturbation—i.e. it got the answer right without using the temporal content. The
+penalty thus pushes the policy toward answers that are both correct and genuinely
+dependent on the video, and \lambda{=}0 recovers the pure outcome reward. The penalty
+is computed on-policy at every step from the same clean/perturbed rollout pair used
+for telemetry, so it adds no separate reward model.
+Visual-hacking diagnostic ( \mathrm{VHS} ).
+To measure shortcut reliance
+independently of raw accuracy, we use a perturbation-based score. For each
+diagnostic item we generate answers on the clean video and on a perturbed video,
+where the perturbation randomly shuffles the temporal order of the video frames,
+destroying the temporal structure a faithful viewer would rely on (the individual
+frames are unchanged). \mathrm{VHS} is the fraction of items on which the answer is
+unchanged under perturbation; higher \mathrm{VHS} indicates stronger reliance on
+a visual shortcut (the model “does not watch”). The diagnostic uses five-way
+multiple-choice questions, so a model that ignores the perturbed video and answers
+at random would yield \mathrm{VHS}\approx 0.2 (chance), whereas \mathrm{VHS} near 1
+indicates that the answer is essentially invariant to the temporal content. All
+diagnostics use greedy decoding.
+Held-out OOD evaluation.
+Crucially, \mathrm{VHS} is measured on a
+held-out, out-of-distribution diagnostic set that is disjoint from the
+training distribution. This ensures that what we call onset reflects an emergent
+behavioral change rather than fitting of the training items.
+Trajectory fleet.
+To separate seed effects from dose effects, we
+train a small fleet of trajectories sharing a common origin and varying one factor
+at a time (Table 1). The reading rules are strict: seed robustness
+is assessed only by comparing the \lambda{=}0 runs across seeds; dose response is
+assessed only across \lambda\in\{0,1,2\} at a fixed seed; intervention timing is
+assessed within the intervention runs. We never compare across two factors at once.
+Table 1: Trajectory fleet. All runs share a common origin; each varies a single
+factor. \mathrm{VHS} is read on the OOD diagnostic set. “Onset region” denotes the
+step window over which \mathrm{VHS} rises sharply for the \lambda{=}0 runs.
+Run
+\lambda
+Seed
+Steps
+Role
+E1 (main)
+0
+A
+500
+Onset origin; dose baseline
+sB (seed)
+0
+B
+80
+Seed-robustness control
+L1
+1
+A
+150
+Intermediate dose (formation then reversal)
+L2
+2
+A
+150
+Strong dose (early suppression)
+Intervention (pre/mid/post)
+1
+A
+50 each
+Timing: penalty applied at pre-/at-/post-onset
+3 Onset is real and seed-robust
+Figure 1 tracks \mathrm{VHS} on the OOD diagnostic set as a function of
+optimization step for the two \lambda{=}0 runs (E1, seed A; sB, seed B). Three
+features stand out. First, the curves are flat and low early in training
+(through roughly step 16, \mathrm{VHS}\approx 0.75 – 0.78 with minor step-to-step
+fluctuation): the model remains genuinely sensitive to the visual perturbation.
+Second, \mathrm{VHS} then rises sharply over a narrow window—the onset region,
+approximately steps 16–24 (shaded in the figure)—reaching a high plateau
+( \mathrm{VHS}\approx 0.91 ) within roughly a dozen steps. Third, and most importantly,
+the two seeds produce
+near-identical onset curves: the rise occurs over the same step window and
+saturates at the same level. Because \mathrm{VHS} is measured OOD, this reproducibility
+indicates that onset is a genuine developmental transition of the policy, not
+memorization of training items or a seed-specific accident.
+Refer to caption
+Figure 1: Onset is real and seed-robust. On held-out OOD data, two
+independent seeds exhibit overlapping, sharply rising \mathrm{VHS} curves over the same
+narrow step window, indicating an emergent visual-shortcut transition rather than
+a memorization artifact.
+4 Reward strength: a monotone dose–response with formation–reversal asymmetry
+We next fix the seed and sweep the grounding penalty \lambda\in\{0,1,2\}
+(runs E1, L1, L2). Figure 2 shows both the training dynamics (left)
+and the plateau level of \mathrm{VHS} as a function of \lambda (right).
+Monotone dose–response.
+The plateau \mathrm{VHS} decreases monotonically
+with \lambda : from \approx 0.91 at \lambda{=}0 , to \approx 0.67 at \lambda{=}1 , to
+\approx 0.48 at \lambda{=}2 (Table 2). Each unit of penalty removes a
+roughly comparable amount of shortcut reliance, i.e. the suppression is
+approximately linear in \lambda over this range. The seed control (sB, \lambda{=}0 ,
+plateau \approx 0.90 ) confirms that the \lambda{=}0 baseline is not seed-specific.
+Table 2: Plateau visual-hacking score \mathrm{VHS} on the OOD diagnostic set as a
+function of grounding-penalty strength \lambda (fixed seed A; sB is the \lambda{=}0
+seed control). Higher \mathrm{VHS} means stronger reliance on a visual shortcut.
+\Delta is the change from the \lambda{=}0 baseline. The intermediate dose
+additionally exhibits a non-monotone form-then-reverse trajectory in time
+(peak before plateau), reported in the last column.
+Run
+\lambda
+Plateau \mathrm{VHS}
+\Delta vs. \lambda{=}0
+In-time trajectory
+E1
+0
+0.91
+—
+rise to plateau
+sB (seed)
+0
+0.90
+-0.01
+rise to plateau
+L1
+1
+0.67
+-0.24
+form then reverse (peak \approx 0.89 )
+L2
+2
+0.48
+-0.43
+early suppression, larger fluctuation
+Formation–reversal asymmetry.
+The intermediate dose is the most
+informative. At \lambda{=}1 (L1), \mathrm{VHS} does not simply settle at a lower level:
+it first rises to a peak comparable to the unpenalized run (forming a strong
+shortcut), and only later falls as training continues (reversing it). The
+strong dose \lambda{=}2 (L2) instead suppresses the shortcut earlier and exhibits
+larger fluctuations, consistent with a stronger but less stable drive. The key
+qualitative point is that forming the shortcut and removing it are
+not mirror images along the time axis. We describe this loosely as
+hysteresis-like, but we use the term only by analogy: we observe a non-monotone
+form-then-reverse trajectory in time at a fixed dose, not a true hysteresis loop
+traced by sweeping \lambda up and then down. Establishing genuine path dependence
+would require such a bidirectional dose sweep, which we leave to future work; here
+the asymmetry refers specifically to the difference between how quickly the shortcut
+forms and how slowly it reverses within a single run.
+Accuracy corroborates “watching vs. guessing.”
+On the same OOD set,
+raw accuracy tracks \mathrm{VHS} across the dose axis: at plateau the unpenalized run
+( \lambda{=}0 ) reaches \mathrm{VHS}{\approx}0.91 with accuracy 0.82 ; at \lambda{=}1 , \mathrm{VHS}
+falls to 0.67 and accuracy to 0.61 ; and at \lambda{=}2 , \mathrm{VHS}{\approx}0.48 with
+accuracy 0.55 (all averaged over the plateau checkpoints). The per-sample hacking
+rate h from Eq. 1—answered correctly and invariant to the
+perturbation—falls in lockstep, from 0.78 at \lambda{=}0 to 0.47 and 0.38 .
+The unpenalized model thus answers confidently without watching (high \mathrm{VHS} , high
+accuracy, high h ), and as the penalty suppresses the shortcut, accuracy declines
+by far less than \mathrm{VHS} does (a 0.43 drop in \mathrm{VHS} versus a 0.27 drop in
+accuracy from \lambda{=}0 to \lambda{=}2 ). This gap is consistent with the
+interpretation that the shortcut inflates apparent accuracy, and that suppressing it
+removes the inflated portion while leaving a substantial vision-grounded core, rather
+than uniformly degrading a genuine capability.
+Refer to caption
+Figure 2: Dose–response and formation–reversal asymmetry. Increasing the
+grounding penalty \lambda monotonically lowers the shortcut plateau (right). At the
+intermediate dose, the trajectory forms and then reverses the shortcut (left),
+exposing an asymmetry between acquiring and removing it.
+5 A critical intervention window
+If forming and reversing a shortcut are asymmetric, the timing of
+intervention should matter. We test this directly. Starting from checkpoints of
+the unpenalized run E1 taken before onset, at the onset transition, and after
+consolidation, we resume training with the grounding penalty ( \lambda{=}1 ) for a
+fixed number of additional steps in each case (the pre-/at-/post-onset
+intervention runs), holding the number of intervention steps constant so that
+differences cannot be attributed to training duration.
+Figure 3 reports \mathrm{VHS} during each intervention. Intervening
+before onset drives \mathrm{VHS} down over the intervention budget, reaching
+0.60 by the end—the penalty prevents the shortcut from consolidating.
+Intervening after consolidation is markedly less effective: \mathrm{VHS} remains
+elevated (around 0.78 – 0.88 throughout), indicating that once the shortcut has
+formed it is comparatively resistant to the same corrective pressure. The at-onset
+case is intermediate, declining only partway (to roughly 0.74 – 0.78 ). This is
+the actionable consequence of the asymmetry in §4: there is a
+window—around and before onset—in which a modest grounding penalty is most
+effective, and waiting until the behavior has consolidated forfeits much of that
+leverage.
+Refer to caption
+Figure 3: A critical intervention window. The same grounding penalty
+suppresses the shortcut when applied before onset but is much less able to reverse
+it once the shortcut has consolidated, demonstrating time-dependent
+intervenability.
+6 What changes inside: representation probe
+To ask what \lambda reshapes internally, we conduct a preliminary probe of
+hidden-state activations from the language-model decoder layers of matched
+checkpoints across doses ( \lambda\in\{0,1,2\} ) at fixed steps, on a stratified
+diagnostic subset, summarizing their geometry with unsupervised metrics (effective
+rank, anisotropy, and mean norm). The pattern we observe is layer-localized:
+early layers (which encode low-level perceptual features) and the final layers
+(near the output) are essentially unchanged across doses, whereas the middle
+layers—where semantic and reasoning content is typically represented—show a
+dose-dependent tendency, with the largest cross- \lambda spread concentrated in the
+middle of the network and a parallel pattern in anisotropy. We emphasize that this
+is an exploratory observation: at the present sample size the mid-layer spread is
+suggestive but lies within bootstrap variability, so we report it as a directional
+finding rather than a calibrated effect, and a higher-powered analysis is left to
+future revision. Taken together with the behavioral results, it offers a tentative
+localization—grounding pressure appears to act on mid-network geometry rather
+than rescaling the representation uniformly—that motivates a more careful
+mechanistic study.
+Refer to caption
+Figure 4: A preliminary, layer-localized representation signature. Internal
+representation statistics of matched checkpoints, contrasting \lambda{=}0,1,2 . The
+observed dose-dependent tendency is concentrated in the middle layers and near-zero
+at early and final layers; we report it as an exploratory, directional finding (the
+mid-layer spread is within bootstrap variability at the current sample size) that
+motivates a more careful mechanistic study.
+7 Related work
+Perception bypass in (multimodal) RLVR.
+A growing body of work documents that LVLMs under-use visual evidence and rely on
+language priors. Surveys frame this as perception bypass / evaluator
+exploitation (12); blind-image ablations show accuracy can
+rise when the image is removed (3); and controlled benchmarks
+isolate textual-prior reliance (5; 8; 11; 2).
+These establish that the shortcut exists. We instead use reward strength as
+a control variable to characterize how it forms, whether it reverses, and
+when intervention helps.
+Temporal dynamics and onset of reward hacking.
+Several works observe that reward hacking is not present from the start but emerges
+at a characteristic phase of optimization: large-scale empirical studies across many
+RL environments and algorithms catalogue reward-hacking categories and find that
+hacking arises during training rather than being present from
+the outset (10); auditing frameworks treat hacking as
+a dynamic, detectable signal that arises during
+optimization (1); and dedicated testbeds study the
+emergence and generalization of hacking (6). Most relevantly,
+rebound hacking exhibits a non-monotone fail/retreat/rebound trajectory that is
+robust across seeds (13). Our intermediate-dose run shows a
+related form-then-reverse pattern, but we obtain it by tuning reward
+strength and read it out with an OOD visual diagnostic, yielding a dose-resolved
+account rather than a single-setting observation.
+Suppression, verifiers, and mechanisms.
+Grounding the verifier can remove shortcuts: e.g. isomorphic (rather than merely
+extensional) verification eliminates rule-induction shortcuts (4),
+echoing our use of a grounding penalty—though as a binary design choice rather
+than a continuous dose. Mechanistic analyses localize shortcut circuits and show
+bidirectional steering on single rewards in text-math settings (14).
+Our representation probe is complementary, contrasting matched checkpoints across a
+reward-strength axis and along the training-time axis in a multimodal setting.
+8 Discussion and limitations
+We have shown that visual-shortcut collapse in multimodal RLVR is better described
+as a controllable, time-dependent, and asymmetric process than as a binary defect.
+Reward strength acts as a knob that sets the plateau level of shortcut reliance;
+the formation and reversal of the shortcut are asymmetric in time; and there is a
+critical window—around and before onset—in which a modest grounding penalty is
+most effective. Practically, this argues for grounding regularization that is
+early and dose-calibrated rather than applied late as a remedy.
+Limitations.
+Our results should be read as a detailed case study of one
+video–language model rather than a universal law of RLVR. All trajectories use a
+single model family (Qwen3-VL-8B-Instruct) and a single grounding-penalty design, so
+we cannot say whether the specific onset location, its sharpness, or the
+near-linear dose response transfer to other scales (e.g. 2B or 30B+ variants) or to
+other architectures (e.g. LLaVA- or InternVL-style models); the existence of an
+abrupt onset and of a dose- and timing-dependent intervention effect is what we
+claim, not its precise quantitative form. Establishing how the onset step and dose
+sensitivity scale with model size and shift across architectures is the most
+important direction for future work, and the diagnostic and penalty defined here are
+designed to port directly to such a study. The \mathrm{VHS} diagnostic also
+measures invariance to a particular class of visual perturbations (temporal frame
+shuffling) and is a proxy
+for “watching”; alternative diagnostics may reveal complementary facets. Finally,
+the representation analysis is correlational and, as noted in §6,
+falls within bootstrap variability at our sample size; it is intended to relate, not
+to causally explain, behavioral shortcut suppression.
+References
+[1]
+M. Beigi, M. Jin, J. Zhang, Q. Wang, and L. Huang (2026)
+Adversarial Reward Auditing for Active Detection and Mitigation of Reward Hacking.
+arXiv preprint arXiv:2602.01750.
+Note: Reconceptualizes reward hacking as a Hacker--Auditor game; an Auditor gates the reward to make hacking detectable and unprofitable.
+Cited by: §1,
+§7.
+[2]
+X. Fu et al. (2024)
+BLINK: Multimodal Large Language Models Can See but Not Perceive.
+arXiv preprint arXiv:2404.12390.
+Cited by: §1,
+§7.
+[3]
+S. Gao, Y. Wang, J. Yan, Z. Wu, and Y. Jiang (2026)
+Thinking with Deltas: Incentivizing Reinforcement Learning via Differential Visual Reasoning Policy.
+arXiv preprint arXiv:2601.06801.
+Note: Blind-image ablation: policies maintain or improve performance with visual inputs removed (``blind reasoners'' exploiting linguistic priors).
+Cited by: §1,
+§1,
+§7.
+[4]
+L. Helff et al. (2026)
+LLMs Gaming Verifiers: RLVR Can Lead to Reward Hacking.
+arXiv preprint arXiv:2604.15149.
+Note: Extensional verification induces shortcut strategies; isomorphic verification eliminates them.
+Cited by: §1,
+§7.
+[5]
+Y. Kementchedjhieva et al. (2026)
+VLMs Need Words: Vision Language Models Ignore Visual Detail in Favor of Semantic Anchors.
+arXiv preprint arXiv:2604.02486.
+Note: VLM failures reflect a learned shortcut: bypass visual comparison and reason through language.
+Cited by: §1,
+§1,
+§7.
+[6]
+M. Khalifa et al. (2026)
+Countdown-Code: A Testbed for Studying the Emergence and Generalization of Reward Hacking in RLVR.
+arXiv preprint arXiv:2603.07084.
+Note: Clean proxy/true reward separation; as little as 1% SFT contamination is internalized and resurfaces under RL.
+Cited by: §7.
+[7]
+K. Li, Y. Wang, Y. He, Y. Li, Y. Wang, Y. Liu, Z. Wang, J. Xu, G. Chen, P. Luo, L. Wang, and Y. Qiao (2023)
+MVBench: A Comprehensive Multi-modal Video Understanding Benchmark.
+arXiv preprint arXiv:2311.17005.
+Cited by: §A.5.
+[8]
+L. Long, C. Oh, S. Park, and S. Li (2025)
+Understanding Language Prior of LVLMs by Contrasting Chain-of-Embedding.
+arXiv preprint arXiv:2509.23050.
+Note: LVLMs over-rely on language prior, under-utilize visual evidence.
+Cited by: §1,
+§7.
+[9]
+Z. Shao, P. Wang, Q. Zhu, R. Xu, J. Song, X. Bi, H. Zhang, M. Zhang, Y. K. Li, Y. Wu, and D. Guo (2024)
+DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models.
+arXiv preprint arXiv:2402.03300.
+Cited by: §A.1,
+§2.
+[10]
+I. F. Shihab, S. Akter, and A. Sharma (2025)
+Detecting and Mitigating Reward Hacking in Reinforcement Learning Systems: A Comprehensive Empirical Study.
+arXiv preprint arXiv:2507.05619.
+Note: Large-scale empirical study across 15 RL environments (Atari, MuJoCo) and 5 algorithms; automated detection of six reward-hacking categories; hacking emerges during optimization.
+Cited by: §1,
+§7.
+[11]
+P. Singla, S. Garg, V. Singh, and P. Chopra (2026)
+Do Vision--Language Models See or Guess? Measuring and Reducing Textual-Prior Reliance with a Phrasing-Controlled Benchmark.
+arXiv preprint arXiv:2606.10400.
+Note: No-image ablation isolates visual contribution.
+Cited by: §7.
+[12]
+X. Wang, M. Tian, Y. Zeng, Z. Huang, J. Yuan, B. Chen, J. Xu, M. Zhou, W. Liu, M. Wu, Z. Guo, Q. Qian, Y. Wang, F. Zhang, R. Yin, S. Dou, C. Lv, T. Chen, K. Song, X. Tan, T. Gui, X. Zheng, and X. Huang (2026)
+Reward Hacking in the Era of Large Models: Mechanisms, Emergent Misalignment, and Challenges.
+arXiv preprint arXiv:2604.13602.
+Note: Survey; frames multimodal perception--reasoning decoupling and evaluator manipulation under the Proxy Compression Hypothesis.
+Cited by: §1,
+§1,
+§7.
+[13]
+R. Wu and R. Tang (2026)
+When Reward Hacking Rebounds: Understanding and Mitigating It with Representation-Level Signals.
+arXiv preprint arXiv:2604.01476.
+Note: GRPO coding testbed; reproducible three-phase rebound (fail/retreat/rebound); shortcut concept direction tracks hacking; Advantage Modification penalizes hacking rollouts.
+Cited by: §1,
+§7.
+[14]
+L. Yan, R. Li, G. Chen, Q. Li, J. Geng, W. Li, V. Wang, and C. Lee (2026)
+Spurious Rewards Paradox: Mechanistically Understanding How RLVR Activates Memorization Shortcuts in LLMs.
+arXiv preprint arXiv:2601.11061.
+Note: Anchor--Adapter circuit (L18-20) and bidirectional steering; single reward, text-math, no dose axis.
+Cited by: §1,
+§7.
+Appendix A Reproducibility and diagnostic details
+This appendix records the diagnostic construction, the trajectory fleet, the
+evaluation protocol, and the representation-extraction pipeline in enough detail to
+reproduce the trends reported in the main text.
+A.1 Model and training
+The base policy is an 8B-parameter video–language model (Qwen3-VL-8B-Instruct;
+36 decoder layers, hidden size 4096). We post-train with GRPO-style
+RLVR (9) on a video question-answering objective. The base verifiable
+reward is answer correctness; the grounding penalty is added with strength
+\lambda\geq 0 , where \lambda{=}0 recovers the pure outcome reward. During RL we use a
+global batch size of 512 , freeze the vision tower, and keep the visual
+input pipeline fixed across runs so that differences between trajectories are
+attributable to the reward configuration rather than to data ordering or
+preprocessing.
+A.2 Trajectory fleet
+All runs share a common origin and vary a single factor (Table 1):
+E1 ( \lambda{=}0 , seed A, 500 steps) is the onset origin and dose baseline; sB
+( \lambda{=}0 , seed B, 80 steps) is the seed-robustness control; L1 ( \lambda{=}1 ) and
+L2 ( \lambda{=}2 ) are the intermediate and strong doses (150 steps each); the
+intervention runs (pre-/at-/post-onset) resume from E1 checkpoints taken before
+onset, at the onset transition, and after consolidation, each trained for a fixed
+50 additional steps with \lambda{=}1 . The reading rules are strict: seed robustness
+is assessed only across the \lambda{=}0 runs; dose response only across
+\lambda\in\{0,1,2\} at fixed seed; intervention timing only within the
+intervention runs.
+A.3 Held-out OOD diagnostic and the VHS perturbation
+The visual-hacking score (VHS) is read on a held-out, out-of-distribution
+diagnostic set of 640 five-way multiple-choice questions built from the NExT-QA
+video-QA distribution, disjoint from the RLVR training split, so that the measured
+onset reflects an emergent behavioral change rather than fitting of the training
+items. The questions are temporally grounded (they ask about the order or
+progression of actions and events). For each item we generate an answer on the
+clean video and on a perturbed video. The perturbation randomly permutes the
+temporal order of the sampled frames (a random shuffle of the frame sequence),
+which destroys the temporal structure—the ordering of actions and events—that
+a temporally grounded question depends on, while leaving the individual frames and
+their appearance statistics intact. A model that genuinely attends to the video
+should therefore change its answer under this perturbation, whereas a model
+answering from language priors or static cues is unaffected. VHS is the fraction of
+items whose answer is unchanged under the perturbation: higher VHS indicates
+stronger reliance on a visual (specifically temporal) shortcut. Because the
+questions are five-way, a model that ignores the perturbed video and answers at
+random gives VHS \approx 0.2 (chance), while VHS near 1 means the answer is
+essentially invariant to the temporal content. We also record clean accuracy and
+the hacking rate on the same set as corroborating readouts. (This behavioral
+diagnostic is distinct from the data used for the representation probe in
+§A.5, which draws on a separate video-understanding benchmark
+purely as a source of inputs for activation extraction.)
+A.4 Evaluation protocol
+All diagnostics use greedy decoding (temperature 0 , a single sample per item).
+Each checkpoint is evaluated by loading the trained actor and running the
+clean/perturbed double generation on the diagnostic set with a fixed batch size,
+maximum prompt length 8192 , maximum response length 1024 , and a fixed video
+sampling rate; the visual token budget is held constant across checkpoints. To
+build a trajectory we evaluate a sequence of saved checkpoints under identical
+settings and plot the resulting VHS against the optimization step. Evaluation
+configuration (decoding, batching, and the diagnostic set) is held fixed across all
+runs so that trajectories are directly comparable; old and new evaluation
+configurations are never mixed within a single figure or table.
+A.5 Representation-extraction pipeline
+For the representation probe we extract hidden-state activations from the
+language-model decoder layers of matched checkpoints. We read a fixed set of layers
+(every fourth decoder layer, i.e. layers 0,4,8,\dots,32 ), mean-pool token
+activations within each item, and accumulate a fixed, stratified set of input
+items per checkpoint, sampled from a standard video-understanding
+benchmark (7). We emphasize that this probe uses MVBench purely as a
+fixed pool of video inputs for activation extraction; it is a separate data source
+from the NExT-QA–based VHS diagnostic of §A.3 and is not used to
+compute VHS or any behavioral metric. For each (checkpoint, layer) we summarize the
+resulting activation matrix with three unsupervised geometry metrics: effective
+rank (the exponential of the entropy of the normalized singular-value spectrum),
+anisotropy (the share of variance captured by the top principal direction), and
+mean activation norm. The dose-dependent spread reported in the main text is the
+range of a metric across \lambda\in\{0,1,2\} at a matched checkpoint and layer. As
+noted in §6, at the sample size used here the mid-layer spread is
+suggestive but lies within bootstrap variability; we therefore report it as a
+directional, exploratory finding and leave a higher-powered analysis to future
+revision.
+◄
+ar5iv homepage
+Feeling
+lucky?
+Conversion
+report
+Report
+an issue
+View original
+on arXiv►
+Copyright
+Privacy Policy
+Generated by LaTeXML Mascot Sammy (oxide)

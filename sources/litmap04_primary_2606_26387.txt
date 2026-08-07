@@ -1,0 +1,1085 @@
+[2606.26387] Staying VIGILant: Mitigating Visual Laziness via Counterfactual Visual Alignment in MLLMs
+1,*]Xi Xiao
+2,*]Chen Liu
+3]Chih-Ting Liao
+4]Yunbei Zhang
+1]Qizhen Lan
+5]Yuxiang Wei
+6]Lin Zhao
+4]Janet Wang
+7,†]Jianyang Gu
+8]Muchao Ye
+1,†]Tianyang Wang
+9]Hao Xu
+1]UAB
+2]Yale
+3]UNSW
+4]Tulane
+5]Georgia Tech
+6]NEU
+7]OSU
+8]UIowa
+9]Harvard
+\contribution[*]Equal Contributions
+\contribution[†]Co-advising
+\correspondenceXi Xiao ()
+\checkdata[Project Page]https://xixiaouab.github.io/VIGIL/
+Staying VIGILant: Mitigating Visual Laziness via Counterfactual Visual Alignment in MLLMs
+[
+Affiliation: [
+Affiliation: [
+Affiliation: [
+Affiliation: [
+Affiliation: [
+Affiliation: [
+Affiliation: [
+Affiliation: [
+Affiliation: [
+Email: xixiao@uab.edu
+Abstract
+Multimodal large language models (MLLMs) extend large language models (LLMs) with visual perception, enabling joint reasoning over images and text. Despite inheriting strong reasoning capabilities from LLMs, they remain prone to hallucinations that contradict their visual inputs. Mechanistic studies indicate that this weakness stems from visual laziness: MLLMs encode the correct visual evidence internally, but overly rely on strong language priors during response.
+Existing alignment methods, such as direct preference optimization, primarily optimize outcome-level rewards based on text. This introduces an optimization bias toward linguistic shortcuts, leading to responses that often contradict the visual evidence. To address this, we propose Visual Information Gain In aLignment (VIGIL), a reinforcement-learning (RL) post-training framework that shifts the focus from numerical reward fitting to causal visual grounding. VIGIL introduces a geometric constraint that explicitly maximizes the mutual information between the visual input and the generated response. We achieve this by penalizing “blind confidence” instances where the model remains improperly certain even when textual-visual attention is masked to create a counterfactual blind state. Extensive experiments show that VIGIL consistently outperforms recent alignment methods across hallucination and reasoning benchmarks without compromising text-only capabilities. Our approach matches the full-data performance of state-of-the-art methods using only 25% of the preference data and even demonstrates emergent spatial grounding capabilities without explicit bounding box supervision.
+1 Introduction
+Multimodal large language models (MLLMs) are transitioning from basic perception tools to sophisticated reasoning engines capable of interpreting complex visual data [54]. Modern architectures, such as Qwen2-VL [49], LLaVA-OneVision [20] and InternVL2.5 [6], can conduct complex reasoning, including solving mathematical problems and analyzing financial charts. However, hallucination remains a persistent barrier to their reliability. In the multimodal context, hallucination is not simply a perceptual error, but rather represents a failure of visual grounding where models generate descriptions that lack support from the physical visual input.
+The root cause of this unreliability is often visual laziness [55]. Modern MLLMs typically combine a visual encoder with a pre-trained, text-centric LLM. Because the LLM component is trained on vast text corpora, it harbors strong language priors. When evaluating complex multimodal inputs, the model’s reasoning often defaults to these inherent priors rather than relying on visual evidence. Recent studies [55, 19, 34, 2, 61] reveal a striking disparity: MLLMs often contain the correct visual features in their latent space, but still generate incorrect answers because linguistic correlations hijack the decoding process.
+Existing approaches to mitigate this issue have clear trade-offs. One direction relies on architectural modifications, such as the introduction of external tools or modular designs [18] to separate reasoning from perception, which complicates end-to-end learning. Another direction uses online reinforcement learning for dynamic visual token selection [30], introducing significant computational overhead and training instability. Meanwhile, standard outcome-based alignment methods, such as direct preference optimization (DPO) [44] and its difficulty-aware variants [43], optimize the policy by minimizing a preference loss on the final text output. They penalize incorrect tokens but do not constrain how the model derives its answer. If MLLMs arrive at the correct answer through language priors rather than visual evidence, standard DPO still rewards the output, inadvertently reinforcing these optimization shortcuts and preserving visual laziness.
+Taken together, we argue that building robust multimodal alignment and reducing visual laziness requires explicitly enforcing reliance on visual evidence rather than language priors. Our core intuition is simple: to teach a model to use visual information, we must expose the consequences of being blind. Motivated by this insight, we introduce Visual Information Gain In aLignment (VIGIL), a post-training framework that maximizes the Visual Information Gain (VIG) between the visual input and the generated response.
+Specifically, during optimization, we construct a counterfactual blind state ( x^{\emptyset}_{\text{v}} ) by masking visual attention, preventing the model from accessing visual evidence. The policy is then optimized to maximize the divergence between the standard seeing state and the introduced counterfactual blind state. This divergence acts as a geometric constraint on the model’s response distribution, penalizing blind confidence cases where the model remains confident even without visual input. As a result, VIGIL separates visually grounded reasoning from predictions driven purely by language priors, ensuring that high-confidence outputs are causally anchored to visual features ( x_{\text{v}} ).
+Our contributions are summarized as follows:
+1.
+A counterfactual alignment framework: We propose VIGIL to mitigate multimodal hallucinations by incorporating counterfactual visual decoupling into the preference optimization loop and explicitly maximizing the Visual Information Gain.
+2.
+Data and computational efficiency: Operating entirely offline, VIGIL is stable and computationally lightweight. It matches the performance of competitive baselines using only 25% of their preference data.
+3.
+Consistent gains across scales and architectures: Across diverse architectures ranging from 7B to 72B parameters, VIGIL consistently improves performance, with gains increasing for larger and stronger foundation models.
+4.
+Emergent spatial grounding: Without any explicit bounding box supervision, VIGIL improves zero-shot referring expression comprehension, indicating that spatial grounding can emerge without explicit localization supervision.
+2 Preliminaries
+In this section, we provide an extensive theoretical analysis of visual hallucination in MLLMs, which originates from a phenomenon we term visual laziness.
+2.1 Definition of Visual Laziness
+Modern MLLMs often combine a visual encoder with a pre-trained LLM. During reasoning, although the visual encoder captures rich spatial features, an MLLM often overly relies on the inherent language priors learned during massive text-only pre-training [55]. This phenomenon, which we term visual laziness, causes models to favor outputs using exclusively textual information despite having access to relevant visual clues.
+2.2 Information-Theoretic Analysis of Visual Laziness
+Give a multimodal preference dataset \mathcal{D}=\{(x_{\text{v}},x_{\text{t}},y_{w},y_{l})\} , where x_{\text{v}} is the visual input, x_{\text{t}} is the textual instruction, and (y_{w},y_{l}) are the preferred and disfavored responses ( w and l respectively stands for “winning” and “losing”), standard Direct Preference Optimization (DPO) [44] optimizes the policy \pi_{\theta} by minimizing the negative log-likelihood of the preference:
+\mathcal{L}_{\text{DPO}}(\pi_{\theta};\pi_{\text{ref}})=-\mathbb{E}_{\mathcal{D}}\left[\log\sigma\left(\beta\log\frac{\pi_{\theta}(y_{w}|x_{\text{v}},x_{\text{t}})}{\pi_{\text{ref}}(y_{w}|x_{\text{v}},x_{\text{t}})}-\beta\log\frac{\pi_{\theta}(y_{l}|x_{\text{v}},x_{\text{t}})}{\pi_{\text{ref}}(y_{l}|x_{\text{v}},x_{\text{t}})}\right)\right]\vskip-4.0pt
+(1)
+where \pi_{\text{ref}} serves as the reference policy to prevent excessive drift.
+We argue that the objective in Eq. 1 allows for an optimization shortcut that exacerbates visual laziness. To understand this, we analyze the model’s behavior through the lens of conditional probability and information redundancy.
+Refer to caption
+Figure 1: Visual laziness in MLLMs.
+(a) Degenerate posterior and vanishing visual gain. When predictions are dominated by language priors P(y|x_{\text{t}}) , the multimodal posterior P(y|x_{\text{v}},x_{\text{t}}) collapses toward the vision-blind prior P(y|x_{\text{v}}^{\emptyset},x_{\text{t}}) , yielding a diminished visual information gain (VIG).
+(b) Optimization geometry of visual shortcuts. A geometric view illustrates an optimization shortcut that stays on the textual manifold \mathcal{M}_{\text{t}} and converges to a prior-dominated region, instead of entering the multimodal manifold \mathcal{M}_{\text{mm}} for grounded reasoning, motivating our VIGIL framework. Refer to [36, 29, 24, 28, 46] for the definition of manifold.
+Language Prior Dominance.
+A hallucination occurs when the model’s reasoning is dominated by the unimodal prior P(y|x_{\text{t}}) rather than the multimodal posterior P(y|x_{\text{v}},x_{\text{t}}) . If a preferred response y_{w} can be inferred from the text alone, such as in instances of strong linguistic correlation, the model can minimize the loss by simply reinforcing its language priors without truly grounding the answer in the visual content. Mathematically, this manifests as an approximation:
+\pi_{\theta}(y|x_{\text{v}},x_{\text{t}})\approx\pi_{\theta}(y|x_{\text{t}})\vskip-4.0pt
+(2)
+In this regime, the visual input x_{\text{v}} becomes statistically redundant in the optimization trajectory. As illustrated in Fig. 1, visual laziness manifests itself as both a degenerate posterior with vanishing VIG (Fig. 1a, see formal definition in Section 3.1) and an optimization shortcut that stays in the textual manifold (Fig. 1b).
+Perception-Reasoning Decoupling.
+When visual evidence x_{\text{v}} is treated as redundant, the model’s reasoning foundation collapses. For example, a model might predict that an apple is red based on common textual associations even when the image depicts a green apple, illustrating how a strong language prior could override the visual signal, resulting in a decoupling between perception and reasoning. We argue that this failure mode reflects a fundamental limitation of existing multimodal alignment methods. While prior approaches have improved performance through sample reweighting [43] or increased architectural complexity [18], they do not explicitly encourage the model to rely on visual evidence when forming its predictions. This observation motivates our proposed VIGIL framework. We posit that robust grounding requires maximizing the information contributed specifically by x_{\text{v}} , thereby decoupling the multimodal manifold \mathcal{M}_{\text{mm}} from the pure textual manifold \mathcal{M}_{\text{t}} .
+2.3 Outcome Rewards vs. Dependency Alignment
+The recent success of group relative policy optimization (GRPO) [11] shows the effectiveness of outcome-based reinforcement learning for scaling complex reasoning, provided that reliable verifiers are available. GRPO primarily trains models through outcome-level rewards computed by rule-based or model-based verifiers [11]. However, mitigating visual laziness in multimodal models presents a different challenge. In the multimodal domain, a model can often produce a plausible, and sometimes even correct, response by relying on strong language priors without truly anchoring its prediction in visual evidence [51, 34, 55, 60].
+Importantly, correctness is not a sufficient proxy for grounding. Prior work shows that models may achieve correct answers while relying on incorrect intermediate programs or inconsistent reasoning, essentially being “right for the wrong reasons” [40, 10, 26]. Outcome-only rewards can thus inadvertently reinforce causal misattribution [38], where the model reaches the right answer for purely linguistic reasons, preserving the very textual shortcuts we aim to remove.
+Because our goal is to correct the model’s insufficient reliance on visual evidence rather than merely improve the final response, VIGIL leverages the pairwise structure of DPO [44] to directly compare the seeing state against a counterfactual blind state within a unified log-likelihood objective. This comparison explicitly suppresses blind confidence by rewarding responses based on reliance on the visual input. In contrast, GRPO optimizes rewards over sampled responses in a group, and does not naturally encode such counterfactual state comparisons. Incorporating equivalent supervision would require constructing and evaluating additional blind trajectories for each sample, substantially increasing compute and memory. DPO therefore provides a highly efficient and stable offline optimization objective for decoupling the multimodal manifold from the textual manifold. More detailed discussions and empirical results on GRPO are provided in Appendix 6.4.
+3 Method
+To address visual laziness, we propose VIGIL, a framework that explicitly anchors MLLM reasoning to visual evidence. It introduces a geometric constraint to maximize the mutual information between visual inputs and model responses, preventing the model from falling into language-driven optimization shortcuts.
+3.1 Grounding via Information Maximization
+We posit that an ideal MLLM should not merely generate high-probability tokens conditioned on language priors, but should instead maximize the information dependency between the visual input x_{\text{v}} and the generated response y .
+Visual Information Gain (VIG).
+To quantify this dependency, we draw inspiration from Maximum Mutual Information (MMI) principles [22] and introduce VIG. We define VIG as the Pointwise Mutual Information (PMI) between the visual input x_{\text{v}} and the response y , conditioned on the instruction x_{\text{t}} :
+Definition 3.1 (Visual Information Gain)
+For a given multimodal input tuple (x_{\text{v}},x_{\text{t}}) and response y , the Visual Information Gain is defined as:
+{\text{VIG}(y,x_{\text{v}}|x_{\text{t}})=\log\frac{\pi_{\theta}(y|x_{\text{v}},x_{\text{t}})}{\pi_{\theta}(y|x^{\emptyset}_{\text{v}},x_{\text{t}})}}\vskip-4.0pt
+(3)
+where x^{\emptyset}_{\text{v}} denotes the counterfactual attention-masked blind state, functionally equivalent to performing a do-intervention on the visual modality [38].
+VIG measures the reduction in uncertainty about y provided solely by the visual evidence x_{\text{v}} . A VIG near zero indicates that the model is relying entirely on language priors, a core symptom of visual laziness.
+Refer to caption
+Figure 2: Overview of VIGIL.
+(a) Dual-path forward pass. For each training sample, we run two matched conditions with identical image tokens, text tokens, positional embeddings, and projector outputs. In the seeing path, text tokens can attend to visual tokens normally. In the counterfactual blind path, the input tensors remain unchanged, but text-query rows are masked from visual-token key/value columns in every transformer layer, preventing text positions from accessing visual evidence through attention and yielding the blind state x_{\text{v}}^{\emptyset} . The two paths differ only in attention connectivity, without additional input construction or image corruption.
+(b) Geometric constraint via Visual Information Gain (VIG). We explicitly contrast the likelihood of the preferred response under seeing and blind states. VIGIL penalizes high blind confidence and enlarges the log-gap
+\mathrm{VIG}(y_{w})=\log\pi_{\theta}(y_{w}\!\mid\!x_{\text{v}},x_{\text{t}})-\log\pi_{\theta}(y_{w}\!\mid\!x_{\text{v}}^{\emptyset},x_{\text{t}}) ,
+encouraging predictions to depend on visual evidence rather than language priors.
+(c) Dynamic gating and unified objective. A gating factor \alpha is computed from the seeing–blind gap and adaptively balances the standard DPO loss with the Counterfactual Visual Decoupling (CVD) constraint, yielding \mathcal{L}_{\texttt{VIGIL}}=\mathcal{L}_{\text{DPO}}+\lambda\alpha\mathcal{L}_{\text{CVD}} .
+The Constrained Optimization Problem.
+Standard DPO maximizes the margin between preferred ( y_{w} ) and disfavored ( y_{l} ) responses. However, as discussed in Sec. 2, maximizing the reward alone does not guarantee grounding. We instead formulate multimodal alignment as a constrained optimization problem, where we maximize the preference reward subject to the constraint that the Conditional Mutual Information I(y;x_{\text{v}}|x_{\text{t}}) exceeds a threshold \delta :
+\max_{\pi_{\theta}}\quad\mathbb{E}_{\mathcal{D}}\left[\mathcal{J}_{\text{DPO}}(\pi_{\theta})\right]\quad\text{s.t.}\quad\underbrace{\mathbb{E}_{\mathcal{D}}\left[\text{VIG}(y_{w},x_{\text{v}}|x_{\text{t}})\right]}_{\approx I(y_{w};x_{\text{v}}|x_{\text{t}})}\geq\delta\vskip-4.0pt
+(4)
+This constraint encourages the generated response y_{w} contains sufficient information derived from x_{\text{v}} , thereby decoupling the multimodal manifold from the pure textual manifold and preventing optimization from collapsing onto language-only shortcuts.
+Derivation of the Counterfactual Visual Decoupling (CVD) Objective.
+To solve Eq. 4, we introduce a Lagrange multiplier \lambda\geq 0 , leading to the following objective:
+\mathcal{L}(\pi_{\theta},\lambda)=\mathcal{J}_{\text{DPO}}(\pi_{\theta})+\lambda\mathbb{E}\left[\log\pi_{\theta}(y_{w}|x_{\text{v}},x_{\text{t}})-\log\pi_{\theta}(y_{w}|x^{\emptyset}_{\text{v}},x_{\text{t}})\right]
+(5)
+We instantiate this Lagrangian term as a preference optimization problem, where the seeing state (x_{\text{v}},x_{\text{t}}) is preferred over the attention-masked blind state (x^{\emptyset}_{\text{v}},x_{\text{t}}) for the same response y_{w} . Applying the Bradley-Terry model, we derive our Counterfactual Visual Decoupling (CVD) loss:
+\mathcal{L}_{\text{CVD}}(\pi_{\theta})=-\mathbb{E}_{\mathcal{D}}\left[\log\sigma\left(\beta\log\frac{\pi_{\theta}(y_{w}|x_{\text{v}},x_{\text{t}})}{\pi_{\text{ref}}(y_{w}|x_{\text{v}},x_{\text{t}})}-\beta\log\frac{\pi_{\theta}(y_{w}|x^{\emptyset}_{\text{v}},x_{\text{t}})}{\pi_{\text{ref}}(y_{w}|x^{\emptyset}_{\text{v}},x_{\text{t}})}\right)\right]\vskip-4.0pt
+(6)
+This loss enforces a preference for the seeing state over the blind state by penalizing responses whose likelihood does not decrease when visual evidence is removed through counterfactual masking, while the reference model \pi_{\mathrm{ref}} serves to normalize language priors. Importantly, the frozen reference policy is evaluated under the same attention masks as the policy model: the seeing term uses the seeing mask and the blind term uses the blind mask. Thus, Eq. (6) compares matched seeing and blind states, rather than normalizing a blind policy term with a seeing reference term.
+3.2 VIGIL Implementation
+The VIGIL framework is implemented through three integrated steps:
+Step 1: Efficient Visual Counterfactuals.
+To simulate the blind state x^{\emptyset}_{\text{v}} , we perform attention masking. We zero out the attention weights between textual and visual tokens in the forward pass, ensuring the probability drop is strictly causal to the missing visual modality. Pseudocode is provided in Appendix 7.
+Step 2: The Geometric Decoupling Loss.
+We utilize \mathcal{L}_{\text{CVD}} (Eq. 6) as a geometric constraint. This pushes the optimization trajectory to differentiate between grounded reasoning and prior-driven hallucination.
+Step 3: Self-Adversarial Hard Negative Mining.
+To complement our geometric constraints, we generate hallucination-like negatives y_{\text{hard}} by prompting the reference model to include plausible but absent details [43]. These samples provide sharper gradients for fine-grained visual discrimination.
+3.3 Unified Objective with Dynamic Gating
+To balance semantic alignment and visual grounding, we introduce a dynamic gating factor \alpha :
+\alpha=1-\tanh(|\log\pi_{\theta}(y_{w}|x_{\text{v}},x_{\text{t}})-\log\pi_{\theta}(y_{w}|x^{\emptyset}_{\text{v}},x_{\text{t}})|)\vskip-4.0pt
+(7)
+Here, \alpha automatically reduces the regularization strength for samples that already exhibit strong visual grounding (i.e., a high VIG gap). The final VIGIL objective is defined as:
+\mathcal{L}_{\texttt{VIGIL}}=\mathcal{L}_{\text{DPO}}(y_{w},y_{\text{hard}})+\lambda\cdot\alpha\cdot\mathcal{L}_{\text{CVD}}\vskip-4.0pt
+(8)
+This unified objective ensures the model learns not just what to say, but why to say it based on visual evidence.
+3.4 Facing the Sword of Damocles: The Fragile Equilibrium of Grounded Reasoning
+The heavy reliance on language priors in Multimodal Large Language Models is often described as a double-edged sword, or more aptly, a “Sword of Damocles” hanging over the model’s reliability. While these priors enable models to generate fluent and contextually plausible narratives [7], they exist as a fragile equilibrium that easily collapses when the reasoning task demands strict adherence to visual evidence rather than statistical correlation [55, 60]. Our VIGIL framework acknowledges this inherent tension by moving beyond simple error correction. By introducing the counterfactual blind state x^{\emptyset}_{\text{v}} , we establish a regulatory mechanism that quantifies the risk of over-reliance on linguistic context. This creates what we term a Geometric Information Bottleneck, which ensures that the model’s policy \pi_{\theta} is causally anchored in the pixel space. Unlike existing reweighting schemes that treat all samples with equal priority [16], VIGIL explicitly penalizes high confidence in the absence of visual support, transforming the passive vulnerability of priors into a controlled and grounded reasoning process. To sum up, the primary advantages of our approach are threefold. (1) It offers a geometric intervention that is more fundamental than numerical loss reweighting, providing a direct path for causal alignment. (2) It achieves remarkable efficiency, requiring neither additional reference models nor full-dataset fine-tuning to achieve state-of-the-art performance. (3) By stabilizing the balance between linguistic fluency and visual fidelity, VIGIL encourages the emergence of spatial grounding capabilities, suggesting that teaching a model to avoid hallucinations inherently deepens its understanding of the visual world.
+4 Experiments
+4.1 Implementation Details
+We implement all alignment algorithms using the OpenRLHF framework [15]. Training is conducted on a high-performance computing cluster equipped with NVIDIA H100 (80GB) GPU to ensure efficient distributed execution. To manage the memory requirements of training a 72B parameter model with DPO, which necessitates maintaining both the policy and reference models simultaneously, we employ DeepSpeed ZeRO-3 [45] with CPU offloading for optimizer states. We also integrate FlashAttention-2 [9] to accelerate the processing of long-context multimodal sequences. For experiments at the 7B scale, including Qwen2.5-VL-7B [49] and LLaVA-OneVision-7B [20], we utilize standard Fully Sharded Data Parallel (FSDP [58] strategies on A100 nodes. We perform full parameter fine-tuning for all models to maximize learning plasticity. In alignment with recent findings in multimodal preference optimization [43], we use large global batch sizes to maintain training stability: 2048 for 72B models and 1024 for 7B models. All models are trained for exactly one epoch to prevent overfitting to the preference set. The learning rate is set to 5\times 10^{-7} using a cosine decay scheduler with a warmup ratio of 0.03. The KL penalty coefficient \beta is fixed at 0.1 across all DPO variants. For our proposed VIGIL, the dynamic gating factor \alpha is computed on a per-batch basis. We implement counterfactual visual inputs efficiently by manipulating the attention mask during the forward pass rather than modifying physical input tensors, ensuring the blind forward pass incurs minimal computational overhead. To ensure a rigorous comparison, we reproduce all baselines, including SimPO [37], HA-DPO [59], and DA-DPO [43], on the same training data using the hyperparameters recommended in their official implementations.
+4.2 Evaluation Benchmarks
+We adopt a multi-layered evaluation protocol to assess the trade-off between visual faithfulness and reasoning intelligence. For hallucination evaluation, we report F1-scores on the POPE benchmark [25] across its adversarial, popular, and random splits. As performance on POPE has begun to saturate for state-of-the-art models, we also prioritize AMBER [48], a generative benchmark requiring free-form descriptions verified against fine-grained annotations. This metric is sensitive to hallucination propagation issues in long-context generation. Following the protocol of DA-DPO [43], we include MMHal-Bench [47] to measure hallucination in realistic, open-ended VQA scenarios.
+Meanwhile, to verify that our visual constraints do not degrade general intelligence, we evaluate models on multimodal reasoning benchmarks MathVista [35] and MMBench [32]. Additionally, we perform evaluations on text-only benchmarks, namely MMLU [14] and GSM8K [8], to show that VIGIL improves multimodal reasoning without compromising text-only capabilities (Appendix 9).
+4.3 Baselines
+To demonstrate the effectiveness of VIGIL, we benchmark against a diverse array of alignment strategies categorized as follows:
+General Alignment Methods.
+We consider SFT as the performance baseline. For preference alignment, we employ standard DPO [44] and SimPO [37]. SimPO is a reference-free algorithm that allows us to determine if performance gains stem from our visual constraints or simply from improved optimization stability. Comparing VIGIL against SimPO helps identify whether a superior optimizer is sufficient for multimodal grounding or if explicit visual modeling is required.
+Hallucination-Specific Optimization.
+We compare VIGIL against HA-DPO [59], which mitigates hallucination by training on synthetic negative captions generated through text rewriting. We also include the state-of-the-art DA-DPO [43], which addresses overfitting by reweighting preference pairs based on difficulty. Unlike VIGIL, which utilizes physical interventions through counterfactual visual inputs, DA-DPO relies on the implicit difficulty distribution of the dataset.
+Inference-Time Intervention.
+To verify the advantages of training-time alignment over inference-time patching, we compare our method with visual contrastive decoding (VCD) [13]. VCD penalizes hallucination by contrasting logits from original and distorted visual inputs during decoding. While effective, VCD increases inference latency and is sensitive to hyperparameter settings (See Appendix 11). VIGIL instead exposes the model to analogous visual contrast during post-training, resulting in an inference-efficient policy.
+4.4 Main Results
+Model Size Scaling Behavior.
+We first assess the performance of VIGIL and competing methods as we scale the Qwen2.5-VL base model from 7B to 72B (Table 1). VIGIL achieves state-of-the-art results across all evaluated metrics. A notable insight from these results is the scaling behavior of the model: while VIGIL improves the 7B model by 4.1 percentage points on POPE {}_{\text{Adv}} , this gain increases to 5.3 percentage points for the 72B model. This performance supports the existence of a post-training scaling law, suggesting that larger models are better positioned to interpret the visual counterfactuals introduced by our method. Whether this advantage arises from a higher knowledge capacity [1] or from a more favorable latent representation geometry [31] remains an interesting question for future study. In contrast, text-centric methods like SimPO show diminishing returns on multimodal tasks, indicating that optimization stability alone cannot compensate for the absence of modality-specific constraints.
+Cross-Architecture Universality.
+We further evaluate the universality of our approach on different base model architectures and designs (Table 2). VIGIL consistently outperforms standard DPO across different architectures, including the projector-based LLaVA-OneVision-7B and the visual-centric InternVL2.5-26B [6], which utilizes a 6B vision encoder. For both architectures, VIGIL achieves an improvement of approximately 4.0 point on POPE {}_{\text{Adv}} . These results demonstrate that even models with powerful visual encoders remain susceptible to visual laziness, a failure mode that our counterfactual masking effectively addresses.
+Table 1: Main Results across Model Scales. We report performance on both Qwen2.5-VL-7B and 72B to demonstrate the scalability of VIGIL. Performance gains are more pronounced on the 72B model, supporting the hypothesis that stronger foundation models utilize counterfactual visual signals more effectively.
+Base Model
+Method
+Hallucination
+System-2 Reasoning
+Avg Score \uparrow
+POPE {}_{\text{Rand}} \uparrow
+POPE {}_{\text{Pop}} \uparrow
+POPE {}_{\text{Adv}} \uparrow
+AMBER {}_{\text{Gen}} \uparrow
+MMHal {}_{\text{Score}} \uparrow
+MathVista \uparrow
+MMBench \uparrow
+Qwen2.5-VL-7B [49]
+SFT only
+85.1
+83.0
+80.5
+41.2
+34.5
+48.2
+70.5
+63.3
+SFT + DPO [44]
+86.2
+84.5
+82.8
+42.5
+36.8
+48.0
+71.2
+64.6
+SFT + SimPO [37]
+86.5 (+0.3)
+84.8 (+0.3)
+83.1 (+0.3)
+42.8 (+0.3)
+37.0 (+0.2)
+49.1 (+1.1)
+71.5 (+0.3)
+64.9 (+0.3)
+SFT + DA-DPO [43]
+87.0 (+0.8)
+85.8 (+1.3)
+84.2 (+1.4)
+44.8 (+2.3)
+38.5 (+1.7)
+48.8 (+0.8)
+72.0 (+0.8)
+65.9 (+1.3)
+SFT + VIGIL (Ours)
+88.5 (+2.3)
+87.2 (+2.7)
+86.9 (+4.1)
+46.5 (+4.0)
+40.2 (+3.4)
+49.5 (+1.5)
+72.5 (+1.3)
+67.3 (+2.7)
+Qwen2.5-VL-72B [49]
+SFT only
+86.5
+84.2
+82.1
+45.3
+38.2
+54.5
+76.8
+66.8
+SFT + DPO [44]
+87.8
+85.9
+84.5
+46.8
+40.5
+54.1
+77.2
+68.1
+SFT + SimPO [37]
+88.1 (+0.3)
+86.2 (+0.3)
+84.8 (+0.3)
+47.0 (+0.2)
+41.1 (+0.6)
+55.2 (+1.1)
+77.5 (+0.3)
+68.6 (+0.5)
+SFT + HA-DPO [59]
+88.5 (+0.7)
+87.1 (+1.2)
+86.2 (+1.7)
+48.5 (+1.7)
+42.8 (+2.3)
+53.8 (-0.3)
+76.5 (-0.7)
+69.1 (+1.0)
+SFT + DA-DPO [43]
+89.2 (+1.4)
+88.0 (+2.1)
+87.4 (+2.9)
+49.8 (+3.0)
+44.2 (+3.7)
+55.4 (+1.3)
+77.8 (+0.6)
+70.3 (+2.2)
+SFT + VIGIL (Ours)
+91.5 (+3.7)
+90.2 (+4.3)
+89.8 (+5.3)
+52.2 (+5.4)
+46.0 (+5.5)
+56.6 (+2.5)
+78.5 (+1.3)
+72.1 (+4.0)
+Table 2: Generalization across base model architectures. We validate VIGIL across diverse architectures: LLaVA-OneVision and InternVL2.5-26B. VIGIL consistently outperforms standard DPO and DA-DPO. Performance gains are calculated relative to the standard DPO baseline. For the MMHal benchmark, we report the hallucination rate to provide a fine-grained measure of grounding failure.
+Base Model
+Method
+Hallucination
+General Capabilities
+POPE {}_{\text{Adv}} \uparrow
+AMBER {}_{\text{Hal}} \downarrow
+MMHal {}_{\text{HalRate}} \downarrow
+MathVista \uparrow
+MMBench \uparrow
+SeedBench \uparrow
+LLaVA-OneVision-7B [20]
+(SigLIP + MLP)
+SFT only
+80.5
+35.4
+2.76
+51.2
+72.1
+71.5
+SFT + DPO [44]
+82.8
+34.3
+2.61
+50.8
+72.5
+71.8
+SFT + DA-DPO [43]
+84.2 (+1.4)
+28.0 (-6.3)
+2.78 (+0.17)
+51.5 (+0.7)
+73.0 (+0.5)
+72.4 (+0.6)
+SFT + VIGIL (Ours)
+86.9 (+4.1)
+25.1 (-9.2)
+2.45 (-0.16)
+52.8 (+2.0)
+73.8 (+1.3)
+73.1 (+1.3)
+InternVL2.5-26B [6]
+(Large ViT Encoder)
+SFT only
+84.1
+31.2
+2.50
+58.4
+79.2
+76.4
+SFT + DPO [44]
+85.5
+29.8
+2.35
+57.9
+79.5
+76.8
+SFT + DA-DPO [43]
+86.8 (+1.3)
+25.5 (-4.3)
+2.40 (+0.05)
+58.8 (+0.9)
+80.1 (+0.6)
+77.2 (+0.4)
+SFT + VIGIL (Ours)
+89.4 (+3.9)
+22.3 (-7.5)
+2.15 (-0.20)
+60.1 (+2.2)
+81.3 (+1.8)
+78.0 (+1.2)
+4.5 Ablation Study
+We conduct ablation studies on Qwen2.5-VL-7B to analyze the source of performance gains, focusing on component contributions, mechanism design, system robustness, efficiency, and a surprising study on emergent spatial grounding.
+Impact of Key Components.
+The contribution of each module is shown in Table 4. Starting from the DPO baseline, the addition of hard negatives improves the POPE score by 2.0 percentage points, confirming the importance of high-quality preference data. The most significant improvement, a gain of 3.2 percentage points, is driven by the Visual Anchor ( x^{\emptyset}_{\text{v}} ). This result demonstrates that geometric contrast, specifically the ability to distinguish between the seeing and blind states, is essential for mitigating hallucinations. Moreover, the removal of dynamic gating results in a minor performance decrease, validating its role in stabilizing gradient flow during optimization.
+Table 3: Component ablation. We analyze the contribution of each module on Qwen2.5-VL-7B. The Visual Anchor ( x^{\emptyset}_{\text{v}} ) is the most critical component, providing the largest performance boost.
+Method
+POPE {}_{\text{Rand}} \uparrow
+AMBER {}_{\text{Gen}} \uparrow
+MathVista \uparrow
+SFT + VIGIL (Ours)
+88.5
+46.5
+49.5
+- Visual Anchor ( x^{\emptyset}_{\text{v}} )
+85.3 (-3.2)
+43.1 (-3.4)
+49.0 (-0.5)
+- Hard Negatives
+86.5 (-2.0)
+44.2 (-2.3)
+48.8 (-0.7)
+- Dynamic Gating ( \alpha )
+87.4 (-1.1)
+45.4 (-1.1)
+49.2 (-0.3)
+SFT + DPO [44]
+86.2
+42.5
+48.0
+Table 4: Alignment strategy comparison. Our explicit masking (Geometric Decoupling) strategy significantly outperforms implicit difficulty reweighting (DA-DPO) and filtering.
+Strategy
+Core Mechanism
+POPE {}_{\text{Rand}} \uparrow
+DPO [44]
+Equality
+82.8
+Filtering (10%)
+Remove Easy
+84.3 (+1.5)
+DA-DPO [43]
+Reweighting
+85.7 (+2.9)
+CVD-Masking
+Physical Constraint
+88.5 (+5.7)
+Table 5: Performance across Visual Dependency Buckets. Instead of generic difficulty, we categorize samples by Visual Dependency Index (VDI). VIGIL achieves substantial gains on samples with high visual dependency, demonstrating it effectively fixes “blind” hallucinations where baselines fail. Performances are evaluated on POPE {}_{\text{Rand}} .
+Method
+VDI Bucket
+Low
+Medium
+High
+(Text-heavy)
+(In between)
+(Fine-grained)
+SFT + DPO [44]
+88.5
+84.1
+78.2
+SFT + DA-DPO [43]
+89.0
+86.5
+82.4
+SFT + VIGIL (Ours)
+89.2
+88.8
+87.5
+Table 6: Effect of VIGIL on localization. We evaluate Zero-shot Referring Expression Comprehension on RefCOCOg (val). Standard DPO often degrades spatial awareness. In contrast, VIGIL significantly improves localization accuracy, showcasing that our method physically anchors text to image regions.
+Method
+Hallucination
+Localization
+POPE {}_{\text{Adv}} \uparrow
+RefCOCOg Acc@0.5 \uparrow
+SFT only
+80.5
+45.2
+SFT + DPO [44]
+82.8
+44.8 (-0.4)
+SFT + DA-DPO [43]
+84.2
+46.1 (+0.9)
+SFT + VIGIL (Ours)
+86.9
+49.5 (+4.3)
+Refer to caption
+Figure 3: Analyses of data efficiency and effects of hyperparameters. (a) Our proposed VIGIL is data-efficient. It achieves performance comparable to state-of-the-art methods using only 25% of the post-training data.
+(b) Our method is more robust to the KL penalty coefficient \beta than competing methods, and the results justifies the choice of \beta=0.1 . (c) The weighing coefficient \lambda=1.0 leads to a good balance between hallucination mitigation and reasoning performance.
+Mechanism Analyses.
+We evaluate why VIGIL outperforms existing hard-negative mining techniques. Table 4 compares our explicit masking strategy with the implicit reweighting approach used in DA-DPO [43]. While reweighting provides a 2.9 point gain, the physical masking employed by VIGIL yields a 5.3 point increase. This suggests that physical intervention on the input geometry provides a more effective supervision signal than numerical adjustments to loss weights.
+To further investigate this effect, Table 6 categorizes samples by their Visual Dependency Index (VDI), which measures the divergence in model predictions when the visual input is removed. Standard DPO performs poorly on high-dependency samples, scoring 78.2, whereas VIGIL increases this to 87.5. These findings indicate that our method effectively guides the model to prioritize visual features when language priors are ambiguous.
+Additional rigorous evaluations of VIGIL on its optimization trajectory through the lens of Maximum Mutual Information (MMI) [22] and Rate-Distortion Theory are shown in Appendix 12.
+Robustness and Efficiency.
+Figure 3 illustrates the practical advantages of our framework. Regarding data efficiency, VIGIL trained on 25% of the dataset matches the performance of DA-DPO trained on the full dataset. Despite the overhead of masking, this efficiency reduces the total training wall-clock time by approximately 70% compared to full-data training (see Appendix 10). In terms of stability, VIGIL remains robust across a range of KL penalty coefficients, \beta\in[0.05,0.5] , whereas standard DPO often exhibits instability at lower \beta values. We attribute this stability to the regularization effect of the visual anchor.
+Emergent spatial grounding.
+Table 6 shows that VIGIL improves zero-shot RefCOCOg performance by 4.3 percentage points. Although the model is not explicitly trained on bounding box coordinates, it develops improved spatial localization capabilities to satisfy the counterfactual grounding objective.
+4.6 Qualitative Analysis
+To intuitively demonstrate how VIGIL mitigates visual laziness, we present a qualitative comparison against the standard DPO baseline in Figure 4. Both models are based on the Qwen2.5-VL-7B architecture. The results are categorized into three levels of difficulty: fine-grained perception, counterfactual counting, and causal state reasoning.
+Fine-grained Perception.
+The first case illustrates the model’s ability to resolve high-frequency visual details. In the baseball scenario, when asked for the phone number on the banner, the DPO baseline predicts 9201, a response that appears plausible based on inherent language priors but is factually incorrect. In contrast, VIGIL accurately identifies the digits 8015. The visual grounding proof, highlighted by the red bounding box, confirms that the model’s attention is correctly anchored to the specific pixel region. This indicates that the model effectively utilizes visual evidence before generating the corresponding tokens.
+Visual Counting.
+Counting serves as a benchmark for visual grounding. As shown in the second case, the baseline exhibits a strong dependency on language priors. For the brown coins and apples, the DPO baseline predicts 5 and 7, respectively. These numbers are statistically frequent in training corpora yet incorrect for these specific images. By incorporating geometric constraints, VIGIL suppresses prior-based guessing and correctly identifies 11 coins and 5 apples. This demonstrates that our method encourages the model to perform actual enumeration rather than relying on probabilistic retrieval from its language components.
+Causal State Reasoning.
+The third case highlights the capability gap in reasoning about physical states. In the traffic accident scene, the baseline attributes the congestion to heavy traffic during rush hour, representing a generic guess that ignores visual reality. Conversely, VIGIL identifies the specific causal mechanism, stating that a yellow car has collided with a white car. Similarly, in the crowded street scene, our model correctly identifies high crowd density as the physical barrier to vehicle passage. These observations confirm that VIGIL enables grounded reasoning, where logical conclusions are derived from accurate visual premises rather than language-based associations.
+Refer to caption
+Figure 4: Qualitative Comparison of Visual Grounding.
+MLLMs often exhibit visual laziness by relying on language priors, resulting in plausible but factually incorrect hallucinations (red). In contrast, VIGIL anchors reasoning to visual evidence x_{\text{v}} (green).
+Task 1 (Left): In fine-grained perception, VIGIL accurately identifies the digits 8015 as verified by the visual grounding box, whereas the DPO baseline hallucinates 9201.
+Task 2 (Middle): In counterfactual counting, the DPO baseline defaults to generic numbers based on priors, while VIGIL correctly identifies 11 coins and 5 apples.
+Task 3 (Right): In causal reasoning, instead of providing generic descriptions, VIGIL identifies specific physical states, such as vehicle collisions, to derive correct logical conclusions.
+5 Conclusion
+In this paper, we propose VIGIL, a principled post-training framework that mitigates hallucinations in MLLMs by maximizing visual information gain. Unlike standard preference optimization that often leads to visual laziness, our approach introduces a geometric constraint through counterfactual visual decoupling. By penalizing model confidence in the blind state x^{\emptyset}_{\text{v}} , we force the optimization trajectory to anchor reasoning in actual visual features x_{\text{v}} rather than inherent language priors. Our evaluations demonstrate that VIGIL consistently outperforms state-of-the-art baselines while exhibiting superior scaling behavior and data efficiency. Notably, the emergence of spatial grounding capabilities suggests that our geometric anchoring effectively aligns the model’s latent perception with its explicit generation.
+Despite its effectiveness, a potential limitation of our current framework lies in the simplistic construction of the counterfactual state via zero-out masking, which may not capture more nuanced cross-modal conflicts in highly cluttered environments. Future work could explore more granular counterfactual interventions, such as object-level spectral filtering or semantic-preserving transformations, to further refine the model’s visual sensitivity. We hope our work encourages a shift toward causal and information-theoretic alignment in multimodal learning.
+Acknowledgements
+This research is supported in part by the U.S. National Science Foundation (OAC-2118240, HDR Institute: Imageomics).
+References
+[1]
+Z. Allen-Zhu and Y. Li (2025)
+Physics of Language Models: Part 3.3, Knowledge Capacity Scaling Laws.
+In International Conference on Learning Representations,
+Cited by: §4.4.
+[2]
+T. Bai, Y. Fan, Q. Jiantao, F. Sun, J. Song, J. Han, Z. Liu, C. He, W. Zhang, and B. Yuan (2025)
+Hallucination at a Glance: Controlled Visual Edits and Fine-Grained Multimodal Learning.
+In The Thirty-ninth Annual Conference on Neural Information Processing Systems,
+Cited by: §1.
+[3]
+Z. Bai, P. Wang, T. Xiao, T. He, Z. Han, Z. Zhang, and M. Z. Shou (2024)
+Hallucination of multimodal large language models: A survey.
+arXiv preprint arXiv:2404.18930.
+Cited by: §6.1.
+[4]
+M. Cao, H. Zhao, C. Zhang, X. Chang, I. Reid, and X. Liang (2025)
+Ground-r1: Incentivizing grounded visual reasoning via reinforcement learning.
+arXiv preprint arXiv:2505.20272.
+Cited by: §6.1.
+[5]
+S. Chen, J. Liu, Z. Han, Y. Xia, D. Cremers, P. Torr, V. Tresp, and J. Gu (2025)
+True Multimodal In-Context Learning Needs Attention to the Visual Context.
+In Second Conference on Language Modeling,
+Cited by: §6.1.
+[6]
+Z. Chen, J. Wu, W. Wang, W. Su, G. Chen, S. Xing, M. Zhong, Q. Zhang, X. Zhu, L. Lu, et al. (2024)
+Internvl: Scaling up vision foundation models and aligning for generic visual-linguistic tasks.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition,
+pp. 24185–24198.
+Cited by: §1,
+§4.4,
+Table 2.
+[7]
+A. Chowdhery, S. Narang, J. Devlin, M. Bosma, G. Mishra, A. Roberts, P. Barham, H. W. Chung, C. Sutton, S. Gehrmann, et al. (2023)
+Palm: Scaling language modeling with pathways.
+Journal of machine learning research 24 (240), pp. 1–113.
+Cited by: §3.4.
+[8]
+K. Cobbe, V. Kosaraju, M. Bavarian, M. Chen, H. Jun, L. Kaiser, M. Plappert, J. Tworek, J. Hilton, R. Nakano, et al. (2021)
+Training verifiers to solve math word problems.
+arXiv preprint arXiv:2110.14168.
+Cited by: §4.2.
+[9]
+T. Dao (2024)
+Flashattention-2: Faster attention with better parallelism and work partitioning.
+In International Conference on Learning Representations,
+pp. 35549–35562.
+Cited by: §4.1.
+[10]
+M. Gandhi, M. O. Gul, E. Prakash, M. Grunde-McLaughlin, R. Krishna, and M. Agrawala (2022)
+Measuring compositional consistency for video question answering.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition,
+pp. 5046–5055.
+Cited by: §2.3.
+[11]
+D. Guo, D. Yang, H. Zhang, J. Song, P. Wang, Q. Zhu, R. Xu, R. Zhang, S. Ma, X. Bi, et al. (2025)
+DeepSeek-R1 incentivizes reasoning in LLMs through reinforcement learning.
+Nature 645 (8081), pp. 633–638.
+Cited by: §2.3,
+§6.4.
+[12]
+X. Guo, U. Tyagi, A. Gosai, P. Vergara, J. Park, E. G. H. Montoya, C. B. C. Zhang, B. Hu, Y. He, B. Liu, et al. (2025)
+Beyond seeing: Evaluating multimodal llms on tool-enabled image perception, transformation, and reasoning.
+arXiv preprint arXiv:2510.12712.
+Cited by: §6.1.
+[13]
+Y. He, H. Sun, Q. Qi, Z. Zhuang, P. Ren, H. Wang, Y. Nan, and J. Wang (2025)
+Mitigating Object Hallucination in Large Vision-Language Models via Visual Attention Direct Preference Optimization.
+In 2025 IEEE International Conference on Multimedia and Expo (ICME),
+pp. 1–6.
+Cited by: Table S6,
+Table S6,
+§11,
+§4.3.
+[14]
+D. Hendrycks, C. Burns, S. Basart, A. Zou, M. Mazeika, D. Song, and J. Steinhardt (2021)
+Measuring Massive Multitask Language Understanding.
+In International Conference on Learning Representations,
+Cited by: §4.2.
+[15]
+J. Hu, X. Wu, W. Shen, J. K. Liu, Z. Zhu, W. Wang, S. Jiang, H. Wang, H. Chen, B. Chen, et al. (2025)
+OpenRLHF: An Easy-to-use, Scalable and High-performance RLHF Framework.
+In Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics,
+Cited by: §4.1.
+[16]
+X. Hu, H. Ni, Y. Zhang, J. Hamm, Z. Li, and Z. Ding (2026)
+Seeing Clearly, Reasoning Confidently: Plug-and-Play Remedies for Vision Language Model Blindness.
+In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition,
+Cited by: §3.4.
+[17]
+Q. Huang, X. Dong, P. Zhang, B. Wang, C. He, J. Wang, D. Lin, W. Zhang, and N. Yu (2024)
+Opera: Alleviating hallucination in multi-modal large language models via over-trust penalty and retrospection-allocation.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition,
+pp. 13418–13427.
+Cited by: §6.1.
+[18]
+W. Kang, J. Kuen, M. Ren, Z. Wei, Y. Yan, and K. Liu (2026)
+VGent: Visual Grounding via Modular Design for Disentangling Reasoning and Prediction.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition,
+pp. 41160–41170.
+Cited by: §1,
+§2.2,
+§6.3.
+[19]
+S. Leng, H. Zhang, G. Chen, X. Li, S. Lu, C. Miao, and L. Bing (2024)
+Mitigating object hallucinations in large vision-language models through visual contrastive decoding.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition,
+pp. 13872–13882.
+Cited by: §1,
+§6.1.
+[20]
+B. Li, Y. Zhang, D. Guo, R. Zhang, F. Li, H. Zhang, K. Zhang, P. Zhang, Y. Li, Z. Liu, and C. Li (2025)
+LLaVA-OneVision: Easy Visual Task Transfer.
+Transactions on Machine Learning Research.
+Cited by: §1,
+§4.1,
+Table 2,
+§6.1.
+[21]
+H. Li, L. Jiang, X. Xiao, T. Wang, H. Yi, B. Wu, and D. Cai (2025)
+MagicID: Hybrid Preference Optimization for ID-Consistent and Dynamic-Preserved Video Customization.
+In Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV),
+pp. 12737-12746.
+Cited by: §6.2.
+[22]
+J. Li, M. Galley, C. Brockett, J. Gao, and W. B. Dolan (2016)
+A diversity-promoting objective function for neural conversation models.
+In Proceedings of the 2016 conference of the North American chapter of the association for computational linguistics: human language technologies,
+pp. 110–119.
+Cited by: §12,
+§3.1,
+§4.5.
+[23]
+J. Li, R. Selvaraju, A. Gotmare, S. Joty, C. Xiong, and S. C. H. Hoi (2021)
+Align before fuse: Vision and language representation learning with momentum distillation.
+Advances in neural information processing systems 34, pp. 9694–9705.
+Cited by: §6.3.
+[24]
+T. Li and K. He (2026)
+Back to basics: Let denoising generative models denoise.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition,
+pp. 36115–36125.
+Cited by: Figure 1,
+Figure 1.
+[25]
+Y. Li, Y. Du, K. Zhou, J. Wang, W. X. Zhao, and J. Wen (2023)
+Evaluating object hallucination in large vision-language models.
+In Proceedings of the 2023 conference on empirical methods in natural language processing,
+pp. 292–305.
+Cited by: §4.2,
+§6.1.
+[26]
+Y. Liang, M. Li, C. Fan, Z. Li, D. Nguyen, K. A. Cobbina, S. Bhardwaj, J. Chen, F. Liu, and T. Zhou (2025)
+ColorBench: Can VLMs See and Understand the Colorful World? A Comprehensive Benchmark for Color Perception, Reasoning, and Robustness.
+In The Thirty-ninth Annual Conference on Neural Information Processing Systems Datasets and Benchmarks Track,
+Cited by: §2.3.
+[27]
+C. Liao, X. Xiao, C. Meng, Z. Chen, Y. Qiao, W. Zhou, T. Wang, X. Zheng, and X. Cao (2026)
+Spamem: Benchmarking dynamic spatial reasoning via perception-memory integration in embodied environments.
+arXiv preprint arXiv:2604.22409.
+Cited by: §6.3.
+[28]
+D. Liao, C. Liu, B. W. Christensen, A. Tong, G. Huguet, G. Wolf, M. Nickel, I. Adelstein, and S. Krishnaswamy (2024)
+Assessing neural network representations during training using noise-resilient diffusion spectral entropy.
+In 2024 58th Annual Conference on Information Sciences and Systems (CISS),
+pp. 1–6.
+Cited by: Figure 1,
+Figure 1.
+[29]
+D. Liao, C. Liu, X. Sun, D. Tang, H. Wang, S. Youlten, S. K. Gopinath, H. Lee, E. C. Strayer, A. J. Giraldez, et al. (2025)
+RNAGenScape: property-guided optimization and interpolation of mRNA sequences with manifold Langevin dynamics.
+arXiv preprint arXiv:2510.24736.
+Cited by: Figure 1,
+Figure 1.
+[30]
+Z. Lin, Y. Liu, Y. Yang, L. Tao, and D. Ye (2026)
+AdaptVision: Efficient Vision-Language Models via Adaptive Visual Acquisition.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition,
+pp. 11923–11932.
+Cited by: §1,
+§6.2.
+[31]
+C. Liu, X. Sun, X. Xiao, A. Van Tassel, K. Xu, K. Reimann, D. Liao, M. Gerstein, T. Wang, X. Wang, and S. Krishnaswamy (2026)
+Dispersion Loss Counteracts Embedding Condensation and Improves Generalization in Small Language Models.
+In International Conference on Machine Learning,
+Cited by: §4.4.
+[32]
+Y. Liu, H. Duan, Y. Zhang, B. Li, S. Zhang, W. Zhao, Y. Yuan, J. Wang, C. He, Z. Liu, et al. (2024)
+Mmbench: Is your multi-modal model an all-around player?.
+In European conference on computer vision,
+pp. 216–233.
+Cited by: §4.2.
+[33]
+Y. Liu, L. Qin, and S. Wang (2025)
+Small drafts, big verdict: Information-intensive visual reasoning via speculation.
+arXiv preprint arXiv:2510.20812.
+Cited by: §6.1.
+[34]
+L. Long, C. Oh, S. Park, and S. Li (2026)
+Understanding Language Prior of LVLMs by Contrasting Chain-of-Embedding.
+In The Fourteenth International Conference on Learning Representations,
+Cited by: §1,
+§2.3.
+[35]
+P. Lu, H. Bansal, T. Xia, J. Liu, C. Li, H. Hajishirzi, H. Cheng, K. Chang, M. Galley, and J. Gao (2024)
+MathVista: Evaluating Mathematical Reasoning of Foundation Models in Visual Contexts.
+In The Twelfth International Conference on Learning Representations,
+Cited by: §4.2.
+[36]
+M. Meilă and H. Zhang (2024)
+Manifold learning: What, how, and why.
+Annual Review of Statistics and Its Application 11 (1), pp. 393–417.
+Cited by: Figure 1,
+Figure 1.
+[37]
+Y. Meng, M. Xia, and D. Chen (2024)
+Simpo: Simple preference optimization with a reference-free reward.
+Advances in Neural Information Processing Systems 37, pp. 124198–124235.
+Cited by: §4.1,
+§4.3,
+Table 1,
+Table 1.
+[38]
+Y. Niu, K. Tang, H. Zhang, Z. Lu, X. Hua, and J. Wen (2021)
+Counterfactual vqa: A cause-effect look at language bias.
+In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition,
+pp. 12700–12710.
+Cited by: §12,
+§2.3,
+Definition 3.1.
+[39]
+L. Ouyang, J. Wu, X. Jiang, D. Almeida, C. Wainwright, P. Mishkin, C. Zhang, S. Agarwal, K. Slama, A. Ray, et al. (2022)
+Training language models to follow instructions with human feedback.
+Advances in neural information processing systems 35, pp. 27730–27744.
+Cited by: §6.2.
+[40]
+A. Panagopoulou, H. Zhou, S. Savarese, C. Xiong, C. Callison-Burch, M. Yatskar, and J. C. Niebles (2025)
+Viunit: Visual unit tests for more robust visual programming.
+In Proceedings of the Computer Vision and Pattern Recognition Conference,
+pp. 24646–24656.
+Cited by: §2.3.
+[41]
+J. Pearl (2009)
+Causality.
+Cambridge university press.
+Cited by: §6.3.
+[42]
+F. Peng, X. Yang, Y. Wang, and C. Xu (2026)
+Group-Relative Visual Discrimination Enhancement for Unlocking Intrinsic Capability of MLLMs.
+IEEE Transactions on Circuits and Systems for Video Technology.
+Cited by: §6.1.
+[43]
+L. Qiu, S. Ning, C. Zhang, J. Sun, and X. He (2025)
+DA-DPO: Cost-efficient Difficulty-aware Preference Optimization for Reducing MLLM Hallucinations.
+Transactions on Machine Learning Research.
+Cited by: §1,
+§2.2,
+§3.2,
+§4.1,
+§4.2,
+§4.3,
+§4.5,
+Table 1,
+Table 1,
+Table 2,
+Table 2,
+Table 4,
+Table 6,
+Table 6,
+§6.2.
+[44]
+R. Rafailov, A. Sharma, E. Mitchell, C. D. Manning, S. Ermon, and C. Finn (2023)
+Direct preference optimization: Your language model is secretly a reward model.
+Advances in neural information processing systems 36, pp. 53728–53741.
+Cited by: §1,
+§2.2,
+§2.3,
+§4.3,
+Table 1,
+Table 1,
+Table 2,
+Table 2,
+Table 4,
+Table 4,
+Table 6,
+Table 6,
+§6.2.
+[45]
+S. Rajbhandari, J. Rasley, O. Ruwase, and Y. He (2020)
+Zero: Memory optimizations toward training trillion parameter models.
+In SC20: international conference for high performance computing, networking, storage and analysis,
+pp. 1–16.
+Cited by: §4.1.
+[46]
+X. Sun, D. Liao, K. MacDonald, Y. Zhang, G. Huguet, G. Wolf, I. Adelstein, T. G. Rudner, and S. Krishnaswamy (2025)
+Geometry-Aware Generative Autoencoders for Warped Riemannian Metric Learning and Generative Modeling on Data Manifolds.
+In The 28th International Conference on Artificial Intelligence and Statistics,
+Cited by: Figure 1,
+Figure 1.
+[47]
+Z. Sun, S. Shen, S. Cao, H. Liu, C. Li, Y. Shen, C. Gan, L. Gui, Y. Wang, Y. Yang, et al. (2024)
+Aligning large multimodal models with factually augmented rlhf.
+In Findings of the Association for Computational Linguistics: ACL 2024,
+pp. 13088–13110.
+Cited by: §4.2.
+[48]
+J. Wang, Y. Wang, G. Xu, J. Zhang, Y. Gu, H. Jia, J. Wang, H. Xu, M. Yan, J. Zhang, et al. (2023)
+Amber: An llm-free multi-dimensional benchmark for mllms hallucination evaluation.
+arXiv preprint arXiv:2311.07397.
+Cited by: §4.2.
+[49]
+P. Wang, S. Bai, S. Tan, S. Wang, Z. Fan, J. Bai, K. Chen, X. Liu, J. Wang, W. Ge, et al. (2024)
+Qwen2-vl: Enhancing vision-language model's perception of the world at any resolution.
+arXiv preprint arXiv:2409.12191.
+Cited by: §1,
+§11,
+§4.1,
+Table 1,
+Table 1,
+§6.1.
+[50]
+Z. Wang, F. Xiong, L. Lin, X. Hu, Y. Wang, Y. Wang, M. Zhang, and X. Chu (2026)
+Visually-Guided Policy Optimization for Multimodal Reasoning.
+arXiv preprint arXiv:2604.09349.
+Cited by: §6.1.
+[51]
+Z. Wang, X. Guo, S. Stoica, H. Xu, H. Wang, H. Ha, X. Chen, Y. Chen, M. Yan, F. Huang, et al. (2025)
+Perception-aware policy optimization for multimodal reasoning.
+arXiv preprint arXiv:2507.06448.
+Cited by: §2.3.
+[52]
+X. Xiao, C. Ma, Y. Zhang, C. Liu, Z. Wang, Y. Li, L. Zhao, G. Hu, T. Wang, and H. Xu (2026)
+Not All Directions Matter: Towards Structured and Task-Aware Low-Rank Model Adaptation.
+arXiv preprint arXiv:2603.14228.
+Cited by: §6.2.
+[53]
+T. Xu, H. Jing, Y. Li, Y. Wei, J. Feng, G. Chen, H. Gao, T. Zhang, and F. Chen (2025)
+DeFacto: Counterfactual Thinking with Images for Enforcing Evidence-Grounded and Faithful Reasoning.
+arXiv preprint arXiv:2509.20912.
+Cited by: §6.1.
+[54]
+D. Zhang, Z. Li, M. Zhang, J. Zhang, Z. Liu, Y. Yao, H. Xu, J. Zheng, X. Chen, Y. Zhang, et al. (2025)
+From system 1 to system 2: a survey of reasoning large language models.
+IEEE Transactions on Pattern Analysis and Machine Intelligence.
+Cited by: §1.
+[55]
+J. Zhang, M. Khayatkhoei, P. Chhikara, and F. Ilievski (2025)
+MLLMs Know Where to Look: Training-free Perception of Small Visual Details with Multimodal LLMs.
+In The Thirteenth International Conference on Learning Representations,
+Cited by: §1,
+1st item,
+§2.1,
+§2.3,
+§3.4,
+§6.1.
+[56]
+L. Zhao, X. Jiang, X. Xiao, Q. Fan, L. Lu, Y. Wang, X. Lin, O. Camps, P. Zhao, and J. Gu (2026)
+Hieramp: Coarse-to-fine autoregressive amplification for generative dataset distillation.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition,
+pp. 41688–41698.
+Cited by: §6.2.
+[57]
+L. Zhao, H. Li, X. Ning, and X. Jiang (2024)
+Thinimg: Cross-modal steganography for presenting talking heads in images.
+In Proceedings of the IEEE/CVF winter conference on applications of computer vision,
+pp. 5553–5562.
+Cited by: §6.2.
+[58]
+Y. Zhao, A. Gu, R. Varma, L. Luo, C. Huang, M. Xu, L. Wright, H. Shojanazeri, M. Ott, S. Shleifer, et al. (2023)
+PyTorch FSDP: Experiences on Scaling Fully Sharded Data Parallel.
+Proceedings of the VLDB Endowment 16 (12), pp. 3848–3860.
+Cited by: §4.1.
+[59]
+Z. Zhao, B. Wang, L. Ouyang, X. Dong, J. Wang, and C. He (2025)
+Beyond Multimodal Hallucinations: Enhancing LVLMs through Hallucination-Aware Direct Preference Optimization.
+In 2025 IEEE International Conference on Multimedia and Expo (ICME),
+pp. 1–6.
+Cited by: §4.1,
+§4.3,
+Table 1,
+§6.2.
+[60]
+Y. Zhou, C. Cui, J. Yoon, L. Zhang, Z. Deng, C. Finn, M. Bansal, and H. Yao (2024)
+Analyzing and Mitigating Object Hallucination in Large Vision-Language Models.
+In The Twelfth International Conference on Learning Representations,
+Cited by: §2.3,
+§3.4.
+[61]
+D. Zhu, Z. Wang, X. Xiao, H. Jiang, S. Vahidian, W. Chao, T. Berger-Wolf, Y. Su, R. Vatsavai, and J. Gu (2026)
+Leveraging Latent Visual Reasoning in Silence.
+arXiv preprint arXiv:2605.18641.
+Cited by: §1,
+§6.1.
+\beginappendix
+6 Related Work
+6.1 Mechanisms of Hallucination in MLLMs
+Recent Multimodal Large Language Models (MLLMs), such as Qwen-VL [49] and LLaVA-OneVision [20], have achieved significant progress by connecting visual encoders with powerful LLMs. However, hallucination remains a persistent challenge where models generate content inconsistent with visual inputs [25, 5, 12, 33, 53, 3, 42, 50]. Early hypotheses attributed this to the limited resolution of visual encoders or low-quality training data. However, recent mechanistic interpretability studies offer a different perspective [4, 61]. For instance, Zhang et al. [55] reveal that visual information is often preserved in the model’s latent space but is suppressed by strong language priors during decoding. This suggests that the model effectively sees the correct object in its internal states but speaks the wrong answer due to learned language correlations. To address this, inference-time intervention methods like VCD [19] and OPERA [17] have been proposed. These methods suppress hallucinations by penalizing logits that rely heavily on language priors during the decoding process. While effective, these inference-time methods increase latency and exhibit sensitivity to hyperparameter tuning. Our work seeks to internalize these constraints directly into the model weights during post-training, offering a more inference-efficient solution.
+6.2 Alignment and Efficiency in Multimodal Learning
+Reinforcement Learning from Human Feedback (RLHF) [39] and Direct Preference Optimization (DPO) [44] are the standard methods for aligning models with human intent. In the multimodal domain, DPO variants like HA-DPO [59] and DA-DPO [43] have been developed to reduce hallucinations. Multimodal visual generation has also explored cross-modal image representations and hybrid preference optimization for personalized video synthesis [57, 21]. DA-DPO, for instance, identifies difficulty imbalances in training data and uses an implicit reweighting strategy to emphasize harder samples.
+Beyond static data reweighting, recent works explore dynamic efficiency. AdaptVision [30] utilizes reinforcement learning to dynamically select visual tokens to reduce computational overhead. Complementary efficiency work reduces training cost through generative dataset distillation [56] or task-aware low-rank adaptation [52]. However, such methods either change the training data, change the adaptation parameterization, or rely on Online RL, which can introduce training instability and implementation complexity. In contrast, VIGIL operates within the stable Offline DPO framework. We achieve high data efficiency not by dynamic sampling, but by maximizing the information gain from each preference pair through geometric constraints.
+6.3 Architectural vs. Geometric Solutions
+To improve visual grounding and reasoning, one line of research focuses on architectural enhancements. Methods like VGent [18] adopt a modular design, employing external tools or separate reasoning modules to handle complex visual tasks. Recent benchmarks further show that dynamic spatial reasoning requires integrating perception with memory over time [27]. While modular designs can improve performance on specific benchmarks, they compromise the elegance and generalizability of end-to-end learning.
+An alternative approach uses visual counterfactuals to enforce grounding without architectural changes. This concept, rooted in causal inference [41], involves reasoning about how the model’s prediction would change if the visual input were different. Previous works like ALBEF [23] applied this in pre-training. Our work integrates this concept into preference learning. Unlike modular approaches that rely on external components, VIGIL introduces a geometric constraint by formulating the counterfactual blind state ( x^{\emptyset}_{\text{v}} ) as a negative anchor. This forces the model to distinguish between seeing and blindness, thereby grounding preference optimization in visual evidence without requiring additional parameters.
+6.4 DPO vs. GRPO
+Group Relative Policy Optimization (GRPO) [11] is widely recognized for its strengths in reinforcement learning fine-tuning. In particular, it provides a stable policy-gradient update by using group-relative advantages, and it scales well to long-horizon, multi-step reasoning when a reliable reward signal is available. These properties make GRPO a strong default choice for tasks with verifiable outcomes, such as program synthesis and math problems with deterministic checkers.
+In VIGIL, however, our target is multimodal hallucination mitigation, where the primary failure mode is not incorrect reasoning per se, but incorrect modality dependence. As analyzed in Sec. 2, an MLLM can produce a plausible or even correct final answer while still being driven by language priors rather than visual evidence. Under this problem setting, optimizing final-answer rewards alone does not reliably distinguish grounded responses from prior-driven responses, and may inadvertently reinforce visual laziness.
+Why DPO fits our setting.
+DPO directly optimizes pairwise preferences and therefore does not require an external verifier to produce dense and reliable rewards. This is important for hallucination benchmarks, where correctness can be ambiguous and where the key objective is to align the dependency path (using x_{v} ) rather than only the terminal string. Moreover, DPO naturally supports controlled comparisons under matched conditions. This property is essential for our counterfactual design: we contrast the same instruction and candidate response under a seeing state (x_{v},x_{t}) and a blind state (x_{v}^{\emptyset},x_{t}) , and we penalize blind confidence while preserving the ability to answer correctly when vision is available. This yields a direct and low-variance training signal for grounding.
+GRPO is computationally inefficient for our use case.
+To reproduce the same counterfactual logic in GRPO, one would need to construct multiple blind variants for each sample within a group and evaluate reward signals for each variant, since the key supervision comes from comparing seeing versus blind behavior. This substantially increases the number of forward passes, reward computations, and memory footprint. The overhead becomes especially pronounced for large-scale MLLMs, where GRPO already requires group rollouts and reward evaluation. In contrast, DPO allows us to integrate the seeing/blind contrast directly into a single preference-style objective, making the counterfactual constraint practical at scale.
+Empirical comparison.
+We additionally implement a Visual-GRPO baseline on Qwen2.5-VL-7B, using POPE accuracy as the reward. As shown in Table S1, Visual-GRPO is competitive on MathVista, which aligns with GRPO’s known advantages on reasoning tasks. However, it underperforms on hallucination benchmarks. The results support our main point: for multimodal alignment, explicitly enforcing visual dependence via counterfactual geometric decoupling is more effective than reward-based policy optimization that primarily targets final-answer correctness.
+Table S1: Comparison with GRPO. Evaluations on Qwen2.5-VL-7B. VIGIL outperforms the GRPO-based reward-tuning in mitigating hallucinations while maintaining comparable reasoning capabilities.
+Method
+POPE {}_{\text{Adv}} \uparrow
+MMHal \uparrow
+MathVista \uparrow
+Visual-GRPO
+84.1
+37.5
+50.1
+VIGIL (Ours)
+86.9
+40.2
+49.5
+7 Blind State Construction
+To construct the counterfactual blind state x_{\mathrm{v}}^{\emptyset} , we keep the same image, visual tokens, projector outputs, text tokens, and positional embeddings as in the seeing path, and intervene only on attention connectivity. Specifically, a per-layer attention mask prevents text-query positions from attending to visual key/value positions, while leaving the vision encoder untouched.
+Table S2 compares this design with image-level perturbations such as blacking out, blurring, and shuffling. Attention masking achieves the best performance, whereas the black-image variant performs worst, suggesting that directly corrupting the image introduces undesirable distribution shifts. Thus, VIG is computed between matched seeing and blind states, which renders it a matched-state estimate rather than a corrupted-image likelihood ratio.
+Table S2: Effect of different blind state construction techniques. Compared with image-level perturbations, attention masking achieves the best performance while avoiding additional image processing cost.
+Black
+Blur
+Shuffle
+Attention Mask
+POPE {}_{\text{Adv}} \uparrow
+84.7
+85.6
+85.9
+86.9
+The pseudocode of blind state construction is provided below.
+Algorithm 1 Attention-Masked Blind State Construction for VIGIL
+1:
+Image x_{\mathrm{v}} , instruction x_{\mathrm{t}} , response prefix y_{<t} , MLLM with L language layers
+2:
+Visual-token index set \mathcal{I}_{\mathrm{v}} after the vision projector; text-token index set \mathcal{I}_{\mathrm{t}}
+3:
+Encode the real image once: z_{\mathrm{v}}\leftarrow\mathrm{Proj}(\mathrm{Enc}_{\mathrm{v}}(x_{\mathrm{v}}))
+4:
+Build the shared token sequence z\leftarrow[z_{\mathrm{v}};\mathrm{Emb}(x_{\mathrm{t}},y_{<t})] with the original positional embeddings
+5:
+Construct the normal causal/padding attention mask M_{\mathrm{see}}
+6:
+Initialize the blind mask M_{\mathrm{blind}}\leftarrow M_{\mathrm{see}}
+7:
+for each language layer \ell=1,\ldots,L do
+8:
+for each text-query position i\in\mathcal{I}_{\mathrm{t}} do
+9:
+for each visual key/value position j\in\mathcal{I}_{\mathrm{v}} do
+10:
+Set M_{\mathrm{blind}}^{(\ell)}[i,j]\leftarrow-\infty
+11:
+end for
+12:
+end for
+13:
+end for
+14:
+Run the seeing path with (z,M_{\mathrm{see}}) to obtain \log\pi_{\theta}(y\mid x_{\mathrm{v}},x_{\mathrm{t}})
+15:
+Run the blind path with the same z and (M_{\mathrm{blind}}) to obtain \log\pi_{\theta}(y\mid x_{\mathrm{v}}^{\emptyset},x_{\mathrm{t}})
+16:
+return matched seeing and blind log-likelihoods for the CVD and VIG objectives
+The intervention in Algorithm 1 is applied after visual encoding and projection. Therefore, the blind path never feeds a corrupted image to the vision encoder and never changes the visual-token distribution. Only text-query rows are blocked from reading visual key/value columns. Visual tokens can still participate in their own preprocessing, and the causal, padding, and position masks remain identical to the seeing path. This matched construction ensures that the difference between the two likelihoods is attributable to cross-modal access rather than OOD image corruption.
+8 Preference Set, Reference Policy and Reproducibility
+This section specifies the preference data, reference-policy evaluation, and judging protocol used for reproducibility.
+Matched reference-policy evaluation.
+The frozen reference policy is evaluated under the same state as the policy model. In the seeing term of Eq. 6, both \pi_{\theta} and \pi_{\mathrm{ref}} use M_{\mathrm{see}} . In the blind term, both models use M_{\mathrm{blind}} . Thus, the CVD objective compares matched seeing and blind states:
+\log\frac{\pi_{\theta}(y_{w}\mid x_{\mathrm{v}},x_{\mathrm{t}};M_{\mathrm{see}})}{\pi_{\mathrm{ref}}(y_{w}\mid x_{\mathrm{v}},x_{\mathrm{t}};M_{\mathrm{see}})}-\log\frac{\pi_{\theta}(y_{w}\mid x_{\mathrm{v}}^{\emptyset},x_{\mathrm{t}};M_{\mathrm{blind}})}{\pi_{\mathrm{ref}}(y_{w}\mid x_{\mathrm{v}}^{\emptyset},x_{\mathrm{t}};M_{\mathrm{blind}})}.
+(9)
+This avoids normalizing a blind policy term with a seeing reference term and keeps the contrast focused on visual access rather than reference-model mismatch.
+Preference data composition.
+The preference set contains 120K pairs. All methods are trained for one epoch from the same base checkpoint, and DPO, DA-DPO, and VIGIL use the same preference pool unless otherwise stated. Table S3 reports the composition.
+Table S3: Preference-set composition. The training pool combines hallucination-specific samples with general multimodal reasoning, OCR/chart, and math/spatial tasks.
+Category
+Fraction
+Role in Training
+Hallucination / grounding
+45%
+object faithfulness and visual premise correction
+General VQA / reasoning
+25%
+broad multimodal instruction following
+OCR / chart understanding
+15%
+text-rich and structured visual evidence
+Math / spatial reasoning
+15%
+compositional and geometry-sensitive reasoning
+Visual CoT consistency judging.
+For VCC, GPT-4o receives the image, a ground-truth object list, and the first visual premise in the model’s chain of thought. The judge returns a binary consistency label and, when inconsistent, the offending object or visual claim. The exact judging prompt used in our evaluation is:
+You are given an image, a list of ground-truth objects visible in the image, and the first visual premise extracted from a model’s reasoning. Decide whether the premise is visually consistent with the image. Answer with CONSISTENT or INCONSISTENT. If inconsistent, name the offending object, attribute, count, or spatial relation. Do not judge later reasoning steps or the final answer; evaluate only the first visual premise against the image evidence.
+Manual audit.
+We manually audit 300 randomly sampled VCC judgments. The GPT-4o judge agrees with human annotation on 92.3% of the audited samples. Most disagreements come from ambiguous attributes or partially occluded objects, rather than from systematic bias toward any training method. We use the automatic VCC judge only as an auxiliary grounding diagnostic and do not train on its labels.
+9 Maintenance of Text-Only Capabilities
+To assess whether improved visual grounding comes at the expense of general reasoning ability, we evaluate VIGIL on text-only benchmarks with the image branch disabled, alongside representative multimodal reasoning benchmarks.
+As shown in Table S4, VIGIL preserves text-only performance, with changes on MMLU and GSM8K limited to less than 0.2 points. Across three random seeds, the standard deviation on these benchmarks is approximately \pm 0.3 , indicating that the observed differences fall within run-to-run variation rather than systematic degradation. In contrast, VIGIL consistently improves multimodal reasoning performance on MathVista and MMBench. These results suggest that the CVD objective encourages visual dependence only when visual evidence is informative, rather than imposing an indiscriminate reliance on the visual modality. Consequently, VIGIL improves multimodal grounding without introducing a measurable capability tax or catastrophic forgetting of text-only reasoning skills.
+Table S4: Text-only capability retention after VIGIL post-training. VIGIL preserves text-only reasoning performance on MMLU and GSM8K while improving multimodal reasoning benchmarks. The small changes on text-only tasks fall within run-to-run variation, indicating no measurable capability tax.
+Method
+Text-Only
+Multimodal
+MMLU \uparrow
+GSM8K \uparrow
+MathVista \uparrow
+MMBench \uparrow
+SFT only
+74.8
+91.3
+48.2
+70.5
+SFT + VIGIL (Ours)
+74.6
+91.1
+49.5
+72.5
+10 Training Efficiency and Computational Resource Analysis
+We further evaluate the computational cost of VIGIL to demonstrate its practical feasibility for large-scale multimodal alignment. As shown in Table S5, VIGIL exhibits a distinct advantage in resource utilization compared to standard DPO and its variants.
+High Data Leverage.
+The most significant efficiency gain stems from our method’s high signal-to-noise ratio in causal anchoring. While standard DPO requires the full preference dataset to achieve convergence, VIGIL matches the performance of 100% DA-DPO using only 25% of the training samples. This reduction in data requirements directly translates to a 70% decrease in total training wall-clock time. For the Qwen2.5-VL-7B model, the entire alignment process is completed within 3.5 GPU hours on a single A100 node, representing a substantial improvement over existing benchmarks.
+Minimal Forward Overhead.
+Contrary to intuition, our dual-path (Seeing and Blind) optimization does not double the computational burden. Since the counterfactual blind state x^{\emptyset}_{\text{v}} is implemented via attention masking rather than modifying physical input tensors, it bypasses the redundant re-processing of high-resolution visual tokens. The additional TFLOPs attributable to the CVD constraint account for less than 1% of the total forward-backward pass.
+Comparison with Online RL.
+Compared to online reinforcement learning methods like GRPO or AdaptVision, which require massive sampling and multiple reference models during training, VIGIL operates within a stable offline framework. This avoids the memory overhead of maintaining group-relative samples and significantly reduces the VRAM requirement, allowing for the full-parameter fine-tuning of 72B-scale models on standard infrastructure without aggressive quantization.
+Table S5: Computational Cost and Efficiency Comparison. All models are evaluated on Qwen2.5-VL-7B. GPU hours are measured as the total time required to reach state-of-the-art performance (POPE > 86.0).
+Method
+Data Fraction
+GPU Hours (A100)
+Avg Score \uparrow
+SFT + DPO
+100%
+12.0
+64.6
+SFT + DA-DPO
+100%
+14.5
+65.9
+SFT + VIGIL (Ours)
+25%
+3.5
+66.0
+SFT + VIGIL (Ours)
+100%
+13.2
+67.3
+11 Comparison with Inference-Time Intervention using VCD
+We compare VIGIL with Visual Contrastive Decoding (VCD) [13] under the official hyperparameter setting ( \alpha=1,\beta=0.1,\gamma=0.1 ), using the same Qwen2.5-VL-7B [49] SFT checkpoint, benchmark splits, decoding length, and evaluation scripts. Latency is measured per generated token and includes the additional degraded-image forward pass required by VCD. As shown in Table S6, VCD substantially improves the SFT baseline, confirming that inference-time visual contrast is an effective hallucination mitigation strategy. However, applying VCD on top of VIGIL yields only minimal effects across benchmarks, while almost doubling the inference latency. These results suggest that exposing the model to visual contrast during post-training using VIGIL already captures much of the benefit provided by inference-time contrastive decoding.
+Table S6: Visual Contrastive Decoding (VCD) provides only marginal benefits after VIGIL post-training. While VCD substantially improves the SFT baseline, it yields only marginal gains when applied to VIGIL. Using standard decoding alone, VIGIL achieves performance on par with the VCD counterpart at much lower inference latency.
+Method
+Decoding
+POPE {}_{\text{Adv}} \uparrow
+AMBER {}_{\text{Gen}} \uparrow
+MMHal \downarrow
+Latency \downarrow
+SFT only
+Standard
+80.5
+41.2
+34.5
+1.00 \times
+SFT only
+VCD [13]
+84.0
+43.8
+37.7
+1.78 \times
+SFT + VIGIL (Ours)
+Standard
+86.9
+46.5
+40.2
+1.00 \times
+SFT + VIGIL (Ours)
+VCD [13]
+87.1
+46.4
+40.3
+1.79 \times
+12 Information-Theoretic Analysis: Quantifying Causal Grounding
+To rigorously evaluate the mechanism of VIGIL, we analyze its optimization trajectory through the lens of Maximum Mutual Information (MMI) [22] and Rate-Distortion Theory. We aim to quantify whether our geometric constraint effectively shifts the model from a regime of linguistic compression to one of causal visual grounding.
+Visual Information Gain (VIG) as Causal Strength.
+As established in Eq. 3, VIG is an empirical instantiation of Pointwise Mutual Information (PMI) between the visual manifold x_{v} and the response y , conditioned on the instruction x_{t} .
+From an information-theoretic perspective, a high VIG indicates that the visual modality provides a significant reduction in the model’s posterior uncertainty [38].
+As shown in Table S7, while standard DPO achieved an average VIG of only 2.1 on High-VDI samples, VIGIL reached 7.2 . This indicates that our method forces the model to maximize the Information Gain derived specifically from pixels, effectively preventing the multimodal posterior from collapsing into the text-only prior.
+Entropy Dynamics and Blind Uncertainty.
+We further utilize Predictive Entropy H(y|x) to characterize the model’s confidence distribution. In information theory, low entropy represents high information compression or certainty, while high entropy indicates a state of maximum uncertainty or a flattened probability manifold.
+•
+Low Blind Entropy ( H_{\text{blind}}\approx 0.65 ): In standard DPO, we observe that entropy remains low even when visual evidence x_{v} is removed. This suggests that the model has “compressed” the visual input into a redundant signal, relying on the high-probability paths of the textual manifold to maintain certainty [55].
+•
+High Blind Entropy ( H_{\text{blind}}\approx 1.88 ): VIGIL exhibits an “entropy explosion” under counterfactual blindness. This signifies that without visual anchoring, the model loses its predictive certainty. This shift is a direct result of our Geometric Information Bottleneck, which ensures that the policy model \pi_{\theta} cannot achieve a low-entropy (high-confidence) state unless the visual premises are explicitly satisfied.
+Summary of Findings.
+These results provide a solid information-theoretic proof of our core hypothesis: VIGIL does not merely reweight samples based on difficulty, but fundamentally alters the model’s dependency path. By penalizing low-entropy predictions in the blind state, we ensure that the model’s reasoning is causally anchored in the visual world rather than being a byproduct of linguistic over-fitting.
+Table S7: Quantitative Information-Theoretic Metrics. Results are reported using Qwen2.5-VL-7B on the High-VDI split. H_{\text{blind}} represents the predictive entropy in the counterfactual state.
+Method
+VIG (PMI) \uparrow
+Blind Entropy ( H_{\text{blind}} ) \uparrow
+Modality Dependence
+SFT only
+1.2
+0.45
+Text-driven
+SFT + DPO
+2.1
+0.65
+Prior-dominated
+SFT + DA-DPO
+3.5
+0.92
+Partially Grounded
+SFT + VIGIL (Ours)
+7.2
+1.88
+Causally Anchored
+◄
+ar5iv homepage
+Feeling
+lucky?
+Conversion
+report
+Report
+an issue
+View original
+on arXiv►
+Copyright
+Privacy Policy
+Generated by LaTeXML Mascot Sammy (oxide)

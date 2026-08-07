@@ -1,0 +1,974 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>[2606.22043] When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR</title><meta property="og:description" content="Reinforcement learning with verifiable rewards (RLVR) is increasingly applied to
+large vision–language models (LVLMs), yet outcome-only optimization can drive a
+model to stop attending to the video and instead exploit …">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR">
+<meta name="twitter:image:src" content="https://ar5iv.labs.arxiv.org/assets/ar5iv_card.png">
+<meta name="twitter:image:alt" content="ar5iv logo">
+<meta property="og:title" content="When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR">
+<meta property="og:site_name" content="ar5iv">
+<meta property="og:image" content="https://ar5iv.labs.arxiv.org/assets/ar5iv_card.png">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ar5iv.labs.arxiv.org/html/2606.22043">
+<link rel="canonical" target="_blank" href="https://ar5iv.labs.arxiv.org/html/2606.22043">
+
+<!--Document created on .-->
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<script>
+  function detectColorScheme(){
+    var theme="light";
+    var current_theme = localStorage.getItem("ar5iv_theme");
+    if(current_theme){
+      if(current_theme == "dark"){
+        theme = "dark";
+      } }
+    else if(!window.matchMedia) { return false; }
+    else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      theme = "dark"; }
+    if (theme=="dark") {
+      document.documentElement.setAttribute("data-theme", "dark");
+    } else {
+      document.documentElement.setAttribute("data-theme", "light"); } }
+
+  detectColorScheme();
+
+  function toggleColorScheme(){
+    var current_theme = localStorage.getItem("ar5iv_theme");
+    if (current_theme) {
+      if (current_theme == "light") {
+        localStorage.setItem("ar5iv_theme", "dark"); }
+      else {
+        localStorage.setItem("ar5iv_theme", "light"); } }
+    else {
+        localStorage.setItem("ar5iv_theme", "dark"); }
+    detectColorScheme(); }
+</script>
+<link media="all" rel="stylesheet" href="/assets/ar5iv-fonts.0.9.0.css"><link media="all" rel="stylesheet" href="/assets/ar5iv.0.9.0.css"><link media="all" rel="stylesheet" href="/assets/ar5iv-site.0.2.2.css">
+</head>
+<body>
+<div class="ltx_page_main">
+<div class="ltx_page_content">
+<article class="ltx_document ltx_authors_1line">
+<h1 class="ltx_title ltx_title_document">When Does a Video–Language Model Stop Watching?
+<br class="ltx_break">Reward Strength Controls the Formation and Reversal
+<br class="ltx_break">of Visual Shortcuts in Multimodal RLVR</h1>
+<div class="ltx_authors">
+<span class="ltx_creator ltx_role_author">
+<span class="ltx_personname">Zekun Xu
+</span><span class="ltx_author_notes"><span class="ltx_author_notes_content">
+<span class="ltx_contact ltx_role_affiliation"><span class="ltx_contact_name">Affiliation: </span>School of Computer Science, The University of Sydney, Sydney, Australia
+</span>
+<span class="ltx_contact ltx_role_affiliation"><span class="ltx_contact_name">Affiliation: </span><span id="id1" class="ltx_text ltx_font_typewriter">xzk20020423@gmail.com</span>
+</span></span></span></span></div>
+
+<div id="abstract1" class="ltx_abstract"><h6 class="ltx_title ltx_title_abstract">Abstract</h6>
+    
+<p id="abstract1.1" class="ltx_p">Reinforcement learning with verifiable rewards (RLVR) is increasingly applied to
+large vision–language models (LVLMs), yet outcome-only optimization can drive a
+model to stop attending to the video and instead exploit linguistic priors—a
+failure we call a <em id="abstract1.1.1" class="ltx_emph ltx_font_italic">visual shortcut</em>. While the existence of such
+perception bypass is by now documented, <em id="abstract1.1.2" class="ltx_emph ltx_font_italic">how</em> it forms, whether it can be
+<em id="abstract1.1.3" class="ltx_emph ltx_font_italic">undone</em>, and <em id="abstract1.1.4" class="ltx_emph ltx_font_italic">when</em> intervention still helps remain open. We treat the
+strength of a grounding penalty, <math id="abstract1.m1" class="ltx_Math" alttext="\lambda" display="inline" intent=":literal"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>, as a control knob and characterize the
+formation–reversal dynamics of visual shortcuts along the training time axis.
+On a held-out, out-of-distribution diagnostic set, we find: (i) a sharp
+<em id="abstract1.1.5" class="ltx_emph ltx_font_italic">onset</em>—shortcut reliance emerges abruptly over a narrow window of
+optimization steps and is robust across random seeds; (ii) a monotone
+<em id="abstract1.1.6" class="ltx_emph ltx_font_italic">dose–response</em>—increasing <math id="abstract1.m2" class="ltx_Math" alttext="\lambda" display="inline" intent=":literal"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math> progressively suppresses the shortcut,
+and at an intermediate dose the trajectory first <em id="abstract1.1.7" class="ltx_emph ltx_font_italic">forms</em> and then
+<em id="abstract1.1.8" class="ltx_emph ltx_font_italic">reverses</em> the shortcut, exposing a hysteresis-like asymmetry between
+acquiring and removing it; and (iii) a <em id="abstract1.1.9" class="ltx_emph ltx_font_italic">critical intervention window</em>—applying
+the penalty before onset arrests shortcut formation, whereas the same penalty
+applied after consolidation is markedly less effective. Together these results
+recast visual-shortcut collapse not as a binary defect but as a controllable,
+time-dependent, and asymmetric process, with direct implications for when and how
+strongly to regularize multimodal RLVR.</p>
+  
+</div>
+<section id="S1" class="ltx_section">
+<h2 class="ltx_title ltx_font_bold ltx_font_smallcaps ltx_title_section" style="font-size:120%;">1 Introduction</h2>
+
+<div id="S1.p1" class="ltx_para">
+<p id="S1.p1.1" class="ltx_p">Reinforcement learning with verifiable rewards (RLVR) has become a standard
+recipe for improving the reasoning of large language models, and recent work
+extends it to large vision–language models (LVLMs). A recurring hazard, however,
+is that optimizing a final-answer reward can teach the model to <em id="S1.p1.1.1" class="ltx_emph ltx_font_italic">ignore the
+visual input</em>: it learns to answer from language priors and surface statistics
+rather than from what the video actually shows. We refer to this degenerate
+solution as a <em id="S1.p1.1.2" class="ltx_emph ltx_font_italic">visual shortcut</em>. The phenomenon—discussed under the
+umbrella of perception bypass or evaluator exploitation <cite class="ltx_cite ltx_citemacro_citep">(<a href="#bib.bib12" title="" class="ltx_ref">12</a>)</cite>—is
+now well documented. Blind-image ablations are striking: replacing informative
+frames with blank ones can <em id="S1.p1.1.3" class="ltx_emph ltx_font_italic">improve</em> accuracy, indicating that the policy has
+learned to treat the image as noise <cite class="ltx_cite ltx_citemacro_citep">(<a href="#bib.bib3" title="" class="ltx_ref">3</a>)</cite>; and VLMs routinely
+bypass visual comparison in favor of language priors and semantic
+anchors <cite class="ltx_cite ltx_citemacro_citep">(<a href="#bib.bib5" title="" class="ltx_ref">5</a>; <a href="#bib.bib8" title="" class="ltx_ref">8</a>; <a href="#bib.bib2" title="" class="ltx_ref">2</a>)</cite>. What is far less
+understood is the <em id="S1.p1.1.4" class="ltx_emph ltx_font_italic">process</em>: visual shortcuts are typically reported as an
+endpoint property (“the model ignores vision”), with little characterization of
+how the behavior emerges over training, whether it is reversible, and whether the
+timing of intervention matters.</p>
+</div>
+<div id="S1.p2" class="ltx_para">
+<p id="S1.p2.1" class="ltx_p">This paper studies that process. Our central move is to treat the
+<span id="S1.p2.1.1" class="ltx_text ltx_font_bold">strength of a grounding penalty</span>, <math id="S1.p2.m1" class="ltx_Math" alttext="\lambda" display="inline" intent=":literal"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>, as an experimental control knob,
+and to read out shortcut reliance <em id="S1.p2.1.2" class="ltx_emph ltx_font_italic">densely along the training time axis</em>
+using a perturbation-based diagnostic. Concretely, we measure a
+visual-hacking score (<math id="S1.p2.m2" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math>) that quantifies how invariant a model’s answers are
+to a visual perturbation that should change the correct answer: a model that
+truly watches the video is sensitive to the perturbation, whereas a model relying
+on a shortcut is not. By sweeping <math id="S1.p2.m3" class="ltx_Math" alttext="\lambda" display="inline" intent=":literal"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math> and tracking <math id="S1.p2.m4" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math> through training on a
+held-out, out-of-distribution (OOD) set, we can ask formation, reversal, and
+timing questions that endpoint evaluations cannot.</p>
+</div>
+<section id="S1.SS0.SSS0.Px1" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Findings.</h4>
+
+<div id="S1.SS0.SSS0.Px1.p1" class="ltx_para">
+<p id="S1.SS0.SSS0.Px1.p1.1" class="ltx_p">We report three results.
+<span id="S1.SS0.SSS0.Px1.p1.1.1" class="ltx_text ltx_font_bold">(1) Onset is real and seed-robust (§<a href="#S3" title="3 Onset is real and seed-robust ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">3</span></a>).</span> On OOD data,
+shortcut reliance does not drift in smoothly; it rises abruptly over a narrow
+window of optimization steps, and two independent random seeds produce
+near-identical onset curves. This identifies a developmental transition rather
+than a memorization artifact.
+<span id="S1.SS0.SSS0.Px1.p1.1.2" class="ltx_text ltx_font_bold">(2) Reward strength yields a monotone dose–response with a
+formation–reversal asymmetry (§<a href="#S4" title="4 Reward strength: a monotone dose–response with formation–reversal asymmetry ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">4</span></a>).</span> Increasing <math id="S1.SS0.SSS0.Px1.p1.m1" class="ltx_Math" alttext="\lambda" display="inline" intent=":literal"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math> monotonically
+lowers the plateau level of the shortcut. Strikingly, at an intermediate dose the
+trajectory first <em id="S1.SS0.SSS0.Px1.p1.1.3" class="ltx_emph ltx_font_italic">forms</em> a strong shortcut and then <em id="S1.SS0.SSS0.Px1.p1.1.4" class="ltx_emph ltx_font_italic">reverses</em> it later
+in training—an asymmetry between acquiring and removing the shortcut that is
+reminiscent of hysteresis in driven systems.
+<span id="S1.SS0.SSS0.Px1.p1.1.5" class="ltx_text ltx_font_bold">(3) There is a critical intervention window (§<a href="#S5" title="5 A critical intervention window ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">5</span></a>).</span>
+Applying the grounding penalty <em id="S1.SS0.SSS0.Px1.p1.1.6" class="ltx_emph ltx_font_italic">before</em> onset suppresses shortcut formation,
+whereas the same penalty applied <em id="S1.SS0.SSS0.Px1.p1.1.7" class="ltx_emph ltx_font_italic">after</em> the shortcut has consolidated is
+substantially less able to undo it.
+We additionally probe internal representations (§<a href="#S6" title="6 What changes inside: representation probe ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">6</span></a>) to ask what
+changes inside the model as <math id="S1.SS0.SSS0.Px1.p1.m2" class="ltx_Math" alttext="\lambda" display="inline" intent=":literal"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math> reshapes the shortcut.</p>
+</div>
+</section>
+<section id="S1.SS0.SSS0.Px2" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Contributions.</h4>
+
+<div id="S1.SS0.SSS0.Px2.p1" class="ltx_para">
+<ul id="S1.I1" class="ltx_itemize">
+<li id="S1.I1.i1" class="ltx_item" style="list-style-type:none;"><span class="ltx_tag ltx_tag_item">•</span> 
+<div id="S1.I1.i1.p1" class="ltx_para">
+<p id="S1.I1.i1.p1.1" class="ltx_p">We introduce a <em id="S1.I1.i1.p1.1.1" class="ltx_emph ltx_font_italic">dose-controlled, time-resolved</em> study of visual
+shortcuts in multimodal RLVR, treating the grounding-penalty strength <math id="S1.I1.i1.p1.m1" class="ltx_Math" alttext="\lambda" display="inline" intent=":literal"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math> as a
+control knob and reading shortcut reliance densely along training on a held-out OOD
+diagnostic.</p>
+</div></li>
+<li id="S1.I1.i2" class="ltx_item" style="list-style-type:none;"><span class="ltx_tag ltx_tag_item">•</span> 
+<div id="S1.I1.i2.p1" class="ltx_para">
+<p id="S1.I1.i2.p1.1" class="ltx_p">We show that shortcut <span id="S1.I1.i2.p1.1.1" class="ltx_text ltx_font_smallcaps">onset</span> is sharp and <em id="S1.I1.i2.p1.1.2" class="ltx_emph ltx_font_italic">seed-robust</em>, that the
+plateau is a <em id="S1.I1.i2.p1.1.3" class="ltx_emph ltx_font_italic">monotone</em> function of <math id="S1.I1.i2.p1.m1" class="ltx_Math" alttext="\lambda" display="inline" intent=":literal"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>, and that an intermediate dose
+<em id="S1.I1.i2.p1.1.4" class="ltx_emph ltx_font_italic">forms and then reverses</em> the shortcut—an asymmetry between acquisition and
+removal.</p>
+</div></li>
+<li id="S1.I1.i3" class="ltx_item" style="list-style-type:none;"><span class="ltx_tag ltx_tag_item">•</span> 
+<div id="S1.I1.i3.p1" class="ltx_para">
+<p id="S1.I1.i3.p1.1" class="ltx_p">We demonstrate a <em id="S1.I1.i3.p1.1.1" class="ltx_emph ltx_font_italic">critical intervention window</em>: a grounding penalty
+applied before <span id="S1.I1.i3.p1.1.2" class="ltx_text ltx_font_smallcaps">onset</span> prevents the shortcut, whereas the same penalty applied
+after consolidation is much less effective.</p>
+</div></li>
+</ul>
+<p id="S1.SS0.SSS0.Px2.p1.1" class="ltx_p">As a secondary, exploratory analysis we also probe internal representations across
+the dose axis (§<a href="#S6" title="6 What changes inside: representation probe ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">6</span></a>); we find a directional, layer-localized tendency
+but it falls within bootstrap variability at our sample size, so we report it as a
+motivating observation rather than a core claim.</p>
+</div>
+</section>
+<section id="S1.SS0.SSS0.Px3" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Relation to prior work.</h4>
+
+<div id="S1.SS0.SSS0.Px3.p1" class="ltx_para">
+<p id="S1.SS0.SSS0.Px3.p1.1" class="ltx_p">Our contribution is not the observation that
+LVLMs can ignore vision, which prior work already documents
+<cite class="ltx_cite ltx_citemacro_citep">(<a href="#bib.bib12" title="" class="ltx_ref">12</a>; <a href="#bib.bib3" title="" class="ltx_ref">3</a>; <a href="#bib.bib5" title="" class="ltx_ref">5</a>)</cite>. It is the
+characterization of the shortcut as a <em id="S1.SS0.SSS0.Px3.p1.1.1" class="ltx_emph ltx_font_italic">controllable, time-resolved, and
+asymmetric</em> process using reward strength as the control variable. Studies of
+reward-hacking dynamics report onset-like transitions and even non-monotone
+rise/retreat/rebound trajectories <cite class="ltx_cite ltx_citemacro_citep">(<a href="#bib.bib1" title="" class="ltx_ref">1</a>; <a href="#bib.bib13" title="" class="ltx_ref">13</a>)</cite>,
+and large-scale empirical studies document that hacking emerges during
+optimization across many RL settings <cite class="ltx_cite ltx_citemacro_citep">(<a href="#bib.bib10" title="" class="ltx_ref">10</a>)</cite>;
+and verifier-grounding can suppress shortcuts <cite class="ltx_cite ltx_citemacro_citep">(<a href="#bib.bib4" title="" class="ltx_ref">4</a>)</cite>; but these
+are text or code domains, typically at a single reward setting, and without a
+<em id="S1.SS0.SSS0.Px3.p1.1.2" class="ltx_emph ltx_font_italic">dose</em> axis that lets one trace formation against reversal. Mechanistic
+accounts localize shortcut circuits on single rewards in text-math
+settings <cite class="ltx_cite ltx_citemacro_citep">(<a href="#bib.bib14" title="" class="ltx_ref">14</a>)</cite>. We discuss these distinctions in
+§<a href="#S7" title="7 Related work ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">7</span></a>.</p>
+</div>
+</section>
+</section>
+<section id="S2" class="ltx_section">
+<h2 class="ltx_title ltx_font_bold ltx_font_smallcaps ltx_title_section" style="font-size:120%;">2 Setup</h2>
+
+<section id="S2.SS0.SSS0.Px1" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Task and model.</h4>
+
+<div id="S2.SS0.SSS0.Px1.p1" class="ltx_para">
+<p id="S2.SS0.SSS0.Px1.p1.1" class="ltx_p">We post-train Qwen3-VL-8B-Instruct, an 8B-parameter
+video–language model,
+with GRPO-style RLVR <cite class="ltx_cite ltx_citemacro_citep">(<a href="#bib.bib9" title="" class="ltx_ref">9</a>)</cite> on a video question-answering objective. The base
+verifiable reward combines answer correctness and a light format term,
+<math id="S2.SS0.SSS0.Px1.p1.m1" class="ltx_Math" alttext="r_{\text{base}}=(1-w)\,a+w\,f" display="inline" intent=":literal"><semantics><mrow><msub><mi>r</mi><mtext>base</mtext></msub><mo>=</mo><mrow><mrow><mrow><mo stretchy="false">(</mo><mrow><mn>1</mn><mo>−</mo><mi>w</mi></mrow><mo stretchy="false">)</mo></mrow><mo lspace="0.170em" rspace="0em">​</mo><mi>a</mi></mrow><mo>+</mo><mrow><mi>w</mi><mo lspace="0.170em" rspace="0em">​</mo><mi>f</mi></mrow></mrow></mrow><annotation encoding="application/x-tex">r_{\text{base}}=(1-w)\,a+w\,f</annotation></semantics></math>, where <math id="S2.SS0.SSS0.Px1.p1.m2" class="ltx_Math" alttext="a\in\{0,1\}" display="inline" intent=":literal"><semantics><mrow><mi>a</mi><mo>∈</mo><mrow><mo stretchy="false">{</mo><mrow><mn>0</mn><mo>,</mo><mn>1</mn></mrow><mo stretchy="false">}</mo></mrow></mrow><annotation encoding="application/x-tex">a\in\{0,1\}</annotation></semantics></math> is answer correctness,
+<math id="S2.SS0.SSS0.Px1.p1.m3" class="ltx_Math" alttext="f\in\{0,1\}" display="inline" intent=":literal"><semantics><mrow><mi>f</mi><mo>∈</mo><mrow><mo stretchy="false">{</mo><mrow><mn>0</mn><mo>,</mo><mn>1</mn></mrow><mo stretchy="false">}</mo></mrow></mrow><annotation encoding="application/x-tex">f\in\{0,1\}</annotation></semantics></math> checks that the answer is enclosed in the required tag, and
+<math id="S2.SS0.SSS0.Px1.p1.m4" class="ltx_Math" alttext="w{=}0.1" display="inline" intent=":literal"><semantics><mrow><mi>w</mi><mo>=</mo><mn>0.1</mn></mrow><annotation encoding="application/x-tex">w{=}0.1</annotation></semantics></math>. To study controllable grounding, we add a grounding penalty whose
+strength is set by a scalar <math id="S2.SS0.SSS0.Px1.p1.m5" class="ltx_Math" alttext="\lambda\geq 0" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>≥</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\lambda\geq 0</annotation></semantics></math>:</p>
+<table id="S2.E1" class="ltx_equation ltx_eqn_table">
+
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math id="S2.E1.m1" class="ltx_math_unparsed" alttext="r=r_{\text{base}}-\lambda\cdot h,\qquad h=a\cdot\mathbf{1}\!\left[\hat{y}_{\text{pert}}=\hat{y}_{\text{clean}}\right]," display="block" intent=":literal"><semantics><mrow><mi>r</mi><mo>=</mo><msub><mi>r</mi><mtext>base</mtext></msub><mo>−</mo><mi>λ</mi><mo lspace="0.222em" rspace="0.222em">⋅</mo><mi>h</mi><mo rspace="2.167em">,</mo><mi>h</mi><mo>=</mo><mi>a</mi><mo lspace="0.222em" rspace="0.052em">⋅</mo><mrow><mo>[</mo><msub><mover accent="true"><mi>y</mi><mo>^</mo></mover><mtext>pert</mtext></msub><mo>=</mo><msub><mover accent="true"><mi>y</mi><mo>^</mo></mover><mtext>clean</mtext></msub><mo>]</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">r=r_{\text{base}}-\lambda\cdot h,\qquad h=a\cdot\mathbf{1}\!\left[\hat{y}_{\text{pert}}=\hat{y}_{\text{clean}}\right],</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+<td rowspan="1" class="ltx_eqn_cell ltx_eqn_eqno ltx_align_middle ltx_align_right"><span class="ltx_tag ltx_tag_equation ltx_align_right">(1)</span></td></tr></tbody>
+</table>
+<p id="S2.SS0.SSS0.Px1.p1.2" class="ltx_p">where <math id="S2.SS0.SSS0.Px1.p1.m6" class="ltx_Math" alttext="\hat{y}_{\text{clean}}" display="inline" intent=":literal"><semantics><msub><mover accent="true"><mi>y</mi><mo>^</mo></mover><mtext>clean</mtext></msub><annotation encoding="application/x-tex">\hat{y}_{\text{clean}}</annotation></semantics></math> and <math id="S2.SS0.SSS0.Px1.p1.m7" class="ltx_Math" alttext="\hat{y}_{\text{pert}}" display="inline" intent=":literal"><semantics><msub><mover accent="true"><mi>y</mi><mo>^</mo></mover><mtext>pert</mtext></msub><annotation encoding="application/x-tex">\hat{y}_{\text{pert}}</annotation></semantics></math> are the model’s answers on
+the clean and temporally perturbed video (the same perturbation used by the VHS
+diagnostic, §<a href="#A1.SS3" title="A.3 Held-out OOD diagnostic and the VHS perturbation ‣ Appendix A Reproducibility and diagnostic details ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">A.3</span></a>), and <math id="S2.SS0.SSS0.Px1.p1.m8" class="ltx_Math" alttext="h" display="inline" intent=":literal"><semantics><mi>h</mi><annotation encoding="application/x-tex">h</annotation></semantics></math> is a per-sample hacking indicator: it fires
+only when the model answers correctly <em id="S2.SS0.SSS0.Px1.p1.2.1" class="ltx_emph ltx_font_italic">and</em> its answer is unchanged under the
+perturbation—i.e. it got the answer right without using the temporal content. The
+penalty thus pushes the policy toward answers that are both correct and genuinely
+dependent on the video, and <math id="S2.SS0.SSS0.Px1.p1.m9" class="ltx_Math" alttext="\lambda{=}0" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\lambda{=}0</annotation></semantics></math> recovers the pure outcome reward. The penalty
+is computed on-policy at every step from the same clean/perturbed rollout pair used
+for telemetry, so it adds no separate reward model.</p>
+</div>
+</section>
+<section id="S2.SS0.SSS0.Px2" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Visual-hacking diagnostic (<math id="S2.SS0.SSS0.Px2.m1" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math>).</h4>
+
+<div id="S2.SS0.SSS0.Px2.p1" class="ltx_para">
+<p id="S2.SS0.SSS0.Px2.p1.1" class="ltx_p">To measure shortcut reliance
+independently of raw accuracy, we use a perturbation-based score. For each
+diagnostic item we generate answers on the clean video and on a perturbed video,
+where the perturbation randomly shuffles the temporal order of the video frames,
+destroying the temporal structure a faithful viewer would rely on (the individual
+frames are unchanged). <math id="S2.SS0.SSS0.Px2.p1.m1" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math> is the fraction of items on which the answer is
+<em id="S2.SS0.SSS0.Px2.p1.1.1" class="ltx_emph ltx_font_italic">unchanged</em> under perturbation; higher <math id="S2.SS0.SSS0.Px2.p1.m2" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math> indicates stronger reliance on
+a visual shortcut (the model “does not watch”). The diagnostic uses five-way
+multiple-choice questions, so a model that ignores the perturbed video and answers
+at random would yield <math id="S2.SS0.SSS0.Px2.p1.m3" class="ltx_Math" alttext="\mathrm{VHS}\approx 0.2" display="inline" intent=":literal"><semantics><mrow><mi>VHS</mi><mo>≈</mo><mn>0.2</mn></mrow><annotation encoding="application/x-tex">\mathrm{VHS}\approx 0.2</annotation></semantics></math> (chance), whereas <math id="S2.SS0.SSS0.Px2.p1.m4" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math> near <math id="S2.SS0.SSS0.Px2.p1.m5" class="ltx_Math" alttext="1" display="inline" intent=":literal"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>
+indicates that the answer is essentially invariant to the temporal content. All
+diagnostics use greedy decoding.</p>
+</div>
+</section>
+<section id="S2.SS0.SSS0.Px3" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Held-out OOD evaluation.</h4>
+
+<div id="S2.SS0.SSS0.Px3.p1" class="ltx_para">
+<p id="S2.SS0.SSS0.Px3.p1.1" class="ltx_p">Crucially, <math id="S2.SS0.SSS0.Px3.p1.m1" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math> is measured on a
+<em id="S2.SS0.SSS0.Px3.p1.1.1" class="ltx_emph ltx_font_italic">held-out, out-of-distribution diagnostic set</em> that is disjoint from the
+training distribution. This ensures that what we call onset reflects an emergent
+behavioral change rather than fitting of the training items.</p>
+</div>
+</section>
+<section id="S2.SS0.SSS0.Px4" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Trajectory fleet.</h4>
+
+<div id="S2.SS0.SSS0.Px4.p1" class="ltx_para">
+<p id="S2.SS0.SSS0.Px4.p1.1" class="ltx_p">To separate seed effects from dose effects, we
+train a small fleet of trajectories sharing a common origin and varying one factor
+at a time (Table <a href="#S2.T1" title="Table 1 ‣ Trajectory fleet. ‣ 2 Setup ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">1</span></a>). The reading rules are strict: seed robustness
+is assessed only by comparing the <math id="S2.SS0.SSS0.Px4.p1.m1" class="ltx_Math" alttext="\lambda{=}0" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\lambda{=}0</annotation></semantics></math> runs across seeds; dose response is
+assessed only across <math id="S2.SS0.SSS0.Px4.p1.m2" class="ltx_Math" alttext="\lambda\in\{0,1,2\}" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>∈</mo><mrow><mo stretchy="false">{</mo><mrow><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>2</mn></mrow><mo stretchy="false">}</mo></mrow></mrow><annotation encoding="application/x-tex">\lambda\in\{0,1,2\}</annotation></semantics></math> at a fixed seed; intervention timing is
+assessed within the intervention runs. We never compare across two factors at once.</p>
+</div>
+<figure id="S2.T1" class="ltx_table">
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_table"><span id="S2.T1.2" class="ltx_text" style="font-size:90%;">Table 1</span>: </span><span id="S2.T1.3" class="ltx_text" style="font-size:90%;">Trajectory fleet. All runs share a common origin; each varies a single
+factor. <math id="S2.T1.m4" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math> is read on the OOD diagnostic set. “Onset region” denotes the
+step window over which <math id="S2.T1.m5" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math> rises sharply for the <math id="S2.T1.m6" class="ltx_Math" alttext="\lambda{=}0" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\lambda{=}0</annotation></semantics></math> runs.</span></figcaption>
+<table id="S2.T1.4" class="ltx_tabular ltx_centering ltx_guessed_headers ltx_align_middle">
+<thead class="ltx_thead">
+<tr id="S2.T1.4.1" class="ltx_tr">
+<th id="S2.T1.4.1.1" class="ltx_td ltx_align_left ltx_th ltx_th_column ltx_border_tt">Run</th>
+<th id="S2.T1.4.1.2" class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_tt"><math id="S2.T1.m7" class="ltx_Math" alttext="\lambda" display="inline" intent=":literal"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math></th>
+<th id="S2.T1.4.1.3" class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_tt">Seed</th>
+<th id="S2.T1.4.1.4" class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_tt">Steps</th>
+<th id="S2.T1.4.1.5" class="ltx_td ltx_align_left ltx_th ltx_th_column ltx_border_tt">Role</th></tr>
+</thead>
+<tbody class="ltx_tbody">
+<tr id="S2.T1.4.2" class="ltx_tr">
+<td id="S2.T1.4.2.1" class="ltx_td ltx_align_left ltx_border_t">E1 (main)</td>
+<td id="S2.T1.4.2.2" class="ltx_td ltx_align_center ltx_border_t"><math id="S2.T1.m8" class="ltx_Math" alttext="0" display="inline" intent=":literal"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math></td>
+<td id="S2.T1.4.2.3" class="ltx_td ltx_align_center ltx_border_t">A</td>
+<td id="S2.T1.4.2.4" class="ltx_td ltx_align_center ltx_border_t">500</td>
+<td id="S2.T1.4.2.5" class="ltx_td ltx_align_left ltx_border_t">Onset origin; dose baseline</td></tr>
+<tr id="S2.T1.4.3" class="ltx_tr">
+<td id="S2.T1.4.3.1" class="ltx_td ltx_align_left">sB (seed)</td>
+<td id="S2.T1.4.3.2" class="ltx_td ltx_align_center"><math id="S2.T1.m9" class="ltx_Math" alttext="0" display="inline" intent=":literal"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math></td>
+<td id="S2.T1.4.3.3" class="ltx_td ltx_align_center">B</td>
+<td id="S2.T1.4.3.4" class="ltx_td ltx_align_center">80</td>
+<td id="S2.T1.4.3.5" class="ltx_td ltx_align_left">Seed-robustness control</td></tr>
+<tr id="S2.T1.4.4" class="ltx_tr">
+<td id="S2.T1.4.4.1" class="ltx_td ltx_align_left">L1</td>
+<td id="S2.T1.4.4.2" class="ltx_td ltx_align_center"><math id="S2.T1.m10" class="ltx_Math" alttext="1" display="inline" intent=":literal"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math></td>
+<td id="S2.T1.4.4.3" class="ltx_td ltx_align_center">A</td>
+<td id="S2.T1.4.4.4" class="ltx_td ltx_align_center">150</td>
+<td id="S2.T1.4.4.5" class="ltx_td ltx_align_left">Intermediate dose (formation then reversal)</td></tr>
+<tr id="S2.T1.4.5" class="ltx_tr">
+<td id="S2.T1.4.5.1" class="ltx_td ltx_align_left">L2</td>
+<td id="S2.T1.4.5.2" class="ltx_td ltx_align_center"><math id="S2.T1.m11" class="ltx_Math" alttext="2" display="inline" intent=":literal"><semantics><mn>2</mn><annotation encoding="application/x-tex">2</annotation></semantics></math></td>
+<td id="S2.T1.4.5.3" class="ltx_td ltx_align_center">A</td>
+<td id="S2.T1.4.5.4" class="ltx_td ltx_align_center">150</td>
+<td id="S2.T1.4.5.5" class="ltx_td ltx_align_left">Strong dose (early suppression)</td></tr>
+<tr id="S2.T1.4.6" class="ltx_tr">
+<td id="S2.T1.4.6.1" class="ltx_td ltx_align_left ltx_border_bb">Intervention (pre/mid/post)</td>
+<td id="S2.T1.4.6.2" class="ltx_td ltx_align_center ltx_border_bb"><math id="S2.T1.m12" class="ltx_Math" alttext="1" display="inline" intent=":literal"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math></td>
+<td id="S2.T1.4.6.3" class="ltx_td ltx_align_center ltx_border_bb">A</td>
+<td id="S2.T1.4.6.4" class="ltx_td ltx_align_center ltx_border_bb"><math id="S2.T1.m13" class="ltx_Math" alttext="50" display="inline" intent=":literal"><semantics><mn>50</mn><annotation encoding="application/x-tex">50</annotation></semantics></math> each</td>
+<td id="S2.T1.4.6.5" class="ltx_td ltx_align_left ltx_border_bb">Timing: penalty applied at pre-/at-/post-onset</td></tr>
+</tbody>
+</table>
+</figure>
+</section>
+</section>
+<section id="S3" class="ltx_section">
+<h2 class="ltx_title ltx_font_bold ltx_font_smallcaps ltx_title_section" style="font-size:120%;">3 Onset is real and seed-robust</h2>
+
+<div id="S3.p1" class="ltx_para">
+<p id="S3.p1.1" class="ltx_p">Figure <a href="#S3.F1" title="Figure 1 ‣ 3 Onset is real and seed-robust ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">1</span></a> tracks <math id="S3.p1.m1" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math> on the OOD diagnostic set as a function of
+optimization step for the two <math id="S3.p1.m2" class="ltx_Math" alttext="\lambda{=}0" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\lambda{=}0</annotation></semantics></math> runs (E1, seed A; sB, seed B). Three
+features stand out. First, the curves are <em id="S3.p1.1.1" class="ltx_emph ltx_font_italic">flat and low</em> early in training
+(through roughly step 16, <math id="S3.p1.m3" class="ltx_Math" alttext="\mathrm{VHS}\approx 0.75" display="inline" intent=":literal"><semantics><mrow><mi>VHS</mi><mo>≈</mo><mn>0.75</mn></mrow><annotation encoding="application/x-tex">\mathrm{VHS}\approx 0.75</annotation></semantics></math>–<math id="S3.p1.m4" class="ltx_Math" alttext="0.78" display="inline" intent=":literal"><semantics><mn>0.78</mn><annotation encoding="application/x-tex">0.78</annotation></semantics></math> with minor step-to-step
+fluctuation): the model remains genuinely sensitive to the visual perturbation.
+Second, <math id="S3.p1.m5" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math> then <em id="S3.p1.1.2" class="ltx_emph ltx_font_italic">rises sharply</em> over a narrow window—the onset region,
+approximately steps 16–24 (shaded in the figure)—reaching a high plateau
+(<math id="S3.p1.m6" class="ltx_Math" alttext="\mathrm{VHS}\approx 0.91" display="inline" intent=":literal"><semantics><mrow><mi>VHS</mi><mo>≈</mo><mn>0.91</mn></mrow><annotation encoding="application/x-tex">\mathrm{VHS}\approx 0.91</annotation></semantics></math>) within roughly a dozen steps. Third, and most importantly,
+the two seeds produce
+<em id="S3.p1.1.3" class="ltx_emph ltx_font_italic">near-identical</em> onset curves: the rise occurs over the same step window and
+saturates at the same level. Because <math id="S3.p1.m7" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math> is measured OOD, this reproducibility
+indicates that onset is a genuine developmental transition of the policy, not
+memorization of training items or a seed-specific accident.</p>
+</div>
+<figure id="S3.F1" class="ltx_figure"><img src="/html/2606.22043/assets/figureA_onset.png" id="S3.F1.g1" class="ltx_graphics ltx_centering ltx_img_landscape" width="406" height="244" alt="Refer to caption">
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure"><span id="S3.F1.3" class="ltx_text" style="font-size:90%;">Figure 1</span>: </span><span id="S3.F1.4" class="ltx_text ltx_font_bold" style="font-size:90%;">Onset is real and seed-robust.<span id="S3.F1.4.1" class="ltx_text ltx_font_medium"> On held-out OOD data, two
+independent seeds exhibit overlapping, sharply rising <math id="S3.F1.m2" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math> curves over the same
+narrow step window, indicating an emergent visual-shortcut transition rather than
+a memorization artifact.</span></span></figcaption>
+</figure>
+</section>
+<section id="S4" class="ltx_section">
+<h2 class="ltx_title ltx_font_bold ltx_font_smallcaps ltx_title_section" style="font-size:120%;">4 Reward strength: a monotone dose–response with formation–reversal asymmetry</h2>
+
+<div id="S4.p1" class="ltx_para">
+<p id="S4.p1.1" class="ltx_p">We next fix the seed and sweep the grounding penalty <math id="S4.p1.m1" class="ltx_Math" alttext="\lambda\in\{0,1,2\}" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>∈</mo><mrow><mo stretchy="false">{</mo><mrow><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>2</mn></mrow><mo stretchy="false">}</mo></mrow></mrow><annotation encoding="application/x-tex">\lambda\in\{0,1,2\}</annotation></semantics></math>
+(runs E1, L1, L2). Figure <a href="#S4.F2" title="Figure 2 ‣ Accuracy corroborates “watching vs. guessing.” ‣ 4 Reward strength: a monotone dose–response with formation–reversal asymmetry ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">2</span></a> shows both the training dynamics (left)
+and the plateau level of <math id="S4.p1.m2" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math> as a function of <math id="S4.p1.m3" class="ltx_Math" alttext="\lambda" display="inline" intent=":literal"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math> (right).</p>
+</div>
+<section id="S4.SS0.SSS0.Px1" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Monotone dose–response.</h4>
+
+<div id="S4.SS0.SSS0.Px1.p1" class="ltx_para">
+<p id="S4.SS0.SSS0.Px1.p1.1" class="ltx_p">The plateau <math id="S4.SS0.SSS0.Px1.p1.m1" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math> decreases monotonically
+with <math id="S4.SS0.SSS0.Px1.p1.m2" class="ltx_Math" alttext="\lambda" display="inline" intent=":literal"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>: from <math id="S4.SS0.SSS0.Px1.p1.m3" class="ltx_Math" alttext="\approx 0.91" display="inline" intent=":literal"><semantics><mrow><mo>≈</mo><mn>0.91</mn></mrow><annotation encoding="application/x-tex">\approx 0.91</annotation></semantics></math> at <math id="S4.SS0.SSS0.Px1.p1.m4" class="ltx_Math" alttext="\lambda{=}0" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\lambda{=}0</annotation></semantics></math>, to <math id="S4.SS0.SSS0.Px1.p1.m5" class="ltx_Math" alttext="\approx 0.67" display="inline" intent=":literal"><semantics><mrow><mo>≈</mo><mn>0.67</mn></mrow><annotation encoding="application/x-tex">\approx 0.67</annotation></semantics></math> at <math id="S4.SS0.SSS0.Px1.p1.m6" class="ltx_Math" alttext="\lambda{=}1" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\lambda{=}1</annotation></semantics></math>, to
+<math id="S4.SS0.SSS0.Px1.p1.m7" class="ltx_Math" alttext="\approx 0.48" display="inline" intent=":literal"><semantics><mrow><mo>≈</mo><mn>0.48</mn></mrow><annotation encoding="application/x-tex">\approx 0.48</annotation></semantics></math> at <math id="S4.SS0.SSS0.Px1.p1.m8" class="ltx_Math" alttext="\lambda{=}2" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\lambda{=}2</annotation></semantics></math> (Table <a href="#S4.T2" title="Table 2 ‣ Monotone dose–response. ‣ 4 Reward strength: a monotone dose–response with formation–reversal asymmetry ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">2</span></a>). Each unit of penalty removes a
+roughly comparable amount of shortcut reliance, i.e. the suppression is
+approximately linear in <math id="S4.SS0.SSS0.Px1.p1.m9" class="ltx_Math" alttext="\lambda" display="inline" intent=":literal"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math> over this range. The seed control (sB, <math id="S4.SS0.SSS0.Px1.p1.m10" class="ltx_Math" alttext="\lambda{=}0" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\lambda{=}0</annotation></semantics></math>,
+plateau <math id="S4.SS0.SSS0.Px1.p1.m11" class="ltx_Math" alttext="\approx 0.90" display="inline" intent=":literal"><semantics><mrow><mo>≈</mo><mn>0.90</mn></mrow><annotation encoding="application/x-tex">\approx 0.90</annotation></semantics></math>) confirms that the <math id="S4.SS0.SSS0.Px1.p1.m12" class="ltx_Math" alttext="\lambda{=}0" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\lambda{=}0</annotation></semantics></math> baseline is not seed-specific.</p>
+</div>
+<figure id="S4.T2" class="ltx_table">
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_table"><span id="S4.T2.3" class="ltx_text" style="font-size:90%;">Table 2</span>: </span><span id="S4.T2.4" class="ltx_text" style="font-size:90%;">Plateau visual-hacking score <math id="S4.T2.m7" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math> on the OOD diagnostic set as a
+function of grounding-penalty strength <math id="S4.T2.m8" class="ltx_Math" alttext="\lambda" display="inline" intent=":literal"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math> (fixed seed A; sB is the <math id="S4.T2.m9" class="ltx_Math" alttext="\lambda{=}0" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\lambda{=}0</annotation></semantics></math>
+seed control). Higher <math id="S4.T2.m10" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math> means stronger reliance on a visual shortcut.
+<math id="S4.T2.m11" class="ltx_Math" alttext="\Delta" display="inline" intent=":literal"><semantics><mi mathvariant="normal">Δ</mi><annotation encoding="application/x-tex">\Delta</annotation></semantics></math> is the change from the <math id="S4.T2.m12" class="ltx_Math" alttext="\lambda{=}0" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\lambda{=}0</annotation></semantics></math> baseline. The intermediate dose
+additionally exhibits a non-monotone <em id="S4.T2.4.1" class="ltx_emph ltx_font_italic">form-then-reverse</em> trajectory in time
+(peak before plateau), reported in the last column.</span></figcaption>
+<table id="S4.T2.5" class="ltx_tabular ltx_centering ltx_guessed_headers ltx_align_middle">
+<thead class="ltx_thead">
+<tr id="S4.T2.5.1" class="ltx_tr">
+<th id="S4.T2.5.1.1" class="ltx_td ltx_align_left ltx_th ltx_th_column ltx_th_row ltx_border_tt">Run</th>
+<th id="S4.T2.5.1.2" class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_tt"><math id="S4.T2.m13" class="ltx_Math" alttext="\lambda" display="inline" intent=":literal"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math></th>
+<th id="S4.T2.5.1.3" class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_tt">Plateau <math id="S4.T2.m14" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math></th>
+<th id="S4.T2.5.1.4" class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_tt"><math id="S4.T2.m15" class="ltx_Math" alttext="\Delta" display="inline" intent=":literal"><semantics><mi mathvariant="normal">Δ</mi><annotation encoding="application/x-tex">\Delta</annotation></semantics></math> vs. <math id="S4.T2.m16" class="ltx_Math" alttext="\lambda{=}0" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\lambda{=}0</annotation></semantics></math></th>
+<th id="S4.T2.5.1.5" class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_tt">In-time trajectory</th></tr>
+</thead>
+<tbody class="ltx_tbody">
+<tr id="S4.T2.5.2" class="ltx_tr">
+<th id="S4.T2.5.2.1" class="ltx_td ltx_align_left ltx_th ltx_th_row ltx_border_t">E1</th>
+<td id="S4.T2.5.2.2" class="ltx_td ltx_align_center ltx_border_t"><math id="S4.T2.m17" class="ltx_Math" alttext="0" display="inline" intent=":literal"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math></td>
+<td id="S4.T2.5.2.3" class="ltx_td ltx_align_center ltx_border_t"><math id="S4.T2.m18" class="ltx_Math" alttext="0.91" display="inline" intent=":literal"><semantics><mn>0.91</mn><annotation encoding="application/x-tex">0.91</annotation></semantics></math></td>
+<td id="S4.T2.5.2.4" class="ltx_td ltx_align_center ltx_border_t">—</td>
+<td id="S4.T2.5.2.5" class="ltx_td ltx_align_center ltx_border_t">rise to plateau</td></tr>
+<tr id="S4.T2.5.3" class="ltx_tr">
+<th id="S4.T2.5.3.1" class="ltx_td ltx_align_left ltx_th ltx_th_row">sB (seed)</th>
+<td id="S4.T2.5.3.2" class="ltx_td ltx_align_center"><math id="S4.T2.m19" class="ltx_Math" alttext="0" display="inline" intent=":literal"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math></td>
+<td id="S4.T2.5.3.3" class="ltx_td ltx_align_center"><math id="S4.T2.m20" class="ltx_Math" alttext="0.90" display="inline" intent=":literal"><semantics><mn>0.90</mn><annotation encoding="application/x-tex">0.90</annotation></semantics></math></td>
+<td id="S4.T2.5.3.4" class="ltx_td ltx_align_center"><math id="S4.T2.m21" class="ltx_Math" alttext="-0.01" display="inline" intent=":literal"><semantics><mrow><mo>−</mo><mn>0.01</mn></mrow><annotation encoding="application/x-tex">-0.01</annotation></semantics></math></td>
+<td id="S4.T2.5.3.5" class="ltx_td ltx_align_center">rise to plateau</td></tr>
+<tr id="S4.T2.5.4" class="ltx_tr">
+<th id="S4.T2.5.4.1" class="ltx_td ltx_align_left ltx_th ltx_th_row">L1</th>
+<td id="S4.T2.5.4.2" class="ltx_td ltx_align_center"><math id="S4.T2.m22" class="ltx_Math" alttext="1" display="inline" intent=":literal"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math></td>
+<td id="S4.T2.5.4.3" class="ltx_td ltx_align_center"><math id="S4.T2.m23" class="ltx_Math" alttext="0.67" display="inline" intent=":literal"><semantics><mn>0.67</mn><annotation encoding="application/x-tex">0.67</annotation></semantics></math></td>
+<td id="S4.T2.5.4.4" class="ltx_td ltx_align_center"><math id="S4.T2.m24" class="ltx_Math" alttext="-0.24" display="inline" intent=":literal"><semantics><mrow><mo>−</mo><mn>0.24</mn></mrow><annotation encoding="application/x-tex">-0.24</annotation></semantics></math></td>
+<td id="S4.T2.5.4.5" class="ltx_td ltx_align_center"><span id="S4.T2.5.4.5.1" class="ltx_text ltx_font_bold">form then reverse</span> (peak <math id="S4.T2.m25" class="ltx_Math" alttext="\approx 0.89" display="inline" intent=":literal"><semantics><mrow><mo>≈</mo><mn>0.89</mn></mrow><annotation encoding="application/x-tex">\approx 0.89</annotation></semantics></math>)</td></tr>
+<tr id="S4.T2.5.5" class="ltx_tr">
+<th id="S4.T2.5.5.1" class="ltx_td ltx_align_left ltx_th ltx_th_row ltx_border_bb">L2</th>
+<td id="S4.T2.5.5.2" class="ltx_td ltx_align_center ltx_border_bb"><math id="S4.T2.m26" class="ltx_Math" alttext="2" display="inline" intent=":literal"><semantics><mn>2</mn><annotation encoding="application/x-tex">2</annotation></semantics></math></td>
+<td id="S4.T2.5.5.3" class="ltx_td ltx_align_center ltx_border_bb"><math id="S4.T2.m27" class="ltx_Math" alttext="0.48" display="inline" intent=":literal"><semantics><mn>0.48</mn><annotation encoding="application/x-tex">0.48</annotation></semantics></math></td>
+<td id="S4.T2.5.5.4" class="ltx_td ltx_align_center ltx_border_bb"><math id="S4.T2.m28" class="ltx_Math" alttext="-0.43" display="inline" intent=":literal"><semantics><mrow><mo>−</mo><mn>0.43</mn></mrow><annotation encoding="application/x-tex">-0.43</annotation></semantics></math></td>
+<td id="S4.T2.5.5.5" class="ltx_td ltx_align_center ltx_border_bb">early suppression, larger fluctuation</td></tr>
+</tbody>
+</table>
+</figure>
+</section>
+<section id="S4.SS0.SSS0.Px2" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Formation–reversal asymmetry.</h4>
+
+<div id="S4.SS0.SSS0.Px2.p1" class="ltx_para">
+<p id="S4.SS0.SSS0.Px2.p1.1" class="ltx_p">The intermediate dose is the most
+informative. At <math id="S4.SS0.SSS0.Px2.p1.m1" class="ltx_Math" alttext="\lambda{=}1" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\lambda{=}1</annotation></semantics></math> (L1), <math id="S4.SS0.SSS0.Px2.p1.m2" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math> does not simply settle at a lower level:
+it first <em id="S4.SS0.SSS0.Px2.p1.1.1" class="ltx_emph ltx_font_italic">rises</em> to a peak comparable to the unpenalized run (forming a strong
+shortcut), and only later <em id="S4.SS0.SSS0.Px2.p1.1.2" class="ltx_emph ltx_font_italic">falls</em> as training continues (reversing it). The
+strong dose <math id="S4.SS0.SSS0.Px2.p1.m3" class="ltx_Math" alttext="\lambda{=}2" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\lambda{=}2</annotation></semantics></math> (L2) instead suppresses the shortcut earlier and exhibits
+larger fluctuations, consistent with a stronger but less stable drive. The key
+qualitative point is that <em id="S4.SS0.SSS0.Px2.p1.1.3" class="ltx_emph ltx_font_italic">forming</em> the shortcut and <em id="S4.SS0.SSS0.Px2.p1.1.4" class="ltx_emph ltx_font_italic">removing</em> it are
+not mirror images along the time axis. We describe this loosely as
+hysteresis-like, but we use the term only by analogy: we observe a non-monotone
+form-then-reverse trajectory in time at a fixed dose, not a true hysteresis loop
+traced by sweeping <math id="S4.SS0.SSS0.Px2.p1.m4" class="ltx_Math" alttext="\lambda" display="inline" intent=":literal"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math> up and then down. Establishing genuine path dependence
+would require such a bidirectional dose sweep, which we leave to future work; here
+the asymmetry refers specifically to the difference between how quickly the shortcut
+forms and how slowly it reverses within a single run.</p>
+</div>
+</section>
+<section id="S4.SS0.SSS0.Px3" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Accuracy corroborates “watching vs. guessing.”</h4>
+
+<div id="S4.SS0.SSS0.Px3.p1" class="ltx_para">
+<p id="S4.SS0.SSS0.Px3.p1.1" class="ltx_p">On the same OOD set,
+raw accuracy tracks <math id="S4.SS0.SSS0.Px3.p1.m1" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math> across the dose axis: at plateau the unpenalized run
+(<math id="S4.SS0.SSS0.Px3.p1.m2" class="ltx_Math" alttext="\lambda{=}0" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\lambda{=}0</annotation></semantics></math>) reaches <math id="S4.SS0.SSS0.Px3.p1.m3" class="ltx_Math" alttext="\mathrm{VHS}{\approx}0.91" display="inline" intent=":literal"><semantics><mrow><mi>VHS</mi><mo>≈</mo><mn>0.91</mn></mrow><annotation encoding="application/x-tex">\mathrm{VHS}{\approx}0.91</annotation></semantics></math> with accuracy <math id="S4.SS0.SSS0.Px3.p1.m4" class="ltx_Math" alttext="0.82" display="inline" intent=":literal"><semantics><mn>0.82</mn><annotation encoding="application/x-tex">0.82</annotation></semantics></math>; at <math id="S4.SS0.SSS0.Px3.p1.m5" class="ltx_Math" alttext="\lambda{=}1" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\lambda{=}1</annotation></semantics></math>, <math id="S4.SS0.SSS0.Px3.p1.m6" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math>
+falls to <math id="S4.SS0.SSS0.Px3.p1.m7" class="ltx_Math" alttext="0.67" display="inline" intent=":literal"><semantics><mn>0.67</mn><annotation encoding="application/x-tex">0.67</annotation></semantics></math> and accuracy to <math id="S4.SS0.SSS0.Px3.p1.m8" class="ltx_Math" alttext="0.61" display="inline" intent=":literal"><semantics><mn>0.61</mn><annotation encoding="application/x-tex">0.61</annotation></semantics></math>; and at <math id="S4.SS0.SSS0.Px3.p1.m9" class="ltx_Math" alttext="\lambda{=}2" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\lambda{=}2</annotation></semantics></math>, <math id="S4.SS0.SSS0.Px3.p1.m10" class="ltx_Math" alttext="\mathrm{VHS}{\approx}0.48" display="inline" intent=":literal"><semantics><mrow><mi>VHS</mi><mo>≈</mo><mn>0.48</mn></mrow><annotation encoding="application/x-tex">\mathrm{VHS}{\approx}0.48</annotation></semantics></math> with
+accuracy <math id="S4.SS0.SSS0.Px3.p1.m11" class="ltx_Math" alttext="0.55" display="inline" intent=":literal"><semantics><mn>0.55</mn><annotation encoding="application/x-tex">0.55</annotation></semantics></math> (all averaged over the plateau checkpoints). The per-sample hacking
+rate <math id="S4.SS0.SSS0.Px3.p1.m12" class="ltx_Math" alttext="h" display="inline" intent=":literal"><semantics><mi>h</mi><annotation encoding="application/x-tex">h</annotation></semantics></math> from Eq. <a href="#S2.E1" title="In Task and model. ‣ 2 Setup ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">1</span></a>—answered correctly <em id="S4.SS0.SSS0.Px3.p1.1.1" class="ltx_emph ltx_font_italic">and</em> invariant to the
+perturbation—falls in lockstep, from <math id="S4.SS0.SSS0.Px3.p1.m13" class="ltx_Math" alttext="0.78" display="inline" intent=":literal"><semantics><mn>0.78</mn><annotation encoding="application/x-tex">0.78</annotation></semantics></math> at <math id="S4.SS0.SSS0.Px3.p1.m14" class="ltx_Math" alttext="\lambda{=}0" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\lambda{=}0</annotation></semantics></math> to <math id="S4.SS0.SSS0.Px3.p1.m15" class="ltx_Math" alttext="0.47" display="inline" intent=":literal"><semantics><mn>0.47</mn><annotation encoding="application/x-tex">0.47</annotation></semantics></math> and <math id="S4.SS0.SSS0.Px3.p1.m16" class="ltx_Math" alttext="0.38" display="inline" intent=":literal"><semantics><mn>0.38</mn><annotation encoding="application/x-tex">0.38</annotation></semantics></math>.
+The unpenalized model thus answers confidently without watching (high <math id="S4.SS0.SSS0.Px3.p1.m17" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math>, high
+accuracy, high <math id="S4.SS0.SSS0.Px3.p1.m18" class="ltx_Math" alttext="h" display="inline" intent=":literal"><semantics><mi>h</mi><annotation encoding="application/x-tex">h</annotation></semantics></math>), and as the penalty suppresses the shortcut, accuracy declines
+by far less than <math id="S4.SS0.SSS0.Px3.p1.m19" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math> does (a <math id="S4.SS0.SSS0.Px3.p1.m20" class="ltx_Math" alttext="0.43" display="inline" intent=":literal"><semantics><mn>0.43</mn><annotation encoding="application/x-tex">0.43</annotation></semantics></math> drop in <math id="S4.SS0.SSS0.Px3.p1.m21" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math> versus a <math id="S4.SS0.SSS0.Px3.p1.m22" class="ltx_Math" alttext="0.27" display="inline" intent=":literal"><semantics><mn>0.27</mn><annotation encoding="application/x-tex">0.27</annotation></semantics></math> drop in
+accuracy from <math id="S4.SS0.SSS0.Px3.p1.m23" class="ltx_Math" alttext="\lambda{=}0" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\lambda{=}0</annotation></semantics></math> to <math id="S4.SS0.SSS0.Px3.p1.m24" class="ltx_Math" alttext="\lambda{=}2" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\lambda{=}2</annotation></semantics></math>). This gap is consistent with the
+interpretation that the shortcut inflates apparent accuracy, and that suppressing it
+removes the inflated portion while leaving a substantial vision-grounded core, rather
+than uniformly degrading a genuine capability.</p>
+</div>
+<figure id="S4.F2" class="ltx_figure"><img src="/html/2606.22043/assets/figureB_dose_response.png" id="S4.F2.g1" class="ltx_graphics ltx_centering ltx_img_landscape" width="454" height="174" alt="Refer to caption">
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure"><span id="S4.F2.3" class="ltx_text" style="font-size:90%;">Figure 2</span>: </span><span id="S4.F2.4" class="ltx_text ltx_font_bold" style="font-size:90%;">Dose–response and formation–reversal asymmetry.<span id="S4.F2.4.1" class="ltx_text ltx_font_medium"> Increasing the
+grounding penalty <math id="S4.F2.m2" class="ltx_Math" alttext="\lambda" display="inline" intent=":literal"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math> monotonically lowers the shortcut plateau (right). At the
+intermediate dose, the trajectory forms and then reverses the shortcut (left),
+exposing an asymmetry between acquiring and removing it.</span></span></figcaption>
+</figure>
+</section>
+</section>
+<section id="S5" class="ltx_section">
+<h2 class="ltx_title ltx_font_bold ltx_font_smallcaps ltx_title_section" style="font-size:120%;">5 A critical intervention window</h2>
+
+<div id="S5.p1" class="ltx_para">
+<p id="S5.p1.1" class="ltx_p">If forming and reversing a shortcut are asymmetric, the <em id="S5.p1.1.1" class="ltx_emph ltx_font_italic">timing</em> of
+intervention should matter. We test this directly. Starting from checkpoints of
+the unpenalized run E1 taken before onset, at the onset transition, and after
+consolidation, we resume training with the grounding penalty (<math id="S5.p1.m1" class="ltx_Math" alttext="\lambda{=}1" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\lambda{=}1</annotation></semantics></math>) for a
+fixed number of additional steps in each case (the pre-/at-/post-onset
+intervention runs), holding the number of intervention steps constant so that
+differences cannot be attributed to training duration.</p>
+</div>
+<div id="S5.p2" class="ltx_para">
+<p id="S5.p2.1" class="ltx_p">Figure <a href="#S5.F3" title="Figure 3 ‣ 5 A critical intervention window ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">3</span></a> reports <math id="S5.p2.m1" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math> during each intervention. Intervening
+<em id="S5.p2.1.1" class="ltx_emph ltx_font_italic">before</em> onset drives <math id="S5.p2.m2" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math> down over the intervention budget, reaching
+<math id="S5.p2.m3" class="ltx_Math" alttext="0.60" display="inline" intent=":literal"><semantics><mn>0.60</mn><annotation encoding="application/x-tex">0.60</annotation></semantics></math> by the end—the penalty prevents the shortcut from consolidating.
+Intervening <em id="S5.p2.1.2" class="ltx_emph ltx_font_italic">after</em> consolidation is markedly less effective: <math id="S5.p2.m4" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math> remains
+elevated (around <math id="S5.p2.m5" class="ltx_Math" alttext="0.78" display="inline" intent=":literal"><semantics><mn>0.78</mn><annotation encoding="application/x-tex">0.78</annotation></semantics></math>–<math id="S5.p2.m6" class="ltx_Math" alttext="0.88" display="inline" intent=":literal"><semantics><mn>0.88</mn><annotation encoding="application/x-tex">0.88</annotation></semantics></math> throughout), indicating that once the shortcut has
+formed it is comparatively resistant to the same corrective pressure. The at-onset
+case is intermediate, declining only partway (to roughly <math id="S5.p2.m7" class="ltx_Math" alttext="0.74" display="inline" intent=":literal"><semantics><mn>0.74</mn><annotation encoding="application/x-tex">0.74</annotation></semantics></math>–<math id="S5.p2.m8" class="ltx_Math" alttext="0.78" display="inline" intent=":literal"><semantics><mn>0.78</mn><annotation encoding="application/x-tex">0.78</annotation></semantics></math>). This is
+the actionable consequence of the asymmetry in §<a href="#S4" title="4 Reward strength: a monotone dose–response with formation–reversal asymmetry ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">4</span></a>: there is a
+window—around and before onset—in which a modest grounding penalty is most
+effective, and waiting until the behavior has consolidated forfeits much of that
+leverage.</p>
+</div>
+<figure id="S5.F3" class="ltx_figure"><img src="/html/2606.22043/assets/figureD.png" id="S5.F3.g1" class="ltx_graphics ltx_centering ltx_img_landscape" width="454" height="172" alt="Refer to caption">
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure"><span id="S5.F3.3" class="ltx_text" style="font-size:90%;">Figure 3</span>: </span><span id="S5.F3.4" class="ltx_text ltx_font_bold" style="font-size:90%;">A critical intervention window.<span id="S5.F3.4.1" class="ltx_text ltx_font_medium"> The same grounding penalty
+suppresses the shortcut when applied before onset but is much less able to reverse
+it once the shortcut has consolidated, demonstrating time-dependent
+intervenability.</span></span></figcaption>
+</figure>
+</section>
+<section id="S6" class="ltx_section">
+<h2 class="ltx_title ltx_font_bold ltx_font_smallcaps ltx_title_section" style="font-size:120%;">6 What changes inside: representation probe</h2>
+
+<div id="S6.p1" class="ltx_para">
+<p id="S6.p1.1" class="ltx_p">To ask what <math id="S6.p1.m1" class="ltx_Math" alttext="\lambda" display="inline" intent=":literal"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math> reshapes internally, we conduct a <em id="S6.p1.1.1" class="ltx_emph ltx_font_italic">preliminary</em> probe of
+hidden-state activations from the language-model decoder layers of matched
+checkpoints across doses (<math id="S6.p1.m2" class="ltx_Math" alttext="\lambda\in\{0,1,2\}" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>∈</mo><mrow><mo stretchy="false">{</mo><mrow><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>2</mn></mrow><mo stretchy="false">}</mo></mrow></mrow><annotation encoding="application/x-tex">\lambda\in\{0,1,2\}</annotation></semantics></math>) at fixed steps, on a stratified
+diagnostic subset, summarizing their geometry with unsupervised metrics (effective
+rank, anisotropy, and mean norm). The pattern we observe is <em id="S6.p1.1.2" class="ltx_emph ltx_font_italic">layer-localized</em>:
+early layers (which encode low-level perceptual features) and the final layers
+(near the output) are essentially unchanged across doses, whereas the middle
+layers—where semantic and reasoning content is typically represented—show a
+dose-dependent tendency, with the largest cross-<math id="S6.p1.m3" class="ltx_Math" alttext="\lambda" display="inline" intent=":literal"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math> spread concentrated in the
+middle of the network and a parallel pattern in anisotropy. We emphasize that this
+is an exploratory observation: at the present sample size the mid-layer spread is
+suggestive but lies within bootstrap variability, so we report it as a directional
+finding rather than a calibrated effect, and a higher-powered analysis is left to
+future revision. Taken together with the behavioral results, it offers a tentative
+localization—grounding pressure appears to act on mid-network geometry rather
+than rescaling the representation uniformly—that motivates a more careful
+mechanistic study.</p>
+</div>
+<figure id="S6.F4" class="ltx_figure"><img src="/html/2606.22043/assets/figureC.png" id="S6.F4.g1" class="ltx_graphics ltx_centering ltx_img_landscape" width="454" height="362" alt="Refer to caption">
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure"><span id="S6.F4.3" class="ltx_text" style="font-size:90%;">Figure 4</span>: </span><span id="S6.F4.4" class="ltx_text ltx_font_bold" style="font-size:90%;">A preliminary, layer-localized representation signature.<span id="S6.F4.4.1" class="ltx_text ltx_font_medium"> Internal
+representation statistics of matched checkpoints, contrasting <math id="S6.F4.m2" class="ltx_Math" alttext="\lambda{=}0,1,2" display="inline" intent=":literal"><semantics><mrow><mrow><mi>λ</mi><mo>=</mo><mn>0</mn></mrow><mo>,</mo><mn>1</mn><mo>,</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\lambda{=}0,1,2</annotation></semantics></math>. The
+observed dose-dependent tendency is concentrated in the middle layers and near-zero
+at early and final layers; we report it as an exploratory, directional finding (the
+mid-layer spread is within bootstrap variability at the current sample size) that
+motivates a more careful mechanistic study.</span></span></figcaption>
+</figure>
+</section>
+<section id="S7" class="ltx_section">
+<h2 class="ltx_title ltx_font_bold ltx_font_smallcaps ltx_title_section" style="font-size:120%;">7 Related work</h2>
+
+<section id="S7.SS0.SSS0.Px1" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Perception bypass in (multimodal) RLVR.</h4>
+
+<div id="S7.SS0.SSS0.Px1.p1" class="ltx_para">
+<p id="S7.SS0.SSS0.Px1.p1.1" class="ltx_p">A growing body of work documents that LVLMs under-use visual evidence and rely on
+language priors. Surveys frame this as perception bypass / evaluator
+exploitation <cite class="ltx_cite ltx_citemacro_citep">(<a href="#bib.bib12" title="" class="ltx_ref">12</a>)</cite>; blind-image ablations show accuracy can
+rise when the image is removed <cite class="ltx_cite ltx_citemacro_citep">(<a href="#bib.bib3" title="" class="ltx_ref">3</a>)</cite>; and controlled benchmarks
+isolate textual-prior reliance <cite class="ltx_cite ltx_citemacro_citep">(<a href="#bib.bib5" title="" class="ltx_ref">5</a>; <a href="#bib.bib8" title="" class="ltx_ref">8</a>; <a href="#bib.bib11" title="" class="ltx_ref">11</a>; <a href="#bib.bib2" title="" class="ltx_ref">2</a>)</cite>.
+These establish that the shortcut <em id="S7.SS0.SSS0.Px1.p1.1.1" class="ltx_emph ltx_font_italic">exists</em>. We instead use reward strength as
+a control variable to characterize <em id="S7.SS0.SSS0.Px1.p1.1.2" class="ltx_emph ltx_font_italic">how</em> it forms, whether it reverses, and
+<em id="S7.SS0.SSS0.Px1.p1.1.3" class="ltx_emph ltx_font_italic">when</em> intervention helps.</p>
+</div>
+</section>
+<section id="S7.SS0.SSS0.Px2" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Temporal dynamics and onset of reward hacking.</h4>
+
+<div id="S7.SS0.SSS0.Px2.p1" class="ltx_para">
+<p id="S7.SS0.SSS0.Px2.p1.1" class="ltx_p">Several works observe that reward hacking is not present from the start but emerges
+at a characteristic phase of optimization: large-scale empirical studies across many
+RL environments and algorithms catalogue reward-hacking categories and find that
+hacking arises during training rather than being present from
+the outset <cite class="ltx_cite ltx_citemacro_citep">(<a href="#bib.bib10" title="" class="ltx_ref">10</a>)</cite>; auditing frameworks treat hacking as
+a dynamic, detectable signal that arises during
+optimization <cite class="ltx_cite ltx_citemacro_citep">(<a href="#bib.bib1" title="" class="ltx_ref">1</a>)</cite>; and dedicated testbeds study the
+emergence and generalization of hacking <cite class="ltx_cite ltx_citemacro_citep">(<a href="#bib.bib6" title="" class="ltx_ref">6</a>)</cite>. Most relevantly,
+rebound hacking exhibits a non-monotone fail/retreat/rebound trajectory that is
+robust across seeds <cite class="ltx_cite ltx_citemacro_citep">(<a href="#bib.bib13" title="" class="ltx_ref">13</a>)</cite>. Our intermediate-dose run shows a
+related form-then-reverse pattern, but we obtain it by <em id="S7.SS0.SSS0.Px2.p1.1.1" class="ltx_emph ltx_font_italic">tuning reward
+strength</em> and read it out with an OOD visual diagnostic, yielding a dose-resolved
+account rather than a single-setting observation.</p>
+</div>
+</section>
+<section id="S7.SS0.SSS0.Px3" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Suppression, verifiers, and mechanisms.</h4>
+
+<div id="S7.SS0.SSS0.Px3.p1" class="ltx_para">
+<p id="S7.SS0.SSS0.Px3.p1.1" class="ltx_p">Grounding the verifier can remove shortcuts: e.g. isomorphic (rather than merely
+extensional) verification eliminates rule-induction shortcuts <cite class="ltx_cite ltx_citemacro_citep">(<a href="#bib.bib4" title="" class="ltx_ref">4</a>)</cite>,
+echoing our use of a grounding penalty—though as a binary design choice rather
+than a continuous dose. Mechanistic analyses localize shortcut circuits and show
+bidirectional steering on single rewards in text-math settings <cite class="ltx_cite ltx_citemacro_citep">(<a href="#bib.bib14" title="" class="ltx_ref">14</a>)</cite>.
+Our representation probe is complementary, contrasting matched checkpoints across a
+reward-strength axis and along the training-time axis in a multimodal setting.</p>
+</div>
+</section>
+</section>
+<section id="S8" class="ltx_section">
+<h2 class="ltx_title ltx_font_bold ltx_font_smallcaps ltx_title_section" style="font-size:120%;">8 Discussion and limitations</h2>
+
+<div id="S8.p1" class="ltx_para">
+<p id="S8.p1.1" class="ltx_p">We have shown that visual-shortcut collapse in multimodal RLVR is better described
+as a controllable, time-dependent, and asymmetric process than as a binary defect.
+Reward strength acts as a knob that sets the plateau level of shortcut reliance;
+the formation and reversal of the shortcut are asymmetric in time; and there is a
+critical window—around and before onset—in which a modest grounding penalty is
+most effective. Practically, this argues for grounding regularization that is
+<em id="S8.p1.1.1" class="ltx_emph ltx_font_italic">early</em> and <em id="S8.p1.1.2" class="ltx_emph ltx_font_italic">dose-calibrated</em> rather than applied late as a remedy.</p>
+</div>
+<section id="S8.SS0.SSS0.Px1" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Limitations.</h4>
+
+<div id="S8.SS0.SSS0.Px1.p1" class="ltx_para">
+<p id="S8.SS0.SSS0.Px1.p1.1" class="ltx_p">Our results should be read as a detailed case study of one
+video–language model rather than a universal law of RLVR. All trajectories use a
+single model family (Qwen3-VL-8B-Instruct) and a single grounding-penalty design, so
+we cannot say whether the specific onset location, its sharpness, or the
+near-linear dose response transfer to other scales (e.g. 2B or 30B+ variants) or to
+other architectures (e.g. LLaVA- or InternVL-style models); the existence of an
+abrupt onset and of a dose- and timing-dependent intervention effect is what we
+claim, not its precise quantitative form. Establishing how the onset step and dose
+sensitivity scale with model size and shift across architectures is the most
+important direction for future work, and the diagnostic and penalty defined here are
+designed to port directly to such a study. The <math id="S8.SS0.SSS0.Px1.p1.m1" class="ltx_Math" alttext="\mathrm{VHS}" display="inline" intent=":literal"><semantics><mi>VHS</mi><annotation encoding="application/x-tex">\mathrm{VHS}</annotation></semantics></math> diagnostic also
+measures invariance to a particular class of visual perturbations (temporal frame
+shuffling) and is a proxy
+for “watching”; alternative diagnostics may reveal complementary facets. Finally,
+the representation analysis is correlational and, as noted in §<a href="#S6" title="6 What changes inside: representation probe ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">6</span></a>,
+falls within bootstrap variability at our sample size; it is intended to relate, not
+to causally explain, behavioral shortcut suppression.</p>
+</div>
+</section>
+</section>
+<section id="bib" class="ltx_bibliography">
+<h2 class="ltx_title ltx_title_bibliography">References</h2>
+
+<ul class="ltx_biblist">
+<li id="bib.bib1" class="ltx_bibitem ltx_bib_article"><span class="ltx_tag ltx_bib_key ltx_role_refnum ltx_tag_bibitem">[1]</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_author">M. Beigi, M. Jin, J. Zhang, Q. Wang, and L. Huang</span><span class="ltx_text ltx_bib_year"> (2026)</span>
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Adversarial Reward Auditing for Active Detection and Mitigation of Reward Hacking</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">arXiv preprint arXiv:2602.01750</span>.
+</span>
+<span class="ltx_bibblock">Note: <span class="ltx_text ltx_bib_note">Reconceptualizes reward hacking as a Hacker--Auditor game; an Auditor gates the reward to make hacking detectable and unprofitable.</span>
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.SS0.SSS0.Px3.p1.1" title="Relation to prior work. ‣ 1 Introduction ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S7.SS0.SSS0.Px2.p1.1" title="Temporal dynamics and onset of reward hacking. ‣ 7 Related work ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§7</span></a>.
+</span></li>
+<li id="bib.bib2" class="ltx_bibitem ltx_bib_article"><span class="ltx_tag ltx_bib_key ltx_role_refnum ltx_tag_bibitem">[2]</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_author">X. Fu <span class="ltx_text ltx_bib_etal">et al.</span></span><span class="ltx_text ltx_bib_year"> (2024)</span>
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">BLINK: Multimodal Large Language Models Can See but Not Perceive</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">arXiv preprint arXiv:2404.12390</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.p1.1" title="1 Introduction ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S7.SS0.SSS0.Px1.p1.1" title="Perception bypass in (multimodal) RLVR. ‣ 7 Related work ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§7</span></a>.
+</span></li>
+<li id="bib.bib3" class="ltx_bibitem ltx_bib_article"><span class="ltx_tag ltx_bib_key ltx_role_refnum ltx_tag_bibitem">[3]</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_author">S. Gao, Y. Wang, J. Yan, Z. Wu, and Y. Jiang</span><span class="ltx_text ltx_bib_year"> (2026)</span>
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Thinking with Deltas: Incentivizing Reinforcement Learning via Differential Visual Reasoning Policy</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">arXiv preprint arXiv:2601.06801</span>.
+</span>
+<span class="ltx_bibblock">Note: <span class="ltx_text ltx_bib_note">Blind-image ablation: policies maintain or improve performance with visual inputs removed (``blind reasoners'' exploiting linguistic priors).</span>
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.SS0.SSS0.Px3.p1.1" title="Relation to prior work. ‣ 1 Introduction ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S1.p1.1" title="1 Introduction ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S7.SS0.SSS0.Px1.p1.1" title="Perception bypass in (multimodal) RLVR. ‣ 7 Related work ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§7</span></a>.
+</span></li>
+<li id="bib.bib4" class="ltx_bibitem ltx_bib_article"><span class="ltx_tag ltx_bib_key ltx_role_refnum ltx_tag_bibitem">[4]</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_author">L. Helff <span class="ltx_text ltx_bib_etal">et al.</span></span><span class="ltx_text ltx_bib_year"> (2026)</span>
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">LLMs Gaming Verifiers: RLVR Can Lead to Reward Hacking</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">arXiv preprint arXiv:2604.15149</span>.
+</span>
+<span class="ltx_bibblock">Note: <span class="ltx_text ltx_bib_note">Extensional verification induces shortcut strategies; isomorphic verification eliminates them.</span>
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.SS0.SSS0.Px3.p1.1" title="Relation to prior work. ‣ 1 Introduction ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S7.SS0.SSS0.Px3.p1.1" title="Suppression, verifiers, and mechanisms. ‣ 7 Related work ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§7</span></a>.
+</span></li>
+<li id="bib.bib5" class="ltx_bibitem ltx_bib_article"><span class="ltx_tag ltx_bib_key ltx_role_refnum ltx_tag_bibitem">[5]</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_author">Y. Kementchedjhieva <span class="ltx_text ltx_bib_etal">et al.</span></span><span class="ltx_text ltx_bib_year"> (2026)</span>
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">VLMs Need Words: Vision Language Models Ignore Visual Detail in Favor of Semantic Anchors</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">arXiv preprint arXiv:2604.02486</span>.
+</span>
+<span class="ltx_bibblock">Note: <span class="ltx_text ltx_bib_note">VLM failures reflect a learned shortcut: bypass visual comparison and reason through language.</span>
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.SS0.SSS0.Px3.p1.1" title="Relation to prior work. ‣ 1 Introduction ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S1.p1.1" title="1 Introduction ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S7.SS0.SSS0.Px1.p1.1" title="Perception bypass in (multimodal) RLVR. ‣ 7 Related work ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§7</span></a>.
+</span></li>
+<li id="bib.bib6" class="ltx_bibitem ltx_bib_article"><span class="ltx_tag ltx_bib_key ltx_role_refnum ltx_tag_bibitem">[6]</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_author">M. Khalifa <span class="ltx_text ltx_bib_etal">et al.</span></span><span class="ltx_text ltx_bib_year"> (2026)</span>
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Countdown-Code: A Testbed for Studying the Emergence and Generalization of Reward Hacking in RLVR</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">arXiv preprint arXiv:2603.07084</span>.
+</span>
+<span class="ltx_bibblock">Note: <span class="ltx_text ltx_bib_note">Clean proxy/true reward separation; as little as 1% SFT contamination is internalized and resurfaces under RL.</span>
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S7.SS0.SSS0.Px2.p1.1" title="Temporal dynamics and onset of reward hacking. ‣ 7 Related work ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§7</span></a>.
+</span></li>
+<li id="bib.bib7" class="ltx_bibitem ltx_bib_article"><span class="ltx_tag ltx_bib_key ltx_role_refnum ltx_tag_bibitem">[7]</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_author">K. Li, Y. Wang, Y. He, Y. Li, Y. Wang, Y. Liu, Z. Wang, J. Xu, G. Chen, P. Luo, L. Wang, and Y. Qiao</span><span class="ltx_text ltx_bib_year"> (2023)</span>
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">MVBench: A Comprehensive Multi-modal Video Understanding Benchmark</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">arXiv preprint arXiv:2311.17005</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#A1.SS5.p1.1" title="A.5 Representation-extraction pipeline ‣ Appendix A Reproducibility and diagnostic details ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§A.5</span></a>.
+</span></li>
+<li id="bib.bib8" class="ltx_bibitem ltx_bib_article"><span class="ltx_tag ltx_bib_key ltx_role_refnum ltx_tag_bibitem">[8]</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_author">L. Long, C. Oh, S. Park, and S. Li</span><span class="ltx_text ltx_bib_year"> (2025)</span>
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Understanding Language Prior of LVLMs by Contrasting Chain-of-Embedding</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">arXiv preprint arXiv:2509.23050</span>.
+</span>
+<span class="ltx_bibblock">Note: <span class="ltx_text ltx_bib_note">LVLMs over-rely on language prior, under-utilize visual evidence.</span>
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.p1.1" title="1 Introduction ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S7.SS0.SSS0.Px1.p1.1" title="Perception bypass in (multimodal) RLVR. ‣ 7 Related work ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§7</span></a>.
+</span></li>
+<li id="bib.bib9" class="ltx_bibitem ltx_bib_article"><span class="ltx_tag ltx_bib_key ltx_role_refnum ltx_tag_bibitem">[9]</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_author">Z. Shao, P. Wang, Q. Zhu, R. Xu, J. Song, X. Bi, H. Zhang, M. Zhang, Y. K. Li, Y. Wu, and D. Guo</span><span class="ltx_text ltx_bib_year"> (2024)</span>
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">arXiv preprint arXiv:2402.03300</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#A1.SS1.p1.1" title="A.1 Model and training ‣ Appendix A Reproducibility and diagnostic details ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§A.1</span></a>,
+<a href="#S2.SS0.SSS0.Px1.p1.1" title="Task and model. ‣ 2 Setup ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§2</span></a>.
+</span></li>
+<li id="bib.bib10" class="ltx_bibitem ltx_bib_article"><span class="ltx_tag ltx_bib_key ltx_role_refnum ltx_tag_bibitem">[10]</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_author">I. F. Shihab, S. Akter, and A. Sharma</span><span class="ltx_text ltx_bib_year"> (2025)</span>
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Detecting and Mitigating Reward Hacking in Reinforcement Learning Systems: A Comprehensive Empirical Study</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">arXiv preprint arXiv:2507.05619</span>.
+</span>
+<span class="ltx_bibblock">Note: <span class="ltx_text ltx_bib_note">Large-scale empirical study across 15 RL environments (Atari, MuJoCo) and 5 algorithms; automated detection of six reward-hacking categories; hacking emerges during optimization.</span>
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.SS0.SSS0.Px3.p1.1" title="Relation to prior work. ‣ 1 Introduction ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S7.SS0.SSS0.Px2.p1.1" title="Temporal dynamics and onset of reward hacking. ‣ 7 Related work ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§7</span></a>.
+</span></li>
+<li id="bib.bib11" class="ltx_bibitem ltx_bib_article"><span class="ltx_tag ltx_bib_key ltx_role_refnum ltx_tag_bibitem">[11]</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_author">P. Singla, S. Garg, V. Singh, and P. Chopra</span><span class="ltx_text ltx_bib_year"> (2026)</span>
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Do Vision--Language Models See or Guess? Measuring and Reducing Textual-Prior Reliance with a Phrasing-Controlled Benchmark</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">arXiv preprint arXiv:2606.10400</span>.
+</span>
+<span class="ltx_bibblock">Note: <span class="ltx_text ltx_bib_note">No-image ablation isolates visual contribution.</span>
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S7.SS0.SSS0.Px1.p1.1" title="Perception bypass in (multimodal) RLVR. ‣ 7 Related work ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§7</span></a>.
+</span></li>
+<li id="bib.bib12" class="ltx_bibitem ltx_bib_article"><span class="ltx_tag ltx_bib_key ltx_role_refnum ltx_tag_bibitem">[12]</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_author">X. Wang, M. Tian, Y. Zeng, Z. Huang, J. Yuan, B. Chen, J. Xu, M. Zhou, W. Liu, M. Wu, Z. Guo, Q. Qian, Y. Wang, F. Zhang, R. Yin, S. Dou, C. Lv, T. Chen, K. Song, X. Tan, T. Gui, X. Zheng, and X. Huang</span><span class="ltx_text ltx_bib_year"> (2026)</span>
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Reward Hacking in the Era of Large Models: Mechanisms, Emergent Misalignment, and Challenges</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">arXiv preprint arXiv:2604.13602</span>.
+</span>
+<span class="ltx_bibblock">Note: <span class="ltx_text ltx_bib_note">Survey; frames multimodal perception--reasoning decoupling and evaluator manipulation under the Proxy Compression Hypothesis.</span>
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.SS0.SSS0.Px3.p1.1" title="Relation to prior work. ‣ 1 Introduction ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S1.p1.1" title="1 Introduction ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S7.SS0.SSS0.Px1.p1.1" title="Perception bypass in (multimodal) RLVR. ‣ 7 Related work ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§7</span></a>.
+</span></li>
+<li id="bib.bib13" class="ltx_bibitem ltx_bib_article"><span class="ltx_tag ltx_bib_key ltx_role_refnum ltx_tag_bibitem">[13]</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_author">R. Wu and R. Tang</span><span class="ltx_text ltx_bib_year"> (2026)</span>
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">When Reward Hacking Rebounds: Understanding and Mitigating It with Representation-Level Signals</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">arXiv preprint arXiv:2604.01476</span>.
+</span>
+<span class="ltx_bibblock">Note: <span class="ltx_text ltx_bib_note">GRPO coding testbed; reproducible three-phase rebound (fail/retreat/rebound); shortcut concept direction tracks hacking; Advantage Modification penalizes hacking rollouts.</span>
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.SS0.SSS0.Px3.p1.1" title="Relation to prior work. ‣ 1 Introduction ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S7.SS0.SSS0.Px2.p1.1" title="Temporal dynamics and onset of reward hacking. ‣ 7 Related work ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§7</span></a>.
+</span></li>
+<li id="bib.bib14" class="ltx_bibitem ltx_bib_article"><span class="ltx_tag ltx_bib_key ltx_role_refnum ltx_tag_bibitem">[14]</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_author">L. Yan, R. Li, G. Chen, Q. Li, J. Geng, W. Li, V. Wang, and C. Lee</span><span class="ltx_text ltx_bib_year"> (2026)</span>
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Spurious Rewards Paradox: Mechanistically Understanding How RLVR Activates Memorization Shortcuts in LLMs</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">arXiv preprint arXiv:2601.11061</span>.
+</span>
+<span class="ltx_bibblock">Note: <span class="ltx_text ltx_bib_note">Anchor--Adapter circuit (L18-20) and bidirectional steering; single reward, text-math, no dose axis.</span>
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.SS0.SSS0.Px3.p1.1" title="Relation to prior work. ‣ 1 Introduction ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S7.SS0.SSS0.Px3.p1.1" title="Suppression, verifiers, and mechanisms. ‣ 7 Related work ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§7</span></a>.
+</span></li>
+</ul>
+</section>
+<section id="A1" class="ltx_appendix">
+<h2 class="ltx_title ltx_title_appendix"><span class="ltx_tag ltx_tag_appendix">Appendix A </span>Reproducibility and diagnostic details</h2>
+
+<div id="A1.p1" class="ltx_para">
+<p id="A1.p1.1" class="ltx_p">This appendix records the diagnostic construction, the trajectory fleet, the
+evaluation protocol, and the representation-extraction pipeline in enough detail to
+reproduce the trends reported in the main text.</p>
+</div>
+<section id="A1.SS1" class="ltx_subsection">
+<h3 class="ltx_title ltx_font_bold ltx_font_smallcaps ltx_title_subsection">A.1 Model and training</h3>
+
+<div id="A1.SS1.p1" class="ltx_para">
+<p id="A1.SS1.p1.1" class="ltx_p">The base policy is an 8B-parameter video–language model (Qwen3-VL-8B-Instruct;
+36 decoder layers, hidden size 4096). We post-train with GRPO-style
+RLVR <cite class="ltx_cite ltx_citemacro_citep">(<a href="#bib.bib9" title="" class="ltx_ref">9</a>)</cite> on a video question-answering objective. The base verifiable
+reward is answer correctness; the grounding penalty is added with strength
+<math id="A1.SS1.p1.m1" class="ltx_Math" alttext="\lambda\geq 0" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>≥</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\lambda\geq 0</annotation></semantics></math>, where <math id="A1.SS1.p1.m2" class="ltx_Math" alttext="\lambda{=}0" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\lambda{=}0</annotation></semantics></math> recovers the pure outcome reward. During RL we use a
+global batch size of <math id="A1.SS1.p1.m3" class="ltx_Math" alttext="512" display="inline" intent=":literal"><semantics><mn>512</mn><annotation encoding="application/x-tex">512</annotation></semantics></math>, freeze the vision tower, and keep the visual
+input pipeline fixed across runs so that differences between trajectories are
+attributable to the reward configuration rather than to data ordering or
+preprocessing.</p>
+</div>
+</section>
+<section id="A1.SS2" class="ltx_subsection">
+<h3 class="ltx_title ltx_font_bold ltx_font_smallcaps ltx_title_subsection">A.2 Trajectory fleet</h3>
+
+<div id="A1.SS2.p1" class="ltx_para">
+<p id="A1.SS2.p1.1" class="ltx_p">All runs share a common origin and vary a single factor (Table <a href="#S2.T1" title="Table 1 ‣ Trajectory fleet. ‣ 2 Setup ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">1</span></a>):
+E1 (<math id="A1.SS2.p1.m1" class="ltx_Math" alttext="\lambda{=}0" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\lambda{=}0</annotation></semantics></math>, seed A, 500 steps) is the onset origin and dose baseline; sB
+(<math id="A1.SS2.p1.m2" class="ltx_Math" alttext="\lambda{=}0" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\lambda{=}0</annotation></semantics></math>, seed B, 80 steps) is the seed-robustness control; L1 (<math id="A1.SS2.p1.m3" class="ltx_Math" alttext="\lambda{=}1" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\lambda{=}1</annotation></semantics></math>) and
+L2 (<math id="A1.SS2.p1.m4" class="ltx_Math" alttext="\lambda{=}2" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\lambda{=}2</annotation></semantics></math>) are the intermediate and strong doses (150 steps each); the
+intervention runs (pre-/at-/post-onset) resume from E1 checkpoints taken before
+onset, at the onset transition, and after consolidation, each trained for a fixed
+50 additional steps with <math id="A1.SS2.p1.m5" class="ltx_Math" alttext="\lambda{=}1" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\lambda{=}1</annotation></semantics></math>. The reading rules are strict: seed robustness
+is assessed only across the <math id="A1.SS2.p1.m6" class="ltx_Math" alttext="\lambda{=}0" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\lambda{=}0</annotation></semantics></math> runs; dose response only across
+<math id="A1.SS2.p1.m7" class="ltx_Math" alttext="\lambda\in\{0,1,2\}" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>∈</mo><mrow><mo stretchy="false">{</mo><mrow><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>2</mn></mrow><mo stretchy="false">}</mo></mrow></mrow><annotation encoding="application/x-tex">\lambda\in\{0,1,2\}</annotation></semantics></math> at fixed seed; intervention timing only within the
+intervention runs.</p>
+</div>
+</section>
+<section id="A1.SS3" class="ltx_subsection">
+<h3 class="ltx_title ltx_font_bold ltx_font_smallcaps ltx_title_subsection">A.3 Held-out OOD diagnostic and the VHS perturbation</h3>
+
+<div id="A1.SS3.p1" class="ltx_para">
+<p id="A1.SS3.p1.1" class="ltx_p">The visual-hacking score (VHS) is read on a held-out, out-of-distribution
+diagnostic set of <math id="A1.SS3.p1.m1" class="ltx_Math" alttext="640" display="inline" intent=":literal"><semantics><mn>640</mn><annotation encoding="application/x-tex">640</annotation></semantics></math> five-way multiple-choice questions built from the NExT-QA
+video-QA distribution, disjoint from the RLVR training split, so that the measured
+onset reflects an emergent behavioral change rather than fitting of the training
+items. The questions are temporally grounded (they ask about the order or
+progression of actions and events). For each item we generate an answer on the
+clean video and on a perturbed video. The perturbation randomly permutes the
+temporal order of the sampled frames (a random shuffle of the frame sequence),
+which destroys the temporal structure—the ordering of actions and events—that
+a temporally grounded question depends on, while leaving the individual frames and
+their appearance statistics intact. A model that genuinely attends to the video
+should therefore change its answer under this perturbation, whereas a model
+answering from language priors or static cues is unaffected. VHS is the fraction of
+items whose answer is <em id="A1.SS3.p1.1.1" class="ltx_emph ltx_font_italic">unchanged</em> under the perturbation: higher VHS indicates
+stronger reliance on a visual (specifically temporal) shortcut. Because the
+questions are five-way, a model that ignores the perturbed video and answers at
+random gives VHS <math id="A1.SS3.p1.m2" class="ltx_Math" alttext="\approx 0.2" display="inline" intent=":literal"><semantics><mrow><mo>≈</mo><mn>0.2</mn></mrow><annotation encoding="application/x-tex">\approx 0.2</annotation></semantics></math> (chance), while VHS near <math id="A1.SS3.p1.m3" class="ltx_Math" alttext="1" display="inline" intent=":literal"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math> means the answer is
+essentially invariant to the temporal content. We also record clean accuracy and
+the hacking rate on the same set as corroborating readouts. (This behavioral
+diagnostic is distinct from the data used for the representation probe in
+§<a href="#A1.SS5" title="A.5 Representation-extraction pipeline ‣ Appendix A Reproducibility and diagnostic details ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">A.5</span></a>, which draws on a separate video-understanding benchmark
+purely as a source of inputs for activation extraction.)</p>
+</div>
+</section>
+<section id="A1.SS4" class="ltx_subsection">
+<h3 class="ltx_title ltx_font_bold ltx_font_smallcaps ltx_title_subsection">A.4 Evaluation protocol</h3>
+
+<div id="A1.SS4.p1" class="ltx_para">
+<p id="A1.SS4.p1.1" class="ltx_p">All diagnostics use greedy decoding (temperature <math id="A1.SS4.p1.m1" class="ltx_Math" alttext="0" display="inline" intent=":literal"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math>, a single sample per item).
+Each checkpoint is evaluated by loading the trained actor and running the
+clean/perturbed double generation on the diagnostic set with a fixed batch size,
+maximum prompt length <math id="A1.SS4.p1.m2" class="ltx_Math" alttext="8192" display="inline" intent=":literal"><semantics><mn>8192</mn><annotation encoding="application/x-tex">8192</annotation></semantics></math>, maximum response length <math id="A1.SS4.p1.m3" class="ltx_Math" alttext="1024" display="inline" intent=":literal"><semantics><mn>1024</mn><annotation encoding="application/x-tex">1024</annotation></semantics></math>, and a fixed video
+sampling rate; the visual token budget is held constant across checkpoints. To
+build a trajectory we evaluate a sequence of saved checkpoints under identical
+settings and plot the resulting VHS against the optimization step. Evaluation
+configuration (decoding, batching, and the diagnostic set) is held fixed across all
+runs so that trajectories are directly comparable; old and new evaluation
+configurations are never mixed within a single figure or table.</p>
+</div>
+</section>
+<section id="A1.SS5" class="ltx_subsection">
+<h3 class="ltx_title ltx_font_bold ltx_font_smallcaps ltx_title_subsection">A.5 Representation-extraction pipeline</h3>
+
+<div id="A1.SS5.p1" class="ltx_para">
+<p id="A1.SS5.p1.1" class="ltx_p">For the representation probe we extract hidden-state activations from the
+language-model decoder layers of matched checkpoints. We read a fixed set of layers
+(every fourth decoder layer, i.e. layers <math id="A1.SS5.p1.m1" class="ltx_Math" alttext="0,4,8,\dots,32" display="inline" intent=":literal"><semantics><mrow><mn>0</mn><mo>,</mo><mn>4</mn><mo>,</mo><mn>8</mn><mo>,</mo><mi mathvariant="normal">…</mi><mo>,</mo><mn>32</mn></mrow><annotation encoding="application/x-tex">0,4,8,\dots,32</annotation></semantics></math>), mean-pool token
+activations within each item, and accumulate a fixed, stratified set of input
+items per checkpoint, sampled from a standard video-understanding
+benchmark <cite class="ltx_cite ltx_citemacro_citep">(<a href="#bib.bib7" title="" class="ltx_ref">7</a>)</cite>. We emphasize that this probe uses MVBench purely as a
+fixed pool of video inputs for activation extraction; it is a separate data source
+from the NExT-QA–based VHS diagnostic of §<a href="#A1.SS3" title="A.3 Held-out OOD diagnostic and the VHS perturbation ‣ Appendix A Reproducibility and diagnostic details ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">A.3</span></a> and is not used to
+compute VHS or any behavioral metric. For each (checkpoint, layer) we summarize the
+resulting activation matrix with three unsupervised geometry metrics: effective
+rank (the exponential of the entropy of the normalized singular-value spectrum),
+anisotropy (the share of variance captured by the top principal direction), and
+mean activation norm. The dose-dependent spread reported in the main text is the
+range of a metric across <math id="A1.SS5.p1.m2" class="ltx_Math" alttext="\lambda\in\{0,1,2\}" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>∈</mo><mrow><mo stretchy="false">{</mo><mrow><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>2</mn></mrow><mo stretchy="false">}</mo></mrow></mrow><annotation encoding="application/x-tex">\lambda\in\{0,1,2\}</annotation></semantics></math> at a matched checkpoint and layer. As
+noted in §<a href="#S6" title="6 What changes inside: representation probe ‣ When Does a Video–Language Model Stop Watching?Reward Strength Controls the Formation and Reversalof Visual Shortcuts in Multimodal RLVR" class="ltx_ref"><span class="ltx_text ltx_ref_tag">6</span></a>, at the sample size used here the mid-layer spread is
+suggestive but lies within bootstrap variability; we therefore report it as a
+directional, exploratory finding and leave a higher-powered analysis to future
+revision.</p>
+</div>
+</section>
+</section>
+</article>
+</div>
+<div class="ar5iv-footer"><a href="/html/2606.22042" class="ar5iv-nav-button ar5iv-nav-button-prev">◄</a>
+    <a class="ar5iv-home-button" href="/"><img height="40" alt="ar5iv homepage" src="/assets/ar5iv.png"></a>
+    <a href="/feeling_lucky" class="ar5iv-text-button">Feeling<br>lucky?</a>
+    <a href="/land_of_honey_and_milk" rel="nofollow" aria-hidden="true" tabindex="-1"></a>
+    <a href="/log/2606.22043" class="ar5iv-text-button ar5iv-severity-ok">Conversion<br>report</a>
+    <a class="ar5iv-text-button" target="_blank" href="https://github.com/dginev/ar5iv/issues/new?template=improve-article--arxiv-id-.md&title=Improve+article+2606.22043">Report<br>an issue</a>
+    <a href="https://arxiv.org/abs/2606.22043" class="ar5iv-text-button arxiv-ui-theme">View&nbsp;original<br>on&nbsp;arXiv</a><a href="/html/2606.22044" class="ar5iv-nav-button ar5iv-nav-button-next">►</a>
+</div><footer class="ltx_page_footer">
+<a class="ar5iv-toggle-color-scheme" href="javascript:toggleColorScheme()" title="Toggle ar5iv color scheme"><span class="color-scheme-icon"></span></a>
+<a class="ar5iv-footer-button" href="https://arxiv.org/help/license" target="_blank">Copyright</a>
+<a class="ar5iv-footer-button" href="https://arxiv.org/help/policies/privacy_policy" target="_blank">Privacy Policy</a>
+
+<div class="ltx_page_logo">Generated  by <a target="_blank" href="http://dlmf.nist.gov/LaTeXML/" class="ltx_LaTeXML_logo"><span style="letter-spacing:-0.2em; margin-right:0.1em;">L<span class="ltx_font_smallcaps" style="position:relative; bottom:2.2pt;">a</span>T<span class="ltx_font_smallcaps" style="font-size:120%;position:relative; bottom:-0.2ex;">e</span></span><span style="font-size:90%; position:relative; bottom:-0.2ex;">XML</span><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAOCAYAAAD5YeaVAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wKExQZLWTEaOUAAAAddEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIFRoZSBHSU1Q72QlbgAAAdpJREFUKM9tkL+L2nAARz9fPZNCKFapUn8kyI0e4iRHSR1Kb8ng0lJw6FYHFwv2LwhOpcWxTjeUunYqOmqd6hEoRDhtDWdA8ApRYsSUCDHNt5ul13vz4w0vWCgUnnEc975arX6ORqN3VqtVZbfbTQC4uEHANM3jSqXymFI6yWazP2KxWAXAL9zCUa1Wy2tXVxheKA9YNoR8Pt+aTqe4FVVVvz05O6MBhqUIBGk8Hn8HAOVy+T+XLJfLS4ZhTiRJgqIoVBRFIoric47jPnmeB1mW/9rr9ZpSSn3Lsmir1fJZlqWlUonKsvwWwD8ymc/nXwVBeLjf7xEKhdBut9Hr9WgmkyGEkJwsy5eHG5vN5g0AKIoCAEgkEkin0wQAfN9/cXPdheu6P33fBwB4ngcAcByHJpPJl+fn54mD3Gg0NrquXxeLRQAAwzAYj8cwTZPwPH9/sVg8PXweDAauqqr2cDjEer1GJBLBZDJBs9mE4zjwfZ85lAGg2+06hmGgXq+j3+/DsixYlgVN03a9Xu8jgCNCyIegIAgx13Vfd7vdu+FweG8YRkjXdWy329+dTgeSJD3ieZ7RNO0VAXAPwDEAO5VKndi2fWrb9jWl9Esul6PZbDY9Go1OZ7PZ9z/lyuD3OozU2wAAAABJRU5ErkJggg==" alt="Mascot Sammy"></a> (oxide)</div></footer>
+</div>
+
+    <script>
+      var canMathML = typeof(MathMLElement) == "function";
+      if (!canMathML) {
+        var body = document.querySelector("body");
+        body.firstElementChild.setAttribute('style', 'opacity: 0;');
+        var loading = document.createElement("div");
+        loading.setAttribute("id", "mathjax-loading-spinner");
+        var message = document.createElement("div");
+        message.setAttribute("id", "mathjax-loading-message");
+        message.innerText = "Typesetting Equations...";
+        body.prepend(loading);
+        body.prepend(message);
+
+        var el = document.createElement("script");
+        el.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
+        document.querySelector("head").appendChild(el);
+
+        window.MathJax = {
+          startup: {
+            pageReady: () => {
+              return MathJax.startup.defaultPageReady().then(() => {
+                body.removeChild(loading);
+                body.removeChild(message);
+                body.firstElementChild.removeAttribute('style');
+              }); } } };
+      }
+    </script>
+    <script>
+    // Auxiliary function, building the preview feature when
+    // an inline citation is clicked
+    function clicked_cite(e) {
+      e.preventDefault();
+      let cite = this.closest('.ltx_cite');
+      let next = cite.nextSibling;
+      if (next && next.nodeType == Node.ELEMENT_NODE && next.getAttribute('class') == "ar5iv-bibitem-preview") {
+        next.remove();
+        return; }
+      // Before adding a preview modal,
+      // cleanup older previews, in case they're still open
+      document.querySelectorAll('span.ar5iv-bibitem-preview').forEach(function(node) {
+        node.remove();
+      })
+
+      // Create the preview
+      preview = document.createElement('span');
+      preview.setAttribute('class','ar5iv-bibitem-preview');
+      let target = document.getElementById(this.getAttribute('href').slice(1));
+      target.childNodes.forEach(function (child) {
+        preview.append(child.cloneNode(true));
+      });
+      let close_x = document.createElement('button');
+      close_x.setAttribute("aria-label","Close modal for bibliography item preview");
+      close_x.textContent = "×";
+      close_x.setAttribute('class', 'ar5iv-button-close-preview');
+      close_x.setAttribute('onclick','this.parentNode.remove()');
+      preview.append(close_x);
+      preview.querySelectorAll('.ltx_tag_bibitem').forEach(function(node) {
+        node.remove();
+      });
+      cite.parentNode.insertBefore(preview, cite.nextSibling);
+      return;
+    }
+    // Global Document initialization:
+    // - assign the preview feature to all inline citation links
+    document.querySelectorAll(".ltx_cite .ltx_ref").forEach(function (link) {
+      link.addEventListener("click", clicked_cite);
+    });
+    </script>
+    </body>
+</html>

@@ -1,0 +1,609 @@
+[2407.20454] CoMMIT: Coordinated Instruction Tuning for Multimodal Large Language Models
+**footnotetext: These authors contributed equally to this work.
+CoMMIT: Coordinated Instruction Tuning for Multimodal Large Language Models
+Junda Wu1∗ Xintong Li1∗ Tong Yu2 Yu Wang1 Xiang Chen2
+Jiuxiang Gu2 Lina Yao3,4 Jingbo Shang1 Julian McAuley1
+1University of California, San Diego 2Adobe Research
+3The University of New South Wales 4CSIRO’s Data61
+{juw069,xil240,yuw164,jshang,jmcauley}@ucsd.edu
+{tyu,xiangche,jigu}@adobe.com lina.yao@data61.csiro.au
+Abstract
+Instruction tuning in multimodal large language models (MLLMs) aims to smoothly integrate a backbone LLM with a pre-trained feature encoder for downstream tasks.
+The major challenge is how to efficiently find the synergy through cooperative learning where LLMs adapt their
+reasoning abilities
+in downstream tasks
+while feature encoders adjust their encoding to provide more relevant modal information.
+In this paper, we analyze the MLLM instruction tuning from both theoretical and empirical perspectives,
+where we find unbalanced learning between the two components, i.e., the feature encoder and the LLM,
+can cause diminishing learning gradients that slow the model convergence and often lead to sub-optimal results due to insufficient learning.
+Inspired by our findings, we propose a measurement to quantitatively evaluate the learning balance, based on which we further design a dynamic learning scheduler that better coordinates the learning.
+In addition, we introduce an auxiliary loss regularization method to promote updating of the generation distribution of MLLMs considering the learning state of each model component,
+which potentially prevents each component from gradient diminishing and enables a more accurate estimation of the learning balance coefficient.
+We conduct experiments with multiple LLM backbones and feature encoders, where our techniques are model-agnostic and can be generically integrated with various MLLM backbones.
+Experiment results on multiple downstream tasks and modalities in vision and audio,
+demonstrate the proposed method’s better efficiency and effectiveness in MLLM instruction tuning.
+1 Introduction
+Multimodal instruction tuning aligns pre-trained general-purpose multimodal large language models (MLLMs) with specific downstream tasks by fine-tuning MLLMs to follow arbitrary instructions Dai et al. (2024); Liu et al. (2024); Zhang et al. (2023); Zhao et al. (2024); Lu et al. (2023); Han et al. (2023).
+State-of-the-art pre-trained MLLMs Li et al. (2023); Liu et al. (2024); Tang et al. (2023a); Chu et al. (2023) adopt a similar model architecture design, which encodes modality-specific features before adding these encoded tokens into language prompts.
+Multimodal understanding and reasoning abilities in MLLMs are enabled by learning aligned multimodal feature encoding (e.g., Q-Former Li et al. (2023)) and leveraging pre-trained abilities in LLMs e.g. Llama 2 Touvron et al. (2023), Vicuna Chiang et al. (2023).
+In the instruction tuning of these MLLMs, cooperative learning and alignment of the two components, the feature encoder and the backbone LLM, can be critical:
+(1) modality-specific (e.g., vision and audio) features in downstream tasks can be visually different, such that LLMs need to adjust their reasoning based on new feature tokens;
+(2) while LLMs are aligned to specific reasoning tasks, feature encoders must adjust their encoding and provide more relevant modal information to such tasks.
+Insufficient learning of the feature encoder may cause information loss Bai et al. (2024); Tong et al. (2024) of task-relevant visual details, which can be essential evidence for reasoning.
+Misaligned LLMs can suffer from visual hallucination problems Bai et al. (2024); Rawte et al. (2024) due to strong language prior in backbone LLMs.
+Refer to caption
+(a)
+Refer to caption
+(b)
+Figure 1:
+Illustration of (a) single modality learning insufficiency problem, (b) and multimodal learning oscillation problem, caused by imbalanced multimodal learning.
+We show the optimization trajectories in solid bold lines and the multimodal gradients at the current step t in solid thin lines.
+The dashed line borders are the contours of the learning balance coefficient \kappa_{t} proposed and detailed in Section 3.
+In this paper, we first propose a multimodal learning balance coefficient that quantifies the learning balance between the feature encoder and the backbone LLM in MLLM instruction tuning.
+Based on theoretical analysis and empirical observations, we reveal reasons behind such learning imbalance (Section 4.1), which can further cause insufficient learning and slower convergence (Section 4.2).
+In Figure 1, we illustrate two typical learning dilemmas caused by imbalanced multimodal learning, concerning learning insufficient and ineffective problems respectively.
+Figure 1(a) shows that when the instruction tuning is largely inclining to either the LLM or the feature encoder (or overfit to one component),
+the effective gradient descent direction can be dominated by that component, which makes the other component’s learning insufficient.
+Consequently, the insufficiently learned component cannot contribute sufficient information to the generation results, which makes its gradient descent less effective.
+The other learning difficulty in Figure 1(b), demonstrates that imbalanced learning between two components can also cause the gradient descent to oscillate between two tendencies, which impedes the convergence of the optimization process.
+To address these issues, we propose a coordinated learning rate scheduler to balance the cooperative learning progress (Section 5.1).
+With multimodal learning progress better coordinated, we can prevent learning insufficiency of multimodal components caused by imbalanced learning tendency towards a certain modality, and learning inefficiency caused by multimodal oscillation.
+We further propose our method CoMMIT that composes the dynamic learning rate scheduler with an auxiliary loss regularization to encourage updates of the generation distribution of MLLMs (Section 5.2),
+which alleviates the learning gradient diminishing problem caused by imbalanced learning.
+In addition, we analyze the convergence rate of the optimizer when employing these two methods and demonstrate that they can lead to faster convergence (Section 6).
+We summarize our main contributions as follows:
+•
+We introduce a theoretical framework to uncover the pitfall of the learning imbalance problem in MLLM instruction tuning, which can cause MLLM insufficient learning in individual modality and slow the convergence of training.
+•
+Based on the theoretical analysis and empirical observation, we propose CoMMIT to balance multimodal learning progress by dynamically coordinating learning rates in multimodal components,
+whose learning gradients are regularized by an auxiliary loss regularization.
+•
+Applying CoMMIT introduces a new term in the convergence rate analysis, and we prove that this term, which is always greater than one, can accelerate convergence under our settings. We also demonstrate that the theorem can be generalized to any optimizer.
+•
+Empirical results on multiple downstream tasks in vision and audio modalities with various MLLM backbones show the efficiency and effectiveness of the proposed methods.
+In addition, we also demonstrate that CoMMIT can better coordinate multimodal learning progress and reduce learning oscillations.
+2 Preliminaries
+Related Works.
+MLLMs have become a new paradigm to empower multimodal learning with advanced language reasoning capabilities,
+such as with vision Li et al. (2023); Liu et al. (2024); Wang et al. (2024b); Maaz et al. (2023); Zhang et al. (2023); Huang et al. (2023a), and audio Huang et al. (2023b); Tang et al. (2023a); Gardner et al. (2023).
+To bridge the multimodality gap and align with downstream tasks, several works focus on two-fold considerations: feature (modality) alignment and reasoning alignment.
+The most common approach for feature alignment is to encode the source modality feature to semantic tokens within the LLMs’ embedding feature space.
+By adding the modality-specific tokens as soft prompt inputs Wang et al. (2024a); Liu et al. (2021); Zhang et al. (2024), the backbone LLMs can process these tokens with language tokens as a unified sequence.
+However, the newly added semantic tokens cannot be understood by LLMs directly for language reasoning, due to the limited text-only pretraining of LLMs.
+Such misalignment problems will lead to textual hallucination problems, namely linguistic bias Ko et al. (2023); Tang et al. (2023b), in which the language models reason only based on their language prior.
+MLLM instruction tuning. In MLLM instruction tuning, given an adapter module T of backbone generative language model X and a feature encoder S ,
+the backbone language model X , whose parameters are frozen during instruction tuning, will be projected by the two modules (T\circ S)(X)=T(S(X)) .
+Most state-of-the-art MLLMs adopt a similar model architecture design Gardner et al. (2023); Li et al. (2023); Liu et al. (2024) to first encode the multimodal input I^{S} into the language model X embedding space,
+before inserting these encoded tokens into instruction prompts I_{T} ,
+P(\hat{y}_{k}|I^{S},I^{T},y_{j<k})=S(X)(I^{S},I^{T},y_{j<k})=X([\theta_{S}(I^{S}),I^{T},y_{j<k}]),
+where \theta_{S} is the learnable set of model parameters in the feature encoder S and the next-token prediction probability is determined by multimodal instructions (I^{S},I^{T}) and the previously generated language tokens y_{j<k} .
+To further adapt the language model’s reasoning and understanding abilities to the new multimodal reasoning tasks,
+the language model X is projected by T to another language model \tilde{X}_{\theta_{T}}=T(X) ,
+where S(T(X))=S(\tilde{X}_{\theta_{T}})=T(S(X)) and \theta_{T} denotes a set of trainable language adapter parameters.
+Given a downstream task in MLLM instruction tuning, the loss function is defined by the generation cross-entropy loss between the generated responses to a set of N training instructions \left\{(I^{S}_{i},I^{T}_{i})\right\}_{i\leq N} , and the corresponding ground truth responses \left\{(y_{i,j})_{j\leq K_{i}}\right\}_{i\leq N} Liu et al. (2024); Ouyang et al. (2022),
+L\left((T\circ S)(X)\right)=\frac{1}{N}\sum_{i=1}^{N}\frac{1}{K_{i}}\sum_{k=1}^{K_{i}}\text{CrossEntropy}\left(y_{i,j},\tilde{X}_{\theta_{T}}([\theta_{S}(I^{S}_{i}),I^{T}_{i},y_{i,j<k}])\right),
+and the learning objective is to find the optimal (T\circ S)^{*} , such that the generated responses can match the ground truth answers by minimizing the loss function.
+3 Measurement of Learning Balance in MLLM Instruction Tuning
+Learning balance in multimodal joint training. According to Lipschitz continuity in cross-entropy loss function Mao et al. (2023),
+there exists a sequence of T_{t} and S_{t} during MLLM instruction tuning, where multimodal components are jointly trained.
+Given the two metric spaces, (\mathbb{R},l_{2}) of the cross-entropy losses and (H,d) of the generation distributions, there exists 0<\gamma<1 such that, at each optimization step t ,
+\left\|L((T\circ S)_{t+1}(X))-L((T\circ S)_{t}(X))\right\|_{2}\leq\gamma d\left[(T\circ S)_{t+1}(X),(T\circ S)_{t}(X)\right],
+(1)
+where the metric d measures the prediction distribution y_{t}\in H change when the multimodal components T\circ S are jointly updated.
+Based on the triangle inequality in metric space, a joint step of multimodal learning is bounded by the combination of two components’ separate step forward,
+d\left[(T\circ S)^{\prime}(X),(T\circ S)(X)\right]\leq d\left[T^{\prime}(S(X)),T(S(X))\right]+d\left[S^{\prime}(\tilde{X}_{\theta_{T}}),S(\tilde{X}_{\theta_{T}})\right].
+(2)
+Definition 3.1 (Multimodal balance coefficient).
+Given the step forward of multimodal joint update at time step t ,
+the multimodal learning balance coefficient \kappa_{t} is measured considering the separate learning steps of the feature encoder S_{t} and the language model T_{t} .
+\kappa_{t}=\frac{d\left[T_{t+1}(S_{t}(X)),T_{t}(S_{t}(X))\right]}{d\left[S_{t+1}(T_{t}(X)),S_{t}(T_{t}(X))\right]}.
+(3)
+Then we can derive the multimodal gradient estimated bounds based on MLLM’s generative performance in its metric space d .
+According to Eq. (1) and Eq. (2),
+\|G^{T}_{t}\|\leq\gamma(\kappa_{t}+1)H^{S}_{t},\quad\|G^{S}_{t}\|\leq\gamma(\frac{1}{\kappa_{t}}+1)H^{T}_{t},
+(4)
+where the individual learning steps of feature encoder H^{S}_{t} and language model H^{T}_{t} are
+\displaystyle H^{S}_{t}
+\displaystyle=\left(\|I^{T}_{t}\|+\|\theta_{S_{t}}(I^{S}_{t})\|\right)^{-1}d\left[S_{t+1}(T_{t}(X)),S_{t}(T_{t}(X))\right],
+\displaystyle H^{T}_{t}
+\displaystyle=\left\|I^{S}_{t}\right\|^{-1}d\left[T_{t+1}(S_{t}(X)),T_{t}(S_{t}(X))\right].
+(5)
+Learning dilemmas in MLLM instruction tuning.
+Based on the analysis of the learning process in multimodal joint training in Eq. (4), we propose two hypotheses regarding potential learning dilemmas in MLLM instruction tuning.
+Concerning potential instability in multimodal learning, since in the generation probability distribution space (H,d) , the metrics H^{S}_{t} and H^{T}_{t} are bounded by a finite norm,
+the learning imbalance problem measured by \kappa_{t} can account the most for the learning inefficiency problem, while H^{s}_{t} and H^{T}_{t} are lower-bounded (i.e., multimodal gradients are not diminishing).
+We propose Hypothesis 3.1 and empirically evaluate such problem in Section 4.1 and Section 4.2, which inspires our design of CoMMIT in Section 5.1.
+Hypothesis 3.1 (Learning inefficiency).
+The oscillation of the multimodal learning balance coefficient \kappa_{t} can cause an inefficient learning problem that slows the convergence of MLLM instruction tuning.
+In addition, while the learning process is inclined toward a certain component (i.e., feature encoder or language model) due to learning imbalance,
+we might observe the gradient-diminishing problem in the corresponding component (i.e., H^{S}_{t}\rightarrow 0 and H^{T}_{t}\rightarrow 0 ).
+Hypothesis 3.2 (Learning insufficiency).
+The diminished model gradient of an individual model component can further cause the insufficient learning problem of MLLM instruction tuning.
+Hypothesis 3.2 is empirically evaluated in Section 4.2 and inspires our design of further loss regularization in Section 5.2.
+4 An Empirical Study of Learning Dilemmas in MLLM Instruction Tuning
+We conduct an empirical study of MLLM instruction tuning to understand the behavior of multimodal components joint training.
+In Section 4.1 we investigate the learning imbalance problem with the learning curves of the measurements introduced in Eq. (4).
+Then, we reveal the insufficient multimodal learning problem caused by imbalanced joint training in Section 4.2.
+4.1 Understanding the Learning Inefficiency in Imbalanced MLLM Instruction Tuning
+To quantitatively understand the effect of the imbalanced multimodal learning problem in MLLM instruction tuning,
+we show the learning curves (Figure 2) of the measurement variables H^{S}_{t} , H^{T}_{t} , and \kappa_{t} proposed in Eq. 4.
+The experiment is conducted on a visual question-answering task TextVQA Singh et al. (2019), on which a BLIP-2 Li et al. (2023) model is instruction-tuned.
+We show the analysis results on TextVQA, one of the common instruction tuning downstream tasks which is widely used in vision LLMs Dai et al. (2024); Yin et al. (2024).
+To probe the learning imbalance problem, we include three learning strategies:
+(1) Synced LR is trained by setting the learning rate of both the feature encoder and the language model to 1e-4 ;
+(2) Language LR \uparrow increases the language model’s learning rate to 1e-3 ;
+(2) and Vision LR \uparrow increases the vision model’s learning rate to 1e-3 .
+Refer to caption
+Figure 2: Learning curves of the variables H^{S}_{t} , H^{T}_{t} , and \kappa_{t} for a measurement of learning balance in BLIP-2 instruction tuning on TextVQA.
+Observation 4.1.
+As shown in Figure 2(c), the multimodal learning process can suffer from significant multimodal learning oscillation problems,
+while simply setting the same learning rate for each component in the MLLM (i.e., the Synced LR method).
+We observe that the learning curve of \kappa_{t} is generally between 1 (i.e., an absolute balance), while
+the learning curve of H^{S}_{t} (in Figure 2(a)) is as expected more unstable than H^{T}_{t} (in Figure 2(b)).
+In addition, comparing the learning behaviors of H^{S}_{t} and H^{T}_{t} ,
+we find that the vision feature encoder is more likely to suffer from the gradient-diminishing problem.
+This suggests that such learning oscillation can be insufficient learning of the language model.
+By increasing the learning rate of the language model (i.e., Language LR \uparrow ),
+we can observe more stabilized \kappa_{t} in Figure 2(c) and less decreased learning progress of H^{T}_{t} in Figure 2(b),
+which further benefits the learning of the vision feature encoder ( H^{S}_{t} ).
+4.2 Understanding the Learning Insufficiency in Imbalanced MLLM Instruction Tuning
+We further show three metrics with the same backbone MLLM and downstream task as in Section 4.1:
+(1) the normalized learning gradient \|G^{S}_{t}\|/\|\theta_{S_{t}}\| of the feature encoder in Figure 3(a),
+(2) the normalized learning gradient \|G^{T}_{t}\|/\|\theta_{T_{t}}\| of the feature encoder in Figure 3(b),
+(3) and the cross-entropy loss in Figure 3(c),
+to understand the impact of the multimodal imbalance learning problem in Section 4.1 on the learning sufficiency in MLLM instruction tuning.
+Refer to caption
+Figure 3:
+The learning curves of normalized learning gradient \|G^{S}_{t}\|/\|\theta_{S_{t}}\| and \|G^{T}_{t}\|/\|\theta_{T_{t}}\| for the feature encoder and language model respectively, as well as the cross-entropy training losses.
+Observation 4.2.
+In Figure 3(c), we observe that imbalanced learning of an individual component (e.g., Vision LR \uparrow ) can slow the convergence of the MLLM and result in inferior training performance.
+In addition, we can further observe in Figure 3(a) and Figure 3(b) that the imbalanced learning problem can simultaneously cause the gradient diminishing problem in both model components.
+In such cases, without rebalancing the learning progress of multimodal components, simply increasing the learning rate of individual components can exaggerate the learning insufficient problem.
+5 Methodology
+5.1 Coordinated Learning Rate Scheduling
+Motivated by Observation 4.1 we propose a dynamic learning rate scheduling method to coordinate multimodal components’ learning and alleviate learning oscillation problems.
+Inspired by damping strategies in optimization Lucas et al. (2018); Tanaka and Kunin (2021); Wei et al. (2021),
+we use the proposed learning balance metric \kappa_{t} in Eq. (3) as the damping parameter with a learning advantage \alpha that describes a global multimodal learning balance tendency.
+Intuitively, since the base learning rate for MLLM instruction tuning is generally lower than model learning from scratch, the learning oscillation frequency can be smaller, which is also observed in our empirical study in Figure 2.
+To directly address the learning oscillation problem caused by multimodal imbalance explained in Eq. 4 of Section 3,
+we track the N_{\kappa} moving average of \kappa_{t} through the learning process and dynamically adjust multimodal components’ learning rates,
+\tilde{\kappa}_{t}=\frac{1}{N_{\kappa}}\sum_{i=1}^{N_{\kappa}}\kappa_{t-i+1},
+(6)
+and the based learning rate \beta^{T} and \beta^{S} can be adjusted to \beta_{t}^{T}=\frac{\alpha}{\gamma(\tilde{\kappa}_{t}+1)} and \beta_{t}^{S}=\frac{\alpha}{\gamma(1/\tilde{\kappa}_{t}+1)} for the language model T and the feature encoder S respectively.
+To avoid a large computation overhead for batch-wise calculation of \tilde{\kappa}_{t} and reduce the impact of oscillations caused by the overly adjusted learning rate,
+we only periodically change the learning rates for every L_{lr} number of forward steps.
+5.2 CoMMIT: Coordinated Multimodal Instruction Tuning
+With the learning process balanced by Eq. (6), the original gradient descent can be slowed down.
+In addition, the diminishing values of H^{S}_{t} and H^{T}_{t} can cause higher estimation errors in \tilde{\kappa}_{t} .
+To address the potential learning dilemma described in Hypothesis 3.1 and improve the estimation of learning balance \tilde{\kappa}_{t} ,
+we propose CoMMIT which additionally incorporates an auxiliary loss regularization to promote learning of each component’s one step forward in Eq. (3).
+Specifically, at time step t , with the current batch of input data \left\{(I^{S}_{i},I^{T}_{i})\right\}_{i\in N_{t}} ,
+we first calculate the model prediction
+\hat{y}_{i,j}=(T\circ S)_{t}(X)([I^{S}_{i},I^{T}_{i},y_{i,k<j}])
+by the current model (T\circ S)_{t} in its evaluation mode (i.e., requires no gradient propagation on the model).
+Then we derive the advantage obtained by each component’s one-step forward (i.e., \theta_{t+1}^{T} and \theta_{t+1}^{S} ) by fixing one component while updating the other component,
+\displaystyle\hat{y}_{i,j}^{T}
+\displaystyle=S_{t}(\tilde{X}_{\theta_{t+1}^{T}})([I^{S}_{i},I^{T}_{i},y_{i,k<j}])
+\displaystyle\hat{y}_{i,j}^{S}
+\displaystyle=T_{t}(X)([\theta_{t+1}^{S}(I^{S}_{i}),I^{T}_{i},y_{i,k<j}]).
+Without access to ground-truth labels, we design the loss regularization to prevent diminishing learning gradients.
+Accompanied by the proposed learning rate scheduling method in Eq. 6, we update both components’ model weights,
+\displaystyle\theta_{t+1}^{T}
+\displaystyle\leftarrow\theta_{t}^{T}-\beta_{t}^{T}\cdot\nabla_{\theta^{T}}L(S_{t}(\tilde{X}_{\theta_{t}^{T}}))+\beta_{t}^{T}\cdot\nabla_{\theta^{T}}\frac{1}{|N_{t}|}\sum_{i\in N_{t}}\frac{1}{K_{i}}\sum_{k=1}^{K_{i}}d(\hat{y}_{i,j},\hat{y}_{i,j}^{T}),
+(7)
+\displaystyle\theta_{t+1}^{S}
+\displaystyle\leftarrow\theta_{t}^{S}-\beta_{t}^{S}\cdot\nabla_{\theta^{S}}L(T_{t}(S_{t}(X));\theta_{t}^{S})+\beta_{t}^{S}\cdot\nabla_{\theta^{S}}\frac{1}{|N_{t}|}\sum_{i\in N_{t}}\frac{1}{K_{i}}\sum_{k=1}^{K_{i}}d(\hat{y}_{i,j},\hat{y}_{i,j}^{S}).
+(8)
+6 Theoretical Analysis
+In this section, we present the computation and proof of a new convergence bound with our proposed method.
+Our theoretical analysis demonstrates that it achieves a faster convergence rate compared to the imbalanced MLLM instruction tuning.
+6.1 Setup and Notations
+Consider a non-convex random objective function F:\mathbb{R}^{d}\rightarrow\mathbb{R} . In the context of large-scale optimization, this function can be effectively expressed as the average of N component functions, denoted as, F(x)=\frac{1}{K}\sum_{k=1}^{K}f_{k}(x) , where each f_{k}(x) is an i.i.d sample.
+We are going to minimize the expect value of \mathbb{E}\left[F(x)\right] given x\in\mathbb{R}^{d} .
+We also define \mathbb{E}_{k-1} as the conditional expectation with respect to f_{1},f_{2},\cdots,f_{k} .
+Similar as Adam Kingma and Ba (2014) algorithm, we denote m_{k,i} , v_{k,i} , x_{k,i} as the i -th component of m_{k} , v_{k} , x_{k}\in\mathbb{R}^{d} iteratively.
+Building upon the insight of Défossez et al. Défossez et al. (2020) regarding the presence of two bias correction terms, we define \alpha_{k,i}=\alpha_{i}\sqrt{\frac{1-\beta_{2}^{k}}{1-\beta_{2}}} .
+Notably, we opt to drop the correction term for m_{k} due to its faster convergence compared to v_{k} .
+Additionally, to mitigate the risk of vanishing or exploding gradients, we introduce an auxiliary loss regularization term.
+By setting \beta_{1}=0 , 0<\beta_{2}\leq 1 , \alpha_{k,i}>0 , \epsilon=10^{-8} , m_{0}=0 , and v_{0}=0 , given x_{0}\in\mathbb{R}^{d} as our starting point,
+this refinement yields the updated rules as follows,
+\displaystyle v_{k,i}
+\displaystyle=\beta_{2}v_{k-1,i}+\left(\nabla_{i}f_{k}(x_{k-1})+\lambda\nabla_{i}h_{k}(x_{k-1})\right)^{2}
+(9)
+\displaystyle x_{k,i}
+\displaystyle=x_{k-1,i}-\alpha_{k}\frac{\nabla_{i}f_{k}(x_{k-1})+\lambda\nabla_{i}h_{k}(x_{k-1})}{\sqrt{v_{k,i}+\epsilon}},
+(10)
+where \lambda and h(x) represent the learning parameter and loss regularization function, respectively.
+Throughout the proof, we also denote \tilde{v}_{k,i}=\beta_{2}v_{k-1,i}+\mathbb{E}_{k-1}\left[\left(\nabla_{i}f_{k}(x_{k-1})+\lambda\nabla_{i}h_{k}(x_{k-1})\right)^{2}\right] , and the norm of the gradients \|\nabla f(x)+\nabla h(x)\| is bounded by R-\sqrt{\epsilon} .
+6.2 Convergence Proof
+Following the second Theorem outlined by Défossez et al. Défossez et al. (2020), we calculate the convergence bound of our algorithm with a dynamic learning rate and loss function.
+Theorem 1.
+Given the assumptions from Appendix A.1, applying Lemma A.2, let \{x_{k}\} be a sequence generated by the optimizer, with 0<\beta_{2}\leq 1 , and \alpha_{i}>0 , for any time step K we have,
+\displaystyle\mathbb{E}\left[F(x_{K})\right]-\mathbb{E}\left[F(x_{0})\right]
+\displaystyle\leq C\sum_{k=0}^{K-1}\mathbb{E}\left[\|u_{k,i}\|^{2}_{2}\right]-\frac{\alpha_{i}}{2R}\sum_{k=0}^{K-1}\left(\mathbb{E}\left[\|\nabla F(x_{k})_{2}^{2}\|\right]+\lambda\mathbb{E}\left[\nabla F(x_{k})^{T}\nabla h(x_{k})\right]\right),
+(11)
+where u_{k,i}=\frac{\nabla_{i}f_{k}(x_{k-1})+\lambda\nabla_{i}h_{k}(x_{k-1})}{\sqrt{\epsilon+v_{k,i}}} .
+For all the components of step sizes and gradients, updating \alpha_{i} with the corresponding value from H^{S}_{t} and H^{T}_{t} , and updating u_{k,i} based on Eq.( 7) and Eq.( 8),
+\displaystyle\mathbb{E}\left[\|\nabla F(x_{k})_{2}^{2}\|\right]\leq 2R\frac{F(x_{0})-f^{*}}{\alpha_{i}\lambda K}+C\left(\frac{1}{K}\ln\left(\frac{(1-\beta_{2}^{k})R^{2}}{(1-\beta_{2})\epsilon}\right)-ln(\beta_{2})\right)
+(12)
+with
+C=\frac{2\alpha_{i}R}{\sqrt{1-\beta_{2}}}+\frac{\alpha_{i}^{2}L}{2(1-\beta_{2})}
+The detailed proof is provided in Appendix A.3.
+Dynamic learning rate scheduling method in Section 5.1 involves maintaining fixed h(x) while updating \lambda , whereas \lambda and h(x) are both updated alongside incorporating loss regularization in Section 5.2.
+\lambda , measuring the balance of feature and language learning, remains above 1 due to \kappa during training. For example, in Fig. 1, if \kappa>1 (insufficient feature encoding), CoMMIT promotes G^{t} in the opposite direction and reduces step size, balancing learning and ensuring \lambda>1 . Notably, \nabla h(x) is directly added to \nabla f(x) to induce gradient changes, which further contributes to the increase of \lambda , resulting in a faster convergence rate.
+In this section, we prove our theorem using Adam as the base optimizer. Due to the reason that CoMMIT does not modify the optimization algorithm itself, the theorem can be extended to any gradient-based optimization method.
+7 Experiment
+We conduct experiments on three modalities, vision and audio, with multiple instruction-based downstream tasks:
+(1) for Vision, we instruction fine-tune the pre-trained BLIP-2 Li et al. (2023), which is comprised of a vision Q-Former (i.e., the feature encoder) and a backbone OPT-2.7B LLM Zhang et al. (2022).
+We evaluate three visual question-answering tasks, A-OKVQA Schwenk et al. (2022), IconQA Lu et al. (2021), and TextVQA Singh et al. (2019), which focus on knowledge-intensive QA, abstract diagram understanding, and text recognition and reasoning respectively;
+(2) for Audio, we use the SALMONN Tang et al. (2023a) model, which extracts both speech and audio features from waveforms and composes these low-level features by a learnable audio Q-Former structure (i.e., the feature encoder).
+The audio tokens generated by the audio Q-Former are prefixed to language instruction tokens, which are further reasoned by the backbone Vicuna-7B LLM Chiang et al. (2023).
+We evaluate one audio question-answering task and two audio captioning tasks: ClothoAQA Lipping et al. (2022), MACS Morato and Mesaros (2021), and SDD Manco et al. (2023), which focus respectively on crowdsourced audio question-answering, acoustic scene captioning, and text-to-music generation.
+We follow the common instruction tuning methods Dai et al. (2024); Tang et al. (2023a); Huang et al. (2023a), where the parameters of backbone LLMs are frozen, while the parameters in feature encoders and LoRAs Hu et al. (2021) are fine-tuned.
+We set the learning rate to 1e-4 for all the feature encoders and backbone LLMs in Constant LR Dai et al. (2024); Tang et al. (2023a), Feature CD, Language CD Wright (2015), and use the same base learning rates for CoMMIT-CLR and CoMMIT.
+CoMMIT-CLR is a variant of our proposed CoMMIT, without considering the loss regularization in Section 5.2.
+For Feature CD, we first update the feature encoder until its weights stabilize, then update the backbone LLMs. For Language CD, the process is reversed, with the LLMs being trained first.
+Improved Learning Efficiency in MLLM Instruction Tuning. We evaluate the learning efficiency of the proposed methods CoMMIT-CLR and CoMMIT compared with Constant LR in Figure 5 and 5.
+For visual question-answering tasks in Figure 5, we observe that CoMMIT-CLR and CoMMIT consistently accelerate the instruction tuning of BLIP-2 in the early stage.
+Especially in the downstream task IconQA which is held out in BLIP-2 instruction tuning Dai et al. (2024) and requires regional-level and spatial visual understanding that are different from pre-trained tasks Chen et al. (2023),
+CoMMIT-CLR and CoMMIT can achieve lower training losses compared with Constant LR.
+Refer to caption
+Figure 4: Instruction-tuning learning curves of BLIP-2 on three vision-based downstream tasks.
+Refer to caption
+Figure 5: Instruction-tuning learning curves of SALMONN on three audio-based downstream tasks.
+In Figure 5, we observe that the CoMMIT-CLR and CoMMIT can achieve better accelerations in audio captioning tasks, MACS and SDD, compared with their performance in ClothoAQA which is an audio question-answering task.
+Since audio captioning tasks need more adaptation in MLLMs to generate relatively longer context and align the generation distribution with specific tasks,
+the coordinated learning rate scheduling method in Section 5.1 can more dynamically adjust the learning rate for less learned components at each model update step.
+In addition, we show that the proposed loss regularization method adopted in CoMMIT can actively promote the difference in MLLM’s generation distribution between optimization steps,
+which can better benefit tasks, such as audio captioning, that require the model to generate longer contexts.
+Improved Downstream Performance across Modalities. In Table 1, We evaluate the performance of the proposed methods CoMMIT-CLR and CoMMIT, compared with three baselines Constant LR, Feature CD, and Language CD.
+Comparing among baselines, we observe that coordinate gradient descend methods can improve the constant learning rate method in some cases when the model learning shows a significant learning tendency towards a certain modality
+(e.g., Language CD in SDD, and Feature CD in A-OKVQA and ClothoAQA).
+However, since such learning balance varies in downstream tasks, coordinate descend methods cannot consistently improve MLLM instruction tuning,
+while arbitrarily choosing the learning tendency towards a certain modality can result in inferior model performance (e.g., Feature CD in SDD and Language CD in A-OKVQA).
+BLIP-2
+SALMONN
+Average
+Method
+A-OKVQA
+IconQA
+TextVQA
+ClothoAQA
+MACS
+SDD
+Constant LR
+54.06
+37.16
+26.48
+42.49
+24.60
+15.10
+33.32
+Feature CD
+57.99
+35.48
+18.00
+45.80
+22.41
+5.70
+30.90
+Language CD
+49.87
+34.47
+19.44
+38.52
+23.64
+15.74
+30.28
+CoMMIT-CLR
+60.44
+39.09
+27.66
+52.86
+23.81
+15.07
+36.49
+CoMMIT
+64.37
+38.65
+28.12
+50.55
+25.06
+15.33
+37.01
+Table 1:
+Instruction tuning results for two MLLMs, BLIP-2 and SALMONN, which are pre-trained LLMs in vision and audio respectively.
+For questions-answering tasks, A-OKVQA, IconQA, TextVQA, and ClothoAQA, we report the accuracy score of the generated answers.
+For audio captioning tasks, MACS, and SDD, we report the Rouge-L metric that compares the generated caption with candidate captions.
+We highlight the best method in bold font for each downstream task.
+Different from the fixed learning tendency which needs to be predetermined by coordinate descend methods,
+the proposed coordinated learning rate scheduling method can dynamically adapt learning rates for multimodal components and balance the multimodal joint training.
+With better coordinated multimodal learning, CoMMIT-CLR and CoMMIT consistently improve Constant LR across modalities and downstream tasks.
+In addition, the proposed loss regularization method in CoMMIT can promote updating in the generation distribution, conditioned on the learning progress of each component.
+The auxiliary loss regularization prevents learning from being stuck at local optima, which can be especially beneficial for modality-specific captioning tasks whose optimization space can be relatively larger than question-answering tasks.
+Refer to caption
+Figure 6: Learning curves of the multimodal learning balance coefficient \kappa_{t} for multiple methods. In addition to the learning curve, we also report the standard deviation of \kappa_{t} of each method.
+Stabilized Multimodal Learning Balance.
+In Figure 6, we evaluate the stability of CoMMIT and CoMMIT-CLR compared with previous methods in Section 4.1.
+We observe that both CoMMIT and CoMMIT-CLR can stabilize multimodal learning with smaller standard deviations of \kappa_{t} over time.
+Although Language LR \uparrow also achieves relatively higher stability,
+such arbitrary learning rate adjustment method suffers from similar performance inconsistency on multimodal components,
+which potentially may cause worse instruction tuning performance.
+Comparing CoMMIT and CoMMIT-CLR, we can observe that CoMMIT achieves more balanced learning and demonstrates relatively milder learning oscillation.
+Such better stability in CoMMIT can be benefited by the loss regularization in Section 5.2, which encourages generation distribution change in MLLMs conditioned on the learning progress of the feature encoder and language model.
+Accompanied by the loss regularization, the learning balance coefficient \kappa_{t} , which is calculated based on generation distributions, can be more accurately estimated and the coordinated learning rate scheduler can more effectively adapt the optimization process.
+8 Conclusion
+In this work, we address the challenge of learning imbalance between the feature encoder and the backbone LMM during MLLM instruction tuning.
+Through theoretical analysis and empirical observations, we uncovered how this imbalance can lead to insufficient learning and slow convergence.
+To mitigate these challenges, we proposed CoMMIT, a novel approach that dynamically coordinates the learning rates of the multimodal components and regularizes their gradients through an auxiliary loss.
+Our theoretical and empirical analyses demonstrate that CoMMIT improves convergence rates and overall learning efficiency.
+Experiments across multiple vision and audio downstream tasks illustrate CoMMIT’s efficiency and effectiveness compared to baselines.
+Our work has the potential limitations as follows:
+(i) the MLLMs which we focus on have a similar architecture design that composes a feature encoder and a backbone LLM;
+(ii) the proposed method just focuses on MLLM instruction tuning but may not be directly generalized to MLLM pre-training.
+References
+Bai et al. [2024]
+Zechen Bai, Pichao Wang, Tianjun Xiao, Tong He, Zongbo Han, Zheng Zhang, and Mike Zheng Shou.
+Hallucination of multimodal large language models: A survey.
+arXiv preprint arXiv:2404.18930, 2024.
+Bertsekas et al. [2003]
+Dimitri Bertsekas, Angelia Nedic, and Asuman Ozdaglar.
+Convex analysis and optimization, volume 1.
+Athena Scientific, 2003.
+Chen et al. [2023]
+Gongwei Chen, Leyang Shen, Rui Shao, Xiang Deng, and Liqiang Nie.
+Lion: Empowering multimodal large language model with dual-level visual knowledge.
+arXiv preprint arXiv:2311.11860, 2023.
+Chiang et al. [2023]
+Wei-Lin Chiang, Zhuohan Li, Zi Lin, Ying Sheng, Zhanghao Wu, Hao Zhang, Lianmin Zheng, Siyuan Zhuang, Yonghao Zhuang, Joseph E Gonzalez, et al.
+Vicuna: An open-source chatbot impressing gpt-4 with 90%* chatgpt quality.
+See https://vicuna. lmsys. org (accessed 14 April 2023), 2(3):6, 2023.
+Chu et al. [2023]
+Yunfei Chu, Jin Xu, Xiaohuan Zhou, Qian Yang, Shiliang Zhang, Zhijie Yan, Chang Zhou, and Jingren Zhou.
+Qwen-audio: Advancing universal audio understanding via unified large-scale audio-language models.
+arXiv preprint arXiv:2311.07919, 2023.
+Dai et al. [2024]
+Wenliang Dai, Junnan Li, Dongxu Li, Anthony Meng Huat Tiong, Junqi Zhao, Weisheng Wang, Boyang Li, Pascale N Fung, and Steven Hoi.
+Instructblip: Towards general-purpose vision-language models with instruction tuning.
+Advances in Neural Information Processing Systems, 36, 2024.
+Défossez et al. [2020]
+Alexandre Défossez, Léon Bottou, Francis Bach, and Nicolas Usunier.
+A simple convergence proof of adam and adagrad.
+arXiv preprint arXiv:2003.02395, 2020.
+Gardner et al. [2023]
+Josh Gardner, Simon Durand, Daniel Stoller, and Rachel M Bittner.
+Llark: A multimodal foundation model for music.
+arXiv preprint arXiv:2310.07160, 2023.
+Han et al. [2023]
+Jiaming Han, Renrui Zhang, Wenqi Shao, Peng Gao, Peng Xu, Han Xiao, Kaipeng Zhang, Chris Liu, Song Wen, Ziyu Guo, et al.
+Imagebind-llm: Multi-modality instruction tuning.
+arXiv preprint arXiv:2309.03905, 2023.
+Hu et al. [2021]
+Edward J Hu, Yelong Shen, Phillip Wallis, Zeyuan Allen-Zhu, Yuanzhi Li, Shean Wang, Lu Wang, and Weizhu Chen.
+Lora: Low-rank adaptation of large language models.
+arXiv preprint arXiv:2106.09685, 2021.
+Huang et al. [2023a]
+Bin Huang, Xin Wang, Hong Chen, Zihan Song, and Wenwu Zhu.
+Vtimellm: Empower llm to grasp video moments.
+arXiv preprint arXiv:2311.18445, 2023a.
+Huang et al. [2023b]
+Rongjie Huang, Mingze Li, Dongchao Yang, Jiatong Shi, Xuankai Chang, Zhenhui Ye, Yuning Wu, Zhiqing Hong, Jiawei Huang, Jinglin Liu, et al.
+Audiogpt: Understanding and generating speech, music, sound, and talking head.
+arXiv preprint arXiv:2304.12995, 2023b.
+Kingma and Ba [2014]
+Diederik P Kingma and Jimmy Ba.
+Adam: A method for stochastic optimization.
+arXiv preprint arXiv:1412.6980, 2014.
+Ko et al. [2023]
+Dohwan Ko, Ji Soo Lee, Wooyoung Kang, Byungseok Roh, and Hyunwoo J Kim.
+Large language models are temporal and causal reasoners for video question answering.
+arXiv preprint arXiv:2310.15747, 2023.
+Li et al. [2023]
+Junnan Li, Dongxu Li, Silvio Savarese, and Steven Hoi.
+Blip-2: Bootstrapping language-image pre-training with frozen image encoders and large language models.
+arXiv preprint arXiv:2301.12597, 2023.
+Lipping et al. [2022]
+Samuel Lipping, Parthasaarathy Sudarsanam, Konstantinos Drossos, and Tuomas Virtanen.
+Clotho-aqa: A crowdsourced dataset for audio question answering.
+In 2022 30th European Signal Processing Conference (EUSIPCO), pages 1140–1144. IEEE, 2022.
+Liu et al. [2024]
+Haotian Liu, Chunyuan Li, Qingyang Wu, and Yong Jae Lee.
+Visual instruction tuning.
+Advances in neural information processing systems, 36, 2024.
+Liu et al. [2021]
+Tianyi Liu, Zuxuan Wu, Wenhan Xiong, Jingjing Chen, and Yu-Gang Jiang.
+Unified multimodal pre-training and prompt-based tuning for vision-language understanding and generation.
+arXiv preprint arXiv:2112.05587, 2021.
+Lu et al. [2021]
+Pan Lu, Liang Qiu, Jiaqi Chen, Tony Xia, Yizhou Zhao, Wei Zhang, Zhou Yu, Xiaodan Liang, and Song-Chun Zhu.
+Iconqa: A new benchmark for abstract diagram understanding and visual language reasoning.
+arXiv preprint arXiv:2110.13214, 2021.
+Lu et al. [2023]
+Yadong Lu, Chunyuan Li, Haotian Liu, Jianwei Yang, Jianfeng Gao, and Yelong Shen.
+An empirical study of scaling instruct-tuned large multimodal models.
+arXiv preprint arXiv:2309.09958, 2023.
+Lucas et al. [2018]
+James Lucas, Shengyang Sun, Richard Zemel, and Roger Grosse.
+Aggregated momentum: Stability through passive damping.
+In International Conference on Learning Representations, 2018.
+Maaz et al. [2023]
+Muhammad Maaz, Hanoona Rasheed, Salman Khan, and Fahad Shahbaz Khan.
+Video-chatgpt: Towards detailed video understanding via large vision and language models.
+arXiv preprint arXiv:2306.05424, 2023.
+Manco et al. [2023]
+Ilaria Manco, Benno Weck, Seungheon Doh, Minz Won, Yixiao Zhang, Dmitry Bodganov, Yusong Wu, Ke Chen, Philip Tovstogan, Emmanouil Benetos, et al.
+The song describer dataset: A corpus of audio captions for music-and-language evaluation.
+arXiv preprint arXiv:2311.10057, 2023.
+Mao et al. [2023]
+Anqi Mao, Mehryar Mohri, and Yutao Zhong.
+Cross-entropy loss functions: Theoretical analysis and applications.
+In International Conference on Machine Learning, pages 23803–23828. PMLR, 2023.
+Morato and Mesaros [2021]
+IM Morato and A Mesaros.
+Macs-multi-annotator captioned soundscapes, 2021.
+Nesterov [2013]
+Yurii Nesterov.
+Introductory lectures on convex optimization: A basic course, volume 87.
+Springer Science & Business Media, 2013.
+Ouyang et al. [2022]
+Long Ouyang, Jeffrey Wu, Xu Jiang, Diogo Almeida, Carroll Wainwright, Pamela Mishkin, Chong Zhang, Sandhini Agarwal, Katarina Slama, Alex Ray, et al.
+Training language models to follow instructions with human feedback.
+Advances in neural information processing systems, 35:27730–27744, 2022.
+Rawte et al. [2024]
+Vipula Rawte, Anku Rani, Harshad Sharma, Neeraj Anand, Krishnav Rajbangshi, Amit Sheth, and Amitava Das.
+Visual hallucination: Definition, quantification, and prescriptive remediations.
+arXiv preprint arXiv:2403.17306, 2024.
+Sashank et al. [2018]
+J Reddi Sashank, Kale Satyen, and Kumar Sanjiv.
+On the convergence of adam and beyond.
+In International conference on learning representations, volume 5, 2018.
+Schwenk et al. [2022]
+Dustin Schwenk, Apoorv Khandelwal, Christopher Clark, Kenneth Marino, and Roozbeh Mottaghi.
+A-okvqa: A benchmark for visual question answering using world knowledge.
+In European Conference on Computer Vision, pages 146–162. Springer, 2022.
+Singh et al. [2019]
+Amanpreet Singh, Vivek Natarjan, Meet Shah, Yu Jiang, Xinlei Chen, Devi Parikh, and Marcus Rohrbach.
+Towards vqa models that can read.
+In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pages 8317–8326, 2019.
+Steele [2004]
+J Michael Steele.
+The Cauchy-Schwarz master class: an introduction to the art of mathematical inequalities.
+Cambridge University Press, 2004.
+Tanaka and Kunin [2021]
+Hidenori Tanaka and Daniel Kunin.
+Noether’s learning dynamics: Role of symmetry breaking in neural networks.
+Advances in Neural Information Processing Systems, 34:25646–25660, 2021.
+Tang et al. [2023a]
+Changli Tang, Wenyi Yu, Guangzhi Sun, Xianzhao Chen, Tian Tan, Wei Li, Lu Lu, Zejun Ma, and Chao Zhang.
+Salmonn: Towards generic hearing abilities for large language models.
+arXiv preprint arXiv:2310.13289, 2023a.
+Tang et al. [2023b]
+Yunlong Tang, Jing Bi, Siting Xu, Luchuan Song, Susan Liang, Teng Wang, Daoan Zhang, Jie An, Jingyang Lin, Rongyi Zhu, et al.
+Video understanding with large language models: A survey.
+arXiv preprint arXiv:2312.17432, 2023b.
+Tong et al. [2024]
+Shengbang Tong, Zhuang Liu, Yuexiang Zhai, Yi Ma, Yann LeCun, and Saining Xie.
+Eyes wide shut? exploring the visual shortcomings of multimodal llms.
+arXiv preprint arXiv:2401.06209, 2024.
+Touvron et al. [2023]
+Hugo Touvron, Louis Martin, Kevin Stone, Peter Albert, Amjad Almahairi, Yasmine Babaei, Nikolay Bashlykov, Soumya Batra, Prajjwal Bhargava, Shruti Bhosale, et al.
+Llama 2: Open foundation and fine-tuned chat models.
+arXiv preprint arXiv:2307.09288, 2023.
+Wang et al. [2024a]
+Dongsheng Wang, Miaoge Li, Xinyang Liu, MingSheng Xu, Bo Chen, and Hanwang Zhang.
+Tuning multi-mode token-level prompt alignment across modalities.
+Advances in Neural Information Processing Systems, 36, 2024a.
+Wang et al. [2024b]
+Wenhai Wang, Zhe Chen, Xiaokang Chen, Jiannan Wu, Xizhou Zhu, Gang Zeng, Ping Luo, Tong Lu, Jie Zhou, Yu Qiao, et al.
+Visionllm: Large language model is also an open-ended decoder for vision-centric tasks.
+Advances in Neural Information Processing Systems, 36, 2024b.
+Wei et al. [2021]
+Fuchao Wei, Chenglong Bao, and Yang Liu.
+Stochastic anderson mixing for nonconvex stochastic optimization.
+Advances in Neural Information Processing Systems, 34:22995–23008, 2021.
+Wright [2015]
+Stephen J Wright.
+Coordinate descent algorithms.
+Mathematical programming, 151(1):3–34, 2015.
+Yin et al. [2024]
+Zhenfei Yin, Jiong Wang, Jianjian Cao, Zhelun Shi, Dingning Liu, Mukai Li, Xiaoshui Huang, Zhiyong Wang, Lu Sheng, Lei Bai, et al.
+Lamm: Language-assisted multi-modal instruction-tuning dataset, framework, and benchmark.
+Advances in Neural Information Processing Systems, 36, 2024.
+Zhang et al. [2024]
+Ao Zhang, Hao Fei, Yuan Yao, Wei Ji, Li Li, Zhiyuan Liu, and Tat-Seng Chua.
+Vpgtrans: Transfer visual prompt generator across llms.
+Advances in Neural Information Processing Systems, 36, 2024.
+Zhang et al. [2023]
+Hang Zhang, Xin Li, and Lidong Bing.
+Video-llama: An instruction-tuned audio-visual language model for video understanding.
+arXiv preprint arXiv:2306.02858, 2023.
+Zhang et al. [2022]
+Susan Zhang, Stephen Roller, Naman Goyal, Mikel Artetxe, Moya Chen, Shuohui Chen, Christopher Dewan, Mona Diab, Xian Li, Xi Victoria Lin, et al.
+Opt: Open pre-trained transformer language models.
+arXiv preprint arXiv:2205.01068, 2022.
+Zhao et al. [2024]
+Hang Zhao, Yifei Xin, Zhesong Yu, Bilei Zhu, Lu Lu, and Zejun Ma.
+Slit: Boosting audio-text pre-training via multi-stage learning and instruction tuning.
+arXiv preprint arXiv:2402.07485, 2024.
+Appendix A Appendix
+A.1 Necessary Assumptions
+We state the necessary assumptions Bertsekas et al. [2003] commonly used when analyzing the convergence of stochastic algorithms for non-convex problems:
+Assumption 1.
+The minimum value of f(x) is lower-bounded,
+\forall x\in\mathbb{R}^{d},\ f^{*}=\min f(x).
+Assumption 2.
+The gradient of the non-convex objective function f is L -Liptchitz continuous Nesterov [2013]. Then \forall x,y\in\mathbb{R}^{d} , the following inequality holds,
+f(y)\leq f(x)+\nabla f(x)^{T}(y-x)+\frac{L}{2}\|x-y\|^{2}_{2}.
+A.2 Controlling Deviation from Descent Direction
+Following the first Lemma outlined by Défossez et al. Défossez et al. [2020], where the expected update direction can positively correlate with the gradient Sashank et al. [2018], we aim to control the deviation from the descent direction to enhance convergence.
+Lemma 1.
+For all k\in\mathbb{N}^{*} and R\geq\|\nabla f(x)+\nabla h(x)\|+\sqrt{\epsilon} , the gradient update follows a descent direction,
+\displaystyle\mathbb{E}_{k-1}\left[\nabla_{i}F(x_{k-1})\frac{\nabla_{i}f_{k}(x_{k-1})+\lambda\nabla_{i}h_{k}(x_{k-1})}{\sqrt{\epsilon+v_{k,i}}}\right]-\frac{(\nabla_{i}F(x_{k-1}))^{2}}{2\sqrt{\epsilon+\tilde{v}_{k,i}}}
+\displaystyle\geq\frac{\lambda\nabla_{i}F(x_{k-1})\nabla_{i}h_{k}(x_{k-1})}{2\sqrt{\epsilon+\tilde{v}_{k,i}}}-2R\mathbb{E}_{k-1}\left[\frac{(\nabla_{i}f_{k}(x_{k-1})+\lambda\nabla_{i}h_{k}(x_{k-1}))^{2}}{\epsilon+v_{k,i}}\right].
+(13)
+Proof.
+Denote F=\nabla_{i}F(x_{k-1}) , f=\nabla_{i}f_{k}(x_{k-1}) , h=\lambda\nabla_{i}h_{k}(x_{k-1})
+\mathbb{E}_{k-1}\left[\frac{F(f+h)}{\sqrt{\epsilon+v_{k,i}}}\right]=\mathbb{E}_{k-1}\left[\frac{F(f+h)}{\sqrt{\epsilon+\tilde{v}_{k,i}}}\right]+\mathbb{E}_{k-1}\left[F(f+h)\left(\frac{1}{\sqrt{\epsilon+v_{k,i}}}-\frac{1}{\sqrt{\epsilon+\tilde{v}_{k,i}}}\right)\right]
+(14)
+We know that g and \tilde{v}_{k,i} are independent given f_{1},f_{2},\cdots,f_{n-1} . h and \tilde{v}_{k,i} are also independent based on our settings which do not affect the momentum, we have,
+\mathbb{E}_{k-1}\left[\frac{F(f+h)}{\sqrt{\epsilon+\tilde{v}_{k,i}}}\right]=\frac{F^{2}}{\sqrt{\epsilon+\tilde{v}_{k,i}}}+\frac{Fh}{\sqrt{\epsilon+\tilde{v}_{k,i}}}
+(15)
+The only thing we need to do is control the deviation of the second term in Eq.( 14). Applying Cauchy-Schwarz Steele [2004],
+\displaystyle RHS
+\displaystyle=F(f+h)\frac{\mathbb{E}_{k-1}\left[(f+h)^{2}\right]-(f+h)^{2}}{\sqrt{\epsilon+v_{k,i}}\sqrt{\epsilon+\tilde{v}_{k,i}}(\sqrt{\epsilon+v_{k,i}}+\sqrt{\epsilon+\tilde{v}_{k,i}})}
+\displaystyle\leq F(f+h)\frac{\mathbb{E}_{k-1}\left[(f+h)^{2}\right]}{\sqrt{\epsilon+v_{k,i}}(\epsilon+\tilde{v}_{k,i})}+F(f+h)\frac{(f+h)^{2}}{\sqrt{\epsilon+v_{k,i}}(\epsilon+\tilde{v}_{k,i})}.
+(16)
+By applying the inequality ab\leq\frac{1}{2\lambda}b^{2}+\frac{\lambda}{2}a^{2} with \lambda=\frac{\sqrt{\epsilon+\tilde{v}_{k,i}}}{2} , a = \frac{F}{\sqrt{\epsilon+\tilde{v}_{k,i}}} , and b=\frac{(f+h)\mathbb{E}_{k-1}\left[(f+h)^{2}\right]}{\sqrt{\epsilon+\tilde{v}_{k,i}}\sqrt{\epsilon+v_{k,i}}} , the conditional expectation of the first term in Eq.( 16) can be bounded as,
+\displaystyle\mathbb{E}_{k-1}\left[F(f+h)\frac{\mathbb{E}_{k-1}\left[(f+h)^{2}\right]}{\sqrt{\epsilon+v_{k,i}}(\epsilon+\tilde{v}_{k,i})}\right]
+\displaystyle\leq\mathbb{E}_{k-1}\left[\frac{F^{2}}{4\sqrt{\epsilon+\tilde{v}_{k,i}}}+\frac{(f+h)^{2}\mathbb{E}_{k-1}\left[(f+h)^{2}\right]^{2}}{\sqrt{\epsilon+\tilde{v}_{k,i}}^{3}(\epsilon+v_{k,i})}\right]
+\displaystyle\leq\frac{F^{2}}{4\sqrt{\epsilon+\tilde{v}_{k,i}}}+\mathbb{E}_{k-1}\left[\frac{(f+h)^{2}\mathbb{E}_{k-1}\left[(f+h)^{2}\right]}{\sqrt{\epsilon+\tilde{v}_{k,i}}(\epsilon+v_{k,i})}\right]
+\displaystyle\leq\frac{F^{2}}{4\sqrt{\epsilon+\tilde{v}_{k,i}}}+R\mathbb{E}_{k-1}\left[\frac{(f+h)^{2}}{\epsilon+v_{k,i}}\right],
+(17)
+with respect to the fact that \epsilon+\tilde{v}_{k,i}\geq\mathbb{E}_{k-1}\left[(f+h)^{2}\right] and \mathbb{E}_{k-1}\left[(f+h)^{2}\right]\leq R .
+Similarly, applying the inequality ab\leq\frac{\lambda}{2}a^{2}+\frac{1}{2\lambda}b^{2} with \lambda=\frac{\sqrt{\epsilon+\tilde{v}_{k,i}}}{2\mathbb{E}_{k-1}\left[(f+h)^{2}\right]} , a=\frac{F(f+h)}{\sqrt{\epsilon+\tilde{v}_{k,i}}} , and b=\frac{(f+h)^{2}}{\epsilon+v_{k,i}} , the conditional expectation of the second term in Eq.( 16) can be bounded as,
+\displaystyle\mathbb{E}_{k-1}\left[F\frac{(f+h)^{2}(f+h)}{\sqrt{\epsilon+v_{k,i}}(\epsilon+\tilde{v}_{k,i})}\right]
+\displaystyle\leq\mathbb{E}_{k-1}\left[\frac{F^{2}}{4\sqrt{\epsilon+\tilde{v}_{k,i}}}\frac{(f+h)^{2}}{\mathbb{E}_{k-1}\left[(f+h)^{2}\right]}+\frac{\mathbb{E}_{k-1}\left[(f+h)^{2}\right]}{\sqrt{\epsilon+\tilde{v}_{k,i}}}\frac{(f+h)^{4}}{(\epsilon+v_{k,i})^{2}}\right]
+\displaystyle\leq\frac{F^{2}}{4\sqrt{\epsilon+\tilde{v}_{k,i}}}+\mathbb{E}_{k-1}\left[\frac{\mathbb{E}_{k-1}\left[(f+h)^{2}\right]}{\sqrt{\epsilon+\tilde{v}_{k,i}}}\frac{(f+h)^{2}}{(\epsilon+v_{k,i})}\right]
+\displaystyle\leq\frac{F^{2}}{4\sqrt{\epsilon+\tilde{v}_{k,i}}}+R\mathbb{E}_{k-1}\left[\frac{(f+h)^{2}}{\epsilon+v_{k,i}}\right],
+(18)
+given again \mathbb{E}_{k-1}\left[(f+h)^{2}\right]\leq R .
+Putting inequalities (17) and (18) back into (16) gives,
+\mathbb{E}_{k-1}\left[F(f+h)\left(\frac{1}{\sqrt{\epsilon+v_{k,i}}}-\frac{1}{\sqrt{\epsilon+\tilde{v}_{k,i}}}\right)\right]\leq\frac{F^{2}}{2\sqrt{\epsilon+\tilde{v}_{k,i}}}+2R\mathbb{E}_{k-1}\left[\frac{(f+h)^{2}}{\epsilon+v_{k,i}}\right]
+(19)
+And, therefore, adding Eq.(19) and Eq.(15) into Eq.(14) finishes the proof.
+∎
+A.3 Proof of Convergence
+In this section, we prove the theorem 1.
+Proof.
+Give \alpha_{k}=\alpha\sqrt{\frac{1-\beta_{2}^{k}}{1-\beta_{2}}} , we apply the Assumption 2 and get,
+F(x_{k})\leq F(x_{k-1})-\alpha_{k}\nabla F(x_{k-1})^{T}u_{k}+\frac{\alpha_{k}^{2}L}{2}\|u_{k}\|^{2}_{2}.
+(20)
+Since we define the bound R\geq\|\nabla f(x)+\nabla h(x)\|+\sqrt{\epsilon} , it follows that \sqrt{\epsilon+\tilde{v}_{k,i}}\leq R\sqrt{\sum_{j=0}^{n-1}\beta_{2}^{j}} . By applying this inequality, we obtain,
+\displaystyle\alpha_{k}\left(\frac{(\nabla_{i}F(x_{k-1}))^{2}}{2\sqrt{\epsilon+\tilde{v}_{k,i}}}+\frac{\lambda\nabla_{i}F(x_{k-1})\nabla_{i}h_{k}(x_{k-1})}{2\sqrt{\epsilon+\tilde{v}_{k,i}}}\right)
+\displaystyle\geq\alpha\left(\frac{(\nabla_{i}F(x_{k-1}))^{2}}{2R}+\frac{\lambda\nabla_{i}F(x_{k-1})\nabla_{i}h_{k}(x_{k-1})}{2R}\right).
+(21)
+By taking the conditional expectation, we apply Eq.( A.3) to Lemma 1 to derive results from Eq.( 20),
+\displaystyle\mathbb{E}_{k-1}\left[F(x_{K})\right]
+\displaystyle\leq\mathbb{E}_{k-1}\left[F(x_{k-1})\right]-\frac{\alpha}{2R}\|\nabla F(x_{k})_{2}^{2}\|
+\displaystyle-\frac{\alpha\lambda}{2R}(\nabla F(x_{k})^{T}\nabla h(x_{k}))+\left(2\alpha_{k}R+\frac{\alpha_{k}^{2}L}{2}\right)\mathbb{E}\left[\|u_{k}\|^{2}_{2}\right]
+(22)
+Summing the previous inequality over all k and taking the full expectation results in the Eq( 1) with respect to the fact that \alpha\geq\alpha_{k}\sqrt{1-\beta_{2}} .
+By applying Lemma 5.2 from Défossez et al. Défossez et al. [2020], we get the final bound,
+\displaystyle\mathbb{E}\left[\|\nabla F(x_{k})_{2}^{2}\|\right]\leq 2R\frac{F(x_{0})-f^{*}}{\alpha(1+\lambda)K}+\left(\frac{2\alpha R}{\sqrt{1-\beta_{2}}}+\frac{\alpha^{2}L}{2(1-\beta_{2})}\right)\left(\frac{1}{K}\ln\left(\frac{(1-\beta_{2}^{n})R^{2}}{(1-\beta_{2})\epsilon}\right)-ln(\beta_{2})\right)
+(23)
+∎
+A.4 Computation Resources
+Our model is trained on 4 A100 GPUs with 40GB memory. The average training time is about 8 hours.
+◄
+ar5iv homepage
+Feeling
+lucky?
+Conversion
+report
+Report
+an issue
+View original
+on arXiv►
+Copyright
+Privacy Policy
+Generated on Mon Aug 5 18:46:58 2024 by LaTeXML Mascot Sammy

@@ -1,0 +1,1824 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/WAUFB/pfB8MPdFpstDvogZ/PWuY</id>
+  <title>arXiv Query: search_query=all:"multimodal large language model" AND (all:"next-token prediction" OR all:"language prior" OR all:"modality collapse" OR all:"visual supervision")&amp;id_list=&amp;start=0&amp;max_results=50</title>
+  <updated>2026-08-07T05:16:50Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22multimodal+large+language+model%22+AND+(all:%22next-token+prediction%22+OR+(all:%22language+prior%22+OR+(all:%22modality+collapse%22+OR+all:%22visual+supervision%22)))&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <opensearch:totalResults>67</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2501.12327v1</id>
+    <title>VARGPT: Unified Understanding and Generation in a Visual Autoregressive Multimodal Large Language Model</title>
+    <updated>2025-01-21T17:50:43Z</updated>
+    <link href="https://arxiv.org/abs/2501.12327v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.12327v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present VARGPT, a novel multimodal large language model (MLLM) that unifies visual understanding and generation within a single autoregressive framework. VARGPT employs a next-token prediction paradigm for visual understanding and a next-scale prediction paradigm for visual autoregressive generation. VARGPT innovatively extends the LLaVA architecture, achieving efficient scale-wise autoregressive visual generation within MLLMs while seamlessly accommodating mixed-modal input and output within a single model framework. Our VARGPT undergoes a three-stage unified training process on specially curated datasets, comprising a pre-training phase and two mixed visual instruction-tuning phases. The unified training strategy are designed to achieve alignment between visual and textual features, enhance instruction following for both understanding and generation, and improve visual generation quality, respectively. Despite its LLAVA-based architecture for multimodel understanding, VARGPT significantly outperforms LLaVA-1.5 across various vision-centric benchmarks, such as visual question-answering and reasoning tasks. Notably, VARGPT naturally supports capabilities in autoregressive visual generation and instruction-to-image synthesis, showcasing its versatility in both visual understanding and generation tasks. Project page is at: \url{https://vargpt-1.github.io/}</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-01-21T17:50:43Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xianwei Zhuang</name>
+    </author>
+    <author>
+      <name>Yuxin Xie</name>
+    </author>
+    <author>
+      <name>Yufan Deng</name>
+    </author>
+    <author>
+      <name>Liming Liang</name>
+    </author>
+    <author>
+      <name>Jinghan Ru</name>
+    </author>
+    <author>
+      <name>Yuguo Yin</name>
+    </author>
+    <author>
+      <name>Yuexian Zou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.02607v2</id>
+    <title>UniChange: Unifying Change Detection with Multimodal Large Language Model</title>
+    <updated>2025-11-26T08:26:24Z</updated>
+    <link href="https://arxiv.org/abs/2511.02607v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.02607v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Change detection (CD) is a fundamental task for monitoring and analyzing land cover dynamics. While recent high performance models and high quality datasets have significantly advanced the field, a critical limitation persists. Current models typically acquire limited knowledge from single-type annotated data and cannot concurrently leverage diverse binary change detection (BCD) and semantic change detection (SCD) datasets. This constraint leads to poor generalization and limited versatility. The recent advancements in Multimodal Large Language Models (MLLMs) introduce new possibilities for a unified CD framework. We leverage the language priors and unification capabilities of MLLMs to develop UniChange, the first MLLM-based unified change detection model. UniChange integrates generative language abilities with specialized CD functionalities. Our model successfully unifies both BCD and SCD tasks through the introduction of three special tokens: [T1], [T2], and [CHANGE]. Furthermore, UniChange utilizes text prompts to guide the identification of change categories, eliminating the reliance on predefined classification heads. This design allows UniChange to effectively acquire knowledge from multi-source datasets, even when their class definitions conflict. Experiments on four public benchmarks (WHU-CD, S2Looking, LEVIR-CD+, and SECOND) demonstrate SOTA performance, achieving IoU scores of 90.41, 53.04, 78.87, and 57.62, respectively, surpassing all previous methods. The code is available at https://github.com/Erxucomeon/UniChange.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-04T14:31:06Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xu Zhang</name>
+    </author>
+    <author>
+      <name>Danyang Li</name>
+    </author>
+    <author>
+      <name>Xiaohang Dong</name>
+    </author>
+    <author>
+      <name>Tianhao Wu</name>
+    </author>
+    <author>
+      <name>Hualong Yu</name>
+    </author>
+    <author>
+      <name>Jianye Wang</name>
+    </author>
+    <author>
+      <name>Qicheng Li</name>
+    </author>
+    <author>
+      <name>Xiang Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.14735v1</id>
+    <title>Decoupled Proxy Alignment: Mitigating Language Prior Conflict for Multimodal Alignment in MLLM</title>
+    <updated>2025-09-18T08:37:11Z</updated>
+    <link href="https://arxiv.org/abs/2509.14735v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.14735v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal large language models (MLLMs) have gained significant attention due to their impressive ability to integrate vision and language modalities. Recent advancements in MLLMs have primarily focused on improving performance through high-quality datasets, novel architectures, and optimized training strategies. However, in this paper, we identify a previously overlooked issue, language prior conflict, a mismatch between the inherent language priors of large language models (LLMs) and the language priors in training datasets. This conflict leads to suboptimal vision-language alignment, as MLLMs are prone to adapting to the language style of training samples. To address this issue, we propose a novel training method called Decoupled Proxy Alignment (DPA). DPA introduces two key innovations: (1) the use of a proxy LLM during pretraining to decouple the vision-language alignment process from language prior interference, and (2) dynamic loss adjustment based on visual relevance to strengthen optimization signals for visually relevant tokens. Extensive experiments demonstrate that DPA significantly mitigates the language prior conflict, achieving superior alignment performance across diverse datasets, model families, and scales. Our method not only improves the effectiveness of MLLM training but also shows exceptional generalization capabilities, making it a robust approach for vision-language alignment. Our code is available at https://github.com/fnlp-vision/DPA.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-09-18T08:37:11Z</published>
+    <arxiv:comment>Accepted by Findings of EMNLP2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Chenkun Tan</name>
+    </author>
+    <author>
+      <name>Pengyu Wang</name>
+    </author>
+    <author>
+      <name>Shaojun Zhou</name>
+    </author>
+    <author>
+      <name>Botian Jiang</name>
+    </author>
+    <author>
+      <name>Zhaowei Li</name>
+    </author>
+    <author>
+      <name>Dong Zhang</name>
+    </author>
+    <author>
+      <name>Xinghao Wang</name>
+    </author>
+    <author>
+      <name>Yaqian Zhou</name>
+    </author>
+    <author>
+      <name>Xipeng Qiu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.14349v3</id>
+    <title>Vision-Centric Activation and Coordination for Multimodal Large Language Models</title>
+    <updated>2025-10-23T07:31:13Z</updated>
+    <link href="https://arxiv.org/abs/2510.14349v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.14349v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal large language models (MLLMs) integrate image features from visual encoders with LLMs, demonstrating advanced comprehension capabilities. However, mainstream MLLMs are solely supervised by the next-token prediction of textual tokens, neglecting critical vision-centric information essential for analytical abilities. To track this dilemma, we introduce VaCo, which optimizes MLLM representations through Vision-Centric activation and Coordination from multiple vision foundation models (VFMs). VaCo introduces visual discriminative alignment to integrate task-aware perceptual features extracted from VFMs, thereby unifying the optimization of both textual and visual outputs in MLLMs. Specifically, we incorporate the learnable Modular Task Queries (MTQs) and Visual Alignment Layers (VALs) into MLLMs, activating specific visual signals under the supervision of diverse VFMs. To coordinate representation conflicts across VFMs, the crafted Token Gateway Mask (TGM) restricts the information flow among multiple groups of MTQs. Extensive experiments demonstrate that VaCo significantly improves the performance of different MLLMs on various benchmarks, showcasing its superior capabilities in visual comprehension.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-16T06:38:39Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yunnan Wang</name>
+    </author>
+    <author>
+      <name>Fan Lu</name>
+    </author>
+    <author>
+      <name>Kecheng Zheng</name>
+    </author>
+    <author>
+      <name>Ziyuan Huang</name>
+    </author>
+    <author>
+      <name>Ziqiang Li</name>
+    </author>
+    <author>
+      <name>Wenjun Zeng</name>
+    </author>
+    <author>
+      <name>Xin Jin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.12374v4</id>
+    <title>Fill the GAP: A Granular Alignment Paradigm for Visual Reasoning in Multimodal Large Language Models</title>
+    <updated>2026-05-25T11:34:51Z</updated>
+    <link href="https://arxiv.org/abs/2605.12374v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.12374v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Visual latent reasoning lets a multimodal large language model (MLLM) create intermediate visual evidence as continuous tokens, avoiding external tools or image generators. However, existing methods usually follow an output-as-input latent paradigm and yield unstable gains. We identify evidence for a feature-space mismatch that can contribute to this instability: dominant visual-latent models build on pre-norm MLLMs and reuse decoder hidden states as predicted latent inputs, even though these states occupy a substantially different norm regime from the input embeddings the model was trained to consume (Xie et al., 2025; Li et al., 2026; Team et al., 2026). This mismatch can make direct latent feedback unreliable. Motivated by this diagnosis, we propose GAP, a Granular Alignment Paradigm for visual latent modeling. GAP aligns visual latent reasoning at three levels: feature-level alignment maps decoder outputs into input-compatible visual latents through a lightweight PCA-aligned latent head; context-level alignment grounds latent targets with inspectable auxiliary visual supervision; and capacity-guided alignment assigns latent supervision selectively to examples where the base MLLM struggles. On Qwen2.5-VL 7B, the resulting model achieves the best mean aggregate perception and reasoning performance among our supervised variants. Inference-time intervention probing further suggests that generated latents provide task-relevant visual signal beyond merely adding token slots.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-12T16:41:09Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yanting Miao</name>
+    </author>
+    <author>
+      <name>Yutao Sun</name>
+    </author>
+    <author>
+      <name>Dexin Wang</name>
+    </author>
+    <author>
+      <name>Mengyu Zhou</name>
+    </author>
+    <author>
+      <name>Pascal Poupart</name>
+    </author>
+    <author>
+      <name>Lei Lv</name>
+    </author>
+    <author>
+      <name>Qi Zhao</name>
+    </author>
+    <author>
+      <name>Li Wang</name>
+    </author>
+    <author>
+      <name>Hao Li</name>
+    </author>
+    <author>
+      <name>Xiaoxi Jiang</name>
+    </author>
+    <author>
+      <name>Guanjun Jiang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.19915v1</id>
+    <title>SpatialSV: Internalizing Interpretable 3D Spatial Awareness in MLLMs via Task-Oriented Visual Supervision</title>
+    <updated>2026-06-18T08:09:32Z</updated>
+    <link href="https://arxiv.org/abs/2606.19915v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.19915v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Unlocking the spatial intelligence of multimodal large language model (MLLMs) is crucial for understanding and interacting with the 3D world. Prevailing approaches typically inject spatial priors via external tools, which impose significant inference overhead, or rely on latent feature distillation, which remains uninterpretable and lacks fine-grained geometric constraints. To address these issues, we propose SpatialSV, a framework designed to internalize robust 3D spatial awareness within MLLMs while simultaneously offering inherent interpretability. Deviating from passive feature imitation, SpatialSV employs task-oriented visual supervision, compelling the model to actively lift its 2D visual features into explicit 3D representations, including depth maps, camera poses, and point clouds. Crucially, this 2D-to-3D lifting process provides a transparent window into the model's representations: the resulting 3D reconstructions serve as an intuitive proxy for visualizing and diagnosing the quality of the model's intrinsic spatial knowledge. Extensive experiments across multiple models and benchmarks demonstrate the effectiveness of SpatialSV in enhancing and interpreting MLLMs' spatial intelligence. Furthermore, the framework exhibits strong generalization in semi-supervised settings, validating its potential to leverage unlabeled visual data for scalable, interpretable spatial representation learning.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-18T08:09:32Z</published>
+    <arxiv:comment>Accepted by IJCAI 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jiayu Tang</name>
+    </author>
+    <author>
+      <name>Yuchen Zhou</name>
+    </author>
+    <author>
+      <name>Chao Gou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.06895v1</id>
+    <title>BASIC: Boosting Visual Alignment with Intrinsic Refined Embeddings in Multimodal Large Language Models</title>
+    <updated>2025-08-09T09:00:45Z</updated>
+    <link href="https://arxiv.org/abs/2508.06895v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.06895v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Mainstream Multimodal Large Language Models (MLLMs) achieve visual understanding by using a vision projector to bridge well-pretrained vision encoders and large language models (LLMs). The inherent gap between visual and textual modalities makes the embeddings from the vision projector critical for visual comprehension. However, current alignment approaches treat visual embeddings as contextual cues and merely apply auto-regressive supervision to textual outputs, neglecting the necessity of introducing equivalent direct visual supervision, which hinders the potential finer alignment of visual embeddings. In this paper, based on our analysis of the refinement process of visual embeddings in the LLM's shallow layers, we propose BASIC, a method that utilizes refined visual embeddings within the LLM as supervision to directly guide the projector in generating initial visual embeddings. Specifically, the guidance is conducted from two perspectives: (i) optimizing embedding directions by reducing angles between initial and supervisory embeddings in semantic space; (ii) improving semantic matching by minimizing disparities between the logit distributions of both visual embeddings. Without additional supervisory models or artificial annotations, BASIC significantly improves the performance of MLLMs across a wide range of benchmarks, demonstrating the effectiveness of our introduced direct visual supervision.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-09T09:00:45Z</published>
+    <arxiv:comment>Accepted to ICCV 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jianting Tang</name>
+    </author>
+    <author>
+      <name>Yubo Wang</name>
+    </author>
+    <author>
+      <name>Haoyu Cao</name>
+    </author>
+    <author>
+      <name>Linli Xu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.15885v1</id>
+    <title>Seeing Beyond Words: Self-Supervised Visual Learning for Multimodal Large Language Models</title>
+    <updated>2025-12-17T19:01:34Z</updated>
+    <link href="https://arxiv.org/abs/2512.15885v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.15885v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Large Language Models (MLLMs) have recently demonstrated impressive capabilities in connecting vision and language, yet their proficiency in fundamental visual reasoning tasks remains limited. This limitation can be attributed to the fact that MLLMs learn visual understanding primarily from textual descriptions, which constitute a subjective and inherently incomplete supervisory signal. Furthermore, the modest scale of multimodal instruction tuning compared to massive text-only pre-training leads MLLMs to overfit language priors while overlooking visual details. To address these issues, we introduce JARVIS, a JEPA-inspired framework for self-supervised visual enhancement in MLLMs. Specifically, we integrate the I-JEPA learning paradigm into the standard vision-language alignment pipeline of MLLMs training. Our approach leverages frozen vision foundation models as context and target encoders, while training the predictor, implemented as the early layers of an LLM, to learn structural and semantic regularities from images without relying exclusively on language supervision. Extensive experiments on standard MLLM benchmarks show that JARVIS consistently improves performance on vision-centric benchmarks across different LLM families, without degrading multimodal reasoning abilities. Our source code is publicly available at: https://github.com/aimagelab/JARVIS.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-17T19:01:34Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Davide Caffagni</name>
+    </author>
+    <author>
+      <name>Sara Sarto</name>
+    </author>
+    <author>
+      <name>Marcella Cornia</name>
+    </author>
+    <author>
+      <name>Lorenzo Baraldi</name>
+    </author>
+    <author>
+      <name>Pier Luigi Dovesi</name>
+    </author>
+    <author>
+      <name>Shaghayegh Roohi</name>
+    </author>
+    <author>
+      <name>Mark Granroth-Wilding</name>
+    </author>
+    <author>
+      <name>Rita Cucchiara</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.08970v1</id>
+    <title>JW-Flare: Accurate Solar Flare Forecasting Method Based on Multimodal Large Language Models</title>
+    <updated>2025-11-12T04:27:22Z</updated>
+    <link href="https://arxiv.org/abs/2511.08970v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.08970v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Solar flares, the most powerful explosive phenomena in the solar system, may pose significant hazards to spaceborne satellites and ground-based infrastructure. Despite decades of intensive research, reliable flare prediction remains a challenging task. Large Language Models, as a milestone in artificial intelligence, exhibit exceptional general knowledge and next-token prediction capabilities. Here we introduce JW-Flare, the first Multimodal Large Language Models (MLLMs) explicitly trained for solar flare forecasting through fine-tuning on textual physic parameters of solar active regions and magnetic field images. This method demonstrates state-of-the-art (SOTA) performance for large flares prediction on the test dataset. It effectively identifies all 79 X-class flares from 18,949 test samples, yielding a True Skill Statistic (TSS) of 0.95 and a True Positive Rate (TPR) of 1.00, outperforming traditional predictive models. We further investigate the capability origins of JW-Flare through explainability experiments, revealing that solar physics knowledge acquired during pre-training contributes to flare forecasting performance. Additionally, we evaluate models of different parameter scales, confirming the Scaling_Law of Large Language Models in domain-specific applications, such as solar physics. This study marks a substantial advance in both the scale and accuracy of solar flare forecasting and opens a promising avenue for AI-driven methodologies in broader scientific domains.</summary>
+    <category term="astro-ph.SR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-12T04:27:22Z</published>
+    <arxiv:comment>12 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="astro-ph.SR"/>
+    <author>
+      <name>Mingfu Shao</name>
+    </author>
+    <author>
+      <name>Hui Wang</name>
+    </author>
+    <author>
+      <name>Yuyang Li</name>
+    </author>
+    <author>
+      <name>Jiaben Lin</name>
+    </author>
+    <author>
+      <name>Jifeng Liu</name>
+    </author>
+    <author>
+      <name>Baolin Tan</name>
+    </author>
+    <author>
+      <name>Juan Guo</name>
+    </author>
+    <author>
+      <name>Yin Zhang</name>
+    </author>
+    <author>
+      <name>Jing Huang</name>
+    </author>
+    <author>
+      <name>Jiangtao Su</name>
+    </author>
+    <author>
+      <name>Yingzi Sun</name>
+    </author>
+    <author>
+      <name>Haiqing Xu</name>
+    </author>
+    <author>
+      <name>Jie Chen</name>
+    </author>
+    <author>
+      <name>Suo Liu</name>
+    </author>
+    <author>
+      <name>Yuanyong Deng</name>
+    </author>
+    <author>
+      <name>Liyue Tong</name>
+    </author>
+    <author>
+      <name>Yang Bai</name>
+    </author>
+    <author>
+      <name>Cunshi Wang</name>
+    </author>
+    <author>
+      <name>Kaifan Ji</name>
+    </author>
+    <author>
+      <name>Yuqing Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.16409v2</id>
+    <title>Multilingual OCR-Aware Fine-Tuning and Prompt-Guided Chain-of-Thought Reasoning for Multimodal Large Language Models</title>
+    <updated>2026-05-24T16:22:41Z</updated>
+    <link href="https://arxiv.org/abs/2605.16409v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.16409v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Optical character recognition (OCR) and multilingual text understanding remain major failure modes of multimodal large language models (MLLMs), particularly in real-world images containing cluttered layouts, small fonts, blur, occlusion, and complex typography.
+  We present an OCR-aware multilingual multimodal training framework that combines (i) large-scale synthetic OCR-to-translation data generation, (ii) OCR-aware supervised fine-tuning (SFT) with LoRA adaptation, and (iii) structured visual chain-of-thought (CoT) prompting for reasoning under uncertain visual conditions. Using a LLaMA-based multimodal architecture, the proposed framework substantially improves OCR completeness, multilingual translation accuracy, and robustness under degraded visual conditions.
+  Experimental results on multilingual receipts, menus, posters, signs, handwritten text, and document images demonstrate significantly improved visual-text grounding compared with the baseline model. In particular, the proposed OCR-aware post-training framework improves extraction of small, blurred, spatially scattered, and partially occluded text while reducing reliance on language priors under uncertain OCR conditions. Qualitative comparisons with frontier multimodal systems, including GPT-5-class and Gemini-family models, further suggest improved OCR grounding and reduced hallucination under noisy and visually ambiguous OCR scenarios.
+  Overall, the results indicate that data-centric OCR-aware multimodal post-training provides an effective and scalable direction for improving multilingual OCR and OCR-based visual question answering systems.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-13T14:16:39Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Qinwu Xu</name>
+    </author>
+    <author>
+      <name>Yifan Jiang</name>
+    </author>
+    <author>
+      <name>Haoyu Ren</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.05262v3</id>
+    <title>Debiasing Multimodal Large Language Models via Penalization of Language Priors</title>
+    <updated>2025-08-14T12:30:25Z</updated>
+    <link href="https://arxiv.org/abs/2403.05262v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.05262v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In the realms of computer vision and natural language processing, Multimodal Large Language Models (MLLMs) have become indispensable tools, proficient in generating textual responses based on visual inputs. Despite their advancements, our investigation reveals a noteworthy bias: the generated content is often driven more by the inherent priors of the underlying Large Language Models (LLMs) than by the input image. Empirical experiments underscore the persistence of this bias, as MLLMs often provide confident answers even in the absence of relevant images or given incongruent visual inputs. To rectify these biases and redirect the model's focus toward visual information, we propose two simple, training-free strategies. First, for tasks such as classification or multi-choice question answering, we introduce a "Post-Hoc Debias" method using an affine calibration step to adjust the output distribution. This approach ensures uniform answer scores when the image is absent, acting as an effective regularization technique to alleviate the influence of LLM priors. For more intricate open-ended generation tasks, we extend this method to "Visual Debias Decoding", which mitigates bias by contrasting token log-probabilities conditioned on a correct image versus a meaningless one. Additionally, our investigation sheds light on the instability of MLLMs across various decoding configurations. Through systematic exploration of different settings, we achieve significant performance improvements--surpassing previously reported results--and raise concerns about the fairness of current evaluation practices. Comprehensive experiments substantiate the effectiveness of our proposed strategies in mitigating biases. These strategies not only prove beneficial in minimizing hallucinations but also contribute to the generation of more helpful and precise illustrations.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-08T12:35:07Z</published>
+    <arxiv:comment>10 pages, 12 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>YiFan Zhang</name>
+    </author>
+    <author>
+      <name>Yang Shi</name>
+    </author>
+    <author>
+      <name>Weichen Yu</name>
+    </author>
+    <author>
+      <name>Qingsong Wen</name>
+    </author>
+    <author>
+      <name>Xue Wang</name>
+    </author>
+    <author>
+      <name>Wenjing Yang</name>
+    </author>
+    <author>
+      <name>Zhang Zhang</name>
+    </author>
+    <author>
+      <name>Liang Wang</name>
+    </author>
+    <author>
+      <name>Rong Jin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.13107v2</id>
+    <title>ClearSight: Visual Signal Enhancement for Object Hallucination Mitigation in Multimodal Large language Models</title>
+    <updated>2025-05-27T11:13:47Z</updated>
+    <link href="https://arxiv.org/abs/2503.13107v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.13107v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Contrastive decoding strategies are widely used to mitigate object hallucinations in multimodal large language models (MLLMs). By reducing over-reliance on language priors, these strategies ensure that generated content remains closely grounded in visual inputs, producing contextually accurate outputs. Since contrastive decoding requires no additional training or external tools, it offers both computational efficiency and versatility, making it highly attractive. However, these methods present two main limitations: (1) bluntly suppressing language priors can compromise coherence and accuracy of generated content, and (2) processing contrastive inputs adds computational load, significantly slowing inference speed. To address these challenges, we propose Visual Amplification Fusion (VAF), a plug-and-play technique that enhances attention to visual signals within the model's middle layers, where modality fusion predominantly occurs. This approach enables more effective capture of visual features, reducing the model's bias toward language modality. Experimental results demonstrate that VAF significantly reduces hallucinations across various MLLMs without affecting inference speed, while maintaining coherence and accuracy in generated outputs.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-17T12:30:40Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Hao Yin</name>
+    </author>
+    <author>
+      <name>Guangzong Si</name>
+    </author>
+    <author>
+      <name>Zilei Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.26326v1</id>
+    <title>Seeing or Knowing? Visual Context Sensitivity in Multimodal Large Language Models</title>
+    <updated>2026-07-28T22:52:34Z</updated>
+    <link href="https://arxiv.org/abs/2607.26326v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.26326v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Large Language Models (MLLMs) achieve strong performance by integrating visual inputs with the rich priors of pretrained language models. However, they often fail on vision-centric tasks, especially when visual evidence conflicts with pretrained knowledge. We explore these failures separately using two diagnostic paradigms: (1) probing whether visual information is available, via image reconstruction, and (2) measuring multimodal context sensitivity, the extent to which the model follows visual context versus the language prior. To support the second, we introduce the WhatIfVis, a benchmark spanning five coarse-grained dimensions (spatial-temporal, color, count, size, and weight) whose questions admit answers from either the image or the prior. Our analysis yields three findings: (i) Coarse-grained visual evidence is preserved, as these attributes can be reconstructed from the final-layer image tokens of frozen MLLMs. Failures on questions about these attributes therefore point to post-perceptual utilization, rather than to degraded visual encoding during perception. (ii) Even when explicitly instructed to use or ignore visual evidence, vanilla models (without supervised fine-tuning on the WhatIfVis) show unstable visual context sensitivity. Supervised fine-tuning (SFT) improves this controllability and generalizes across domains, and activation patching further localizes the vision-versus-prior trade-off at architecture-specific depths across all six models. (iii) The vision-versus-prior trade-off is controllable along a learned vector. Applying this steering vector, even without any intent instruction, improves controllability over the vanilla model. Together, these results relocate the bottleneck, indicating that for the coarse attributes we study, MLLMs encode the visual evidence but cannot reliably control their reliance on it.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-28T22:52:34Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jiaang Li</name>
+    </author>
+    <author>
+      <name>Chengzu Li</name>
+    </author>
+    <author>
+      <name>Zhaochong An</name>
+    </author>
+    <author>
+      <name>Yifei Yuan</name>
+    </author>
+    <author>
+      <name>Xi Liu</name>
+    </author>
+    <author>
+      <name>Serge Belongie</name>
+    </author>
+    <author>
+      <name>Vésteinn Snæbjarnarson</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2410.04780v2</id>
+    <title>Mitigating Modality Prior-Induced Hallucinations in Multimodal Large Language Models via Deciphering Attention Causality</title>
+    <updated>2025-02-18T12:47:58Z</updated>
+    <link href="https://arxiv.org/abs/2410.04780v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2410.04780v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Large Language Models (MLLMs) have emerged as a central focus in both industry and academia, but often suffer from biases introduced by visual and language priors, which can lead to multimodal hallucination. These biases arise from the visual encoder and the Large Language Model (LLM) backbone, affecting the attention mechanism responsible for aligning multimodal inputs. Existing decoding-based mitigation methods focus on statistical correlations and overlook the causal relationships between attention mechanisms and model output, limiting their effectiveness in addressing these biases. To tackle this issue, we propose a causal inference framework termed CausalMM that applies structural causal modeling to MLLMs, treating modality priors as a confounder between attention mechanisms and output. Specifically, by employing backdoor adjustment and counterfactual reasoning at both the visual and language attention levels, our method mitigates the negative effects of modality priors and enhances the alignment of MLLM's inputs and outputs, with a maximum score improvement of 65.3% on 6 VLind-Bench indicators and 164 points on MME Benchmark compared to conventional methods. Extensive experiments validate the effectiveness of our approach while being a plug-and-play solution. Our code is available at: https://github.com/The-Martyr/CausalMM</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-10-07T06:45:22Z</published>
+    <arxiv:comment>Accepted by The Thirteenth International Conference on Learning Representations (ICLR 2025)</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Guanyu Zhou</name>
+    </author>
+    <author>
+      <name>Yibo Yan</name>
+    </author>
+    <author>
+      <name>Xin Zou</name>
+    </author>
+    <author>
+      <name>Kun Wang</name>
+    </author>
+    <author>
+      <name>Aiwei Liu</name>
+    </author>
+    <author>
+      <name>Xuming Hu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.05626v3</id>
+    <title>Perceiving Beyond Language Priors: Enhancing Visual Comprehension and Attention in Multimodal Models</title>
+    <updated>2025-07-02T07:30:12Z</updated>
+    <link href="https://arxiv.org/abs/2505.05626v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.05626v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Achieving deep alignment between vision and language remains a central challenge for Multimodal Large Language Models (MLLMs). These models often fail to fully leverage visual input, defaulting to strong language priors. Our approach first provides insights into how MLLMs internally build visual understanding of image regions and then introduces techniques to amplify this capability. Specifically, we explore techniques designed both to deepen the model's understanding of visual content and to ensure that these visual insights actively guide language generation. We demonstrate the superior multimodal understanding of our resultant model through a detailed upstream analysis quantifying its ability to predict visually-dependent tokens as well as 10 pt boost on visually challenging tasks.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-08T20:04:27Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Aarti Ghatkesar</name>
+    </author>
+    <author>
+      <name>Ganesh Venkatesh</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.07962v1</id>
+    <title>ChronoPhyBench: Do MLLMs Truly Understand the World or Merely Exploit Language Priors?</title>
+    <updated>2026-06-06T03:40:47Z</updated>
+    <link href="https://arxiv.org/abs/2606.07962v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.07962v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent advancements in Multimodal Large Language Models (MLLMs) have demonstrated remarkable proficiency in open-world reasoning and understanding. However, a critical ambiguity persists: it remains unclear whether these models genuinely synthesize cross-modal information to construct physically grounded reasoning chains, or if they merely exploit strong language priors to mask single-modality reliance, thereby hallucinating advanced multimodal capabilities. Motivated by this, and to rigorously mitigate language modality bias and shortcuts, we propose a novel multimodal Chrono}logical Physical Dynamics Reasoning Benchmark ChronoPhyBench, which unifies next state prediction with Visual Question Answering (VQA) paradigms by conditioning on historical video context and textual captions to enforce models to deduce subsequent physical states through both single image selection and the inherently more complex task of multiple frame chronological sorting. Concurrently, we construct a large-scale multimodal reasoning dataset curated using the ChronoPhyBench criteria, comprising over 10,000 long-form videos paired with meticulously annotated captions, totaling 5M tokens. Our experimental evaluations reveal a stark contrast to conclusions drawn by previous benchmarks. The capacity of current open-source models to perform physically grounded multimodal reasoning remains in its infancy. Ultimately, this work seeks to systematically stress-test the reasoning capabilities of multimodal models, quantify hallucination rates, and advance the development of Physical AI, thereby providing the community with a robust and transparent evaluation framework toward Artificial General Intelligence (AGI).</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-06T03:40:47Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Bin Zhu</name>
+    </author>
+    <author>
+      <name>Yanhao Jia</name>
+    </author>
+    <author>
+      <name>Kexin Zhao</name>
+    </author>
+    <author>
+      <name>Jie Wang</name>
+    </author>
+    <author>
+      <name>Munan Ning</name>
+    </author>
+    <author>
+      <name>Hao Li</name>
+    </author>
+    <author>
+      <name>Yuwei Niu</name>
+    </author>
+    <author>
+      <name>Tanqing Sun</name>
+    </author>
+    <author>
+      <name>Huangchong Yan</name>
+    </author>
+    <author>
+      <name>Mingjun Pan</name>
+    </author>
+    <author>
+      <name>Xinyi Wu</name>
+    </author>
+    <author>
+      <name>Qishen Yin</name>
+    </author>
+    <author>
+      <name>Yunyang Ge</name>
+    </author>
+    <author>
+      <name>Shuai Zhao</name>
+    </author>
+    <author>
+      <name>Li Yuan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.01728v1</id>
+    <title>Token Communication in the Era of Large Models: An Information Bottleneck-Based Approach</title>
+    <updated>2025-07-02T14:03:01Z</updated>
+    <link href="https://arxiv.org/abs/2507.01728v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.01728v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This letter proposes UniToCom, a unified token communication paradigm that treats tokens as the fundamental units for both processing and wireless transmission. Specifically, to enable efficient token representations, we propose a generative information bottleneck (GenIB) principle, which facilitates the learning of tokens that preserve essential information while supporting reliable generation across multiple modalities. By doing this, GenIB-based tokenization is conducive to improving the communication efficiency and reducing computational complexity. Additionally, we develop $σ$-GenIB to address the challenges of variance collapse in autoregressive modeling, maintaining representational diversity and stability. Moreover, we employ a causal Transformer-based multimodal large language model (MLLM) at the receiver to unify the processing of both discrete and continuous tokens under the next-token prediction paradigm. Simulation results validate the effectiveness and superiority of the proposed UniToCom compared to baselines under dynamic channel conditions. By integrating token processing with MLLMs, UniToCom enables scalable and generalizable communication in favor of multimodal understanding and generation, providing a potential solution for next-generation intelligent communications.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-02T14:03:01Z</published>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Hao Wei</name>
+    </author>
+    <author>
+      <name>Wanli Ni</name>
+    </author>
+    <author>
+      <name>Wen Wang</name>
+    </author>
+    <author>
+      <name>Wenjun Xu</name>
+    </author>
+    <author>
+      <name>Dusit Niyato</name>
+    </author>
+    <author>
+      <name>Ping Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2511.01082v1</id>
+    <title>GeoToken: Hierarchical Geolocalization of Images via Next Token Prediction</title>
+    <updated>2025-11-02T21:30:06Z</updated>
+    <link href="https://arxiv.org/abs/2511.01082v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2511.01082v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Image geolocalization, the task of determining an image's geographic origin, poses significant challenges, largely due to visual similarities across disparate locations and the large search space. To address these issues, we propose a hierarchical sequence prediction approach inspired by how humans narrow down locations from broad regions to specific addresses. Analogously, our model predicts geographic tokens hierarchically, first identifying a general region and then sequentially refining predictions to increasingly precise locations. Rather than relying on explicit semantic partitions, our method uses S2 cells, a nested, multiresolution global grid, and sequentially predicts finer-level cells conditioned on visual inputs and previous predictions. This procedure mirrors autoregressive text generation in large language models. Much like in language modeling, final performance depends not only on training but also on inference-time strategy. We investigate multiple top-down traversal methods for autoregressive sampling, incorporating techniques from test-time compute scaling used in language models. Specifically, we integrate beam search and multi-sample inference while exploring various selection strategies to determine the final output. This enables the model to manage uncertainty by exploring multiple plausible paths through the hierarchy. We evaluate our method on the Im2GPS3k and YFCC4k datasets against two distinct sets of baselines: those that operate without a Multimodal Large Language Model (MLLM) and those that leverage one. In the MLLM-free setting, our model surpasses other comparable baselines on nearly all metrics, achieving state-of-the-art performance with accuracy gains of up to 13.9%. When augmented with an MLLM, our model outperforms all baselines, setting a new state-of-the-art across all metrics. The source code is available at https://github.com/NNargesNN/GeoToken.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-02T21:30:06Z</published>
+    <arxiv:comment>Accepted to IEEE International Conference on Data Mining (ICDM) 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Narges Ghasemi</name>
+    </author>
+    <author>
+      <name>Amir Ziashahabi</name>
+    </author>
+    <author>
+      <name>Salman Avestimehr</name>
+    </author>
+    <author>
+      <name>Cyrus Shahabi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.06673v1</id>
+    <title>ILLUME: Illuminating Your LLMs to See, Draw, and Self-Enhance</title>
+    <updated>2024-12-09T17:11:50Z</updated>
+    <link href="https://arxiv.org/abs/2412.06673v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.06673v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we introduce ILLUME, a unified multimodal large language model (MLLM) that seamlessly integrates multimodal understanding and generation capabilities within a single large language model through a unified next-token prediction formulation. To address the large dataset size typically required for image-text alignment, we propose to enhance data efficiency through the design of a vision tokenizer that incorporates semantic information and a progressive multi-stage training procedure. This approach reduces the dataset size to just 15M for pretraining -- over four times fewer than what is typically needed -- while achieving competitive or even superior performance with existing unified MLLMs, such as Janus. Additionally, to promote synergistic enhancement between understanding and generation capabilities, which is under-explored in previous works, we introduce a novel self-enhancing multimodal alignment scheme. This scheme supervises the MLLM to self-assess the consistency between text descriptions and self-generated images, facilitating the model to interpret images more accurately and avoid unrealistic and incorrect predictions caused by misalignment in image generation. Based on extensive experiments, our proposed ILLUME stands out and competes with state-of-the-art unified MLLMs and specialized models across various benchmarks for multimodal understanding, generation, and editing.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-09T17:11:50Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Chunwei Wang</name>
+    </author>
+    <author>
+      <name>Guansong Lu</name>
+    </author>
+    <author>
+      <name>Junwei Yang</name>
+    </author>
+    <author>
+      <name>Runhui Huang</name>
+    </author>
+    <author>
+      <name>Jianhua Han</name>
+    </author>
+    <author>
+      <name>Lu Hou</name>
+    </author>
+    <author>
+      <name>Wei Zhang</name>
+    </author>
+    <author>
+      <name>Hang Xu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.07961v3</id>
+    <title>SGG-R$^{\rm 3}$: From Next-Token Prediction to End-to-End Unbiased Scene Graph Generation</title>
+    <updated>2026-04-23T08:53:57Z</updated>
+    <link href="https://arxiv.org/abs/2603.07961v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.07961v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Scene Graph Generation (SGG) structures visual scenes as graphs of objects and their relations. While Multimodal Large Language Models (MLLMs) have advanced end-to-end SGG, current methods are hindered by both a lack of task-specific structured reasoning and the challenges of sparse, long-tailed relation distributions, resulting in incomplete scene graphs characterized by low recall and biased predictions. To address these issues, we introduce SGG-R$^{\rm 3}$, a structured reasoning framework that integrates task-specific chain-of-thought (CoT)-guided supervised fine-tuning (SFT) and reinforcement learning (RL) with group sequence policy optimization (GSPO), designed to engage in three sequential stages to achieve end-to-end unbiased scene graph generation. During the SFT phase, we propose a relation augmentation strategy by leveraging an MLLM and refined via embedding similarity filtering to alleviate relation sparsity. Subsequently, a stage-aligned reward scheme optimizes the procedural reasoning during RL. Specifically, we propose a novel dual-granularity reward which integrates fine-grained and coarse-grained relation rewards, simultaneously mitigating the long-tail issue via frequency-based adaptive weighting of predicates and improving relation coverage through semantic clustering. Experiments on two benchmarks show that SGG-R$^{\rm 3}$ achieves superior performance compared to existing methods, demonstrating the effectiveness and generalization of the framework.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-09T04:58:03Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jiaye Feng</name>
+    </author>
+    <author>
+      <name>Qixiang Yin</name>
+    </author>
+    <author>
+      <name>Yuankun Liu</name>
+    </author>
+    <author>
+      <name>Tong Mo</name>
+    </author>
+    <author>
+      <name>Weiping Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.15130v1</id>
+    <title>Enhancing Visual Planning with Auxiliary Tasks and Multi-token Prediction</title>
+    <updated>2025-07-20T21:39:05Z</updated>
+    <link href="https://arxiv.org/abs/2507.15130v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.15130v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Visual Planning for Assistance (VPA) aims to predict a sequence of user actions required to achieve a specified goal based on a video showing the user's progress. Although recent advances in multimodal large language models (MLLMs) have shown promising results in video understanding, long-horizon visual planning remains a challenging problem. We identify two challenges in training large MLLMs for video-based planning tasks: (1) scarcity of procedural annotations, limiting the model's ability to learn procedural task dynamics effectively, and (2) inefficiency of next-token prediction objective to explicitly capture the structured action space for visual planning when compared to free-form, natural language. To tackle data scarcity, we introduce Auxiliary Task Augmentation. We design and train our model on auxiliary tasks relevant to long-horizon video-based planning (e.g., goal prediction) to augment the model's planning ability. To more explicitly model the structured action space unique to visual planning tasks, we leverage Multi-token Prediction, extending traditional next-token prediction by using multiple heads to predict multiple future tokens during training. Our approach, VideoPlan, achieves state-of-the-art VPA performance on the COIN and CrossTask datasets, surpassing prior methods by 7.3% and 3.4%, respectively, when predicting 3 future actions. We further extend our method to the challenging Ego4D Long-term Action Anticipation task, and show that it is on par with the state-of-the-art approaches despite not using specialized egocentric features. Code will be made available.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-20T21:39:05Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Ce Zhang</name>
+    </author>
+    <author>
+      <name>Yale Song</name>
+    </author>
+    <author>
+      <name>Ruta Desai</name>
+    </author>
+    <author>
+      <name>Michael Louis Iuzzolino</name>
+    </author>
+    <author>
+      <name>Joseph Tighe</name>
+    </author>
+    <author>
+      <name>Gedas Bertasius</name>
+    </author>
+    <author>
+      <name>Satwik Kottur</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.20641v1</id>
+    <title>MAGNIFIED: RL Fine-tuning of Multimodal Large Language Models for Motion Planning</title>
+    <updated>2026-06-02T16:07:28Z</updated>
+    <link href="https://arxiv.org/abs/2606.20641v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.20641v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multi-modal Large Language Models (MLLMs) have demonstrated remarkable capabilities in semantic understanding and common sense reasoning, making them promising candidates for solving planning problems in autonomous driving. However, the next-token text prediction objectives traditionally used in pre-training and supervised fine-tuning (SFT) of MLLMs may fall short of fulfilling the planning objectives for autonomous vehicles. The next-token prediction objective merely encourages per-token imitation in text, often irrespective of multi-step consequences and the alignment with crucial planning considerations such as giving space to other road actors. To overcome these limitations, we propose a reinforcement learning fine-tuning (RLFT) approach, MAGNIFIED, that aligns the MLLM-based driving agent with planning objectives by learning from token-level rewards. By mapping a sequence of predicted tokens to corresponding vehicle trajectories and learning from planning rewards, MAGNIFIED optimizes for the true planning objectives rather than focusing solely on token prediction accuracy, enabling the model to refine its understanding of the planning task beyond simple imitation. We validate our approach on the Waymo Open Motion Dataset with a novel setup incorporating rasterized birds-eye views and tokenized trajectories as inputs and planning-oriented outputs. An initial SFT phase establishes a strong baseline in outputting plan trajectories as sequences of X-Y coordinates in text, while subsequent RL fine-tuning substantially enhances planning performance relative to the SFT baseline (demonstrating over a 10.5% reduction in overlap rate and a 38.9% reduction in off-road rate), underscoring the potential of RLFT on MLLMs to achieve vehicle planning that is better aligned with compliant, comfortable, and efficient driving.</summary>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-02T16:07:28Z</published>
+    <arxiv:primary_category term="cs.RO"/>
+    <arxiv:journal_ref>ICRA 2026</arxiv:journal_ref>
+    <author>
+      <name>Letian Chen</name>
+    </author>
+    <author>
+      <name>Yiren Lu</name>
+    </author>
+    <author>
+      <name>Justin Fu</name>
+    </author>
+    <author>
+      <name>Yichen Xie</name>
+    </author>
+    <author>
+      <name>Runsheng Xu</name>
+    </author>
+    <author>
+      <name>Jyh-Jing Hwang</name>
+    </author>
+    <author>
+      <name>Ben Sapp</name>
+    </author>
+    <author>
+      <name>Drago Anguelov</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2408.08640v2</id>
+    <title>Math-PUMA: Progressive Upward Multimodal Alignment to Enhance Mathematical Reasoning</title>
+    <updated>2024-09-25T09:53:13Z</updated>
+    <link href="https://arxiv.org/abs/2408.08640v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2408.08640v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Large Language Models (MLLMs) excel in solving text-based mathematical problems, but they struggle with mathematical diagrams since they are primarily trained on natural scene images. For humans, visual aids generally enhance problem-solving, but MLLMs perform worse as information shifts from textual to visual modality. This decline is mainly due to their shortcomings in aligning images and text. To tackle aforementioned challenges, we propose Math-PUMA, a methodology focused on Progressive Upward Multimodal Alignment. This approach is designed to improve the mathematical reasoning skills of MLLMs through a three-stage training process, with the second stage being the critical alignment stage. We first enhance the language model's mathematical reasoning capabilities with extensive set of textual mathematical problems. We then construct a multimodal dataset with varying degrees of textual and visual information, creating data pairs by presenting each problem in at least two forms. By leveraging the Kullback-Leibler (KL) divergence of next-token prediction distributions to align visual and textual modalities, consistent problem-solving abilities are ensured. Finally, we utilize multimodal instruction tuning for MLLMs with high-quality multimodal data. Experimental results on multiple mathematical reasoning benchmarks demonstrate that the MLLMs trained with Math-PUMA surpass most open-source MLLMs. Our approach effectively narrows the performance gap for problems presented in different modalities. The code and data are available at: \url{https://github.com/wwzhuang01/Math-PUMA}.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-08-16T10:11:05Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Wenwen Zhuang</name>
+    </author>
+    <author>
+      <name>Xin Huang</name>
+    </author>
+    <author>
+      <name>Xiantao Zhang</name>
+    </author>
+    <author>
+      <name>Jin Zeng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.09604v1</id>
+    <title>SynerGen-VL: Towards Synergistic Image Understanding and Generation with Vision Experts and Token Folding</title>
+    <updated>2024-12-12T18:59:26Z</updated>
+    <link href="https://arxiv.org/abs/2412.09604v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.09604v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The remarkable success of Large Language Models (LLMs) has extended to the multimodal domain, achieving outstanding performance in image understanding and generation. Recent efforts to develop unified Multimodal Large Language Models (MLLMs) that integrate these capabilities have shown promising results. However, existing approaches often involve complex designs in model architecture or training pipeline, increasing the difficulty of model training and scaling. In this paper, we propose SynerGen-VL, a simple yet powerful encoder-free MLLM capable of both image understanding and generation. To address challenges identified in existing encoder-free unified MLLMs, we introduce the token folding mechanism and the vision-expert-based progressive alignment pretraining strategy, which effectively support high-resolution image understanding while reducing training complexity. After being trained on large-scale mixed image-text data with a unified next-token prediction objective, SynerGen-VL achieves or surpasses the performance of existing encoder-free unified MLLMs with comparable or smaller parameter sizes, and narrows the gap with task-specific state-of-the-art models, highlighting a promising path toward future unified MLLMs. Our code and models shall be released.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-12T18:59:26Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Hao Li</name>
+    </author>
+    <author>
+      <name>Changyao Tian</name>
+    </author>
+    <author>
+      <name>Jie Shao</name>
+    </author>
+    <author>
+      <name>Xizhou Zhu</name>
+    </author>
+    <author>
+      <name>Zhaokai Wang</name>
+    </author>
+    <author>
+      <name>Jinguo Zhu</name>
+    </author>
+    <author>
+      <name>Wenhan Dou</name>
+    </author>
+    <author>
+      <name>Xiaogang Wang</name>
+    </author>
+    <author>
+      <name>Hongsheng Li</name>
+    </author>
+    <author>
+      <name>Lewei Lu</name>
+    </author>
+    <author>
+      <name>Jifeng Dai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.01471v3</id>
+    <title>Reconstructing Content with Collaborative Attention for Universal Multimodal Representation Learning</title>
+    <updated>2026-06-02T03:52:48Z</updated>
+    <link href="https://arxiv.org/abs/2603.01471v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.01471v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal embedding models, rooted in multimodal large language models (MLLMs), have yielded significant performance improvements across diverse tasks such as retrieval and classification. However, most existing approaches rely heavily on large-scale contrastive learning, with limited exploration of how the architectural and training paradigms of MLLMs affect embedding quality. While effective for generation, the causal attention and next-token prediction paradigm of MLLMs does not explicitly encourage the formation of globally compact representations, limiting their effectiveness as multimodal embedding backbones. To address this, we propose CoCoA, a Content reconstruction pre-training paradigm based on Collaborative Attention for multimodal embedding optimization. Specifically, we restructure the attention flow and introduce an EOS-based reconstruction task, encouraging the model to reconstruct input from the corresponding &lt;EOS&gt; embeddings. This drives the multimodal model to compress the semantic information of the input into the &lt;EOS&gt; token, laying the foundations for subsequent contrastive learning. Extensive experiments on MMEB-V1 demonstrate that CoCoA built upon Qwen2-VL and Qwen2.5-VL significantly improves embedding quality. Results validate that content reconstruction serves as an effective strategy to maximize the value of existing data, enabling multimodal embedding models generate compact and informative representations, raising their performance ceiling.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-02T05:34:45Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Jiahan Chen</name>
+    </author>
+    <author>
+      <name>Da Li</name>
+    </author>
+    <author>
+      <name>Hengran Zhang</name>
+    </author>
+    <author>
+      <name>Yinqiong Cai</name>
+    </author>
+    <author>
+      <name>Lixin Su</name>
+    </author>
+    <author>
+      <name>Jiafeng Guo</name>
+    </author>
+    <author>
+      <name>Daiting Shi</name>
+    </author>
+    <author>
+      <name>Dawei Yin</name>
+    </author>
+    <author>
+      <name>Keping Bi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.10759v2</id>
+    <title>miniReranker: Efficient Multimodal Reranking through Visual Cache Reuse and Interaction Sparsity</title>
+    <updated>2026-06-16T02:36:19Z</updated>
+    <link href="https://arxiv.org/abs/2606.10759v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.10759v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal large language models (MLLMs) have recently shown strong potential as point-wise rerankers by directly modeling query--document relevance through next-token prediction. However, point-wise reranking suffers from substantial repeated computation across query--document pairs, while the causal structure of transformers allows only prefix segments to be reused via pre-caching. To address the misalignment of existing query-first and document-first formats with both VQA-style prompting and computation-aware reuse, we propose a $\textit{vision-first}$ formulation that improves both cache reuse efficiency and reranking performance. However, the remaining cost is still considerable and stems from three main sources: (1) $\textit{model depth}$, for which we reduce active parameters via early exit; (2) $\textit{cross-segment attention}$, which we restrict to a narrow interaction band across a few layers; and (3) $\textit{visual tokens}$, where we reduce the number of tokens via embedder-guided pruning. Together, these designs form miniReranker, which reduces reranking runtime to &lt;1% of the dense implementation under high-reuse settings for a single query, while preserving &gt;96% of the dense model performance.</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-09T12:11:02Z</published>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Yingqi Fan</name>
+    </author>
+    <author>
+      <name>Xuan Lu</name>
+    </author>
+    <author>
+      <name>Anhao Zhao</name>
+    </author>
+    <author>
+      <name>Junlong Tong</name>
+    </author>
+    <author>
+      <name>Ping Nie</name>
+    </author>
+    <author>
+      <name>Kai Zou</name>
+    </author>
+    <author>
+      <name>Yunpu Ma</name>
+    </author>
+    <author>
+      <name>Wei Zhang</name>
+    </author>
+    <author>
+      <name>Xiaoyu Shen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.16271v2</id>
+    <title>Structuring GUI Elements through Vision Language Models: Towards Action Space Generation</title>
+    <updated>2025-08-30T03:46:19Z</updated>
+    <link href="https://arxiv.org/abs/2508.16271v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.16271v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal large language models (MLLMs) have emerged as pivotal tools in enhancing human-computer interaction. In this paper we focus on the application of MLLMs in the field of graphical user interface (GUI) elements structuring, where they assist in processing user instructions based on screen contents. Despite the promise of MLLMs, their performance in precisely generating UI element coordinates, a critical aspect of GUI understanding, is hindered by the nature of next-token prediction training. This challenge arises from the semantic void surrounding numerical UI coordinates in language representation spaces, necessitating a substantial and diverse dataset to bolster visual module capabilities. To address these limitations, we introduce an IoU-Augmented Maximum Likelihood (IAML) training paradigm. Specifically, our approach involves a novel pipeline for IoU-based coordinate sampling to augment the training data, which considers the proximity to ground truth coordinates. This data augmentation strategy is then employed to fine-tune MLLMs under the IAML paradigm, which is designed to mitigate the exposure bias problem inherent in traditional maximum likelihood estimation. Through extensive experiments, we demonstrate the superior performance of our IAML training approach over traditional training paradigms.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-22T10:14:15Z</published>
+    <arxiv:comment>10pageV0</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yi Xu</name>
+    </author>
+    <author>
+      <name>Yesheng Zhang</name>
+    </author>
+    <author>
+      <name>Jiajia Liu</name>
+    </author>
+    <author>
+      <name>Jingdong Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.12424v1</id>
+    <title>Decoding by Perturbation: Mitigating MLLM Hallucinations via Dynamic Textual Perturbation</title>
+    <updated>2026-04-14T08:15:44Z</updated>
+    <link href="https://arxiv.org/abs/2604.12424v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.12424v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Large Language Models frequently suffer from inference hallucinations, partially stemming from language priors dominating visual evidence. Existing training-free mitigation methods either perturb the visual representation and deviate from the natural image distribution, or enforce intrusive manipulations that compromise the model's inherent generative fluency. We introduce a novel perspective that multimodal hallucination manifests as the hypersensitivity of visual grounding to textual phrasing during the decoding phase. Building on this insight, we propose Decoding by Perturbation (DeP), a training-free framework mitigating prior-induced hallucinations via controlled textual interventions. DeP employs a dynamic probe applying multi-level textual perturbations to elicit latent language priors. Leveraging attention variance, it enhances stable evidence regions while suppressing suspicious noise in the feature space. Furthermore, it constructs an interpretable prior drift direction using logits statistics to counteract probability biases from textual co-occurrences. Extensive experiments confirm DeP effectively reduces hallucinations and achieves superior performance across multiple benchmarks.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-14T08:15:44Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Sihang Jia</name>
+    </author>
+    <author>
+      <name>Shuliang Liu</name>
+    </author>
+    <author>
+      <name>Songbo Yang</name>
+    </author>
+    <author>
+      <name>Yibo Yan</name>
+    </author>
+    <author>
+      <name>Xin Zou</name>
+    </author>
+    <author>
+      <name>Xuming Hu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.26656v1</id>
+    <title>DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding</title>
+    <updated>2026-05-26T07:41:48Z</updated>
+    <link href="https://arxiv.org/abs/2605.26656v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.26656v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal large language models are typically trained end-to-end to predict ground-truth answers, yet supervision signals are applied exclusively to text tokens. Visual tokens, the core carriers of visual information, are optimized only implicitly as part of the context, leading to coarse-grained visual understanding. Prior works attempt to supervise visual inputs but inevitably rely on auxiliary components such as additional decoders or forward passes, because visual tokens lack readily interpretable labels. This limits their practical applicability. In this work, we propose \textbf{D}irect \textbf{V}ision \textbf{S}upervised \textbf{F}ine-\textbf{T}uning (DV-SFT), which constructs explicit, token-level supervision for visual tokens and trains them through the same next-token prediction objective used for text. Specifically, we exploit the direct vision--text correspondence in OCR-related scenarios and automatically label each visual token with the word in its corresponding image patch. DV-SFT treats the MLLM as a black box, requiring no architectural modifications or additional forward passes. Extensive experiments demonstrate the superiority of direct vision supervision. DV-SFT consistently outperforms standard SFT across three in-domain and four out-of-domain benchmarks. Further analyses show that vision supervision effectively enhances fine-grained visual understanding and achieves higher multimodal alignment efficiency.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-26T07:41:48Z</published>
+    <arxiv:comment>Under Review</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jianfei Zhao</name>
+    </author>
+    <author>
+      <name>Feng Zhang</name>
+    </author>
+    <author>
+      <name>Xin Sun</name>
+    </author>
+    <author>
+      <name>Chong Feng</name>
+    </author>
+    <author>
+      <name>Bing Wang</name>
+    </author>
+    <author>
+      <name>Zhixing Tan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.00395v1</id>
+    <title>Better, Stronger, Faster: Tackling the Trilemma in MLLM-based Segmentation with Simultaneous Textual Mask Prediction</title>
+    <updated>2025-11-29T08:52:41Z</updated>
+    <link href="https://arxiv.org/abs/2512.00395v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.00395v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Integrating segmentation into Multimodal Large Language Models (MLLMs) presents a core trilemma: simultaneously preserving dialogue ability, achieving high segmentation performance, and ensuring fast inference. Prevailing paradigms are forced into a compromise. Embedding prediction methods introduce a conflicting pixel-level objective that degrades the MLLM's general dialogue abilities. The alternative, next-token prediction, reframes segmentation as an autoregressive task, which preserves dialogue but forces a trade-off between poor segmentation performance with sparse outputs or prohibitive inference speeds with rich ones. We resolve this trilemma with all-mask prediction, a novel paradigm that decouples autoregressive dialogue generation from non-autoregressive mask prediction. We present STAMP: Simultaneous Textual All-Mask Prediction, an MLLM that embodies this paradigm. After generating a textual response, STAMP predicts an entire segmentation mask in a single forward pass by treating it as a parallel "fill-in-the-blank" task over image patches. This design maintains the MLLM's dialogue ability by avoiding conflicting objectives, enables high segmentation performance by leveraging rich, bidirectional spatial context for all mask tokens, and achieves exceptional speed. Extensive experiments show that STAMP significantly outperforms state-of-the-art methods across multiple segmentation benchmarks, providing a solution that excels in dialogue, segmentation, and speed without compromise.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-29T08:52:41Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jiazhen Liu</name>
+    </author>
+    <author>
+      <name>Mingkuan Feng</name>
+    </author>
+    <author>
+      <name>Long Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.01546v1</id>
+    <title>Growing Visual Generative Capacity for Pre-Trained MLLMs</title>
+    <updated>2025-10-02T00:40:02Z</updated>
+    <link href="https://arxiv.org/abs/2510.01546v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.01546v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal large language models (MLLMs) extend the success of language models to visual understanding, and recent efforts have sought to build unified MLLMs that support both understanding and generation. However, constructing such models remains challenging: hybrid approaches combine continuous embeddings with diffusion or flow-based objectives, producing high-quality images but breaking the autoregressive paradigm, while pure autoregressive approaches unify text and image prediction over discrete visual tokens but often face trade-offs between semantic alignment and pixel-level fidelity. In this work, we present Bridge, a pure autoregressive unified MLLM that augments pre-trained visual understanding models with generative ability through a Mixture-of-Transformers architecture, enabling both image understanding and generation within a single next-token prediction framework. To further improve visual generation fidelity, we propose a semantic-to-pixel discrete representation that integrates compact semantic tokens with fine-grained pixel tokens, achieving strong language alignment and precise description of visual details with only a 7.9% increase in sequence length. Extensive experiments across diverse multimodal benchmarks demonstrate that Bridge achieves competitive or superior results in both understanding and generation benchmarks, while requiring less training data and reduced training time compared to prior unified MLLMs.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-02T00:40:02Z</published>
+    <arxiv:comment>Project page: https://hywang66.github.io/bridge/</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Hanyu Wang</name>
+    </author>
+    <author>
+      <name>Jiaming Han</name>
+    </author>
+    <author>
+      <name>Ziyan Yang</name>
+    </author>
+    <author>
+      <name>Qi Zhao</name>
+    </author>
+    <author>
+      <name>Shanchuan Lin</name>
+    </author>
+    <author>
+      <name>Xiangyu Yue</name>
+    </author>
+    <author>
+      <name>Abhinav Shrivastava</name>
+    </author>
+    <author>
+      <name>Zhenheng Yang</name>
+    </author>
+    <author>
+      <name>Hao Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.17726v3</id>
+    <title>Slot-MLLM: Object-Centric Visual Tokenization for Multimodal LLM</title>
+    <updated>2026-05-19T09:55:01Z</updated>
+    <link href="https://arxiv.org/abs/2505.17726v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.17726v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently, multimodal large language models (MLLMs) have emerged as a key approach in achieving artificial general intelligence. In particular, vision-language MLLMs have been developed to generate not only text but also visual outputs from multimodal inputs. This advancement requires efficient image tokens that LLMs can process effectively both in input and output. However, existing image tokenization methods for MLLMs typically capture only global abstract concepts or uniformly segmented image patches, restricting MLLMs' capability to effectively understand or generate detailed visual content, particularly at the object level. To address this limitation, we propose an object-centric visual tokenizer based on Slot Attention specifically for MLLMs. In particular, based on the Q-Former encoder, diffusion decoder, and residual vector quantization, our proposed discretized slot tokens can encode local visual details while maintaining high-level semantics, and also align with textual data to be integrated seamlessly within a unified next-token prediction framework of LLMs. The resulting Slot-MLLM demonstrates significant performance improvements over baselines with previous visual tokenizers across various vision-language tasks that entail local detailed comprehension and generation. Notably, this work is the first demonstration of the feasibility of object-centric slot attention performed with MLLMs and in-the-wild natural images.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-23T10:43:45Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Donghwan Chi</name>
+    </author>
+    <author>
+      <name>Hyomin Kim</name>
+    </author>
+    <author>
+      <name>Yoonjin Oh</name>
+    </author>
+    <author>
+      <name>Yongjin Kim</name>
+    </author>
+    <author>
+      <name>Donghoon Lee</name>
+    </author>
+    <author>
+      <name>Daejin Jo</name>
+    </author>
+    <author>
+      <name>Jongmin Kim</name>
+    </author>
+    <author>
+      <name>Junyeob Baek</name>
+    </author>
+    <author>
+      <name>Sungjin Ahn</name>
+    </author>
+    <author>
+      <name>Sungwoong Kim</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.06486v1</id>
+    <title>PerturboLLaVA: Reducing Multimodal Hallucinations with Perturbative Visual Training</title>
+    <updated>2025-03-09T07:07:03Z</updated>
+    <link href="https://arxiv.org/abs/2503.06486v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.06486v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper aims to address the challenge of hallucinations in Multimodal Large Language Models (MLLMs) particularly for dense image captioning tasks. To tackle the challenge, we identify the current lack of a metric that finely measures the caption quality in concept level. We hereby introduce HalFscore, a novel metric built upon the language graph and is designed to evaluate both the accuracy and completeness of dense captions at a granular level. Additionally, we identify the root cause of hallucination as the model's over-reliance on its language prior. To address this, we propose PerturboLLaVA, which reduces the model's reliance on the language prior by incorporating adversarially perturbed text during training. This method enhances the model's focus on visual inputs, effectively reducing hallucinations and producing accurate, image-grounded descriptions without incurring additional computational overhead. PerturboLLaVA significantly improves the fidelity of generated captions, outperforming existing approaches in handling multimodal hallucinations and achieving improved performance across general multimodal benchmarks.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-09T07:07:03Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Cong Chen</name>
+    </author>
+    <author>
+      <name>Mingyu Liu</name>
+    </author>
+    <author>
+      <name>Chenchen Jing</name>
+    </author>
+    <author>
+      <name>Yizhou Zhou</name>
+    </author>
+    <author>
+      <name>Fengyun Rao</name>
+    </author>
+    <author>
+      <name>Hao Chen</name>
+    </author>
+    <author>
+      <name>Bo Zhang</name>
+    </author>
+    <author>
+      <name>Chunhua Shen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.11095v1</id>
+    <title>Bottleneck Tokens for Unified Multimodal Retrieval</title>
+    <updated>2026-04-13T07:12:12Z</updated>
+    <link href="https://arxiv.org/abs/2604.11095v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.11095v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Adapting decoder-only multimodal large language models (MLLMs) for unified multimodal retrieval faces two structural gaps. First, existing methods rely on implicit pooling, which overloads the hidden state of a standard vocabulary token (e.g., &lt;EOS&gt;) as the sequence-level representation, a mechanism never designed for information aggregation. Second, contrastive fine-tuning specifies what the embedding should match but provides no token-level guidance on how information should be compressed into it. We address both gaps with two complementary components. Architecturally, we introduce Bottleneck Tokens (BToks), a small set of learnable tokens that serve as a fixed-capacity explicit pooling mechanism. For training, we propose Generative Information Condensation: a next-token prediction objective coupled with a Condensation Mask that severs the direct attention path from target tokens to query tokens. All predictive signals are thereby forced through the BToks, converting the generative loss into dense, token-level supervision for semantic compression. At inference time, only the input and BToks are processed in a single forward pass with negligible overhead over conventional last-token pooling. On MMEB-V2 (78 datasets, 3 modalities, 9 meta-tasks), our approach achieves state-of-the-art among 2B-scale methods under comparable data conditions, attaining an Overall score of 59.0 (+3.6 over VLM2Vec-V2) with substantial gains on semantically demanding tasks (e.g., +12.6 on Video-QA).</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-13T07:12:12Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Siyu Sun</name>
+    </author>
+    <author>
+      <name>Jing Ren</name>
+    </author>
+    <author>
+      <name>Zhaohe Liao</name>
+    </author>
+    <author>
+      <name>Dongxiao Mao</name>
+    </author>
+    <author>
+      <name>Xiangyuan Ren</name>
+    </author>
+    <author>
+      <name>Yiyi Zhang</name>
+    </author>
+    <author>
+      <name>Haohua Zhao</name>
+    </author>
+    <author>
+      <name>Weixiong Lin</name>
+    </author>
+    <author>
+      <name>Jiang Shaohua</name>
+    </author>
+    <author>
+      <name>Liqing Zhang</name>
+    </author>
+    <author>
+      <name>Yuchao Zheng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.08099v1</id>
+    <title>VidVec: Unlocking Video MLLM Embeddings for Video-Text Retrieval</title>
+    <updated>2026-02-08T19:39:32Z</updated>
+    <link href="https://arxiv.org/abs/2602.08099v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.08099v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recent studies have adapted generative Multimodal Large Language Models (MLLMs) into embedding extractors for vision tasks, typically through fine-tuning to produce universal representations. However, their performance on video remains inferior to Video Foundation Models (VFMs). In this paper, we focus on leveraging MLLMs for video-text embedding and retrieval. We first conduct a systematic layer-wise analysis, showing that intermediate (pre-trained) MLLM layers already encode substantial task-relevant information. Leveraging this insight, we demonstrate that combining intermediate-layer embeddings with a calibrated MLLM head yields strong zero-shot retrieval performance without any training. Building on these findings, we introduce a lightweight text-based alignment strategy which maps dense video captions to short summaries and enables task-related video-text embedding learning without visual supervision. Remarkably, without any fine-tuning beyond text, our method outperforms current methods, often by a substantial margin, achieving state-of-the-art results across common video retrieval benchmarks.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-08T19:39:32Z</published>
+    <arxiv:comment>Project page: https://iyttor.github.io/VidVec/</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Issar Tzachor</name>
+    </author>
+    <author>
+      <name>Dvir Samuel</name>
+    </author>
+    <author>
+      <name>Rami Ben-Ari</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.06040v1</id>
+    <title>SwimBird: Eliciting Switchable Reasoning Mode in Hybrid Autoregressive MLLMs</title>
+    <updated>2026-02-05T18:59:51Z</updated>
+    <link href="https://arxiv.org/abs/2602.06040v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.06040v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Large Language Models (MLLMs) have made remarkable progress in multimodal perception and reasoning by bridging vision and language. However, most existing MLLMs perform reasoning primarily with textual CoT, which limits their effectiveness on vision-intensive tasks. Recent approaches inject a fixed number of continuous hidden states as "visual thoughts" into the reasoning process and improve visual performance, but often at the cost of degraded text-based logical reasoning. We argue that the core limitation lies in a rigid, pre-defined reasoning pattern that cannot adaptively choose the most suitable thinking modality for different user queries. We introduce SwimBird, a reasoning-switchable MLLM that dynamically switches among three reasoning modes conditioned on the input: (1) text-only reasoning, (2) vision-only reasoning (continuous hidden states as visual thoughts), and (3) interleaved vision-text reasoning. To enable this capability, we adopt a hybrid autoregressive formulation that unifies next-token prediction for textual thoughts with next-embedding prediction for visual thoughts, and design a systematic reasoning-mode curation strategy to construct SwimBird-SFT-92K, a diverse supervised fine-tuning dataset covering all three reasoning patterns. By enabling flexible, query-adaptive mode selection, SwimBird preserves strong textual logic while substantially improving performance on vision-dense tasks. Experiments across diverse benchmarks covering textual reasoning and challenging visual understanding demonstrate that SwimBird achieves state-of-the-art results and robust gains over prior fixed-pattern multimodal reasoning methods.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-02-05T18:59:51Z</published>
+    <arxiv:comment>Project Page: https://accio-lab.github.io/SwimBird</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jintao Tong</name>
+    </author>
+    <author>
+      <name>Shilin Yan</name>
+    </author>
+    <author>
+      <name>Hongwei Xue</name>
+    </author>
+    <author>
+      <name>Xiaojun Tang</name>
+    </author>
+    <author>
+      <name>Kunyu Shi</name>
+    </author>
+    <author>
+      <name>Guannan Zhang</name>
+    </author>
+    <author>
+      <name>Ruixuan Li</name>
+    </author>
+    <author>
+      <name>Yixiong Zou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.21523v3</id>
+    <title>More Thinking, Less Seeing? Assessing Amplified Hallucination in Multimodal Reasoning Models</title>
+    <updated>2025-06-20T08:41:41Z</updated>
+    <link href="https://arxiv.org/abs/2505.21523v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.21523v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Test-time compute has empowered multimodal large language models to generate extended reasoning chains, yielding strong performance on tasks such as multimodal math reasoning. However, this improved reasoning ability often comes with increased hallucination: as generations become longer, models tend to drift away from image-grounded content and rely more heavily on language priors. Attention analysis shows that longer reasoning chains lead to reduced focus on visual inputs, which contributes to hallucination. To systematically study this phenomenon, we introduce RH-AUC, a metric that quantifies how a model's perception accuracy changes with reasoning length, allowing us to evaluate whether the model preserves visual grounding during reasoning. We also release RH-Bench, a diagnostic benchmark that spans a variety of multimodal tasks, designed to assess the trade-off between reasoning ability and hallucination. Our analysis reveals that (i) larger models typically achieve a better balance between reasoning and perception, and (ii) this balance is influenced more by the types and domains of training data than by its overall volume. These findings underscore the importance of evaluation frameworks that jointly consider both reasoning quality and perceptual fidelity.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-23T05:08:40Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Chengzhi Liu</name>
+    </author>
+    <author>
+      <name>Zhongxing Xu</name>
+    </author>
+    <author>
+      <name>Qingyue Wei</name>
+    </author>
+    <author>
+      <name>Juncheng Wu</name>
+    </author>
+    <author>
+      <name>James Zou</name>
+    </author>
+    <author>
+      <name>Xin Eric Wang</name>
+    </author>
+    <author>
+      <name>Yuyin Zhou</name>
+    </author>
+    <author>
+      <name>Sheng Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.18603v2</id>
+    <title>Doc-CoB: Enhancing Document Understanding with Visual Chain-of-Boxes Reasoning</title>
+    <updated>2026-05-26T15:30:09Z</updated>
+    <link href="https://arxiv.org/abs/2505.18603v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.18603v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Document understanding aims to perform question answering and information extraction over document images, where the visual content is highly information-dense and most queries rely on only a few relevant layout regions. However, existing methods either adopt a one-pass strategy that implicitly assumes all layouts are equally important, or focus excessively on small regions at the cost of losing critical layout information. To address these limitations, we introduce Doc-CoB (Chain-of-Boxes), a simple-yet-effective framework that integrates coarse-to-fine layout-aware visual reasoning into multimodal large language models. Instead of directly zooming into small regions, Doc-CoB progressively focuses on query-relevant layouts while preserving global document information. Specifically, it first selects key layout boxes and then focuses on them for further understanding with visual prompting. To support this paradigm, we introduce two reasoning tasks for box recognition and box reasoning, with an automatic pipeline that constructs 249k training samples with intermediate visual supervision. Extensive experiments on seven benchmarks with four popular models show that Doc-CoB significantly improves performance, demonstrating its effectiveness and wide applicability.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-24T08:53:05Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Ye Mo</name>
+    </author>
+    <author>
+      <name>Kai Ye</name>
+    </author>
+    <author>
+      <name>Xianwei Mao</name>
+    </author>
+    <author>
+      <name>Zirui Shao</name>
+    </author>
+    <author>
+      <name>Gang Huang</name>
+    </author>
+    <author>
+      <name>Bo Zhang</name>
+    </author>
+    <author>
+      <name>Hangdi Xing</name>
+    </author>
+    <author>
+      <name>Kehan Chen</name>
+    </author>
+    <author>
+      <name>Huan Zhou</name>
+    </author>
+    <author>
+      <name>Zixu Yan</name>
+    </author>
+    <author>
+      <name>Jiajun Bu</name>
+    </author>
+    <author>
+      <name>Sheng Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.22012v1</id>
+    <title>LatentOmni: Rethinking Omni-Modal Understanding via Unified Audio-Visual Latent Reasoning</title>
+    <updated>2026-05-21T05:18:57Z</updated>
+    <link href="https://arxiv.org/abs/2605.22012v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.22012v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Joint audio-visual reasoning is essential for omnimodal understanding, yet current multimodal large language models (MLLMs) still struggle when reasoning requires fine-grained evidence from both modalities. A central limitation is that explicit text-based chain-of-thought (CoT) compresses continuous audio-visual signals into discrete tokens, weakening temporal grounding and shifting intermediate reasoning toward language priors. We argue that a unified latent space is a better medium for such reasoning because it preserves dense sensory information while remaining compatible with autoregressive generation. Based on this insight, we propose \textbf{LatentOmni}, a cross-modal reasoning framework that interleaves textual reasoning with audio-visual latent states. LatentOmni introduces feature-level supervision to align latent reasoning states with task-relevant sensory features and uses Omni-Sync Position Embedding (OSPE) to maintain temporal consistency between latent audio and visual states. We further construct \textbf{LatentOmni-Instruct-35K}, a dataset of audio-visual interleaved reasoning trajectories for supervising latent-space reasoning. Comprehensive evaluation across multiple audio-visual reasoning benchmarks demonstrates that LatentOmni achieves the best performance among the evaluated open-source models and consistently outperforms the Explicit Text CoT baseline, supporting latent-space joint reasoning as a promising path toward stronger omnimodal understanding.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-21T05:18:57Z</published>
+    <arxiv:comment>21 pages, 15 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Yifan Dai</name>
+    </author>
+    <author>
+      <name>Zhenhua Wu</name>
+    </author>
+    <author>
+      <name>Bohan Zeng</name>
+    </author>
+    <author>
+      <name>Daili Hua</name>
+    </author>
+    <author>
+      <name>Jialing Liu</name>
+    </author>
+    <author>
+      <name>Bozhou Li</name>
+    </author>
+    <author>
+      <name>Yuran Wang</name>
+    </author>
+    <author>
+      <name>Chengzhuo Tong</name>
+    </author>
+    <author>
+      <name>Hao Liang</name>
+    </author>
+    <author>
+      <name>Xiaochen Ma</name>
+    </author>
+    <author>
+      <name>Junbo Niu</name>
+    </author>
+    <author>
+      <name>Tianyu Guo</name>
+    </author>
+    <author>
+      <name>Yang Shi</name>
+    </author>
+    <author>
+      <name>Yue Ding</name>
+    </author>
+    <author>
+      <name>Yiyan Ji</name>
+    </author>
+    <author>
+      <name>Bingyin Mei</name>
+    </author>
+    <author>
+      <name>Yushuo Guan</name>
+    </author>
+    <author>
+      <name>Yuanxing Zhang</name>
+    </author>
+    <author>
+      <name>Pengfei Wan</name>
+    </author>
+    <author>
+      <name>Fangcheng Fu</name>
+    </author>
+    <author>
+      <name>Wentao Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.05600v1</id>
+    <title>SceneAlign: Aligning Multimodal Reasoning to Scene Graphs in Complex Visual Scenes</title>
+    <updated>2026-01-09T07:40:39Z</updated>
+    <link href="https://arxiv.org/abs/2601.05600v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.05600v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal large language models often struggle with faithful reasoning in complex visual scenes, where intricate entities and relations require precise visual grounding at each step. This reasoning unfaithfulness frequently manifests as hallucinated entities, mis-grounded relations, skipped steps, and over-specified reasoning. Existing preference-based approaches, typically relying on textual perturbations or answer-conditioned rationales, fail to address this challenge as they allow models to exploit language priors to bypass visual grounding. To address this, we propose SceneAlign, a framework that leverages scene graphs as structured visual information to perform controllable structural interventions. By identifying reasoning-critical nodes and perturbing them through four targeted strategies that mimic typical grounding failures, SceneAlign constructs hard negative rationales that remain linguistically plausible but are grounded in inaccurate visual facts. These contrastive pairs are used in Direct Preference Optimization to steer models toward fine-grained, structure-faithful reasoning. Across seven visual reasoning benchmarks, SceneAlign consistently improves answer accuracy and reasoning faithfulness, highlighting the effectiveness of grounding-aware alignment for multimodal reasoning.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-09T07:40:39Z</published>
+    <arxiv:comment>Preprint</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Chuhan Wang</name>
+    </author>
+    <author>
+      <name>Xintong Li</name>
+    </author>
+    <author>
+      <name>Jennifer Yuntong Zhang</name>
+    </author>
+    <author>
+      <name>Junda Wu</name>
+    </author>
+    <author>
+      <name>Chengkai Huang</name>
+    </author>
+    <author>
+      <name>Lina Yao</name>
+    </author>
+    <author>
+      <name>Julian McAuley</name>
+    </author>
+    <author>
+      <name>Jingbo Shang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.17789v2</id>
+    <title>Token-Shuffle: Towards High-Resolution Image Generation with Autoregressive Models</title>
+    <updated>2025-04-27T23:01:22Z</updated>
+    <link href="https://arxiv.org/abs/2504.17789v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.17789v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Autoregressive (AR) models, long dominant in language generation, are increasingly applied to image synthesis but are often considered less competitive than Diffusion-based models. A primary limitation is the substantial number of image tokens required for AR models, which constrains both training and inference efficiency, as well as image resolution. To address this, we present Token-Shuffle, a novel yet simple method that reduces the number of image tokens in Transformer. Our key insight is the dimensional redundancy of visual vocabularies in Multimodal Large Language Models (MLLMs), where low-dimensional visual codes from visual encoder are directly mapped to high-dimensional language vocabularies. Leveraging this, we consider two key operations: token-shuffle, which merges spatially local tokens along channel dimension to decrease the input token number, and token-unshuffle, which untangles the inferred tokens after Transformer blocks to restore the spatial arrangement for output. Jointly training with textual prompts, our strategy requires no additional pretrained text-encoder and enables MLLMs to support extremely high-resolution image synthesis in a unified next-token prediction way while maintaining efficient training and inference. For the first time, we push the boundary of AR text-to-image generation to a resolution of 2048x2048 with gratifying generation performance. In GenAI-benchmark, our 2.7B model achieves 0.77 overall score on hard prompts, outperforming AR models LlamaGen by 0.18 and diffusion models LDM by 0.15. Exhaustive large-scale human evaluations also demonstrate our prominent image generation ability in terms of text-alignment, visual flaw, and visual appearance. We hope that Token-Shuffle can serve as a foundational design for efficient high-resolution image generation within MLLMs.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-24T17:59:56Z</published>
+    <arxiv:comment>Project Page: https://ma-xu.github.io/token-shuffle/ Add related works</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xu Ma</name>
+    </author>
+    <author>
+      <name>Peize Sun</name>
+    </author>
+    <author>
+      <name>Haoyu Ma</name>
+    </author>
+    <author>
+      <name>Hao Tang</name>
+    </author>
+    <author>
+      <name>Chih-Yao Ma</name>
+    </author>
+    <author>
+      <name>Jialiang Wang</name>
+    </author>
+    <author>
+      <name>Kunpeng Li</name>
+    </author>
+    <author>
+      <name>Xiaoliang Dai</name>
+    </author>
+    <author>
+      <name>Yujun Shi</name>
+    </author>
+    <author>
+      <name>Xuan Ju</name>
+    </author>
+    <author>
+      <name>Yushi Hu</name>
+    </author>
+    <author>
+      <name>Artsiom Sanakoyeu</name>
+    </author>
+    <author>
+      <name>Felix Juefei-Xu</name>
+    </author>
+    <author>
+      <name>Ji Hou</name>
+    </author>
+    <author>
+      <name>Junjiao Tian</name>
+    </author>
+    <author>
+      <name>Tao Xu</name>
+    </author>
+    <author>
+      <name>Tingbo Hou</name>
+    </author>
+    <author>
+      <name>Yen-Cheng Liu</name>
+    </author>
+    <author>
+      <name>Zecheng He</name>
+    </author>
+    <author>
+      <name>Zijian He</name>
+    </author>
+    <author>
+      <name>Matt Feiszli</name>
+    </author>
+    <author>
+      <name>Peizhao Zhang</name>
+    </author>
+    <author>
+      <name>Peter Vajda</name>
+    </author>
+    <author>
+      <name>Sam Tsai</name>
+    </author>
+    <author>
+      <name>Yun Fu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.09269v1</id>
+    <title>DeltaRubric: Generative Multimodal Reward Modeling via Joint Planning and Verification</title>
+    <updated>2026-05-10T02:32:19Z</updated>
+    <link href="https://arxiv.org/abs/2605.09269v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.09269v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Aligning Multimodal Large Language Models (MLLMs) requires reliable reward models, yet existing single-step evaluators can suffer from lazy judging, exploiting language priors over fine-grained visual verification. While rubric-based evaluation mitigates these biases in text-only settings, extending it to multimodal tasks is bottlenecked by the complexity of visual reasoning. The critical differences between responses often depend on instance-specific visual details. Robust evaluation requires dynamically synthesizing rubrics that isolate spatial and factual discrepancies. To address this, we introduce $\textbf{DeltaRubric}$, an approach that reformulates multimodal preference evaluation as a plan-and-execute process within a single MLLM. DeltaRubric operates in two steps: acting first as a $\textit{Disagreement Planner}$, the model generates a neutral, instance-specific verification checklist. Transitioning into a $\textit{Checklist Verifier}$, it executes these self-generated checks against the image and question to produce the final grounded judgment. We formulate DeltaRubric as a multi-role reinforcement learning problem, jointly optimizing planning and verification capabilities. Validated on Qwen3-VL 4B and 8B Instruct models, DeltaRubric achieves solid empirical gains. For instance, On VL-RewardBench, it improves base model overall accuracy by $\textbf{+22.6}$ (4B) and $\textbf{+18.8}$ (8B) points, largely outperforming standard no-rubric baselines. The results demonstrate that decomposing evaluation into structured, verifiable steps leads to more reliable and generalizable multimodal reward modeling.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-10T02:32:19Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Rui Liu</name>
+    </author>
+    <author>
+      <name>Dian Yu</name>
+    </author>
+    <author>
+      <name>Zhenwen Liang</name>
+    </author>
+    <author>
+      <name>Yucheng Shi</name>
+    </author>
+    <author>
+      <name>Tong Zheng</name>
+    </author>
+    <author>
+      <name>Runpeng Dai</name>
+    </author>
+    <author>
+      <name>Haitao Mi</name>
+    </author>
+    <author>
+      <name>Pratap Tokekar</name>
+    </author>
+    <author>
+      <name> Leoweiliang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.27023v1</id>
+    <title>Just how sure are you? Improving Verbalized Uncertainty Calibration in Medical VQA</title>
+    <updated>2026-06-25T13:33:58Z</updated>
+    <link href="https://arxiv.org/abs/2606.27023v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.27023v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal large language models (MLLMs) applied to Medical Visual Question Answering (VQA) tend to produce overconfident outputs regardless of actual correctness, and existing verbalized confidence calibration methods, developed primarily for text only LLMs, do not account for the multimodal nature of medical image understanding.
+  This work proposes a training based framework that finetunes MLLMs to improve their calibration using a composite loss function combining a Brier style calibration term, an anchor regularizer that prevents confidence collapse toward extreme values, a contrastive image text alignment term, and a KL based model stabilization term. The alignment signal is derived from a $2 \times 2$ factorial perturbation design that crosses image presence with text integrity, probing the reliance of the model on visual modality input versus language priors. Finally, a top K KL divergence regularizer is used to protect the answering ability of the model during finetuning.
+  Across three Medical VQA benchmarks and two architectures (MedGemma 4B IT and Qwen2 VL 7B Instruct), our method reduces calibration error by 60% or more, and improves discrimination by 26% or more, while preserving predictive accuracy. On average across benchmarks, the technique outperforms prompting based, sampling based, and training based approaches, and ablation experiments confirm that each component of the loss function is indeed necessary for improving the calibration. All code for the experiments is publicly available.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-25T13:33:58Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Eren Senoglu</name>
+    </author>
+    <author>
+      <name>Federico Toschi</name>
+    </author>
+    <author>
+      <name>Nicolo Brunello</name>
+    </author>
+    <author>
+      <name>Andrea Sassella</name>
+    </author>
+    <author>
+      <name>Mark James Carman</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.18675v3</id>
+    <title>ReasonMap: Towards Fine-Grained Visual Reasoning from Transit Maps</title>
+    <updated>2026-03-12T14:45:15Z</updated>
+    <link href="https://arxiv.org/abs/2505.18675v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.18675v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal large language models (MLLMs) have demonstrated significant progress in semantic scene understanding and text-image alignment, with reasoning variants enhancing performance on more complex tasks involving mathematics and logic. To bridge this gap, we introduce ReasonMap, a novel benchmark specifically designed to evaluate these capabilities. ReasonMap encompasses high-resolution transit maps from 30 cities and includes 1,008 question-answer pairs spanning two question types and three templates. Furthermore, we design a two-level evaluation pipeline that properly assesses answer correctness and quality. Our comprehensive evaluation of 16 popular MLLMs reveals a counterintuitive pattern: among open-source models, base variants outperform their reasoning-tuned counterparts, whereas the opposite trend is observed in closed-source models. Further analysis under the visual-masking setting confirms that strong performance necessitates direct visual grounding, rather than relying solely on language priors. We further establish a training baseline with reinforcement fine-tuning, providing a reference for future exploration. We hope this benchmark study offers new insights into visual reasoning and helps investigate the gap between open- and closed-source models.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-24T12:33:52Z</published>
+    <arxiv:comment>CVPR 2026, website: https://fscdc.github.io/ReasonMap/</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Sicheng Feng</name>
+    </author>
+    <author>
+      <name>Song Wang</name>
+    </author>
+    <author>
+      <name>Shuyi Ouyang</name>
+    </author>
+    <author>
+      <name>Lingdong Kong</name>
+    </author>
+    <author>
+      <name>Zikai Song</name>
+    </author>
+    <author>
+      <name>Jianke Zhu</name>
+    </author>
+    <author>
+      <name>Huan Wang</name>
+    </author>
+    <author>
+      <name>Xinchao Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.12166v1</id>
+    <title>LatentGeo: Learnable Auxiliary Constructions in Latent Space for Multimodal Geometric Reasoning</title>
+    <updated>2026-03-12T17:01:23Z</updated>
+    <link href="https://arxiv.org/abs/2603.12166v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.12166v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Despite recent advances in multimodal reasoning, representing auxiliary geometric constructions remains a fundamental challenge for multimodal large language models (MLLMs). Such constructions are absent from the original diagram and must be introduced before theorems apply. Existing approaches predominantly rely on explicit construction paradigms, including text-based geometric specification, visual-token interleaving during reasoning, and tool-augmented geometric execution. However, these methods either fail to faithfully represent complex spatial relationships, incur representation mismatch between discrete symbols and continuous geometric structures, or rely on external capabilities that hinder end-to-end optimization. To address these limitations, we propose LatentGeo, a framework that learns continuous latent visual representations to internalize auxiliary geometric constructions without pixel-level rendering or external executors. We design a three-stage curriculum that progressively aligns and internalizes these latent representations through auxiliary visual supervision, followed by LaGDPO, a latent-aware reinforcement learning procedure that stabilizes latent representations during policy optimization while improving end-task correctness. To systematically evaluate construction-centric representation quality, we introduce GeoAux, a new benchmark targeting visually dependent geometry problems, and conduct experiments on GeoAux and MathVerse. Results show that LatentGeo achieves substantial gains on geometric reasoning tasks, particularly those requiring auxiliary constructions. Extensive analyses and ablation studies further validate the effectiveness of each component in our framework.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-12T17:01:23Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Haiying Xu</name>
+    </author>
+    <author>
+      <name>Zihan Wang</name>
+    </author>
+    <author>
+      <name>Song Dai</name>
+    </author>
+    <author>
+      <name>Zhengxuan Zhang</name>
+    </author>
+    <author>
+      <name>Kairan Dou</name>
+    </author>
+    <author>
+      <name>Xuming Hu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.26387v1</id>
+    <title>Staying VIGILant: Mitigating Visual Laziness via Counterfactual Visual Alignment in MLLMs</title>
+    <updated>2026-06-24T21:12:24Z</updated>
+    <link href="https://arxiv.org/abs/2606.26387v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.26387v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal large language models (MLLMs) extend large language models (LLMs) with visual perception, enabling joint reasoning over images and text. Despite inheriting strong reasoning capabilities from LLMs, they remain prone to hallucinations that contradict their visual inputs. Mechanistic studies indicate that this weakness stems from visual laziness: MLLMs encode the correct visual evidence internally, but overly rely on strong language priors during response. Existing alignment methods, such as direct preference optimization, primarily optimize outcome-level rewards based on text. This introduces an optimization bias toward linguistic shortcuts, leading to responses that often contradict the visual evidence. To address this, we propose Visual Information Gain In aLignment (VIGIL), a reinforcement-learning (RL) post-training framework that shifts the focus from numerical reward fitting to causal visual grounding. VIGIL introduces a geometric constraint that explicitly maximizes the mutual information between the visual input and the generated response. We achieve this by penalizing "blind confidence" instances where the model remains improperly certain even when textual-visual attention is masked to create a counterfactual blind state. Extensive experiments show that VIGIL consistently outperforms recent alignment methods across hallucination and reasoning benchmarks without compromising text-only capabilities. Our approach matches the full-data performance of state-of-the-art methods using only 25% of the preference data and even demonstrates emergent spatial grounding capabilities without explicit bounding box supervision.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-24T21:12:24Z</published>
+    <arxiv:comment>ECCV 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xi Xiao</name>
+    </author>
+    <author>
+      <name>Chen Liu</name>
+    </author>
+    <author>
+      <name>Chih-Ting Liao</name>
+    </author>
+    <author>
+      <name>Yunbei Zhang</name>
+    </author>
+    <author>
+      <name>Qizhen Lan</name>
+    </author>
+    <author>
+      <name>Yuxiang Wei</name>
+    </author>
+    <author>
+      <name>Lin Zhao</name>
+    </author>
+    <author>
+      <name>Janet Wang</name>
+    </author>
+    <author>
+      <name>Jianyang Gu</name>
+    </author>
+    <author>
+      <name>Muchao Ye</name>
+    </author>
+    <author>
+      <name>Tianyang Wang</name>
+    </author>
+    <author>
+      <name>Hao Xu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.11931v1</id>
+    <title>Learn to Think: Improving Multimodal Reasoning through Vision-Aware Self-Improvement Training</title>
+    <updated>2026-05-12T10:44:35Z</updated>
+    <link href="https://arxiv.org/abs/2605.11931v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.11931v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Post-training with explicit reasoning traces is common to improve the reasoning capabilities of Multimodal Large Language Models (MLLMs). However, acquiring high-quality reasoning traces is often costly and time-consuming. Hence, the self-improvement paradigm has emerged, enabling MLLMs to self-generate reasoning traces for training without external supervision. Despite its effectiveness, we reveal two shortcomings in the self-improvement training of MLLMs: 1) data imbalance, where simple samples are over-trained, but the challenging yet crucial samples are under-trained; 2) language prior bias, where MLLMs overly rely on linguistic priors while neglecting the visual cues. To this end, we propose VISTA, a vision-aware self-improvement training framework for enhancing the multimodal reasoning of MLLMs. Specifically, VISTA first introduces a prefix resampling strategy to reuse the partial correct reasoning traces for efficient data collection, and then designs a vision-aware attention score to quantify the model's focus on visual information. Extensive experiments show that VISTA can be applied to various post-training scenarios, i.e., supervised fine-tuning and preference learning, and effectively enhances the multimodal reasoning performance across various MLLMs and tasks, e.g., bringing up to +13.66% average performance gains for Qwen2.5-VL-3B-Instruct.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-12T10:44:35Z</published>
+    <arxiv:comment>Accepted by ICML 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Qihuang Zhong</name>
+    </author>
+    <author>
+      <name>Liang Ding</name>
+    </author>
+    <author>
+      <name>Wenjie Xuan</name>
+    </author>
+    <author>
+      <name>Juhua Liu</name>
+    </author>
+    <author>
+      <name>Bo Du</name>
+    </author>
+    <author>
+      <name>Dacheng Tao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.15162v1</id>
+    <title>Train a Unified Multimodal Data Quality Classifier with Synthetic Data</title>
+    <updated>2025-10-16T21:53:28Z</updated>
+    <link href="https://arxiv.org/abs/2510.15162v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.15162v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The Multimodal Large Language Models (MLLMs) are continually pre-trained on a mixture of image-text caption data and interleaved document data, while the high-quality data filtering towards image-text interleaved document data is under-explored. We propose to train an efficient MLLM as a Unified Mulitmodal Data Quality Classifier to Filter both high-quality image-text caption and interleaved data (UniFilter). To address the challenge of collecting diverse labeled multimodal data, we introduce a semi-synthetic approach that leverages readily available raw images and generates corresponding text across four quality levels. This method enables efficient creation of sample-score pairs for both caption and interleaved document data to train UniFilter. We apply UniFilter to curate high-quality caption data from DataComp caption dataset and interleaved data from the OBELICS image-text interleaved dataset. MLLMs pre-trained on the filtered data demonstrate significantly enhanced capabilities compared to those trained on baseline-filtered data, achieving stronger zero-shot reasoning and in-context learning capabilities. After visual supervised fine-tuning, these UniFilter-induced MLLMs achieve stronger performance on various benchmarks, highlighting the downstream benefits of high-quality multimodal pre-training. We release the synthetic training data used for training UniFilter, the UniFilter model checkpoints, and the high-quality interleaved document subset OBELICS-HQ, curated by UniFilter, to the community for reproduction and further development.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-16T21:53:28Z</published>
+    <arxiv:comment>EMNLP 2025 Findings</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Weizhi Wang</name>
+    </author>
+    <author>
+      <name>Rongmei Lin</name>
+    </author>
+    <author>
+      <name>Shiyang Li</name>
+    </author>
+    <author>
+      <name>Colin Lockard</name>
+    </author>
+    <author>
+      <name>Ritesh Sarkhel</name>
+    </author>
+    <author>
+      <name>Sanket Lokegaonkar</name>
+    </author>
+    <author>
+      <name>Jingbo Shang</name>
+    </author>
+    <author>
+      <name>Xifeng Yan</name>
+    </author>
+    <author>
+      <name>Nasser Zalmout</name>
+    </author>
+    <author>
+      <name>Xian Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.19120v2</id>
+    <title>Seeing Before Reasoning: Decoupling Perception and Reasoning for Shortcut-Resilient Multimodal On-Policy Self-Distillation</title>
+    <updated>2026-06-19T10:05:34Z</updated>
+    <link href="https://arxiv.org/abs/2606.19120v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.19120v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>On-policy self-distillation (OPSD) trains a model on its own rollouts and uses a frozen copy to provide dense token-level targets conditioned on a reference target. This works well for LLM reasoning, but a direct extension to multimodal large language models (MLLMs) can create a shortcut: the privileged target may guide tokens mainly based on the text reference target rather than the image. We propose ViGOS, a visually grounded OPSD framework for MLLM post-training. The student first writes a visual description and then reasons toward the final answer. For valid rollouts, an image-only perception teacher supervises the description, while a privileged reasoning teacher supervises the reasoning and final answer on the same student prefix. A reference teacher is used only for invalid rollouts to recover the output format. Across general vision-language, expert reasoning, visual math, spatial grounding, and visual-language-prior benchmarks, ViGOS keeps the main benefits of OPSD and improves image-grounded behavior in shortcut-prone settings.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-17T14:33:38Z</published>
+    <arxiv:comment>29 pages, 5 figures, 8 tables; Project page: https://oedosoldier.github.io/ViGOS/</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Sihan Wang</name>
+    </author>
+    <author>
+      <name>Xiyao Liu</name>
+    </author>
+    <author>
+      <name>Lianqing Liu</name>
+    </author>
+    <author>
+      <name>Zhi Han</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.07737v2</id>
+    <title>Seeing vs. Believing: Evaluating the Language Bias of Open-Source MLLMs in Counter-Intuitive Scenes</title>
+    <updated>2026-05-26T12:27:32Z</updated>
+    <link href="https://arxiv.org/abs/2601.07737v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.07737v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Large Language Models (MLLMs) have demonstrated remarkable performance in mainstream visual understanding tasks, but their ability to process action scenes that contradict everyday common sense remains undertested. To address this gap, we introduce CAIT, a benchmark comprising 400 high-fidelity synthetic scenes focused on counter-intuitive visual actions, such as ``a rabbit is chasing a tiger'', where visual evidence explicitly contradicts common-sense expectations. We evaluate human, leading proprietary models (e.g., Claude and Gemini), and 14 representative open-source MLLMs. Humans achieve near-perfect performance (around 0.95 accuracy) and proprietary models demonstrate robust understanding (achieving up to 0.88 accuracy), standard open-source instruction-tuned models perform at the chance level. Further analysis demonstrates that this failure is driven by a strong language prior: rather than trusting the visual input, they automatically override the anomalous visual signals with statistically common text descriptions. Although introducing Chain-of-Thought reasoning mechanisms can improve accuracy, it significantly slows down the response and generates a new failure mode: models overthink the scenario and refuse to accept the actual visual content simply because it violates real-world physical laws. Finally, we demonstrate that targeted fine-tuning and structured prompting can effectively mitigate this reliance on language priors, enabling open-source models to accurately ground their reasoning in actual visual evidence.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-12T17:15:45Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Chen Ling</name>
+    </author>
+    <author>
+      <name>Tongwei Zhang</name>
+    </author>
+    <author>
+      <name>Hanqian Li</name>
+    </author>
+    <author>
+      <name>Nai Ding</name>
+    </author>
+  </entry>
+</feed>

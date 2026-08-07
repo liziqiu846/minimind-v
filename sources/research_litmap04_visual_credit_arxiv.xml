@@ -1,0 +1,304 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/oBV1PqOKVtXjfHpseW9PMXHz0X0</id>
+  <title>arXiv Query: search_query=all:"visual instruction tuning" AND (all:"visual token" OR all:"language dominance" OR all:"credit assignment" OR all:"gradient routing")&amp;id_list=&amp;start=0&amp;max_results=40</title>
+  <updated>2026-08-07T05:13:00Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22visual+instruction+tuning%22+AND+(all:%22visual+token%22+OR+(all:%22language+dominance%22+OR+(all:%22credit+assignment%22+OR+all:%22gradient+routing%22)))&amp;start=0&amp;max_results=40&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>40</opensearch:itemsPerPage>
+  <opensearch:totalResults>9</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2505.11945v2</id>
+    <title>Top-Down Compression: Revisit Efficient Vision Token Projection for Visual Instruction Tuning</title>
+    <updated>2025-05-22T15:10:59Z</updated>
+    <link href="https://arxiv.org/abs/2505.11945v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.11945v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Visual instruction tuning aims to enable large language models to comprehend the visual world, with a pivotal challenge lying in establishing an effective vision-to-language projection. However, existing methods often grapple with the intractable trade-off between accuracy and efficiency. In this paper, we present LLaVA-Meteor, a novel approach designed to break this deadlock, equipped with a novel Top-Down Compression paradigm that strategically compresses visual tokens without compromising core information. Specifically, we construct a trainable Flash Global Fusion module based on efficient selective state space operators, which aligns the feature space while enabling each token to perceive holistic visual context and instruction preference at low cost. Furthermore, a local-to-single scanning manner is employed to effectively capture local dependencies, thereby enhancing the model's capability in vision modeling. To alleviate computational overhead, we explore a Visual-Native Selection mechanism that independently assesses token significance by both the visual and native experts, followed by aggregation to retain the most critical subset. Extensive experiments show that our approach reduces visual tokens by 75--95% while achieving comparable or superior performance across 12 benchmarks, significantly improving efficiency.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-17T10:22:29Z</published>
+    <arxiv:comment>Under Review</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Bonan li</name>
+    </author>
+    <author>
+      <name>Zicheng Zhang</name>
+    </author>
+    <author>
+      <name>Songhua Liu</name>
+    </author>
+    <author>
+      <name>Weihao Yu</name>
+    </author>
+    <author>
+      <name>Xinchao Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.16353v2</id>
+    <title>StrLoRA: Towards Streaming Continual Visual Instruction Tuning for MLLMs</title>
+    <updated>2026-05-19T02:02:00Z</updated>
+    <link href="https://arxiv.org/abs/2605.16353v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.16353v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Continual Visual Instruction Tuning (CVIT) enables Multimodal Large Language Models to incrementally acquire new abilities. However, existing CVIT methods operate under a restrictive task-incremental setting, where each training phase corresponds to a single, predefined task. This does not reflect real-world conditions, where data arrives as a continuous stream of interleaved and dynamically evolving tasks. To bridge this gap, we introduce Streaming CVIT (StrCVIT), a more general and realistic setting where models learn from a stream of data chunks containing a dynamic mixture of tasks. In StrCVIT, a model must simultaneously acquire new abilities, reinforce recurring abilities, and mitigate forgetting. Existing CVIT methods fail here as they cannot reliably distinguish or adapt to the heterogeneous task samples within each chunk. We therefore propose StrLoRA, a regularized two-stage expert routing framework. StrLoRA first performs task-aware expert selection using the textual instruction to activate a sparse subset of relevant experts, reducing cross-task interference. It then applies token-wise expert weighting within this subset, where contribution weights are computed via cross-modal attention between local visual tokens and the global instruction representation. To maintain stability across the non-stationary stream, a routing-stability regularization aligns current routing distributions with a historical exponential moving average reference. Extensive experiments on a newly developed StrCVIT benchmark show that StrLoRA substantially outperforms existing methods, effectively enhancing model's abilities from continuously evolving data streams. The code is available at https://github.com/chanceche/StrCVIT.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-08T06:16:37Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Chang Che</name>
+    </author>
+    <author>
+      <name>Ziqi Wang</name>
+    </author>
+    <author>
+      <name>Hui Ma</name>
+    </author>
+    <author>
+      <name>Cheems Wang</name>
+    </author>
+    <author>
+      <name>Zenglin Shi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.02539v3</id>
+    <title>Parrot: Multilingual Visual Instruction Tuning</title>
+    <updated>2025-05-26T03:47:46Z</updated>
+    <link href="https://arxiv.org/abs/2406.02539v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.02539v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The rapid development of Multimodal Large Language Models (MLLMs), such as GPT-4o, marks a significant step toward artificial general intelligence. Existing methods typically align vision encoders with LLMs via supervised fine-tuning (SFT), but this often deteriorates their ability to handle multiple languages as training progresses. We empirically observe that imbalanced SFT datasets, largely English-centric, degrade performance on non-English languages due to the failure in multilingual token alignment. To address this, we propose PARROT, a novel approach that leverages textual guidance for visual token alignment at the language level. PARROT conditions visual tokens on diverse language inputs and uses Mixture-of-Experts (MoE) to align multilingual tokens. By computing cross-attention between initial visual features and textual embeddings, we select the most relevant experts, converting visual tokens into language-specific representations. Additionally, we introduce the Massive Multilingual Multimodal Benchmark (MMMB), a new benchmark comprising 6 languages, 15 categories, and 12,000 questions, to assess multilingual capabilities. PARROT achieves state-of-the-art performance on both the multilingual benchmarks and a wide range of multimodal tasks. Code and dataset are available at: https://github.com/AIDC-AI/Parrot</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-04T17:56:28Z</published>
+    <arxiv:comment>Accepted to ICML 2025. Code and dataset are available at: https://github.com/AIDC-AI/Parrot</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Hai-Long Sun</name>
+    </author>
+    <author>
+      <name>Da-Wei Zhou</name>
+    </author>
+    <author>
+      <name>Yang Li</name>
+    </author>
+    <author>
+      <name>Shiyin Lu</name>
+    </author>
+    <author>
+      <name>Chao Yi</name>
+    </author>
+    <author>
+      <name>Qing-Guo Chen</name>
+    </author>
+    <author>
+      <name>Zhao Xu</name>
+    </author>
+    <author>
+      <name>Weihua Luo</name>
+    </author>
+    <author>
+      <name>Kaifu Zhang</name>
+    </author>
+    <author>
+      <name>De-Chuan Zhan</name>
+    </author>
+    <author>
+      <name>Han-Jia Ye</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.26596v1</id>
+    <title>Decoupled Visual Processing: Efficient Multimodal Adaptation via Modality-Specific Transformer Substitution</title>
+    <updated>2026-07-29T08:16:28Z</updated>
+    <link href="https://arxiv.org/abs/2607.26596v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.26596v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal large language models (MLLMs) have demonstrated remarkable capabilities by integrating visual and textual understanding within a unified transformer architecture. However, fine-tuning all parameters of these models for visual instruction tuning is computationally expensive and often unnecessary, as the representation requirements for visual and textual tokens diverge significantly in the deeper layers of the network. In this paper, we propose Decoupled Visual Processing (DVP), an efficient training framework that replaces the upper decoder layers of a pretrained LLM with a lightweight, independently trainable single transformer block dedicated exclusively to visual token processing. Specifically, after shared processing through the first half of the decoder layers, visual and textual tokens are split: visual tokens are routed through a newly initialized single transformer block while textual tokens continue through the original frozen decoder layers. The two streams are then concatenated before the language modeling head. During training, only the single transformer block is updated, dramatically reducing the number of trainable parameters. Experiments on the LLaVA-1.5 framework demonstrate that DVP achieves competitive performance on MME, POPE, and ChartQA benchmarks while training only a fraction of the total parameters, suggesting that visual representations in MLLMs can be effectively learned through a decoupled, parameter-efficient pathway.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-29T08:16:28Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Mingkuan Feng</name>
+    </author>
+    <author>
+      <name>Zhengqi Wen</name>
+    </author>
+    <author>
+      <name>Jianhua Tao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.12728v3</id>
+    <title>SpecFLASH: A Latent-Guided Semi-autoregressive Speculative Decoding Framework for Efficient Multimodal Generation</title>
+    <updated>2026-02-03T12:51:29Z</updated>
+    <link href="https://arxiv.org/abs/2505.12728v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.12728v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large language models and large multimodal models (LLMs and LMMs) deliver strong generative performance but suffer from slow decoding, a problem that becomes more severe when handling visual inputs, whose sequences typically contain many more tokens with lower information density than text. Speculative decoding accelerates LLM inference by letting a compact draft model propose candidate tokens that are selectively accepted by a larger target model, achieving speed-up without degrading quality. However, existing multimodal speculative decoding approaches largely ignore the structural characteristics of visual representations and usually rely on text-only draft models. In this paper, we introduce SpecFLASH, a speculative decoding framework tailored to LMMs that explicitly exploits multimodal structure when designing the draft model. We first mitigate redundancy in visual token sequences with a lightweight, latent-guided token compression module that compacts visual features while preserving semantics, and then leverage the co-occurrence and local correlations of visual entities via a semi-autoregressive decoding scheme that predicts multiple tokens in a single forward pass. Extensive experiments demonstrate that SpecFLASH consistently surpasses prior speculative decoding baselines, achieving up to $2.68\times$ speed-up on video captioning and $2.55\times$ on visual instruction tuning, relative to the original LMM. Our code is available here: https://github.com/ZihuaEvan/FlashSD/.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-19T05:35:30Z</published>
+    <arxiv:comment>Under review</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zihua Wang</name>
+    </author>
+    <author>
+      <name>Ruibo Li</name>
+    </author>
+    <author>
+      <name>Haozhe Du</name>
+    </author>
+    <author>
+      <name>Joey Tianyi Zhou</name>
+    </author>
+    <author>
+      <name>Yu Zhang</name>
+    </author>
+    <author>
+      <name>Xu Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2404.06918v1</id>
+    <title>HRVDA: High-Resolution Visual Document Assistant</title>
+    <updated>2024-04-10T11:10:50Z</updated>
+    <link href="https://arxiv.org/abs/2404.06918v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2404.06918v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Leveraging vast training data, multimodal large language models (MLLMs) have demonstrated formidable general visual comprehension capabilities and achieved remarkable performance across various tasks. However, their performance in visual document understanding still leaves much room for improvement. This discrepancy is primarily attributed to the fact that visual document understanding is a fine-grained prediction task. In natural scenes, MLLMs typically use low-resolution images, leading to a substantial loss of visual information. Furthermore, general-purpose MLLMs do not excel in handling document-oriented instructions. In this paper, we propose a High-Resolution Visual Document Assistant (HRVDA), which bridges the gap between MLLMs and visual document understanding. This model employs a content filtering mechanism and an instruction filtering module to separately filter out the content-agnostic visual tokens and instruction-agnostic visual tokens, thereby achieving efficient model training and inference for high-resolution images. In addition, we construct a document-oriented visual instruction tuning dataset and apply a multi-stage training strategy to enhance the model's document modeling capabilities. Extensive experiments demonstrate that our model achieves state-of-the-art performance across multiple document understanding datasets, while maintaining training efficiency and inference speed comparable to low-resolution models.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-04-10T11:10:50Z</published>
+    <arxiv:comment>Accepted to CVPR 2024 main conference</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Chaohu Liu</name>
+    </author>
+    <author>
+      <name>Kun Yin</name>
+    </author>
+    <author>
+      <name>Haoyu Cao</name>
+    </author>
+    <author>
+      <name>Xinghua Jiang</name>
+    </author>
+    <author>
+      <name>Xin Li</name>
+    </author>
+    <author>
+      <name>Yinsong Liu</name>
+    </author>
+    <author>
+      <name>Deqiang Jiang</name>
+    </author>
+    <author>
+      <name>Xing Sun</name>
+    </author>
+    <author>
+      <name>Linli Xu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.14164v1</id>
+    <title>MetaMorph: Multimodal Understanding and Generation via Instruction Tuning</title>
+    <updated>2024-12-18T18:58:50Z</updated>
+    <link href="https://arxiv.org/abs/2412.14164v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.14164v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this work, we propose Visual-Predictive Instruction Tuning (VPiT) - a simple and effective extension to visual instruction tuning that enables a pretrained LLM to quickly morph into an unified autoregressive model capable of generating both text and visual tokens. VPiT teaches an LLM to predict discrete text tokens and continuous visual tokens from any input sequence of image and text data curated in an instruction-following format. Our empirical investigation reveals several intriguing properties of VPiT: (1) visual generation ability emerges as a natural byproduct of improved visual understanding, and can be unlocked efficiently with a small amount of generation data; (2) while we find understanding and generation to be mutually beneficial, understanding data contributes to both capabilities more effectively than generation data. Building upon these findings, we train our MetaMorph model and achieve competitive performance on both visual understanding and generation. In visual generation, MetaMorph can leverage the world knowledge and reasoning abilities gained from LLM pretraining, and overcome common failure modes exhibited by other generation models. Our results suggest that LLMs may have strong "prior" vision capabilities that can be efficiently adapted to both visual understanding and generation with a relatively simple instruction tuning process.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-18T18:58:50Z</published>
+    <arxiv:comment>Project page at tsb0601.github.io/metamorph</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Shengbang Tong</name>
+    </author>
+    <author>
+      <name>David Fan</name>
+    </author>
+    <author>
+      <name>Jiachen Zhu</name>
+    </author>
+    <author>
+      <name>Yunyang Xiong</name>
+    </author>
+    <author>
+      <name>Xinlei Chen</name>
+    </author>
+    <author>
+      <name>Koustuv Sinha</name>
+    </author>
+    <author>
+      <name>Michael Rabbat</name>
+    </author>
+    <author>
+      <name>Yann LeCun</name>
+    </author>
+    <author>
+      <name>Saining Xie</name>
+    </author>
+    <author>
+      <name>Zhuang Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.07601v2</id>
+    <title>Towards Zero-Shot Anomaly Detection and Reasoning with Multimodal Large Language Models</title>
+    <updated>2025-03-17T07:11:04Z</updated>
+    <link href="https://arxiv.org/abs/2502.07601v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.07601v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Zero-Shot Anomaly Detection (ZSAD) is an emerging AD paradigm. Unlike the traditional unsupervised AD setting that requires a large number of normal samples to train a model, ZSAD is more practical for handling data-restricted real-world scenarios. Recently, Multimodal Large Language Models (MLLMs) have shown revolutionary reasoning capabilities in various vision tasks. However, the reasoning of image abnormalities remains underexplored due to the lack of corresponding datasets and benchmarks. To facilitate research in AD &amp; reasoning, we establish the first visual instruction tuning dataset, Anomaly-Instruct-125k, and the evaluation benchmark, VisA-D&amp;R. Through investigation with our benchmark, we reveal that current MLLMs like GPT-4o cannot accurately detect and describe fine-grained anomalous details in images. To address this, we propose Anomaly-OneVision (Anomaly-OV), the first specialist visual assistant for ZSAD and reasoning. Inspired by human behavior in visual inspection, Anomaly-OV leverages a Look-Twice Feature Matching (LTFM) mechanism to adaptively select and emphasize abnormal visual tokens. Extensive experiments demonstrate that Anomaly-OV achieves significant improvements over advanced generalist models in both detection and reasoning. Extensions to medical and 3D AD are provided for future study. The link to our project page: https://xujiacong.github.io/Anomaly-OV/</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-11T14:50:43Z</published>
+    <arxiv:comment>19 pages, 10 figures, accepted by CVPR 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jiacong Xu</name>
+    </author>
+    <author>
+      <name>Shao-Yuan Lo</name>
+    </author>
+    <author>
+      <name>Bardia Safaei</name>
+    </author>
+    <author>
+      <name>Vishal M. Patel</name>
+    </author>
+    <author>
+      <name>Isht Dwivedi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2408.14023v1</id>
+    <title>Video-CCAM: Enhancing Video-Language Understanding with Causal Cross-Attention Masks for Short and Long Videos</title>
+    <updated>2024-08-26T05:27:14Z</updated>
+    <link href="https://arxiv.org/abs/2408.14023v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2408.14023v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multi-modal large language models (MLLMs) have demonstrated considerable potential across various downstream tasks that require cross-domain knowledge. MLLMs capable of processing videos, known as Video-MLLMs, have attracted broad interest in video-language understanding. However, videos, especially long videos, contain more visual tokens than images, making them difficult for LLMs to process. Existing works either downsample visual features or extend the LLM context size, risking the loss of high-resolution information or slowing down inference speed. To address these limitations, we apply cross-attention layers in the intermediate projector between the visual encoder and the large language model (LLM). As the naive cross-attention mechanism is insensitive to temporal order, we further introduce causal cross-attention masks (CCAMs) within the cross-attention layers. This Video-MLLM, named Video-CCAM, is trained in a straightforward two-stage fashion: feature alignment and visual instruction tuning. We develop several Video-CCAM models based on LLMs of different sizes (4B, 9B, and 14B). Video-CCAM proves to be a robust Video-MLLM and shows outstanding performance from short videos to long ones. Among standard video benchmarks like MVBench and VideoChatGPT-QA, Video-CCAM shows outstanding performances (1st/2nd/3rd in MVBench and TGIF-QA, 2nd/3rd/4th in MSVD-QA, MSRVTT-QA, and ActivityNet-QA). In benchmarks encompassing long videos, Video-CCAM models can be directly adapted to long video understanding and still achieve exceptional scores despite being trained solely with images and 16-frame videos. Using 96 frames (6$\times$ the training number of frames), Video-CCAM models rank 1st/2nd/3rd in VideoVista and 1st/2nd/4th in MLVU among all open-source Video-MLLMs, respectively. The code is publicly available in \url{https://github.com/QQ-MM/Video-CCAM}.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-08-26T05:27:14Z</published>
+    <arxiv:comment>10 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jiajun Fei</name>
+    </author>
+    <author>
+      <name>Dian Li</name>
+    </author>
+    <author>
+      <name>Zhidong Deng</name>
+    </author>
+    <author>
+      <name>Zekun Wang</name>
+    </author>
+    <author>
+      <name>Gang Liu</name>
+    </author>
+    <author>
+      <name>Hui Wang</name>
+    </author>
+  </entry>
+</feed>

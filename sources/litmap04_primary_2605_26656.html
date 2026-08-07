@@ -1,0 +1,1414 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>[2605.26656] DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding</title><meta property="og:description" content="Multimodal large language models are typically trained end-to-end to predict ground-truth answers, yet supervision signals are applied exclusively to text tokens. Visual tokens, the core carriers of visual information,…">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding">
+<meta name="twitter:image:src" content="https://ar5iv.labs.arxiv.org/assets/ar5iv_card.png">
+<meta name="twitter:image:alt" content="ar5iv logo">
+<meta property="og:title" content="DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding">
+<meta property="og:site_name" content="ar5iv">
+<meta property="og:image" content="https://ar5iv.labs.arxiv.org/assets/ar5iv_card.png">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ar5iv.labs.arxiv.org/html/2605.26656">
+<link rel="canonical" target="_blank" href="https://ar5iv.labs.arxiv.org/html/2605.26656">
+
+<!--Generated on Fri Jun  5 22:30:42 2026 by LaTeXML (version 0.8.8) http://dlmf.nist.gov/LaTeXML/.-->
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<script>
+  function detectColorScheme(){
+    var theme="light";
+    var current_theme = localStorage.getItem("ar5iv_theme");
+    if(current_theme){
+      if(current_theme == "dark"){
+        theme = "dark";
+      } }
+    else if(!window.matchMedia) { return false; }
+    else if(window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      theme = "dark"; }
+    if (theme=="dark") {
+      document.documentElement.setAttribute("data-theme", "dark");
+    } else {
+      document.documentElement.setAttribute("data-theme", "light"); } }
+
+  detectColorScheme();
+
+  function toggleColorScheme(){
+    var current_theme = localStorage.getItem("ar5iv_theme");
+    if (current_theme) {
+      if (current_theme == "light") {
+        localStorage.setItem("ar5iv_theme", "dark"); }
+      else {
+        localStorage.setItem("ar5iv_theme", "light"); } }
+    else {
+        localStorage.setItem("ar5iv_theme", "dark"); }
+    detectColorScheme(); }
+</script>
+<link media="all" rel="stylesheet" href="/assets/ar5iv-fonts.0.8.4.css"><link media="all" rel="stylesheet" href="/assets/ar5iv.0.8.5.css"><link media="all" rel="stylesheet" href="/assets/ar5iv-site.0.2.2.css">
+</head>
+<body>
+<div class="ltx_page_main">
+<div class="ltx_page_content">
+<article class="ltx_document">
+<h1 class="ltx_title ltx_title_document">DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding</h1>
+<div class="ltx_authors">
+<span class="ltx_creator ltx_role_author">
+<span class="ltx_personname"><span id="id1.1.id1" class="ltx_text ltx_font_bold">Jianfei Zhao</span>
+</span><span class="ltx_author_notes"><span class="ltx_author_notes_content">
+<span class="ltx_contact ltx_role_affiliation"><span class="ltx_contact_name">Affiliation: </span>School of Computer ScienceTechnology, Beijing Institute of Technology,
+</span></span></span></span>
+<span class="ltx_author_before">  </span><span class="ltx_creator ltx_role_author">
+<span class="ltx_personname"><span id="id2.1.id1" class="ltx_text ltx_font_bold">Feng Zhang</span>
+</span><span class="ltx_author_notes"><span class="ltx_author_notes_content">
+<span class="ltx_contact ltx_role_affiliation"><span class="ltx_contact_name">Affiliation: </span>School of Computer ScienceTechnology, Beijing Institute of Technology,
+</span></span></span></span>
+<span class="ltx_author_before">  </span><span class="ltx_creator ltx_role_author">
+<span class="ltx_personname"><span id="id3.1.id1" class="ltx_text ltx_font_bold">Xin Sun</span>
+</span><span class="ltx_author_notes"><span class="ltx_author_notes_content">
+<span class="ltx_contact ltx_role_affiliation"><span class="ltx_contact_name">Affiliation: </span>School of Computer ScienceTechnology, Beijing Institute of Technology,
+</span></span></span></span>
+<span class="ltx_author_before">  </span><span class="ltx_creator ltx_role_author">
+<span class="ltx_personname"><span id="id4.1.id1" class="ltx_text ltx_font_bold">Chong Feng</span>
+</span><span class="ltx_author_notes"><span class="ltx_author_notes_content">
+<span class="ltx_contact ltx_role_affiliation"><span class="ltx_contact_name">Affiliation: </span>School of Computer ScienceTechnology, Beijing Institute of Technology,
+</span>
+<span class="ltx_contact ltx_role_affiliation"><span class="ltx_contact_name">Affiliation: </span>Southeast Academy of Information Technology, Beijing Institute of Technology,
+zhqingan@bit.edu.cn
+
+</span></span></span></span>
+<span class="ltx_author_before">  </span><span class="ltx_creator ltx_role_author">
+<span class="ltx_personname"><span id="id5.1.id1" class="ltx_text ltx_font_bold">Bing Wang</span>
+</span></span>
+<span class="ltx_author_before">  </span><span class="ltx_creator ltx_role_author">
+<span class="ltx_personname"><span id="id6.1.id1" class="ltx_text ltx_font_bold">Zhixing Tan</span>
+
+</span><span class="ltx_author_notes"><span class="ltx_author_notes_content">
+<span class="ltx_contact ltx_role_affiliation"><span class="ltx_contact_name">Affiliation: </span>Zhongguancun Academy,
+Beihang University,
+Zhongguancun Laboratory
+</span></span></span></span>
+</div>
+
+<div id="abstract1" class="ltx_abstract">
+<h6 class="ltx_title ltx_title_abstract">Abstract</h6>
+<p class="ltx_p">Multimodal large language models are typically trained end-to-end to predict ground-truth answers, yet supervision signals are applied exclusively to text tokens. Visual tokens, the core carriers of visual information, are optimized only implicitly as part of the context, leading to coarse-grained visual understanding.
+Prior works attempt to supervise visual inputs but inevitably rely on auxiliary components such as additional decoders or forward passes, because visual tokens lack readily interpretable labels. This limits their practical applicability.
+In this work, we propose <span class="ltx_text ltx_font_bold">D</span>irect <span class="ltx_text ltx_font_bold">V</span>ision <span class="ltx_text ltx_font_bold">S</span>upervised <span class="ltx_text ltx_font_bold">F</span>ine-<span class="ltx_text ltx_font_bold">T</span>uning (DV-SFT), which constructs explicit, token-level supervision for visual tokens and trains them through the same next-token prediction objective used for text.
+Specifically, we exploit the direct vision–text correspondence in OCR-related scenarios and automatically label each visual token with the word in its corresponding image patch.
+DV-SFT treats the MLLM as a black box, requiring no architectural modifications or additional forward passes.
+Extensive experiments demonstrate the superiority of direct vision supervision. DV-SFT consistently outperforms standard SFT across three in-domain and four out-of-domain benchmarks.
+Further analyses show that vision supervision effectively enhances fine-grained visual understanding and achieves higher multimodal alignment efficiency.
+<span class="ltx_note ltx_role_footnote"><sup class="ltx_note_mark">1</sup><span class="ltx_note_outer"><span class="ltx_note_content"><sup class="ltx_note_mark">1</sup><span class="ltx_tag ltx_tag_note">1</span>The code will be released once accepted.</span></span></span></p>
+</div>
+<div id="p1" class="ltx_para ltx_noindent">
+<div id="p1.1" class="ltx_block ltx_align_bottom">
+<p id="p1.1.1" class="ltx_p ltx_align_center"><span id="p1.1.1.1" class="ltx_text ltx_font_bold">DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding</span></p>
+<p id="p1.1.2" class="ltx_p ltx_align_center" style="width:345.0pt;"><span id="p1.1.2.1" class="ltx_text ltx_inline-block" style="width:0.0pt;">
+<span id="p1.1.2.1.1" class="ltx_tabular ltx_align_top">
+<span class="ltx_tbody">
+<span id="p1.1.2.1.1.1.1" class="ltx_tr">
+<span id="p1.1.2.1.1.1.1.1" class="ltx_td ltx_align_center"><span id="p1.1.2.1.1.1.1.1.1" class="ltx_text ltx_font_bold">
+Jianfei Zhao<sup id="p1.1.2.1.1.1.1.1.1.1" class="ltx_sup">1,2</sup>,
+Feng Zhang<sup id="p1.1.2.1.1.1.1.1.1.2" class="ltx_sup">1</sup>,
+Xin Sun<sup id="p1.1.2.1.1.1.1.1.1.3" class="ltx_sup">1</sup>,
+Chong Feng<sup id="p1.1.2.1.1.1.1.1.1.4" class="ltx_sup">1,5</sup>,
+Bing Wang<sup id="p1.1.2.1.1.1.1.1.1.5" class="ltx_sup">3</sup>,
+Zhixing Tan<sup id="p1.1.2.1.1.1.1.1.1.6" class="ltx_sup">4</sup></span></span></span>
+<span id="p1.1.2.1.1.2.2" class="ltx_tr">
+<span id="p1.1.2.1.1.2.2.1" class="ltx_td ltx_align_center"><sup id="p1.1.2.1.1.2.2.1.1" class="ltx_sup">1</sup>School of Computer Science and Technology, Beijing Institute of Technology,</span></span>
+<span id="p1.1.2.1.1.3.3" class="ltx_tr">
+<span id="p1.1.2.1.1.3.3.1" class="ltx_td ltx_align_center"><sup id="p1.1.2.1.1.3.3.1.1" class="ltx_sup">2</sup>Zhongguancun Academy,
+<sup id="p1.1.2.1.1.3.3.1.2" class="ltx_sup">3</sup>Beihang University,
+<sup id="p1.1.2.1.1.3.3.1.3" class="ltx_sup">4</sup>Zhongguancun Laboratory</span></span>
+<span id="p1.1.2.1.1.4.4" class="ltx_tr">
+<span id="p1.1.2.1.1.4.4.1" class="ltx_td ltx_align_center"><sup id="p1.1.2.1.1.4.4.1.1" class="ltx_sup">5</sup>Southeast Academy of Information Technology, Beijing Institute of Technology,</span></span>
+<span id="p1.1.2.1.1.5.5" class="ltx_tr">
+<span id="p1.1.2.1.1.5.5.1" class="ltx_td ltx_align_center">
+zhqingan@bit.edu.cn</span></span>
+</span>
+</span></span></p>
+</div>
+</div>
+<section id="S1" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">1 </span>Introduction</h2>
+
+<div id="S1.p1" class="ltx_para">
+<p id="S1.p1.1" class="ltx_p">Multimodal large language models (MLLMs) <cite class="ltx_cite ltx_citemacro_citep">(Liu<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib3" title="Visual instruction tuning" class="ltx_ref">2023</a>; Dai<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib5" title="Instructblip: towards general-purpose vision-language models with instruction tuning" class="ltx_ref">2023</a>; Bai<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib4" title="Qwen3-vl technical report" class="ltx_ref">2025</a>)</cite> augment large language models with a vision encoder <cite class="ltx_cite ltx_citemacro_cite">Dosovitskiy<span class="ltx_text ltx_bib_etal"> et al.</span> (<a href="#bib.bib7" title="An image is worth 16x16 words: transformers for image recognition at scale" class="ltx_ref">2021</a>); Zhai<span class="ltx_text ltx_bib_etal"> et al.</span> (<a href="#bib.bib6" title="Sigmoid loss for language image pre-training" class="ltx_ref">2023</a>)</cite>, mapping images into the language feature space. End-to-end training aligns multimodal features and enables MLLMs to achieve near-human performance on various visual understanding tasks.
+Despite this success, a critical limitation remains: all explicit supervision signals are applied solely to text tokens. Visual tokens—the primary carriers of visual information—are only optimized implicitly as part of the context, receiving no direct semantic guidance.
+Scaling up end-to-end training, though beneficial in the aggregate, still supervises visual tokens only implicitly through data statistics, leaving fine-grained details easily overlooked or hallucinated <cite class="ltx_cite ltx_citemacro_citep">(Chen<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib18" title="Mitigating hallucination in visual language models with visual supervision" class="ltx_ref">2023</a>; Tang<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib12" title="Basic: boosting visual alignment with intrinsic refined embeddings in multimodal large language models" class="ltx_ref">2025</a>)</cite>.</p>
+</div>
+<div id="S1.p2" class="ltx_para">
+<p id="S1.p2.1" class="ltx_p">To improve the precision of visual understanding, a number of recent efforts attempt to inject additional supervision for visual tokens.
+However, these signals are often indirect and coarse-grained, such as devising vision-targeted auxiliary rewards <cite class="ltx_cite ltx_citemacro_citep">(Li<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib10" title="Vision-sr1: self-rewarding vision-language model via reasoning decomposition and multi-reward policy optimization" class="ltx_ref">2026b</a>; Liu<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib9" title="Empowering small vlms to think with dynamic memorization and exploration" class="ltx_ref">2026</a>)</cite> or distilling visual features through representation alignment <cite class="ltx_cite ltx_citemacro_citep">(Tang<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib12" title="Basic: boosting visual alignment with intrinsic refined embeddings in multimodal large language models" class="ltx_ref">2025</a>; Li<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib13" title="Unleashing the intrinsic visual representation capability of multimodal large language models" class="ltx_ref">2026a</a>; Jiang<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib14" title="Analyzing fine-grained alignment and enhancing vision understanding in multimodal language models" class="ltx_ref">2025a</a>)</cite>.
+In other cases, the training objective of visual tokens is misaligned with visual understanding, as seen in next-visual-token prediction <cite class="ltx_cite ltx_citemacro_citep">(Wang<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib11" title="Autoregressive semantic visual reconstruction helps vlms understand better" class="ltx_ref">2025a</a>, <a href="#bib.bib21" title="Emu3: next-token prediction is all you need" class="ltx_ref">2024</a>; Zou<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib22" title="Echogen: cycle-consistent learning for unified layout-image generation and understanding" class="ltx_ref">2026</a>)</cite> or pixel-level reconstruction <cite class="ltx_cite ltx_citemacro_cite">Wang<span class="ltx_text ltx_bib_etal"> et al.</span> (<a href="#bib.bib17" title="Reconstructive visual instruction tuning" class="ltx_ref">2025b</a>); Sun<span class="ltx_text ltx_bib_etal"> et al.</span> (<a href="#bib.bib23" title="Ds-vlm: diffusion supervision vision language model" class="ltx_ref">2025</a>)</cite>.
+More critically, most of these methods require architectural modifications such as additional decoders or forward passes, which hinder their practical adoption.
+A more direct, intuitive, and architecturally simple form of vision supervision thus remains an open need.</p>
+</div>
+<div id="S1.p3" class="ltx_para">
+<p id="S1.p3.1" class="ltx_p">An intriguing observation from recent studies <cite class="ltx_cite ltx_citemacro_citep">(Zhao<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib24" title="Tell model where to look: mitigating hallucinations in mllms by vision-guided attention" class="ltx_ref">2025a</a>; Tang<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib12" title="Basic: boosting visual alignment with intrinsic refined embeddings in multimodal large language models" class="ltx_ref">2025</a>; Jiang<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib25" title="Interpreting and editing vision-language representations to mitigate hallucinations" class="ltx_ref">2025b</a>)</cite> suggests a more direct path: end-to-end trained MLLMs can extract semantic information from visual tokens without any dedicated vision supervision. Specifically, for each visual token, the words corresponding to peak values in its logits (hereafter <em id="S1.p3.1.1" class="ltx_emph ltx_font_italic">visual logits</em>) often accurately describe the content of the associated image patch, including objects, attributes, text strings, and so on.
+Inspired by this finding, we hypothesize that explicitly supervising visual tokens by the words that describe their corresponding image patches can substantially enhance fine-grained visual understanding.</p>
+</div>
+<div id="S1.p4" class="ltx_para">
+<p id="S1.p4.1" class="ltx_p">To validate this idea, we concentrate on OCR-related scenarios, where the correspondence between vision and text is most straightforward, facilitating fine-grained alignment between image tokens and words.
+As illustrated in Figure <a href="#S2.F1" title="Figure 1 ‣ 2 Related Work ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">1</span></a>, an MLLM’s visual logits in an OCR image can roughly recognize the textual content, but the granularity remains coarse and the alignments imprecise—a direct consequence of the absence of fine-grained vision supervision.
+The OCR scenarios thus serve as a clean, well-controlled testbed for studying direct vision supervision.</p>
+</div>
+<div id="S1.p5" class="ltx_para">
+<p id="S1.p5.1" class="ltx_p">We therefore propose <span id="S1.p5.1.1" class="ltx_text ltx_font_bold">D</span>irect <span id="S1.p5.1.2" class="ltx_text ltx_font_bold">V</span>ision <span id="S1.p5.1.3" class="ltx_text ltx_font_bold">S</span>upervised <span id="S1.p5.1.4" class="ltx_text ltx_font_bold">F</span>ine-<span id="S1.p5.1.5" class="ltx_text ltx_font_bold">T</span>uning (DV-SFT), a simple and principled method that uses words in visual tokens as vision labels and applies the next-token prediction loss directly on visual tokens. Critically, DV-SFT requires no architectural modifications, no additional forward passes, and treats the MLLM as a black box, making it readily applicable to any existing MLLM pipeline.
+We conduct comprehensive evaluations across eight benchmarks, including document and chart understanding <cite class="ltx_cite ltx_citemacro_citep">(Rajpurkar<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib29" title="Squad: 100,000+ questions for machine comprehension of text" class="ltx_ref">2016</a>; Mathew<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib27" title="Docvqa: a dataset for vqa on document images" class="ltx_ref">2021</a>, <a href="#bib.bib28" title="Infographicvqa" class="ltx_ref">2022</a>; Masry<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib31" title="Chartqa: a benchmark for question answering about charts with visual and logical reasoning" class="ltx_ref">2022</a>)</cite>, OCR <cite class="ltx_cite ltx_citemacro_citep">(Mishra<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib26" title="Ocr-vqa: visual question answering by reading text in images" class="ltx_ref">2019</a>; Liu<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib30" title="Ocrbench: on the hidden mystery of ocr in large multimodal models" class="ltx_ref">2024b</a>; Singh<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib35" title="Towards vqa models that can read" class="ltx_ref">2019</a>)</cite>, and general VQA <cite class="ltx_cite ltx_citemacro_citep">(Fu<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib37" title="Mme: a comprehensive evaluation benchmark for multimodal large language models" class="ltx_ref">2026</a>)</cite>.</p>
+</div>
+<div id="S1.p6" class="ltx_para">
+<p id="S1.p6.1" class="ltx_p">In summary, our main contributions are as follows:</p>
+<ul id="S1.I1" class="ltx_itemize">
+<li id="S1.I1.i1" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span> 
+<div id="S1.I1.i1.p1" class="ltx_para">
+<p id="S1.I1.i1.p1.1" class="ltx_p">We propose DV-SFT, which enables direct token-level supervision on visual tokens without any modification to model architecture or forward path, keeping a fully unified, end-to-end training paradigm.</p>
+</div>
+</li>
+<li id="S1.I1.i2" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span> 
+<div id="S1.I1.i2.p1" class="ltx_para">
+<p id="S1.I1.i2.p1.1" class="ltx_p">We design an offline vision label construction pipeline that leverages OCR and drawing tools to produce fine-grained, token-level supervision for visual tokens.</p>
+</div>
+</li>
+<li id="S1.I1.i3" class="ltx_item" style="list-style-type:none;">
+<span class="ltx_tag ltx_tag_item">•</span> 
+<div id="S1.I1.i3.p1" class="ltx_para">
+<p id="S1.I1.i3.p1.1" class="ltx_p">Extensive experiments show that DV-SFT significantly improves visual capability and outperforms standard SFT across a range of benchmarks, with detailed analyses confirming that the gains stem from refined visual representations.</p>
+</div>
+</li>
+</ul>
+</div>
+</section>
+<section id="S2" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">2 </span>Related Work</h2>
+
+<div id="S2.p1" class="ltx_para">
+<p id="S2.p1.1" class="ltx_p">Multimodal large language models <cite class="ltx_cite ltx_citemacro_citep">(Liu<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib3" title="Visual instruction tuning" class="ltx_ref">2023</a>; Bai<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib4" title="Qwen3-vl technical report" class="ltx_ref">2025</a>)</cite> typically adopt an end-to-end training paradigm, where visual tokens receive supervision only indirectly through the correctness of the final text output. Although this approach effectively models visual features, the learning outcomes are often unstable, leading to coarse-grained interpretation and hallucination <cite class="ltx_cite ltx_citemacro_cite">Liu<span class="ltx_text ltx_bib_etal"> et al.</span> (<a href="#bib.bib32" title="A survey on hallucination in large vision-language models" class="ltx_ref">2024a</a>); Chen<span class="ltx_text ltx_bib_etal"> et al.</span> (<a href="#bib.bib18" title="Mitigating hallucination in visual language models with visual supervision" class="ltx_ref">2023</a>); Zhao<span class="ltx_text ltx_bib_etal"> et al.</span> (<a href="#bib.bib33" title="Cross-image contrastive decoding: precise, lossless suppression of language priors in large vision-language models" class="ltx_ref">2025b</a>)</cite>.
+To mitigate this, a growing body of research has explored incorporating supervision on the visual tokens.</p>
+</div>
+<div id="S2.p2" class="ltx_para">
+<p id="S2.p2.1" class="ltx_p">Existing vision supervision methods can be broadly grouped into four paradigms.
+(1) The first provides <em id="S2.p2.1.1" class="ltx_emph ltx_font_italic">indirect semantic guidance</em> by using reward signals.
+Reward functions offer a more flexible form of supervision, and these methods <cite class="ltx_cite ltx_citemacro_citep">(Li<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib10" title="Vision-sr1: self-rewarding vision-language model via reasoning decomposition and multi-reward policy optimization" class="ltx_ref">2026b</a>; Liu<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib9" title="Empowering small vlms to think with dynamic memorization and exploration" class="ltx_ref">2026</a>)</cite> reward the model based on the visual consistency observed in sampled outputs.
+While these approaches effectively strengthen visual understanding, they remain an indirect form of supervision.
+(2) The second paradigm employs <em id="S2.p2.1.2" class="ltx_emph ltx_font_italic">representation alignment</em>.
+These methods <cite class="ltx_cite ltx_citemacro_citep">(Tang<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib12" title="Basic: boosting visual alignment with intrinsic refined embeddings in multimodal large language models" class="ltx_ref">2025</a>; Li<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib13" title="Unleashing the intrinsic visual representation capability of multimodal large language models" class="ltx_ref">2026a</a>; Jiang<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib14" title="Analyzing fine-grained alignment and enhancing vision understanding in multimodal language models" class="ltx_ref">2025a</a>)</cite> distill high-quality features to supervise the forward pass of visual tokens.
+However, the poor interpretability of continuous representations can inject noise and limit the reliability of the supervision.
+(3) The third paradigm is <em id="S2.p2.1.3" class="ltx_emph ltx_font_italic">next-visual-token prediction</em>.
+The emergence of discrete visual tokens has bridged the gap between the learning forms of visual and text tokens. Methods in this category supervise visual tokens through autoregressive image generation tasks <cite class="ltx_cite ltx_citemacro_citep">(Wang<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib21" title="Emu3: next-token prediction is all you need" class="ltx_ref">2024</a>; Zou<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib22" title="Echogen: cycle-consistent learning for unified layout-image generation and understanding" class="ltx_ref">2026</a>)</cite>.
+Despite their explicitness, these approaches suffer from a misalignment between the generative objective and the goal of visual understanding
+<cite class="ltx_cite ltx_citemacro_citet">Wang<span class="ltx_text ltx_bib_etal"> et al.</span> (<a href="#bib.bib11" title="Autoregressive semantic visual reconstruction helps vlms understand better" class="ltx_ref">2025a</a>)</cite> retain the architecture of visual understanding models and use only discrete visual tokens as supervisory signals, but the objective misalignment remains.
+(4) The fourth paradigm aims for <em id="S2.p2.1.4" class="ltx_emph ltx_font_italic">reconstructing visual input</em>.
+These studies <cite class="ltx_cite ltx_citemacro_citep">(Wang<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib17" title="Reconstructive visual instruction tuning" class="ltx_ref">2025b</a>; Sun<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib23" title="Ds-vlm: diffusion supervision vision language model" class="ltx_ref">2025</a>)</cite> supervise the correctness of visual token understanding by reconstructing the original visual input from visual representation; however, they face a conflict <cite class="ltx_cite ltx_citemacro_citep">(Song<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib8" title="Dualtoken: towards unifying visual understanding and generation with dual visual vocabularies" class="ltx_ref">2026</a>)</cite> between pixel-level and semantic features, resulting in suboptimal learning outcomes.
+Importantly, nearly all of these methods introduce additional architectural components, such as visual tokenizers, diffusion-based decoders, or extra forward passes, which complicate training and limit their general applicability.</p>
+</div>
+<div id="S2.p3" class="ltx_para">
+<p id="S2.p3.1" class="ltx_p">In contrast, our proposed DV-SFT avoids all of the above limitations.
+It constructs direct token-level labels for visual tokens based on the visual semantics in the image patches, closely aligning with the goal of visual understanding.
+By modeling vision supervision as a standard next-token prediction task, DV-SFT achieves a fully unified, end-to-end training paradigm.
+More importantly, DV-SFT introduces no additional modules or forward propagation passes, offering high practical usability.</p>
+</div>
+<figure id="S2.F1" class="ltx_figure"><img src="/html/2605.26656/assets/x1.png" id="S2.F1.g1" class="ltx_graphics ltx_centering ltx_img_landscape" width="830" height="610" alt="Refer to caption">
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 1: </span>An example of visual logits in Qwen3-VL-2B showing the top-20 tokens at the final image patch of each word. Numbers indicate rank; punctuation and meaningless characters are removed.
+This observation inspires us to <em id="S2.F1.2.1" class="ltx_emph ltx_font_italic">supervise visual tokens using the words in the image patches</em>.
+</figcaption>
+</figure>
+</section>
+<section id="S3" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">3 </span>Preliminaries</h2>
+
+<div id="S3.p1" class="ltx_para">
+<p id="S3.p1.3" class="ltx_p">An MLLM typically consists of a vision encoder that processes visual inputs, a projector that aligns features across modalities, and a large language model.
+In MLLMs’ training process, the input image is first tokenized into patches, and the patch sequence is input into the visual encoder.
+After successively processed by the encoder and projector, the input image finally forms a sequence of visual embeddings <math id="S3.p1.1.m1" class="ltx_Math" alttext="\bm{I}=[\bm{v}_{1},\bm{v}_{2},\cdots,\bm{v}_{m}]\in\mathbb{R}^{m\times D}" display="inline" intent=":literal"><semantics><mrow><mi>𝑰</mi><mo>=</mo><mrow><mo stretchy="false">[</mo><msub><mi>𝒗</mi><mn>1</mn></msub><mo>,</mo><msub><mi>𝒗</mi><mn>2</mn></msub><mo>,</mo><mi mathvariant="normal">⋯</mi><mo>,</mo><msub><mi>𝒗</mi><mi>m</mi></msub><mo stretchy="false">]</mo></mrow><mo>∈</mo><msup><mi>ℝ</mi><mrow><mi>m</mi><mo lspace="0.222em" rspace="0.222em">×</mo><mi>D</mi></mrow></msup></mrow><annotation encoding="application/x-tex">\bm{I}=[\bm{v}_{1},\bm{v}_{2},\cdots,\bm{v}_{m}]\in\mathbb{R}^{m\times D}</annotation></semantics></math> where <math id="S3.p1.2.m2" class="ltx_Math" alttext="m" display="inline" intent=":literal"><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math> is the number of visual tokens and <math id="S3.p1.3.m3" class="ltx_Math" alttext="D" display="inline" intent=":literal"><semantics><mi>D</mi><annotation encoding="application/x-tex">D</annotation></semantics></math> is the model dimension.
+When concatenated with the text input embeddings, the entire sequence is fed into the large language model, which outputs the logits for each token.
+The language modeling loss will act on the text logits under the teacher-forcing paradigm:</p>
+<table id="S3.E1" class="ltx_equation ltx_eqn_table">
+
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math id="S3.E1.m1" class="ltx_Math" alttext="\mathcal{L}_{t}=-\frac{1}{n}\sum^{n}_{i}\log\mathrm{P}(y_{i}|\bm{I},\bm{X},\bm{Y}_{&lt;i};\theta)," display="block" intent=":literal"><semantics><mrow><mrow><msub><mi class="ltx_font_mathcaligraphic">ℒ</mi><mi>t</mi></msub><mo>=</mo><mrow><mo>−</mo><mrow><mfrac><mn>1</mn><mi>n</mi></mfrac><mo lspace="0em" rspace="0em">​</mo><mrow><munderover><mo movablelimits="false">∑</mo><mi>i</mi><mi>n</mi></munderover><mrow><mrow><mi>log</mi><mo lspace="0.167em">⁡</mo><mi mathvariant="normal">P</mi></mrow><mo lspace="0em" rspace="0em">​</mo><mrow><mo stretchy="false">(</mo><mrow><msub><mi>y</mi><mi>i</mi></msub><mo fence="false">|</mo><mrow><mi>𝑰</mi><mo>,</mo><mi>𝑿</mi><mo>,</mo><msub><mi>𝒀</mi><mrow><mi></mi><mo>&lt;</mo><mi>i</mi></mrow></msub><mo>;</mo><mi>θ</mi></mrow></mrow><mo stretchy="false">)</mo></mrow></mrow></mrow></mrow></mrow></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">\mathcal{L}_{t}=-\frac{1}{n}\sum^{n}_{i}\log\mathrm{P}(y_{i}|\bm{I},\bm{X},\bm{Y}_{&lt;i};\theta),</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+<td rowspan="1" class="ltx_eqn_cell ltx_eqn_eqno ltx_align_middle ltx_align_right"><span class="ltx_tag ltx_tag_equation ltx_align_right">(1)</span></td>
+</tr></tbody>
+</table>
+<p id="S3.p1.6" class="ltx_p">where <math id="S3.p1.4.m1" class="ltx_Math" alttext="\bm{X}" display="inline" intent=":literal"><semantics><mi>𝑿</mi><annotation encoding="application/x-tex">\bm{X}</annotation></semantics></math> is the prompt and <math id="S3.p1.5.m2" class="ltx_Math" alttext="\bm{Y}" display="inline" intent=":literal"><semantics><mi>𝒀</mi><annotation encoding="application/x-tex">\bm{Y}</annotation></semantics></math> of length <math id="S3.p1.6.m3" class="ltx_Math" alttext="n" display="inline" intent=":literal"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math> is the ground-truth response.</p>
+</div>
+<figure id="S3.F2" class="ltx_figure"><img src="/html/2605.26656/assets/x2.png" id="S3.F2.g1" class="ltx_graphics ltx_centering ltx_img_landscape" width="747" height="498" alt="Refer to caption">
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 2: </span>Diagram of DV-SFT.
+The training procedure of DV-SFT is identical to that of standard SFT, where all tokens are trained end-to-end on the next-token prediction task. The difference lies in the fact that a significant portion of visual tokens have valid labels.
+</figcaption>
+</figure>
+<div id="S3.p2" class="ltx_para">
+<p id="S3.p2.2" class="ltx_p">Like text tokens, the model also produces logits for all visual tokens, referred to as visual logits.
+Recent studies <cite class="ltx_cite ltx_citemacro_citep">(Zhao<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib24" title="Tell model where to look: mitigating hallucinations in mllms by vision-guided attention" class="ltx_ref">2025a</a>; Jiang<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib25" title="Interpreting and editing vision-language representations to mitigate hallucinations" class="ltx_ref">2025b</a>; Tang<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib12" title="Basic: boosting visual alignment with intrinsic refined embeddings in multimodal large language models" class="ltx_ref">2025</a>)</cite> found that the distribution of visual logits contains concrete semantic features in each visual token.
+Sepcifically, the top words in <math id="S3.p2.1.m1" class="ltx_math_unparsed" alttext="\mathrm{P}(.|\bm{I}_{\leq i})" display="inline" intent=":literal"><semantics><mrow><mi mathvariant="normal">P</mi><mrow><mo stretchy="false">(</mo><mo lspace="0em" rspace="0.167em">.</mo><mo fence="false" rspace="0.167em" stretchy="false">|</mo><msub><mi>𝑰</mi><mrow><mi></mi><mo>≤</mo><mi>i</mi></mrow></msub><mo stretchy="false">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathrm{P}(.|\bm{I}_{\leq i})</annotation></semantics></math> always reflect the visual content in the patch of <math id="S3.p2.2.m2" class="ltx_Math" alttext="\bm{v}_{i}" display="inline" intent=":literal"><semantics><msub><mi>𝒗</mi><mi>i</mi></msub><annotation encoding="application/x-tex">\bm{v}_{i}</annotation></semantics></math>.
+Intuitively, the generalizable feature patterns that emerge spontaneously in models under end-to-end training serve as high-quality supervisory signals.
+Therefore, inspired by this, we use words that are semantically aligned with the visual content to supervise the learning of visual tokens in MLLMs:</p>
+<table id="S3.E2" class="ltx_equation ltx_eqn_table">
+
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math id="S3.E2.m1" class="ltx_Math" alttext="\mathcal{L}_{v}=-\frac{1}{m}\sum^{m}_{i}\log\mathrm{P}(w_{i}\mid\bm{I}_{\leq i};\theta)," display="block" intent=":literal"><semantics><mrow><mrow><msub><mi class="ltx_font_mathcaligraphic">ℒ</mi><mi>v</mi></msub><mo>=</mo><mrow><mo>−</mo><mrow><mfrac><mn>1</mn><mi>m</mi></mfrac><mo lspace="0em" rspace="0em">​</mo><mrow><munderover><mo movablelimits="false">∑</mo><mi>i</mi><mi>m</mi></munderover><mrow><mrow><mi>log</mi><mo lspace="0.167em">⁡</mo><mi mathvariant="normal">P</mi></mrow><mo lspace="0em" rspace="0em">​</mo><mrow><mo stretchy="false">(</mo><mrow><msub><mi>w</mi><mi>i</mi></msub><mo>∣</mo><mrow><msub><mi>𝑰</mi><mrow><mi></mi><mo>≤</mo><mi>i</mi></mrow></msub><mo>;</mo><mi>θ</mi></mrow></mrow><mo stretchy="false">)</mo></mrow></mrow></mrow></mrow></mrow></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">\mathcal{L}_{v}=-\frac{1}{m}\sum^{m}_{i}\log\mathrm{P}(w_{i}\mid\bm{I}_{\leq i};\theta),</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+<td rowspan="1" class="ltx_eqn_cell ltx_eqn_eqno ltx_align_middle ltx_align_right"><span class="ltx_tag ltx_tag_equation ltx_align_right">(2)</span></td>
+</tr></tbody>
+</table>
+<p id="S3.p2.4" class="ltx_p">where <math id="S3.p2.3.m1" class="ltx_Math" alttext="w_{i}" display="inline" intent=":literal"><semantics><msub><mi>w</mi><mi>i</mi></msub><annotation encoding="application/x-tex">w_{i}</annotation></semantics></math> is the label for the visual token <math id="S3.p2.4.m2" class="ltx_Math" alttext="\bm{v}_{i}" display="inline" intent=":literal"><semantics><msub><mi>𝒗</mi><mi>i</mi></msub><annotation encoding="application/x-tex">\bm{v}_{i}</annotation></semantics></math>.</p>
+</div>
+</section>
+<section id="S4" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">4 </span>Direct Vision Supervision</h2>
+
+<div id="S4.p1" class="ltx_para">
+<p id="S4.p1.1" class="ltx_p">We propose Direct Vision Supervised Fine-Tuning (DV-SFT), which utilizes words that describe image patches as direct supervision signals for visual tokens, thereby enhancing the model’s learning of visual tokens.
+Due to the information-rich nature of the visual modality, constructing labels for visual tokens is highly challenging.
+To address this, we exploit the straightforward association between vision and text in OCR-related scenarios to construct labels for visual tokens.
+Specifically, we use the word contained in a visual token as its label and let the model learn through the next-token prediction task, as illustrated in Figure <a href="#S3.F2" title="Figure 2 ‣ 3 Preliminaries ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">2</span></a>.
+To ensure parallel training, we perform only one-step prediction for vision labels. Specifically, the loss is computed using only the first token after tokenizing the vision label. This practice also conforms to the first-token preference property of visual logits <cite class="ltx_cite ltx_citemacro_citep">(Zhao<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib24" title="Tell model where to look: mitigating hallucinations in mllms by vision-guided attention" class="ltx_ref">2025a</a>)</cite>.</p>
+</div>
+<section id="S4.SS1" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">4.1 </span>Vision Label Construction</h3>
+
+<div id="S4.SS1.p1" class="ltx_para">
+<p id="S4.SS1.p1.1" class="ltx_p">We attempt to construct labels for visual tokens in OCR-related scenarios, where the direct correspondence between text and vision makes the construction of vision labels feasible.
+The challenge in constructing vision labels lies in establishing a one-to-one mapping between words in the image and visual tokens. Specifically, it involves identifying which words appear in the image and determining which visual tokens each word should supervise.</p>
+</div>
+<div id="S4.SS1.p2" class="ltx_para">
+<p id="S4.SS1.p2.1" class="ltx_p">We achieve this through two approaches: (1) Image-to-Label, and (2) Label-to-Image.</p>
+</div>
+<section id="S4.SS1.SSS0.Px1" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Image-to-Label.</h4>
+
+<div id="S4.SS1.SSS0.Px1.p1" class="ltx_para">
+<p id="S4.SS1.SSS0.Px1.p1.1" class="ltx_p">We first use a text detection model and a text recognition model to conduct word-level OCR for the image, obtaining all words along with their spatial locations.
+We identify word concatenation errors in the OCR results by checking the tokenization length and discard words whose tokenization length exceeds three.
+Extremely large words (with a height exceeding three times the patch size) are also discarded to ensure the annotation precision of the vision labels.
+Considering the autoregressive nature of MLLMs, we align each word to the visual token corresponding to its bottom-right corner and use it as the label for that visual token.
+Finally, we filter out multiple vision labels assigned to the same visual token to avoid confusing the model.</p>
+</div>
+</section>
+<section id="S4.SS1.SSS0.Px2" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Label-to-Image.</h4>
+
+<div id="S4.SS1.SSS0.Px2.p1" class="ltx_para">
+<p id="S4.SS1.SSS0.Px2.p1.1" class="ltx_p">The visual encoder tokenizes images through a mechanical strategy, which prevents perfect alignment between text in the image and visual tokens.
+To address this issue, we construct fine-grained vision labels through a text-to-image approach.
+Specifically, we use a unimodal document question-answering dataset and employ drawing tools to render documents by aligning each word individually onto the patch grid of a blank image.
+Words that span multiple visual tokens are assigned as labels only to the last visual token, in accordance with the autoregressive property.</p>
+</div>
+</section>
+</section>
+<section id="S4.SS2" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">4.2 </span>Vision Smoothing</h3>
+
+<div id="S4.SS2.p1" class="ltx_para">
+<p id="S4.SS2.p1.1" class="ltx_p">Although MLLMs are causal models with unidirectional attention, the visual encoder possesses bidirectional characteristics. This means that visual information will interact across tokens—that is, a visual token may contain semantic information from subsequent visual tokens in the sequence.
+The example in Figure <a href="#S2.F1" title="Figure 1 ‣ 2 Related Work ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">1</span></a> illustrates this phenomenon: the last word “model” in the image appears in the logits of the fourth token.</p>
+</div>
+<div id="S4.SS2.p2" class="ltx_para">
+<p id="S4.SS2.p2.3" class="ltx_p">To address this phenomenon, we propose Vision Smoothing method inspired by label smoothing, in which a visual token learns its own vision label while also learning other vision labels in the image.
+Accordingly, Eq. <a href="#S3.E2" title="In 3 Preliminaries ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">2</span></a> is modified as:</p>
+<table id="S4.E3" class="ltx_equation ltx_eqn_table">
+
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math id="S4.E3.m1" class="ltx_Math" alttext="\begin{split}\mathcal{L}_{v}=&amp;-\frac{1}{m}\sum_{i=1}^{m}\Bigg[(1-\beta)\log\mathrm{P}(w_{i}\mid\bm{I}_{\leq i};\theta)\\
+&amp;+\frac{\beta}{|V|-1}\sum^{V}_{t\neq w_{i}}\log\mathrm{P}(t\mid\bm{I}_{\leq i};\theta)\Bigg],\end{split}" display="block" intent=":literal"><semantics><mtable columnspacing="0pt" displaystyle="true" rowspacing="0pt"><mtr><mtd class="ltx_align_right" columnalign="right"><mrow><msub><mi class="ltx_font_mathcaligraphic">ℒ</mi><mi>v</mi></msub><mo>=</mo><mi></mi></mrow></mtd><mtd class="ltx_align_left" columnalign="left"><mrow><mo>−</mo><mfrac><mn>1</mn><mi>m</mi></mfrac><munderover><mo movablelimits="false" rspace="0em">∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>m</mi></munderover><mrow><mo maxsize="2.600em" minsize="2.600em">[</mo><mrow><mo stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>β</mi><mo rspace="0.167em" stretchy="false">)</mo></mrow><mi>log</mi><mi mathvariant="normal">P</mi><mrow><mo stretchy="false">(</mo><msub><mi>w</mi><mi>i</mi></msub><mo lspace="0em" rspace="0.167em">∣</mo><msub><mi>𝑰</mi><mrow><mi></mi><mo>≤</mo><mi>i</mi></mrow></msub><mo>;</mo><mi>θ</mi><mo stretchy="false">)</mo></mrow></mrow></mrow></mtd></mtr><mtr><mtd></mtd><mtd class="ltx_align_left" columnalign="left"><mrow><mo>+</mo><mfrac><mi>β</mi><mrow><mrow><mo stretchy="false">|</mo><mi>V</mi><mo stretchy="false">|</mo></mrow><mo>−</mo><mn>1</mn></mrow></mfrac><munderover><mo movablelimits="false">∑</mo><mrow><mi>t</mi><mo>≠</mo><msub><mi>w</mi><mi>i</mi></msub></mrow><mi>V</mi></munderover><mi>log</mi><mi mathvariant="normal">P</mi><mrow><mo stretchy="false">(</mo><mi>t</mi><mo lspace="0em" rspace="0.167em">∣</mo><msub><mi>𝑰</mi><mrow><mi></mi><mo>≤</mo><mi>i</mi></mrow></msub><mo>;</mo><mi>θ</mi><mo stretchy="false">)</mo></mrow><mo maxsize="2.600em" minsize="2.600em">]</mo><mo>,</mo></mrow></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{split}\mathcal{L}_{v}=&amp;-\frac{1}{m}\sum_{i=1}^{m}\Bigg[(1-\beta)\log\mathrm{P}(w_{i}\mid\bm{I}_{\leq i};\theta)\\
+&amp;+\frac{\beta}{|V|-1}\sum^{V}_{t\neq w_{i}}\log\mathrm{P}(t\mid\bm{I}_{\leq i};\theta)\Bigg],\end{split}</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+<td rowspan="1" class="ltx_eqn_cell ltx_eqn_eqno ltx_align_middle ltx_align_right"><span class="ltx_tag ltx_tag_equation ltx_align_right">(3)</span></td>
+</tr></tbody>
+</table>
+<p id="S4.SS2.p2.2" class="ltx_p">where <math id="S4.SS2.p2.1.m1" class="ltx_Math" alttext="V" display="inline" intent=":literal"><semantics><mi>V</mi><annotation encoding="application/x-tex">V</annotation></semantics></math> denotes all vision labels in an image and <math id="S4.SS2.p2.2.m2" class="ltx_Math" alttext="\beta" display="inline" intent=":literal"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math> is the smoothing factor.</p>
+</div>
+<div id="S4.SS2.p3" class="ltx_para">
+<p id="S4.SS2.p3.2" class="ltx_p">The final loss of DV-SFT is:</p>
+<table id="S4.E4" class="ltx_equation ltx_eqn_table">
+
+<tbody><tr class="ltx_equation ltx_eqn_row ltx_align_baseline">
+<td class="ltx_eqn_cell ltx_eqn_center_padleft"></td>
+<td class="ltx_eqn_cell ltx_align_center"><math id="S4.E4.m1" class="ltx_Math" alttext="\mathcal{L}=\mathcal{L}_{t}+\lambda\mathcal{L}_{v}," display="block" intent=":literal"><semantics><mrow><mrow><mi class="ltx_font_mathcaligraphic">ℒ</mi><mo>=</mo><mrow><msub><mi class="ltx_font_mathcaligraphic">ℒ</mi><mi>t</mi></msub><mo>+</mo><mrow><mi>λ</mi><mo lspace="0em" rspace="0em">​</mo><msub><mi class="ltx_font_mathcaligraphic">ℒ</mi><mi>v</mi></msub></mrow></mrow></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">\mathcal{L}=\mathcal{L}_{t}+\lambda\mathcal{L}_{v},</annotation></semantics></math></td>
+<td class="ltx_eqn_cell ltx_eqn_center_padright"></td>
+<td rowspan="1" class="ltx_eqn_cell ltx_eqn_eqno ltx_align_middle ltx_align_right"><span class="ltx_tag ltx_tag_equation ltx_align_right">(4)</span></td>
+</tr></tbody>
+</table>
+<p id="S4.SS2.p3.1" class="ltx_p">where <math id="S4.SS2.p3.1.m1" class="ltx_Math" alttext="\lambda" display="inline" intent=":literal"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math> is a hyperparameter.</p>
+</div>
+</section>
+</section>
+<section id="S5" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">5 </span>Experiments</h2>
+
+<section id="S5.SS1" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">5.1 </span>Experimental Setup</h3>
+
+<figure id="S5.T1" class="ltx_table">
+<table id="S5.T1.1" class="ltx_tabular ltx_centering ltx_guessed_headers ltx_align_middle">
+<thead class="ltx_thead">
+<tr id="S5.T1.1.1.1" class="ltx_tr">
+<th id="S5.T1.1.1.1.1" class="ltx_td ltx_align_left ltx_th ltx_th_column ltx_th_row ltx_border_r ltx_border_tt" style="padding-left:8.5pt;padding-right:8.5pt;">Dataset</th>
+<th id="S5.T1.1.1.1.2" class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_tt" style="padding-left:8.5pt;padding-right:8.5pt;">Samples</th>
+<th id="S5.T1.1.1.1.3" class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_tt" style="padding-left:8.5pt;padding-right:8.5pt;">Images</th>
+<th id="S5.T1.1.1.1.4" class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_tt" style="padding-left:8.5pt;padding-right:8.5pt;">Text Labels</th>
+<th id="S5.T1.1.1.1.5" class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_tt" style="padding-left:8.5pt;padding-right:8.5pt;">Vision Labels</th>
+<th id="S5.T1.1.1.1.6" class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_tt" style="padding-left:8.5pt;padding-right:8.5pt;">Vision Coverage</th>
+</tr>
+</thead>
+<tbody class="ltx_tbody">
+<tr id="S5.T1.1.2.1" class="ltx_tr">
+<th id="S5.T1.1.2.1.1" class="ltx_td ltx_align_left ltx_th ltx_th_row ltx_border_r ltx_border_t" style="padding-left:8.5pt;padding-right:8.5pt;">DocVQA</th>
+<td id="S5.T1.1.2.1.2" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:8.5pt;padding-right:8.5pt;">39,463</td>
+<td id="S5.T1.1.2.1.3" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:8.5pt;padding-right:8.5pt;">10,194</td>
+<td id="S5.T1.1.2.1.4" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:8.5pt;padding-right:8.5pt;">190,895</td>
+<td id="S5.T1.1.2.1.5" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:8.5pt;padding-right:8.5pt;">5,402,739</td>
+<td id="S5.T1.1.2.1.6" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:8.5pt;padding-right:8.5pt;">6.97%</td>
+</tr>
+<tr id="S5.T1.1.3.2" class="ltx_tr">
+<th id="S5.T1.1.3.2.1" class="ltx_td ltx_align_left ltx_th ltx_th_row ltx_border_r" style="padding-left:8.5pt;padding-right:8.5pt;">InfographicVQA</th>
+<td id="S5.T1.1.3.2.2" class="ltx_td ltx_align_center" style="padding-left:8.5pt;padding-right:8.5pt;">23,946</td>
+<td id="S5.T1.1.3.2.3" class="ltx_td ltx_align_center" style="padding-left:8.5pt;padding-right:8.5pt;">4,406</td>
+<td id="S5.T1.1.3.2.4" class="ltx_td ltx_align_center" style="padding-left:8.5pt;padding-right:8.5pt;">61,608</td>
+<td id="S5.T1.1.3.2.5" class="ltx_td ltx_align_center" style="padding-left:8.5pt;padding-right:8.5pt;">4,173,608</td>
+<td id="S5.T1.1.3.2.6" class="ltx_td ltx_align_center" style="padding-left:8.5pt;padding-right:8.5pt;">11.94%</td>
+</tr>
+<tr id="S5.T1.1.4.3" class="ltx_tr">
+<th id="S5.T1.1.4.3.1" class="ltx_td ltx_align_left ltx_th ltx_th_row ltx_border_bb ltx_border_r" style="padding-left:8.5pt;padding-right:8.5pt;">SQuAD</th>
+<td id="S5.T1.1.4.3.2" class="ltx_td ltx_align_center ltx_border_bb" style="padding-left:8.5pt;padding-right:8.5pt;">24,929</td>
+<td id="S5.T1.1.4.3.3" class="ltx_td ltx_align_center ltx_border_bb" style="padding-left:8.5pt;padding-right:8.5pt;">13,183</td>
+<td id="S5.T1.1.4.3.4" class="ltx_td ltx_align_center ltx_border_bb" style="padding-left:8.5pt;padding-right:8.5pt;">60,957</td>
+<td id="S5.T1.1.4.3.5" class="ltx_td ltx_align_center ltx_border_bb" style="padding-left:8.5pt;padding-right:8.5pt;">2,607,031</td>
+<td id="S5.T1.1.4.3.6" class="ltx_td ltx_align_center ltx_border_bb" style="padding-left:8.5pt;padding-right:8.5pt;">31.44%</td>
+</tr>
+</tbody>
+</table>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_table">Table 1: </span>
+Statistical information of training data. Visual Coverage refers to the percentage of visual tokens that are assigned vision labels.
+</figcaption>
+</figure>
+<section id="S5.SS1.SSS0.Px1" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Datasets.</h4>
+
+<div id="S5.SS1.SSS0.Px1.p1" class="ltx_para">
+<p id="S5.SS1.SSS0.Px1.p1.1" class="ltx_p">We employ DocVQA <cite class="ltx_cite ltx_citemacro_citep">(Mathew<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib27" title="Docvqa: a dataset for vqa on document images" class="ltx_ref">2021</a>)</cite>, InfographicVQA <cite class="ltx_cite ltx_citemacro_citep">(Mathew<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib28" title="Infographicvqa" class="ltx_ref">2022</a>)</cite>, and SQuAD <cite class="ltx_cite ltx_citemacro_citep">(Rajpurkar<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib29" title="Squad: 100,000+ questions for machine comprehension of text" class="ltx_ref">2016</a>)</cite> to build training data.
+Both DocVQA and InfographicVQA are multimodal datasets, and we construct vision labels using the data-to-label approach.
+SQuAD is a unimodal document understanding dataset with extractive answers, which aligns well with the model’s need for accurate visual perception.
+We convert this dataset into a multimodal task through the label-to-data approach.
+The statistics of the training data are shown in Table <a href="#S5.T1" title="Table 1 ‣ 5.1 Experimental Setup ‣ 5 Experiments ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">1</span></a>.</p>
+</div>
+</section>
+<section id="S5.SS1.SSS0.Px2" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Benchmarks.</h4>
+
+<div id="S5.SS1.SSS0.Px2.p1" class="ltx_para">
+<p id="S5.SS1.SSS0.Px2.p1.1" class="ltx_p">For in-domain data, we use the test sets of DocVQA and InfographicVQA, as well as the validation set of SQuAD. For out-of-domain data, we use the test set of ChartQA <cite class="ltx_cite ltx_citemacro_citep">(Masry<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib31" title="Chartqa: a benchmark for question answering about charts with visual and logical reasoning" class="ltx_ref">2022</a>)</cite>, OCRBench <cite class="ltx_cite ltx_citemacro_citep">(Liu<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib30" title="Ocrbench: on the hidden mystery of ocr in large multimodal models" class="ltx_ref">2024b</a>)</cite>, the test set of OCRVQA <cite class="ltx_cite ltx_citemacro_citep">(Mishra<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib26" title="Ocr-vqa: visual question answering by reading text in images" class="ltx_ref">2019</a>)</cite>, and the validation set of TextVQA <cite class="ltx_cite ltx_citemacro_citep">(Singh<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib35" title="Towards vqa models that can read" class="ltx_ref">2019</a>)</cite>.
+For OCRVQA, we randomly select 3,000 test samples and ensure that the ground truth of each sample is visible in the image.</p>
+</div>
+</section>
+<section id="S5.SS1.SSS0.Px3" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Baselines.</h4>
+
+<div id="S5.SS1.SSS0.Px3.p1" class="ltx_para">
+<p id="S5.SS1.SSS0.Px3.p1.1" class="ltx_p">We choose the standard SFT method as our baseline, which trains the model using only text labels.
+In addition, we reproduce BASIC <cite class="ltx_cite ltx_citemacro_citep">(Tang<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib12" title="Basic: boosting visual alignment with intrinsic refined embeddings in multimodal large language models" class="ltx_ref">2025</a>)</cite> method, which is a self-distilled representation supervision method.</p>
+</div>
+</section>
+<section id="S5.SS1.SSS0.Px4" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Implementation Details.</h4>
+
+<div id="S5.SS1.SSS0.Px4.p1" class="ltx_para">
+<p id="S5.SS1.SSS0.Px4.p1.2" class="ltx_p">We select Qwen3-VL-2B/8B-Instruct and Qwen3-1.7B as the base models.
+For Qwen3-VL, we randomly select one QA pair (two for InfographicVQA) per image to avoid duplicate vision labels. For Qwen3, we load the visual encoder from Qwen3-VL-2B and use all training data.
+We set <math id="S5.SS1.SSS0.Px4.p1.1.m1" class="ltx_Math" alttext="\beta=0.3" display="inline" intent=":literal"><semantics><mrow><mi>β</mi><mo>=</mo><mn>0.3</mn></mrow><annotation encoding="application/x-tex">\beta=0.3</annotation></semantics></math> in Eq. <a href="#S4.E3" title="In 4.2 Vision Smoothing ‣ 4 Direct Vision Supervision ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">3</span></a> and <math id="S5.SS1.SSS0.Px4.p1.2.m2" class="ltx_Math" alttext="\lambda=2\text{e-}3" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mrow><mn>2</mn><mo lspace="0em" rspace="0em">​</mo><mtext>e-</mtext><mo lspace="0em" rspace="0em">​</mo><mn>3</mn></mrow></mrow><annotation encoding="application/x-tex">\lambda=2\text{e-}3</annotation></semantics></math> in Eq. <a href="#S4.E4" title="In 4.2 Vision Smoothing ‣ 4 Direct Vision Supervision ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">4</span></a>. We employ greedy decoding during inference with the default setting.</p>
+</div>
+<div id="S5.SS1.SSS0.Px4.p2" class="ltx_para">
+<p id="S5.SS1.SSS0.Px4.p2.1" class="ltx_p">Detailed experimental setups are provided in Appendix <a href="#A1" title="Appendix A Detailed Experimental Setup ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">A</span></a>.</p>
+</div>
+<figure id="S5.T2" class="ltx_table">
+<table id="S5.T2.1" class="ltx_tabular ltx_centering ltx_align_middle">
+<tbody class="ltx_tbody">
+<tr id="S5.T2.1.1.1" class="ltx_tr">
+<td id="S5.T2.1.1.1.1" class="ltx_td ltx_align_left ltx_border_r ltx_border_tt" style="padding-left:4.3pt;padding-right:4.3pt;" rowspan="2"><span id="S5.T2.1.1.1.1.1" class="ltx_text">Method</span></td>
+<td id="S5.T2.1.1.1.2" class="ltx_td ltx_align_center ltx_border_r ltx_border_tt" style="padding-left:4.3pt;padding-right:4.3pt;" colspan="4">In Domain</td>
+<td id="S5.T2.1.1.1.3" class="ltx_td ltx_align_center ltx_border_tt" style="padding-left:4.3pt;padding-right:4.3pt;" colspan="5">Out of Domain</td>
+</tr>
+<tr id="S5.T2.1.2.2" class="ltx_tr">
+<td id="S5.T2.1.2.2.1" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">DocVQA</td>
+<td id="S5.T2.1.2.2.2" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">InfoVQA</td>
+<td id="S5.T2.1.2.2.3" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">SQuAD</td>
+<td id="S5.T2.1.2.2.4" class="ltx_td ltx_align_center ltx_border_r ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">Avg.</td>
+<td id="S5.T2.1.2.2.5" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">ChartQA</td>
+<td id="S5.T2.1.2.2.6" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">OCRBench</td>
+<td id="S5.T2.1.2.2.7" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">OCRVQA</td>
+<td id="S5.T2.1.2.2.8" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">TextVQA</td>
+<td id="S5.T2.1.2.2.9" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">Avg.</td>
+</tr>
+<tr id="S5.T2.1.3.3" class="ltx_tr">
+<td id="S5.T2.1.3.3.1" class="ltx_td ltx_align_left ltx_border_r ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;"><em id="S5.T2.1.3.3.1.1" class="ltx_emph ltx_font_italic">Qwen3-VL-2B</em></td>
+<td id="S5.T2.1.3.3.2" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">92.25</td>
+<td id="S5.T2.1.3.3.3" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">70.18</td>
+<td id="S5.T2.1.3.3.4" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">77.43</td>
+<td id="S5.T2.1.3.3.5" class="ltx_td ltx_align_center ltx_border_r ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">79.95</td>
+<td id="S5.T2.1.3.3.6" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.3.3.6.1" class="ltx_text ltx_font_bold">70.56</span></td>
+<td id="S5.T2.1.3.3.7" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">72.00</td>
+<td id="S5.T2.1.3.3.8" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">72.97</td>
+<td id="S5.T2.1.3.3.9" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.3.3.9.1" class="ltx_text ltx_font_bold">84.88</span></td>
+<td id="S5.T2.1.3.3.10" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">75.10</td>
+</tr>
+<tr id="S5.T2.1.4.4" class="ltx_tr">
+<td id="S5.T2.1.4.4.1" class="ltx_td ltx_align_left ltx_border_r" style="padding-left:4.3pt;padding-right:4.3pt;">SFT</td>
+<td id="S5.T2.1.4.4.2" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">93.54</td>
+<td id="S5.T2.1.4.4.3" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">71.66</td>
+<td id="S5.T2.1.4.4.4" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">86.99</td>
+<td id="S5.T2.1.4.4.5" class="ltx_td ltx_align_center ltx_border_r" style="padding-left:4.3pt;padding-right:4.3pt;">84.06</td>
+<td id="S5.T2.1.4.4.6" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">69.60</td>
+<td id="S5.T2.1.4.4.7" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">73.10</td>
+<td id="S5.T2.1.4.4.8" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">75.00</td>
+<td id="S5.T2.1.4.4.9" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">84.10</td>
+<td id="S5.T2.1.4.4.10" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">75.45</td>
+</tr>
+<tr id="S5.T2.1.5.5" class="ltx_tr">
+<td id="S5.T2.1.5.5.1" class="ltx_td ltx_align_left ltx_border_r" style="padding-left:4.3pt;padding-right:4.3pt;">BASIC</td>
+<td id="S5.T2.1.5.5.2" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">84.02</td>
+<td id="S5.T2.1.5.5.3" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">57.15</td>
+<td id="S5.T2.1.5.5.4" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">72.95</td>
+<td id="S5.T2.1.5.5.5" class="ltx_td ltx_align_center ltx_border_r" style="padding-left:4.3pt;padding-right:4.3pt;">71.37</td>
+<td id="S5.T2.1.5.5.6" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">54.96</td>
+<td id="S5.T2.1.5.5.7" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">65.90</td>
+<td id="S5.T2.1.5.5.8" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">66.33</td>
+<td id="S5.T2.1.5.5.9" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">77.12</td>
+<td id="S5.T2.1.5.5.10" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">66.08</td>
+</tr>
+<tr id="S5.T2.1.6.6" class="ltx_tr" style="--ltx-bg-color:#E6E6E6;">
+<td id="S5.T2.1.6.6.1" class="ltx_td ltx_align_left ltx_border_r" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.6.6.1.1" class="ltx_text" style="--ltx-bg-color:#E6E6E6;">DV-SFT</span></td>
+<td id="S5.T2.1.6.6.2" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.6.6.2.1" class="ltx_text ltx_font_bold" style="--ltx-bg-color:#E6E6E6;">93.68</span></td>
+<td id="S5.T2.1.6.6.3" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.6.6.3.1" class="ltx_text ltx_font_bold" style="--ltx-bg-color:#E6E6E6;">72.34</span></td>
+<td id="S5.T2.1.6.6.4" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.6.6.4.1" class="ltx_text ltx_font_bold" style="--ltx-bg-color:#E6E6E6;">87.38</span></td>
+<td id="S5.T2.1.6.6.5" class="ltx_td ltx_align_center ltx_border_r" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.6.6.5.1" class="ltx_text ltx_font_bold" style="--ltx-bg-color:#E6E6E6;">84.47</span></td>
+<td id="S5.T2.1.6.6.6" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.6.6.6.1" class="ltx_text" style="--ltx-bg-color:#E6E6E6;">69.80</span></td>
+<td id="S5.T2.1.6.6.7" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.6.6.7.1" class="ltx_text ltx_font_bold" style="--ltx-bg-color:#E6E6E6;">74.40</span></td>
+<td id="S5.T2.1.6.6.8" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.6.6.8.1" class="ltx_text ltx_font_bold" style="--ltx-bg-color:#E6E6E6;">75.17</span></td>
+<td id="S5.T2.1.6.6.9" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.6.6.9.1" class="ltx_text" style="--ltx-bg-color:#E6E6E6;">84.08</span></td>
+<td id="S5.T2.1.6.6.10" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.6.6.10.1" class="ltx_text ltx_font_bold" style="--ltx-bg-color:#E6E6E6;">75.86</span></td>
+</tr>
+<tr id="S5.T2.1.7.7" class="ltx_tr">
+<td id="S5.T2.1.7.7.1" class="ltx_td ltx_align_left ltx_border_r ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;"><em id="S5.T2.1.7.7.1.1" class="ltx_emph ltx_font_italic">Qwen3-VL-8B</em></td>
+<td id="S5.T2.1.7.7.2" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">95.97</td>
+<td id="S5.T2.1.7.7.3" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">81.88</td>
+<td id="S5.T2.1.7.7.4" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">80.27</td>
+<td id="S5.T2.1.7.7.5" class="ltx_td ltx_align_center ltx_border_r ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">86.23</td>
+<td id="S5.T2.1.7.7.6" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">77.12</td>
+<td id="S5.T2.1.7.7.7" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">82.30</td>
+<td id="S5.T2.1.7.7.8" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">76.03</td>
+<td id="S5.T2.1.7.7.9" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">87.80</td>
+<td id="S5.T2.1.7.7.10" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">80.81</td>
+</tr>
+<tr id="S5.T2.1.8.8" class="ltx_tr">
+<td id="S5.T2.1.8.8.1" class="ltx_td ltx_align_left ltx_border_r" style="padding-left:4.3pt;padding-right:4.3pt;">SFT</td>
+<td id="S5.T2.1.8.8.2" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">96.28</td>
+<td id="S5.T2.1.8.8.3" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">82.24</td>
+<td id="S5.T2.1.8.8.4" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">87.60</td>
+<td id="S5.T2.1.8.8.5" class="ltx_td ltx_align_center ltx_border_r" style="padding-left:4.3pt;padding-right:4.3pt;">88.71</td>
+<td id="S5.T2.1.8.8.6" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">77.52</td>
+<td id="S5.T2.1.8.8.7" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">83.70</td>
+<td id="S5.T2.1.8.8.8" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.8.8.8.1" class="ltx_text ltx_font_bold">77.17</span></td>
+<td id="S5.T2.1.8.8.9" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">88.44</td>
+<td id="S5.T2.1.8.8.10" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">81.71</td>
+</tr>
+<tr id="S5.T2.1.9.9" class="ltx_tr">
+<td id="S5.T2.1.9.9.1" class="ltx_td ltx_align_left ltx_border_r" style="padding-left:4.3pt;padding-right:4.3pt;">BASIC</td>
+<td id="S5.T2.1.9.9.2" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">96.38</td>
+<td id="S5.T2.1.9.9.3" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">82.39</td>
+<td id="S5.T2.1.9.9.4" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">86.72</td>
+<td id="S5.T2.1.9.9.5" class="ltx_td ltx_align_center ltx_border_r" style="padding-left:4.3pt;padding-right:4.3pt;">88.50</td>
+<td id="S5.T2.1.9.9.6" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">77.44</td>
+<td id="S5.T2.1.9.9.7" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">83.40</td>
+<td id="S5.T2.1.9.9.8" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">77.00</td>
+<td id="S5.T2.1.9.9.9" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">88.14</td>
+<td id="S5.T2.1.9.9.10" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">81.50</td>
+</tr>
+<tr id="S5.T2.1.10.10" class="ltx_tr" style="--ltx-bg-color:#E6E6E6;">
+<td id="S5.T2.1.10.10.1" class="ltx_td ltx_align_left ltx_border_r" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.10.10.1.1" class="ltx_text" style="--ltx-bg-color:#E6E6E6;">DV-SFT</span></td>
+<td id="S5.T2.1.10.10.2" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.10.10.2.1" class="ltx_text ltx_font_bold" style="--ltx-bg-color:#E6E6E6;">96.40</span></td>
+<td id="S5.T2.1.10.10.3" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.10.10.3.1" class="ltx_text ltx_font_bold" style="--ltx-bg-color:#E6E6E6;">82.49</span></td>
+<td id="S5.T2.1.10.10.4" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.10.10.4.1" class="ltx_text ltx_font_bold" style="--ltx-bg-color:#E6E6E6;">88.14</span></td>
+<td id="S5.T2.1.10.10.5" class="ltx_td ltx_align_center ltx_border_r" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.10.10.5.1" class="ltx_text ltx_font_bold" style="--ltx-bg-color:#E6E6E6;">89.01</span></td>
+<td id="S5.T2.1.10.10.6" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.10.10.6.1" class="ltx_text ltx_font_bold" style="--ltx-bg-color:#E6E6E6;">77.76</span></td>
+<td id="S5.T2.1.10.10.7" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.10.10.7.1" class="ltx_text ltx_font_bold" style="--ltx-bg-color:#E6E6E6;">84.00</span></td>
+<td id="S5.T2.1.10.10.8" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.10.10.8.1" class="ltx_text ltx_font_bold" style="--ltx-bg-color:#E6E6E6;">77.17</span></td>
+<td id="S5.T2.1.10.10.9" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.10.10.9.1" class="ltx_text ltx_font_bold" style="--ltx-bg-color:#E6E6E6;">88.48</span></td>
+<td id="S5.T2.1.10.10.10" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.10.10.10.1" class="ltx_text ltx_font_bold" style="--ltx-bg-color:#E6E6E6;">81.85</span></td>
+</tr>
+<tr id="S5.T2.1.11.11" class="ltx_tr">
+<td id="S5.T2.1.11.11.1" class="ltx_td ltx_align_left ltx_border_r ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;"><em id="S5.T2.1.11.11.1.1" class="ltx_emph ltx_font_italic">Qwen3-1.7B</em></td>
+<td id="S5.T2.1.11.11.2" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">-</td>
+<td id="S5.T2.1.11.11.3" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">-</td>
+<td id="S5.T2.1.11.11.4" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">-</td>
+<td id="S5.T2.1.11.11.5" class="ltx_td ltx_align_center ltx_border_r ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">-</td>
+<td id="S5.T2.1.11.11.6" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">-</td>
+<td id="S5.T2.1.11.11.7" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">-</td>
+<td id="S5.T2.1.11.11.8" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">-</td>
+<td id="S5.T2.1.11.11.9" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">-</td>
+<td id="S5.T2.1.11.11.10" class="ltx_td ltx_align_center ltx_border_t" style="padding-left:4.3pt;padding-right:4.3pt;">-</td>
+</tr>
+<tr id="S5.T2.1.12.12" class="ltx_tr">
+<td id="S5.T2.1.12.12.1" class="ltx_td ltx_align_left ltx_border_r" style="padding-left:4.3pt;padding-right:4.3pt;">SFT</td>
+<td id="S5.T2.1.12.12.2" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">86.49</td>
+<td id="S5.T2.1.12.12.3" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">58.02</td>
+<td id="S5.T2.1.12.12.4" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">77.60</td>
+<td id="S5.T2.1.12.12.5" class="ltx_td ltx_align_center ltx_border_r" style="padding-left:4.3pt;padding-right:4.3pt;">74.04</td>
+<td id="S5.T2.1.12.12.6" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">48.60</td>
+<td id="S5.T2.1.12.12.7" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">57.90</td>
+<td id="S5.T2.1.12.12.8" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">60.67</td>
+<td id="S5.T2.1.12.12.9" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">66.74</td>
+<td id="S5.T2.1.12.12.10" class="ltx_td ltx_align_center" style="padding-left:4.3pt;padding-right:4.3pt;">58.48</td>
+</tr>
+<tr id="S5.T2.1.13.13" class="ltx_tr" style="--ltx-bg-color:#E6E6E6;">
+<td id="S5.T2.1.13.13.1" class="ltx_td ltx_align_left ltx_border_bb ltx_border_r" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.13.13.1.1" class="ltx_text" style="--ltx-bg-color:#E6E6E6;">DV-SFT</span></td>
+<td id="S5.T2.1.13.13.2" class="ltx_td ltx_align_center ltx_border_bb" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.13.13.2.1" class="ltx_text ltx_font_bold" style="--ltx-bg-color:#E6E6E6;">86.57</span></td>
+<td id="S5.T2.1.13.13.3" class="ltx_td ltx_align_center ltx_border_bb" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.13.13.3.1" class="ltx_text ltx_font_bold" style="--ltx-bg-color:#E6E6E6;">58.51</span></td>
+<td id="S5.T2.1.13.13.4" class="ltx_td ltx_align_center ltx_border_bb" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.13.13.4.1" class="ltx_text ltx_font_bold" style="--ltx-bg-color:#E6E6E6;">78.69</span></td>
+<td id="S5.T2.1.13.13.5" class="ltx_td ltx_align_center ltx_border_bb ltx_border_r" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.13.13.5.1" class="ltx_text ltx_font_bold" style="--ltx-bg-color:#E6E6E6;">74.59</span></td>
+<td id="S5.T2.1.13.13.6" class="ltx_td ltx_align_center ltx_border_bb" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.13.13.6.1" class="ltx_text ltx_font_bold" style="--ltx-bg-color:#E6E6E6;">49.08</span></td>
+<td id="S5.T2.1.13.13.7" class="ltx_td ltx_align_center ltx_border_bb" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.13.13.7.1" class="ltx_text ltx_font_bold" style="--ltx-bg-color:#E6E6E6;">58.60</span></td>
+<td id="S5.T2.1.13.13.8" class="ltx_td ltx_align_center ltx_border_bb" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.13.13.8.1" class="ltx_text ltx_font_bold" style="--ltx-bg-color:#E6E6E6;">62.20</span></td>
+<td id="S5.T2.1.13.13.9" class="ltx_td ltx_align_center ltx_border_bb" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.13.13.9.1" class="ltx_text ltx_font_bold" style="--ltx-bg-color:#E6E6E6;">67.82</span></td>
+<td id="S5.T2.1.13.13.10" class="ltx_td ltx_align_center ltx_border_bb" style="padding-left:4.3pt;padding-right:4.3pt;"><span id="S5.T2.1.13.13.10.1" class="ltx_text ltx_font_bold" style="--ltx-bg-color:#E6E6E6;">59.43</span></td>
+</tr>
+</tbody>
+</table>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_table">Table 2: </span>
+Main results. <em id="S5.T2.4.1" class="ltx_emph ltx_font_italic">Avg.</em> denotes the average accuracy. The <span id="S5.T2.5.2" class="ltx_text ltx_font_bold">bolded</span> results indicate the best performance in each setting.
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="S5.SS2" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">5.2 </span>Main Results</h3>
+
+<div id="S5.SS2.p1" class="ltx_para">
+<p id="S5.SS2.p1.1" class="ltx_p">We validate the superiority of our method on both in-domain and out-of-domain data, and the results are illustrated in Table <a href="#S5.T2" title="Table 2 ‣ Implementation Details. ‣ 5.1 Experimental Setup ‣ 5 Experiments ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">2</span></a>.</p>
+</div>
+<section id="S5.SS2.SSS0.Px1" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">In Domain.</h4>
+
+<div id="S5.SS2.SSS0.Px1.p1" class="ltx_para">
+<p id="S5.SS2.SSS0.Px1.p1.1" class="ltx_p">Our method, DV-SFT, achieves consistent advantages on in-domain data, and the experimental results across three base models fully validate its effectiveness. Moreover, the next-token prediction learning paradigm adopted by DV-SFT aligns more naturally with the inherent characteristics of language models, yielding significant advantages over BASIC.
+The intuitively comprehensible supervisory signal is another strength of DV-SFT. The representation supervision approach employed by BASIC can suffer from severe model degradation when the quality of the representations is suboptimal. This issue is confirmed in the experiments on the 2B model, where the training results of BASIC fall far behind the original capabilities of the base model. In the experiments on the 8B model, BASIC benefits from higher-quality supervised representations and achieves stable performance improvements; however, its gains are not significantly superior to those of SFT.
+Thanks to direct vision supervision, DV-SFT enables the model to understand visual features more accurately, thereby achieving a significant advantage in text-oriented visual understanding.</p>
+</div>
+</section>
+<section id="S5.SS2.SSS0.Px2" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Out of Domain.</h4>
+
+<div id="S5.SS2.SSS0.Px2.p1" class="ltx_para">
+<p id="S5.SS2.SSS0.Px2.p1.1" class="ltx_p">DV-SFT also demonstrates significant advantages on out-of-domain tasks, indicating its strong domain generalization capability.
+Due to the limited knowledge capacity of the 2B model, DV-SFT achieves the best overall performance but does not consistently outperform across all datasets. In contrast, in the experiments with the 8B model, where the larger parameter count affords greater knowledge capacity, DV-SFT consistently improves performance on out-of-domain datasets.
+Experimental results on out-of-domain tasks indicate that DV-SFT does not simply improve task-specific performance but genuinely enhances the model’s visual capability.</p>
+</div>
+<div id="S5.SS2.SSS0.Px2.p2" class="ltx_para">
+<p id="S5.SS2.SSS0.Px2.p2.1" class="ltx_p">In summary, constructing vision supervision for MLLMs can more effectively enhance their visual understanding capability. Compared with SFT, DV-SFT achieves consistent advantages on both in-domain and out-of-domain tasks. Moreover, the direct vision supervision established by DV-SFT aligns perfectly with the next-token prediction learning paradigm of the model and does not rely on any additional network modules or forward passes. The end-to-end black box training approach requires no intermediate states of the model. These advantages in the training paradigm make DV-SFT highly practical and readily applicable.</p>
+</div>
+</section>
+</section>
+<section id="S5.SS3" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">5.3 </span>Multimodal Alignment</h3>
+
+<figure id="S5.F3" class="ltx_figure"><img src="/html/2605.26656/assets/figures/Alignment.png" id="S5.F3.g1" class="ltx_graphics ltx_centering ltx_img_landscape" width="598" height="330" alt="Refer to caption">
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 3: </span>
+Test results of Qwen3-1.7B at each checkpoint during training.
+Results under <em id="S5.F3.2.1" class="ltx_emph ltx_font_italic">In-Domain</em> are obtained on the validation set.
+</figcaption>
+</figure>
+<div id="S5.SS3.p1" class="ltx_para">
+<p id="S5.SS3.p1.1" class="ltx_p">To investigate the advantages of vision supervision over text-only supervision, we analyze the effectiveness of the two methods in the process of a unimodal model learning visual features from scratch.
+As shown in Table <a href="#S5.T2" title="Table 2 ‣ Implementation Details. ‣ 5.1 Experimental Setup ‣ 5 Experiments ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">2</span></a>, vision supervision demonstrates comprehensive advantages over text-only supervision, indicating that with limited training data, vision supervision enables the model to better understand visual information.
+The advantage of vision supervision is even more pronounced on out-of-domain tasks. Compared with an average performance improvement of 0.74% on in-domain tasks, DV-SFT achieves an average improvement of 1.6% on out-of-domain tasks. This suggests that vision supervision genuinely enhances the model’s visual understanding capability, rather than merely improving task-specific learning.</p>
+</div>
+<div id="S5.SS3.p2" class="ltx_para">
+<p id="S5.SS3.p2.1" class="ltx_p">We further analyze the visual learning process of the unimodal model, as shown in Figure <a href="#S5.F3" title="Figure 3 ‣ 5.3 Multimodal Alignment ‣ 5 Experiments ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">3</span></a>. It can be observed that in the early stages of training, vision supervision exhibits a more pronounced advantage over text-only supervision. Similarly, this advantage is more significant on out-of-domain tasks.
+This indicates that applying direct supervision to visual tokens leads to higher multimodal alignment efficiency compared to indirect supervision of text-only labels.</p>
+</div>
+<div id="S5.SS3.p3" class="ltx_para">
+<p id="S5.SS3.p3.1" class="ltx_p">In summary, the experimental results on the unimodal model further validate the superiority of direct vision supervision.</p>
+</div>
+</section>
+<section id="S5.SS4" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">5.4 </span>Character Recognition Ability</h3>
+
+<figure id="S5.F4" class="ltx_figure"><img src="/html/2605.26656/assets/figures/ocr_all.png" id="S5.F4.g1" class="ltx_graphics ltx_centering ltx_img_landscape" width="539" height="184" alt="Refer to caption">
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 4: </span>Test results on naive text OCR tasks. <em id="S5.F4.6.1" class="ltx_emph ltx_font_italic">Contextual OCR</em> refers to the recognition task on normal text, while <em id="S5.F4.7.2" class="ltx_emph ltx_font_italic">Non-Contextual OCR</em> refers to the recognition task on unordered word sequences.
+<em id="S5.F4.8.3" class="ltx_emph ltx_font_italic">NED</em> denotes Normalized Edit Distance, where lower values indicate better performance.
+<em id="S5.F4.9.4" class="ltx_emph ltx_font_italic">Left part</em>: test results at the original image resolution. <em id="S5.F4.10.5" class="ltx_emph ltx_font_italic">Right part</em>: test results of the 2B model at different image resolutions, with the X-axis representing the visual token length.
+</figcaption>
+</figure>
+<div id="S5.SS4.p1" class="ltx_para">
+<p id="S5.SS4.p1.1" class="ltx_p">We use a plain text OCR task to evaluate the improvement in character recognition ability brought by DV-SFT. Specifically, we construct test samples from the news dataset XSUM <cite class="ltx_cite ltx_citemacro_citep">(Narayan<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib36" title="Don’t give me the details, just the summary! topic-aware convolutional neural networks for extreme summarization" class="ltx_ref">2018</a>)</cite>, convert the documents into images using drawing tools, and then ask the model to recognize the text in the images. To avoid the influence of the model’s prior knowledge on character recognition, we further construct a Non-Contextual text recognition task. We collect all words from the dataset and sample them based on word frequency to form semantically meaningless word sequences, which are used to test the model’s pure character recognition ability.</p>
+</div>
+<div id="S5.SS4.p2" class="ltx_para">
+<p id="S5.SS4.p2.1" class="ltx_p">The results on both tasks, each with 500 test samples, are shown in the left part of Figure <a href="#S5.F4" title="Figure 4 ‣ 5.4 Character Recognition Ability ‣ 5 Experiments ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">4</span></a>.
+First, we can observe that DV-SFT achieves superior performance on both OCR tasks, indicating that vision supervision can effectively improve the model’s character recognition accuracy. Furthermore, the advantage of DV-SFT is amplified on the Non-Contextual OCR task, which further demonstrates that direct vision supervision enhances the model’s fine-grained visual understanding capability rather than merely improving task performance.</p>
+</div>
+<div id="S5.SS4.p3" class="ltx_para">
+<p id="S5.SS4.p3.1" class="ltx_p">During DV-SFT training, vision labels supervise visual tokens in a one-to-one manner. To investigate whether this learning pattern can generalize to one-to-many or many-to-one scenarios, we evaluate the model’s ability to recognize text in images at different resolutions. As shown in the results in the right part of Figure <a href="#S5.F4" title="Figure 4 ‣ 5.4 Character Recognition Ability ‣ 5 Experiments ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">4</span></a>, DV-SFT consistently outperforms SFT across different resolutions. Although the model learns vision–text correspondences in a one-to-one mode during training, it effectively acquires visual features rather than mechanically learning word prediction.</p>
+</div>
+</section>
+<section id="S5.SS5" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">5.5 </span>General Visual Capability</h3>
+
+<figure id="S5.T3" class="ltx_table">
+<table id="S5.T3.1" class="ltx_tabular ltx_centering ltx_guessed_headers ltx_align_middle">
+<thead class="ltx_thead">
+<tr id="S5.T3.1.1.1" class="ltx_tr">
+<th id="S5.T3.1.1.1.1" class="ltx_td ltx_align_left ltx_th ltx_th_column ltx_th_row ltx_border_r ltx_border_tt" rowspan="2"><span id="S5.T3.1.1.1.1.1" class="ltx_text">Method</span></th>
+<th id="S5.T3.1.1.1.2" class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_r ltx_border_tt" colspan="2">Qwen3-VL-2B</th>
+<th id="S5.T3.1.1.1.3" class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_tt" colspan="2">Qwen3-VL-8B</th>
+</tr>
+<tr id="S5.T3.1.2.2" class="ltx_tr">
+<th id="S5.T3.1.2.2.1" class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_t">Acc.</th>
+<th id="S5.T3.1.2.2.2" class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_r ltx_border_t">F1</th>
+<th id="S5.T3.1.2.2.3" class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_t">Acc.</th>
+<th id="S5.T3.1.2.2.4" class="ltx_td ltx_align_center ltx_th ltx_th_column ltx_border_t">F1</th>
+</tr>
+</thead>
+<tbody class="ltx_tbody">
+<tr id="S5.T3.1.3.1" class="ltx_tr">
+<th id="S5.T3.1.3.1.1" class="ltx_td ltx_align_left ltx_th ltx_th_row ltx_border_r ltx_border_t">SFT</th>
+<td id="S5.T3.1.3.1.2" class="ltx_td ltx_align_center ltx_border_t"><span id="S5.T3.1.3.1.2.1" class="ltx_text ltx_font_bold">81.21</span></td>
+<td id="S5.T3.1.3.1.3" class="ltx_td ltx_align_center ltx_border_r ltx_border_t">80.07</td>
+<td id="S5.T3.1.3.1.4" class="ltx_td ltx_align_center ltx_border_t">87.95</td>
+<td id="S5.T3.1.3.1.5" class="ltx_td ltx_align_center ltx_border_t">88.46</td>
+</tr>
+<tr id="S5.T3.1.4.2" class="ltx_tr">
+<th id="S5.T3.1.4.2.1" class="ltx_td ltx_align_left ltx_th ltx_th_row ltx_border_bb ltx_border_r">DV-SFT</th>
+<td id="S5.T3.1.4.2.2" class="ltx_td ltx_align_center ltx_border_bb">80.88</td>
+<td id="S5.T3.1.4.2.3" class="ltx_td ltx_align_center ltx_border_bb ltx_border_r"><span id="S5.T3.1.4.2.3.1" class="ltx_text ltx_font_bold">80.12</span></td>
+<td id="S5.T3.1.4.2.4" class="ltx_td ltx_align_center ltx_border_bb"><span id="S5.T3.1.4.2.4.1" class="ltx_text ltx_font_bold">88.08</span></td>
+<td id="S5.T3.1.4.2.5" class="ltx_td ltx_align_center ltx_border_bb"><span id="S5.T3.1.4.2.5.1" class="ltx_text ltx_font_bold">88.47</span></td>
+</tr>
+</tbody>
+</table>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_table">Table 3: </span>The results on MME.
+</figcaption>
+</figure>
+<figure id="S5.F5" class="ltx_figure"><img src="/html/2605.26656/assets/x3.png" id="S5.F5.g1" class="ltx_graphics ltx_centering ltx_img_landscape" width="830" height="450" alt="Refer to caption">
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 5: </span>
+A case study of visual logits in a general visual scene.
+The image is resized to dimensions of 10 × 10 visual tokens.
+Each box represents a visual token, with the word inside indicating its Top-1 logit. Green boxes denote matches with the visual content; red boxes indicate mismatches.
+</figcaption>
+</figure>
+<div id="S5.SS5.p1" class="ltx_para">
+<p id="S5.SS5.p1.1" class="ltx_p">We leverage the straightforward association between vision and text in OCR-related scenarios to construct supervisory signals for visual tokens. Specifically, we use the word within the patch corresponding to each visual token to supervise the model’s learning of that token. Extensive experiments demonstrate that vision supervision effectively enhances the model’s character recognition ability. However, whether purely text-based vision supervision leads to degradation in visual understanding on non-text scenarios remains an open question.</p>
+</div>
+<div id="S5.SS5.p2" class="ltx_para">
+<p id="S5.SS5.p2.1" class="ltx_p">We evaluate the model’s visual capability in general scenarios using MME <cite class="ltx_cite ltx_citemacro_citep">(Fu<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib37" title="Mme: a comprehensive evaluation benchmark for multimodal large language models" class="ltx_ref">2026</a>)</cite>, a benchmark comprising 10 visual perception tasks and 4 visual cognition tasks. The experimental results are shown in Table <a href="#S5.T3" title="Table 3 ‣ 5.5 General Visual Capability ‣ 5 Experiments ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">3</span></a>.
+From the results, we can observe that purely word-based vision supervision does not degrade the model’s visual capabilities in general scenarios; rather, it slightly improves the model’s overall visual performance. This suggests that although vision supervision constructed around OCR scenarios cannot fully annotate visual information, this form of direct vision supervision facilitates the development of fine-grained visual understanding mechanisms in the model.
+As can be seen from Figure <a href="#S5.F5" title="Figure 5 ‣ 5.5 General Visual Capability ‣ 5 Experiments ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">5</span></a>, although the model learns visual features under word-based vision supervision, this direct supervision enables the model to develop more concrete semantic understanding of visual tokens, and this visual advantage generalizes effectively to general scenarios.</p>
+</div>
+<div id="S5.SS5.p3" class="ltx_para">
+<p id="S5.SS5.p3.1" class="ltx_p">In summary, although training the model on OCR-related scenarios yields effective performance improvements on general vision tasks, vision supervision can effectively enhance the model’s semantic understanding of visual tokens, and this semantic understanding generalizes from text to general visual scenarios. This phenomenon further validates the effectiveness and necessity of vision supervision.</p>
+</div>
+</section>
+<section id="S5.SS6" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">5.6 </span>Ablation Study</h3>
+
+<figure id="S5.F6" class="ltx_figure"><img src="/html/2605.26656/assets/figures/Ablation.png" id="S5.F6.g1" class="ltx_graphics ltx_centering ltx_img_landscape" width="539" height="340" alt="Refer to caption">
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 6: </span>Ablation studies on the validation set of DocVQA and InfographicVQA.
+<em id="S5.F6.2.1" class="ltx_emph ltx_font_italic">Avg. Acc.</em> denotes average accuracy.
+</figcaption>
+</figure>
+<div id="S5.SS6.p1" class="ltx_para">
+<p id="S5.SS6.p1.2" class="ltx_p">We conduct ablation experiments on the two key mechanisms in DV-SFT: <em id="S5.SS6.p1.2.1" class="ltx_emph ltx_font_italic">Vision Supervision</em> (<math id="S5.SS6.p1.1.m1" class="ltx_Math" alttext="\lambda" display="inline" intent=":literal"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math> in Eq. <a href="#S4.E4" title="In 4.2 Vision Smoothing ‣ 4 Direct Vision Supervision ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">4</span></a>) and <em id="S5.SS6.p1.2.2" class="ltx_emph ltx_font_italic">Visual Smoothing</em> (<math id="S5.SS6.p1.2.m2" class="ltx_Math" alttext="\beta" display="inline" intent=":literal"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math> in Eq. <a href="#S4.E3" title="In 4.2 Vision Smoothing ‣ 4 Direct Vision Supervision ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">3</span></a>). The Results are shown in Figure <a href="#S5.F6" title="Figure 6 ‣ 5.6 Ablation Study ‣ 5 Experiments ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">6</span></a>.</p>
+</div>
+<section id="S5.SS6.SSS0.Px1" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Vision Supervision.</h4>
+
+<div id="S5.SS6.SSS0.Px1.p1" class="ltx_para">
+<p id="S5.SS6.SSS0.Px1.p1.1" class="ltx_p">The experimental results show that incorporating only weak vision supervision on top of SFT can yield stable performance improvements for the model. However, we observe that excessively large weights for vision supervision lead to negative effects.
+We attribute this phenomenon to three factors:
+(1) <em id="S5.SS6.SSS0.Px1.p1.1.1" class="ltx_emph ltx_font_italic">Label imbalance</em>. As shown in the dataset statistics in Table <a href="#S5.T1" title="Table 1 ‣ 5.1 Experimental Setup ‣ 5 Experiments ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">1</span></a>, the number of vision labels is several tens of times that of text labels. Although label normalization alleviates the quantitative imbalance to some extent, a larger amount of supervisory signals can still lead to training imbalance.
+(2) <em id="S5.SS6.SSS0.Px1.p1.1.2" class="ltx_emph ltx_font_italic">Initial gradient</em>. We compute the validation loss on 1,024 training samples for the 2B model. The average loss for vision supervision is 24.30, while that for text supervision is 0.98. Since vision labels and text labels follow exactly the same training procedure, the large discrepancy in initial loss causes the gradient to be heavily biased toward learning visual tokens.
+(3) <em id="S5.SS6.SSS0.Px1.p1.1.3" class="ltx_emph ltx_font_italic">Task objective</em>. The ultimate goal of MLLMs is to generate responses that meet task requirements, whereas the role of vision supervision is to assist the model in understanding visual information.
+In summary, incorporating vision supervision on top of text supervision can effectively enhance the model’s visual understanding capability, but the weight of vision supervision should be properly balanced to prevent degradation of the model’s generation ability.</p>
+</div>
+</section>
+<section id="S5.SS6.SSS0.Px2" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Vision Smoothing.</h4>
+
+<div id="S5.SS6.SSS0.Px2.p1" class="ltx_para">
+<p id="S5.SS6.SSS0.Px2.p1.1" class="ltx_p">We can observe that without vision smoothing, the advantage of DV-SFT over SFT is very limited, which is due to the information interaction across visual tokens. Although the forward propagation in MLLMs follows a strictly unidirectional mask, visual tokens first pass through the vision encoder to extract features before being fed into the MLLM. During this process, bidirectional information flow occurs, such that each visual token contains not only the visual information of its corresponding patch but also the context of the entire visual input. Consequently, having each visual token learn only its own label restricts its information representation. In contrast, our proposed visual smoothing method better accommodates the global nature of visual tokens and can more effectively supervise the learning of visual tokens.</p>
+</div>
+<div id="S5.SS6.SSS0.Px2.p2" class="ltx_para">
+<p id="S5.SS6.SSS0.Px2.p2.1" class="ltx_p">In summary, the experimental results validate the necessity of balancing vision loss and text loss, as well as the positive effect of vision smoothing on vision supervision.</p>
+</div>
+</section>
+</section>
+</section>
+<section id="S6" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">
+<span class="ltx_tag ltx_tag_section">6 </span>Conclusion</h2>
+
+<div id="S6.p1" class="ltx_para">
+<p id="S6.p1.1" class="ltx_p">In this paper, we propose DV-SFT, a method motivated by the semantic alignment observed in visual logits that constructs explicit token-level supervision for visual tokens. By exploiting the straightforward vision–text correspondence in OCR-related scenarios, we construct fine-grained vision labels through two complementary pipelines: an image-to-label approach that extracts words from images using OCR engines, and a label-to-image approach that synthesizes images from word labels using drawing tools. To further address the contextualization of visual tokens caused by the bidirectional attention in the vision encoder, we introduced Vision Smoothing, which optimizes the learning of vision labels. Experimental results on both in-domain and out-of-domain benchmarks demonstrate that DV-SFT consistently outperforms standard supervised fine-tuning, and further analyses confirm that direct vision supervision effectively enhances fine-grained visual understanding and improves multimodal alignment efficiency.</p>
+</div>
+<div id="S6.p2" class="ltx_para">
+<p id="S6.p2.1" class="ltx_p">In the future, we plan to extend direct vision supervision to broader visual domains beyond OCR.</p>
+</div>
+</section>
+<section id="Sx1" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">Limitations</h2>
+
+<div id="Sx1.p1" class="ltx_para">
+<p id="Sx1.p1.1" class="ltx_p">We proposed DV-SFT, which enhances the model’s visual capability through direct vision supervision.
+Although the importance of direct vision supervision has been thoroughly validated, there remains room for improvement in its specific implementation, particularly in the following aspects:</p>
+</div>
+<section id="Sx1.SS0.SSS0.Px1" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">OCR Scenarios.</h4>
+
+<div id="Sx1.SS0.SSS0.Px1.p1" class="ltx_para">
+<p id="Sx1.SS0.SSS0.Px1.p1.1" class="ltx_p">We exploited the natural correspondence between vision and text in OCR tasks to construct labels for visual tokens. However, this approach to constructing vision labels may not be easily generalizable to broader visual scenes.
+In general visual scenes, visual tokens often carry more complex and diverse information, making it highly challenging to construct sufficiently matched vision labels.</p>
+</div>
+</section>
+<section id="Sx1.SS0.SSS0.Px2" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Single Vision Label.</h4>
+
+<div id="Sx1.SS0.SSS0.Px2.p1" class="ltx_para">
+<p id="Sx1.SS0.SSS0.Px2.p1.1" class="ltx_p">In OCR tasks, visual tokens and text tend to exhibit a one-to-one correspondence, which facilitates the construction of vision labels. In general visual scenes, however, a single visual token often contains highly rich visual information, and may need multiple labels to represent the visual information within a patch.</p>
+</div>
+</section>
+<section id="Sx1.SS0.SSS0.Px3" class="ltx_paragraph">
+<h4 class="ltx_title ltx_title_paragraph">Vision Coverage.</h4>
+
+<div id="Sx1.SS0.SSS0.Px3.p1" class="ltx_para">
+<p id="Sx1.SS0.SSS0.Px3.p1.1" class="ltx_p">Although our method achieves substantial vision coverage, some visual tokens still remain unlabeled. In future work, we will explore how to improve the construction of vision labels to achieve higher-quality vision supervision.</p>
+</div>
+<div id="Sx1.SS0.SSS0.Px3.p2" class="ltx_para">
+<p id="Sx1.SS0.SSS0.Px3.p2.1" class="ltx_p">Despite the above limitations, the experiments fully validate the effectiveness and superiority of direct vision supervision and offer a new perspective for future MLLM training paradigms.</p>
+</div>
+</section>
+</section>
+<section id="Sx2" class="ltx_section">
+<h2 class="ltx_title ltx_title_section">Ethical Considerations</h2>
+
+<div id="Sx2.p1" class="ltx_para">
+<p id="Sx2.p1.1" class="ltx_p">This work does not introduce any new datasets and therefore raises no privacy or personally identifiable information concerns. Our method relies solely on existing, publicly available tools for label construction. Consequently, DV-SFT poses negligible unique ethical risks beyond those already associated with general MLLM training and deployment.</p>
+</div>
+</section>
+<section id="bib" class="ltx_bibliography">
+<h2 class="ltx_title ltx_title_bibliography">References</h2>
+
+<ul id="bib.L1" class="ltx_biblist">
+<li id="bib.bib4" class="ltx_bibitem ltx_bib_article">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">S. Bai, Y. Cai, R. Chen, K. Chen, X. Chen, Z. Cheng, L. Deng, W. Ding, C. Gao, C. Ge, <span class="ltx_text ltx_bib_etal">et al.</span> (2025)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Qwen3-vl technical report</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">arXiv preprint arXiv:2511.21631</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.p1.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S2.p1.1" title="2 Related Work ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§2</span></a>.
+</span>
+</li>
+<li id="bib.bib18" class="ltx_bibitem ltx_bib_article">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">Z. Chen, Y. Zhu, Y. Zhan, Z. Li, C. Zhao, J. Wang, and M. Tang (2023)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Mitigating hallucination in visual language models with visual supervision</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">arXiv preprint arXiv:2311.16479</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.p1.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S2.p1.1" title="2 Related Work ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§2</span></a>.
+</span>
+</li>
+<li id="bib.bib38" class="ltx_bibitem ltx_bib_article">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">C. Cui, T. Sun, M. Lin, T. Gao, Y. Zhang, J. Liu, X. Wang, Z. Zhang, C. Zhou, H. Liu, <span class="ltx_text ltx_bib_etal">et al.</span> (2025)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Paddleocr 3.0 technical report</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">arXiv preprint arXiv:2507.05595</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#A1.SS1.p1.1" title="A.1 Datasets ‣ Appendix A Detailed Experimental Setup ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§A.1</span></a>.
+</span>
+</li>
+<li id="bib.bib5" class="ltx_bibitem ltx_bib_inproceedings">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">W. Dai, J. Li, D. Li, A. Tiong, J. Zhao, W. Wang, B. Li, P. N. Fung, and S. Hoi (2023)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Instructblip: towards general-purpose vision-language models with instruction tuning</span>.
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_bib_inbook">NIPS</span>,
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_pages"> pp. 49250–49267</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.p1.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>.
+</span>
+</li>
+<li id="bib.bib7" class="ltx_bibitem ltx_bib_inproceedings">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">A. Dosovitskiy, L. Beyer, A. Kolesnikov, D. Weissenborn, X. Zhai, T. Unterthiner, M. Dehghani, M. Minderer, G. Heigold, S. Gelly, <span class="ltx_text ltx_bib_etal">et al.</span> (2021)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">An image is worth 16x16 words: transformers for image recognition at scale</span>.
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_bib_inbook">ICLR</span>,
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.p1.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>.
+</span>
+</li>
+<li id="bib.bib37" class="ltx_bibitem ltx_bib_inproceedings">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">C. Fu, P. Chen, Y. Shen, Y. Qin, M. Zhang, X. Lin, J. Yang, X. Zheng, K. Li, X. Sun, <span class="ltx_text ltx_bib_etal">et al.</span> (2026)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Mme: a comprehensive evaluation benchmark for multimodal large language models</span>.
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_bib_inbook">NIPS</span>,
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.p5.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S5.SS5.p2.1" title="5.5 General Visual Capability ‣ 5 Experiments ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§5.5</span></a>.
+</span>
+</li>
+<li id="bib.bib14" class="ltx_bibitem ltx_bib_inproceedings">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">J. Jiang, J. Zhou, B. Peng, X. Ning, and Z. Zhu (2025a)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Analyzing fine-grained alignment and enhancing vision understanding in multimodal language models</span>.
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_bib_inbook">NIPS</span>,
+</span>
+<span class="ltx_bibblock">Vol. <span class="ltx_text ltx_bib_volume">38</span>, <span class="ltx_text ltx_bib_pages"> pp. 874–899</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.p2.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S2.p2.1" title="2 Related Work ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§2</span></a>.
+</span>
+</li>
+<li id="bib.bib25" class="ltx_bibitem ltx_bib_inproceedings">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">N. Jiang, A. Kachinthaya, S. Petryk, and Y. Gandelsman (2025b)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Interpreting and editing vision-language representations to mitigate hallucinations</span>.
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_bib_inbook">ICLR</span>,
+</span>
+<span class="ltx_bibblock">Vol. <span class="ltx_text ltx_bib_volume">2025</span>, <span class="ltx_text ltx_bib_pages"> pp. 63582–63605</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.p3.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S3.p2.2" title="3 Preliminaries ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§3</span></a>.
+</span>
+</li>
+<li id="bib.bib13" class="ltx_bibitem ltx_bib_inproceedings">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">H. Li, X. Zhang, Q. Peng, B. Luo, H. Hu, D. Jiang, H. Ye, T. Zhang, and H. Jin (2026a)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Unleashing the intrinsic visual representation capability of multimodal large language models</span>.
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_bib_inbook">CVPR</span>,
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_pages"> pp. 11975–11986</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.p2.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S2.p2.1" title="2 Related Work ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§2</span></a>.
+</span>
+</li>
+<li id="bib.bib10" class="ltx_bibitem ltx_bib_inproceedings">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">Z. Li, W. Yu, C. Huang, Z. Liang, R. Liu, F. Liu, J. Chen, D. Yu, J. L. Boyd-Graber, H. Mi, and D. Yu (2026b)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Vision-sr1: self-rewarding vision-language model via reasoning decomposition and multi-reward policy optimization</span>.
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_bib_inbook">ICLR</span>,
+</span>
+<span class="ltx_bibblock">External Links: <span class="ltx_text ltx_bib_links"><a target="_blank" href="https://openreview.net/forum?id=C1M4ETatgM" title="" class="ltx_ref ltx_bib_external">Link</a></span>
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.p2.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S2.p2.1" title="2 Related Work ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§2</span></a>.
+</span>
+</li>
+<li id="bib.bib32" class="ltx_bibitem ltx_bib_article">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">H. Liu, W. Xue, Y. Chen, D. Chen, X. Zhao, K. Wang, L. Hou, R. Li, and W. Peng (2024a)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">A survey on hallucination in large vision-language models</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">arXiv preprint arXiv:2402.00253</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S2.p1.1" title="2 Related Work ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§2</span></a>.
+</span>
+</li>
+<li id="bib.bib3" class="ltx_bibitem ltx_bib_inproceedings">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">H. Liu, C. Li, Q. Wu, and Y. J. Lee (2023)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Visual instruction tuning</span>.
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_bib_inbook">NIPS</span>,
+</span>
+<span class="ltx_bibblock">Vol. <span class="ltx_text ltx_bib_volume">36</span>, <span class="ltx_text ltx_bib_pages"> pp. 34892–34916</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.p1.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S2.p1.1" title="2 Related Work ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§2</span></a>.
+</span>
+</li>
+<li id="bib.bib9" class="ltx_bibitem ltx_bib_inproceedings">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">J. Liu, Y. Deng, and L. Chen (2026)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Empowering small vlms to think with dynamic memorization and exploration</span>.
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_bib_inbook">ICLR</span>,
+</span>
+<span class="ltx_bibblock">External Links: <span class="ltx_text ltx_bib_links"><a target="_blank" href="https://openreview.net/forum?id=qFDju6ahkk" title="" class="ltx_ref ltx_bib_external">Link</a></span>
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.p2.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S2.p2.1" title="2 Related Work ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§2</span></a>.
+</span>
+</li>
+<li id="bib.bib30" class="ltx_bibitem ltx_bib_article">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">Y. Liu, Z. Li, M. Huang, B. Yang, W. Yu, C. Li, X. Yin, C. Liu, L. Jin, and X. Bai (2024b)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Ocrbench: on the hidden mystery of ocr in large multimodal models</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">Science China Information Sciences</span> <span class="ltx_text ltx_bib_volume">67</span> (<span class="ltx_text ltx_bib_number">12</span>), <span class="ltx_text ltx_bib_pages"> pp. 220102</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#A1.SS2.p1.1" title="A.2 Benchmarks ‣ Appendix A Detailed Experimental Setup ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§A.2</span></a>,
+<a href="#S1.p5.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S5.SS1.SSS0.Px2.p1.1" title="Benchmarks. ‣ 5.1 Experimental Setup ‣ 5 Experiments ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§5.1</span></a>.
+</span>
+</li>
+<li id="bib.bib31" class="ltx_bibitem ltx_bib_inproceedings">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">A. Masry, X. L. Do, J. Q. Tan, S. Joty, and E. Hoque (2022)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Chartqa: a benchmark for question answering about charts with visual and logical reasoning</span>.
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_bib_inbook">Findings of ACL</span>,
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_pages"> pp. 2263–2279</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#A1.SS2.p1.1" title="A.2 Benchmarks ‣ Appendix A Detailed Experimental Setup ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§A.2</span></a>,
+<a href="#S1.p5.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S5.SS1.SSS0.Px2.p1.1" title="Benchmarks. ‣ 5.1 Experimental Setup ‣ 5 Experiments ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§5.1</span></a>.
+</span>
+</li>
+<li id="bib.bib28" class="ltx_bibitem ltx_bib_inproceedings">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">M. Mathew, V. Bagal, R. Tito, D. Karatzas, E. Valveny, and C. Jawahar (2022)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Infographicvqa</span>.
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_bib_inbook">Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision</span>,
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_pages"> pp. 1697–1706</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#A1.SS1.p1.1" title="A.1 Datasets ‣ Appendix A Detailed Experimental Setup ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§A.1</span></a>,
+<a href="#S1.p5.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S5.SS1.SSS0.Px1.p1.1" title="Datasets. ‣ 5.1 Experimental Setup ‣ 5 Experiments ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§5.1</span></a>.
+</span>
+</li>
+<li id="bib.bib27" class="ltx_bibitem ltx_bib_inproceedings">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">M. Mathew, D. Karatzas, and C. Jawahar (2021)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Docvqa: a dataset for vqa on document images</span>.
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_bib_inbook">Proceedings of the IEEE/CVF winter conference on applications of computer vision</span>,
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_pages"> pp. 2200–2209</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#A1.SS1.p1.1" title="A.1 Datasets ‣ Appendix A Detailed Experimental Setup ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§A.1</span></a>,
+<a href="#S1.p5.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S5.SS1.SSS0.Px1.p1.1" title="Datasets. ‣ 5.1 Experimental Setup ‣ 5 Experiments ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§5.1</span></a>.
+</span>
+</li>
+<li id="bib.bib26" class="ltx_bibitem ltx_bib_inproceedings">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">A. Mishra, S. Shekhar, A. K. Singh, and A. Chakraborty (2019)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Ocr-vqa: visual question answering by reading text in images</span>.
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_bib_inbook">International conference on document analysis and recognition</span>,
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_pages"> pp. 947–952</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#A1.SS2.p1.1" title="A.2 Benchmarks ‣ Appendix A Detailed Experimental Setup ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§A.2</span></a>,
+<a href="#S1.p5.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S5.SS1.SSS0.Px2.p1.1" title="Benchmarks. ‣ 5.1 Experimental Setup ‣ 5 Experiments ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§5.1</span></a>.
+</span>
+</li>
+<li id="bib.bib36" class="ltx_bibitem ltx_bib_inproceedings">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">S. Narayan, S. B. Cohen, and M. Lapata (2018)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Don’t give me the details, just the summary! topic-aware convolutional neural networks for extreme summarization</span>.
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_bib_inbook">EMNLP</span>,
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_pages"> pp. 1797–1807</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S5.SS4.p1.1" title="5.4 Character Recognition Ability ‣ 5 Experiments ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§5.4</span></a>.
+</span>
+</li>
+<li id="bib.bib29" class="ltx_bibitem ltx_bib_inproceedings">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">P. Rajpurkar, J. Zhang, K. Lopyrev, and P. Liang (2016)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Squad: 100,000+ questions for machine comprehension of text</span>.
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_bib_inbook">EMNLP</span>,
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_pages"> pp. 2383–2392</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#A1.SS1.p1.1" title="A.1 Datasets ‣ Appendix A Detailed Experimental Setup ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§A.1</span></a>,
+<a href="#S1.p5.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S5.SS1.SSS0.Px1.p1.1" title="Datasets. ‣ 5.1 Experimental Setup ‣ 5 Experiments ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§5.1</span></a>.
+</span>
+</li>
+<li id="bib.bib35" class="ltx_bibitem ltx_bib_inproceedings">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">A. Singh, V. Natarjan, M. Shah, Y. Jiang, X. Chen, D. Batra, D. Parikh, and M. Rohrbach (2019)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Towards vqa models that can read</span>.
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_bib_inbook">CVPR</span>,
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_pages"> pp. 8317–8326</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#A1.SS2.p1.1" title="A.2 Benchmarks ‣ Appendix A Detailed Experimental Setup ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§A.2</span></a>,
+<a href="#S1.p5.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S5.SS1.SSS0.Px2.p1.1" title="Benchmarks. ‣ 5.1 Experimental Setup ‣ 5 Experiments ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§5.1</span></a>.
+</span>
+</li>
+<li id="bib.bib8" class="ltx_bibitem ltx_bib_inproceedings">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">W. Song, Y. Wang, Z. Song, Y. Li, Z. Zhou, L. Chen, X. Jhua, J. Wang, and K. Yu (2026)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Dualtoken: towards unifying visual understanding and generation with dual visual vocabularies</span>.
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_bib_inbook">ICLR</span>,
+</span>
+<span class="ltx_bibblock">External Links: <span class="ltx_text ltx_bib_links"><a target="_blank" href="https://openreview.net/forum?id=BpgCOFefcE" title="" class="ltx_ref ltx_bib_external">Link</a></span>
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S2.p2.1" title="2 Related Work ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§2</span></a>.
+</span>
+</li>
+<li id="bib.bib23" class="ltx_bibitem ltx_bib_inproceedings">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">Z. Sun, Y. Shen, J. Li, X. Sun, P. Dai, L. Cao, and R. Ji (2025)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Ds-vlm: diffusion supervision vision language model</span>.
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_bib_inbook">ICML</span>,
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.p2.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S2.p2.1" title="2 Related Work ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§2</span></a>.
+</span>
+</li>
+<li id="bib.bib12" class="ltx_bibitem ltx_bib_inproceedings">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">J. Tang, Y. Wang, H. Cao, and L. Xu (2025)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Basic: boosting visual alignment with intrinsic refined embeddings in multimodal large language models</span>.
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_bib_inbook">ICCV</span>,
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_pages"> pp. 20582–20592</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#A1.SS3.p1.1" title="A.3 Baselines ‣ Appendix A Detailed Experimental Setup ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§A.3</span></a>,
+<a href="#S1.p1.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S1.p2.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S1.p3.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S2.p2.1" title="2 Related Work ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§2</span></a>,
+<a href="#S3.p2.2" title="3 Preliminaries ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§3</span></a>,
+<a href="#S5.SS1.SSS0.Px3.p1.1" title="Baselines. ‣ 5.1 Experimental Setup ‣ 5 Experiments ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§5.1</span></a>.
+</span>
+</li>
+<li id="bib.bib11" class="ltx_bibitem ltx_bib_article">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">D. Wang, W. Song, Y. Wang, S. Wang, K. Yu, Z. Wei, and J. Wang (2025a)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Autoregressive semantic visual reconstruction helps vlms understand better</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">arXiv preprint arXiv:2506.09040</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.p2.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S2.p2.1" title="2 Related Work ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§2</span></a>.
+</span>
+</li>
+<li id="bib.bib17" class="ltx_bibitem ltx_bib_inproceedings">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">H. Wang, A. Zheng, Y. Zhao, T. Wang, Z. Ge, X. Zhang, and Z. Zhang (2025b)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Reconstructive visual instruction tuning</span>.
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_bib_inbook">ICLR</span>,
+</span>
+<span class="ltx_bibblock">Vol. <span class="ltx_text ltx_bib_volume">2025</span>, <span class="ltx_text ltx_bib_pages"> pp. 14374–14399</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.p2.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S2.p2.1" title="2 Related Work ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§2</span></a>.
+</span>
+</li>
+<li id="bib.bib21" class="ltx_bibitem ltx_bib_article">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">X. Wang, X. Zhang, Z. Luo, Q. Sun, Y. Cui, J. Wang, F. Zhang, Y. Wang, Z. Li, Q. Yu, <span class="ltx_text ltx_bib_etal">et al.</span> (2024)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Emu3: next-token prediction is all you need</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">arXiv preprint arXiv:2409.18869</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.p2.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S2.p2.1" title="2 Related Work ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§2</span></a>.
+</span>
+</li>
+<li id="bib.bib6" class="ltx_bibitem ltx_bib_inproceedings">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">X. Zhai, B. Mustafa, A. Kolesnikov, and L. Beyer (2023)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Sigmoid loss for language image pre-training</span>.
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_bib_inbook">CVPR</span>,
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_pages"> pp. 11975–11986</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.p1.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>.
+</span>
+</li>
+<li id="bib.bib24" class="ltx_bibitem ltx_bib_article">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">J. Zhao, F. Zhang, X. Sun, C. Feng, and Z. Tan (2025a)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Tell model where to look: mitigating hallucinations in mllms by vision-guided attention</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">arXiv preprint arXiv:2511.20032</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.p3.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S3.p2.2" title="3 Preliminaries ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§3</span></a>,
+<a href="#S4.p1.1" title="4 Direct Vision Supervision ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§4</span></a>.
+</span>
+</li>
+<li id="bib.bib33" class="ltx_bibitem ltx_bib_article">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">J. Zhao, F. Zhang, X. Sun, L. Kong, Z. Tan, and C. Feng (2025b)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Cross-image contrastive decoding: precise, lossless suppression of language priors in large vision-language models</span>.
+</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_journal">arXiv preprint arXiv:2505.10634</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S2.p1.1" title="2 Related Work ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§2</span></a>.
+</span>
+</li>
+<li id="bib.bib22" class="ltx_bibitem ltx_bib_inproceedings">
+<span class="ltx_tag ltx_bib_author-year ltx_role_refnum ltx_tag_bibitem">K. Zou, H. Liu, D. Zheng, J. Gao, Z. Zhao, and B. Liu (2026)</span>
+<span class="ltx_bibblock"><span class="ltx_text ltx_bib_title">Echogen: cycle-consistent learning for unified layout-image generation and understanding</span>.
+</span>
+<span class="ltx_bibblock">In <span class="ltx_text ltx_bib_inbook">AAAI</span>,
+</span>
+<span class="ltx_bibblock">Vol. <span class="ltx_text ltx_bib_volume">40</span>, <span class="ltx_text ltx_bib_pages"> pp. 14068–14076</span>.
+</span>
+<span class="ltx_bibblock ltx_bib_cited">Cited by: <a href="#S1.p2.1" title="1 Introduction ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§1</span></a>,
+<a href="#S2.p2.1" title="2 Related Work ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">§2</span></a>.
+</span>
+</li>
+</ul>
+</section>
+<div class="ltx_pagination ltx_role_newpage"></div>
+<section id="A1" class="ltx_appendix">
+<h2 class="ltx_title ltx_title_appendix">
+<span class="ltx_tag ltx_tag_appendix">Appendix A </span>Detailed Experimental Setup</h2>
+
+<section id="A1.SS1" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">A.1 </span>Datasets</h3>
+
+<div id="A1.SS1.p1" class="ltx_para">
+<p id="A1.SS1.p1.1" class="ltx_p">We employ DocVQA <cite class="ltx_cite ltx_citemacro_citep">(Mathew<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib27" title="Docvqa: a dataset for vqa on document images" class="ltx_ref">2021</a>)</cite>, InfographicVQA <cite class="ltx_cite ltx_citemacro_citep">(Mathew<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib28" title="Infographicvqa" class="ltx_ref">2022</a>)</cite>, and SQuAD <cite class="ltx_cite ltx_citemacro_citep">(Rajpurkar<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib29" title="Squad: 100,000+ questions for machine comprehension of text" class="ltx_ref">2016</a>)</cite> to build training data.
+Both DocVQA and InfographicVQA are multimodal datasets, and we construct vision labels using the image-to-label method.
+We use PaddleOCR <cite class="ltx_cite ltx_citemacro_citep">(Cui<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib38" title="Paddleocr 3.0 technical report" class="ltx_ref">2025</a>)</cite> to perform word-level OCR, which specifically includes a text detection model (PP-OCRv5_server_det) and a text recognition model (PP-OCRv5_server_rec).
+An example of image-to-label is shown in Figure <a href="#A1.F8" title="Figure 8 ‣ A.4 Implementation Details ‣ Appendix A Detailed Experimental Setup ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">8</span></a>.</p>
+</div>
+<div id="A1.SS1.p2" class="ltx_para">
+<p id="A1.SS1.p2.2" class="ltx_p">SQuAD is a unimodal document understanding dataset with extractive answers, which aligns well with the model’s need for accurate visual perception.
+We convert this dataset into a multimodal task through the label-to-image approach.
+We randomly select one dark and one light color for rendering the background and text, respectively, to enhance training diversity.
+An example of label-to-image is shown in Figure <a href="#A1.F9" title="Figure 9 ‣ A.4 Implementation Details ‣ Appendix A Detailed Experimental Setup ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">9</span></a>.
+To strengthen the model’s reliance on visual information, we filter out question-answer pairs in SQuAD that exhibit weak relevance to the document. We also remove answers with low fluency.
+We achieve this using the perplexity of a unimodal LLM, Qwen3-0.6B. Specifically, each training sample satisfies the following conditions: <math id="A1.SS1.p2.1.m1" class="ltx_Math" alttext="\mathrm{PPL}(A\mid Q)&gt;100" display="inline" intent=":literal"><semantics><mrow><mrow><mi>PPL</mi><mo lspace="0em" rspace="0em">​</mo><mrow><mo stretchy="false">(</mo><mrow><mi>A</mi><mo>∣</mo><mi>Q</mi></mrow><mo stretchy="false">)</mo></mrow></mrow><mo>&gt;</mo><mn>100</mn></mrow><annotation encoding="application/x-tex">\mathrm{PPL}(A\mid Q)&gt;100</annotation></semantics></math> and <math id="A1.SS1.p2.2.m2" class="ltx_Math" alttext="\mathrm{PPL}(A\mid D,Q)&lt;10" display="inline" intent=":literal"><semantics><mrow><mrow><mi>PPL</mi><mo lspace="0em" rspace="0em">​</mo><mrow><mo stretchy="false">(</mo><mrow><mi>A</mi><mo>∣</mo><mrow><mi>D</mi><mo>,</mo><mi>Q</mi></mrow></mrow><mo stretchy="false">)</mo></mrow></mrow><mo>&lt;</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">\mathrm{PPL}(A\mid D,Q)&lt;10</annotation></semantics></math>.</p>
+</div>
+<div id="A1.SS1.p3" class="ltx_para">
+<p id="A1.SS1.p3.1" class="ltx_p">To ensure the verifiability of the model’s responses, we randomly incorporate diverse format-control instructions into the training data. The detailed instructions are shown in Figure <a href="#A1.F7" title="Figure 7 ‣ A.2 Benchmarks ‣ Appendix A Detailed Experimental Setup ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">7</span></a>.</p>
+</div>
+</section>
+<section id="A1.SS2" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">A.2 </span>Benchmarks</h3>
+
+<div id="A1.SS2.p1" class="ltx_para">
+<p id="A1.SS2.p1.1" class="ltx_p">For in-domain data, we use the test sets of DocVQA and InfographicVQA, as well as the validation set of SQuAD. For out-of-domain data, we use the test set of ChartQA <cite class="ltx_cite ltx_citemacro_citep">(Masry<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib31" title="Chartqa: a benchmark for question answering about charts with visual and logical reasoning" class="ltx_ref">2022</a>)</cite>, OCRBench <cite class="ltx_cite ltx_citemacro_citep">(Liu<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib30" title="Ocrbench: on the hidden mystery of ocr in large multimodal models" class="ltx_ref">2024b</a>)</cite>, the test set of OCRVQA <cite class="ltx_cite ltx_citemacro_citep">(Mishra<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib26" title="Ocr-vqa: visual question answering by reading text in images" class="ltx_ref">2019</a>)</cite>, and the validation set of TextVQA <cite class="ltx_cite ltx_citemacro_citep">(Singh<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib35" title="Towards vqa models that can read" class="ltx_ref">2019</a>)</cite>.
+For OCRVQA, we randomly select 3,000 test samples and ensure that the ground truth of each sample is visible in the image.
+Results for DocVQA and InfographicVQA are obtained through online evaluation <span id="footnote2" class="ltx_note ltx_role_footnote"><sup class="ltx_note_mark">2</sup><span class="ltx_note_outer"><span class="ltx_note_content"><sup class="ltx_note_mark">2</sup><span class="ltx_tag ltx_tag_note">2</span><a target="_blank" href="https://rrc.cvc.uab.es/" title="" class="ltx_ref ltx_url ltx_font_typewriter">https://rrc.cvc.uab.es/</a></span></span></span>, while the remaining benchmarks are evaluated by ground truth.</p>
+</div>
+<div id="A1.SS2.p2" class="ltx_para">
+<p id="A1.SS2.p2.1" class="ltx_p">During testing, we use a uniform format-control instruction: “Answer the question using a single word or phrase.”</p>
+</div>
+<figure id="A1.F7" class="ltx_figure"><img src="/html/2605.26656/assets/x4.png" id="A1.F7.g1" class="ltx_graphics ltx_centering ltx_img_landscape" width="830" height="555" alt="Refer to caption">
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 7: </span>
+Format-control instructions.
+</figcaption>
+</figure>
+<figure id="A1.T4" class="ltx_table">
+<table id="A1.T4.1" class="ltx_tabular ltx_centering ltx_guessed_headers ltx_align_middle">
+<thead class="ltx_thead">
+<tr id="A1.T4.1.1.1" class="ltx_tr">
+<th id="A1.T4.1.1.1.1" class="ltx_td ltx_align_center ltx_th ltx_th_row ltx_border_tt" colspan="2">Qwen3-VL-2B / Qwen3-1.7B</th>
+</tr>
+</thead>
+<tbody class="ltx_tbody">
+<tr id="A1.T4.1.2.1" class="ltx_tr">
+<th id="A1.T4.1.2.1.1" class="ltx_td ltx_align_left ltx_th ltx_th_row ltx_border_t">Min Pixels</th>
+<td id="A1.T4.1.2.1.2" class="ltx_td ltx_align_center ltx_border_t">32*32*64</td>
+</tr>
+<tr id="A1.T4.1.3.2" class="ltx_tr">
+<th id="A1.T4.1.3.2.1" class="ltx_td ltx_align_left ltx_th ltx_th_row">Max Pixels</th>
+<td id="A1.T4.1.3.2.2" class="ltx_td ltx_align_center">32*32*2048</td>
+</tr>
+<tr id="A1.T4.1.4.3" class="ltx_tr">
+<th id="A1.T4.1.4.3.1" class="ltx_td ltx_align_left ltx_th ltx_th_row">Global Batch Size</th>
+<td id="A1.T4.1.4.3.2" class="ltx_td ltx_align_center">64</td>
+</tr>
+<tr id="A1.T4.1.5.4" class="ltx_tr">
+<th id="A1.T4.1.5.4.1" class="ltx_td ltx_align_left ltx_th ltx_th_row">Learning Rate</th>
+<td id="A1.T4.1.5.4.2" class="ltx_td ltx_align_center">5e-6</td>
+</tr>
+<tr id="A1.T4.1.6.5" class="ltx_tr">
+<th id="A1.T4.1.6.5.1" class="ltx_td ltx_align_left ltx_th ltx_th_row">Warmup Ratio</th>
+<td id="A1.T4.1.6.5.2" class="ltx_td ltx_align_center">0.03</td>
+</tr>
+<tr id="A1.T4.1.7.6" class="ltx_tr">
+<th id="A1.T4.1.7.6.1" class="ltx_td ltx_align_left ltx_th ltx_th_row">Max Grad Norm</th>
+<td id="A1.T4.1.7.6.2" class="ltx_td ltx_align_center">1</td>
+</tr>
+<tr id="A1.T4.1.8.7" class="ltx_tr">
+<th id="A1.T4.1.8.7.1" class="ltx_td ltx_align_left ltx_th ltx_th_row">LR Scheduler</th>
+<td id="A1.T4.1.8.7.2" class="ltx_td ltx_align_center">cosine</td>
+</tr>
+<tr id="A1.T4.1.9.8" class="ltx_tr">
+<th id="A1.T4.1.9.8.1" class="ltx_td ltx_align_left ltx_th ltx_th_row">Weight Decay</th>
+<td id="A1.T4.1.9.8.2" class="ltx_td ltx_align_center">0</td>
+</tr>
+<tr id="A1.T4.1.10.9" class="ltx_tr">
+<th id="A1.T4.1.10.9.1" class="ltx_td ltx_align_left ltx_th ltx_th_row">Model Max Length</th>
+<td id="A1.T4.1.10.9.2" class="ltx_td ltx_align_center">8192</td>
+</tr>
+<tr id="A1.T4.1.11.10" class="ltx_tr">
+<th id="A1.T4.1.11.10.1" class="ltx_td ltx_align_center ltx_th ltx_th_row ltx_border_t" colspan="2">Additional Settings for Qwen3-VL-8B</th>
+</tr>
+<tr id="A1.T4.1.12.11" class="ltx_tr">
+<th id="A1.T4.1.12.11.1" class="ltx_td ltx_align_left ltx_th ltx_th_row ltx_border_t">Learning Rate</th>
+<td id="A1.T4.1.12.11.2" class="ltx_td ltx_align_center ltx_border_t">2e-5</td>
+</tr>
+<tr id="A1.T4.1.13.12" class="ltx_tr">
+<th id="A1.T4.1.13.12.1" class="ltx_td ltx_align_left ltx_th ltx_th_row">LoRA Rank</th>
+<td id="A1.T4.1.13.12.2" class="ltx_td ltx_align_center">64</td>
+</tr>
+<tr id="A1.T4.1.14.13" class="ltx_tr">
+<th id="A1.T4.1.14.13.1" class="ltx_td ltx_align_left ltx_th ltx_th_row">LoRA Alpha</th>
+<td id="A1.T4.1.14.13.2" class="ltx_td ltx_align_center">128</td>
+</tr>
+<tr id="A1.T4.1.15.14" class="ltx_tr">
+<th id="A1.T4.1.15.14.1" class="ltx_td ltx_align_left ltx_th ltx_th_row ltx_border_bb">LoRA Dropout</th>
+<td id="A1.T4.1.15.14.2" class="ltx_td ltx_align_center ltx_border_bb">0</td>
+</tr>
+</tbody>
+</table>
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_table">Table 4: </span>Detailed training settings.</figcaption>
+</figure>
+</section>
+<section id="A1.SS3" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">A.3 </span>Baselines</h3>
+
+<div id="A1.SS3.p1" class="ltx_para">
+<p id="A1.SS3.p1.1" class="ltx_p">We choose the standard SFT method as our baseline, which trains the model using only text labels.
+In addition, we reproduce BASIC <cite class="ltx_cite ltx_citemacro_citep">(Tang<span class="ltx_text ltx_bib_etal"> et al.</span>, <a href="#bib.bib12" title="Basic: boosting visual alignment with intrinsic refined embeddings in multimodal large language models" class="ltx_ref">2025</a>)</cite> method. This approach constructs supervisory signals from the hidden states of visual tokens in the early-to-middle layers of the model and trains the projector and the first layer of the model to learn visual features through representation supervision.
+To ensure compatibility with FlashAttention, we disable the attention-distribution-based loss normalization in BASIC and adopt uniform normalization instead.
+All hyperparameters follow the settings in the original paper.</p>
+</div>
+</section>
+<section id="A1.SS4" class="ltx_subsection">
+<h3 class="ltx_title ltx_title_subsection">
+<span class="ltx_tag ltx_tag_subsection">A.4 </span>Implementation Details</h3>
+
+<div id="A1.SS4.p1" class="ltx_para">
+<p id="A1.SS4.p1.1" class="ltx_p">We select Qwen3-VL-2B/8B-Instruct and Qwen3-1.7B as the base models.
+For Qwen3-VL-2B/8B-Instruct, we randomly select one QA pair (two for InfographicVQA) per image to avoid duplicate vision labels. For Qwen3-1.7B, we load the visual encoder from Qwen3-VL-2B and use all training data. The visual encoder parameters are frozen in all training settings. Qwen3-VL-2B and Qwen3-1.7B are fully fine-tuned, while Qwen3-VL-8B is fine-tuned using LoRA.
+All models are trained for one epoch, and the final checkpoint is selected as the final model.
+The detailed experimental settings are shown in Table <a href="#A1.T4" title="Table 4 ‣ A.2 Benchmarks ‣ Appendix A Detailed Experimental Setup ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">4</span></a>.</p>
+</div>
+<div id="A1.SS4.p2" class="ltx_para">
+<p id="A1.SS4.p2.2" class="ltx_p">We set <math id="A1.SS4.p2.1.m1" class="ltx_Math" alttext="\beta=0.3" display="inline" intent=":literal"><semantics><mrow><mi>β</mi><mo>=</mo><mn>0.3</mn></mrow><annotation encoding="application/x-tex">\beta=0.3</annotation></semantics></math> in Eq. <a href="#S4.E3" title="In 4.2 Vision Smoothing ‣ 4 Direct Vision Supervision ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">3</span></a> and <math id="A1.SS4.p2.2.m2" class="ltx_Math" alttext="\lambda=2\text{e-}3" display="inline" intent=":literal"><semantics><mrow><mi>λ</mi><mo>=</mo><mrow><mn>2</mn><mo lspace="0em" rspace="0em">​</mo><mtext>e-</mtext><mo lspace="0em" rspace="0em">​</mo><mn>3</mn></mrow></mrow><annotation encoding="application/x-tex">\lambda=2\text{e-}3</annotation></semantics></math> in Eq. <a href="#S4.E4" title="In 4.2 Vision Smoothing ‣ 4 Direct Vision Supervision ‣ DV-SFT: Direct Vision Supervision for Fine-Grained Visual Understanding" class="ltx_ref"><span class="ltx_text ltx_ref_tag">4</span></a>. We employ greedy decoding during inference with the default setting.
+All experiments were conducted on two NVIDIA A100 80G GPUs.</p>
+</div>
+<div id="A1.SS4.p3" class="ltx_para">
+<p id="A1.SS4.p3.1" class="ltx_p">When constructing the Non-Contextual OCR task, we randomly generate unordered word sequences of 200–500 characters in length based on word frequency to create OCR images. The average ground-truth length for the Contextual OCR task is 550.22, while that for the Non-Contextual OCR task is 348.63.</p>
+</div>
+<figure id="A1.F8" class="ltx_figure"><img src="/html/2605.26656/assets/figures/docvqa_case.jpg" id="A1.F8.g1" class="ltx_graphics ltx_centering ltx_img_portrait" width="359" height="470" alt="Refer to caption">
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 8: </span>
+An example of constructing vision labels by the image-to-label approach. Each rectangle represents a visual token span that has been successfully aligned with a word.
+</figcaption>
+</figure>
+<figure id="A1.F9" class="ltx_figure"><img src="/html/2605.26656/assets/figures/squad_case.jpg" id="A1.F9.g1" class="ltx_graphics ltx_centering ltx_img_landscape" width="479" height="165" alt="Refer to caption">
+<figcaption class="ltx_caption ltx_centering"><span class="ltx_tag ltx_tag_figure">Figure 9: </span>
+An example of constructing vision labels by the label-to-image approach. The grid represents the vision tokenization result, with each box corresponding to a visual token.
+</figcaption>
+</figure>
+</section>
+</section>
+</article>
+</div>
+<div class="ar5iv-footer"><a href="/html/2605.26655" class="ar5iv-nav-button ar5iv-nav-button-prev">◄</a>
+    <a class="ar5iv-home-button" href="/"><img height="40" alt="ar5iv homepage" src="/assets/ar5iv.png"></a>
+    <a href="/feeling_lucky" class="ar5iv-text-button">Feeling<br>lucky?</a>
+    <a href="/land_of_honey_and_milk" rel="nofollow" aria-hidden="true" tabindex="-1"></a>
+    <a href="/log/2605.26656" class="ar5iv-text-button ar5iv-severity-warning">Conversion<br>report</a>
+    <a class="ar5iv-text-button" target="_blank" href="https://github.com/dginev/ar5iv/issues/new?template=improve-article--arxiv-id-.md&title=Improve+article+2605.26656">Report<br>an issue</a>
+    <a href="https://arxiv.org/abs/2605.26656" class="ar5iv-text-button arxiv-ui-theme">View&nbsp;original<br>on&nbsp;arXiv</a><a href="/html/2605.26657" class="ar5iv-nav-button ar5iv-nav-button-next">►</a>
+</div><footer class="ltx_page_footer">
+<a class="ar5iv-toggle-color-scheme" href="javascript:toggleColorScheme()" title="Toggle ar5iv color scheme"><span class="color-scheme-icon"></span></a>
+<a class="ar5iv-footer-button" href="https://arxiv.org/help/license" target="_blank">Copyright</a>
+<a class="ar5iv-footer-button" href="https://arxiv.org/help/policies/privacy_policy" target="_blank">Privacy Policy</a>
+
+<div class="ltx_page_logo">Generated  on Fri Jun  5 22:30:42 2026 by <a target="_blank" href="http://dlmf.nist.gov/LaTeXML/" class="ltx_LaTeXML_logo"><span style="letter-spacing:-0.2em; margin-right:0.1em;">L<span class="ltx_font_smallcaps" style="position:relative; bottom:2.2pt;">a</span>T<span class="ltx_font_smallcaps" style="font-size:120%;position:relative; bottom:-0.2ex;">e</span></span><span style="font-size:90%; position:relative; bottom:-0.2ex;">XML</span><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAOCAYAAAD5YeaVAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wKExQZLWTEaOUAAAAddEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIFRoZSBHSU1Q72QlbgAAAdpJREFUKM9tkL+L2nAARz9fPZNCKFapUn8kyI0e4iRHSR1Kb8ng0lJw6FYHFwv2LwhOpcWxTjeUunYqOmqd6hEoRDhtDWdA8ApRYsSUCDHNt5ul13vz4w0vWCgUnnEc975arX6ORqN3VqtVZbfbTQC4uEHANM3jSqXymFI6yWazP2KxWAXAL9zCUa1Wy2tXVxheKA9YNoR8Pt+aTqe4FVVVvz05O6MBhqUIBGk8Hn8HAOVy+T+XLJfLS4ZhTiRJgqIoVBRFIoric47jPnmeB1mW/9rr9ZpSSn3Lsmir1fJZlqWlUonKsvwWwD8ymc/nXwVBeLjf7xEKhdBut9Hr9WgmkyGEkJwsy5eHG5vN5g0AKIoCAEgkEkin0wQAfN9/cXPdheu6P33fBwB4ngcAcByHJpPJl+fn54mD3Gg0NrquXxeLRQAAwzAYj8cwTZPwPH9/sVg8PXweDAauqqr2cDjEer1GJBLBZDJBs9mE4zjwfZ85lAGg2+06hmGgXq+j3+/DsixYlgVN03a9Xu8jgCNCyIegIAgx13Vfd7vdu+FweG8YRkjXdWy329+dTgeSJD3ieZ7RNO0VAXAPwDEAO5VKndi2fWrb9jWl9Esul6PZbDY9Go1OZ7PZ9z/lyuD3OozU2wAAAABJRU5ErkJggg==" alt="Mascot Sammy"></a>
+</div></footer>
+</div>
+
+    <script>
+      var canMathML = typeof(MathMLElement) == "function";
+      if (!canMathML) {
+        var body = document.querySelector("body");
+        body.firstElementChild.setAttribute('style', 'opacity: 0;');
+        var loading = document.createElement("div");
+        loading.setAttribute("id", "mathjax-loading-spinner");
+        var message = document.createElement("div");
+        message.setAttribute("id", "mathjax-loading-message");
+        message.innerText = "Typesetting Equations...";
+        body.prepend(loading);
+        body.prepend(message);
+
+        var el = document.createElement("script");
+        el.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
+        document.querySelector("head").appendChild(el);
+
+        window.MathJax = {
+          startup: {
+            pageReady: () => {
+              return MathJax.startup.defaultPageReady().then(() => {
+                body.removeChild(loading);
+                body.removeChild(message);
+                body.firstElementChild.removeAttribute('style');
+              }); } } };
+      }
+    </script>
+    <script>
+    // Auxiliary function, building the preview feature when
+    // an inline citation is clicked
+    function clicked_cite(e) {
+      e.preventDefault();
+      let cite = this.closest('.ltx_cite');
+      let next = cite.nextSibling;
+      if (next && next.nodeType == Node.ELEMENT_NODE && next.getAttribute('class') == "ar5iv-bibitem-preview") {
+        next.remove();
+        return; }
+      // Before adding a preview modal,
+      // cleanup older previews, in case they're still open
+      document.querySelectorAll('span.ar5iv-bibitem-preview').forEach(function(node) {
+        node.remove();
+      })
+
+      // Create the preview
+      preview = document.createElement('span');
+      preview.setAttribute('class','ar5iv-bibitem-preview');
+      let target = document.getElementById(this.getAttribute('href').slice(1));
+      target.childNodes.forEach(function (child) {
+        preview.append(child.cloneNode(true));
+      });
+      let close_x = document.createElement('button');
+      close_x.setAttribute("aria-label","Close modal for bibliography item preview");
+      close_x.textContent = "×";
+      close_x.setAttribute('class', 'ar5iv-button-close-preview');
+      close_x.setAttribute('onclick','this.parentNode.remove()');
+      preview.append(close_x);
+      preview.querySelectorAll('.ltx_tag_bibitem').forEach(function(node) {
+        node.remove();
+      });
+      cite.parentNode.insertBefore(preview, cite.nextSibling);
+      return;
+    }
+    // Global Document initialization:
+    // - assign the preview feature to all inline citation links
+    document.querySelectorAll(".ltx_cite .ltx_ref").forEach(function (link) {
+      link.addEventListener("click", clicked_cite);
+    });
+    </script>
+    </body>
+</html>
