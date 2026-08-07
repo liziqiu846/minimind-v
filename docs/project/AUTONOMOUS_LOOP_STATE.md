@@ -5,19 +5,19 @@ MODE: AUTONOMOUS_RESEARCH
 ACTIVE_RESEARCH_QUESTION: docs/project/ACTIVE_RESEARCH_QUESTION.md
 CURRENT_IDEA: XID-01
 CURRENT_ROUND: 4
-CURRENT_STATE: XID01_ROUND4_TRAINING_PLAN_PENDING_COMMIT
+CURRENT_STATE: XID01_ROUND4_IMPLEMENTATION_PREFLIGHT_COMMITTED_SMOKE_NEXT
 RUNNING_JOB: none
 LAST_PLAN: experiments/plans/XID-01_round4.md
 LAST_RESULT: experiments/results/XID-01_round3/RESULT.md
 GPU_HOURS_USED_THIS_CYCLE: 1.39
 ACTIVE_QUEUE: XID-01
-NEXT_QUEUE: COMMIT_XID01_ROUND4_PLAN_THEN_IMPLEMENT_PREFLIGHT
+NEXT_QUEUE: RUN_PAIRED_NONSCIENTIFIC_SMOKE_THEN_ROOT_43301_PILOT
 BACKLOG_QUEUE: AR_VISUAL_CREDIT;CROSS_MODAL_COMPOSITION;JOINT_SUPPORT_COVERAGE;OBJ-01
 WINOGROUND_ACCESS: blocked_by_access
 SEARCH_PROGRESS: LITMAP06_COMPLETE;3479_raw_records;2395_unique_titles;369_prior_search_duplicates;98_score_ge_10;10_decisive_primary_sources;5_of_5_DOIs_verified;deterministic_index_verified;AI_figure_backend_failed_twice
 REJECTION_SCOPE: XMC01_BRIDGE;COMP01_PROXY;VISCOND01_PROXY;VISSUP01_INSTANTIATION;PROJALLOC01_INSTANTIATION;LITMAP04_BRIDGE;LITMAP05_BRIDGE;COVER01_BRIDGE;NO_MECHANISM_REJECTED
 CANONICAL_STATE: docs/project/CURRENT_STATE.md
-RESOURCE_NOTE: XID01 matched-support one-paired-seed pilot plan pending commit;estimated 0.28 GPU-hours after exact preflight;positive only may extend to total 6 trainings;no running job;no final confirmation
+RESOURCE_NOTE: XID01 data/model/resource preflight passed;A40 available;estimated 0.28 GPU-hours for paired pilot;positive only may extend to total 6 trainings;no running job;no final confirmation
 HARD_STOP: false
 ```
 

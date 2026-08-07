@@ -81,9 +81,11 @@ MiniMind-V 只是低成本验证平台，不能反过来定义理论。
 > 哪些 support / objective 条件能够识别可迁移规则，并控制 unseen multimodal
 > combination risk？
 
-证据级别仅为 `CONJECTURE` + `EMPIRICAL_SUPPORT`。当前先建立有限支持理论对象，
-不运行真实模型训练，不把新 metric、proxy、gate、audit 或 benchmark qualification
-当成科学机制。
+证据级别为 theory `CONCLUSION_CANDIDATE`；真实 LVLM mechanism 尚未验证。
+Round4 已冻结并通过 matched-support MiniMind-V pilot 的 data/model/resource
+preflight。pilot 只区分 interaction identifiability 与 visual necessity /
+conditional entropy explanation，不把新 metric、proxy、gate、audit 或 benchmark
+qualification 当成科学机制。
 
 当前不再一头扎进某个单一 proxy 或局部公式。先在任务书大方向下系统比较 VLM 泛化的主要来源。
 
@@ -264,9 +266,9 @@ level 解读。当前没有证据达到 `MECHANISM_REJECTED`。
 
 ## 10. 当前动态 backlog
 
-- **ACTIVE**：`XID-01` cross-modal interaction identifiability。下一轮先定义
-  observed-support predictor equivalence class，证明最小 finite crossed-support
-  proposition，并 exhaustive verification。
+- **ACTIVE**：`XID-01` cross-modal interaction identifiability。round1–3 theory
+  已完成；round4 implementation 与 preflight 已通过，下一步按计划先做二条件
+  non-scientific smoke，再运行 root `43301` paired pilot。
 - **NEXT**：AR visual-credit competition；cross-modal compositional
   factorization。它们有直接证据与算法出口，但需由 `XID-01` 判断是特例、竞争解释
   还是独立机制。
@@ -332,9 +334,12 @@ level 解读。当前没有证据达到 `MECHANISM_REJECTED`。
   diagnostic-mass threshold 与 worst-case sharpness theorem 已 `PROVEN`；
   180 parameter cases、2,700 admissible gaps 无 violation。`XID-01` 仅升为
   theory `CONCLUSION_CANDIDATE`，真实 LVLM mechanism 未验证。
-- 下一步：冻结一个 matched \(N\)、visual/language/target marginals、pixels、
-  target format、steps 与 coordinates 的 MiniMind-V paired pilot，只改变 joint
-  support 是否 interaction-diagnostic；先 1 paired seed，plan commit 前不训练。
+- Round4 immutable plan commit=`5cbe500`。data/token/pixel/model/resource
+  preflight 全通过：两条件 train rows=`11,040`、steps=`2,070`、coordinates=`4,096`；
+  pixel/target order、target spans/masks、marginals、per-key entropy 精确匹配，
+  paired token records 只在预定 contextual key slot 变化。
+- 下一步：implementation/preflight commit 后，先运行二条件 non-scientific smoke；
+  smoke 通过才按 frozen order 运行 root `43301` paired pilot。
 - `RUNNING_JOB=none`，`HARD_STOP=false`。
 - 新增 plans、results、raw receipts、logs 和 SHA manifests 已在
   `EXPERIMENT_REGISTRY.md` 建立 canonical 索引；失败原始证据保留。

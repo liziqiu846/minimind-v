@@ -17,11 +17,10 @@ Mission Question 不得由 Agent 自行改变。
 
 当前 active question 是：
 
-> 是否存在由数据发布者预先定义的 crossed multimodal schema：同一
-> image/acquisition unit 系统地对应多个 text/task factors，从而在固定视觉来源、
-> 质量、难度和 output format 后，唯一构造 baseline、complementary、matched
-> redundancy 与 held-out crossed cells，用 generative VLM prediction 裁决跨模态
-> 组合覆盖？
+> 在 autoregressive LVLM 中，当 observed training support 上 language shortcut
+> 与真实 image–text interaction rule 都能达到低 next-token NLL 时，哪些 support /
+> objective 条件能识别可迁移的 interaction rule，并控制其在 unseen multimodal
+> combinations 上的风险？
 
 这一问题是当前子问题，不是永久冻结的唯一主线。Agent 可以依据可靠实验、
 反例或权威文献自主切换 Active Research Question。
@@ -381,10 +380,8 @@ Agent 可以自主改变：
 - **What remains open from the previous question**: broad domain/source coverage、
   task diversity、source-specific transfer、ALLaVA 全量 lineage 与 future formal
   generative coverage theorem 均开放。
-- **Status**: ACTIVE_SCHEMA_GATE；`experiments/plans/CROSSFACT-01_round1.md`
-  已由当前 plan commit 冻结。Round 1 只执行 targeted primary-source、official
-  schema 与 local-lineage audit，不运行 checkpoint/GPU/training，不访问 final
-  confirmation。
+- **Status**: DEMOTED_AS_ACTIVE_EXPERIMENT_TOOL；publisher-defined crossed cells
+  仍可作为未来验证工具，但不能以 schema availability 决定科学机制准入。
 
 ### 2026-08-07｜XID-01 cross-modal interaction identifiability
 
@@ -417,5 +414,5 @@ Agent 可以自主改变：
 - **Status**: ACTIVE_THEORY_CONCLUSION_CANDIDATE；round1 finite proposition、
   round2 risk decomposition、round3 diagnostic-mass threshold 与 sharpness
   result 均 `PROVEN`。Round3 的 180 parameter / 2,700 gap cases 无 violation。
-  真实 LVLM mechanism 仍未验证；下一步允许按阶段三规则冻结一个 matched-support、
+  真实 LVLM mechanism 仍未验证；round4 已冻结一个 matched-support、
   one-paired-seed mechanism pilot，阳性才可补至 total 3 seeds。

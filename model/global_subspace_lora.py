@@ -20,7 +20,7 @@ from torch import nn
 A0_DOMAIN = "stage2-a0-v1"
 MAP_DOMAIN = "stage2-map-v1"
 MODEL_GROUPS = ("M0", "M1", "M2", "M3")
-MAPPING_ROOTS = (43101, 43102, 43103)
+MAPPING_ROOTS = (43101, 43102, 43103, 43301, 43302, 43303)
 GROUP_DIMENSIONS = {
     "M0": {"language": 4096},
     "M1": {"projector_layer_1": 2048, "projector_layer_2": 2048},

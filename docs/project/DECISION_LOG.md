@@ -566,3 +566,26 @@ necessary threshold。真实 LVLM 的 \(\beta,\gamma\) 尚无 validated estimato
 target format、steps、trainable coordinates 与 paired seed 下，只改变 joint support
 是否含 interaction-diagnostic cells；它区分 XID mechanism 与 marginal exposure /
 label-frequency explanation。先 1 paired seed，阳性才补 total 3。
+
+---
+
+## 2026-08-07｜XID-01 round4 implementation 与 preflight 通过
+
+**决定**：允许按 immutable plan 先执行 ambiguous/consistent 二条件
+non-scientific smoke；smoke 通过后直接运行 root `43301` paired pilot。
+
+**依据**：
+
+1. 两条件各 11,040 rows；injection pixel order、target-token order、target
+   spans/masks、prompt length、visual/key/target marginals 与 per-key target entropy
+   全部匹配；
+2. 624/1,040 paired injection rows token record 完全相同，416/1,040 只在唯一
+   contextual `c/d` key slot 变化；
+3. target `(e,V=1)` 两条件都未见；consistent support 对 intended XOR 为 `8/8`，
+   ambiguous 为 `4/8`；
+4. M2-current 两条件初始 frozen hash、target names 与 zero coordinate state 相同；
+   4,096 coordinates 全部被 mapping 使用，精确训练步数为 2,070；
+5. CPU preflight 没有模型推理或训练，未访问 final confirmation。
+
+**边界**：preflight 只认证实现与配对设计，不支持 interaction-identifiability
+机制。pilot 任一科学 gate 失败即拒绝当前 empirical instantiation，不调参 rescue。
