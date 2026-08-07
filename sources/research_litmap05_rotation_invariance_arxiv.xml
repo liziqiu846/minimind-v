@@ -1,0 +1,360 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/yxFKN+dmLgTW69KLgJ+zje+vo4E</id>
+  <title>arXiv Query: search_query=(all:CLIP OR all:SigLIP) AND (all:rotation OR all:orientation OR all:"spatial relation" OR all:"geometric transformation") AND (all:"linear probe" OR all:"linear separability" OR all:invariance)&amp;id_list=&amp;start=0&amp;max_results=100</title>
+  <updated>2026-08-07T06:18:23Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=(all:CLIP+OR+all:SigLIP)+AND+((all:rotation+OR+(all:orientation+OR+(all:%22spatial+relation%22+OR+all:%22geometric+transformation%22)))+AND+(all:%22linear+probe%22+OR+(all:%22linear+separability%22+OR+all:invariance)))&amp;start=0&amp;max_results=100&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>100</opensearch:itemsPerPage>
+  <opensearch:totalResults>14</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2603.04091v1</id>
+    <title>CLIP-Guided Multi-Task Regression for Multi-View Plant Phenotyping</title>
+    <updated>2026-03-04T14:01:47Z</updated>
+    <link href="https://arxiv.org/abs/2603.04091v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.04091v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Modeling plant growth dynamics plays a central role in modern agricultural research. However, learning robust predictors from multi-view plant imagery remains challenging due to strong viewpoint redundancy and viewpoint-dependent appearance changes. We propose a level-aware vision language framework that jointly predicts plant age and leaf count using a single multi-task model built on CLIP embeddings. Our method aggregates rotational views into angle-invariant representations and conditions visual features on lightweight text priors encoding viewpoint level for stable prediction under incomplete or unordered inputs. On the GroMo25 benchmark, our approach reduces mean age MAE from 7.74 to 3.91 and mean leaf-count MAE from 5.52 to 3.08 compared to the GroMo baseline, corresponding to improvements of 49.5% and 44.2%, respectively. The unified formulation simplifies the pipeline by replacing the conventional dual-model setup while improving robustness to missing views. The models and code is available at: https://github.com/SimonWarmers/CLIP-MVP</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-04T14:01:47Z</published>
+    <arxiv:comment>Under review at IEEE Conference</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Simon Warmers</name>
+    </author>
+    <author>
+      <name>Muhammad Zawish</name>
+    </author>
+    <author>
+      <name>Fayaz Ali Dharejo</name>
+    </author>
+    <author>
+      <name>Steven Davy</name>
+    </author>
+    <author>
+      <name>Radu Timofte</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2509.00351v1</id>
+    <title>Target-Oriented Single Domain Generalization</title>
+    <updated>2025-08-30T04:21:48Z</updated>
+    <link href="https://arxiv.org/abs/2509.00351v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2509.00351v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Deep models trained on a single source domain often fail catastrophically under distribution shifts, a critical challenge in Single Domain Generalization (SDG). While existing methods focus on augmenting source data or learning invariant features, they neglect a readily available resource: textual descriptions of the target deployment environment. We propose Target-Oriented Single Domain Generalization (TO-SDG), a novel problem setup that leverages the textual description of the target domain, without requiring any target data, to guide model generalization. To address TO-SDG, we introduce Spectral TARget Alignment (STAR), a lightweight module that injects target semantics into source features by exploiting visual-language models (VLMs) such as CLIP. STAR uses a target-anchored subspace derived from the text embedding of the target description to recenter image features toward the deployment domain, then utilizes spectral projection to retain directions aligned with target cues while discarding source-specific noise. Moreover, we use a vision-language distillation to align backbone features with VLM's semantic geometry. STAR further employs feature-space Mixup to ensure smooth transitions between source and target-oriented representations. Experiments across various image classification and object detection benchmarks demonstrate STAR's superiority. This work establishes that minimal textual metadata, which is a practical and often overlooked resource, significantly enhances generalization under severe data constraints, opening new avenues for deploying robust models in target environments with unseen data.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-30T04:21:48Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Marzi Heidari</name>
+    </author>
+    <author>
+      <name>Yuhong Guo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1912.02783v2</id>
+    <title>Self-Supervised Learning of Video-Induced Visual Invariances</title>
+    <updated>2020-04-01T18:29:28Z</updated>
+    <link href="https://arxiv.org/abs/1912.02783v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1912.02783v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose a general framework for self-supervised learning of transferable visual representations based on Video-Induced Visual Invariances (VIVI). We consider the implicit hierarchy present in the videos and make use of (i) frame-level invariances (e.g. stability to color and contrast perturbations), (ii) shot/clip-level invariances (e.g. robustness to changes in object orientation and lighting conditions), and (iii) video-level invariances (semantic relationships of scenes across shots/clips), to define a holistic self-supervised loss. Training models using different variants of the proposed framework on videos from the YouTube-8M (YT8M) data set, we obtain state-of-the-art self-supervised transfer learning results on the 19 diverse downstream tasks of the Visual Task Adaptation Benchmark (VTAB), using only 1000 labels per task. We then show how to co-train our models jointly with labeled images, outperforming an ImageNet-pretrained ResNet-50 by 0.8 points with 10x fewer labeled images, as well as the previous best supervised model by 3.7 points using the full ImageNet data set.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-12-05T18:20:31Z</published>
+    <arxiv:comment>CVPR 2020</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Michael Tschannen</name>
+    </author>
+    <author>
+      <name>Josip Djolonga</name>
+    </author>
+    <author>
+      <name>Marvin Ritter</name>
+    </author>
+    <author>
+      <name>Aravindh Mahendran</name>
+    </author>
+    <author>
+      <name>Xiaohua Zhai</name>
+    </author>
+    <author>
+      <name>Neil Houlsby</name>
+    </author>
+    <author>
+      <name>Sylvain Gelly</name>
+    </author>
+    <author>
+      <name>Mario Lucic</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.10375v2</id>
+    <title>Test-Time Canonicalization by Foundation Models for Robust Perception</title>
+    <updated>2025-09-15T18:55:09Z</updated>
+    <link href="https://arxiv.org/abs/2507.10375v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.10375v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Perception in the real world requires robustness to diverse viewing conditions. Existing approaches often rely on specialized architectures or training with predefined data augmentations, limiting adaptability. Taking inspiration from mental rotation in human vision, we propose FOCAL, a test-time robustness framework that transforms the input into the most typical view. At inference time, FOCAL explores a set of transformed images and chooses the one with the highest likelihood under foundation model priors. This test-time optimization boosts robustness while requiring no retraining or architectural changes. Applied to models like CLIP and SAM, it significantly boosts robustness across a wide range of transformations, including 2D and 3D rotations, contrast and lighting shifts, and day-night changes. We also explore potential applications in active vision. By reframing invariance as a test-time optimization problem, FOCAL offers a general and scalable approach to robustness. Our code is available at: https://github.com/sutkarsh/focal.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-14T15:14:38Z</published>
+    <arxiv:comment>Published at ICML 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Utkarsh Singhal</name>
+    </author>
+    <author>
+      <name>Ryan Feng</name>
+    </author>
+    <author>
+      <name>Stella X. Yu</name>
+    </author>
+    <author>
+      <name>Atul Prakash</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.28644v1</id>
+    <title>Seeing Differently: Modeling Interpretive Perspectives in Computational Creativity using a Four-World Framework</title>
+    <updated>2026-05-28T04:02:54Z</updated>
+    <link href="https://arxiv.org/abs/2607.28644v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.28644v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Creativity in computational systems is often evaluated as an objective property of artifacts, with existing Computational Creativity (CC) frameworks assessing creative merit at the level of outputs or systems rather than interpretive context. However, artistic meaning is inherently perspective-dependent and can vary across viewers and critical traditions. This paper proposes a computational approach to modeling interpretive perspectives rather than treating creativity as a single measurable construct. The study adopts a twelve-trait creativity framework, organized across four conceptual domains, and operationalizes it through three evaluative personas: formalist, social-historical, and iconographic. Using 1,069 artworks from the SemArt dataset, the analysis generates 38,484 persona-based evaluations to examine how perspectives shape creativity assessment. Results show systematic divergence across perspectives, with traits such as Social Reflexivity exhibiting strong viewpoint sensitivity. Linear probing of CLIP image embeddings reveals that perspectives correspond to distinct orientation vectors in representation space, suggesting that creativity evaluation depends on which visual features become salient under each persona condition. These findings support a relational view of creativity and indicate that incorporating multiple evaluative perspectives could enable co-creative systems to support interpretively diverse human collaborators.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-28T04:02:54Z</published>
+    <arxiv:comment>Accepted at the 17th International Conference on Computational Creativity (ICCC 2026)</arxiv:comment>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Prerna Luthra</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2205.10526v2</id>
+    <title>Difference of measured proton and He3 EDMs: a reduced systematics test of T-reversal invariance</title>
+    <updated>2022-11-08T23:26:35Z</updated>
+    <link href="https://arxiv.org/abs/2205.10526v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2205.10526v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The upper limit on (time reversal symmetry T-violating) permanent hadron electric dipole moments (EDMs) is the PSI neutron EDM value; $d_n = (0.0\pm1.1_{\rm stat}\pm0.2_{\rm sys}\times10^{-26})\,e$\,cm. This paper describes an experiment to be performed at a BNL-proposed CLIP project which is to be capable of producing intense polarized beams of protons, $p$, helions (He${}^3$ nuclei), h, and other isotopes.
+  The EDM prototype ring PTR (proposed at COSY Lab, Juelich) is expected to measure individual particle EDMs (for example ${\rm EDM\_p}$ for the proton) using simultaneous counter-rotating polarized proton beams, with statistical error $\pm10^{-30}$e.cm after one year running time, four orders of magnitude less than the PSI neutron EDM upper limit, and with comparable systematic error.
+  A composite particle, the helion faces T-symmetry constraints more challenging than the proton. Any measurably large value of $$Δ={\rm EDM}_h-{\rm EDM}_p,$$ the difference of helion and proton EDMs, would represent BSM physics.
+  The plan is to replicate PTR at BNL. The dominant systematic error would be canceled two ways, both made possible by phase-locking "doubly-magic" 38.6\,MeV proton and 39.2\,MeV helion spin tunes. This stabilizes their MDM-induced in-plane precessions, without affecting their EDM-induced out-of-plane precessions. The dominant systematic error would therefore cancel in the meaurement of $Δ$ in a fixed field configuration.
+  Another systematic error cancellation will come from averaging runs for which both magnetic field and beam circulation directions are reversed. Precise magnetic field reversal is made possible by the reproducible absolute frequency phase-locking over long runs to eliminate the need for (impractically precise) magnetic field measurement. Risk of EDM measurement failure is discussed in a final appendix.</summary>
+    <category term="physics.acc-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="nucl-ex" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-05-21T07:33:17Z</published>
+    <arxiv:primary_category term="physics.acc-ph"/>
+    <author>
+      <name>Richard M. Talman</name>
+    </author>
+    <arxiv:doi>10.1088/1748-0221/17/11/P11039</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1088/1748-0221/17/11/P11039" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.04544v1</id>
+    <title>Attracting without being attracted: Dark Matter as an aether wind</title>
+    <updated>2025-05-07T16:25:53Z</updated>
+    <link href="https://arxiv.org/abs/2505.04544v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.04544v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We explore the possibility that part of what we call dark matter may be the mark of a preferred frame, revealing a breakdown of diffeomorphism invariance. In the non-relativistic limit this appears as a deviant matter source capable of attracting normal matter, but not feeling the attraction from other forms of matter or from itself. While this implies a violation of momentum conservation, no logical inconsistencies arise in this deviant ``Newtonian'' limit. In contrast, due to Bianchi identities, the relativistic theory must undergo core change, and we discuss a modification of Einstein's gravity capable of coupling a non-conserved source to gravity. It results from fixing some of the spatial components of the metric, thereby constraining the possible diffeomorphisms and clipping some of the equations. Bianchi identities can always be used to refill the equations, but the effective Stueckelberg stresses are so outlandish that this defines symmetry breakdown and violations of local energy-momentum conservation. We work out spherically symmetric solutions with static halos and flat rotation curves, with and without a central black hole. The model has the drawback that it can evade experimental constraints simply by setting to zero the local density of deviant matter (which is a non-dynamic input). Its presence, in contrast, would leave inimitable signatures. We briefly discuss the Hamiltonian formulation of these models, where such dark matter appears as a central charge in the Poisson bracket of the Hamiltonian and the momentum.</summary>
+    <category term="gr-qc" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="astro-ph.CO" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="hep-th" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-07T16:25:53Z</published>
+    <arxiv:primary_category term="gr-qc"/>
+    <author>
+      <name>Raymond Isichei</name>
+    </author>
+    <author>
+      <name>Joao Magueijo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2310.09675v2</id>
+    <title>Efficient Model-Agnostic Multi-Group Equivariant Networks</title>
+    <updated>2024-10-07T16:28:52Z</updated>
+    <link href="https://arxiv.org/abs/2310.09675v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2310.09675v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Constructing model-agnostic group equivariant networks, such as equitune (Basu et al., 2023b) and its generalizations (Kim et al., 2023), can be computationally expensive for large product groups. We address this problem by providing efficient model-agnostic equivariant designs for two related problems: one where the network has multiple inputs each with potentially different groups acting on them, and another where there is a single input but the group acting on it is a large product group. For the first design, we initially consider a linear model and characterize the entire equivariant space that satisfies this constraint. This characterization gives rise to a novel fusion layer between different channels that satisfies an invariance-symmetry (IS) constraint, which we call an IS layer. We then extend this design beyond linear models, similar to equitune, consisting of equivariant and IS layers. We also show that the IS layer is a universal approximator of invariant-symmetric functions. Inspired by the first design, we use the notion of the IS property to design a second efficient model-agnostic equivariant design for large product groups acting on a single input. For the first design, we provide experiments on multi-image classification where each view is transformed independently with transformations such as rotations. We find equivariant models are robust to such transformations and perform competitively otherwise. For the second design, we consider three applications: language compositionality on the SCAN dataset to product groups; fairness in natural language generation from GPT-2 to address intersectionality; and robust zero-shot image classification with CLIP. Overall, our methods are simple and general, competitive with equitune and its variants, while also being computationally more efficient.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-10-14T22:24:26Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <arxiv:journal_ref>Published in Transactions on Machine Learning Research (10/2024)</arxiv:journal_ref>
+    <author>
+      <name>Razan Baltaji</name>
+    </author>
+    <author>
+      <name>Sourya Basu</name>
+    </author>
+    <author>
+      <name>Lav R. Varshney</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.09242v2</id>
+    <title>When Detectors Forget Forensics: Blocking Semantic Shortcuts for Generalizable AI-Generated Image Detection</title>
+    <updated>2026-06-03T08:38:35Z</updated>
+    <link href="https://arxiv.org/abs/2603.09242v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.09242v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The growing realism of generative models has blurred the boundary between real and synthetic content, posing significant challenges to reliable AI-generated image detection. Although large-scale pre-trained Vision Foundation Models have advanced detection capability, their generalization to images from unseen generation pipelines remains inadequate. In this paper, we identify, for the first time, a key failure mechanism, termed \emph{semantic fallback}, wherein forensic fine-tuning fails to fully reshape the representation space. Consequently, the resulting representations remain organized along high-level semantic structures rather than manipulation-specific forensic cues. Building on this insight, we propose a \textbf{Geometric Semantic Decoupling (GSD)} framework, which explicitly suppresses semantically dominant directions, thereby promoting invariant forensic representations. Specifically, GSD leverages a frozen CLIP encoder to estimate the dominant semantic subspace via Singular Value Decomposition (SVD). It then suppresses the semantic components through a geometry-constrained formulation with the suppression strength adaptively modulated across samples and layers. We further introduce a mini-batch SVD approximation strategy that amortizes subspace estimation, achieving over a $15 \times$ reduction in computational overhead while preserving effectiveness. Finally, considering practical scenarios spanning both large-scale and online evaluation, we develop three inference protocols, batch, per-sample, and reference-based inference, and demonstrate that they induce consistent semantic decoupling, yielding a stable forgery-oriented feature manifold.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-10T06:16:35Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Chao Shuai</name>
+    </author>
+    <author>
+      <name>Shaojing Fan</name>
+    </author>
+    <author>
+      <name>Chenlin Zou</name>
+    </author>
+    <author>
+      <name>Bin Gong</name>
+    </author>
+    <author>
+      <name>Weichen Lian</name>
+    </author>
+    <author>
+      <name>Xiuli Bi</name>
+    </author>
+    <author>
+      <name>Zhenguang Liu</name>
+    </author>
+    <author>
+      <name>Zhongjie Ba</name>
+    </author>
+    <author>
+      <name>Kui Ren</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.10814v1</id>
+    <title>Multiscale Convolutional Neural Networks for Subgrid-scale Modeling in Large-Eddy Simulation</title>
+    <updated>2025-02-15T14:39:27Z</updated>
+    <link href="https://arxiv.org/abs/2502.10814v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.10814v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This study proposes a multiscale convolutional neural network subgrid-scale (MSC-SGS) model for large-eddy simulation (LES). This model incorporates multiscale representations obtained via filtering to capture turbulent vortices interactions and physical processes at different scales. Subsequently, it progressively encodes information from the largest to the smallest scale, thereby mimicking an energy-cascade process. A turbulent channel flow with $\text{Re}_τ = 180$ is adopted as the training and testing dataset, whereas the rate-of-strain tensor is used as the input variable to adhere the rotational invariance. $\textit{A priori}$ test results show that the MSC-SGS model predicts the physical quantities of residual stress, SGS dissipation, backscatter, and SGS transport more accurately than two other convolutional neural network (CNN)-based monoscale and U-Net, while maintaining high temporal correlation. Based on $\textit{a posteriori}$ test, the MSC-SGS model outperforms the two other CNN models and the conventional Smagorinsky model in predicting turbulence statistics while ensuring numerical stability without resorting to ad-hoc treatments such as clipping excessive backscatters. The LES results based on the MSC-SGS model closely align with DNS data in terms of turbulence statistics, energy spectra, and the quantitative reproduction of instantaneous-flow structures. These findings suggest that incorporating multiscale representations effectively advances the development of SGS models for LES.</summary>
+    <category term="physics.flu-dyn" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-15T14:39:27Z</published>
+    <arxiv:primary_category term="physics.flu-dyn"/>
+    <author>
+      <name>Bahrul Jalaali</name>
+    </author>
+    <author>
+      <name>Kie Okabayashi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1510.04234v9</id>
+    <title>All Optical Three Dimensional Spatio-Temporal Correlator for Automatic Event Recognition Using a Multiphoton Atomic System</title>
+    <updated>2016-06-05T23:48:48Z</updated>
+    <link href="https://arxiv.org/abs/1510.04234v9" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1510.04234v9" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We describe an automatic event recognition (AER) system based on a three-dimensional spatio-temporal correlator (STC) that combines the techniques of holographic correlation and photon echo based temporal pattern recognition. The STC is shift invariant in space and time. It can be used to recognize rapidly an event (e.g., a short video clip) that may be present in a large video file, and determine the temporal location of the event. Using polar Mellin transform, it is possible to realize an STC that is also scale and rotation invariant spatially. Numerical simulation results of such a system are presented using quantum mechanical equations of evolution. For this simulation we have used the model of an idealized, decay-free two level system of atoms with an inhomogeneous broadening that is larger than the inverse of the temporal resolution of the data stream. We show how such a system can be realized by using a lambda-type three level system in atomic vapor, via adiabatic elimination of the intermediate state. We have also developed analytically a three dimensional transfer function of the system, and shown that it agrees closely with the results obtained via explicit simulation of the atomic response. The analytical transfer function can be used to determine the response of an STC very rapidly. In addition to the correlation signal, other nonlinear terms appear in the explicit numerical model. These terms are also verified by the analytical model. We describe how the AER can be operated in a manner such that the correlation signal remains unaffected by the additional nonlinear terms. We also show how such a practical STC can be realized using a combination of a porous-glass based Rb vapor cell, a holographic video disc, and a lithium niobate crystal.</summary>
+    <category term="physics.optics" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="physics.atom-ph" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2015-10-13T17:53:19Z</published>
+    <arxiv:primary_category term="physics.optics"/>
+    <author>
+      <name>Mehjabin S. Monjur</name>
+    </author>
+    <author>
+      <name>Mohamed F. Fouda</name>
+    </author>
+    <author>
+      <name>Selim M. Shahriar</name>
+    </author>
+    <arxiv:doi>10.1016/j.optcom.2016.07.038</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1016/j.optcom.2016.07.038" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2005.05751v1</id>
+    <title>Unpaired Motion Style Transfer from Video to Animation</title>
+    <updated>2020-05-12T13:21:27Z</updated>
+    <link href="https://arxiv.org/abs/2005.05751v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2005.05751v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Transferring the motion style from one animation clip to another, while preserving the motion content of the latter, has been a long-standing problem in character animation. Most existing data-driven approaches are supervised and rely on paired data, where motions with the same content are performed in different styles. In addition, these approaches are limited to transfer of styles that were seen during training. In this paper, we present a novel data-driven framework for motion style transfer, which learns from an unpaired collection of motions with style labels, and enables transferring motion styles not observed during training. Furthermore, our framework is able to extract motion styles directly from videos, bypassing 3D reconstruction, and apply them to the 3D input motion. Our style transfer network encodes motions into two latent codes, for content and for style, each of which plays a different role in the decoding (synthesis) process. While the content code is decoded into the output motion by several temporal convolutional layers, the style code modifies deep features via temporally invariant adaptive instance normalization (AdaIN). Moreover, while the content code is encoded from 3D joint rotations, we learn a common embedding for style from either 3D or 2D joint positions, enabling style extraction from videos. Our results are comparable to the state-of-the-art, despite not requiring paired training data, and outperform other methods when transferring previously unseen styles. To our knowledge, we are the first to demonstrate style transfer directly from videos to 3D animations - an ability which enables one to extend the set of style examples far beyond motions captured by MoCap systems.</summary>
+    <category term="cs.GR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-05-12T13:21:27Z</published>
+    <arxiv:comment>SIGGRAPH 2020. Project page: https://deepmotionediting.github.io/style_transfer , Video: https://www.youtube.com/watch?v=m04zuBSdGrc , Code: https://github.com/DeepMotionEditing/deep-motion-editing</arxiv:comment>
+    <arxiv:primary_category term="cs.GR"/>
+    <author>
+      <name>Kfir Aberman</name>
+    </author>
+    <author>
+      <name>Yijia Weng</name>
+    </author>
+    <author>
+      <name>Dani Lischinski</name>
+    </author>
+    <author>
+      <name>Daniel Cohen-Or</name>
+    </author>
+    <author>
+      <name>Baoquan Chen</name>
+    </author>
+    <arxiv:doi>10.1145/3386569.3392469</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3386569.3392469" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.27898v1</id>
+    <title>CoRE-UIR: Prior-guided common and residual experts for efficient all-in-one remote sensing image restoration</title>
+    <updated>2026-07-30T09:14:08Z</updated>
+    <link href="https://arxiv.org/abs/2607.27898v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.27898v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Remote sensing images acquired by unmanned aerial vehicles (UAVs) and satellites are often degraded by adverse weather, illumination variation, and imaging artifacts, which may co-occur and jointly induce global distribution shifts and local structural corruption. Although All-in-One image restoration offers an appealing unified alternative to task-specific pipelines, existing methods still suffer from weak or implicit degradation cues and parameter redundancy caused by full-rank multi-expert designs with overlapping restoration behaviors. We propose CoRE-UIR (Common and Residual Experts for Universal Image Restoration), a prior-guided global-local framework centered on the Common-and-Residual Expert Block (CoRE). CoRE explicitly decomposes restoration capacity into a common dense expert for degradation-invariant restoration and low-rank residual experts for degradation-specific compensation, enabling adaptive specialization without redundant expert replication. Built on this design, Degradation Prior Embedding (DPE) adapts frozen CLIP features into an explicit restoration-oriented prior, while Global Feature Modulation (GFM) aligns global feature statistics before local residual compensation. We also construct MDVD-108K (Multi-Degradation VisDrone), a large-scale UAV restoration dataset covering both single and compound degradations, together with a real-world test set. Extensive experiments on multiple datasets show that CoRE-UIR improves the overall average PSNR by 1.05 dB while running 11.83$\times$ faster and reducing peak memory by 85.3% relative to the strongest baseline, BaryIR, thereby maintaining a favorable quality-efficiency trade-off. Evaluations on downstream tasks and unseen degradation also validate the generalizability of CoRE-UIR. The code and dataset will be released at https://github.com/zzaiyan/CoRE-UIR.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-30T09:14:08Z</published>
+    <arxiv:comment>Accepted by ISPRS Journal of Photogrammetry and Remote Sensing</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zaiyan Zhang</name>
+    </author>
+    <author>
+      <name>Qiangqiang Yuan</name>
+    </author>
+    <author>
+      <name>Jie Li</name>
+    </author>
+    <author>
+      <name>Ziyang Lihe</name>
+    </author>
+    <author>
+      <name>Yu Wan</name>
+    </author>
+    <author>
+      <name>Yuzeng Chen</name>
+    </author>
+    <author>
+      <name>Xin Su</name>
+    </author>
+    <author>
+      <name>Liangpei Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2404.07153v1</id>
+    <title>Lost in Translation: Modern Neural Networks Still Struggle With Small Realistic Image Transformations</title>
+    <updated>2024-04-10T16:39:50Z</updated>
+    <link href="https://arxiv.org/abs/2404.07153v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2404.07153v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Deep neural networks that achieve remarkable performance in image classification have previously been shown to be easily fooled by tiny transformations such as a one pixel translation of the input image. In order to address this problem, two approaches have been proposed in recent years. The first approach suggests using huge datasets together with data augmentation in the hope that a highly varied training set will teach the network to learn to be invariant. The second approach suggests using architectural modifications based on sampling theory to deal explicitly with image translations. In this paper, we show that these approaches still fall short in robustly handling 'natural' image translations that simulate a subtle change in camera orientation. Our findings reveal that a mere one-pixel translation can result in a significant change in the predicted image representation for approximately 40% of the test images in state-of-the-art models (e.g. open-CLIP trained on LAION-2B or DINO-v2) , while models that are explicitly constructed to be robust to cyclic translations can still be fooled with 1 pixel realistic (non-cyclic) translations 11% of the time. We present Robust Inference by Crop Selection: a simple method that can be proven to achieve any desired level of consistency, although with a modest tradeoff with the model's accuracy. Importantly, we demonstrate how employing this method reduces the ability to fool state-of-the-art models with a 1 pixel translation to less than 5% while suffering from only a 1% drop in classification accuracy. Additionally, we show that our method can be easy adjusted to deal with circular shifts as well. In such case we achieve 100% robustness to integer shifts with state-of-the-art accuracy, and with no need for any further training.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-04-10T16:39:50Z</published>
+    <arxiv:comment>14 pages, 6 appendices, 17 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Ofir Shifman</name>
+    </author>
+    <author>
+      <name>Yair Weiss</name>
+    </author>
+  </entry>
+</feed>

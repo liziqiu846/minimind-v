@@ -1,0 +1,344 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/etU62ZE55op0lDbctLo16Dc3mKI</id>
+  <title>arXiv Query: search_query=all:"linear probe" AND (all:"multimodal large language model" OR all:"large vision-language model" OR all:MLLM)&amp;id_list=&amp;start=0&amp;max_results=50</title>
+  <updated>2026-08-07T06:20:55Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=all:%22linear+probe%22+AND+(all:%22multimodal+large+language+model%22+OR+(all:%22large+vision-language+model%22+OR+all:MLLM))&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <opensearch:totalResults>14</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2505.14071v1</id>
+    <title>Textual Steering Vectors Can Improve Visual Understanding in Multimodal Large Language Models</title>
+    <updated>2025-05-20T08:23:08Z</updated>
+    <link href="https://arxiv.org/abs/2505.14071v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.14071v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Steering methods have emerged as effective and targeted tools for guiding large language models' (LLMs) behavior without modifying their parameters. Multimodal large language models (MLLMs), however, do not currently enjoy the same suite of techniques, due in part to their recency and architectural diversity. Inspired by this gap, we investigate whether MLLMs can be steered using vectors derived from their text-only LLM backbone, via sparse autoencoders (SAEs), mean shift, and linear probing. We find that text-derived steering consistently enhances multimodal accuracy across diverse MLLM architectures and visual tasks. In particular, mean shift boosts spatial relationship accuracy on CV-Bench by up to +7.3% and counting accuracy by up to +3.3%, outperforming prompting and exhibiting strong generalization to out-of-distribution datasets. These results highlight textual steering vectors as a powerful, efficient mechanism for enhancing grounding in MLLMs with minimal additional data collection and computational overhead.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-20T08:23:08Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Woody Haosheng Gan</name>
+    </author>
+    <author>
+      <name>Deqing Fu</name>
+    </author>
+    <author>
+      <name>Julian Asilis</name>
+    </author>
+    <author>
+      <name>Ollie Liu</name>
+    </author>
+    <author>
+      <name>Dani Yogatama</name>
+    </author>
+    <author>
+      <name>Vatsal Sharan</name>
+    </author>
+    <author>
+      <name>Robin Jia</name>
+    </author>
+    <author>
+      <name>Willie Neiswanger</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.09037v2</id>
+    <title>The First to Know: How Token Distributions Reveal Hidden Knowledge in Large Vision-Language Models?</title>
+    <updated>2024-07-17T05:54:38Z</updated>
+    <link href="https://arxiv.org/abs/2403.09037v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.09037v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large vision-language models (LVLMs), designed to interpret and respond to human instructions, occasionally generate hallucinated or harmful content due to inappropriate instructions. This study uses linear probing to shed light on the hidden knowledge at the output layers of LVLMs. We demonstrate that the logit distributions of the first tokens contain sufficient information to determine whether to respond to the instructions, including recognizing unanswerable visual questions, defending against jailbreaking attacks, and identifying deceptive questions. Such hidden knowledge is gradually lost in logits of subsequent tokens during response generation. Then, we illustrate a simple decoding strategy at the generation of the first token, effectively improving the generated content. In experiments, we find a few interesting insights: First, the CLIP model already contains a strong signal for solving these tasks, which indicates potential bias in the existing datasets. Second, we observe performance improvement by utilizing the first logit distributions on three additional tasks, including indicating uncertainty in math solving, mitigating hallucination, and image classification. Last, with the same training data, simply finetuning LVLMs improves models' performance but is still inferior to linear probing on these tasks.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-14T02:25:35Z</published>
+    <arxiv:comment>ECCV 2024. Project page: https://github.com/Qinyu-Allen-Zhao/LVLM-LP</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Qinyu Zhao</name>
+    </author>
+    <author>
+      <name>Ming Xu</name>
+    </author>
+    <author>
+      <name>Kartik Gupta</name>
+    </author>
+    <author>
+      <name>Akshay Asthana</name>
+    </author>
+    <author>
+      <name>Liang Zheng</name>
+    </author>
+    <author>
+      <name>Stephen Gould</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.08069v1</id>
+    <title>Synthetic Defect Image Generation for Power Line Insulator Inspection Using Multimodal Large Language Models</title>
+    <updated>2026-03-09T08:06:27Z</updated>
+    <link href="https://arxiv.org/abs/2603.08069v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.08069v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Utility companies increasingly rely on drone imagery for post-event and routine inspection, but training accurate defect-type classifiers remains difficult because defect examples are rare and inspection datasets are often limited or proprietary. We address this data-scarcity setting by using an off-the-shelf multimodal large language model (MLLM) as a training-free image generator to synthesize defect images from visual references and text prompts. Our pipeline increases diversity via dual-reference conditioning, improves label fidelity with lightweight human verification and prompt refinement, and filters the resulting synthetic pool using an embedding-based selection rule based on distances to class centroids computed from the real training split. We evaluate on ceramic insulator defect-type classification (shell vs. glaze) using a public dataset with a realistic low training-data regime (104 real training images; 152 validation; 308 test). Augmenting the 10% real training set with embedding-selected synthetic images improves test F1 score (harmonic mean of precision and recall) from 0.615 to 0.739 (20% relative), corresponding to an estimated 4--5x data-efficiency gain, and the gains persist with stronger backbone models and frozen-feature linear-probe baselines. These results suggest a practical, low-barrier path for improving defect recognition when collecting additional real defects is slow or infeasible.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-09T08:06:27Z</published>
+    <arxiv:comment>Submitted to Engineering Applications of Artificial Intelligence, Feb. 16, 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xuesong Wang</name>
+    </author>
+    <author>
+      <name>Caisheng Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.17228v1</id>
+    <title>From Drop-off to Recovery: A Mechanistic Analysis of Segmentation in MLLMs</title>
+    <updated>2026-03-18T00:22:15Z</updated>
+    <link href="https://arxiv.org/abs/2603.17228v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.17228v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Large Language Models (MLLMs) are increasingly applied to pixel-level vision tasks, yet their intrinsic capacity for spatial understanding remains poorly understood. We investigate segmentation capacity through a layerwise linear probing evaluation across the entire MLLM pipeline: vision encoder, adapter, and LLM. We further conduct an intervention based attention knockout analysis to test whether cross-token attention progressively refines visual representations, and an evaluation of bidirectional attention among image tokens on spatial consistency. Our analysis reveals that the adapter introduces a segmentation representation drop-off, but LLM layers progressively recover through attention-mediated refinement, where correctly classified tokens steer misclassified neighbors toward the correct label. At early image token positions, this recovery is bounded by causal attention, which bidirectional attention among image tokens alleviates. These findings provide a mechanistic account of how MLLMs process visual information for segmentation, informing the design of future segmentation-capable models.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-18T00:22:15Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Boyong Wu</name>
+    </author>
+    <author>
+      <name>Sanghwan Kim</name>
+    </author>
+    <author>
+      <name>Zeynep Akata</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.26608v1</id>
+    <title>Understanding Knowledge Transfer Mechanism in Heterogeneous MLLM Fusion: A Simple Linear Approach</title>
+    <updated>2026-07-29T08:31:27Z</updated>
+    <link href="https://arxiv.org/abs/2607.26608v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.26608v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Training-free fusion of heterogeneous multimodal large language models (MLLMs) provides a direct route for cross-scale capability transfer, yet improvements in aggregate performance do not reveal what a smaller model actually inherits. Existing studies are largely designed and evaluated on limited task sets or aggregate metrics; as evaluation expands to broader task collections, whether different capabilities can transfer across scales remains poorly understood. To investigate this question, we introduce Cross-Scale Directional Parameter Injection (CDPI), a simple linear probe to analyze cross-scale knowledge transfer during heterogeneous fusion. A local theoretical analysis indicates that knowledge transfer selectivity is determined at first order by capability-dependent responses to a shared injection direction, while second-order curvature effects constrain the effective transfer regime. Across four Qwen3-VL model pairs and twelve multimodal benchmarks, our experiments reveal a consistent pattern of selectivity: gains concentrate on reasoning, particularly high-level reasoning, whereas perception performance remains close to that of the original target model. Component-wise ablations further show that high-level reasoning gains arise primarily from the language model, while ratio analysis finds that positive selective transfer occurs mainly in the small-ratio regime. These findings recast cross-scale heterogeneous MLLM fusion as selective language-side reasoning transfer within a narrow, low-interference regime, rather than broad capability inheritance.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-29T08:31:27Z</published>
+    <arxiv:comment>17 pages, 6 figures; includes supplementary material</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yinghao Hou</name>
+    </author>
+    <author>
+      <name>Jiahe Fan</name>
+    </author>
+    <author>
+      <name>Yuanhao Pu</name>
+    </author>
+    <author>
+      <name>Zongyuan Chen</name>
+    </author>
+    <author>
+      <name>Hong Xie</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.00901v1</id>
+    <title>FunBench: Benchmarking Fundus Reading Skills of MLLMs</title>
+    <updated>2025-03-02T14:00:24Z</updated>
+    <link href="https://arxiv.org/abs/2503.00901v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.00901v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multimodal Large Language Models (MLLMs) have shown significant potential in medical image analysis. However, their capabilities in interpreting fundus images, a critical skill for ophthalmology, remain under-evaluated. Existing benchmarks lack fine-grained task divisions and fail to provide modular analysis of its two key modules, i.e., large language model (LLM) and vision encoder (VE). This paper introduces FunBench, a novel visual question answering (VQA) benchmark designed to comprehensively evaluate MLLMs' fundus reading skills. FunBench features a hierarchical task organization across four levels (modality perception, anatomy perception, lesion analysis, and disease diagnosis). It also offers three targeted evaluation modes: linear-probe based VE evaluation, knowledge-prompted LLM evaluation, and holistic evaluation. Experiments on nine open-source MLLMs plus GPT-4o reveal significant deficiencies in fundus reading skills, particularly in basic tasks such as laterality recognition. The results highlight the limitations of current MLLMs and emphasize the need for domain-specific training and improved LLMs and VEs.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-02T14:00:24Z</published>
+    <arxiv:comment>7 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Qijie Wei</name>
+    </author>
+    <author>
+      <name>Kaiheng Qian</name>
+    </author>
+    <author>
+      <name>Xirong Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2312.12730v2</id>
+    <title>A Closer Look at the Few-Shot Adaptation of Large Vision-Language Models</title>
+    <updated>2024-03-25T18:49:52Z</updated>
+    <link href="https://arxiv.org/abs/2312.12730v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2312.12730v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Efficient transfer learning (ETL) is receiving increasing attention to adapt large pre-trained language-vision models on downstream tasks with a few labeled samples. While significant progress has been made, we reveal that state-of-the-art ETL approaches exhibit strong performance only in narrowly-defined experimental setups, and with a careful adjustment of hyperparameters based on a large corpus of labeled samples. In particular, we make two interesting, and surprising empirical observations. First, to outperform a simple Linear Probing baseline, these methods require to optimize their hyper-parameters on each target task. And second, they typically underperform -- sometimes dramatically -- standard zero-shot predictions in the presence of distributional drifts. Motivated by the unrealistic assumptions made in the existing literature, i.e., access to a large validation set and case-specific grid-search for optimal hyperparameters, we propose a novel approach that meets the requirements of real-world scenarios. More concretely, we introduce a CLass-Adaptive linear Probe (CLAP) objective, whose balancing term is optimized via an adaptation of the general Augmented Lagrangian method tailored to this context. We comprehensively evaluate CLAP on a broad span of datasets and scenarios, demonstrating that it consistently outperforms SoTA approaches, while yet being a much more efficient alternative.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-12-20T02:58:25Z</published>
+    <arxiv:comment>CVPR 2024. Code: https://github.com/jusiro/CLAP</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Julio Silva-Rodríguez</name>
+    </author>
+    <author>
+      <name>Sina Hajimiri</name>
+    </author>
+    <author>
+      <name>Ismail Ben Ayed</name>
+    </author>
+    <author>
+      <name>Jose Dolz</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.04411v1</id>
+    <title>Responses Fall Short of Understanding: Revealing the Gap between Internal Representations and Responses in Visual Document Understanding</title>
+    <updated>2026-04-06T04:25:52Z</updated>
+    <link href="https://arxiv.org/abs/2604.04411v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.04411v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Visual document understanding (VDU) is a challenging task for large vision language models (LVLMs), requiring the integration of visual perception, text recognition, and reasoning over structured layouts. Although recent LVLMs have shown progress on VDU benchmarks, their performance is typically evaluated based on generated responses, which may not necessarily reflect whether the model has actually captured the required information internally. In this paper, we investigate how information required to solve VDU tasks is represented across different layers of LLMs within LVLMs using linear probing. Our study reveals that (1) there is a clear gap between internal representations and generated responses, and (2) information required to solve the task is often encoded more linearly from intermediate layers than from the final layer. Motivated by these findings, we explore fine-tuning strategies that target intermediate layers. Experiments show that fine-tuning intermediate layers improves both linear probing accuracy and response accuracy while narrowing the gap.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-06T04:25:52Z</published>
+    <arxiv:comment>Accepted to CVPR2026 workshop (MULA)</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Haruka Kawasaki</name>
+    </author>
+    <author>
+      <name>Ryota Tanaka</name>
+    </author>
+    <author>
+      <name>Kyosuke Nishida</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.14136v1</id>
+    <title>Interpreting Biomedical VLMs on High-Imbalance Out-of-Distributions: An Insight into BiomedCLIP on Radiology</title>
+    <updated>2025-06-17T02:59:42Z</updated>
+    <link href="https://arxiv.org/abs/2506.14136v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.14136v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In this paper, we construct two research objectives: i) explore the learned embedding space of BiomedCLIP, an open-source large vision language model, to analyse meaningful class separations, and ii) quantify the limitations of BiomedCLIP when applied to a highly imbalanced, out-of-distribution multi-label medical dataset. We experiment on IU-xray dataset, which exhibits the aforementioned criteria, and evaluate BiomedCLIP in classifying images (radiographs) in three contexts: zero-shot inference, full finetuning, and linear probing. The results show that the model under zero-shot settings over-predicts all labels, leading to poor precision and inter-class separability. Full fine-tuning improves classification of distinct diseases, while linear probing detects overlapping features. We demonstrate visual understanding of the model using Grad-CAM heatmaps and compare with 15 annotations by a radiologist. We highlight the need for careful adaptations of the models to foster reliability and applicability in a real-world setting. The code for the experiments in this work is available and maintained on GitHub.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-17T02:59:42Z</published>
+    <arxiv:comment>GitHub: https://github.com/Nafiz95/BioVLM_Eval_CXR</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Nafiz Sadman</name>
+    </author>
+    <author>
+      <name>Farhana Zulkernine</name>
+    </author>
+    <author>
+      <name>Benjamin Kwan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.08811v1</id>
+    <title>CXR-Agent: Vision-language models for chest X-ray interpretation with uncertainty aware radiology reporting</title>
+    <updated>2024-07-11T18:39:19Z</updated>
+    <link href="https://arxiv.org/abs/2407.08811v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.08811v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recently large vision-language models have shown potential when interpreting complex images and generating natural language descriptions using advanced reasoning. Medicine's inherently multimodal nature incorporating scans and text-based medical histories to write reports makes it conducive to benefit from these leaps in AI capabilities. We evaluate the publicly available, state of the art, foundational vision-language models for chest X-ray interpretation across several datasets and benchmarks. We use linear probes to evaluate the performance of various components including CheXagent's vision transformer and Q-former, which outperform the industry-standard Torch X-ray Vision models across many different datasets showing robust generalisation capabilities. Importantly, we find that vision-language models often hallucinate with confident language, which slows down clinical interpretation. Based on these findings, we develop an agent-based vision-language approach for report generation using CheXagent's linear probes and BioViL-T's phrase grounding tools to generate uncertainty-aware radiology reports with pathologies localised and described based on their likelihood. We thoroughly evaluate our vision-language agents using NLP metrics, chest X-ray benchmarks and clinical evaluations by developing an evaluation platform to perform a user study with respiratory specialists. Our results show considerable improvements in accuracy, interpretability and safety of the AI-generated reports. We stress the importance of analysing results for normal and abnormal scans separately. Finally, we emphasise the need for larger paired (scan and report) datasets alongside data augmentation to tackle overfitting seen in these large vision-language models.</summary>
+    <category term="eess.IV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-11T18:39:19Z</published>
+    <arxiv:comment>Supervised by Professor Ben Glocker</arxiv:comment>
+    <arxiv:primary_category term="eess.IV"/>
+    <author>
+      <name>Naman Sharma</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.24194v1</id>
+    <title>Face Age Verification Vulnerabilities Under Simple Appearance Manipulations</title>
+    <updated>2026-07-27T09:13:55Z</updated>
+    <link href="https://arxiv.org/abs/2607.24194v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.24194v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Online platforms increasingly rely on automated age estimation systems to enforce minimum-age policies. Focusing on vision-based models designed for this task, concerns arise regarding their robustness to simple appearance changes that underage individuals may use to bypass such systems, such as drawing a mustache or applying lipstick. In this work, we present a systematic study of age verification robustness by simulating visual alterations that can be easily achieved by underage individuals. We evaluate seven models, including vision, vision-language, and multimodal large language models, across three datasets and four manipulation types. Interestingly, under drawn beard stubble, up to 61% of True Negatives are flipped into False Positives. Furthermore, we investigate how different demographics are affected by such manipulations, finding that Indians are more affected by beard stubble manipulations, while females are more affected than males across all manipulations. Finally, we explore how these biases can be mitigated using bias mitigation methodologies in lightweight linear probe settings.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-27T09:13:55Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Ioannis Sarridis</name>
+    </author>
+    <author>
+      <name>Ioannis Kompatsiaris</name>
+    </author>
+    <author>
+      <name>Symeon Papadopoulos</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.30170v2</id>
+    <title>Unveiling the Visual Counting Bottleneck in Vision-Language Models</title>
+    <updated>2026-07-08T01:28:50Z</updated>
+    <link href="https://arxiv.org/abs/2605.30170v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.30170v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>While Large Vision-Language Models (VLMs) excel at interpolation, they suffer catastrophic failures in systematic generalization, most notably in visual counting. In this work, we investigate this extrapolation bottleneck by deconstructing visual counting into three cognitive stages: visual individuation, magnitude awareness, and symbolic mapping. Using synthetic Go boards and linear probes, we demonstrate that visual backbones maintain robust, linearly separable representations of quantity well into the extrapolation regime, ruling out perceptual failure. Furthermore, models retain latent magnitude awareness, successfully performing comparative reasoning on quantities they fail to enumerate. We pinpoint the collapse to the symbolic mapping stage, where the model fails to project valid visual magnitudes onto symbolic tokens. Our findings support a frac tured magnitude hypothesis: VLMs fail to acquire a universal number space, instead learning disjoint, modality-specific statistical manifolds that prevent cross-modal grounding for unseen quantities. Validated on the state-of-the-art foundation model, our results suggest that bridging this gap requires inductive priors enforcing unified representations, as data scaling alone is insufficient.</summary>
+    <category term="cs.MM" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-28T16:20:29Z</published>
+    <arxiv:comment>ICML 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.MM"/>
+    <author>
+      <name>Xingzhou Pang</name>
+    </author>
+    <author>
+      <name>Yifan Hou</name>
+    </author>
+    <author>
+      <name>Junling Wang</name>
+    </author>
+    <author>
+      <name>Mrinmaya Sachan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.21637v1</id>
+    <title>Self-Aware Safety Augmentation: Leveraging Internal Semantic Understanding to Enhance Safety in Vision-Language Models</title>
+    <updated>2025-07-29T09:48:57Z</updated>
+    <link href="https://arxiv.org/abs/2507.21637v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.21637v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large vision-language models (LVLMs) are vulnerable to harmful input compared to their language-only backbones. We investigated this vulnerability by exploring LVLMs internal dynamics, framing their inherent safety understanding in terms of three key capabilities. Specifically, we define these capabilities as safety perception, semantic understanding, and alignment for linguistic expression, and experimentally pinpointed their primary locations within the model architecture. The results indicate that safety perception often emerges before comprehensive semantic understanding, leading to the reduction in safety. Motivated by these findings, we propose \textbf{Self-Aware Safety Augmentation (SASA)}, a technique that projects informative semantic representations from intermediate layers onto earlier safety-oriented layers. This approach leverages the model's inherent semantic understanding to enhance safety recognition without fine-tuning. Then, we employ linear probing to articulate the model's internal semantic comprehension to detect the risk before the generation process. Extensive experiments on various datasets and tasks demonstrate that SASA significantly improves the safety of LVLMs, with minimal impact on the utility.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-29T09:48:57Z</published>
+    <arxiv:comment>Accepted by ACM Multimedia 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Wanying Wang</name>
+    </author>
+    <author>
+      <name>Zeyu Ma</name>
+    </author>
+    <author>
+      <name>Han Zheng</name>
+    </author>
+    <author>
+      <name>Xin Tan</name>
+    </author>
+    <author>
+      <name>Mingang Chen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.04616v2</id>
+    <title>Assessing and Learning Alignment of Unimodal Vision and Language Models</title>
+    <updated>2025-04-19T15:39:32Z</updated>
+    <link href="https://arxiv.org/abs/2412.04616v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.04616v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>How well are unimodal vision and language models aligned? Although prior work have approached answering this question, their assessment methods do not directly translate to how these models are used in practical vision-language tasks. In this paper, we propose a direct assessment method, inspired by linear probing, to assess vision-language alignment. We identify that the degree of alignment of the SSL vision models depends on their SSL training objective, and we find that the clustering quality of SSL representations has a stronger impact on alignment performance than their linear separability. Next, we introduce Swift Alignment of Image and Language (SAIL), a efficient transfer learning framework that aligns pretrained unimodal vision and language models for downstream vision-language tasks. Since SAIL leverages the strengths of pretrained unimodal models, it requires significantly fewer (6%) paired image-text data for the multimodal alignment compared to models like CLIP which are trained from scratch. SAIL training only requires a single A100 GPU, 5 hours of training and can accommodate a batch size up to 32,768. SAIL achieves 73.4% zero-shot accuracy on ImageNet (vs. CLIP's 72.7%) and excels in zero-shot retrieval, complex reasoning, and semantic segmentation. Additionally, SAIL improves the language-compatibility of vision encoders that in turn enhance the performance of multimodal large language models. The entire codebase and model weights are open-source: https://lezhang7.github.io/sail.github.io/</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-05T21:04:58Z</published>
+    <arxiv:comment>CVPR 2025 Highlight</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Le Zhang</name>
+    </author>
+    <author>
+      <name>Qian Yang</name>
+    </author>
+    <author>
+      <name>Aishwarya Agrawal</name>
+    </author>
+  </entry>
+</feed>

@@ -221,3 +221,28 @@
   frozen-feature sufficiency / identifiability gate，先冻结 immutable plan。
 - **Recommended human decision**: 无需立即决定；之后可审查 14-paper applicability
   matrix 与 no-sweep local-feasibility gate 的边界。
+
+## 2026-08-07｜LITMAP-05：frozen-feature identifiability bridge 被否定
+
+- **Date**: 2026-08-07
+- **Idea / issue**: formal probing/decodability theory、direct LVLM evidence 与
+  MiniMind-V architecture 是否能共同唯一固定一个有可靠正负推断边界的
+  frozen-feature readout。
+- **Why human should review it**: 文献明确支持“内部表示可读而最终回答失败”是一种
+  可能现象，但所有 formal objects 与 direct protocols 都依赖 family、target、
+  layer、token、pooling、regularization 或 selection choice；必须避免把
+  `NO_CANDIDATE` 外推为“frozen encoder 没有信号”。
+- **Current evidence**: 553 raw records、491 unique titles、13 篇决定性 primary
+  sources 与 exact local interface 全部可核查；source hashes 和 deterministic
+  index rebuild 通过。Formal family/target/regularization 不唯一，direct LVLM
+  studies 使用 layer/token/pooling/LR 或 max-over-layer selection，负 probe 无
+  completeness；0 GPU、0 checkpoint inference、0 training。
+- **What Agent has already frozen**: `LITMAP-05=BRIDGE_REJECTED`；只否定当前
+  frozen-feature identifiability bridge。不得用 layer/pooling/probe/metric sweep
+  反向制造 bridge；feature signal、downstream absorption/transfer、objective
+  mismatch、encoder limitation 均开放。
+- **Whether autonomous work can continue**: 可以；转入 `COVER-01`
+  authoritative controlled-coverage gate，先提交 immutable plan。
+- **Recommended human decision**: 无需立即决定；之后审查 asymmetric negative
+  inference boundary 是否足够保守，以及 13-paper matrix 是否遗漏真正的
+  completeness theorem。

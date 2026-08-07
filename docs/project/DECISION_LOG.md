@@ -374,3 +374,35 @@ level=`BRIDGE_REJECTED`；不从已核查路线中任挑 component 或超参数�
 - 在 immutable plan 提交前不执行新 scientific search/readout；之后也不得 sweep
   layer/rank/pooling/probe/metric。若无唯一 readout bridge，转入 controlled
   coverage gate。
+
+---
+
+## 2026-08-07｜LITMAP-05 frozen-feature identifiability bridge 被否定并转向 COVER-01
+
+**决定**：`LITMAP-05` 按 immutable gate 判为 `NO_CANDIDATE`，科学 failure
+level=`BRIDGE_REJECTED`。Active Research Question 切换为 `COVER-01`
+authoritative controlled-coverage gate。
+
+**依据**：
+
+1. 五族冻结检索得到 553 raw records、491 unique titles，完整核查 13 篇决定性
+   primary sources；source hashes 与 deterministic index rebuild 均通过；
+2. predictive \(\mathcal V\)-information、DIB 与
+   representational-similarity decoding theory 都需要 analyst 预先选择 predictive
+   family、target distribution 或 regularization；
+3. 最直接 LVLM studies 仍遍历 layer/token/pooling/LR 或使用 max-over-layer，
+   negative finite probes 没有 completeness/impossibility guarantee；
+4. MiniMind-V architecture 只固定 SigLIP2 `last_hidden_state` 与 64-token
+   projector input，不固定 task readout、regularization、metric 或负向排除边界。
+
+**后果**：
+
+- 只否定当前 formal theory + direct evidence + local architecture 到唯一
+  frozen-feature readout 的 bridge；
+- frozen-feature signal、downstream absorption/transfer、objective mismatch、
+  encoder limitation 与 independently justified readout families 保持开放；
+- 禁止通过 layer/token/pooling/classifier/rank/metric sweep 反向制造 bridge；
+- `COVER-01` 首先审计 authoritative source-defined domain/mixture/combination
+  strata、exact data lineage、single-factor contrast、held-out prediction 与本地
+  资源可行性；plan 提交前不执行新的 scientific analysis，不访问 final
+  confirmation。

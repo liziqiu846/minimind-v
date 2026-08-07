@@ -1,0 +1,350 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/nKROLmOOB8Sporb3U6T2sLM5TDY</id>
+  <title>arXiv Query: search_query=&amp;id_list=2407.06581,2603.06054,2604.04411,2403.09037,2406.16860,2412.04616,2407.16526,2002.10689,2009.12789,2411.08197,1909.03368,2003.12298,1610.01644&amp;start=0&amp;max_results=30</title>
+  <updated>2026-08-07T06:22:10Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=&amp;start=0&amp;max_results=30&amp;id_list=2407.06581,2603.06054,2604.04411,2403.09037,2406.16860,2412.04616,2407.16526,2002.10689,2009.12789,2411.08197,1909.03368,2003.12298,1610.01644" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>30</opensearch:itemsPerPage>
+  <opensearch:totalResults>13</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/1909.03368v1</id>
+    <title>Designing and Interpreting Probes with Control Tasks</title>
+    <updated>2019-09-08T02:04:32Z</updated>
+    <link href="https://arxiv.org/abs/1909.03368v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1909.03368v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Probes, supervised models trained to predict properties (like parts-of-speech) from representations (like ELMo), have achieved high accuracy on a range of linguistic tasks. But does this mean that the representations encode linguistic structure or just that the probe has learned the linguistic task? In this paper, we propose control tasks, which associate word types with random outputs, to complement linguistic tasks. By construction, these tasks can only be learned by the probe itself. So a good probe, (one that reflects the representation), should be selective, achieving high linguistic task accuracy and low control task accuracy. The selectivity of a probe puts linguistic task accuracy in context with the probe's capacity to memorize from word types. We construct control tasks for English part-of-speech tagging and dependency edge prediction, and show that popular probes on ELMo representations are not selective. We also find that dropout, commonly used to control probe complexity, is ineffective for improving selectivity of MLPs, but that other forms of regularization are effective. Finally, we find that while probes on the first layer of ELMo yield slightly better part-of-speech tagging accuracy than the second, probes on the second layer are substantially more selective, which raises the question of which layer better represents parts-of-speech.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-09-08T02:04:32Z</published>
+    <arxiv:comment>EMNLP 2019</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>John Hewitt</name>
+    </author>
+    <author>
+      <name>Percy Liang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1610.01644v4</id>
+    <title>Understanding intermediate layers using linear classifier probes</title>
+    <updated>2018-11-22T23:40:00Z</updated>
+    <link href="https://arxiv.org/abs/1610.01644v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1610.01644v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Neural network models have a reputation for being black boxes. We propose to monitor the features at every layer of a model and measure how suitable they are for classification. We use linear classifiers, which we refer to as "probes", trained entirely independently of the model itself.
+  This helps us better understand the roles and dynamics of the intermediate layers. We demonstrate how this can be used to develop a better intuition about models and to diagnose potential problems.
+  We apply this technique to the popular models Inception v3 and Resnet-50. Among other things, we observe experimentally that the linear separability of features increase monotonically along the depth of the model.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2016-10-05T20:59:01Z</published>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Guillaume Alain</name>
+    </author>
+    <author>
+      <name>Yoshua Bengio</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.09037v2</id>
+    <title>The First to Know: How Token Distributions Reveal Hidden Knowledge in Large Vision-Language Models?</title>
+    <updated>2024-07-17T05:54:38Z</updated>
+    <link href="https://arxiv.org/abs/2403.09037v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.09037v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large vision-language models (LVLMs), designed to interpret and respond to human instructions, occasionally generate hallucinated or harmful content due to inappropriate instructions. This study uses linear probing to shed light on the hidden knowledge at the output layers of LVLMs. We demonstrate that the logit distributions of the first tokens contain sufficient information to determine whether to respond to the instructions, including recognizing unanswerable visual questions, defending against jailbreaking attacks, and identifying deceptive questions. Such hidden knowledge is gradually lost in logits of subsequent tokens during response generation. Then, we illustrate a simple decoding strategy at the generation of the first token, effectively improving the generated content. In experiments, we find a few interesting insights: First, the CLIP model already contains a strong signal for solving these tasks, which indicates potential bias in the existing datasets. Second, we observe performance improvement by utilizing the first logit distributions on three additional tasks, including indicating uncertainty in math solving, mitigating hallucination, and image classification. Last, with the same training data, simply finetuning LVLMs improves models' performance but is still inferior to linear probing on these tasks.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-14T02:25:35Z</published>
+    <arxiv:comment>ECCV 2024. Project page: https://github.com/Qinyu-Allen-Zhao/LVLM-LP</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Qinyu Zhao</name>
+    </author>
+    <author>
+      <name>Ming Xu</name>
+    </author>
+    <author>
+      <name>Kartik Gupta</name>
+    </author>
+    <author>
+      <name>Akshay Asthana</name>
+    </author>
+    <author>
+      <name>Liang Zheng</name>
+    </author>
+    <author>
+      <name>Stephen Gould</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2002.10689v1</id>
+    <title>A Theory of Usable Information Under Computational Constraints</title>
+    <updated>2020-02-25T06:09:30Z</updated>
+    <link href="https://arxiv.org/abs/2002.10689v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2002.10689v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose a new framework for reasoning about information in complex systems. Our foundation is based on a variational extension of Shannon's information theory that takes into account the modeling power and computational constraints of the observer. The resulting \emph{predictive $\mathcal{V}$-information} encompasses mutual information and other notions of informativeness such as the coefficient of determination. Unlike Shannon's mutual information and in violation of the data processing inequality, $\mathcal{V}$-information can be created through computation. This is consistent with deep neural networks extracting hierarchies of progressively more informative features in representation learning. Additionally, we show that by incorporating computational constraints, $\mathcal{V}$-information can be reliably estimated from data even in high dimensions with PAC-style guarantees. Empirically, we demonstrate predictive $\mathcal{V}$-information is more effective than mutual information for structure learning and fair representation learning.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-02-25T06:09:30Z</published>
+    <arxiv:comment>ICLR 2020 (Talk)</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Yilun Xu</name>
+    </author>
+    <author>
+      <name>Shengjia Zhao</name>
+    </author>
+    <author>
+      <name>Jiaming Song</name>
+    </author>
+    <author>
+      <name>Russell Stewart</name>
+    </author>
+    <author>
+      <name>Stefano Ermon</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2009.12789v2</id>
+    <title>Learning Optimal Representations with the Decodable Information Bottleneck</title>
+    <updated>2021-07-16T09:22:20Z</updated>
+    <link href="https://arxiv.org/abs/2009.12789v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2009.12789v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We address the question of characterizing and finding optimal representations for supervised learning. Traditionally, this question has been tackled using the Information Bottleneck, which compresses the inputs while retaining information about the targets, in a decoder-agnostic fashion. In machine learning, however, our goal is not compression but rather generalization, which is intimately linked to the predictive family or decoder of interest (e.g. linear classifier). We propose the Decodable Information Bottleneck (DIB) that considers information retention and compression from the perspective of the desired predictive family. As a result, DIB gives rise to representations that are optimal in terms of expected test performance and can be estimated with guarantees. Empirically, we show that the framework can be used to enforce a small generalization gap on downstream classifiers and to predict the generalization ability of neural networks.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-09-27T08:33:08Z</published>
+    <arxiv:comment>Accepted at NeurIPS 2020</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Yann Dubois</name>
+    </author>
+    <author>
+      <name>Douwe Kiela</name>
+    </author>
+    <author>
+      <name>David J. Schwab</name>
+    </author>
+    <author>
+      <name>Ramakrishna Vedantam</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.16860v2</id>
+    <title>Cambrian-1: A Fully Open, Vision-Centric Exploration of Multimodal LLMs</title>
+    <updated>2024-12-04T17:57:32Z</updated>
+    <link href="https://arxiv.org/abs/2406.16860v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.16860v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce Cambrian-1, a family of multimodal LLMs (MLLMs) designed with a vision-centric approach. While stronger language models can enhance multimodal capabilities, the design choices for vision components are often insufficiently explored and disconnected from visual representation learning research. This gap hinders accurate sensory grounding in real-world scenarios. Our study uses LLMs and visual instruction tuning as an interface to evaluate various visual representations, offering new insights into different models and architectures -- self-supervised, strongly supervised, or combinations thereof -- based on experiments with over 20 vision encoders. We critically examine existing MLLM benchmarks, address the difficulties involved in consolidating and interpreting results from various tasks, and introduce a new vision-centric benchmark, CV-Bench. To further improve visual grounding, we propose the Spatial Vision Aggregator (SVA), a dynamic and spatially-aware connector that integrates high-resolution vision features with LLMs while reducing the number of tokens. Additionally, we discuss the curation of high-quality visual instruction-tuning data from publicly available sources, emphasizing the importance of data source balancing and distribution ratio. Collectively, Cambrian-1 not only achieves state-of-the-art performance but also serves as a comprehensive, open cookbook for instruction-tuned MLLMs. We provide model weights, code, supporting tools, datasets, and detailed instruction-tuning and evaluation recipes. We hope our release will inspire and accelerate advancements in multimodal systems and visual representation learning.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-24T17:59:42Z</published>
+    <arxiv:comment>NeurIPS 2024 (Oral). Website at https://cambrian-mllm.github.io</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Shengbang Tong</name>
+    </author>
+    <author>
+      <name>Ellis Brown</name>
+    </author>
+    <author>
+      <name>Penghao Wu</name>
+    </author>
+    <author>
+      <name>Sanghyun Woo</name>
+    </author>
+    <author>
+      <name>Manoj Middepogu</name>
+    </author>
+    <author>
+      <name>Sai Charitha Akula</name>
+    </author>
+    <author>
+      <name>Jihan Yang</name>
+    </author>
+    <author>
+      <name>Shusheng Yang</name>
+    </author>
+    <author>
+      <name>Adithya Iyer</name>
+    </author>
+    <author>
+      <name>Xichen Pan</name>
+    </author>
+    <author>
+      <name>Ziteng Wang</name>
+    </author>
+    <author>
+      <name>Rob Fergus</name>
+    </author>
+    <author>
+      <name>Yann LeCun</name>
+    </author>
+    <author>
+      <name>Saining Xie</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.06054v1</id>
+    <title>Probing Visual Concepts in Lightweight Vision-Language Models for Automated Driving</title>
+    <updated>2026-03-06T09:07:57Z</updated>
+    <link href="https://arxiv.org/abs/2603.06054v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.06054v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The use of Vision-Language Models (VLMs) in automated driving applications is becoming increasingly common, with the aim of leveraging their reasoning and generalisation capabilities to handle long tail scenarios. However, these models often fail on simple visual questions that are highly relevant to automated driving, and the reasons behind these failures remain poorly understood. In this work, we examine the intermediate activations of VLMs and assess the extent to which specific visual concepts are linearly encoded, with the goal of identifying bottlenecks in the flow of visual information. Specifically, we create counterfactual image sets that differ only in a targeted visual concept and then train linear probes to distinguish between them using the activations of four state-of-the-art (SOTA) VLMs. Our results show that concepts such as the presence of an object or agent in a scene are explicitly and linearly encoded, whereas other spatial visual concepts, such as the orientation of an object or agent, are only implicitly encoded by the spatial structure retained by the vision encoder. In parallel, we observe that in certain cases, even when a concept is linearly encoded in the model's activations, the model still fails to answer correctly. This leads us to identify two failure modes. The first is perceptual failure, where the visual information required to answer a question is not linearly encoded in the model's activations. The second is cognitive failure, where the visual information is present but the model fails to align it correctly with language semantics. Finally, we show that increasing the distance of the object in question quickly degrades the linear separability of the corresponding visual concept. Overall, our findings improve our understanding of failure cases in VLMs on simple visual tasks that are highly relevant to automated driving.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-06T09:07:57Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Nikos Theodoridis</name>
+    </author>
+    <author>
+      <name>Reenu Mohandas</name>
+    </author>
+    <author>
+      <name>Ganesh Sistu</name>
+    </author>
+    <author>
+      <name>Anthony Scanlan</name>
+    </author>
+    <author>
+      <name>Ciarán Eising</name>
+    </author>
+    <author>
+      <name>Tim Brophy</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.08197v1</id>
+    <title>What Representational Similarity Measures Imply about Decodable Information</title>
+    <updated>2024-11-12T21:37:10Z</updated>
+    <link href="https://arxiv.org/abs/2411.08197v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.08197v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Neural responses encode information that is useful for a variety of downstream tasks. A common approach to understand these systems is to build regression models or ``decoders'' that reconstruct features of the stimulus from neural responses. Popular neural network similarity measures like centered kernel alignment (CKA), canonical correlation analysis (CCA), and Procrustes shape distance, do not explicitly leverage this perspective and instead highlight geometric invariances to orthogonal or affine transformations when comparing representations. Here, we show that many of these measures can, in fact, be equivalently motivated from a decoding perspective. Specifically, measures like CKA and CCA quantify the average alignment between optimal linear readouts across a distribution of decoding tasks. We also show that the Procrustes shape distance upper bounds the distance between optimal linear readouts and that the converse holds for representations with low participation ratio. Overall, our work demonstrates a tight link between the geometry of neural representations and the ability to linearly decode information. This perspective suggests new ways of measuring similarity between neural systems and also provides novel, unifying interpretations of existing measures.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-12T21:37:10Z</published>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Sarah E. Harvey</name>
+    </author>
+    <author>
+      <name>David Lipshutz</name>
+    </author>
+    <author>
+      <name>Alex H. Williams</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.04411v1</id>
+    <title>Responses Fall Short of Understanding: Revealing the Gap between Internal Representations and Responses in Visual Document Understanding</title>
+    <updated>2026-04-06T04:25:52Z</updated>
+    <link href="https://arxiv.org/abs/2604.04411v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.04411v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Visual document understanding (VDU) is a challenging task for large vision language models (LVLMs), requiring the integration of visual perception, text recognition, and reasoning over structured layouts. Although recent LVLMs have shown progress on VDU benchmarks, their performance is typically evaluated based on generated responses, which may not necessarily reflect whether the model has actually captured the required information internally. In this paper, we investigate how information required to solve VDU tasks is represented across different layers of LLMs within LVLMs using linear probing. Our study reveals that (1) there is a clear gap between internal representations and generated responses, and (2) information required to solve the task is often encoded more linearly from intermediate layers than from the final layer. Motivated by these findings, we explore fine-tuning strategies that target intermediate layers. Experiments show that fine-tuning intermediate layers improves both linear probing accuracy and response accuracy while narrowing the gap.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-06T04:25:52Z</published>
+    <arxiv:comment>Accepted to CVPR2026 workshop (MULA)</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Haruka Kawasaki</name>
+    </author>
+    <author>
+      <name>Ryota Tanaka</name>
+    </author>
+    <author>
+      <name>Kyosuke Nishida</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.16526v1</id>
+    <title>Imperfect Vision Encoders: Efficient and Robust Tuning for Vision-Language Models</title>
+    <updated>2024-07-23T14:39:40Z</updated>
+    <link href="https://arxiv.org/abs/2407.16526v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.16526v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision language models (VLMs) demonstrate impressive capabilities in visual question answering and image captioning, acting as a crucial link between visual and language models. However, existing open-source VLMs heavily rely on pretrained and frozen vision encoders (such as CLIP). Despite CLIP's robustness across diverse domains, it still exhibits non-negligible image understanding errors. These errors propagate to the VLM responses, resulting in sub-optimal performance. In our work, we propose an efficient and robust method for updating vision encoders within VLMs. Our approach selectively and locally updates encoders, leading to substantial performance improvements on data where previous mistakes occurred, while maintaining overall robustness. Furthermore, we demonstrate the effectiveness of our method during continual few-shot updates. Theoretical grounding, generality, and computational efficiency characterize our approach.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-23T14:39:40Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Aristeidis Panos</name>
+    </author>
+    <author>
+      <name>Rahaf Aljundi</name>
+    </author>
+    <author>
+      <name>Daniel Olmeda Reino</name>
+    </author>
+    <author>
+      <name>Richard E Turner</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.06581v6</id>
+    <title>Vision language models are blind: Failing to translate detailed visual features into words</title>
+    <updated>2025-03-27T16:16:09Z</updated>
+    <link href="https://arxiv.org/abs/2407.06581v6" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.06581v6" rel="related" type="application/pdf" title="pdf"/>
+    <summary>While large language models with vision capabilities (VLMs), e.g., GPT-4o and Gemini 1.5 Pro, score high on many vision-understanding benchmarks, they are still struggling with low-level vision tasks that are easy to humans. Specifically, on BlindTest, our suite of 7 very simple tasks, including identifying (a) whether two circles overlap; (b) how many times two lines intersect; (c) which letter is being circled in a word; and (d) the number of circles in an Olympic-like logo, four state-of-the-art VLMs are only 58.07% accurate on average. Claude 3.5 Sonnet performs the best at 77.84% accuracy, far from the human expected accuracy of 100%. Across different image resolutions and line widths, VLMs including slow-thinking models consistently struggle with those tasks that require precise spatial information when geometric primitives overlap or are close. Yet, VLMs perform at near-100% accuracy when much more space is added to separate shapes and letters. Linear probing experiments show that vision encoders contain sufficient visual information to solve BlindTest and that language models fail to decode this information into correct answers. Code and data are at: https://vlmsareblind.github.io</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-09T06:20:17Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Pooyan Rahmanzadehgervi</name>
+    </author>
+    <author>
+      <name>Logan Bolton</name>
+    </author>
+    <author>
+      <name>Mohammad Reza Taesiri</name>
+    </author>
+    <author>
+      <name>Anh Totti Nguyen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2003.12298v1</id>
+    <title>Information-Theoretic Probing with Minimum Description Length</title>
+    <updated>2020-03-27T09:35:38Z</updated>
+    <link href="https://arxiv.org/abs/2003.12298v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2003.12298v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>To measure how well pretrained representations encode some linguistic property, it is common to use accuracy of a probe, i.e. a classifier trained to predict the property from the representations. Despite widespread adoption of probes, differences in their accuracy fail to adequately reflect differences in representations. For example, they do not substantially favour pretrained representations over randomly initialized ones. Analogously, their accuracy can be similar when probing for genuine linguistic labels and probing for random synthetic tasks. To see reasonable differences in accuracy with respect to these random baselines, previous work had to constrain either the amount of probe training data or its model size. Instead, we propose an alternative to the standard probes, information-theoretic probing with minimum description length (MDL). With MDL probing, training a probe to predict labels is recast as teaching it to effectively transmit the data. Therefore, the measure of interest changes from probe accuracy to the description length of labels given representations. In addition to probe quality, the description length evaluates "the amount of effort" needed to achieve the quality. This amount of effort characterizes either (i) size of a probing model, or (ii) the amount of data needed to achieve the high quality. We consider two methods for estimating MDL which can be easily implemented on top of the standard probing pipelines: variational coding and online coding. We show that these methods agree in results and are more informative and stable than the standard probes.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-03-27T09:35:38Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Elena Voita</name>
+    </author>
+    <author>
+      <name>Ivan Titov</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2412.04616v2</id>
+    <title>Assessing and Learning Alignment of Unimodal Vision and Language Models</title>
+    <updated>2025-04-19T15:39:32Z</updated>
+    <link href="https://arxiv.org/abs/2412.04616v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2412.04616v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>How well are unimodal vision and language models aligned? Although prior work have approached answering this question, their assessment methods do not directly translate to how these models are used in practical vision-language tasks. In this paper, we propose a direct assessment method, inspired by linear probing, to assess vision-language alignment. We identify that the degree of alignment of the SSL vision models depends on their SSL training objective, and we find that the clustering quality of SSL representations has a stronger impact on alignment performance than their linear separability. Next, we introduce Swift Alignment of Image and Language (SAIL), a efficient transfer learning framework that aligns pretrained unimodal vision and language models for downstream vision-language tasks. Since SAIL leverages the strengths of pretrained unimodal models, it requires significantly fewer (6%) paired image-text data for the multimodal alignment compared to models like CLIP which are trained from scratch. SAIL training only requires a single A100 GPU, 5 hours of training and can accommodate a batch size up to 32,768. SAIL achieves 73.4% zero-shot accuracy on ImageNet (vs. CLIP's 72.7%) and excels in zero-shot retrieval, complex reasoning, and semantic segmentation. Additionally, SAIL improves the language-compatibility of vision encoders that in turn enhance the performance of multimodal large language models. The entire codebase and model weights are open-source: https://lezhang7.github.io/sail.github.io/</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-12-05T21:04:58Z</published>
+    <arxiv:comment>CVPR 2025 Highlight</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Le Zhang</name>
+    </author>
+    <author>
+      <name>Qian Yang</name>
+    </author>
+    <author>
+      <name>Aishwarya Agrawal</name>
+    </author>
+  </entry>
+</feed>

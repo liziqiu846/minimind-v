@@ -306,3 +306,19 @@ checkpoint-only prediction test；不训练。
 - 本轮 0 GPU、0 checkpoint inference、0 training，未访问 final confirmation。
   ACTIVE 转为 `LITMAP-05` frozen-feature sufficiency / identifiability gate；先提交
   immutable plan，再开始新 scientific search/readout。
+
+## 18. 持续日志：LITMAP-05 判定与 canonical state 同步
+
+- 五族冻结检索保存 553 raw records、491 unique titles，标记 58 个 prior-search
+  duplicates 与 45 个 heuristic score≥10 records；13 篇决定性 primary sources、
+  exact local interface、source hashes 与 deterministic index rebuild 均完成核查。
+- Formal theory 仍需 analyst 选择 predictive family、target 或 regularization；
+  direct LVLM protocols 仍需 layer/token/pooling/LR 或 max-over-layer selection；
+  negative finite probe 没有 completeness guarantee。本地 architecture 只固定
+  SigLIP2 `last_hidden_state` 与 64-token projector input。
+- `LITMAP-05` 判为 `NO_CANDIDATE` / `BRIDGE_REJECTED`。只否定当前
+  frozen-feature identifiability bridge，不否定 signal、downstream
+  absorption/transfer、objective mismatch 或 encoder limitation。
+- 本轮 0 GPU、0 checkpoint inference、0 training，未访问 final confirmation。
+  canonical state 已同步，Active Research Question 转为 `COVER-01`
+  authoritative controlled-coverage gate；先提交 immutable plan。

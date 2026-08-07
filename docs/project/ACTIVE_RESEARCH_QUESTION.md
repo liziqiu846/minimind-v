@@ -317,7 +317,39 @@ Agent 可以自主改变：
   表示但未被生成目标吸收”之间的最小断点；若有唯一 readout，可产生无需新训练的
   falsifier，并为 encoder-side 或 downstream-side 算法选择提供依据；若没有，则转向
   controlled coverage 而不制造新 probe。
-- **Status**: ACTIVE_LITERATURE_GATE；下一步创建并提交
-  `experiments/plans/LITMAP-05_round1.md`。plan commit 前不执行新 scientific
-  search/readout；本 gate 不训练、不访问 final confirmation，也不得 sweep
-  layer/rank/pooling/probe/metric。
+- **Status**: DEMOTED_AS_ACTIVE；failure level=`BRIDGE_REJECTED`。冻结 plan 后
+  搜索 553 raw records、491 unique titles，完整核查 13 篇决定性 primary sources
+  与 exact local SigLIP2→64-token projector-input interface。Formal theory 仍要求
+  analyst 选择 predictive family、target distribution 或 regularization，direct
+  LVLM evidence 仍使用 layer/token/pooling/LR 或 max-over-layer selection，且
+  negative finite probe 没有 completeness guarantee；结果是 `NO_CANDIDATE`。
+  这只否定当前 identifiability bridge，不否定 frozen-feature signal、downstream
+  absorption/transfer、objective mismatch 或 encoder limitation。
+
+### 2026-08-07｜COVER-01 authoritative controlled-coverage gate
+
+- **Question**: MiniMind-V 当前训练数据及本服务器可取得的 authoritative source
+  data 中，是否存在由来源定义且可复现的 domain / mixture /
+  multimodal-combination strata，使“增加互补覆盖”相对“增加同域冗余”形成唯一
+  single-factor contrast、方向明确的 held-out prediction，并可在当前资源内验证？
+- **Why the old question was insufficient**: `LITMAP-05` 证明当前 probing /
+  decodability theory 与 architecture 无法唯一固定具有可靠负向排除力的 readout；
+  继续搜索 layer、pooling、classifier 或 metric 只会新造 proxy，不能区分
+  representation absence 与 downstream absorption。
+- **Evidence / literature origin**: 两个训练 instantiation 和两个 literature bridge
+  连续失败，暴露的共同问题是 analyst choice 与 local identifiability 不足；
+  DataComp、MM1 及 controlled data-mixture/coverage literature 则提示 source-defined
+  domain/mixture strata 可能提供不依赖 checkpoint proxy 的数据侧干预对象，但其
+  exact lineage、CLIP→generative-LVLM applicability 与本地单因素可行性尚未核查。
+- **Mission relation**: 若 authoritative complementary coverage 相对同域 redundancy
+  能产生可预测的未见域/组合风险差异，可解释为何相似码长与样本量产生不同泛化，
+  并自然导出 coverage-aware sampling、mixture optimization 或 targeted
+  recaptioning；若 gate 失败，只否定当前可执行 coverage bridge。
+- **What remains open from the previous question**: frozen representation 中
+  signal 是否存在、downstream absorption/transfer、objective mismatch、encoder
+  limitation 与 independently justified decodability family 全部开放。
+- **Status**: ACTIVE_DATA_INTERFACE_GATE；下一步创建并提交
+  `experiments/plans/COVER-01_round1.md`。plan commit 前不执行新的 source/data
+  analysis；本 gate 不访问 final confirmation，也不把 random cluster、embedding
+  neighborhood、事后 benchmark category 或 sample count 称为 controlled
+  coverage。

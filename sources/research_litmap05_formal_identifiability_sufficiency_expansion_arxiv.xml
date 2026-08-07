@@ -1,0 +1,1329 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/Sz3AxnFU4wNlzH2CmqlzsewAHEU</id>
+  <title>arXiv Query: search_query=(all:"representation sufficiency" OR all:"sufficient representation") AND (all:learning OR all:vision OR all:multimodal)&amp;id_list=&amp;start=0&amp;max_results=50</title>
+  <updated>2026-08-07T06:20:56Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=(all:%22representation+sufficiency%22+OR+all:%22sufficient+representation%22)+AND+(all:learning+OR+(all:vision+OR+all:multimodal))&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <opensearch:totalResults>80</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2210.17444v3</id>
+    <title>Multimodal Information Bottleneck: Learning Minimal Sufficient Unimodal and Multimodal Representations</title>
+    <updated>2022-12-05T12:41:04Z</updated>
+    <link href="https://arxiv.org/abs/2210.17444v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.17444v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Learning effective joint embedding for cross-modal data has always been a focus in the field of multimodal machine learning. We argue that during multimodal fusion, the generated multimodal embedding may be redundant, and the discriminative unimodal information may be ignored, which often interferes with accurate prediction and leads to a higher risk of overfitting. Moreover, unimodal representations also contain noisy information that negatively influences the learning of cross-modal dynamics. To this end, we introduce the multimodal information bottleneck (MIB), aiming to learn a powerful and sufficient multimodal representation that is free of redundancy and to filter out noisy information in unimodal representations. Specifically, inheriting from the general information bottleneck (IB), MIB aims to learn the minimal sufficient representation for a given task by maximizing the mutual information between the representation and the target and simultaneously constraining the mutual information between the representation and the input data. Different from general IB, our MIB regularizes both the multimodal and unimodal representations, which is a comprehensive and flexible framework that is compatible with any fusion methods. We develop three MIB variants, namely, early-fusion MIB, late-fusion MIB, and complete MIB, to focus on different perspectives of information constraints. Experimental results suggest that the proposed method reaches state-of-the-art performance on the tasks of multimodal sentiment analysis and multimodal emotion recognition across three widely used datasets. The codes are available at \url{https://github.com/TmacMai/Multimodal-Information-Bottleneck}.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-31T16:14:18Z</published>
+    <arxiv:comment>This paper is accepted by IEEE Transactions on Multimedia. This version addresses some mistakes and typos in the original paper. The appendix is available at https://github.com/TmacMai/Multimodal-Information-Bottleneck/blob/main/appendix.pdf</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Sijie Mai</name>
+    </author>
+    <author>
+      <name>Ying Zeng</name>
+    </author>
+    <author>
+      <name>Haifeng Hu</name>
+    </author>
+    <arxiv:doi>10.1109/TMM.2022.3171679</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1109/TMM.2022.3171679" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.01030v1</id>
+    <title>Fair Sufficient Representation Learning</title>
+    <updated>2025-03-29T10:37:49Z</updated>
+    <link href="https://arxiv.org/abs/2504.01030v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.01030v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The main objective of fair statistical modeling and machine learning is to minimize or eliminate biases that may arise from the data or the model itself, ensuring that predictions and decisions are not unjustly influenced by sensitive attributes such as race, gender, age, or other protected characteristics. In this paper, we introduce a Fair Sufficient Representation Learning (FSRL) method that balances sufficiency and fairness. Sufficiency ensures that the representation should capture all necessary information about the target variables, while fairness requires that the learned representation remains independent of sensitive attributes. FSRL is based on a convex combination of an objective function for learning a sufficient representation and an objective function that ensures fairness. Our approach manages fairness and sufficiency at the representation level, offering a novel perspective on fair representation learning. We implement this method using distance covariance, which is effective for characterizing independence between random variables. We establish the convergence properties of the learned representations. Experiments conducted on healthcase and text datasets with diverse structures demonstrate that FSRL achieves a superior trade-off between fairness and accuracy compared to existing approaches.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-29T10:37:49Z</published>
+    <arxiv:comment>35 pages, 11 figures, and 6 tables (1 in the main text, 5 in the appendix)</arxiv:comment>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Xueyu Zhou</name>
+    </author>
+    <author>
+      <name>Chun Yin IP</name>
+    </author>
+    <author>
+      <name>Jian Huang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2207.10772v1</id>
+    <title>Deep Sufficient Representation Learning via Mutual Information</title>
+    <updated>2022-07-21T22:13:21Z</updated>
+    <link href="https://arxiv.org/abs/2207.10772v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2207.10772v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose a mutual information-based sufficient representation learning (MSRL) approach, which uses the variational formulation of the mutual information and leverages the approximation power of deep neural networks. MSRL learns a sufficient representation with the maximum mutual information with the response and a user-selected distribution. It can easily handle multi-dimensional continuous or categorical response variables. MSRL is shown to be consistent in the sense that the conditional probability density function of the response variable given the learned representation converges to the conditional probability density function of the response variable given the predictor. Non-asymptotic error bounds for MSRL are also established under suitable conditions. To establish the error bounds, we derive a generalized Dudley's inequality for an order-two U-process indexed by deep neural networks, which may be of independent interest. We discuss how to determine the intrinsic dimension of the underlying data distribution. Moreover, we evaluate the performance of MSRL via extensive numerical experiments and real data analysis and demonstrate that MSRL outperforms some existing nonlinear sufficient dimension reduction methods.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-07-21T22:13:21Z</published>
+    <arxiv:comment>43 pages, 6 figures and 5 tables</arxiv:comment>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Siming Zheng</name>
+    </author>
+    <author>
+      <name>Yuanyuan Lin</name>
+    </author>
+    <author>
+      <name>Jian Huang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2203.07004v2</id>
+    <title>Rethinking Minimal Sufficient Representation in Contrastive Learning</title>
+    <updated>2022-04-02T12:55:12Z</updated>
+    <link href="https://arxiv.org/abs/2203.07004v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2203.07004v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Contrastive learning between different views of the data achieves outstanding success in the field of self-supervised representation learning and the learned representations are useful in broad downstream tasks. Since all supervision information for one view comes from the other view, contrastive learning approximately obtains the minimal sufficient representation which contains the shared information and eliminates the non-shared information between views. Considering the diversity of the downstream tasks, it cannot be guaranteed that all task-relevant information is shared between views. Therefore, we assume the non-shared task-relevant information cannot be ignored and theoretically prove that the minimal sufficient representation in contrastive learning is not sufficient for the downstream tasks, which causes performance degradation. This reveals a new problem that the contrastive learning models have the risk of over-fitting to the shared information between views. To alleviate this problem, we propose to increase the mutual information between the representation and input as regularization to approximately introduce more task-relevant information, since we cannot utilize any downstream task information during training. Extensive experiments verify the rationality of our analysis and the effectiveness of our method. It significantly improves the performance of several classic contrastive learning models in downstream tasks. Our code is available at https://github.com/Haoqing-Wang/InfoCL.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-03-14T11:17:48Z</published>
+    <arxiv:comment>Accepted by CVPR 2022 as Oral presentation</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Haoqing Wang</name>
+    </author>
+    <author>
+      <name>Xun Guo</name>
+    </author>
+    <author>
+      <name>Zhi-Hong Deng</name>
+    </author>
+    <author>
+      <name>Yan Lu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.20414v1</id>
+    <title>Transfer Learning through Enhanced Sufficient Representation: Enriching Source Domain Knowledge with Target Data</title>
+    <updated>2025-02-22T13:18:28Z</updated>
+    <link href="https://arxiv.org/abs/2502.20414v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.20414v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Transfer learning is an important approach for addressing the challenges posed by limited data availability in various applications. It accomplishes this by transferring knowledge from well-established source domains to a less familiar target domain. However, traditional transfer learning methods often face difficulties due to rigid model assumptions and the need for a high degree of similarity between source and target domain models. In this paper, we introduce a novel method for transfer learning called Transfer learning through Enhanced Sufficient Representation (TESR). Our approach begins by estimating a sufficient and invariant representation from the source domains. This representation is then enhanced with an independent component derived from the target data, ensuring that it is sufficient for the target domain and adaptable to its specific characteristics. A notable advantage of TESR is that it does not rely on assuming similar model structures across different tasks. For example, the source domain models can be regression models, while the target domain task can be classification. This flexibility makes TESR applicable to a wide range of supervised learning problems. We explore the theoretical properties of TESR and validate its performance through simulation studies and real-world data applications, demonstrating its effectiveness in finite sample settings.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-22T13:18:28Z</published>
+    <arxiv:comment>44 pages</arxiv:comment>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Yeheng Ge</name>
+    </author>
+    <author>
+      <name>Xueyu Zhou</name>
+    </author>
+    <author>
+      <name>Jian Huang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2408.17053v2</id>
+    <title>Estimating Conditional Average Treatment Effects via Sufficient Representation Learning</title>
+    <updated>2024-12-13T07:21:58Z</updated>
+    <link href="https://arxiv.org/abs/2408.17053v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2408.17053v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Estimating the conditional average treatment effects (CATE) is very important in causal inference and has a wide range of applications across many fields. In the estimation process of CATE, the unconfoundedness assumption is typically required to ensure the identifiability of the regression problems. When estimating CATE using high-dimensional data, there have been many variable selection methods and neural network approaches based on representation learning, while these methods do not provide a way to verify whether the subset of variables after dimensionality reduction or the learned representations still satisfy the unconfoundedness assumption during the estimation process, which can lead to ineffective estimates of the treatment effects. Additionally, these methods typically use data from only the treatment or control group when estimating the regression functions for each group. This paper proposes a novel neural network approach named \textbf{CrossNet} to learn a sufficient representation for the features, based on which we then estimate the CATE, where cross indicates that in estimating the regression functions, we used data from their own group as well as cross-utilized data from another group. Numerical simulations and empirical results demonstrate that our method outperforms the competitive approaches.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-08-30T07:23:59Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Pengfei Shi</name>
+    </author>
+    <author>
+      <name>Wei Zhong</name>
+    </author>
+    <author>
+      <name>Xinyu Zhang</name>
+    </author>
+    <author>
+      <name>Ningtao Wang</name>
+    </author>
+    <author>
+      <name>Xing Fu</name>
+    </author>
+    <author>
+      <name>Weiqiang Wang</name>
+    </author>
+    <author>
+      <name>Yin Jin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.12070v1</id>
+    <title>MEASURE: Multi-scale Minimal Sufficient Representation Learning for Domain Generalization in Sleep Staging</title>
+    <updated>2025-10-14T02:20:50Z</updated>
+    <link href="https://arxiv.org/abs/2510.12070v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.12070v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Deep learning-based automatic sleep staging has significantly advanced in performance and plays a crucial role in the diagnosis of sleep disorders. However, those models often struggle to generalize on unseen subjects due to variability in physiological signals, resulting in degraded performance in out-of-distribution scenarios. To address this issue, domain generalization approaches have recently been studied to ensure generalized performance on unseen domains during training. Among those techniques, contrastive learning has proven its validity in learning domain-invariant features by aligning samples of the same class across different domains. Despite its potential, many existing methods are insufficient to extract adequately domain-invariant representations, as they do not explicitly address domain characteristics embedded within the unshared information across samples. In this paper, we posit that mitigating such domain-relevant attributes-referred to as excess domain-relevant information-is key to bridging the domain gap. However, the direct strategy to mitigate the domain-relevant attributes often overfits features at the high-level information, limiting their ability to leverage the diverse temporal and spectral information encoded in the multiple feature levels. To address these limitations, we propose a novel MEASURE (Multi-scalE minimAl SUfficient Representation lEarning) framework, which effectively reduces domain-relevant information while preserving essential temporal and spectral features for sleep stage classification. In our exhaustive experiments on publicly available sleep staging benchmark datasets, SleepEDF-20 and MASS, our proposed method consistently outperformed state-of-the-art methods. Our code is available at : https://github.com/ku-milab/Measure</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-14T02:20:50Z</published>
+    <arxiv:comment>12 page, 7 figures, uses IEEE.sty</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Sangmin Jo</name>
+    </author>
+    <author>
+      <name>Jee Seok Yoon</name>
+    </author>
+    <author>
+      <name>Wootaek Jeong</name>
+    </author>
+    <author>
+      <name>Kwanseok Oh</name>
+    </author>
+    <author>
+      <name>Heung-Il Suk</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2501.05646v1</id>
+    <title>Efficient Representations for High-Cardinality Categorical Variables in Machine Learning</title>
+    <updated>2025-01-10T01:25:01Z</updated>
+    <link href="https://arxiv.org/abs/2501.05646v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2501.05646v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>High\-cardinality categorical variables pose significant challenges in machine learning, particularly in terms of computational efficiency and model interpretability. Traditional one\-hot encoding often results in high\-dimensional sparse feature spaces, increasing the risk of overfitting and reducing scalability. This paper introduces novel encoding techniques, including means encoding, low\-rank encoding, and multinomial logistic regression encoding, to address these challenges. These methods leverage sufficient representations to generate compact and informative embeddings of categorical data. We conduct rigorous theoretical analyses and empirical validations on diverse datasets, demonstrating significant improvements in model performance and computational efficiency compared to baseline methods. The proposed techniques are particularly effective in domains requiring scalable solutions for large datasets, paving the way for more robust and efficient applications in machine learning.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-01-10T01:25:01Z</published>
+    <arxiv:comment>2025 International Conference on Advanced Machine Learning and Data Science (AMLDS 2025)</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Zixuan Liang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.23181v1</id>
+    <title>Towards Dual-Brain Minimal Sufficient Representation for Vision-Language Navigation</title>
+    <updated>2026-07-25T12:26:47Z</updated>
+    <link href="https://arxiv.org/abs/2607.23181v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.23181v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-and-Language Navigation in continuous environments (VLN-CE) requires an agent to ground language in egocentric observations and plan in unseen scenes. Although recent multimodal large models and world-model-based methods have improved navigation, they often preserve excessive task-irrelevant detail, weakening generalization and increasing computational burden. We propose BrainNav, a navigation framework grounded in the Principle of Minimal Sufficiency. BrainNav consists of three components: a Logical Anchor Model that implements instruction-aware selective perception to suppress environmental noise, a Minimalist Constraint Alignment module that serves as a compact cross-modal bottleneck, efficiently synchronizing discrete linguistic intent with continuous latent dynamics while filtering out redundant information, and a Compression World Model that predicts action-conditioned states within a condensed, low-rank latent space. These modules align semantic intent with spatial perception, enhancing the agent's robustness and efficiency in complex tasks. Experiments show that BrainNav improves over prior SOTA by 2.0 % / 1.0 in SR/SPL on R2R-CE val-unseen and 0.94 % / 0.78 on RxR-CE val-unseen. These results indicate that minimally sufficient world representations provide an effective foundation for robust VLN.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-25T12:26:47Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yihao Wu</name>
+    </author>
+    <author>
+      <name>Chenyi Xu</name>
+    </author>
+    <author>
+      <name>Liqi Yan</name>
+    </author>
+    <author>
+      <name>Chenhuan Cai</name>
+    </author>
+    <author>
+      <name>Geyong Min</name>
+    </author>
+    <author>
+      <name>Bin Lin</name>
+    </author>
+    <author>
+      <name>Fangli Guan</name>
+    </author>
+    <author>
+      <name>Jianhui Zhang</name>
+    </author>
+    <author>
+      <name>Pan Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2407.12724v1</id>
+    <title>An Evaluation of Continual Learning for Advanced Node Semiconductor Defect Inspection</title>
+    <updated>2024-07-17T16:41:22Z</updated>
+    <link href="https://arxiv.org/abs/2407.12724v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2407.12724v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Deep learning-based semiconductor defect inspection has gained traction in recent years, offering a powerful and versatile approach that provides high accuracy, adaptability, and efficiency in detecting and classifying nano-scale defects. However, semiconductor manufacturing processes are continually evolving, leading to the emergence of new types of defects over time. This presents a significant challenge for conventional supervised defect detectors, as they may suffer from catastrophic forgetting when trained on new defect datasets, potentially compromising performance on previously learned tasks. An alternative approach involves the constant storage of previously trained datasets alongside pre-trained model versions, which can be utilized for (re-)training from scratch or fine-tuning whenever encountering a new defect dataset. However, adhering to such a storage template is impractical in terms of size, particularly when considering High-Volume Manufacturing (HVM). Additionally, semiconductor defect datasets, especially those encompassing stochastic defects, are often limited and expensive to obtain, thus lacking sufficient representation of the entire universal set of defectivity. This work introduces a task-agnostic, meta-learning approach aimed at addressing this challenge, which enables the incremental addition of new defect classes and scales to create a more robust and generalized model for semiconductor defect inspection. We have benchmarked our approach using real resist-wafer SEM (Scanning Electron Microscopy) datasets for two process steps, ADI and AEI, demonstrating its superior performance compared to conventional supervised training methods.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-07-17T16:41:22Z</published>
+    <arxiv:comment>Accepted for presentation at the European Conference on Machine Learning and Principles and Practice of Knowledge Discovery in Databases 2024 Industry Track</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Amit Prasad</name>
+    </author>
+    <author>
+      <name>Bappaditya Dey</name>
+    </author>
+    <author>
+      <name>Victor Blanco</name>
+    </author>
+    <author>
+      <name>Sandip Halder</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1910.03016v4</id>
+    <title>Is a Good Representation Sufficient for Sample Efficient Reinforcement Learning?</title>
+    <updated>2020-02-28T03:31:55Z</updated>
+    <link href="https://arxiv.org/abs/1910.03016v4" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1910.03016v4" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Modern deep learning methods provide effective means to learn good representations. However, is a good representation itself sufficient for sample efficient reinforcement learning? This question has largely been studied only with respect to (worst-case) approximation error, in the more classical approximate dynamic programming literature. With regards to the statistical viewpoint, this question is largely unexplored, and the extant body of literature mainly focuses on conditions which permit sample efficient reinforcement learning with little understanding of what are necessary conditions for efficient reinforcement learning.
+  This work shows that, from the statistical viewpoint, the situation is far subtler than suggested by the more traditional approximation viewpoint, where the requirements on the representation that suffice for sample efficient RL are even more stringent. Our main results provide sharp thresholds for reinforcement learning methods, showing that there are hard limitations on what constitutes good function approximation (in terms of the dimensionality of the representation), where we focus on natural representational conditions relevant to value-based, model-based, and policy-based learning. These lower bounds highlight that having a good (value-based, model-based, or policy-based) representation in and of itself is insufficient for efficient reinforcement learning, unless the quality of this approximation passes certain hard thresholds. Furthermore, our lower bounds also imply exponential separations on the sample complexity between 1) value-based learning with perfect representation and value-based learning with a good-but-not-perfect representation, 2) value-based learning and policy-based learning, 3) policy-based learning and supervised learning and 4) reinforcement learning and imitation learning.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-10-07T19:04:43Z</published>
+    <arxiv:comment>To appear in ICLR 2020</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Simon S. Du</name>
+    </author>
+    <author>
+      <name>Sham M. Kakade</name>
+    </author>
+    <author>
+      <name>Ruosong Wang</name>
+    </author>
+    <author>
+      <name>Lin F. Yang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.18551v2</id>
+    <title>Learning Decision-Sufficient Representations for Linear Optimization</title>
+    <updated>2026-05-22T05:09:19Z</updated>
+    <link href="https://arxiv.org/abs/2603.18551v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.18551v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We study how to construct compressed datasets that suffice to recover optimal decisions in linear programs with an unknown cost vector $c$ lying in a prior set $\mathcal{C}$. Recent work by Bennouna et al. provides an exact geometric characterization of sufficient decision datasets (SDDs) via an intrinsic decision-relevant dimension $d^\star$. However, their algorithm for constructing minimum-size SDDs requires solving mixed-integer programs. In this paper, we establish hardness results showing that computing $d^\star$ is NP-hard and deciding whether a dataset is globally sufficient is coNP-hard, thereby resolving a recent open problem posed by Bennouna et al. To address this worst-case intractability, we introduce pointwise sufficiency, a relaxation that requires sufficiency for an individual cost vector. Under nondegeneracy, we provide a polynomial-time cutting-plane algorithm for constructing pointwise-sufficient decision datasets. In a data-driven regime with i.i.d.\ costs, we further propose a cumulative algorithm that aggregates decision-relevant directions across samples, yielding a stable compression scheme of size at most $d^\star$. This leads to a distribution-free PAC guarantee: with high probability over the training sample, the pointwise sufficiency failure probability on a fresh draw is at most $\tilde{O}(d^\star/n)$, and this rate is tight up to logarithmic factors. Finally, we apply decision-sufficient representations to contextual linear optimization, obtaining compressed predictors with generalization bounds scaling as $\tilde{O}(\sqrt{d^\star/n})$ rather than $\tilde{O}(\sqrt{d/n})$, where $d$ is the ambient cost dimension.</summary>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-19T07:07:48Z</published>
+    <arxiv:comment>45 pages plus appendix, 2 figures. Accepted at COLT 2026</arxiv:comment>
+    <arxiv:primary_category term="math.OC"/>
+    <author>
+      <name>Yuhan Ye</name>
+    </author>
+    <author>
+      <name>Saurabh Amin</name>
+    </author>
+    <author>
+      <name>Asuman Ozdaglar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.24890v2</id>
+    <title>QuoVLA: Quotient Space for Vision-Language-Action Models</title>
+    <updated>2026-06-08T07:28:33Z</updated>
+    <link href="https://arxiv.org/abs/2605.24890v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.24890v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Vision-Language-Action (VLA) models commonly adapt pretrained Vision-Language Models (VLMs) to robot control by mapping visual observations and language instructions to continuous actions. Existing approaches typically take an action-insufficiency view, assuming that pretrained VLM latents either lack directly usable action information or should be shielded from action-learning signals. Against this view, our \textit{Quotient Theory for VLA} shows that pretrained VLM latents are not action-insufficient but action-sufficient: they already contain the information needed for control, yet remain overcomplete by distinguishing prompt-level variations that induce the same optimal action behavior. To operationalize this theory, we propose QuoVLA, a quotient-space framework for VLA that compresses pretrained VLM latents into action-sufficient representations. Specifically, QuoVLA instantiates this principle with a quantization module and a dual-branch design with relative temporal-complexity regularization, preserving action-relevant information while removing prompt-level redundancy. Extensive experiments across multiple benchmarks demonstrate that QuoVLA achieves strong performance, with particularly notable improvements in generalization under visual, linguistic, and environmental distribution shifts. Our code will be made publicly available.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-24T06:28:53Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Xuan Wang</name>
+    </author>
+    <author>
+      <name>Yinan Wu</name>
+    </author>
+    <author>
+      <name>Haoran Duan</name>
+    </author>
+    <author>
+      <name>Jungong Han</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.16725v1</id>
+    <title>Semi-Supervised Conditional Generative Learning through Stochastic Interpolation and Sufficient Representations</title>
+    <updated>2026-07-18T09:21:53Z</updated>
+    <link href="https://arxiv.org/abs/2607.16725v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.16725v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Conditional generative modeling remains a challenging problem in semi-supervised settings where labeled data is scarce but unlabeled samples are abundant. To effectively leverage structural information embedded within the unlabeled dataset and compensate for sparse conditioning signals, we propose a semi-supervised framework combining conditional stochastic interpolation with low-dimensional latent representations. RepG decomposes generation into two stages: label-dependent latent sampling and high-dimensional reconstruction. This isolates the supervised learning of conditional dependencies to a low-dimensional space, requiring few labels while utilizing the abundant unlabeled data purely for reconstruction. Theoretically, we establish an error decomposition showing that the Kullback-Leibler divergence of RepG comprises stage-wise estimation errors and a structural bias quantified by conditional mutual information. For deep neural network estimators, we derive non-asymptotic convergence rates proving that RepG significantly improves sample complexity. By confining the supervised estimation burden to the low intrinsic dimension of the latent representation, RepG achieves a strictly faster convergence rate. Complemented by a minimax lower bound, our theoretical results demonstrate that this method effectively mitigates the curse of dimensionality inherent in direct ambient-space generative modeling.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-18T09:21:53Z</published>
+    <arxiv:comment>35 pages, 4 figures and 1 table</arxiv:comment>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Changyu Liu</name>
+    </author>
+    <author>
+      <name>Yuling Jiao</name>
+    </author>
+    <author>
+      <name>Jian Huang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2205.13476v2</id>
+    <title>Embed to Control Partially Observed Systems: Representation Learning with Provable Sample Efficiency</title>
+    <updated>2024-04-01T01:53:31Z</updated>
+    <link href="https://arxiv.org/abs/2205.13476v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2205.13476v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Reinforcement learning in partially observed Markov decision processes (POMDPs) faces two challenges. (i) It often takes the full history to predict the future, which induces a sample complexity that scales exponentially with the horizon. (ii) The observation and state spaces are often continuous, which induces a sample complexity that scales exponentially with the extrinsic dimension. Addressing such challenges requires learning a minimal but sufficient representation of the observation and state histories by exploiting the structure of the POMDP.
+  To this end, we propose a reinforcement learning algorithm named Embed to Control (ETC), which learns the representation at two levels while optimizing the policy.~(i) For each step, ETC learns to represent the state with a low-dimensional feature, which factorizes the transition kernel. (ii) Across multiple steps, ETC learns to represent the full history with a low-dimensional embedding, which assembles the per-step feature. We integrate (i) and (ii) in a unified framework that allows a variety of estimators (including maximum likelihood estimators and generative adversarial networks). For a class of POMDPs with a low-rank structure in the transition kernel, ETC attains an $O(1/ε^2)$ sample complexity that scales polynomially with the horizon and the intrinsic dimension (that is, the rank). Here $ε$ is the optimality gap. To our best knowledge, ETC is the first sample-efficient algorithm that bridges representation learning and policy optimization in POMDPs with infinite observation and state spaces.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SY" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-05-26T16:34:46Z</published>
+    <arxiv:comment>Accepted by ICLR 2022</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Lingxiao Wang</name>
+    </author>
+    <author>
+      <name>Qi Cai</name>
+    </author>
+    <author>
+      <name>Zhuoran Yang</name>
+    </author>
+    <author>
+      <name>Zhaoran Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2512.07273v1</id>
+    <title>RVLF: A Reinforcing Vision-Language Framework for Gloss-Free Sign Language Translation</title>
+    <updated>2025-12-08T08:11:53Z</updated>
+    <link href="https://arxiv.org/abs/2512.07273v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2512.07273v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Gloss-free sign language translation (SLT) is hindered by two key challenges: **inadequate sign representation** that fails to capture nuanced visual cues, and **sentence-level semantic misalignment** in current LLM-based methods, which limits translation quality. To address these issues, we propose a three-stage **r**einforcing **v**ision-**l**anguage **f**ramework (**RVLF**). We build a large vision-language model (LVLM) specifically designed for sign language, and then combine it with reinforcement learning (RL) to adaptively enhance translation performance. First, for a sufficient representation of sign language, RVLF introduces an effective semantic representation learning mechanism that fuses skeleton-based motion cues with semantically rich visual features extracted via DINOv2, followed by instruction tuning to obtain a strong SLT-SFT baseline. Then, to improve sentence-level semantic misalignment, we introduce a GRPO-based optimization strategy that fine-tunes the SLT-SFT model with a reward function combining translation fidelity (BLEU) and sentence completeness (ROUGE), yielding the optimized model termed SLT-GRPO. Our conceptually simple framework yields substantial gains under the gloss-free SLT setting without pre-training on any external large-scale sign language datasets, improving BLEU-4 scores by +5.1, +1.11, +1.4, and +1.61 on the CSL-Daily, PHOENIX-2014T, How2Sign, and OpenASL datasets, respectively. To the best of our knowledge, this is the first work to incorporate GRPO into SLT. Extensive experiments and ablation studies validate the effectiveness of GRPO-based optimization in enhancing both translation quality and semantic consistency.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-12-08T08:11:53Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Zhi Rao</name>
+    </author>
+    <author>
+      <name>Yucheng Zhou</name>
+    </author>
+    <author>
+      <name>Benjia Zhou</name>
+    </author>
+    <author>
+      <name>Yiqing Huang</name>
+    </author>
+    <author>
+      <name>Sergio Escalera</name>
+    </author>
+    <author>
+      <name>Jun Wan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.04045v1</id>
+    <title>Bayes-Sufficient Representations in Supervised Learning</title>
+    <updated>2026-06-02T07:13:31Z</updated>
+    <link href="https://arxiv.org/abs/2606.04045v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.04045v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Representation learning is often described as preserving the information in an input that is relevant for prediction. This work asks what relevance means for a fixed supervised decision problem. A representation is defined to be Bayes-sufficient for a joint distribution and loss if some prediction head can use it to implement a Bayes-optimal action rule. This makes the target information loss-dependent. In the almost-surely unique Bayes-action case, the relevant object is a Bayes quotient, which identifies inputs that require the same Bayes-optimal action. A representation is sufficient when it refines this quotient, and Bayes-minimal when it is informationally equivalent to it. The framework connects naturally to property elicitation: zero-one loss requires the Bayes class, squared loss the conditional mean, Brier loss the conditional probability in binary prediction, and log loss or strictly proper scoring rules the predictive distribution. Controlled finite experiments, learned neural bottleneck experiments, and a real-data iNaturalist taxonomic refinement experiment illustrate the distinction between sufficiency, minimality, and retained non-required information. For a fixed supervised problem, the distribution and the loss determine the Bayes action, the Bayes action determines the quotient, and the quotient determines the minimal information required for Bayes-optimal prediction.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-02T07:13:31Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Vasileios Sevetlidis</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2209.07699v3</id>
+    <title>Graph Contrastive Learning with Cross-view Reconstruction</title>
+    <updated>2022-10-26T00:58:56Z</updated>
+    <link href="https://arxiv.org/abs/2209.07699v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2209.07699v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Among different existing graph self-supervised learning strategies, graph contrastive learning (GCL) has been one of the most prevalent approaches to this problem. Despite the remarkable performance those GCL methods have achieved, existing GCL methods that heavily depend on various manually designed augmentation techniques still struggle to alleviate the feature suppression issue without risking losing task-relevant information. Consequently, the learned representation is either brittle or unilluminating. In light of this, we introduce the Graph Contrastive Learning with Cross-View Reconstruction (GraphCV), which follows the information bottleneck principle to learn minimal yet sufficient representation from graph data. Specifically, GraphCV aims to elicit the predictive (useful for downstream instance discrimination) and other non-predictive features separately. Except for the conventional contrastive loss which guarantees the consistency and sufficiency of the representation across different augmentation views, we introduce a cross-view reconstruction mechanism to pursue the disentanglement of the two learned representations. Besides, an adversarial view perturbed from the original view is added as the third view for the contrastive loss to guarantee the intactness of the global semantics and improve the representation robustness. We empirically demonstrate that our proposed model outperforms the state-of-the-art on graph classification task over multiple benchmark datasets.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-09-16T03:48:39Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Qianlong Wen</name>
+    </author>
+    <author>
+      <name>Zhongyu Ouyang</name>
+    </author>
+    <author>
+      <name>Chunhui Zhang</name>
+    </author>
+    <author>
+      <name>Yiyue Qian</name>
+    </author>
+    <author>
+      <name>Yanfang Ye</name>
+    </author>
+    <author>
+      <name>Chuxu Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2507.19437v1</id>
+    <title>Observations Meet Actions: Learning Control-Sufficient Representations for Robust Policy Generalization</title>
+    <updated>2025-07-25T17:08:16Z</updated>
+    <link href="https://arxiv.org/abs/2507.19437v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2507.19437v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Capturing latent variations ("contexts") is key to deploying reinforcement-learning (RL) agents beyond their training regime. We recast context-based RL as a dual inference-control problem and formally characterize two properties and their hierarchy: observation sufficiency (preserving all predictive information) and control sufficiency (retaining decision-making relevant information). Exploiting this dichotomy, we derive a contextual evidence lower bound(ELBO)-style objective that cleanly separates representation learning from policy learning and optimizes it with Bottlenecked Contextual Policy Optimization (BCPO), an algorithm that places a variational information-bottleneck encoder in front of any off-policy policy learner. On standard continuous-control benchmarks with shifting physical parameters, BCPO matches or surpasses other baselines while using fewer samples and retaining performance far outside the training regime. The framework unifies theory, diagnostics, and practice for context-based RL.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-07-25T17:08:16Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Yuliang Gu</name>
+    </author>
+    <author>
+      <name>Hongpeng Cao</name>
+    </author>
+    <author>
+      <name>Marco Caccamo</name>
+    </author>
+    <author>
+      <name>Naira Hovakimyan</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.00832v1</id>
+    <title>Synthetic Designed Experiments for Diagnosing Vision Model Failure</title>
+    <updated>2026-03-30T02:52:21Z</updated>
+    <link href="https://arxiv.org/abs/2605.00832v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.00832v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Current synthetic data pipelines for computer vision generate images without diagnosing what the downstream model actually needs. This open-loop paradigm treats synthetic data as cheap real data, randomly sampling the generator's output space and hoping to cover the model's failure modes. We argue this fundamentally misuses synthetic data's unique property: the controllable, independent variation of scene factors.Drawing on the statistical theory of Design of Experiments (DoE), we propose Synthetic Designed Experiments for Representational Sufficiency (SDRS). SDRS treats the downstream model as a black-box system and the synthetic generator as an experimental apparatus. Using fractional factorial designs, SDRS efficiently audits a model's factor-sensitivity profile via ANOVA decomposition. It classifies failures into two actionable types: Type I gaps (coverage failures on underrepresented factor levels) and Type II gaps (reliance on spurious nuisance dependencies). The audit then prescribes targeted synthetic data to address each gap type. We validate SDRS on three experiments: (1) a controlled diagnostic on dSprites with planted biases, where the audit correctly identifies both gap types and targeted data improves accuracy from 49.9% to 79.0%; (2) a dense segmentation task on procedural scenes, where detecting background-complexity shortcuts and applying targeted data improves mIoU from 0.948 to 0.998; and (3) an entanglement detection experiment showing that the ANOVA audit identifies cross-factor contamination in imperfect generators. Finally, we show that per-factor invariance penalties can transfer sensitivity between factors, identifying an open problem for representation-level correction.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-30T02:52:21Z</published>
+    <arxiv:comment>Under review at CVPR SynData4CV 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Krisanu Sarkar</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.01852v1</id>
+    <title>Multimodal Embeddings for 3D Similarity Search in Semantic Web-of-Things Digital-Twin Platforms</title>
+    <updated>2026-08-03T07:59:00Z</updated>
+    <link href="https://arxiv.org/abs/2608.01852v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.01852v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Semantic Web of Things (SWoT) platforms model physical infrastructure as knowledge graphs typed against domain ontologies, enabling expressive structural and logical queries. However, they lack native mechanisms to express similarity beyond strict ontological equivalence, which represents a critical gap for 3D digital twins in domains such as telecom infrastructure and industrial IoT, where queries must combine ontological constraints with multimodal similarity search over heterogeneous, temporally-evolving scene data. We propose a framework that extends SWoT platforms with a multimodal embedding layer: ontology-typed entities comprising 3D point clouds, temporal attributes, and semantic labels are encoded into latent vector representations stored alongside the knowledge graph, enabling hybrid ontology-vector queries that combine graph-based filtering with similarity search. Implemented on Orange Research's Thing'in platform with the Clock-G temporal graph database, a feasibility evaluation on S3DIS demonstrates that graph filtering effectively restricts the search pool under temporal and relational constraints, and that general-purpose pretrained encoders produce representations sufficient for similarity retrieval and as a preliminary encoding step for downstream predictive tasks.</summary>
+    <category term="cs.DB" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-03T07:59:00Z</published>
+    <arxiv:primary_category term="cs.DB"/>
+    <arxiv:journal_ref>4th International Workshop on the Semantic WEb of EveryThing (SWEET 2026), co-located with ICWE 2026, Jun 2026, Lyon, France</arxiv:journal_ref>
+    <author>
+      <name>Oussama Zaid</name>
+      <arxiv:affiliation>MALT</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Romaric Gaudel</name>
+      <arxiv:affiliation>MALT</arxiv:affiliation>
+    </author>
+    <author>
+      <name>Hassan Thomas</name>
+    </author>
+    <author>
+      <name>Maria Massri</name>
+    </author>
+    <author>
+      <name>Philippe Raipin-Parv{é}dy</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.05510v2</id>
+    <title>Representation Learning with Conditional Information Flow Maximization</title>
+    <updated>2024-08-12T09:31:30Z</updated>
+    <link href="https://arxiv.org/abs/2406.05510v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.05510v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper proposes an information-theoretic representation learning framework, named conditional information flow maximization, to extract noise-invariant sufficient representations for the input data and target task. It promotes the learned representations have good feature uniformity and sufficient predictive ability, which can enhance the generalization of pre-trained language models (PLMs) for the target task. Firstly, an information flow maximization principle is proposed to learn more sufficient representations for the input and target by simultaneously maximizing both input-representation and representation-label mutual information. Unlike the information bottleneck, we handle the input-representation information in an opposite way to avoid the over-compression issue of latent representations. Besides, to mitigate the negative effect of potential redundant features from the input, we design a conditional information minimization principle to eliminate negative redundant features while preserve noise-invariant features. Experiments on 13 language understanding benchmarks demonstrate that our method effectively improves the performance of PLMs for classification and regression. Extensive experiments show that the learned representations are more sufficient, robust and transferable.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-08T16:19:18Z</published>
+    <arxiv:comment>16 pages, accepted to ACL 2024 (main conference), the code is available at https://github.com/zerohd4869/CIFM</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Dou Hu</name>
+    </author>
+    <author>
+      <name>Lingwei Wei</name>
+    </author>
+    <author>
+      <name>Wei Zhou</name>
+    </author>
+    <author>
+      <name>Songlin Hu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2207.00052v3</id>
+    <title>Visual Pre-training for Navigation: What Can We Learn from Noise?</title>
+    <updated>2023-07-26T21:55:11Z</updated>
+    <link href="https://arxiv.org/abs/2207.00052v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2207.00052v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>One powerful paradigm in visual navigation is to predict actions from observations directly. Training such an end-to-end system allows representations useful for downstream tasks to emerge automatically. However, the lack of inductive bias makes this system data inefficient. We hypothesize a sufficient representation of the current view and the goal view for a navigation policy can be learned by predicting the location and size of a crop of the current view that corresponds to the goal. We further show that training such random crop prediction in a self-supervised fashion purely on synthetic noise images transfers well to natural home images. The learned representation can then be bootstrapped to learn a navigation policy efficiently with little interaction data. The code is available at https://yanweiw.github.io/noise2ptz</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-06-30T18:35:00Z</published>
+    <arxiv:comment>IROS 2023</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yanwei Wang</name>
+    </author>
+    <author>
+      <name>Ching-Yun Ko</name>
+    </author>
+    <author>
+      <name>Pulkit Agrawal</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2403.19078v1</id>
+    <title>MVEB: Self-Supervised Learning with Multi-View Entropy Bottleneck</title>
+    <updated>2024-03-28T00:50:02Z</updated>
+    <link href="https://arxiv.org/abs/2403.19078v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2403.19078v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Self-supervised learning aims to learn representation that can be effectively generalized to downstream tasks. Many self-supervised approaches regard two views of an image as both the input and the self-supervised signals, assuming that either view contains the same task-relevant information and the shared information is (approximately) sufficient for predicting downstream tasks. Recent studies show that discarding superfluous information not shared between the views can improve generalization. Hence, the ideal representation is sufficient for downstream tasks and contains minimal superfluous information, termed minimal sufficient representation. One can learn this representation by maximizing the mutual information between the representation and the supervised view while eliminating superfluous information. Nevertheless, the computation of mutual information is notoriously intractable. In this work, we propose an objective termed multi-view entropy bottleneck (MVEB) to learn minimal sufficient representation effectively. MVEB simplifies the minimal sufficient learning to maximizing both the agreement between the embeddings of two views and the differential entropy of the embedding distribution. Our experiments confirm that MVEB significantly improves performance. For example, it achieves top-1 accuracy of 76.9\% on ImageNet with a vanilla ResNet-50 backbone on linear evaluation. To the best of our knowledge, this is the new state-of-the-art result with ResNet-50.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-03-28T00:50:02Z</published>
+    <arxiv:comment>Accepted by TPAMI</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Liangjian Wen</name>
+    </author>
+    <author>
+      <name>Xiasi Wang</name>
+    </author>
+    <author>
+      <name>Jianzhuang Liu</name>
+    </author>
+    <author>
+      <name>Zenglin Xu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.27729v1</id>
+    <title>Learning 1-Bit LiDAR-based Localization with Auxiliary Objective</title>
+    <updated>2026-06-26T05:20:35Z</updated>
+    <link href="https://arxiv.org/abs/2606.27729v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.27729v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>6-DoF LiDAR-based localization is a fundamental capability for autonomous systems operating in large-scale outdoor environments. Many deep-learning-based localization methods have achieved promising performance so far. However, as one of the always-on modules competing for limited on-board computational resources, the localization module is expected to consume only a small portion of the overall compute budget. Most existing learning-based methods are still too heavy for this purpose. In contrast, binary neural networks (BNNs) offer an appealing solution, but the 1-bit compression causes severe information loss and performance drop. In this paper, we address this challenge by proposing Binarized LiDAR-based Localization (BiLoc), the first binary neural network framework for 6-DoF LiDAR localization. Specifically, we reinterpret the training of BNNs from the perspective of the information-bottleneck principle, aiming at retaining minimal yet sufficient representations for pose estimation while suppressing redundant variations. And we introduce an auxiliary objective that adaptively regulates information retention in the binary encoder, effectively mitigating the information loss caused by binarization. This auxiliary objective provides additional optimization signals that compensate for the limited representational capacity and the gradient mismatch inherent in BNNs. Extensive experiments on large-scale outdoor LiDAR datasets demonstrate that BiLoc establishes a new state of the art for LiDAR localization with BNNs.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-26T05:20:35Z</published>
+    <arxiv:comment>European Conference on Computer Vision(ECCV)</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Kaijie Yin</name>
+    </author>
+    <author>
+      <name>Zhiyuan Zhang</name>
+    </author>
+    <author>
+      <name>Tian Gao</name>
+    </author>
+    <author>
+      <name>Wentao Zhu</name>
+    </author>
+    <author>
+      <name>Cheng-zhong Xu</name>
+    </author>
+    <author>
+      <name>Hui Kong</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2308.11646v1</id>
+    <title>Joint Local Relational Augmentation and Global Nash Equilibrium for Federated Learning with Non-IID Data</title>
+    <updated>2023-08-17T06:17:51Z</updated>
+    <link href="https://arxiv.org/abs/2308.11646v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2308.11646v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Federated learning (FL) is a distributed machine learning paradigm that needs collaboration between a server and a series of clients with decentralized data. To make FL effective in real-world applications, existing work devotes to improving the modeling of decentralized data with non-independent and identical distributions (non-IID). In non-IID settings, there are intra-client inconsistency that comes from the imbalanced data modeling, and inter-client inconsistency among heterogeneous client distributions, which not only hinders sufficient representation of the minority data, but also brings discrepant model deviations. However, previous work overlooks to tackle the above two coupling inconsistencies together. In this work, we propose FedRANE, which consists of two main modules, i.e., local relational augmentation (LRA) and global Nash equilibrium (GNE), to resolve intra- and inter-client inconsistency simultaneously. Specifically, in each client, LRA mines the similarity relations among different data samples and enhances the minority sample representations with their neighbors using attentive message passing. In server, GNE reaches an agreement among inconsistent and discrepant model deviations from clients to server, which encourages the global model to update in the direction of global optimum without breaking down the clients optimization toward their local optimums. We conduct extensive experiments on four benchmark datasets to show the superiority of FedRANE in enhancing the performance of FL with non-IID data.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.GT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-08-17T06:17:51Z</published>
+    <arxiv:comment>To appear in ACM International Conference on Multimedia (ACM MM23)</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Xinting Liao</name>
+    </author>
+    <author>
+      <name>Chaochao Chen</name>
+    </author>
+    <author>
+      <name>Weiming Liu</name>
+    </author>
+    <author>
+      <name>Pengyang Zhou</name>
+    </author>
+    <author>
+      <name>Huabin Zhu</name>
+    </author>
+    <author>
+      <name>Shuheng Shen</name>
+    </author>
+    <author>
+      <name>Weiqiang Wang</name>
+    </author>
+    <author>
+      <name>Mengling Hu</name>
+    </author>
+    <author>
+      <name>Yanchao Tan</name>
+    </author>
+    <author>
+      <name>Xiaolin Zheng</name>
+    </author>
+    <arxiv:doi>10.1145/3581783.3612178</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3581783.3612178" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.04409v1</id>
+    <title>Learning Task-Sufficient World Models by Synergizing Agentic Exploration and Structured Modeling</title>
+    <updated>2026-07-05T17:02:40Z</updated>
+    <link href="https://arxiv.org/abs/2607.04409v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.04409v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Learning and planning in imagination using world models provides an effective paradigm for training agents for decision-making. However, existing approaches often rely on high-dimensional latent spaces or generic visual embeddings that retain many factors irrelevant to control, limiting efficiency and generalization across tasks. To this end, we study how agents can learn world models with representations that are task-specific, minimal, and sufficient for decision-making. We achieve this via a closed-loop synergy between the agent and the world model, in which structured world-model learning distills task-sufficient representations from informative interaction data. On the agent side, agents actively probe the environment to collect informative trajectories that expose task-relevant latent factors, guided by an adaptive curriculum. On the world-model side, we learn structured representations over observations to distill compact, task-sufficient latent states from the collected interaction data. This synergy enables the empirical recovery of task-sufficient latent representations that capture all control-relevant factors. Leveraging these representations, the resulting policies achieve improved sample efficiency and generalization, including generalization across skills, object-skill compositions, and previously unseen tasks on standard continuous-control and robotic-manipulation benchmarks.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-05T17:02:40Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Fan Feng</name>
+    </author>
+    <author>
+      <name>Yujia Zheng</name>
+    </author>
+    <author>
+      <name>Minghao Fu</name>
+    </author>
+    <author>
+      <name>Yongqiang Chen</name>
+    </author>
+    <author>
+      <name>Guangyi Chen</name>
+    </author>
+    <author>
+      <name>Kevin Murphy</name>
+    </author>
+    <author>
+      <name>Biwei Huang</name>
+    </author>
+    <author>
+      <name>Kun Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2406.16121v2</id>
+    <title>Diffusion Spectral Representation for Reinforcement Learning</title>
+    <updated>2024-11-01T16:30:00Z</updated>
+    <link href="https://arxiv.org/abs/2406.16121v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2406.16121v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Diffusion-based models have achieved notable empirical successes in reinforcement learning (RL) due to their expressiveness in modeling complex distributions. Despite existing methods being promising, the key challenge of extending existing methods for broader real-world applications lies in the computational cost at inference time, i.e., sampling from a diffusion model is considerably slow as it often requires tens to hundreds of iterations to generate even one sample. To circumvent this issue, we propose to leverage the flexibility of diffusion models for RL from a representation learning perspective. In particular, by exploiting the connection between diffusion models and energy-based models, we develop Diffusion Spectral Representation (Diff-SR), a coherent algorithm framework that enables extracting sufficient representations for value functions in Markov decision processes (MDP) and partially observable Markov decision processes (POMDP). We further demonstrate how Diff-SR facilitates efficient policy optimization and practical algorithms while explicitly bypassing the difficulty and inference cost of sampling from the diffusion model. Finally, we provide comprehensive empirical studies to verify the benefits of Diff-SR in delivering robust and advantageous performance across various benchmarks with both fully and partially observable settings.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-06-23T14:24:14Z</published>
+    <arxiv:comment>NeurIPS 2024</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Dmitry Shribak</name>
+    </author>
+    <author>
+      <name>Chen-Xiao Gao</name>
+    </author>
+    <author>
+      <name>Yitong Li</name>
+    </author>
+    <author>
+      <name>Chenjun Xiao</name>
+    </author>
+    <author>
+      <name>Bo Dai</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1908.09874v3</id>
+    <title>Sufficient Representations for Categorical Variables</title>
+    <updated>2021-10-28T17:56:28Z</updated>
+    <link href="https://arxiv.org/abs/1908.09874v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1908.09874v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Many learning algorithms require categorical data to be transformed into real vectors before it can be used as input. Often, categorical variables are encoded as one-hot (or dummy) vectors. However, this mode of representation can be wasteful since it adds many low-signal regressors, especially when the number of unique categories is large. In this paper, we investigate simple alternative solutions for universally consistent estimators that rely on lower-dimensional real-valued representations of categorical variables that are "sufficient" in the sense that no predictive information is lost. We then compare preexisting and proposed methods on simulated and observational datasets.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2019-08-26T18:41:29Z</published>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Jonathan Johannemann</name>
+    </author>
+    <author>
+      <name>Vitor Hadad</name>
+    </author>
+    <author>
+      <name>Susan Athey</name>
+    </author>
+    <author>
+      <name>Stefan Wager</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2503.04667v1</id>
+    <title>An Information-theoretic Multi-task Representation Learning Framework for Natural Language Understanding</title>
+    <updated>2025-03-06T17:59:51Z</updated>
+    <link href="https://arxiv.org/abs/2503.04667v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2503.04667v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>This paper proposes a new principled multi-task representation learning framework (InfoMTL) to extract noise-invariant sufficient representations for all tasks. It ensures sufficiency of shared representations for all tasks and mitigates the negative effect of redundant features, which can enhance language understanding of pre-trained language models (PLMs) under the multi-task paradigm. Firstly, a shared information maximization principle is proposed to learn more sufficient shared representations for all target tasks. It can avoid the insufficiency issue arising from representation compression in the multi-task paradigm. Secondly, a task-specific information minimization principle is designed to mitigate the negative effect of potential redundant features in the input for each task. It can compress task-irrelevant redundant information and preserve necessary information relevant to the target for multi-task prediction. Experiments on six classification benchmarks show that our method outperforms 12 comparative multi-task methods under the same multi-task settings, especially in data-constrained and noisy scenarios. Extensive experiments demonstrate that the learned representations are more sufficient, data-efficient, and robust.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-03-06T17:59:51Z</published>
+    <arxiv:comment>11 pages, accepted to AAAI 2025 (main conference), the code is available at https://github.com/zerohd4869/InfoMTL</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Dou Hu</name>
+    </author>
+    <author>
+      <name>Lingwei Wei</name>
+    </author>
+    <author>
+      <name>Wei Zhou</name>
+    </author>
+    <author>
+      <name>Songlin Hu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.30039v2</id>
+    <title>Domain-Specific Data Synthesis for LLMs via Minimal Sufficient Representation Learning</title>
+    <updated>2026-05-29T13:58:00Z</updated>
+    <link href="https://arxiv.org/abs/2605.30039v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.30039v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Language Models have demonstrated remarkable progress in general-purpose capabilities and can achieve strong performance in specific domains through fine-tuning on domain-specific data. However, acquiring high-quality data for target domains remains a significant challenge. Existing data synthesis approaches follow a deductive paradigm, heavily relying on explicit domain descriptions expressed in natural language and careful prompt engineering, limiting their applicability in real-world scenarios where domains are difficult to describe or formally articulate. In this work, we tackle the underexplored problem of domain-specific data synthesis through an inductive paradigm, where the target domain is defined only through a set of reference examples, particularly when domain characteristics are difficult to articulate in natural language. We propose a novel framework, DOMINO, that learns a minimal sufficient domain representation from reference samples and leverages it to guide the generation of domain-aligned synthetic data. DOMINO integrates prompt tuning with a contrastive disentanglement objective to separate domain-level patterns from sample-specific noise, mitigating overfitting while preserving core domain characteristics. Theoretically, we prove that DOMINO expands the support of the synthetic data distribution, ensuring greater diversity. Empirically, on challenging coding benchmarks where domain definitions are implicit, fine-tuning on data synthesized by DOMINO improves Pass@1 accuracy by up to 4.63\% over strong, instruction-tuned backbones, demonstrating its effectiveness and robustness. This work establishes a new paradigm for domain-specific data synthesis, enabling practical and scalable domain adaptation without manual prompt design or natural language domain specifications.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-28T14:57:02Z</published>
+    <arxiv:comment>Accepted by KDD 2026</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Tong Ye</name>
+    </author>
+    <author>
+      <name>Hang Yu</name>
+    </author>
+    <author>
+      <name>Tengfei Ma</name>
+    </author>
+    <author>
+      <name>Xuhong Zhang</name>
+    </author>
+    <author>
+      <name>Jianguo Li</name>
+    </author>
+    <author>
+      <name>Peng Di</name>
+    </author>
+    <author>
+      <name>Peiyu Liu</name>
+    </author>
+    <author>
+      <name>Jianwei Yin</name>
+    </author>
+    <author>
+      <name>Wenhai Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2010.02459v2</id>
+    <title>Usable Information and Evolution of Optimal Representations During Training</title>
+    <updated>2021-02-28T17:51:26Z</updated>
+    <link href="https://arxiv.org/abs/2010.02459v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2010.02459v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce a notion of usable information contained in the representation learned by a deep network, and use it to study how optimal representations for the task emerge during training. We show that the implicit regularization coming from training with Stochastic Gradient Descent with a high learning-rate and small batch size plays an important role in learning minimal sufficient representations for the task. In the process of arriving at a minimal sufficient representation, we find that the content of the representation changes dynamically during training. In particular, we find that semantically meaningful but ultimately irrelevant information is encoded in the early transient dynamics of training, before being later discarded. In addition, we evaluate how perturbing the initial part of training impacts the learning dynamics and the resulting representations. We show these effects on both perceptual decision-making tasks inspired by neuroscience literature, as well as on standard image classification tasks.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-10-06T03:50:19Z</published>
+    <arxiv:comment>ICLR 2021</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Michael Kleinman</name>
+    </author>
+    <author>
+      <name>Alessandro Achille</name>
+    </author>
+    <author>
+      <name>Daksh Idnani</name>
+    </author>
+    <author>
+      <name>Jonathan C. Kao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.24041v1</id>
+    <title>Minimal Sufficient Representations for Self-interpretable Deep Neural Networks</title>
+    <updated>2026-03-25T07:51:21Z</updated>
+    <link href="https://arxiv.org/abs/2603.24041v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.24041v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Deep neural networks (DNNs) achieve remarkable predictive performance but remain difficult to interpret, largely due to overparameterization that obscures the minimal structure required for interpretation. Here we introduce DeepIn, a self-interpretable neural network framework that adaptively identifies and learns the minimal representation necessary for preserving the full expressive capacity of standard DNNs. We show that DeepIn can correctly identify the minimal representation dimension, select relevant variables, and recover the minimal sufficient network architecture for prediction. The resulting estimator achieves optimal non-asymptotic error rates that adapt to the learned minimal dimension, demonstrating that recovering minimal sufficient structure fundamentally improves generalization error. Building on these guarantees, we further develop hypothesis testing procedures for both selected variables and learned representations, bridging deep representation learning with formal statistical inference. Across biomedical and vision benchmarks, DeepIn improves both predictive accuracy and interpretability, reducing error by up to 30% on real-world datasets while automatically uncovering human-interpretable discriminative patterns. Our results suggest that interpretability and statistical rigor can be embedded directly into deep architectures without sacrificing performance.</summary>
+    <category term="stat.ME" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-25T07:51:21Z</published>
+    <arxiv:primary_category term="stat.ME"/>
+    <author>
+      <name>Zhiyao Tan</name>
+    </author>
+    <author>
+      <name>Liu Li</name>
+    </author>
+    <author>
+      <name>Huazhen Lin</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2010.12811v1</id>
+    <title>Graph Information Bottleneck</title>
+    <updated>2020-10-24T07:13:00Z</updated>
+    <link href="https://arxiv.org/abs/2010.12811v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2010.12811v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Representation learning of graph-structured data is challenging because both graph structure and node features carry important information. Graph Neural Networks (GNNs) provide an expressive way to fuse information from network structure and node features. However, GNNs are prone to adversarial attacks. Here we introduce Graph Information Bottleneck (GIB), an information-theoretic principle that optimally balances expressiveness and robustness of the learned representation of graph-structured data. Inheriting from the general Information Bottleneck (IB), GIB aims to learn the minimal sufficient representation for a given task by maximizing the mutual information between the representation and the target, and simultaneously constraining the mutual information between the representation and the input data. Different from the general IB, GIB regularizes the structural as well as the feature information. We design two sampling algorithms for structural regularization and instantiate the GIB principle with two new models: GIB-Cat and GIB-Bern, and demonstrate the benefits by evaluating the resilience to adversarial attacks. We show that our proposed models are more robust than state-of-the-art graph defense models. GIB-based models empirically achieve up to 31% improvement with adversarial perturbation of the graph structure as well as node features.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-10-24T07:13:00Z</published>
+    <arxiv:comment>20 pages, 3 figures, NeurIPS 2020</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Tailin Wu</name>
+    </author>
+    <author>
+      <name>Hongyu Ren</name>
+    </author>
+    <author>
+      <name>Pan Li</name>
+    </author>
+    <author>
+      <name>Jure Leskovec</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2508.20911v1</id>
+    <title>Deep Learning Based Concurrency Bug Detection and Localization</title>
+    <updated>2025-08-28T15:40:20Z</updated>
+    <link href="https://arxiv.org/abs/2508.20911v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2508.20911v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Concurrency bugs, caused by improper synchronization of shared resources in multi-threaded or distributed systems, are notoriously hard to detect and thus compromise software reliability and security. The existing deep learning methods face three main limitations. First, there is an absence of large and dedicated datasets of diverse concurrency bugs for them. Second, they lack sufficient representation of concurrency semantics. Third, binary classification results fail to provide finer-grained debug information such as precise bug lines. To address these problems, we propose a novel method for effective concurrency bug detection as well as localization. We construct a dedicated concurrency bug dataset to facilitate model training and evaluation. We then integrate a pre-trained model with a heterogeneous graph neural network (GNN), by incorporating a new Concurrency-Aware Code Property Graph (CCPG) that concisely and effectively characterizes concurrency semantics. To further facilitate debugging, we employ SubgraphX, a GNN-based interpretability method, which explores the graphs to precisely localize concurrency bugs, mapping them to specific lines of source code. On average, our method demonstrates an improvement of 10\% in accuracy and precision and 26\% in recall compared to state-of-the-art methods across diverse evaluation settings.</summary>
+    <category term="cs.SE" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-08-28T15:40:20Z</published>
+    <arxiv:primary_category term="cs.SE"/>
+    <author>
+      <name>Zuocheng Feng</name>
+    </author>
+    <author>
+      <name>Kaiwen Zhang</name>
+    </author>
+    <author>
+      <name>Miaomiao Wang</name>
+    </author>
+    <author>
+      <name>Yiming Cheng</name>
+    </author>
+    <author>
+      <name>Yuandao Cai</name>
+    </author>
+    <author>
+      <name>Xiaofeng Li</name>
+    </author>
+    <author>
+      <name>Guanjun Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2306.04893v3</id>
+    <title>Coping with Change: Learning Invariant and Minimum Sufficient Representations for Fine-Grained Visual Categorization</title>
+    <updated>2023-10-10T01:24:45Z</updated>
+    <link href="https://arxiv.org/abs/2306.04893v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2306.04893v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Fine-grained visual categorization (FGVC) is a challenging task due to similar visual appearances between various species. Previous studies always implicitly assume that the training and test data have the same underlying distributions, and that features extracted by modern backbone architectures remain discriminative and generalize well to unseen test data. However, we empirically justify that these conditions are not always true on benchmark datasets. To this end, we combine the merits of invariant risk minimization (IRM) and information bottleneck (IB) principle to learn invariant and minimum sufficient (IMS) representations for FGVC, such that the overall model can always discover the most succinct and consistent fine-grained features. We apply the matrix-based R{é}nyi's $α$-order entropy to simplify and stabilize the training of IB; we also design a ``soft" environment partition scheme to make IRM applicable to FGVC task. To the best of our knowledge, we are the first to address the problem of FGVC from a generalization perspective and develop a new information-theoretic solution accordingly. Extensive experiments demonstrate the consistent performance gain offered by our IMS.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-06-08T02:45:15Z</published>
+    <arxiv:comment>Manuscript accepted by CVIU, code is available at Github</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Shuo Ye</name>
+    </author>
+    <author>
+      <name>Shujian Yu</name>
+    </author>
+    <author>
+      <name>Wenjin Hou</name>
+    </author>
+    <author>
+      <name>Yu Wang</name>
+    </author>
+    <author>
+      <name>Xinge You</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2311.18083v5</id>
+    <title>Meta Co-Training: Two Views are Better than One</title>
+    <updated>2025-05-28T01:01:10Z</updated>
+    <link href="https://arxiv.org/abs/2311.18083v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2311.18083v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In many critical computer vision scenarios unlabeled data is plentiful, but labels are scarce and difficult to obtain. As a result, semi-supervised learning which leverages unlabeled data to boost the performance of supervised classifiers have received significant attention in recent literature. One representative class of semi-supervised algorithms are co-training algorithms. Co-training algorithms leverage two different models which have access to different independent and sufficient representations or "views" of the data to jointly make better predictions. Each of these models creates pseudo-labels on unlabeled points which are used to improve the other model. We show that in the common case where independent views are not available, we can construct such views inexpensively using pre-trained models. Co-training on the constructed views yields a performance improvement over any of the individual views we construct and performance comparable with recent approaches in semi-supervised learning. We present Meta Co-Training, a novel semi-supervised learning algorithm, which has two advantages over co-training: (i) learning is more robust when there is large discrepancy between the information content of the different views, and (ii) does not require retraining from scratch on each iteration. Our method achieves new state-of-the-art performance on ImageNet-10% achieving a ~4.7% reduction in error rate over prior work. Our method also outperforms prior semi-supervised work on several other fine-grained image classification datasets.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-11-29T21:11:58Z</published>
+    <arxiv:comment>16 pages, 16 figures, 11 tables, for implementation see https://github.com/JayRothenberger/Meta-Co-Training</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Jay C. Rothenberger</name>
+    </author>
+    <author>
+      <name>Dimitrios I. Diochnos</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2306.07284v1</id>
+    <title>No Free Lunch: The Hazards of Over-Expressive Representations in Anomaly Detection</title>
+    <updated>2023-06-12T17:59:50Z</updated>
+    <link href="https://arxiv.org/abs/2306.07284v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2306.07284v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Anomaly detection methods, powered by deep learning, have recently been making significant progress, mostly due to improved representations. It is tempting to hypothesize that anomaly detection can improve indefinitely by increasing the scale of our networks, making their representations more expressive. In this paper, we provide theoretical and empirical evidence to the contrary. In fact, we empirically show cases where very expressive representations fail to detect even simple anomalies when evaluated beyond the well-studied object-centric datasets. To investigate this phenomenon, we begin by introducing a novel theoretical toy model for anomaly detection performance. The model uncovers a fundamental trade-off between representation sufficiency and over-expressivity. It provides evidence for a no-free-lunch theorem in anomaly detection stating that increasing representation expressivity will eventually result in performance degradation. Instead, guidance must be provided to focus the representation on the attributes relevant to the anomalies of interest. We conduct an extensive empirical investigation demonstrating that state-of-the-art representations often suffer from over-expressivity, failing to detect many types of anomalies. Our investigation demonstrates how this over-expressivity impairs image anomaly detection in practical settings. We conclude with future directions for mitigating this issue.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-06-12T17:59:50Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Tal Reiss</name>
+    </author>
+    <author>
+      <name>Niv Cohen</name>
+    </author>
+    <author>
+      <name>Yedid Hoshen</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2311.12812v1</id>
+    <title>Personalization of Affective Models to Enable Neuropsychiatric Digital Precision Health Interventions: A Feasibility Study</title>
+    <updated>2023-09-21T07:16:50Z</updated>
+    <link href="https://arxiv.org/abs/2311.12812v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2311.12812v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Mobile digital therapeutics for autism spectrum disorder (ASD) often target emotion recognition and evocation, which is a challenge for children with ASD. While such mobile applications often use computer vision machine learning (ML) models to guide the adaptive nature of the digital intervention, a single model is usually deployed and applied to all children. Here, we explore the potential of model personalization, or training a single emotion recognition model per person, to improve the performance of these underlying emotion recognition models used to guide digital health therapies for children with ASD. We conducted experiments on the Emognition dataset, a video dataset of human subjects evoking a series of emotions. For a subset of 10 individuals in the dataset with a sufficient representation of at least two ground truth emotion labels, we trained a personalized version of three classical ML models on a set of 51 features extracted from each video frame. We measured the importance of each facial feature for all personalized models and observed differing ranked lists of top features across subjects, motivating the need for model personalization. We then compared the personalized models against a generalized model trained using data from all 10 participants. The mean F1-scores achieved by the personalized models were 90.48%, 92.66%, and 86.40%, respectively. By contrast, the mean F1-scores reached by non-personalized models trained on different human subjects and evaluated using the same test set were 88.55%, 91.78%, and 80.42%, respectively. The personalized models outperformed the generalized models for 7 out of 10 participants. PCA analyses on the remaining 3 participants revealed relatively facial configuration differences between emotion labels within each subject, suggesting that personalized ML will fail when the variation among data points within a subjects data is too low.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-21T07:16:50Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Ali Kargarandehkordi</name>
+    </author>
+    <author>
+      <name>Matti Kaisti</name>
+    </author>
+    <author>
+      <name>Peter Washington</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2003.06820v2</id>
+    <title>Intra Order-preserving Functions for Calibration of Multi-Class Neural Networks</title>
+    <updated>2020-10-23T06:59:28Z</updated>
+    <link href="https://arxiv.org/abs/2003.06820v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2003.06820v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Predicting calibrated confidence scores for multi-class deep networks is important for avoiding rare but costly mistakes. A common approach is to learn a post-hoc calibration function that transforms the output of the original network into calibrated confidence scores while maintaining the network's accuracy. However, previous post-hoc calibration techniques work only with simple calibration functions, potentially lacking sufficient representation to calibrate the complex function landscape of deep networks. In this work, we aim to learn general post-hoc calibration functions that can preserve the top-k predictions of any deep network. We call this family of functions intra order-preserving functions. We propose a new neural network architecture that represents a class of intra order-preserving functions by combining common neural network components. Additionally, we introduce order-invariant and diagonal sub-families, which can act as regularization for better generalization when the training data size is small. We show the effectiveness of the proposed method across a wide range of datasets and classifiers. Our method outperforms state-of-the-art post-hoc calibration methods, namely temperature scaling and Dirichlet calibration, in several evaluation metrics for the task.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-03-15T12:57:21Z</published>
+    <arxiv:comment>NeurIPS 2020</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Amir Rahimi</name>
+    </author>
+    <author>
+      <name>Amirreza Shaban</name>
+    </author>
+    <author>
+      <name>Ching-An Cheng</name>
+    </author>
+    <author>
+      <name>Richard Hartley</name>
+    </author>
+    <author>
+      <name>Byron Boots</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2502.06343v3</id>
+    <title>Prediction-Powered Causal Inferences</title>
+    <updated>2025-10-23T19:34:01Z</updated>
+    <link href="https://arxiv.org/abs/2502.06343v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2502.06343v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>In many scientific experiments, the data annotating cost constraints the pace for testing novel hypotheses. Yet, modern machine learning pipelines offer a promising solution, provided their predictions yield correct conclusions. We focus on Prediction-Powered Causal Inferences (PPCI), i.e., estimating the treatment effect in an unlabeled target experiment, relying on training data with the same outcome annotated but potentially different treatment or effect modifiers. We first show that conditional calibration guarantees valid PPCI at population level. Then, we introduce a sufficient representation constraint transferring validity across experiments, which we propose to enforce in practice in Deconfounded Empirical Risk Minimization, our new model-agnostic training objective. We validate our method on synthetic and real-world scientific data, solving impossible problem instances for Empirical Risk Minimization even with standard invariance constraints. In particular, for the first time, we achieve valid causal inference on a scientific experiment with complex recording and no human annotations, fine-tuning a foundational model on our similar annotated experiment.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-02-10T10:52:17Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Riccardo Cadei</name>
+    </author>
+    <author>
+      <name>Ilker Demirel</name>
+    </author>
+    <author>
+      <name>Piersilvio De Bartolomeis</name>
+    </author>
+    <author>
+      <name>Lukas Lindorfer</name>
+    </author>
+    <author>
+      <name>Sylvia Cremer</name>
+    </author>
+    <author>
+      <name>Cordelia Schmid</name>
+    </author>
+    <author>
+      <name>Francesco Locatello</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2505.13946v2</id>
+    <title>Visual Instruction Bottleneck Tuning</title>
+    <updated>2025-10-20T03:05:33Z</updated>
+    <link href="https://arxiv.org/abs/2505.13946v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2505.13946v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Despite widespread adoption, multimodal large language models (MLLMs) suffer performance degradation when encountering unfamiliar queries under distribution shifts. Existing methods to improve MLLM generalization typically require either more instruction data or larger advanced model architectures, both of which incur non-trivial human labor or computational costs. In this work, we take an alternative approach to enhance the generalization and robustness of MLLMs under distribution shifts, from a representation learning perspective. Inspired by information bottleneck (IB) principle, we derive a variational lower bound of the IB for MLLMs and devise a practical implementation, Visual Instruction Bottleneck Tuning (Vittle). We then provide a theoretical justification of Vittle by revealing its connection to an information-theoretic robustness metric of MLLM. Empirical validation of multiple MLLMs on open-ended and closed-form question answering and object hallucination detection tasks over 45 datasets, including 30 shift scenarios, demonstrates that Vittle consistently improves the MLLM's robustness under shifts by pursuing the learning of a minimal sufficient representation.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-05-20T05:24:53Z</published>
+    <arxiv:comment>NeurIPS 2025</arxiv:comment>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Changdae Oh</name>
+    </author>
+    <author>
+      <name>Jiatong Li</name>
+    </author>
+    <author>
+      <name>Shawn Im</name>
+    </author>
+    <author>
+      <name>Sharon Li</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2210.12135v1</id>
+    <title>Geometric Sparse Coding in Wasserstein Space</title>
+    <updated>2022-10-21T17:46:31Z</updated>
+    <link href="https://arxiv.org/abs/2210.12135v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2210.12135v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Wasserstein dictionary learning is an unsupervised approach to learning a collection of probability distributions that generate observed distributions as Wasserstein barycentric combinations. Existing methods for Wasserstein dictionary learning optimize an objective that seeks a dictionary with sufficient representation capacity via barycentric interpolation to approximate the observed training data, but without imposing additional structural properties on the coefficients associated to the dictionary. This leads to dictionaries that densely represent the observed data, which makes interpretation of the coefficients challenging and may also lead to poor empirical performance when using the learned coefficients in downstream tasks. In contrast and motivated by sparse dictionary learning in Euclidean spaces, we propose a geometrically sparse regularizer for Wasserstein space that promotes representations of a data point using only nearby dictionary elements. We show this approach leads to sparse representations in Wasserstein space and addresses the problem of non-uniqueness of barycentric representation. Moreover, when data is generated as Wasserstein barycenters of fixed distributions, this regularizer facilitates the recovery of the generating distributions in cases that are ill-posed for unregularized Wasserstein dictionary learning. Through experimentation on synthetic and real data, we show that our geometrically regularized approach yields sparser and more interpretable dictionaries in Wasserstein space, which perform better in downstream applications.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.OC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.PR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.ST" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-21T17:46:31Z</published>
+    <arxiv:comment>24 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Marshall Mueller</name>
+    </author>
+    <author>
+      <name>Shuchin Aeron</name>
+    </author>
+    <author>
+      <name>James M. Murphy</name>
+    </author>
+    <author>
+      <name>Abiy Tasissa</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2007.12322v2</id>
+    <title>Off-Policy Multi-Agent Decomposed Policy Gradients</title>
+    <updated>2020-10-04T08:07:44Z</updated>
+    <link href="https://arxiv.org/abs/2007.12322v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2007.12322v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Multi-agent policy gradient (MAPG) methods recently witness vigorous progress. However, there is a significant performance discrepancy between MAPG methods and state-of-the-art multi-agent value-based approaches. In this paper, we investigate causes that hinder the performance of MAPG algorithms and present a multi-agent decomposed policy gradient method (DOP). This method introduces the idea of value function decomposition into the multi-agent actor-critic framework. Based on this idea, DOP supports efficient off-policy learning and addresses the issue of centralized-decentralized mismatch and credit assignment in both discrete and continuous action spaces. We formally show that DOP critics have sufficient representational capability to guarantee convergence. In addition, empirical evaluations on the StarCraft II micromanagement benchmark and multi-agent particle environments demonstrate that DOP significantly outperforms both state-of-the-art value-based and policy-based multi-agent reinforcement learning algorithms. Demonstrative videos are available at https://sites.google.com/view/dop-mapg/.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.MA" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-07-24T02:21:55Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Yihan Wang</name>
+    </author>
+    <author>
+      <name>Beining Han</name>
+    </author>
+    <author>
+      <name>Tonghan Wang</name>
+    </author>
+    <author>
+      <name>Heng Dong</name>
+    </author>
+    <author>
+      <name>Chongjie Zhang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.01480v1</id>
+    <title>Towards Robot Skill Learning and Adaptation with Gaussian Processes</title>
+    <updated>2026-03-02T05:44:37Z</updated>
+    <link href="https://arxiv.org/abs/2603.01480v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.01480v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>General robot skill adaptation requires expressive representations robust to varying task configurations. While recent learning-based skill adaptation methods refined via Reinforcement Learning (RL), have shown success, existing skill models often lack sufficient representational capacity for anything beyond minor environmental changes. In contrast, Gaussian Process (GP)-based skill modelling provides an expressive representation with useful analytical properties; however, adaptation of GP-based skills remains underexplored. This paper proposes a novel, robust skill adaptation framework that utilises GPs with sparse via-points for compact and expressive modelling. The model considers the trajectory's poses and leverages its first and second analytical derivatives to preserve the skill's kinematic profile. We present three adaptation methods to cater for the variability between initial and observed configurations. Firstly, an optimisation agent that adjusts the path's via-points while preserving the demonstration velocity. Second, a behaviour cloning agent trained to replicate output trajectories from the optimisation agent. Lastly, an RL agent that has learnt to modify via-points whilst maintaining the kinematic profile and enabling online capabilities. Evaluated across three tasks (drawer opening, cube-pushing and bar manipulation) in both simulation and hardware, our proposed methods outperform every benchmark in success rates. Furthermore, the results demonstrate that the GP-based representation enables all three methods to attain high cosine similarity and low velocity magnitude errors, indicating strong preservation of the kinematic profile. Overall, our formulation provides a compact representation capable of adapting to large deviations from a single demonstrated skill.</summary>
+    <category term="cs.RO" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-02T05:44:37Z</published>
+    <arxiv:primary_category term="cs.RO"/>
+    <author>
+      <name>A K M Nadimul Haque</name>
+    </author>
+    <author>
+      <name>Fouad Sukkar</name>
+    </author>
+    <author>
+      <name>Sheila Sujipto</name>
+    </author>
+    <author>
+      <name>Cedric Le Gentil</name>
+    </author>
+    <author>
+      <name>Marc G. Carmichael</name>
+    </author>
+    <author>
+      <name>Teresa Vidal-Calleja</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2309.14134v1</id>
+    <title>One-Class Classification for Intrusion Detection on Vehicular Networks</title>
+    <updated>2023-09-25T13:42:22Z</updated>
+    <link href="https://arxiv.org/abs/2309.14134v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2309.14134v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Controller Area Network bus systems within vehicular networks are not equipped with the tools necessary to ward off and protect themselves from modern cyber-security threats. Work has been done on using machine learning methods to detect and report these attacks, but common methods are not robust towards unknown attacks. These methods usually rely on there being a sufficient representation of attack data, which may not be available due to there either not being enough data present to adequately represent its distribution or the distribution itself is too diverse in nature for there to be a sufficient representation of it. With the use of one-class classification methods, this issue can be mitigated as only normal data is required to train a model for the detection of anomalous instances. Research has been done on the efficacy of these methods, most notably One-Class Support Vector Machine and Support Vector Data Description, but many new extensions of these works have been proposed and have yet to be tested for injection attacks in vehicular networks. In this paper, we investigate the performance of various state-of-the-art one-class classification methods for detecting injection attacks on Controller Area Network bus traffic. We investigate the effectiveness of these techniques on attacks launched on Controller Area Network buses from two different vehicles during normal operation and while being attacked. We observe that the Subspace Support Vector Data Description method outperformed all other tested methods with a Gmean of about 85%.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-25T13:42:22Z</published>
+    <arxiv:comment>7 pages, 2 figures, 4 tables. Accepted at IEEE Symposium Series on Computational Intelligence 2023</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Jake Guidry</name>
+    </author>
+    <author>
+      <name>Fahad Sohrab</name>
+    </author>
+    <author>
+      <name>Raju Gottumukkala</name>
+    </author>
+    <author>
+      <name>Satya Katragadda</name>
+    </author>
+    <author>
+      <name>Moncef Gabbouj</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.13695v2</id>
+    <title>OptiSQL: Executable SQL Generation from Optical Tokens</title>
+    <updated>2026-01-21T03:17:28Z</updated>
+    <link href="https://arxiv.org/abs/2601.13695v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.13695v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Executable SQL generation is typically studied in text-to-SQL settings, where tables are provided as fully linearized textual schemas and contents. While effective, this formulation assumes access to structured text and incurs substantial token overhead, which is misaligned with many real-world scenarios where tables appear as visual artifacts in documents or webpages. We investigate whether compact optical representations can serve as an efficient interface for executable semantic parsing. We present OptiSQL, a vision-driven framework that generates executable SQL directly from table images and natural language questions using compact optical tokens. OptiSQL leverages an OCR-oriented visual encoder to compress table structure and content into a small set of optical tokens and fine-tunes a pretrained decoder for SQL generation while freezing the encoder to isolate representation sufficiency. Experiments on a visualized version of Spider 2.0-Snow show that OptiSQL retains strong execution accuracy while reducing table input tokens by an order of magnitude. Robustness analyses further demonstrate that optical tokens preserve essential structural information under visual perturbations.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-20T07:49:29Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Sifan Li</name>
+    </author>
+    <author>
+      <name>Hongkai Chen</name>
+    </author>
+    <author>
+      <name>Yujun Cai</name>
+    </author>
+    <author>
+      <name>Liyang Chen</name>
+    </author>
+    <author>
+      <name>Qingwen Ye</name>
+    </author>
+    <author>
+      <name>Yiwei Wang</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2110.06057v1</id>
+    <title>Gated Information Bottleneck for Generalization in Sequential Environments</title>
+    <updated>2021-10-12T14:58:38Z</updated>
+    <link href="https://arxiv.org/abs/2110.06057v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2110.06057v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Deep neural networks suffer from poor generalization to unseen environments when the underlying data distribution is different from that in the training set. By learning minimum sufficient representations from training data, the information bottleneck (IB) approach has demonstrated its effectiveness to improve generalization in different AI applications. In this work, we propose a new neural network-based IB approach, termed gated information bottleneck (GIB), that dynamically drops spurious correlations and progressively selects the most task-relevant features across different environments by a trainable soft mask (on raw features). GIB enjoys a simple and tractable objective, without any variational approximation or distributional assumption. We empirically demonstrate the superiority of GIB over other popular neural network-based IB approaches in adversarial robustness and out-of-distribution (OOD) detection. Meanwhile, we also establish the connection between IB theory and invariant causal representation learning, and observed that GIB demonstrates appealing performance when different environments arrive sequentially, a more practical scenario where invariant risk minimization (IRM) fails. Code of GIB is available at https://github.com/falesiani/GIB</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-10-12T14:58:38Z</published>
+    <arxiv:comment>manuscript accepted by IEEE ICDM-21 (regular papers), code is available at https://github.com/falesiani/GIB</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Francesco Alesiani</name>
+    </author>
+    <author>
+      <name>Shujian Yu</name>
+    </author>
+    <author>
+      <name>Xi Yu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2608.01773v1</id>
+    <title>NeuroWorld: A Latent Brain World Model for Stimulus-Conditioned Human Brain Dynamics</title>
+    <updated>2026-08-03T06:46:56Z</updated>
+    <link href="https://arxiv.org/abs/2608.01773v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2608.01773v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Forecasting human brain activity during naturalistic experience requires modeling how endogenous neural states evolve causally under continuous sensory drive. Existing brain encoding models instead frame this as stimulus-to-response regression without strict temporal constraints, allowing future stimuli to leak into current predictions. We introduce NeuroWorld, to our knowledge the first brain world model, which casts naturalistic brain functional dynamics prediction as stimulus-conditioned evolution in a learned latent brain-state space, separating endogenous states (measured via fMRI) from exogenous multimodal stimuli across two stages. Latent Dynamics Learning (LDL) jointly learns a transition-sufficient representation and causal dynamics through next-latent prediction, without reconstructing the observed fMRI signal. Latent Rollout Decoding (LRD) freezes LDL, autoregressively rolls latent states forward from an observed fMRI prefix, and decodes them into subject-specific whole-brain responses. Across three naturalistic movie-fMRI benchmarks spanning 30 participants, including our newly collected Singapore Multimodal Imaging &amp; Naturalistic Dataset (SG-MIND; 20 participants, 8,519 paired stimulus-response clips, 140.7 person-hours of viewing), NeuroWorld achieves state-of-the-art multi-step rollout performance under strictly causal stimulus access, with greater robustness to long-horizon autoregressive drift, supporting reliable simulation of extended brain-state trajectories. Extensive interpretability analyses characterize the functional organization of the learned dynamics, establishing latent-space world modeling as a principled framework for causal forecasting of human brain activity.</summary>
+    <category term="q-bio.NC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-08-03T06:46:56Z</published>
+    <arxiv:comment>10 pages, 9 figures</arxiv:comment>
+    <arxiv:primary_category term="q-bio.NC"/>
+    <author>
+      <name>Zijian Dong</name>
+    </author>
+    <author>
+      <name>Jianxiong Zhou</name>
+    </author>
+    <author>
+      <name>Kwun Kei Ng</name>
+    </author>
+    <author>
+      <name>Jan Paolo Macapinlac Balagtas</name>
+    </author>
+    <author>
+      <name>Zhizhou Li</name>
+    </author>
+    <author>
+      <name>Zijiao Chen</name>
+    </author>
+    <author>
+      <name>Juan Helen Zhou</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2006.12496v2</id>
+    <title>Airfoil Design Parameterization and Optimization using Bézier Generative Adversarial Networks</title>
+    <updated>2020-06-27T15:26:35Z</updated>
+    <link href="https://arxiv.org/abs/2006.12496v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2006.12496v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Global optimization of aerodynamic shapes usually requires a large number of expensive computational fluid dynamics simulations because of the high dimensionality of the design space. One approach to combat this problem is to reduce the design space dimension by obtaining a new representation. This requires a parametric function that compactly and sufficiently describes useful variation in shapes. We propose a deep generative model, Bézier-GAN, to parameterize aerodynamic designs by learning from shape variations in an existing database. The resulted new parameterization can accelerate design optimization convergence by improving the representation compactness while maintaining sufficient representation capacity. We use the airfoil design as an example to demonstrate the idea and analyze Bézier-GAN's representation capacity and compactness. Results show that Bézier-GAN both (1) learns smooth and realistic shape representations for a wide range of airfoils and (2) empirically accelerates optimization convergence by at least two times compared to state-of-the-art parameterization methods.</summary>
+    <category term="cs.CE" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-06-21T05:28:08Z</published>
+    <arxiv:primary_category term="cs.CE"/>
+    <author>
+      <name>Wei Chen</name>
+    </author>
+    <author>
+      <name>Kevin Chiu</name>
+    </author>
+    <author>
+      <name>Mark Fuge</name>
+    </author>
+  </entry>
+</feed>

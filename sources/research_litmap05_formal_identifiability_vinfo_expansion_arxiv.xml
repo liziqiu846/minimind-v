@@ -1,0 +1,702 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/6TyNBhXjcRL9ZPyJ99A1qwxJ6+M</id>
+  <title>arXiv Query: search_query=(all:"usable information" OR all:"V-information" OR all:"decodable information") AND all:representation&amp;id_list=&amp;start=0&amp;max_results=50</title>
+  <updated>2026-08-07T06:20:56Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=(all:%22usable+information%22+OR+(all:%22V-information%22+OR+all:%22decodable+information%22))+AND+all:representation&amp;start=0&amp;max_results=50&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>50</opensearch:itemsPerPage>
+  <opensearch:totalResults>26</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2010.02459v2</id>
+    <title>Usable Information and Evolution of Optimal Representations During Training</title>
+    <updated>2021-02-28T17:51:26Z</updated>
+    <link href="https://arxiv.org/abs/2010.02459v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2010.02459v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We introduce a notion of usable information contained in the representation learned by a deep network, and use it to study how optimal representations for the task emerge during training. We show that the implicit regularization coming from training with Stochastic Gradient Descent with a high learning-rate and small batch size plays an important role in learning minimal sufficient representations for the task. In the process of arriving at a minimal sufficient representation, we find that the content of the representation changes dynamically during training. In particular, we find that semantically meaningful but ultimately irrelevant information is encoded in the early transient dynamics of training, before being later discarded. In addition, we evaluate how perturbing the initial part of training impacts the learning dynamics and the resulting representations. We show these effects on both perceptual decision-making tasks inspired by neuroscience literature, as well as on standard image classification tasks.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-10-06T03:50:19Z</published>
+    <arxiv:comment>ICLR 2021</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Michael Kleinman</name>
+    </author>
+    <author>
+      <name>Alessandro Achille</name>
+    </author>
+    <author>
+      <name>Daksh Idnani</name>
+    </author>
+    <author>
+      <name>Jonathan C. Kao</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2009.12789v2</id>
+    <title>Learning Optimal Representations with the Decodable Information Bottleneck</title>
+    <updated>2021-07-16T09:22:20Z</updated>
+    <link href="https://arxiv.org/abs/2009.12789v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2009.12789v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We address the question of characterizing and finding optimal representations for supervised learning. Traditionally, this question has been tackled using the Information Bottleneck, which compresses the inputs while retaining information about the targets, in a decoder-agnostic fashion. In machine learning, however, our goal is not compression but rather generalization, which is intimately linked to the predictive family or decoder of interest (e.g. linear classifier). We propose the Decodable Information Bottleneck (DIB) that considers information retention and compression from the perspective of the desired predictive family. As a result, DIB gives rise to representations that are optimal in terms of expected test performance and can be estimated with guarantees. Empirically, we show that the framework can be used to enforce a small generalization gap on downstream classifiers and to predict the generalization ability of neural networks.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-09-27T08:33:08Z</published>
+    <arxiv:comment>Accepted at NeurIPS 2020</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Yann Dubois</name>
+    </author>
+    <author>
+      <name>Douwe Kiela</name>
+    </author>
+    <author>
+      <name>David J. Schwab</name>
+    </author>
+    <author>
+      <name>Ramakrishna Vedantam</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.21568v2</id>
+    <title>Bridging Functional and Representational Similarity via Usable Information</title>
+    <updated>2026-05-28T15:56:38Z</updated>
+    <link href="https://arxiv.org/abs/2601.21568v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.21568v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We present a unified framework for quantifying the similarity between representations through the lens of \textit{usable} information, offering a rigorous theoretical and empirical synthesis across three key dimensions. First, addressing functional similarity, we establish a formal link between stitching performance and conditional mutual information. We further reveal that stitching is inherently asymmetric, demonstrating that robust functional comparison necessitates a bidirectional analysis rather than a unidirectional mapping. Second, concerning representational similarity, we find that reconstruction-based metrics and standard tools (e.g., CKA, RSA) act as estimators of usable information under specific constraints. Crucially, we show that similarity is relative to the capacity of the predictive family: representations that appear distinct to a rigid observer may be identical to a more expressive one. Third, we demonstrate that representational similarity is sufficient but not necessary for functional similarity. We unify these concepts through a task-granularity hierarchy: similarity on a complex task guarantees similarity on any coarser derivative, establishing representational similarity as the limit of maximum granularity: input reconstruction.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-29T11:30:55Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Antonio Almudévar</name>
+    </author>
+    <author>
+      <name>Alfonso Ortega</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.03587v1</id>
+    <title>Graph Classification via Network Usable Information: From Representation Evaluation to Structure Selection</title>
+    <updated>2026-07-03T20:11:34Z</updated>
+    <link href="https://arxiv.org/abs/2607.03587v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.03587v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose NetinfoGC, a framework for graph classification that extends the Network Usable Information (NUI) paradigm to graph-level learning. Unlike conventional graph neural network approaches that rely on end-to-end training of black-box embeddings, NetinfoGC constructs a family of permutation-invariant graph representations derived from propagation-based mechanisms and classical structural descriptors, including graph centrality measures.
+  To evaluate representation quality, we introduce a training-free NUI estimation procedure based on clustering consistency with ground-truth labels, providing a proxy for task-relevant information without supervised learning. We further exploit the same representations using sparse-group LASSO regularization, enabling automatic selection of informative structural descriptors while suppressing redundant ones.
+  Experiments on benchmark datasets show that classical centrality measures are highly competitive with learned propagation-based representations, and in several cases yield superior performance. Moreover, we observe a strong correlation between estimated NUI and downstream classification accuracy, validating NUI as an effective measure of representation utility.
+  Overall, NetinfoGC provides a unified and interpretable framework for evaluating and exploiting graph representations without requiring end-to-end neural training.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-03T20:11:34Z</published>
+    <arxiv:comment>7 PAGES</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Abdullah Shaik</name>
+    </author>
+    <author>
+      <name>Anwar Said</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2109.09234v1</id>
+    <title>Conditional probing: measuring usable information beyond a baseline</title>
+    <updated>2021-09-19T21:56:58Z</updated>
+    <link href="https://arxiv.org/abs/2109.09234v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2109.09234v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Probing experiments investigate the extent to which neural representations make properties -- like part-of-speech -- predictable. One suggests that a representation encodes a property if probing that representation produces higher accuracy than probing a baseline representation like non-contextual word embeddings. Instead of using baselines as a point of comparison, we're interested in measuring information that is contained in the representation but not in the baseline. For example, current methods can detect when a representation is more useful than the word identity (a baseline) for predicting part-of-speech; however, they cannot detect when the representation is predictive of just the aspects of part-of-speech not explainable by the word identity. In this work, we extend a theory of usable information called $\mathcal{V}$-information and propose conditional probing, which explicitly conditions on the information in the baseline. In a case study, we find that after conditioning on non-contextual word embeddings, properties like part-of-speech are accessible at deeper layers of a network than previously thought.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-09-19T21:56:58Z</published>
+    <arxiv:comment>EMNLP 2021 + typo fixes</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>John Hewitt</name>
+    </author>
+    <author>
+      <name>Kawin Ethayarajh</name>
+    </author>
+    <author>
+      <name>Percy Liang</name>
+    </author>
+    <author>
+      <name>Christopher D. Manning</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2411.08197v1</id>
+    <title>What Representational Similarity Measures Imply about Decodable Information</title>
+    <updated>2024-11-12T21:37:10Z</updated>
+    <link href="https://arxiv.org/abs/2411.08197v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2411.08197v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Neural responses encode information that is useful for a variety of downstream tasks. A common approach to understand these systems is to build regression models or ``decoders'' that reconstruct features of the stimulus from neural responses. Popular neural network similarity measures like centered kernel alignment (CKA), canonical correlation analysis (CCA), and Procrustes shape distance, do not explicitly leverage this perspective and instead highlight geometric invariances to orthogonal or affine transformations when comparing representations. Here, we show that many of these measures can, in fact, be equivalently motivated from a decoding perspective. Specifically, measures like CKA and CCA quantify the average alignment between optimal linear readouts across a distribution of decoding tasks. We also show that the Procrustes shape distance upper bounds the distance between optimal linear readouts and that the converse holds for representations with low participation ratio. Overall, our work demonstrates a tight link between the geometry of neural representations and the ability to linearly decode information. This perspective suggests new ways of measuring similarity between neural systems and also provides novel, unifying interpretations of existing measures.</summary>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-11-12T21:37:10Z</published>
+    <arxiv:primary_category term="stat.ML"/>
+    <author>
+      <name>Sarah E. Harvey</name>
+    </author>
+    <author>
+      <name>David Lipshutz</name>
+    </author>
+    <author>
+      <name>Alex H. Williams</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2504.15630v1</id>
+    <title>Exploiting Contextual Knowledge in LLMs through V-usable Information based Layer Enhancement</title>
+    <updated>2025-04-22T06:42:22Z</updated>
+    <link href="https://arxiv.org/abs/2504.15630v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2504.15630v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Large Language Models (LLMs) have demonstrated remarkable capabilities in various tasks, yet they often struggle with context-faithfulness generations that properly reflect contextual knowledge. While existing approaches focus on enhancing the decoding strategies, they ignore the fundamental mechanism of how contextual information is processed within LLMs' internal states. As a result, LLMs remain limited in their ability to fully leverage contextual knowledge. In this paper, we propose Context-aware Layer Enhancement (CaLE), a novel intervention method that enhances the utilization of contextual knowledge within LLMs' internal representations. By employing V-usable information analysis, CaLE strategically amplifies the growth of contextual information at an optimal layer, thereby enriching representations in the final layer. Our experiments demonstrate that CaLE effectively improves context-faithful generation in Question-Answering tasks, particularly in scenarios involving unknown or conflicting contextual knowledge.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-04-22T06:42:22Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Xiaowei Yuan</name>
+    </author>
+    <author>
+      <name>Zhao Yang</name>
+    </author>
+    <author>
+      <name>Ziyang Huang</name>
+    </author>
+    <author>
+      <name>Yequan Wang</name>
+    </author>
+    <author>
+      <name>Siqi Fan</name>
+    </author>
+    <author>
+      <name>Yiming Ju</name>
+    </author>
+    <author>
+      <name>Jun Zhao</name>
+    </author>
+    <author>
+      <name>Kang Liu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2002.10689v1</id>
+    <title>A Theory of Usable Information Under Computational Constraints</title>
+    <updated>2020-02-25T06:09:30Z</updated>
+    <link href="https://arxiv.org/abs/2002.10689v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2002.10689v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We propose a new framework for reasoning about information in complex systems. Our foundation is based on a variational extension of Shannon's information theory that takes into account the modeling power and computational constraints of the observer. The resulting \emph{predictive $\mathcal{V}$-information} encompasses mutual information and other notions of informativeness such as the coefficient of determination. Unlike Shannon's mutual information and in violation of the data processing inequality, $\mathcal{V}$-information can be created through computation. This is consistent with deep neural networks extracting hierarchies of progressively more informative features in representation learning. Additionally, we show that by incorporating computational constraints, $\mathcal{V}$-information can be reliably estimated from data even in high dimensions with PAC-style guarantees. Empirically, we demonstrate predictive $\mathcal{V}$-information is more effective than mutual information for structure learning and fair representation learning.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-02-25T06:09:30Z</published>
+    <arxiv:comment>ICLR 2020 (Talk)</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Yilun Xu</name>
+    </author>
+    <author>
+      <name>Shengjia Zhao</name>
+    </author>
+    <author>
+      <name>Jiaming Song</name>
+    </author>
+    <author>
+      <name>Russell Stewart</name>
+    </author>
+    <author>
+      <name>Stefano Ermon</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2104.09743v1</id>
+    <title>Neural tuning and representational geometry</title>
+    <updated>2021-04-20T03:35:35Z</updated>
+    <link href="https://arxiv.org/abs/2104.09743v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2104.09743v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>A central goal of neuroscience is to understand the representations formed by brain activity patterns and their connection to behavior. The classical approach is to investigate how individual neurons encode the stimuli and how their tuning determines the fidelity of the neural representation. Tuning analyses often use the Fisher information to characterize the sensitivity of neural responses to small changes of the stimulus. In recent decades, measurements of large populations of neurons have motivated a complementary approach, which focuses on the information available to linear decoders. The decodable information is captured by the geometry of the representational patterns in the multivariate response space. Here we review neural tuning and representational geometry with the goal of clarifying the relationship between them. The tuning induces the geometry, but different sets of tuned neurons can induce the same geometry. The geometry determines the Fisher information, the mutual information, and the behavioral performance of an ideal observer in a range of psychophysical tasks. We argue that future studies can benefit from considering both tuning and geometry to understand neural codes and reveal the connections between stimulus, brain activity, and behavior.</summary>
+    <category term="q-bio.NC" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2021-04-20T03:35:35Z</published>
+    <arxiv:comment>42 pages, 6 figures</arxiv:comment>
+    <arxiv:primary_category term="q-bio.NC"/>
+    <author>
+      <name>Nikolaus Kriegeskorte</name>
+    </author>
+    <author>
+      <name>Xue-Xin Wei</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2606.08788v1</id>
+    <title>MaskAlign: Token-Subset Representation Alignment for Efficient Diffusion Training</title>
+    <updated>2026-06-07T19:11:22Z</updated>
+    <link href="https://arxiv.org/abs/2606.08788v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2606.08788v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Representation alignment with pretrained vision models has recently shown strong potential for accelerating diffusion transformer training. By aligning intermediate diffusion features with clean-image representations from self-supervised vision encoders, existing methods improve convergence and generation quality. However, such alignment also introduces a non-trivial constraint: diffusion models operate on noisy inputs whose usable information varies across timesteps, while the reference features are extracted from clean images. In this paper, we revisit this mismatch from a token-level perspective. We find that, under full-token representation alignment, tokens with large alignment-gradient norms exhibit a stable spatial preference, suggesting that the alignment objective does not affect all tokens uniformly and may encourage the model to rely on the complete set of clean-image tokens. To address this issue, we propose MaskAlign, a token-subset representation alignment method that applies alignment to randomly sampled token subsets during training. By exposing the model to different token subsets across iterations, MaskAlign reduces the dependence of representation alignment on the complete token set and encourages alignment behavior that is more stable under token-subset perturbations. To mitigate the information loss caused by directly dropping tokens, we further introduce a lightweight pre-mask token mixing block that shares information across tokens before masking.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-06-07T19:11:22Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Lianyu Pang</name>
+    </author>
+    <author>
+      <name>Tianlin Pan</name>
+    </author>
+    <author>
+      <name>Cheng Da</name>
+    </author>
+    <author>
+      <name>Changqian Yu</name>
+    </author>
+    <author>
+      <name>Huan Yang</name>
+    </author>
+    <author>
+      <name>Kun Gai</name>
+    </author>
+    <author>
+      <name>Song Guo</name>
+    </author>
+    <author>
+      <name>Wenhan Luo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2510.20847v2</id>
+    <title>Integrated representational signatures strengthen specificity in brains and models</title>
+    <updated>2026-04-03T08:07:12Z</updated>
+    <link href="https://arxiv.org/abs/2510.20847v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2510.20847v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The extent to which different neural or artificial neural networks (models) rely on equivalent representations to support similar tasks remains a central question in neuroscience and machine learning. Prior work has typically compared systems using a single representational similarity metric, yet each captures only one facet of representational structure. To address this, we leverage a suite of representational similarity metrics-each capturing a distinct facet of representational correspondence, such as geometry, unit-level tuning, or linear decodability-and assess brain region or model separability using multiple complementary measures. Metrics that preserve geometric or tuning structure (e.g., RSA, Soft Matching) yield stronger region-based discrimination, whereas more flexible mappings such as Linear Predictivity show weaker separation. These findings suggest that geometry and tuning encode brain-region- or model-family-specific signatures, while linearly decodable information tends to be more globally shared across regions or models. To integrate these complementary representational facets, we adapt Similarity Network Fusion (SNF), a framework originally developed for multi-omics data integration. SNF produces substantially sharper regional and model family-level separation than any single metric and yields robust composite similarity profiles. Moreover, clustering cortical regions using SNF-derived similarity scores reveals a clearer hierarchical organization that aligns closely with established anatomical and functional hierarchies of the visual cortex-surpassing the correspondence achieved by individual metrics.</summary>
+    <category term="q-bio.NC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-10-21T04:37:27Z</published>
+    <arxiv:primary_category term="q-bio.NC"/>
+    <author>
+      <name>Jialin Wu</name>
+    </author>
+    <author>
+      <name>Shreya Saha</name>
+    </author>
+    <author>
+      <name>Yiqing Bo</name>
+    </author>
+    <author>
+      <name>Meenakshi Khosla</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/1811.03199v2</id>
+    <title>Confusion2Vec: Towards Enriching Vector Space Word Representations with Representational Ambiguities</title>
+    <updated>2019-03-28T23:01:50Z</updated>
+    <link href="https://arxiv.org/abs/1811.03199v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/1811.03199v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Word vector representations are a crucial part of Natural Language Processing (NLP) and Human Computer Interaction. In this paper, we propose a novel word vector representation, Confusion2Vec, motivated from the human speech production and perception that encodes representational ambiguity. Humans employ both acoustic similarity cues and contextual cues to decode information and we focus on a model that incorporates both sources of information. The representational ambiguity of acoustics, which manifests itself in word confusions, is often resolved by both humans and machines through contextual cues. A range of representational ambiguities can emerge in various domains further to acoustic perception, such as morphological transformations, paraphrasing for NLP tasks like machine translation etc. In this work, we present a case study in application to Automatic Speech Recognition (ASR), where the word confusions are related to acoustic similarity. We present several techniques to train an acoustic perceptual similarity representation ambiguity. We term this Confusion2Vec and learn on unsupervised-generated data from ASR confusion networks or lattice-like structures. Appropriate evaluations for the Confusion2Vec are formulated for gauging acoustic similarity in addition to semantic-syntactic and word similarity evaluations. The Confusion2Vec is able to model word confusions efficiently, without compromising on the semantic-syntactic word relations, thus effectively enriching the word vector space with extra task relevant ambiguity information. We provide an intuitive exploration of the 2-dimensional Confusion2Vec space using Principal Component Analysis of the embedding and relate to semantic, syntactic and acoustic relationships. The potential of Confusion2Vec in the utilization of uncertainty present in lattices is demonstrated through small examples relating to ASR error correction.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2018-11-08T00:40:25Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <arxiv:journal_ref>PeerJ Computer Science 5:e195, 2019</arxiv:journal_ref>
+    <author>
+      <name>Prashanth Gurunath Shivakumar</name>
+    </author>
+    <author>
+      <name>Panayiotis Georgiou</name>
+    </author>
+    <arxiv:doi>10.7717/peerj-cs.195</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.7717/peerj-cs.195" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2405.10244v3</id>
+    <title>Towards Task-Compatible Compressible Representations</title>
+    <updated>2024-07-15T14:58:07Z</updated>
+    <link href="https://arxiv.org/abs/2405.10244v3" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2405.10244v3" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We identify an issue in multi-task learnable compression, in which a representation learned for one task does not positively contribute to the rate-distortion performance of a different task as much as expected, given the estimated amount of information available in it. We interpret this issue using the predictive $\mathcal{V}$-information framework. In learnable scalable coding, previous work increased the utilization of side-information for input reconstruction by also rewarding input reconstruction when learning this shared representation. We evaluate the impact of this idea in the context of input reconstruction more rigorously and extended it to other computer vision tasks. We perform experiments using representations trained for object detection on COCO 2017 and depth estimation on the Cityscapes dataset, and use them to assist in image reconstruction and semantic segmentation tasks. The results show considerable improvements in the rate-distortion performance of the assisted tasks. Moreover, using the proposed representations, the performance of the base tasks are also improved. Results suggest that the proposed method induces simpler representations that are more compatible with downstream processes.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-05-16T16:47:46Z</published>
+    <arxiv:comment>Published in ICME Workshops 2024</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Anderson de Andrade</name>
+    </author>
+    <author>
+      <name>Ivan Bajić</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2211.02625v1</id>
+    <title>MAEEG: Masked Auto-encoder for EEG Representation Learning</title>
+    <updated>2022-10-27T21:43:35Z</updated>
+    <link href="https://arxiv.org/abs/2211.02625v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2211.02625v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Decoding information from bio-signals such as EEG, using machine learning has been a challenge due to the small data-sets and difficulty to obtain labels. We propose a reconstruction-based self-supervised learning model, the masked auto-encoder for EEG (MAEEG), for learning EEG representations by learning to reconstruct the masked EEG features using a transformer architecture. We found that MAEEG can learn representations that significantly improve sleep stage classification (~5% accuracy increase) when only a small number of labels are given. We also found that input sample lengths and different ways of masking during reconstruction-based SSL pretraining have a huge effect on downstream model performance. Specifically, learning to reconstruct a larger proportion and more concentrated masked signal results in better performance on sleep classification. Our findings provide insight into how reconstruction-based SSL could help representation learning for EEG.</summary>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2022-10-27T21:43:35Z</published>
+    <arxiv:comment>10 pages, 5 figures, accepted by Workshop on Learning from Time Series for Health, NeurIPS2022 as poster presentation</arxiv:comment>
+    <arxiv:primary_category term="eess.SP"/>
+    <author>
+      <name>Hsiang-Yun Sherry Chien</name>
+    </author>
+    <author>
+      <name>Hanlin Goh</name>
+    </author>
+    <author>
+      <name>Christopher M. Sandino</name>
+    </author>
+    <author>
+      <name>Joseph Y. Cheng</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2305.16873v1</id>
+    <title>Efficient Decoding of Compositional Structure in Holistic Representations</title>
+    <updated>2023-05-26T12:26:19Z</updated>
+    <link href="https://arxiv.org/abs/2305.16873v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2305.16873v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>We investigate the task of retrieving information from compositional distributed representations formed by Hyperdimensional Computing/Vector Symbolic Architectures and present novel techniques which achieve new information rate bounds. First, we provide an overview of the decoding techniques that can be used to approach the retrieval task. The techniques are categorized into four groups. We then evaluate the considered techniques in several settings that involve, e.g., inclusion of external noise and storage elements with reduced precision. In particular, we find that the decoding techniques from the sparse coding and compressed sensing literature (rarely used for Hyperdimensional Computing/Vector Symbolic Architectures) are also well-suited for decoding information from the compositional distributed representations. Combining these decoding techniques with interference cancellation ideas from communications improves previously reported bounds (Hersche et al., 2021) of the information rate of the distributed representations from 1.20 to 1.40 bits per dimension for smaller codebooks and from 0.60 to 1.26 bits per dimension for larger codebooks.</summary>
+    <category term="cs.NE" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-05-26T12:26:19Z</published>
+    <arxiv:comment>28 pages, 5 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.NE"/>
+    <arxiv:journal_ref>Neural Computation, 2023</arxiv:journal_ref>
+    <author>
+      <name>Denis Kleyko</name>
+    </author>
+    <author>
+      <name>Connor Bybee</name>
+    </author>
+    <author>
+      <name>Ping-Chen Huang</name>
+    </author>
+    <author>
+      <name>Christopher J. Kymn</name>
+    </author>
+    <author>
+      <name>Bruno A. Olshausen</name>
+    </author>
+    <author>
+      <name>E. Paxon Frady</name>
+    </author>
+    <author>
+      <name>Friedrich T. Sommer</name>
+    </author>
+    <arxiv:doi>10.1162/neco_a_01590</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1162/neco_a_01590" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2601.22002v5</id>
+    <title>Understanding Rate-Distortion Performance in Distributed Transformer Inference</title>
+    <updated>2026-08-01T18:15:51Z</updated>
+    <link href="https://arxiv.org/abs/2601.22002v5" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2601.22002v5" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Transformers achieve superior performance on many tasks, but impose heavy compute and memory requirements during inference. This inference can be made more efficient by partitioning the process across multiple devices, which, in turn, requires compressing its intermediate representations. We study compressibility of transformer's intermediate representations via learned compression through the lens of rate-distortion and the theory of usable information. Our study reveals that, unlike convolutional models, deeper representations in transformers become more difficult to compress. The reason for this behavior is twofold: first, the complexity of representation increases as we move deeper into the transformer, necessitating a higher rate; and second, the higher complexity of representations worsens the generaliztion bound for learned entropy estimates, which further compromises compression performance. Through a combination of experiments and theory, we characterize and analyze the compressibility of transformer representations, derive bounds on the achievable rate of learned codecs applied to these representations, and offer a unified lens for understanding rate-distortion performance in representation coding.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.IT" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-01-29T17:12:46Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Anderson de Andrade</name>
+    </author>
+    <author>
+      <name>Alon Harell</name>
+    </author>
+    <author>
+      <name>Ivan V. Bajić</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2506.11074v1</id>
+    <title>Challenges in Automated Processing of Speech from Child Wearables: The Case of Voice Type Classifier</title>
+    <updated>2025-06-04T00:09:53Z</updated>
+    <link href="https://arxiv.org/abs/2506.11074v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2506.11074v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recordings gathered with child-worn devices promised to revolutionize both fundamental and applied speech sciences by allowing the effortless capture of children's naturalistic speech environment and language production. This promise hinges on speech technologies that can transform the sheer mounds of data thus collected into usable information. This paper demonstrates several obstacles blocking progress by summarizing three years' worth of experiments aimed at improving one fundamental task: Voice Type Classification. Our experiments suggest that improvements in representation features, architecture, and parameter search contribute to only marginal gains in performance. More progress is made by focusing on data relevance and quantity, which highlights the importance of collecting data with appropriate permissions to allow sharing.</summary>
+    <category term="eess.AS" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SD" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-06-04T00:09:53Z</published>
+    <arxiv:comment>5 pages, 3 figures</arxiv:comment>
+    <arxiv:primary_category term="eess.AS"/>
+    <arxiv:journal_ref>Proc. Interspeech 2025, 2845-2849</arxiv:journal_ref>
+    <author>
+      <name>Tarek Kunze</name>
+    </author>
+    <author>
+      <name>Marianne Métais</name>
+    </author>
+    <author>
+      <name>Hadrien Titeux</name>
+    </author>
+    <author>
+      <name>Lucas Elbert</name>
+    </author>
+    <author>
+      <name>Joseph Coffey</name>
+    </author>
+    <author>
+      <name>Emmanuel Dupoux</name>
+    </author>
+    <author>
+      <name>Alejandrina Cristia</name>
+    </author>
+    <author>
+      <name>Marvin Lavechin</name>
+    </author>
+    <arxiv:doi>10.21437/Interspeech.2025-1962</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.21437/Interspeech.2025-1962" title="doi"/>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2605.03222v2</id>
+    <title>Beyond Activation Alignment: The Geometry of Neural Sensitivity</title>
+    <updated>2026-05-07T08:48:41Z</updated>
+    <link href="https://arxiv.org/abs/2605.03222v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2605.03222v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Activation-alignment measures such as Representational Similarity Analysis (RSA), Canonical Correlation Analysis (CCA), and Centered Kernel Alignment (CKA) are widely used to compare biological and artificial neural representations. Recent theoretical work interprets many of these methods as assessing agreement between optimal linear readouts over broad families of global tasks. However, agreement at the level of global readouts does not determine how a system uses local stimulus evidence. Specifically, representations may align in activation space yet differ in their sensitivity to small perturbations. To address this challenge, we introduce a complementary framework based on local decodable information, which focuses on a representation's ability, under noise, to discriminate small perturbations within a specified stimulus-coordinate subspace. Building on Fisher information and local representation geometry, we summarize each representation using the expected projected pullback/Fisher metric over that subspace. This formulation induces a second-moment family of local discrimination tasks, for which the resulting operator provides a minimal, complete dataset-level summary of expected discriminability. We compare these regularized signatures using a log-spectral distance on the manifold of symmetric positive definite (SPD) matrices, yielding the Spectral Riemannian Alignment Score (S-RAS) and a uniform multiplicative certificate over the corresponding family of lifted task values. Empirically, this framework enables the recovery of corresponding layers across independently trained artificial neural networks, supports transferable class-conditional probes, reveals controlled dissociations between standard and robust training, and uncovers stimulus-coordinate family effects across mouse visual cortex using the Allen Brain Observatory static gratings dataset.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="stat.ML" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-05-04T23:21:24Z</published>
+    <arxiv:comment>9 pages, 4 figures</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Amirhossein Yavari</name>
+    </author>
+    <author>
+      <name>Farnaz Zamani Esfahlani</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2607.02937v2</id>
+    <title>In-span learning: adapting reduced-order models using their own predictions</title>
+    <updated>2026-07-22T15:22:52Z</updated>
+    <link href="https://arxiv.org/abs/2607.02937v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2607.02937v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Reduced-order models compress high-dimensional dynamics into low-dimensional representations that can be evaluated rapidly, but they lose accuracy when online dynamics drift beyond the training data. Adaptive methods address this by updating the subspace online with external, out-of-span information, such as full-order corrections or sensor snapshots. We discovered that a complementary and previously unexploited in-span adaptation channel exists within the current reduced subspace. By streaming the model's own predictions through an incremental singular-value decomposition with forgetting, we obtain a trajectory-informed spectral preconditioner, in which the subspace is unchanged but the basis is reweighted and realigned toward the modes visited by the dynamics. This enables the model to absorb future out-of-span corrections more effectively. We expose aspects of this mechanism on a three-dimensional spiral and confirm it on viscous Burgers and Fisher-KPP dynamics. We also discuss how in-span learning can be viewed as a dynamical-systems analogue of in-context learning. More broadly, in-span learning suggests a new principle for computational science, revealing that model-generated trajectories contain more usable information than previously recognized.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CE" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="math.NA" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-07-03T04:17:14Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Amirpasha Hedayat</name>
+    </author>
+    <author>
+      <name>Laura Balzano</name>
+    </author>
+    <author>
+      <name>Karthik Duraisamy</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2603.05844v1</id>
+    <title>Remote Sensing Image Classification Using Deep Ensemble Learning</title>
+    <updated>2026-03-06T02:58:26Z</updated>
+    <link href="https://arxiv.org/abs/2603.05844v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2603.05844v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Remote sensing imagery plays a crucial role in many applications and requires accurate computerized classification techniques. Reliable classification is essential for transforming raw imagery into structured and usable information. While Convolutional Neural Networks (CNNs) are mostly used for image classification, they excel at local feature extraction, but struggle to capture global contextual information. Vision Transformers (ViTs) address this limitation through self attention mechanisms that model long-range dependencies. Integrating CNNs and ViTs, therefore, leads to better performance than standalone architectures. However, the use of additional CNN and ViT components does not lead to further performance improvement and instead introduces a bottleneck caused by redundant feature representations. In this research, we propose a fusion model that combines the strengths of CNNs and ViTs for remote sensing image classification. To overcome the performance bottleneck, the proposed approach trains four independent fusion models that integrate CNN and ViT backbones and combine their outputs at the final prediction stage through ensembling. The proposed method achieves accuracy rates of 98.10 percent, 94.46 percent, and 95.45 percent on the UC Merced, RSSCN7, and MSRSI datasets, respectively. These results outperform competing architectures and highlight the effectiveness of the proposed solution, particularly due to its efficient use of computational resources during training.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-03-06T02:58:26Z</published>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Niful Islam</name>
+    </author>
+    <author>
+      <name>Md. Rayhan Ahmed</name>
+    </author>
+    <author>
+      <name>Nur Mohammad Fahad</name>
+    </author>
+    <author>
+      <name>Salekul Islam</name>
+    </author>
+    <author>
+      <name>A. K. M. Muzahidul Islam</name>
+    </author>
+    <author>
+      <name>Saddam Mukta</name>
+    </author>
+    <author>
+      <name>Swakkhar Shatabda</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2602.00004v2</id>
+    <title>C$^2$-Cite: Contextual-Aware Citation Generation for Attributed Large Language Models</title>
+    <updated>2026-03-23T15:22:01Z</updated>
+    <link href="https://arxiv.org/abs/2602.00004v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2602.00004v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The attribution technique enhances the credibility of LLMs by adding citations to the generated sentences, enabling users to trace back to the original sources and verify the reliability of the output. However, existing instruction-tuned attributed LLMs often fail to properly interpret the contextual semantics of citation symbols (e.g., [i]) during text generation. This shortcoming arises from their insufficient awareness of the context information surrounding citation markers, which in turn leads to disjointed references and poor integration of retrieved knowledge into the generated content. To address this issue, we propose a novel \textbf{C}ontextual-aware \textbf{C}itation generation framework (\textbf{C$^2$}-\textbf{Cite}) that explicitly integrates the semantic relationships between citation markers and their referenced content. Specifically, a contextual citation alignment mechanism is adopted: it first encodes the retrieved document contexts into the symbol representation of citations, then aligns the marker numbers by decoding information from a citation router function. This mechanism enables the transformation of citation markers from generic placeholders into active knowledge pointers that link to the referenced source information. Experimental results on the ALCE benchmark across three datasets validate our framework C$^2$-Cite++: it outperforms the SOTA baseline by an average of 5.8\% in citation quality and 17.4\% in response correctness. The implementation is publicly available at https://github.com/BAI-LAB/c2cite</summary>
+    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2025-11-19T15:46:25Z</published>
+    <arxiv:comment>WSDM26</arxiv:comment>
+    <arxiv:primary_category term="cs.IR"/>
+    <author>
+      <name>Yue Yu</name>
+    </author>
+    <author>
+      <name>Ting Bai</name>
+    </author>
+    <author>
+      <name>HengZhi Lan</name>
+    </author>
+    <author>
+      <name>Li Qian</name>
+    </author>
+    <author>
+      <name>Li Peng</name>
+    </author>
+    <author>
+      <name>Jie Wu</name>
+    </author>
+    <author>
+      <name>Wei Liu</name>
+    </author>
+    <author>
+      <name>Jian Luan</name>
+    </author>
+    <author>
+      <name>Chuan Shi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2312.02918v2</id>
+    <title>Multimodal Prompt Perceiver: Empower Adaptiveness, Generalizability and Fidelity for All-in-One Image Restoration</title>
+    <updated>2024-03-20T16:12:57Z</updated>
+    <link href="https://arxiv.org/abs/2312.02918v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2312.02918v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Despite substantial progress, all-in-one image restoration (IR) grapples with persistent challenges in handling intricate real-world degradations. This paper introduces MPerceiver: a novel multimodal prompt learning approach that harnesses Stable Diffusion (SD) priors to enhance adaptiveness, generalizability and fidelity for all-in-one image restoration. Specifically, we develop a dual-branch module to master two types of SD prompts: textual for holistic representation and visual for multiscale detail representation. Both prompts are dynamically adjusted by degradation predictions from the CLIP image encoder, enabling adaptive responses to diverse unknown degradations. Moreover, a plug-in detail refinement module improves restoration fidelity via direct encoder-to-decoder information transformation. To assess our method, MPerceiver is trained on 9 tasks for all-in-one IR and outperforms state-of-the-art task-specific methods across most tasks. Post multitask pre-training, MPerceiver attains a generalized representation in low-level vision, exhibiting remarkable zero-shot and few-shot capabilities in unseen tasks. Extensive experiments on 16 IR tasks underscore the superiority of MPerceiver in terms of adaptiveness, generalizability and fidelity.</summary>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-12-05T17:47:11Z</published>
+    <arxiv:comment>13 pages, 8 figures, 9 tables</arxiv:comment>
+    <arxiv:primary_category term="cs.CV"/>
+    <author>
+      <name>Yuang Ai</name>
+    </author>
+    <author>
+      <name>Huaibo Huang</name>
+    </author>
+    <author>
+      <name>Xiaoqiang Zhou</name>
+    </author>
+    <author>
+      <name>Jiexiang Wang</name>
+    </author>
+    <author>
+      <name>Ran He</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2305.14919v2</id>
+    <title>Frugal Prompting for Dialog Models</title>
+    <updated>2023-11-05T06:05:19Z</updated>
+    <link href="https://arxiv.org/abs/2305.14919v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2305.14919v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>The use of large language models (LLMs) in natural language processing (NLP) tasks is rapidly increasing, leading to changes in how researchers approach problems in the field. To fully utilize these models' abilities, a better understanding of their behavior for different input protocols is required. With LLMs, users can directly interact with the models through a text-based interface to define and solve various tasks. Hence, understanding the conversational abilities of these LLMs, which may not have been specifically trained for dialog modeling, is also important. This study examines different approaches for building dialog systems using LLMs by considering various aspects of the prompt. As part of prompt tuning, we experiment with various ways of providing instructions, exemplars, current query and additional context. The research also analyzes the representations of dialog history that have the optimal usable-information density. Based on the findings, the paper suggests more compact ways of providing dialog history information while ensuring good performance and reducing model's inference-API costs. The research contributes to a better understanding of how LLMs can be effectively used for building interactive systems.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-05-24T09:06:49Z</published>
+    <arxiv:comment>Preprint, To appear in EMNLP 2023 (Findings); First two authors have equal contribution</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Bishal Santra</name>
+    </author>
+    <author>
+      <name>Sakya Basak</name>
+    </author>
+    <author>
+      <name>Abhinandan De</name>
+    </author>
+    <author>
+      <name>Manish Gupta</name>
+    </author>
+    <author>
+      <name>Pawan Goyal</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2309.07861v1</id>
+    <title>CiwaGAN: Articulatory information exchange</title>
+    <updated>2023-09-14T17:10:39Z</updated>
+    <link href="https://arxiv.org/abs/2309.07861v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2309.07861v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Humans encode information into sounds by controlling articulators and decode information from sounds using the auditory apparatus. This paper introduces CiwaGAN, a model of human spoken language acquisition that combines unsupervised articulatory modeling with an unsupervised model of information exchange through the auditory modality. While prior research includes unsupervised articulatory modeling and information exchange separately, our model is the first to combine the two components. The paper also proposes an improved articulatory model with more interpretable internal representations. The proposed CiwaGAN model is the most realistic approximation of human spoken language acquisition using deep learning. As such, it is useful for cognitively plausible simulations of the human speech act.</summary>
+    <category term="cs.SD" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.AS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2023-09-14T17:10:39Z</published>
+    <arxiv:primary_category term="cs.SD"/>
+    <author>
+      <name>Gašper Beguš</name>
+    </author>
+    <author>
+      <name>Thomas Lu</name>
+    </author>
+    <author>
+      <name>Alan Zhou</name>
+    </author>
+    <author>
+      <name>Peter Wu</name>
+    </author>
+    <author>
+      <name>Gopala K. Anumanchipalli</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2004.11419v2</id>
+    <title>End-to-end speech-to-dialog-act recognition</title>
+    <updated>2020-07-28T22:12:17Z</updated>
+    <link href="https://arxiv.org/abs/2004.11419v2" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2004.11419v2" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Spoken language understanding, which extracts intents and/or semantic concepts in utterances, is conventionally formulated as a post-processing of automatic speech recognition. It is usually trained with oracle transcripts, but needs to deal with errors by ASR. Moreover, there are acoustic features which are related with intents but not represented with the transcripts. In this paper, we present an end-to-end model which directly converts speech into dialog acts without the deterministic transcription process. In the proposed model, the dialog act recognition network is conjunct with an acoustic-to-word ASR model at its latent layer before the softmax layer, which provides a distributed representation of word-level ASR decoding information. Then, the entire network is fine-tuned in an end-to-end manner. This allows for stable training as well as robustness against ASR errors. The model is further extended to conduct DA segmentation jointly. Evaluations with the Switchboard corpus demonstrate that the proposed method significantly improves dialog act recognition accuracy from the conventional pipeline framework.</summary>
+    <category term="cs.SD" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.AS" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2020-04-23T18:44:27Z</published>
+    <arxiv:primary_category term="cs.SD"/>
+    <author>
+      <name>Viet-Trung Dang</name>
+    </author>
+    <author>
+      <name>Tianyu Zhao</name>
+    </author>
+    <author>
+      <name>Sei Ueno</name>
+    </author>
+    <author>
+      <name>Hirofumi Inaguma</name>
+    </author>
+    <author>
+      <name>Tatsuya Kawahara</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2409.10502v1</id>
+    <title>Causal Language Modeling Can Elicit Search and Reasoning Capabilities on Logic Puzzles</title>
+    <updated>2024-09-16T17:42:15Z</updated>
+    <link href="https://arxiv.org/abs/2409.10502v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2409.10502v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Causal language modeling using the Transformer architecture has yielded remarkable capabilities in Large Language Models (LLMs) over the last few years. However, the extent to which fundamental search and reasoning capabilities emerged within LLMs remains a topic of ongoing debate. In this work, we study if causal language modeling can learn a complex task such as solving Sudoku puzzles. To solve a Sudoku, the model is first required to search over all empty cells of the puzzle to decide on a cell to fill and then apply an appropriate strategy to fill the decided cell. Sometimes, the application of a strategy only results in thinning down the possible values in a cell rather than concluding the exact value of the cell. In such cases, multiple strategies are applied one after the other to fill a single cell. We observe that Transformer models trained on this synthetic task can indeed learn to solve Sudokus (our model solves $94.21\%$ of the puzzles fully correctly) when trained on a logical sequence of steps taken by a solver. We find that training Transformers with the logical sequence of steps is necessary and without such training, they fail to learn Sudoku. We also extend our analysis to Zebra puzzles (known as Einstein puzzles) and show that the model solves $92.04 \%$ of the puzzles fully correctly. In addition, we study the internal representations of the trained Transformer and find that through linear probing, we can decode information about the set of possible values in any given cell from them, pointing to the presence of a strong reasoning engine implicit in the Transformer weights.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2024-09-16T17:42:15Z</published>
+    <arxiv:comment>26 pages</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Kulin Shah</name>
+    </author>
+    <author>
+      <name>Nishanth Dikkala</name>
+    </author>
+    <author>
+      <name>Xin Wang</name>
+    </author>
+    <author>
+      <name>Rina Panigrahy</name>
+    </author>
+  </entry>
+</feed>

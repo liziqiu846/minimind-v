@@ -199,6 +199,7 @@ prediction test 和两个符合阶段三规则的 paired training pilot。当前
 | `VISSUP-01` | `INSTANTIATION_REJECTED` | 当前 9.16% rotation instruction、4,096-coordinate M2-current、frozen encoder/adapter 的具体 visual-necessary intervention | 其他有独立理论与反例支持的 objective design、不同合法机制或 richer visual targets |
 | `PROJALLOC-01` | `INSTANTIATION_REJECTED` | 当前 frozen-base / hashed-coordinate setting 的 exact `1/4094/1` fixed-total projector allocation | frozen-feature identifiability、其他预注册 module-placement regime、objective mismatch、gradient routing、task-specific absorption |
 | `LITMAP-04` | `BRIDGE_REJECTED` | 当前 objective-routing / task-specific-absorption primary literature 到本地唯一、单因素、no-sweep 最小干预的桥 | objective competition、gradient routing、task-specific absorption 与 frozen-feature/objective mismatch 机制本身 |
+| `LITMAP-05` | `BRIDGE_REJECTED` | 当前 formal probing/decodability theory、direct LVLM evidence 与 MiniMind-V architecture 到唯一、no-sweep、具有可靠负向排除力的 frozen-feature readout bridge | frozen feature 中存在可读 signal、downstream absorption/transfer failure、objective mismatch、encoder limitation 与其他被独立理论固定的 readout family |
 
 这些状态不改动任何原始实验结果。历史 result 中的 `REJECT_IDEA` 是当时 autonomous
 workflow 的“停止该 candidate 并转向下一路线”判定；其科学外推必须按上表的 failure
@@ -216,31 +217,31 @@ level 解读。当前没有证据达到 `MECHANISM_REJECTED`。
 
 ## 9. 当前 Active Research Question
 
-> 是否存在一个由 architecture 与正式理论共同唯一固定、无需 layer/rank/proxy
-> sweep 的 frozen-feature readout，能够先裁决当前视觉表示是否含有 held-out
-> rotation 所需信号，并区分“信号在 frozen representation 中缺失”与“信号存在但
-> 下游 autoregressive 模型未吸收/未迁移”？
+> MiniMind-V 当前训练数据及可在本服务器取得的 authoritative source data 中，是否
+> 存在无需新 proxy、由来源语义唯一固定的 domain / mixture / multimodal-combination
+> strata，使“增加互补覆盖”相对“增加同域冗余”能够形成单因素、可证伪且可在当前
+> 资源内验证的 VLM 泛化 prediction？
 
 ### 本次研究重心切换
 
-- **Previous active question**：`LITMAP-04` 是否能从 direct autoregressive-LVLM
-  primary evidence 中唯一导出一个 objective-routing / task-specific-absorption
-  最小干预。
-- **Why it was demoted**：555 条 raw records、523 个 unique titles 与 14 篇决定性
-  primary sources 的完整核查虽找到 direct mechanisms 与 matched controls，但所有
-  本地路线都依赖额外 component、teacher/tokenizer/head、layer/rank/loss/ratio
-  选择、seeing/blind proxy、multi-stage schedule 或远超本地资源；没有路线同时通过
-  unique、single-factor、no-sweep 与 local-feasibility 门。
-- **New active question**：`LITMAP-05` frozen-feature sufficiency / identifiability
-  gate。
-- **Evidence motivating the switch**：`VISSUP-01` 与 `PROJALLOC-01` 均未学会
-  held-out rotation；`LITMAP-04` 又无法合法裁决 objective-level competing
-  explanations。开始新训练前，最小信息缺口是 frozen visual representation 中是否
-  已有可由先验固定 readout 识别的任务信号。
-- **What remains open from the previous question**：objective competition、
-  gradient routing、task-specific absorption、frozen-feature/objective mismatch 及
-  文献中的多组件方法均未被机制性否定；只有当前 literature-to-local-intervention
-  bridge 被否定。
+- **Previous active question**：`LITMAP-05` 是否存在 architecture/theory 唯一
+  固定的 frozen-feature readout，可区分 representation-absent 与
+  downstream-unabsorbed。
+- **Why it was demoted**：553 条 raw records、491 个 unique titles 与 13 篇决定性
+  primary sources 的完整核查显示，formal quantities 都依赖研究者事先选择
+  predictive family、target distribution 或 regularization；最直接的 LVLM studies
+  也需要 layer/token/pooling/learning-rate 选择或 max-over-layer。MiniMind-V 只固定
+  SigLIP2 `last_hidden_state` 的位置，没有固定 task readout 或 negative
+  completeness。
+- **New active question**：`COVER-01` authoritative controlled-coverage gate。
+- **Evidence motivating the switch**：连续两次 training instantiation 与两次
+  literature bridge 均无法无歧义定位 representation/objective failure；相比继续
+  制造 probe，数据来源已有的 domain/mixture/combination labels 更可能提供不依赖
+  checkpoint proxy 的受控科学对象。
+- **What remains open from the previous question**：frozen-feature signal、
+  downstream absorption/transfer failure、objective mismatch、encoder limitation
+  及 linear/nonlinear decodability 均未被机制性否定；只否定当前
+  identifiability bridge。
 
 更完整的 Mission Envelope 与 active-question 历史见
 `docs/project/ACTIVE_RESEARCH_QUESTION.md`。
@@ -249,19 +250,20 @@ level 解读。当前没有证据达到 `MECHANISM_REJECTED`。
 
 ## 10. 当前动态 backlog
 
-- **ACTIVE**：`LITMAP-05`。frozen-feature sufficiency / identifiability
-  literature-theory plan 由本次 plan commit 冻结；只执行 primary-source/theory 与
-  read-only interface gate，不运行 checkpoint readout 或训练。
-- **NEXT**：`COVER-01` 的 controlled coverage gate；仅在 `LITMAP-05` 没有唯一
-  readout bridge 时进入，先核查 authoritative domain/mixture labels。
+- **ACTIVE**：`COVER-01` authoritative controlled-coverage gate。先建立并提交
+  immutable literature/data-interface plan；提交前不执行新 scientific analysis、
+  checkpoint inference 或训练。
+- **NEXT**：尚未登记可执行 candidate。`COVER-01` 只有在 authoritative strata、
+  single-factor contrast、held-out prediction 与 local feasibility 同时通过时才允许
+  选择一个 coverage candidate。
 - **BACKLOG**：`OBJ-01`。它不能由已失败的 `VISCOND-01` positive gate 启动；
   `LITMAP-04` 也没有提供合法最小 objective bridge。该上位假设仍开放，但不是可直接
   训练 candidate。
 
-`LITMAP-04` 已按 immutable gate 作出 `NO_CANDIDATE`，result commit `872657d`。
-下一步先提交 `LITMAP-05_round1` immutable plan，再核查 architecture-defined
-frozen-feature readout 是否有正式 sufficiency / identifiability bridge；不得通过
-layer、rank、pooling、probe family 或 metric sweep 制造 positive。
+`LITMAP-05` 已按 immutable gate 作出 `NO_CANDIDATE` /
+`BRIDGE_REJECTED`。下一步先提交 `COVER-01_round1` immutable plan，再核查
+authoritative domain/mixture labels、现有数据 lineage 与唯一 controlled-coverage
+contrast；不得把数据量、随机 cluster 或事后 embedding 分组换名为 coverage。
 
 ---
 
@@ -276,7 +278,11 @@ layer、rank、pooling、probe family 或 metric sweep 制造 positive。
    bridge/proxy/instantiation 不成立。
 7. frozen visual representation 可能已经包含 held-out task signal，但当前
    autoregressive objective / downstream module 没有吸收；也可能该信号在
-   representation 中确实缺失，当前证据尚不能区分。
+   representation 中确实缺失；`LITMAP-05` 说明当前文献与 architecture 不能用唯一
+   readout 区分二者，而不是二者之一已被排除。
+8. authoritative domain/mixture/combination coverage 可能比原始样本数更能预测
+   未见组合或域的风险；但是否存在可用于本地单因素实验的可靠 strata 尚待
+   `COVER-01` 审计。
 
 ---
 
@@ -289,6 +295,8 @@ layer、rank、pooling、probe family 或 metric sweep 制造 positive。
 - 不运行 `PROJALLOC-01` 的 `43202/43203`，不搜索 allocation，不恢复旧 sweep；
 - 不回到只优化 checkpoint 码长；
 - 不制造新的无理论桥 checkpoint proxy；
+- 不把 random cluster、embedding neighborhood、事后 benchmark category 或原始
+  sample count 直接称为 controlled coverage；
 - 不访问 final confirmation set；
 - 不提前宣布进入阶段四。
 
@@ -296,15 +304,14 @@ layer、rank、pooling、probe family 或 metric sweep 制造 positive。
 
 ## 13. 仓库与执行状态
 
-- 当前 scientific result commit：`872657d`（`LITMAP-04` `NO_CANDIDATE` /
-  `BRIDGE_REJECTED`）。
-- 当前 immutable plan：`experiments/plans/LITMAP-05_round1.md`（本次 plan
-  commit）。
+- 当前最新 scientific result：`experiments/results/LITMAP-05_round1/RESULT.md`
+  （`NO_CANDIDATE` / `BRIDGE_REJECTED`，由本次 result commit 冻结）。
+- 下一 immutable plan：`experiments/plans/COVER-01_round1.md`，尚待创建并提交。
 - `RUNNING_JOB=none`，`HARD_STOP=false`。
 - 昨夜新增 plans、results、raw receipts、logs 和 SHA manifests 已在
   `EXPERIMENT_REGISTRY.md` 建立 canonical 索引；失败原始证据保留。
-- `LITMAP-04` 的 result、evidence matrix、search index、raw receipts 与 source
-  hashes 已冻结；14/14 决定性来源均可核查。
+- `LITMAP-05` 的 result、13-source evidence matrix、deterministic search index、
+  local interface audit 与 source hashes 已固化；13/13 决定性来源均可核查。
 
 ---
 
@@ -314,6 +321,7 @@ layer、rank、pooling、probe family 或 metric sweep 制造 positive。
 > `docs/project/CURRENT_STATE.md` 和 `docs/theory/VLM泛化理论基线.md`，仓库
 > canonical state 优先于聊天与 nightly report。当前仍处于阶段三；五个初始
 > candidate 的失败粒度分别是 bridge/proxy/proxy/instantiation/instantiation，
-> 后续 `LITMAP-04` 另为 bridge rejection，没有上位 mechanism 被否定。当前 active
-> question 是 `LITMAP-05` frozen-feature sufficiency / identifiability gate；先从
-> 已提交 immutable plan 继续，不重跑昨夜实验，不访问 final confirmation set。
+> 后续 `LITMAP-04` 与 `LITMAP-05` 均为 bridge rejection，没有上位 mechanism 被
+> 否定。当前 active question 是 `COVER-01` authoritative controlled-coverage
+> gate；先创建并提交 immutable plan，不重跑既有实验，不制造新 probe，不访问
+> final confirmation set。

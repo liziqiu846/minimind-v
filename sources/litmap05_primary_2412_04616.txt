@@ -1,0 +1,991 @@
+[2412.04616] Assessing and Learning Alignment of Unimodal Vision and Language Models
+\pdfcolInitStack
+tcb@breakable
+Assessing and Learning Alignment of Unimodal Vision and Language Models
+Le Zhang Qian Yang Aishwarya Agrawal
+Mila - Quebec AI Institute
+Université de Montréal
+Abstract
+How well are unimodal vision and language models aligned?
+Although prior work have approached answering this question, their assessment methods do not directly translate to how these models are used in practical vision-language tasks.
+In this paper, we propose a direct assessment method, inspired by linear probing, to assess vision-language alignment.
+We identify that the degree of alignment of the SSL vision models depends on their SSL training objective, and we find that the clustering quality of SSL representations has a stronger impact on alignment performance than their linear separability. Next, we introduce Swift Alignment of Image and Language (SAIL), a efficient transfer learning framework that aligns pretrained unimodal vision and language models for downstream vision-language tasks. Since SAIL leverages the strengths of pretrained unimodal models, it requires significantly fewer ( \sim 6%) paired image-text data for the multimodal alignment compared to models like CLIP which are trained from scratch. SAIL training only requires a single A100 GPU, \sim 5 hours of training and can accommodate a batch size up to 32,768. SAIL achieves 73.4% zero-shot accuracy on ImageNet (vs. CLIP’s 72.7%) and excels in zero-shot retrieval, complex reasoning, and semantic segmentation. Additionally, SAIL improves the language-compatibility of vision encoders that in turn enhance the performance of multimodal large language models. The entire codebase and model weights are open-source: Project Page.
+1 Introduction
+Refer to caption
+Figure 1: Conceptual Overview: Alignment probing evaluates the alignment potential of two pretrained uni-modal models. Akin to linear probing, only the linear alignment layers are trained while the backbone models remain frozen.
+The integration of language and vision is pivotal in advancing models for zero-shot open-vocabulary computer vision tasks [27, 28, 20, 21]. This raises a key question: “To what extent can unimodal visual and language models be aligned with each other?” In particular, how do unimodal representations impact cross-modal alignment: Do larger unimodal models trained on extensive datasets yield better cross-modal alignment? Does the choice of self-supervised learning (SSL) method play a critical role in determining the alignment strength? What property of SSL representation correlates the most with cross-modal alignment performance: is it linear separability or the clustering quality?
+Although prior work have approached answering the question of “To what extent are pretrained unimodal models aligned with each other”, their assessment methods do not directly translate to how these models are used in practical vision-language tasks. For instance, Huh et al. [19] assess cross-modal alignment using mutual nearest-neighbor metrics, indicating a certain level of alignment across models trained on separate modalities. However, this assessment method serves only as a proxy method as it focuses on relative ordering within each modality rather than directly measuring cross-modal distances. The latter is precisely how inference with vision-language models (VLMs) is conducted, so we believe directly measuring cross-modal distances is a more direct measurement of alignment performance.
+To quantitatively answer aforementioned questions regarding the impact of modality-specific representation on cross-modal alignment, we introduce visual-language alignment probing, akin to linear probing used in SSL evaluation. As illustrated in Fig. 1, alignment probing freezes the pretrained vision and language backbones and trains a lightweight linear alignment layer on image-text datasets. We evaluate alignment through zero-shot retrieval tasks, finding that vision and language models exhibit strong alignment generally. However, the degree of alignment of the SSL vision models depends on their SSL training objective. We also found that the clustering quality of visual representations, as indicated by k-NN classifier performance, has a stronger impact on image-text alignment performance than their linear separability. Furthermore, for complex visio-linguistic reasoning, strong language understanding is essential. CLIP training even with scaled model and training data size is insufficient for developing a high-quality text encoder.
+Building on the findings that unimodal vision and language models show inherent alignment, and that language models trained on extensive natural language data serve as effective text encoders for VLMs, we propose Swift Alignment of Image and Language (SAIL) for learning better vision-language alignment. SAIL is an efficient transfer learning framework designed to construct robust foundational VLMs leveraging high-quality pretrained unimodal vision and language models. To enhance alignment quality, we employ three optimized components: a non-linear alignment layer, a refined contrastive loss function, and MLLM-generated high-quality training captions. SAIL is highly data-efficient, leveraging pretrained unimodal models and requiring only about 6% of the paired image-text data needed for models like CLIP, which are trained from scratch. It’s also compute-efficient, needing only a single A100 GPU, \sim 5 hours of training, and supporting batch sizes up to 32,768 by training just the alignment layer.
+By aligning the pretrained vision-encoder DINOv2-L and the pretrained language encoder NV2 using 23M image-text pairs, our method SAIL outperforms CLIP trained on 400M image-text pairs by 0.7% on ImageNet, and by 5.6% and 2.7% on COCO text-to-image and image-to-text retrieval respectively. SAIL leverages the strengths of unimodal models – DINOv2’s fine-grained visual understanding and NV2’s complex language reasoning – and excels considerably in challenging vision-language tasks such as Winoground [41] and MMVP [43], as well as in open-vocabulary image segmentation tasks. Furthermore, in comparison with prior efficient training methods like LiT [45] and Sharelock [37], which focus on tuning language models to align with frozen vision encoders, SAIL improves both the alignment performance as well as the language-compatibility of the vision encoder itself. This enables SAIL’s vision encoder to be transferable to MLLMs, resulting in
+significant performance gains; when integrated with LLaVA-1.5 [27], SAIL’s alignment training pushes the capabilities of the DINOv2 vision encoder from lagging behind the CLIP vision encoder to surpassing it in 5 out of 7 tasks downstream MLLM tasks.
+Refer to caption
+Refer to caption
+Figure 2: Linear alignment probing results trained with 2.2M paired data from CC3M. The radius represents the relative number of parameters in each model. The Y-axis indicates the zero-shot MSCOCO retrieval average R@10 performance. (Left) the X-axis shows kNN performance for various SSL models. (Right) the X-axis displays MTEB average scores across models.
+2 Assessing Alignment between Unimodal Models
+2.1 Approach and Experimental Setup
+In this section, we evaluate the alignment potential of pretrained unimodal models to determine those most compatible with models of the other modality. To focus on the alignment capacity of the pretrained models, we use a linear alignment layer to connect their representations. We refer to this as alignment probing. We use linear layers instead of MLPs because the latter could introduce additional alignment capability and hence confound the findings. The alignment probing architecture is illustrated in Fig. 1: only the alignment layer is trained, while the backbones remain frozen. We employ contrastive learning to pull matched image-text pairs closer and push unmatched pairs further in the representation space; see Appendix for training details.
+We use the open-source CC3M dataset (2.2M paired image-text samples) to train the alignment layer, leveraging its diversity and quality as an effective probing dataset. To measure the alignment quality, we test on COCO in zero-shot retrieval setup, using the R@10 metric. We report average recall of text-to-image and image-to-text retrieval tasks.
+For systematic evaluation, we fix an anchor model in one modality and vary models in the other modality to identify which models best align with the anchor. For the language anchor, we select GTE-en-large-v1.5 due to its robust performance across language understanding tasks [32]. We evaluate a range of vision models with this anchor, including various SSL methodologies: masked image modeling with discrete tokenizers (e.g., iBOT [51]), pixel-level reconstruction (e.g., MAE [17]), knowledge distillation (e.g., DINO [4] and DINOv2 [33]), and autoregressive image modeling (e.g., AIM [10]). Additionally, we incorporate a ResNet [15] model trained with DINO to assess the effect of architectural variations.
+Similarly, we use DINOv2-Large as the vision anchor and evaluate a range of language models, including encoder-only models like GTE-en-large-v1.5 [26] and decoder-only models, such as the GTE-Qwen2 [47] and NV-Embed-v2 [22]. This combination allows us to systematically analyze how pretrained vision models and language models contribute to cross-modal alignment across different architectures and pretraining strategies.
+2.2 Results and Findings
+Language as Anchor.
+The main results are displayed in the left panel of Fig. 2. Using our proposed alignment metric, we observe that most models achieve strong performance, with Retrieval R@10 ranging from 50% to 75%. This suggests a global alignment exists between unimodal vision and language models, consistent with observations from previous studies [19]. Notably, DINOv2 outperform all other SSL models, achieving the strongest alignment with the language anchor. Surprisingly, AIM-L, despite its 1 billion parameters, underperforms DINOv2-B, which has only a 86M parameters. Within the same training framework, DINO-ResNet achieves performance comparable to DINO-B with fewer parameters, indicating the high effectiveness of ResNet in alignment tasks.
+MAE-series models, on the other hand, exhibit markedly weaker alignment compared to other models. This may stem from their pixel-level reconstruction SSL objective, which focuses on low-level details (reconstructing each pixel perfectly) rather than the high-level semantics essential for the image-text alignment tasks. Additionally, model size positively impacts alignment performance, with larger models consistently yielding better alignment outcomes.
+We further investigate which properties of SSL representations best support alignment. There are two standard metrics to probe the quality of SSL representations [16, 6, 4, 33]: 1) k-NN classifier, which measures non-linear separability and clustering quality of the SSL representations, i.e., how well representations of the same concept cluster together, 2) Linear Probing which measures linear separability, i.e., how effectively the features can be separated by a linear boundary. Our analysis reveals a strong linear correlation between k-NN performance and alignment score, as illustrated by an approximated line in the figure. In contrast, Linear Probing (Appendix) shows a weaker correlation with alignment scores . Specifically, Pearson’s correlation between alignment accuracy (computed using our proposed metric) and ImageNet classification accuracy is 0.991 for k-NN classification and 0.847 for linear probing, highlighting that non-linear separability (i.e., clustering quality) matters more than linear-separability for image-text alignment.
+Vision as Anchor.
+Our results in Fig. 2 (right panel) show that the MTEB [32] average score, measuring performance across 56 language understanding tasks, correlates almost linearly with alignment scores, with a Pearson correlation of 0.994. This suggests that the language understanding capability is critical for image-text alignment performance.
+We observe a clear trend: stronger language models (measured by MTEB) consistently yield better alignment with the vision anchor. Notably, the compact gte-small achieves 80% of CLIP’s alignment performance with only 30% of CLIP’s text encoder parameter count; and NV-Embed-2 [33] reaches alignment scores comparable to CLIP-L (78.1% vs. 80.1%) while training on a much smaller dataset (2.2M vs. 400M pairs). This underscores the strength of models trained on natural language data in aligning text semantics into a shared representation space.
+Refer to caption
+Figure 3: Winoground Results. CLIP(V) represents vision encoder and CLIP(T) represents text encoder from CLIP-L(WIT-400M). ‘+’ indicates alignment probing with two models.
+Additionally, we identify that the language understanding significantly influences vision-language complex reasoning. Fig. 3 demonstrates this in Winoground task [41]: although CLIP is scaled in both data (400M \rightarrow 2B) and model size (427M \rightarrow 1366M), the scores remains low in metrics like “Image” (11.25) and “Group” (8.25) scores111See appendix for more details about the metric.. This outcome suggests that merely scaling up CLIP training dataset and model size may not be sufficient for enhancing complex reasoning. A potential explanation could be that CLIP’s training data, primarily web-sourced descriptions, may lack the rich semantic information necessary to learn advanced reasoning for its text encoder.
+In contrast, a stronger language model like NV-Embed-v2, extensively trained on a vast corpus of text, significantly boosts performance in complex vision-language reasoning, despite using limited alignment data (2.2M): replacing the CLIP text encoder with NV2 yields substantial improvements over the original CLIP; similarly, when paired with DINOv2-L vision encoder, NV2 significantly outperforms both CLIP-L text encoder and the Qwen2-1.5B model (Fig. 3) suggesting that:
+3 Learning Alignment between Unimodal Models
+3.1 Swift Alignment of Image and Language
+The assessment results demonstrate that unimodal vision and language models are inherently aligned, and reveals that foundational VLMs such as CLIP can significantly benefit from using strong pretrained text encoders. To build powerful CLIP-like models harnessing the strengths of robust off-the-shelf unimodal vision and language models, we introduce Swift Alignment of Image and Language (SAIL): an efficient transfer learning framework that transfers learned unimodal visual and textual representation to downstream vision-language tasks. SAIL improves alignment through three optimized components: (1) alignment layer architecture, (2) loss function, and (3) data quality. We conduct ablation studies to validate the effectiveness of the choices.
+For all experiments, we use DINOv2-L as the vision model and GTE-en-large-v1.5 as the language model based on their compact model size and good alignment potential. We train with CC3M as the base set-up and evaluate on ImageNet-1k and COCO. Ablation results are shown in Tab. 1.
+Alignment Layer.
+The alignment layer \mathcal{G}(\cdot) plays a crucial role in aligning modality-specific features in frozen vision and language encoders with each other. Our experiments demonstrate that using a single-layer, non-linear Gated Linear Unit (GLU) [38] with ReLU activation significantly improves alignment compared to baselines that use linear layers. As shown in Tab. 1, replacing the linear layer (row 0) used in LiT [45] with the MLP from ShareLock [37] improves classification but reduces retrieval performance. In contrast, GLU layers consistently improve performance on all tasks, with a GLU \times 8 boosting top-1 accuracy on IN-1K by 12.2%, T2I R@1 by 5%, and I2T R@1 by 9%. By limiting tunable parameters to this lightweight GLU layer with minimal FLOPs, we achieve efficient and targeted optimization across vision-language tasks.
+Method
+IN-1K 0-shot
+T2I R@1
+I2T R@1
+0 Baseline
+33.2
+11.1
+13.5
+1 + MLP \times 4
+36.8
+8.0
+10.7
+2 + GLU \times 4
+39.6
+11.5
+17.4
+3 + GLU \times 8
+45.4
+16.1
+22.5
+4 + Sigmoid
+50.7
+25.4
+36.0
+5 + |\mathcal{B}|\rightarrow|\mathcal{B}|^{2}
+51.8
+26.2
+36.7
+6 + Long-HQ
+48.4
+31.4
+44.2
+7 + Multi-Pos
+54.0
+32.9
+45.4
+Table 1: Ablation results using CC3M on Alignment Layers, Loss and Data. Baseline refers to aligning unimodal models with only linear layer using infoNCE loss [34]. +’s indicate addition of the component on top of the immediately previous row. \times n represents an intermediate dimensionality scaled by n times the input dimensionality. IN-1K refer to zero-shot top1 accuracy on ImageNet-1k; text-to-image(T2I) and image-to-text(I2T) refer to retrieval results on COCO.
+Contrastive Loss.
+SAIL samples a batch of image-text pairs \{(\mathcal{I}_{i},\mathcal{T}_{i})\}_{i=1}^{\mathcal{B}} , processed through image encoders \mathcal{F}_{I}(\cdot) and text encoder \mathcal{F}_{T}(\cdot) and their alignment layers \mathcal{G}_{I}(\cdot) and \mathcal{G}_{T}(\cdot) . To improve compute-efficiency and performance, we use the binary classification-based Sigmoid loss [46] instead of CLIP’s InfoNCE. This approach reduces the computational overhead of softmax normalization and enhances the model’s sensitivity to hard negatives. The loss is defined as:
+\displaystyle\mathcal{L}(\mathcal{I},\mathcal{T})=-\frac{1}{|\mathcal{B}|}\sum_{i=1}^{|\mathcal{B}|}\sum_{j=1}^{|\mathcal{B}|}\log\frac{1}{1+e^{z_{ij}(-t\hat{\mathbf{x}}_{i}\cdot\hat{\mathbf{y}}_{j}+b)}},
+(1)
+where \mathbf{x}_{i}=\mathcal{G}_{I}(\mathcal{F}_{I}(\mathcal{I}_{i})) and \mathbf{y}_{i}=\mathcal{G}_{T}(\mathcal{F}_{T}(\mathcal{T}_{i})) . Each feature is then L2-normalized as \hat{\mathbf{x}}_{i}=\frac{\mathbf{x}_{i}}{\|\mathbf{x}_{i}\|_{2}} and \hat{\mathbf{y}}_{j}=\frac{\mathbf{y}_{j}}{\|\mathbf{y}_{j}\|_{2}} . The similarity score, s_{ij}=-t\hat{\mathbf{x}}_{i}\cdot\hat{\mathbf{y}}_{j}+b , incorporates temperature scaling ( t ) and bias ( b ), with z_{ij} set to 1 if i=j and -1 otherwise. As shown in Tab. 1, using sigmoid loss (row 4) significantly outperforms InfoNCE (row 3) across all tasks, with gains of 5.3% on ImageNet-1k, 9.3% on T2I, and 13.5% on I2T for COCO.
+Furthermore, we find that averaging the loss across all pairs—rather than just the positive pairs (i.e., replacing |\mathcal{B}| in row 4 with |\mathcal{B}|^{2} in row 5)—ensures equal contribution from both positive and negative samples, which leads to performance improvements, with gains of 1.1% on ImageNet-1k, 1.5% on T2I, and 1.2% on I2T for COCO.
+Data
+Model
+Food101
+CIFAR10
+CIFAR100
+SUN397
+Cars
+Aircraft
+DTD
+Pets
+Cal101
+Flowers
+Avg.
+IN-1K
+Model Architecture: ViT-B/16
+CC3M
+CLIP-B {\ddagger}
+10.6
+53.9
+20.4
+31.2
+1.2
+1.1
+10.4
+11.7
+43.2
+12.9
+19.7
+16.0
+DreamLIP
+19.4
+74.3
+44.2
+45.9
+2.8
+1.0
+17.0
+27.1
+63.1
+14.7
+31.0
+31.1
+LiT {\ddagger}
+-
+-
+-
+-
+3.0
+2.1
+-
+28.5
+-
+35.9
+-
+44.1
+SAIL-B-GTE
+47.1
+94.1
+74.6
+63.9
+9.2
+4.2
+49.7
+39.5
+77.9
+31.8
+49.2
+50.7
+CC12M
+CLIP-B
+25.3
+66.5
+32.1
+39.9
+14.7
+1.9
+13.5
+45.0
+59.8
+15.0
+31.4
+34.0
+DreamLIP
+58.3
+87.3
+62.6
+54.3
+29.7
+4.9
+29.2
+60.3
+83.1
+28.9
+49.9
+50.3
+LiT {\ddagger}
+-
+-
+-
+-
+13.2
+5.0
+-
+74.4
+-
+48.2
+-
+56.2
+ShareLock {\dagger} {\ddagger}
+-
+-
+-
+-
+11.5
+8.3
+-
+66.6
+-
+48.8
+-
+59.1
+SAIL-B-GTE {\dagger}
+63.1
+94.1
+78.2
+64.2
+28.1
+6.6
+52.0
+60.1
+81.5
+49.4
+57.7
+58.7
+SAIL-B-NV2 {\dagger}
+77.7
+93.8
+79.9
+66.2
+35.8
+13.4
+61.5
+81.7
+82.1
+61.5
+65.4
+68.1
+LAION400M
+CLIP-B
+85.5
+93.0
+71.7
+66.8
+83.5
+16.7
+52.8
+90.1
+91.2
+63.9
+65.5
+67.0
+Model Architecture: ViT-L/14
+CC12M
+SAIL-L-GTE
+71.2
+96.3
+83.8
+67.2
+33.0
+8.0
+53.0
+66.5
+82.6
+57.7
+61.9
+63.9
+23M Merged
+SAIL-L-GTE
+76.1
+97.3
+84.6
+68.6
+32.0
+16.0
+52.5
+56.9
+83.0
+68.3
+63.5
+65.4
+CC12M
+SAIL-L-NV2
+81.9
+96.1
+85.2
+68.3
+42.9
+16.3
+60.4
+84.7
+82.4
+67.5
+68.6
+72.1
+23M Merged
+SAIL-L-NV2
+86.1
+96.7
+86.7
+69.8
+44.6
+28.6
+63.5
+82.3
+85.4
+77.2
+72.1
+73.4
+LAION400M
+CLIP-L
+90.1
+94.6
+77.4
+72.6
+89.6
+25
+60.4
+91.7
+82.1
+75.5
+75.9
+72.7
+Table 2: Zero-shot Image Classification top1 accruacy. CC3M contains 2.2 million samples, while CC12M includes 7.7 million samples. {\dagger} Note that the patch size for DINOv2-B is 14. {\ddagger} Cited results. We highlight the models with best performance and better than CLIP among the models using the same vision encoder architecture. CLIP trained on larger LAION400M dataset is provided as reference.
+High-Quality Data.
+Recent work indicates that VLMs benefit from training on smaller, higher-quality datasets [24, 27, 48, 12]. As shown in Tab. 1, raw web-collected short captions that focus on a single object (row 5) are beneficial for image classification. In contrast, longer, high-quality synthetic captions—such as those generated with ShareGPT4 [5] for each image in CC3M (row 6)—boost performance on retrieval tasks requiring nuanced visio-linguistic understanding, though they are less effective for object recognition.
+To leverage both benefits, we combine long and short captions within each training batch, offering diverse training signals that enhance representation learning and task adaptability (row 7). For each image-caption pair \{(\mathcal{I}_{i},\mathcal{T}_{i})\} , we include high-quality synthetic caption \mathcal{T}_{i}^{HQ} as additional positives. The multiple positive caption contrast is then defined as:
+\displaystyle\mathcal{L}_{\text{Multi-Pos}}=\mathcal{L}(\mathcal{I},\mathcal{T})+\mathcal{L}(\mathcal{I},\mathcal{T^{\text{HQ}}}),
+(2)
+Cheap Training Recipe. SAIL optimizes alignment layers \mathcal{G}(\cdot) , while freezing the backbone networks \mathcal{F}(\cdot) , as illustrated in Fig. 4. By restricting training to only the alignment layer, we can afford to have large batch sizes in the contrastive loss training even for models up to 7B parameters, with 1 GPU. This is otherwise infeasible due to the combined demands of large models and batch sizes.
+In our setup, paired image-text data is pre-encoded into embeddings by pretrained models only once, avoiding the need to load encoders in each forward pass. During training, only these embeddings and the lightweight alignment layer are loaded onto the GPU, significantly reducing memory requirements. This allows training on 23M examples with a single A100 GPU in 5 hours and a batch size up to 32,768. In contrast, end-to-end contrastive training would require over 100 GPUs to handle such batch sizes [34, 8].
+Refer to caption
+Figure 4: SAIL Pipeline. Image-Text data is pre-encoded into embeddings. During alignment tuning, only embeddings and alignment layers are loaded to reduce GPU memory consumption and accelerate training speed.
+3.2 Evaluating SAIL on Downstream Tasks.
+In the previous section, we provided SAIL’s motivation and design choices. In this section, we consider SAIL as a foundational VLM like CLIP and evaluate the quality of the vision and language representations learned using the SAIL alignment framework. SAIL uses state-of-the-art DINOv2 as the vision model, paired with two language models: compact GTE-en-large-v1.5 (SAIL-GTE) and powerful NV-Embed-2 (SAIL-NV2). Following the optimized configurations discussed earlier, we train SAIL on a 23M Merged Dataset [48]. This dataset is a combination of CC3M, CC12M, and YFCC15M 222Due to expired image URLs, we use subsets of 2.2M, 7.7M, and 12.9M images, respectively, with high-quality captions generated from ShareGPT4.
+For optimization, we use the LION optimizer [7] (with \beta_{1}=0.9 , \beta_{2}=0.99 ), a learning rate of 10^{-5} , and a weight decay of 10^{-7} . We use a temperature of t=\log 20 and a bias of b=-10 . The output dimension of alignment layer is 1024. Training runs for 50 epochs with a batch size of 32,768, leveraging pre-encoded embeddings to reduce memory load, using a fixed image resolution of 224.
+SAIL’s performance is assessed across several zero-shot vision-language tasks, including image classification (§3.2.1), image-text retrieval (§3.2.2), and open-vocabulary segmentation (§3.2.3). We compare SAIL to the key baselines—CLIP and DreamCLIP [48], both trained from scratch, as well as LiT [45] and ShareLock [37], both initialized with pretrained DINOv2 and various language models following original configurations. Additionally, we evaluate how well the visual representations learned in the SAIL framework transfer to complex vision-language tasks such as VQA (§3.2.4).
+3.2.1 Zero-Shot Image Recognition
+We evaluated the zero-shot transfer performance of SAIL across 11 common downstream image classification tasks, and report the Top-1 accuracy for each task in Tab. 2. With ViT-B/16 as vision architecture, we see that SAIL consistently outperforms all baselines including DreamLIP [48], which trains from scratch, and efficient training methods like LiT [45] and ShareLock with the same amount of paired image-text data. Notably, SAIL-B-NV2, trained on just CC12M (7.7M) image-text pairs, outperforms CLIP-B on ImageNet-1k, which was trained on the much larger LAION-400M, and achieves comparable performance in fine-grained classification tasks.
+We further scale the vision model to ViT-L/14 and expand the dataset to a larger 23M merged dataset. The overall improvement from enlarging CC12M to the 23M merged dataset demonstrates the scalability of the method. SAIL-L-GTE, with a 400M-parameter language model, already achieves strong performance on ImageNet-1k, reaching 65.4% accuracy. When equipped with a more powerful language model (SAIL-L-NV2), we observe a significant performance boost, outperforming CLIP-L on ImageNet-1k, despite using only 6% of its training image-text paired data. SAIL also outperforms CLIP on 6 out of 10 datasets. These results underscore the pivotal role of advanced language models in enhancing vision-language tasks. In all setups, replacing GTE-en-large-v1.5 with NV-Embed-2 improves ImageNet-1k accuracy by 7-10%.
+Interestingly, SAIL-B-NV2, with a smaller vision encoder and trained on fewer image-text pairs (7.7M), outperforms SAIL-L-GTE, which uses a larger vision encoder and 23M pairs. This demonstrates that a stronger language model (NV2 over GTE) not only boosts alignment performance but also reduces the need for extensive data.
+3.2.2 Zero-Shot Image-Text Retrieval
+MSCOCO
+Flickr30k
+Winoground
+MMVP
+Data
+Model
+I2T
+T2I
+I2T
+T2I
+T.
+I.
+G.
+Avg.
+Model Architecture: ViT-B/16
+CC12M
+DreamLIP
+53.3
+41.2
+82.3
+66.6
+26.0
+10.00
+7.25
+24.0
+LiT {\ddagger}
+30.0
+16.5
+54.8
+38.5
+24.3
+6.5
+4.8
+-
+ShareLock {\dagger} {\ddagger}
+26.0
+13.5
+53.9
+34.9
+26.3
+12.8
+5.3
+-
+SAIL-B-GTE {\dagger}
+48.2
+37.9
+76.5
+63.9
+31.0
+11.5
+9.5
+23.0
+SAIL-B-NV2 {\dagger}
+57.3
+45.3
+84.1
+70.1
+35.0
+17.25
+13.0
+24.4
+LAION400M
+CLIP-B
+55.4
+38.3
+83.2
+65.5
+25.7
+11.5
+7.75
+19.3
+Model Architecture: ViT-L/14
+CC12M
+SAIL-L-GTE
+50.4
+39.3
+78.4
+66.6
+33.25
+13.0
+9.25
+17.0
+23M Merged
+SAIL-L-GTE
+54.1
+42.7
+80.8
+68.9
+34.0
+13.25
+8.75
+22.2
+CC12M
+SAIL-L-NV2
+57.3
+45.3
+84.9
+73.0
+37.75
+18.25
+13.2
+28.0
+23M Merged
+SAIL-L-NV2
+62.4
+48.6
+87.6
+75.7
+40.25
+18.75
+15.0
+28.9
+LAION400M
+CLIP-L
+59.7
+43.0
+87.6
+70.2
+30.5
+11.5
+8.75
+20.0
+Figure 5: Results on standard retrieval, complex reasoning and visual-centric tasks. We report Recall@1 for MSCOCO and Flickr30k; Text, Image and Group scores for Winoground; and the average score for MMVP. {\ddagger} Cited results. {\dagger} ViT patch size is 14.
+Refer to caption
+Figure 6: Image-Image cosine similarity distribution for 150 paired images from MMVP.
+Cross-modal retrieval is more challenging than image recognition, as it requires complex scene understanding, including spatial relationships, context, background, activities, and more. Unlike models like CLIP that lack complex reasoning capabilities [41] as they train from scratch using large, noisy image-text datasets with short captions mentioning just object names, SAIL leverages a robust pretrained language encoder, trained for complex language understanding. With minimal alignment learning on a significantly smaller image-text dataset, SAIL achieves significant cross-modal understanding improvements.
+As shown in Fig. 6, evaluated on standard retrieval tasks such as MSCOCO and Flickr30k, SAIL consistently outperforms other baselines, including DreamLIP, LiT, and ShareLock. It even surpasses CLIP trained on LAION-400M, while using significantly fewer samples. For example, SAIL-B-NV2 surpasses CLIP-B/16 when both are trained on the CC12M dataset. Similarly, SAIL-L-NV2, trained on 23M samples, outperforms CLIP-L/14, which is trained on 400M samples, showing particularly strong gains in text-to-image (T2I) retrieval.
+SAIL also excels in complex reasoning Winoground task. With 7.7M samples, SAIL-B-NV2 outperforms CLIP-ViT-L/14 (trained on 400M samples), underscoring the impact of NV2’s advanced language understanding. As shown in Fig. 6, substituting the vision model from DINOv2-B to DINOv2-L offers only marginal gains, whereas switching the language model from GTE to NV2 yields significant improvements. This highlights that complex reasoning benefits more from advanced language models than from larger vision models. Notably, SAIL-L-NV2, trained on 23M samples, achieves the best results, with an approximate 7-10% improvement across all three metrics in Winoground compared to CLIP. Such substantial improvements underscore SAIL’s strengths in tackling complex reasoning tasks.
+On the vision-centric MMVP benchmark [43], SAIL achieves strong results, outperforming CLIP trained on 400M data. Comparing SAIL(GTE) and SAIL(NV2), we observe consistent improvements. This suggests that stronger linguistic reasoning helps vision centric tasks too.
+We further analyze the image-image cosine similarity on the MMVP benchmark [43], which consists of 150 image pairs. These pairs are selected to test subtle differences in orientation, perspective, quantity, color, and contextual details. Previous findings [43] indicate that CLIP struggles with such distinctions, often assigning very high similarity scores even when condition varies, whereas DINOv2 effectively captures these nuances. As shown in Fig. 6, we found that SAIL’s cosine similarity distribution closely matches DINOv2’s, suggesting it retains DINOv2’s fine-grained visual acuity. By combining DINOv2’s visual precision with NV2’s linguistic depth, SAIL proves to be a powerful vision-language foundation model for nuanced visual discrimination.
+3.2.3 Open-Vocabulary Semantic Segmentation
+CLIP-like models align images with sentences, allowing patch-level matching for open-vocabulary semantic segmentation [50, 44]. SAIL builds on this by enhancing patch-to-label associations for segmentation by taking advantage of strong vision encoders like DINOv2. An image is represented as a sequence of tokens X=[x_{cls},X_{patch}] , where X_{patch}\in\mathbb{R}^{hw\times d} . We compute cosine similarity between each patch and a sentence embedding y_{text} (e.g., “a photo of a {label}”) to produce segmentation masks following MaskCLIP [50]: \mathcal{M}=\arg\max\cos(X_{patch},y_{text}) .
+We evaluated SAIL on ADE20K [49], COCO-Stuff164k [3], and VOC20 [11] using mIOU to assess segmentation accuracy. As shown in Tab. 3, SAIL outperforms baselines like CLIP, MaskCLIP [50], and SCLIP [44], transferring DINOv2’s strong visual representations to open-vocabulary vision-language tasks and retained its fine-grained understanding capacity. This highlights SAIL’s potential for precise scene comprehension with advanced SSL models.
+Data
+Model (ViT-L/14)
+ADE20K
+Stuff
+VOC20
+LAION400M
+CLIP {\ddagger}
+1.2
+2.4
+15.8
+LAION400M
+MaskCLIP {\ddagger}
+6.9
+8.9
+30.1
+LAION400M
+SCLIP {\ddagger}
+7.1
+13.1
+60.3
+23M Merged
+SAIL (GTE)
+13.5
+14.1
+65.2
+23M Merged
+SAIL (NV2)
+14.2
+14.7
+66.1
+Table 3: Open-vocabulary semantic segmentation mIOU results compared with CLIP-based methods. All models use ViT-L/14 as the vision architecture. {\ddagger} Cited results.
+3.2.4 Language-compatible Visual Representation
+Refer to caption
+Figure 7: Using SAIL’s vision encoder for MLLMs.
+Model@224px
+VTune
+SEED {}^{\text{IMG}}
+GQA
+VizWiz
+PoPE
+TextVQA
+MMB
+VQA {}^{\text{v2}}
+0 DINOv2-L
+✗
+61.47
+61.08
+44.12
+85.5
+45.37
+56.96
+74.4
+1 DINOv2-L
+✓
+62.12
+61.53
+46.59
+85.7
+45.92
+58.85
+74.69
+2 SAIL-L
+✓
+65.43
+62.63
+50.00
+86.16
+46.53
+60.14
+76.77
+3 CLIP-L/14∗
+✗
+64.05
+61.58
+48.87
+85.74
+54.56
+63.06
+75.32
+4 CLIP-L/14∗
+✓
+64.15
+61.54
+49.93
+85.73
+54.18
+64.12
+76.36
+Figure 8: LLaVA-1.5 with various vision models. ∗Reproduced using OpenAI CLIP-L@224 [34]. VTune indicates if the vision encoder is fine-tuned during the instruction tuning stage.
+Refer to caption
+Figure 9: CLIP and LiT require training full models, making them resource-intensive. LiT and ShareLock freeze vision models during training, unable to yield language-compatible visual features crucial for MLLMs. Lastly, CLIP and LiT achieves modality-specific representations and cross-modal alignment simultaneously, incapable for alignment evaluation. Proposed SAIL meets all three requirements.
+Tong et al. [42] highlight the limitations of self-supervised vision models (e.g., DINO) as vision encoders for MLLMs, noting their lower performance across MLLM benchmarks compared to language-supervised vision models (e.g., CLIP). However, our findings demonstrate that the alignment training using SAIL framework can transform features from SSL models like DINOv2 to be more language-compatible, thus better suited for integration with MLLMs for tackling complex vision-language tasks.
+We integrate SAIL-L-NV2’s vision encoder into LLaVA. SAIL’s vision encoder consists of DINOv2-L and corresponding learned alignment layers. We train the model following LLaVA-1.5’s training recipe [28], and evaluate the performance of using SAIL’s vision encoder in LLaVA on a range of MLLM benchmarks. Fig. 8 illustrates that DINOv2 benefits from fine-tuning vision encoders during the instruction-tuning stage. Thus we also fine-tune SAIL vision encoder in instruction-tuning stage as shown in Fig. 8.
+Comparing SAIL-L (row 2) with DINOv2 (row 1), SAIL (trained on 23M pairs) significantly boosts DINOv2’s performance in VQA and multimodal instruction-following tasks through alignment training, transforming DINOv2 from lagging behind CLIP (trained on 400M pairs) to surpassing it in 5 out of 7 tasks (rows 1-4). This comparison also includes a CLIP vision encoder that is fine-tuned during the instruction-tuning stage (row 4), highlighting that SAIL effectively learns language-compatible visual features, facilitating smoother integration with LLMs. We observe that SAIL performs poorly on TextVQA and MMB, which require Optical Character Recognition (OCR). We believe this is due to the inherent limitations of DINOv2 w.r.t OCR capabilities as we observe that the DINOv2 baselines (rows 0 and 1) also perform particularly worse than the CLIP version on these specific benchmarks.
+4 Related Work
+Vision-Language Models
+Foundational VLMs like CLIP are widely used across vision-language tasks such as retrieval, classification, and segmentation in zero-shot settings, and they serve as essential components in multimodal generative models. For instance, CLIP functions flexibly as a text encoder in text-to-image generation [36, 35] and as a vision encoder in MLLMs [27, 9, 42], excelling through its aligned multimodal representations.
+Alignment between unimodal models
+Recent studies reveal that alignment can emerge within unimodal models even without explicitly aligning them with each other. Huh et al. [19] use mutual nearest-neighbor metrics to suggest that models across modalities align to a shared statistical reality. Maniparambil et al. [30] find that vision encoders exhibit high semantic similarity with language encoders using Centered Kernel Distance. While these studies imply inherent alignment within unimodal models, they rely on proxy measurements without directly assessing cross-modal distance for individual image-text pairs. Concurrent work by Sharma et al. [37] maps language models to visual representation spaces, identifying large-scale decoder-based LLMs as ideal candidates for vision-centric text representation. Our approach directly measures the cross-modal distance for individual image-text pairs to quantitatively examine how modality-specific features impact alignment.
+Efficient Tuning
+Training VLMs from scratch requires extensive datasets and computational resources, especially for contrastive models like CLIP, which demand large batch sizes, and MLLMs such as Gemini [40] and Fuyu [2] that involve training LLMs. Previous studies have shown that strong pre-trained vision models and LLMs can be efficiently aligned using linear layers [31, 27, 1], resulting in powerful MLLMs.
+On the other hand, efficient training of foundational VLMs like CLIP remains underexplored. One line of work reduces data requirements by using improved captions from LLMs [12] or MLLMs [48], though computational demands remain high. Other methods combine pre-trained unimodal models to reduce data and compute needs. For instance, LiT [45] aligns a frozen vision model with a language model trained from scratch, which still requires substantial pretraining. ShareLock [37] further introduces a tunable MLP layer over the frozen language model to achieve alignment with fewer parameters. However, these methods have limited alignment performance and do not enhance the base vision encoder, restricting the ability to transfer improved vision-language alignment capabilities to MLLMs. As shown in Fig. 9, SAIL stands out by meeting three key points compared to other frameworks: efficient training, learning language-compatible visual features, and a more direct alignment evaluation method consistent with how inference is done with such vision-language models.
+5 Conclusion
+This work proposes a alignment probing framework, inspired by linear probing, to evaluate cross-modal alignment between pretrained unimodal vision and language models and to explore how modality-specific features impact this alignment. Our results show that the clustering quality of self-supervised learning features, assessed by the kNN classifier, is crucial for effective alignment. Additionally, high-performing language models are found to be essential for complex reasoning in vision-language tasks.
+Building on these findings, we introduce the SAIL framework, which achieves optimal vision-language alignment with minimal human annotation. By utilizing pretrained SSL models, fewer resources, and a streamlined training setup, SAIL excels in zero-shot classification, cross-modal retrieval, complex visio-linguistic reasoning, and open-vocabulary segmentation, surpassing large-scale models like CLIP trained on 400M image-text data. It also enables learning of visual encoders that are more compatible to be used in multimodal language models.
+This study underscores the potential of efficient alignment strategies to advance practical vision-language integration, emphasizing the advantages of pretrained unimodal models and minimal human supervision. We hope our findings will accelerate foundational research on vision-language models focused on topics such as architecture, losses, and data, particularly for academic groups with limited resources.
+Acknowledgement
+We sincerely appreciate the valuable feedback provided by Rabiul Awal, Saba Ahmadi, and Oscar Mañas, as well as the thoughtful input from all MAIR Lab members on multiple occasions. We thank the Mila IDT team and their technical support for maintaining the Mila compute cluster. We also acknowledge the material support of NVIDIA in the form of computational resources. Throughout this project, Aishwarya Agrawal received support from the Canada CIFAR AI Chair award.
+References
+Alayrac et al. [2022]
+Jean-Baptiste Alayrac, Jeff Donahue, Pauline Luc, Antoine Miech, Iain Barr, Yana Hasson, Karel Lenc, Arthur Mensch, Katherine Millican, Malcolm Reynolds, et al.
+Flamingo: a visual language model for few-shot learning.
+Advances in neural information processing systems, 35:23716–23736, 2022.
+Bavishi et al. [2023]
+Rohan Bavishi, Erich Elsen, Curtis Hawthorne, Maxwell Nye, Augustus Odena, Arushi Somani, and Sağnak Taşırlar.
+Introducing our multimodal models, 2023.
+Caesar et al. [2018]
+Holger Caesar, Jasper Uijlings, and Vittorio Ferrari.
+Coco-stuff: Thing and stuff classes in context.
+In Proceedings of the IEEE conference on computer vision and pattern recognition, pages 1209–1218, 2018.
+Caron et al. [2021]
+Mathilde Caron, Hugo Touvron, Ishan Misra, Hervé Jégou, Julien Mairal, Piotr Bojanowski, and Armand Joulin.
+Emerging properties in self-supervised vision transformers.
+In Proceedings of the IEEE/CVF international conference on computer vision, pages 9650–9660, 2021.
+Chen et al. [2023a]
+Lin Chen, Jisong Li, Xiaoyi Dong, Pan Zhang, Conghui He, Jiaqi Wang, Feng Zhao, and Dahua Lin.
+Sharegpt4v: Improving large multi-modal models with better captions.
+arXiv preprint arXiv:2311.12793, 2023a.
+Chen et al. [2020]
+Ting Chen, Simon Kornblith, Mohammad Norouzi, and Geoffrey Hinton.
+A simple framework for contrastive learning of visual representations.
+In International conference on machine learning, pages 1597–1607. PMLR, 2020.
+Chen et al. [2023b]
+X Chen, C Liang, D Huang, E Real, K Wang, Y Liu, H Pham, X Dong, T Luong, CJ Hsieh, et al.
+Symbolic discovery of optimization algorithms. arxiv 2023.
+arXiv preprint arXiv:2302.06675, 2023b.
+Cherti et al. [2023]
+Mehdi Cherti, Romain Beaumont, Ross Wightman, Mitchell Wortsman, Gabriel Ilharco, Cade Gordon, Christoph Schuhmann, Ludwig Schmidt, and Jenia Jitsev.
+Reproducible scaling laws for contrastive language-image learning.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pages 2818–2829, 2023.
+Dai et al. [2023]
+Wenliang Dai, Junnan Li, D Li, AMH Tiong, J Zhao, W Wang, B Li, P Fung, and S Hoi.
+Instructblip: Towards general-purpose vision-language models with instruction tuning. arxiv 2023.
+arXiv preprint arXiv:2305.06500, 2, 2023.
+El-Nouby et al. [2024]
+Alaaeldin El-Nouby, Michal Klein, Shuangfei Zhai, Miguel Angel Bautista, Alexander Toshev, Vaishaal Shankar, Joshua M Susskind, and Armand Joulin.
+Scalable pre-training of large autoregressive image models.
+arXiv preprint arXiv:2401.08541, 2024.
+Everingham et al. [2015]
+Mark Everingham, SM Ali Eslami, Luc Van Gool, Christopher KI Williams, John Winn, and Andrew Zisserman.
+The pascal visual object classes challenge: A retrospective.
+International journal of computer vision, 111:98–136, 2015.
+Fan et al. [2024]
+Lijie Fan, Dilip Krishnan, Phillip Isola, Dina Katabi, and Yonglong Tian.
+Improving clip training with language rewrites.
+Advances in Neural Information Processing Systems, 36, 2024.
+Goyal et al. [2017]
+Yash Goyal, Tejas Khot, Douglas Summers-Stay, Dhruv Batra, and Devi Parikh.
+Making the v in vqa matter: Elevating the role of image understanding in visual question answering.
+In Proceedings of the IEEE conference on computer vision and pattern recognition, pages 6904–6913, 2017.
+Gurari et al. [2018]
+Danna Gurari, Qing Li, Abigale J Stangl, Anhong Guo, Chi Lin, Kristen Grauman, Jiebo Luo, and Jeffrey P Bigham.
+Vizwiz grand challenge: Answering visual questions from blind people.
+In Proceedings of the IEEE conference on computer vision and pattern recognition, pages 3608–3617, 2018.
+He et al. [2016]
+Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun.
+Deep residual learning for image recognition.
+In Proceedings of the IEEE conference on computer vision and pattern recognition, pages 770–778, 2016.
+He et al. [2020]
+Kaiming He, Haoqi Fan, Yuxin Wu, Saining Xie, and Ross Girshick.
+Momentum contrast for unsupervised visual representation learning.
+In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition, pages 9729–9738, 2020.
+He et al. [2022]
+Kaiming He, Xinlei Chen, Saining Xie, Yanghao Li, Piotr Dollár, and Ross Girshick.
+Masked autoencoders are scalable vision learners.
+In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition, pages 16000–16009, 2022.
+Hudson and Manning [2019]
+Drew A Hudson and Christopher D Manning.
+Gqa: A new dataset for real-world visual reasoning and compositional question answering.
+In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition, pages 6700–6709, 2019.
+Huh et al. [2024]
+Minyoung Huh, Brian Cheung, Tongzhou Wang, and Phillip Isola.
+The platonic representation hypothesis.
+arXiv preprint arXiv:2405.07987, 2024.
+Kirillov et al. [2023]
+Alexander Kirillov, Eric Mintun, Nikhila Ravi, Hanzi Mao, Chloe Rolland, Laura Gustafson, Tete Xiao, Spencer Whitehead, Alexander C Berg, Wan-Yen Lo, et al.
+Segment anything.
+In Proceedings of the IEEE/CVF International Conference on Computer Vision, pages 4015–4026, 2023.
+Lai et al. [2024]
+Xin Lai, Zhuotao Tian, Yukang Chen, Yanwei Li, Yuhui Yuan, Shu Liu, and Jiaya Jia.
+Lisa: Reasoning segmentation via large language model.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pages 9579–9589, 2024.
+Lee et al. [2024]
+Chankyu Lee, Rajarshi Roy, Mengyao Xu, Jonathan Raiman, Mohammad Shoeybi, Bryan Catanzaro, and Wei Ping.
+Nv-embed: Improved techniques for training llms as generalist embedding models.
+arXiv preprint arXiv:2405.17428, 2024.
+Li et al. [2023a]
+Bohao Li, Rui Wang, Guangzhi Wang, Yuying Ge, Yixiao Ge, and Ying Shan.
+Seed-bench: Benchmarking multimodal llms with generative comprehension.
+arXiv preprint arXiv:2307.16125, 2023a.
+Li et al. [2023b]
+Junnan Li, Dongxu Li, Silvio Savarese, and Steven Hoi.
+Blip-2: Bootstrapping language-image pre-training with frozen image encoders and large language models.
+In International conference on machine learning, pages 19730–19742. PMLR, 2023b.
+Li et al. [2023c]
+Yifan Li, Yifan Du, Kun Zhou, Jinpeng Wang, Wayne Xin Zhao, and Ji-Rong Wen.
+Evaluating object hallucination in large vision-language models.
+arXiv preprint arXiv:2305.10355, 2023c.
+Li et al. [2023d]
+Zehan Li, Xin Zhang, Yanzhao Zhang, Dingkun Long, Pengjun Xie, and Meishan Zhang.
+Towards general text embeddings with multi-stage contrastive learning.
+arXiv preprint arXiv:2308.03281, 2023d.
+Liu et al. [2023]
+Haotian Liu, Chunyuan Li, Yuheng Li, and Yong Jae Lee.
+Improved baselines with visual instruction tuning, 2023.
+Liu et al. [2024]
+Haotian Liu, Chunyuan Li, Yuheng Li, and Yong Jae Lee.
+Improved baselines with visual instruction tuning.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pages 26296–26306, 2024.
+Liu et al. [2025]
+Yuan Liu, Haodong Duan, Yuanhan Zhang, Bo Li, Songyang Zhang, Wangbo Zhao, Yike Yuan, Jiaqi Wang, Conghui He, Ziwei Liu, et al.
+Mmbench: Is your multi-modal model an all-around player?
+In European Conference on Computer Vision, pages 216–233. Springer, 2025.
+Maniparambil et al. [2024]
+Mayug Maniparambil, Raiymbek Akshulakov, Yasser Abdelaziz Dahou Djilali, Mohamed El Amine Seddik, Sanath Narayan, Karttikeya Mangalam, and Noel E O’Connor.
+Do vision and language encoders represent the world similarly?
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pages 14334–14343, 2024.
+Merullo et al. [2022]
+Jack Merullo, Louis Castricato, Carsten Eickhoff, and Ellie Pavlick.
+Linearly mapping from image to text space.
+arXiv preprint arXiv:2209.15162, 2022.
+Muennighoff et al. [2022]
+Niklas Muennighoff, Nouamane Tazi, Loïc Magne, and Nils Reimers.
+Mteb: Massive text embedding benchmark.
+arXiv preprint arXiv:2210.07316, 2022.
+Oquab et al. [2023]
+Maxime Oquab, Timothée Darcet, Théo Moutakanni, Huy Vo, Marc Szafraniec, Vasil Khalidov, Pierre Fernandez, Daniel Haziza, Francisco Massa, Alaaeldin El-Nouby, et al.
+Dinov2: Learning robust visual features without supervision.
+arXiv preprint arXiv:2304.07193, 2023.
+Radford et al. [2021]
+Alec Radford, Jong Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh, Sandhini Agarwal, Girish Sastry, Amanda Askell, Pamela Mishkin, Jack Clark, et al.
+Learning transferable visual models from natural language supervision.
+In International conference on machine learning, pages 8748–8763. PMLR, 2021.
+Ramesh et al. [2022]
+Aditya Ramesh, Prafulla Dhariwal, Alex Nichol, Casey Chu, and Mark Chen.
+Hierarchical text-conditional image generation with clip latents.
+arXiv preprint arXiv:2204.06125, 1(2):3, 2022.
+Rombach et al. [2022]
+Robin Rombach, Andreas Blattmann, Dominik Lorenz, Patrick Esser, and Björn Ommer.
+High-resolution image synthesis with latent diffusion models.
+In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition, pages 10684–10695, 2022.
+Sharma et al. [2024]
+Pratyusha Sharma, Tamar Rott Shaham, Manel Baradad, Stephanie Fu, Adrian Rodriguez-Munoz, Shivam Duggal, Phillip Isola, and Antonio Torralba.
+A vision check-up for language models.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pages 14410–14419, 2024.
+Shazeer [2020]
+Noam Shazeer.
+Glu variants improve transformer.
+arXiv preprint arXiv:2002.05202, 2020.
+Singh et al. [2019]
+Amanpreet Singh, Vivek Natarajan, Meet Shah, Yu Jiang, Xinlei Chen, Dhruv Batra, Devi Parikh, and Marcus Rohrbach.
+Towards vqa models that can read.
+In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition, pages 8317–8326, 2019.
+Team et al. [2024]
+Gemini Team, Petko Georgiev, Ving Ian Lei, Ryan Burnell, Libin Bai, Anmol Gulati, Garrett Tanzer, Damien Vincent, Zhufeng Pan, Shibo Wang, et al.
+Gemini 1.5: Unlocking multimodal understanding across millions of tokens of context.
+arXiv preprint arXiv:2403.05530, 2024.
+Thrush et al. [2022]
+Tristan Thrush, Ryan Jiang, Max Bartolo, Amanpreet Singh, Adina Williams, Douwe Kiela, and Candace Ross.
+Winoground: Probing vision and language models for visio-linguistic compositionality.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pages 5238–5248, 2022.
+Tong et al. [2024a]
+Shengbang Tong, Ellis Brown, Penghao Wu, Sanghyun Woo, Manoj Middepogu, Sai Charitha Akula, Jihan Yang, Shusheng Yang, Adithya Iyer, Xichen Pan, et al.
+Cambrian-1: A fully open, vision-centric exploration of multimodal llms.
+arXiv preprint arXiv:2406.16860, 2024a.
+Tong et al. [2024b]
+Shengbang Tong, Zhuang Liu, Yuexiang Zhai, Yi Ma, Yann LeCun, and Saining Xie.
+Eyes wide shut? exploring the visual shortcomings of multimodal llms.
+In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pages 9568–9578, 2024b.
+Wang et al. [2023]
+Feng Wang, Jieru Mei, and Alan Yuille.
+Sclip: Rethinking self-attention for dense vision-language inference.
+arXiv preprint arXiv:2312.01597, 2023.
+Zhai et al. [2022]
+Xiaohua Zhai, Xiao Wang, Basil Mustafa, Andreas Steiner, Daniel Keysers, Alexander Kolesnikov, and Lucas Beyer.
+Lit: Zero-shot transfer with locked-image text tuning.
+In Proceedings of the IEEE/CVF conference on computer vision and pattern recognition, pages 18123–18133, 2022.
+Zhai et al. [2023]
+Xiaohua Zhai, Basil Mustafa, Alexander Kolesnikov, and Lucas Beyer.
+Sigmoid loss for language image pre-training.
+In Proceedings of the IEEE/CVF International Conference on Computer Vision, pages 11975–11986, 2023.
+Zhang et al. [2024]
+Xin Zhang, Yanzhao Zhang, Dingkun Long, Wen Xie, Ziqi Dai, Jialong Tang, Huan Lin, Baosong Yang, Pengjun Xie, Fei Huang, et al.
+mgte: Generalized long-context text representation and reranking models for multilingual text retrieval.
+arXiv preprint arXiv:2407.19669, 2024.
+Zheng et al. [2024]
+Kecheng Zheng, Yifei Zhang, Wei Wu, Fan Lu, Shuailei Ma, Xin Jin, Wei Chen, and Yujun Shen.
+Dreamlip: Language-image pre-training with long captions.
+arXiv preprint arXiv:2403.17007, 2024.
+Zhou et al. [2017]
+Bolei Zhou, Hang Zhao, Xavier Puig, Sanja Fidler, Adela Barriuso, and Antonio Torralba.
+Scene parsing through ade20k dataset.
+In Proceedings of the IEEE conference on computer vision and pattern recognition, pages 633–641, 2017.
+Zhou et al. [2022]
+Chong Zhou, Chen Change Loy, and Bo Dai.
+Extract free dense labels from clip.
+In European Conference on Computer Vision, pages 696–712. Springer, 2022.
+Zhou et al. [2021]
+Jinghao Zhou, Chen Wei, Huiyu Wang, Wei Shen, Cihang Xie, Alan Yuille, and Tao Kong.
+ibot: Image bert pre-training with online tokenizer.
+arXiv preprint arXiv:2111.07832, 2021.
+\thetitle
+Supplementary Material
+Appendix A Reproducibility Statement
+To ensure the reproducibility of our work, we are committed to making all training code, datasets, and model weights publicly available. Detailed documentation will accompany the codebase to facilitate easy replication of our experiments. Hyperparameter settings, training configurations, and any preprocessing steps will also be thoroughly outlined. By providing these resources, we aim to promote transparency, enable future research, and support the broader community in building upon our work.
+Appendix B Alignment Assessment Training Details
+Alignment Probing
+The alignment probing method uses contrastive learning to train linear layers, referred to as alignment layers, for aligning pretrained unimodal vision and language representation spaces.
+Specifically, with a frozen image encoder \mathcal{F}_{I}(\cdot) and a frozen text encoder \mathcal{F}_{T}(\cdot) , the corresponding linear layers \mathcal{G}_{I}(\cdot) and \mathcal{G}_{T}(\cdot) are trained using the refined sigmoid loss on CC3M dataset with ShareGPT4-enhanced captions and incorporating the multiple positive caption contrast, as described in Sec. 3.1. For optimization, we use the LION optimizer (with \beta_{1}=0.9 , \beta_{2}=0.99 ), a learning rate of 10^{-5} , and a weight decay of 10^{-7} . We use a temperature of t=\log 20 and a bias of b=-10 . The output dimensionality of the linear layer (alignment dimensionality) is 2048. Training runs for 100 epochs with a batch size of 32,768, using a fixed image resolution of 224.
+Linear Probing vs. Alignment scores
+Fig. 10 illustrates the relationship between our alignment metric and the ImageNet linear probing classification accuracy of models. Compared to kNN (refer to Fig. 2), the linear correlation between these two metrics is weaker, with a Pearson correlation coefficient of 0.847. This highlights that non-linear separability (i.e., clustering quality) matters more than linear-separability for image-text alignment.
+Refer to caption
+Figure 10: Linear alignment probing results between Imagenet linear probing accuracy and average retrieval R@10 (our metric). MAE serves as an outlier, achieving high linear probe performance but low alignment performance.
+MSCOCO
+Flickr30k
+Winoground
+MMVP
+ImageNet
+10 Classification
+Data
+Model
+I2T
+T2I
+I2T
+T2I
+T.
+I.
+G.
+10 Avg.
+Top1.
+Avg.
+Model Architecture: ViT-B/16
+CC12M
+DreamLIP
+53.3
+41.2
+82.3
+66.6
+26.0
+10.00
+7.25
+24.0
+50.3
+49.9
+LiT {\ddagger}
+30.0
+16.5
+54.8
+38.5
+24.3
+6.5
+4.8
+-
+56.2
+-
+ShareLock(Llama3) {\dagger} {\ddagger}
+26.0
+13.5
+53.9
+34.9
+26.3
+12.8
+5.3
+-
+59.1
+-
+ShareLock(NV2) {\dagger}
+39.6
+23.1
+68.1
+49.3
+33.25
+13
+9.75
+15.56
+61.9
+62.0
+SAIL-B (GTE) {\dagger}
+48.2
+37.9
+76.5
+63.9
+31.0
+11.5
+9.5
+23.0
+58.7
+57.7
+SAIL-B (NV2) {\dagger}
+57.3
+45.3
+84.1
+70.1
+35.0
+17.25
+13.0
+24.4
+68.1
+65.4
+LAION400M
+CLIP-B
+55.4
+38.3
+83.2
+65.5
+25.7
+11.5
+7.75
+19.3
+67
+65.5
+Model Architecture: ViT-L
+23M Merged
+SAIL-L (NV2) {\dagger}
+62.4
+48.6
+87.6
+75.7
+40.25
+18.75
+15.0
+28.9
+72.1
+73.4
+LAION400M
+CLIP-L
+59.7
+43.0
+87.6
+70.2
+30.5
+11.5
+8.75
+20.0
+75.9
+72.7
+Table 4: Results on standard retrieval, complex reasoning, visual-centric, and classification tasks. We report Recall@1 for MSCOCO and Flickr30k, Text, Image, and Group scores for Winoground, and the average score across 9 visual patterns for MMVP. {\ddagger} indicates cited results, and {\dagger} denotes a ViT patch size of 14. 10 Classification tasks include: Food101, CIFAR10, CIFAR100, SUN397, Cars, Aircraft, DTD, Pets, Caltech101, and Flowers.
+Appendix C Additional Comparison with ShareLock
+In Sec. 3.2.1 and Sec. 3.2.2, we compare our method directly with the concurrent work ShareLock, using the reported results from [37], as the code was not open-source at the time of submission. ShareLock utilizes the LLaMA3-8B as the language encoder, which differs from the NV-Embed-2 language encoder used in SAIL. To ensure a fair comparison, we reproduced ShareLock’s results after consulting the authors, using the same vision and language backbones as SAIL (DINOv2-B and NV-Embed-2). We adhered strictly to the training details provided in the original paper [37] and present evaluation results for classification and retrieval tasks in Tab. 4.
+Refer to caption
+Figure 11: Method comparison. SAIL shows consistent improved performance over ShareLock.
+The ShareLock results demonstrates that replacing LLaMA3-8B with NV-Embed-2 significantly improves alignment performance across benchmarks. Also we see that, using the same vision and language backbones, SAIL (NV2) consistently outperforms ShareLock (NV2) across all tasks by a significant margin. This highlights the effectiveness of incorporating alignment layers for both vision and language models (see Fig. 11 for differences), as well as the advantages of our proposed optimized training methodologies.
+Appendix D Dataset used for evaluation
+Winoground evaluation
+Refer to caption
+(a)
+Refer to caption
+(b)
+Figure 12: An example from Winoground.
+Winoground [41] is a benchmark designed to evaluate the ability of vision-language models to perform visio-linguistic compositional reasoning, we provide one example as in Fig. 12. The task involves matching the correct image-captions pairs given two images and two captions, where the captions contain identical sets of words but in different orders, requiring fine-grained reasoning about the visual and textual alignment.
+Performance is measured using three metrics: text score, image score, and group score, defined as follows. Given two image-text pairs (I_{0},T_{0}) and (I_{1},T_{1}) , and a similarity function s(\cdot) provided by the model:
+The text score evaluates if the ground-truth caption for each image is scored higher than the alternative caption. It is computed as:
+f\left(T_{0},I_{0},T_{1},I_{1}\right)=\begin{cases}1\quad&\text{ if }s\left(T_{0},I_{0}\right)>s\left(T_{1},I_{0}\right)\\
+&\text{ and }s\left(T_{1},I_{1}\right)>s\left(T_{0},I_{1}\right)\\
+0&\text{ otherwise }\end{cases}
+(3)
+The image score tests whether the correct image is selected for each caption. It is computed as:
+g\left(T_{0},I_{0},T_{1},I_{1}\right)=\begin{cases}1\quad&\text{ if }s\left(T_{0},I_{0}\right)>s\left(T_{0},I_{1}\right)\\
+&\text{ and }s\left(T_{1},I_{1}\right)>s\left(T_{1},I_{0}\right)\\
+0&\text{ otherwise }\end{cases}
+(4)
+The group score combines the two previous metrics, requiring both to be correct simultaneously:
+h\left(T_{0},I_{0},T_{1},I_{1}\right)=\begin{cases}1\quad&\text{ if }f\left(T_{0},I_{0},T_{1},I_{1}\right)\\
+&\text{ and }g\left(T_{0},I_{0},T_{1},I_{1}\right)\\
+0&\text{ otherwise }\end{cases}
+(5)
+These metrics collectively assess whether the model can align text and images accurately while reasoning over compositional semantics.
+MLLM benchmarks
+In Sec. 3.2.4, we combine SAIL vision encoder with LLaVA-1.5 and evaluated on various downstream VQA and instruction-following benchmarks. Below we provide a description of each of these benchmarks.
+•
+SEED [23]: SEED-Bench offers a comprehensive evaluation framework with 19K multiple-choice questions, featuring accurate human annotations—six times larger than existing benchmarks. It spans 12 evaluation dimensions, covering comprehension in both image and video modalities. The use of multiple-choice questions with human-annotated ground truth answers ensures objective and efficient model assessment, removing the need for human or GPT intervention during evaluation.
+•
+GQA [18]: GQA stands out as a dataset for real-world visual reasoning and compositional question answering, addressing key limitations of earlier VQA datasets. It emphasizes reasoning, compositionality, and the grammar-based generation of natural language queries, pushing models to engage in structured and logical visual understanding.
+•
+VizWiz [14]: VizWiz features over 31,000 visual questions originating from visually impaired individuals who used mobile phones to capture images and record spoken queries. Each question is paired with 10 crowdsourced answers, introducing challenges such as blurry images, partial scenes, and diverse visual content, providing a real-world perspective on VQA.
+•
+PoPE [25]: PoPE targets Object Hallucination in multimodal large language models (MLLMs) by focusing on challenging visual reasoning tasks. It transforms hallucination evaluation into a binary classification task, using Yes-or-No questions about specific objects (e.g., “Is there a car in the image?”), offering a direct and interpretable measure of model accuracy in visual interpretation.
+•
+TextVQA [39]: TextVQA challenges models to extract and reason about textual information embedded in images, such as names, prices, and other details. It heavily relies on Optical Character Recognition (OCR) to parse diverse and complex text inputs. The dataset pushes OCR systems to handle variations in font styles, sizes, orientations, and noisy scenes, providing critical inputs for downstream reasoning tasks.
+•
+MMBench [29]: MMBench is a systematically designed benchmark for evaluating the diverse abilities of large vision-language models (VLMs). It includes 3,000+ multiple-choice questions across 20 ability dimensions, such as object localization and social reasoning. Each dimension is represented by 125+ balanced questions, ensuring robust evaluation. Tasks such as text interpretation within images further emphasize the importance of OCR capabilities in vision-language modeling.
+•
+VQAv2 [13]: As one of the most widely used benchmarks for VQA, VQAv2 introduces balanced questions to mitigate language biases. It emphasizes visual reasoning, requiring models to align language understanding with accurate visual grounding, setting a strong standard for comprehensive VQA tasks.
+Appendix E Pre-encoding Efficiency
+The SAIL training pipeline comprises two key stages: pre-encoding and alignment tuning. Here, we provide an estimate of the pre-encoding speed for models used in constructing SAIL. Encoding speed is influenced by factors such as hardware capabilities, model architecture, and the availability of acceleration techniques like FlashAttention. Additionally, for language models, sentence length significantly affects encoding performance.
+Since encoding times depend on hardware and model configurations, we report approximate times based on our training setup, utilizing a single A100-80G GPU:
+•
+With DINOv2-L using scaled dot-product attention, encoding 224x224 resolution images from CC3M achieves a throughput of approximately \sim 830 samples/s.
+•
+For GTE-en-large-v1.5 with FlashAttention, the throughput is \sim 2350 samples/s for short raw captions and \sim 130 samples/s for longer, high-quality captions (truncated to a maximum of 1024 tokens).
+•
+With NV-embed-2, the throughput is \sim 170 samples/s for short raw captions and \sim 25 samples/s for longer, high-quality captions (truncated to a maximum of 1024 tokens).
+With acceleration methods such as FlashAttention and vLLM, the encoding speed could be further enhanced for these models. Note that encoding is performed only once and reused multiple times during training.
+◄
+ar5iv homepage
+Feeling
+lucky?
+Conversion
+report
+Report
+an issue
+View original
+on arXiv►
+Copyright
+Privacy Policy
+Generated on Tue Jan 7 08:54:32 2025 by LaTeXML Mascot Sammy
