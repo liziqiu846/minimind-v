@@ -293,3 +293,24 @@
 - **Recommended human decision**: 无需立即决定；之后重点审查 theorem 是否超出
   普通 distribution-shift impossibility，以及新 prediction 是否可在不制造新 gate
   的条件下转入 MiniMind-V。
+
+## 2026-08-07｜XID-01：finite theory bridge 成为 PROMISING candidate
+
+- **Date**: 2026-08-07
+- **Idea / issue**: round1 matched-support proposition 与 round2 finite-class
+  target-risk decomposition 均通过，正式区分 source-target alignment 与 exact
+  source-minimizer interaction-identification diameter。
+- **Why human should review it**: theorem algebra 和 finite-class concentration 本身
+  不是 VLM-specific；论文潜力取决于能否从 interaction-diagnostic support /
+  separation 推出可验证的 \(I_{S\to U}\) 控制，而不是只定义 target-risk term。
+- **Current evidence**: round1 redundant minimax target error=`0.5`，identifying
+  unique NLL gap解析/枚举一致；round2 1,147,625 risk tables、1,530,375 ERM cases、
+  0 violations，并精确恢复 round1。
+- **What Agent has already frozen**: `XID-01=PROMISING` 仅指 theory bridge。真实
+  LVLM mechanism 未验证；禁止把 target-risk terms 当 checkpoint proxy，禁止立即
+  启动模型训练。
+- **Whether autonomous work can continue**: 可以；下一轮预注册 diagnostic mass
+  \(\lambda\)、separation \(\gamma\)、base shortcut advantage \(\beta\) 与
+  estimation radius 的 prediction theorem。
+- **Recommended human decision**: 无需立即决定；之后审查 separation theorem 是否
+  真正产生“diagnostic support vs redundant sample count”的新预测。

@@ -507,3 +507,31 @@ optimization bias 或真实 multimodal sequence。
 **后果**：下一轮只做一般 finite-hypothesis decomposition，把 approximation、
 source-target alignment、estimation 与 interaction-identification diameter 分开；
 不扩 cell table，不启动 MiniMind-V 训练。
+
+---
+
+## 2026-08-07｜XID-01 finite target-risk decomposition 通过
+
+**决定**：`XID-01` 升为 `PROMISING` theory bridge 并进入 prediction-theorem
+validation；该状态不等于真实机制 `CONCLUSION_CANDIDATE`。
+
+**依据**：
+
+1. finite-class ERM 以至少 \(1-\delta\) 概率进入
+   \(\mathcal E_{2\alpha_n}\)；
+2. target excess risk 被四个非负项分开：
+   approximation \(A\)、alignment \(B\)、exact identification diameter \(I\) 与
+   estimation expansion \(G\)；
+3. exhaustive grid 共检查 1,147,625 target tables 与 1,530,375 empirical-ERM
+   cases，无 violation；
+4. round1 redundant case 只留下 \(I=\log((1-\eta)/\eta)\)，identifying case 四项
+   全为 0。
+
+**边界**：uniform convergence 与 algebra 是通用 theory；只有当 exact source
+minimizers 包含 visual-ignoring shortcut 与 cross-modal rule 时，\(I\) 才是
+VLM-specific。各项使用 target risk，不是可反复计算的 model-selection certificate。
+
+**后果**：candidate 两个 exploratory rounds 已结束。下一轮属于预声明
+prediction-theorem validation，目标是证明 diagnostic mass/separation threshold，
+直接区分冗余样本缩小 estimation 与 diagnostic support 改变 identification margin；
+仍不训练真实模型。

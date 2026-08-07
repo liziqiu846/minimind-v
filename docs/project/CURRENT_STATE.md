@@ -328,12 +328,12 @@ level 解读。当前没有证据达到 `MECHANISM_REJECTED`。
 
 ## 13. 仓库与执行状态
 
-- 当前最新 scientific result：`experiments/results/XID-01_round1/RESULT.md`。
-  finite two-rule proposition 已 `PROVEN`：matched \(N\)/marginals 和 unseen target
-  下，diagnostic support 消除 shortcut equivalence，redundant support 的 minimax
-  target error 下界为 `0.5`。真实 LVLM 机制仍仅为 `CONJECTURE`。
-- 下一 immutable plan：`experiments/plans/XID-01_round2.md`，建立一般
-  target-risk decomposition；0 checkpoint/GPU/training。
+- 当前最新 scientific result：`experiments/results/XID-01_round2/RESULT.md`。
+  finite-class approximation/alignment/identification/estimation decomposition 已
+  `PROVEN`，1,147,625 risk tables / 1,530,375 ERM cases 无 violation；这是
+  `PROMISING` theory bridge，不是已验证 LVLM mechanism。
+- 下一 immutable plan：XID-01 diagnostic-mass separation prediction theorem；
+  0 checkpoint/GPU/training，提交前不执行。
 - `RUNNING_JOB=none`，`HARD_STOP=false`。
 - 新增 plans、results、raw receipts、logs 和 SHA manifests 已在
   `EXPERIMENT_REGISTRY.md` 建立 canonical 索引；失败原始证据保留。
