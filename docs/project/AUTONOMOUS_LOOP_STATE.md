@@ -5,19 +5,19 @@ MODE: AUTONOMOUS_RESEARCH
 ACTIVE_RESEARCH_QUESTION: docs/project/ACTIVE_RESEARCH_QUESTION.md
 CURRENT_IDEA: XID-01
 CURRENT_ROUND: 1
-CURRENT_STATE: XID01_ROUND1_PLAN_PENDING_COMMIT
+CURRENT_STATE: XID01_ROUND1_PROVEN_TOY_CONTINUE
 RUNNING_JOB: none
 LAST_PLAN: experiments/plans/XID-01_round1.md
-LAST_RESULT: experiments/results/LITMAP-06_round1/RESULT.md
+LAST_RESULT: experiments/results/XID-01_round1/RESULT.md
 GPU_HOURS_USED_THIS_CYCLE: 1.39
 ACTIVE_QUEUE: XID-01
-NEXT_QUEUE: COMMIT_XID01_ROUND1_PLAN_THEN_PROVE_AND_VERIFY
+NEXT_QUEUE: FREEZE_XID01_ROUND2_GENERAL_TARGET_RISK_DECOMPOSITION
 BACKLOG_QUEUE: AR_VISUAL_CREDIT;CROSS_MODAL_COMPOSITION;JOINT_SUPPORT_COVERAGE;OBJ-01
 WINOGROUND_ACCESS: blocked_by_access
 SEARCH_PROGRESS: LITMAP06_COMPLETE;3479_raw_records;2395_unique_titles;369_prior_search_duplicates;98_score_ge_10;10_decisive_primary_sources;5_of_5_DOIs_verified;deterministic_index_verified;AI_figure_backend_failed_twice
 REJECTION_SCOPE: XMC01_BRIDGE;COMP01_PROXY;VISCOND01_PROXY;VISSUP01_INSTANTIATION;PROJALLOC01_INSTANTIATION;LITMAP04_BRIDGE;LITMAP05_BRIDGE;COVER01_BRIDGE;NO_MECHANISM_REJECTED
 CANONICAL_STATE: docs/project/CURRENT_STATE.md
-RESOURCE_NOTE: LITMAP06 complete with zero GPU/checkpoint/training;XID01 finite-theory plan pending commit and uses only sub-minute CPU enumeration;CROSSFACT01 retained only as experiment-tool artifact;PROJALLOC roots43202/43203 forbidden;no running job;no final confirmation
+RESOURCE_NOTE: XID01 round1 finite proposition and exhaustive verification passed with sub-second CPU;proof is toy-only and does not authorize model training;CROSSFACT01 retained only as experiment-tool artifact;PROJALLOC roots43202/43203 forbidden;no running job;no final confirmation
 HARD_STOP: false
 ```
 

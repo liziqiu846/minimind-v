@@ -328,10 +328,12 @@ level 解读。当前没有证据达到 `MECHANISM_REJECTED`。
 
 ## 13. 仓库与执行状态
 
-- 当前最新 scientific result：`experiments/results/LITMAP-06_round1/RESULT.md`
-  （选择 `XID-01`，最高证据仅为 `CONJECTURE` + `EMPIRICAL_SUPPORT`）。
-- 下一 immutable plan：`experiments/plans/XID-01_round1.md`，必须提交后才执行
-  finite theory/proof/exhaustive verification；0 checkpoint/GPU/training。
+- 当前最新 scientific result：`experiments/results/XID-01_round1/RESULT.md`。
+  finite two-rule proposition 已 `PROVEN`：matched \(N\)/marginals 和 unseen target
+  下，diagnostic support 消除 shortcut equivalence，redundant support 的 minimax
+  target error 下界为 `0.5`。真实 LVLM 机制仍仅为 `CONJECTURE`。
+- 下一 immutable plan：`experiments/plans/XID-01_round2.md`，建立一般
+  target-risk decomposition；0 checkpoint/GPU/training。
 - `RUNNING_JOB=none`，`HARD_STOP=false`。
 - 新增 plans、results、raw receipts、logs 和 SHA manifests 已在
   `EXPERIMENT_REGISTRY.md` 建立 canonical 索引；失败原始证据保留。

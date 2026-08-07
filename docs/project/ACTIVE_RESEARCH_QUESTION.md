@@ -414,6 +414,9 @@ Agent 可以自主改变：
   checkpoint proxy；`VISSUP-01`/`PROJALLOC-01` 失败的是具体 intervention。
   `XID-01` 的对象是低 observed-risk 条件预测器的等价类，不依赖 caption-NLL、
   no-pixel margin、rotation task 或 module allocation。
-- **Status**: ACTIVE_CONJECTURE；最高证据为 `CONJECTURE` +
-  `EMPIRICAL_SUPPORT`。下一轮先做 finite crossed-support theorem/proof 与 exhaustive
-  verification，0 checkpoint/GPU/training；不得提前声称 scientific law。
+- **Status**: ACTIVE_CONJECTURE；round1 finite two-rule proposition 已
+  `PROVEN`，matched \(N\)/marginals、target unseen、redundant minimax lower bound
+  与 identifying unique NLL gap 均通过 exhaustive verification。这只证明 toy
+  formal consistency；真实 LVLM 仍是 `CONJECTURE`。下一轮建立一般
+  approximation / alignment / estimation / identification decomposition，仍为
+  0 checkpoint/GPU/training。

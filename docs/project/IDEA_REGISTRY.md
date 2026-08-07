@@ -42,7 +42,7 @@ Failed ideas must never be deleted.
 | `LITMAP-04` | `LITERATURE_SCREEN` | `OBJ-01` objective routing / absorption | local-intervention bridge rejected | 失败的是从已核查文献唯一导出 no-sweep 本地干预；objective competition、routing 与 task-specific absorption 仍开放 |
 | `LITMAP-05` | `LITERATURE_SCREEN` | frozen-feature signal 与 downstream absorption | readout bridge rejected | 失败的是 architecture/theory 唯一 readout 与 negative completeness；representation signal/absence 两种解释均未被裁决 |
 | `LITMAP-06` | `LITERATURE_SCREEN` | failure-informed scientific-mechanism reselection | completed; selected `XID-01` | 比较上位机制的 scientific expected value；结果只支持 `XID-01` 值得继续，不证明机制成立 |
-| `XID-01` | `SCIENTIFIC_MECHANISM` | autoregressive supervision 下的跨模态交互规则可识别性 | `CONJECTURE`; literature-selected | observed support 上多个低 NLL 条件预测器可能只在 unseen multimodal cells 分歧；科学对象是规则等价类与 target-support divergence，不是新 proxy/gate |
+| `XID-01` | `SCIENTIFIC_MECHANISM` | autoregressive supervision 下的跨模态交互规则可识别性 | `CONJECTURE`; finite toy proposition proven | round1 在 matched \(N\)/marginals、target-unseen 二规则 setting 证明 diagnostic support 可消除 shortcut equivalence；真实 LVLM mechanism 未验证 |
 
 ## Dynamic backlog
 

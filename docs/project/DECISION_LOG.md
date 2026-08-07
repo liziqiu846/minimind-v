@@ -480,3 +480,30 @@ autoregressive supervision 下的 cross-modal interaction identifiability，证�
 - 当前 0 checkpoint/GPU/training，不访问 final confirmation；
 - 只有 theorem 产生清楚、尚未查看且能区分两个科学解释的 prediction 后，才可考虑
   existing-artifact test 或最小训练。
+
+---
+
+## 2026-08-07｜XID-01 finite interaction-identifiability proposition 通过
+
+**决定**：保留 `XID-01=ACTIVE_CONJECTURE` 并进入一般 risk decomposition；不因
+toy theorem 通过而升格为 `PROMISING` 或真实 LVLM 规律。
+
+**依据**：
+
+1. redundant 与 identifying designs 都有 \(N=4\)，visual marginals=`2/2`、
+   language marginals=`2/1/1`，target `(1,c)` 在两者中均未出现；
+2. diagnostic `(0,b)` 与 target 由同一 \(\theta\) 控制，不是独立 lookup；
+3. redundant labelled training worlds 完全相同，任何 learner 的 worst-case target
+   0–1 error 至少 `0.5`；
+4. identifying support 唯一识别 ground-truth rule，三个固定 eta 的 NLL gap 与
+   \(\frac14\log((1-\eta)/\eta)\) 完全一致；
+5. exhaustive verifier 的全部 invariants、diameter 与 unseen-target prediction
+   通过。
+
+**边界**：`PROVEN` 仅限 two-rule finite class。证明技巧与普通 indistinguishability
+/ no-free-lunch 相邻；尚未处理 neural approximation、finite-sample stochasticity、
+optimization bias 或真实 multimodal sequence。
+
+**后果**：下一轮只做一般 finite-hypothesis decomposition，把 approximation、
+source-target alignment、estimation 与 interaction-identification diameter 分开；
+不扩 cell table，不启动 MiniMind-V 训练。
